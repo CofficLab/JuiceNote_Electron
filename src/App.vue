@@ -8,7 +8,7 @@ import Process from './components/Process.vue'
 </script>
 
 <template>
-	<div class="mb-8 justify-center flex">
+	<div class="my-8 justify-center flex">
 		<Process></Process>
 	</div>
 
@@ -16,7 +16,7 @@ import Process from './components/Process.vue'
 		<div>
 			<Sidebar></Sidebar>
 		</div>
-		<main class="container mx-auto bg-base-200 shadow-2xl p-4 rounded-2xl">
+		<main class="container mx-auto bg-gradient-to-b from-cyan-700/30 to-blue-900/20 shadow-2xl p-4 rounded-2xl">
 			<div>
 				<Nodejs></Nodejs>
 				<VueJs></VueJs>
