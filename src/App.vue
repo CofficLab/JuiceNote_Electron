@@ -1,68 +1,21 @@
 <script setup lang="ts">
 
-import HelloWorld from './components/HelloWorld.vue'
+import Nodejs from './views/Nodejs.vue'
+import Sidebar from './components/Sidebar.vue'
+import VueJs from './views/VueJs.vue'
 
 </script>
 
 <template>
-  <div class="logo-box bg-cyan-700">
-    <img class="logo vite" src="./assets/vite.svg">
-    <img class="logo electron" src="./assets/electron.svg">
-    <img class="logo vue" src="./assets/vue.svg">
-  </div>
-  <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
-  <div class="static-public">
-    Place static files into the <code>/public</code> folder
-    <img style="width:77px;" :src="'./node.png'">
-  </div>
+	<div class="bg-base-100 min-h-screen min-w-full  flex flex-row gap-4">
+		<div>
+			<Sidebar></Sidebar>
+		</div>
+		<main class="container mx-auto bg-base-200 shadow-2xl px-4">
+			<div>
+				<Nodejs></Nodejs>
+				<VueJs></VueJs>
+			</div>
+		</main>
+	</div>
 </template>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-
-.logo-box {
-  display: flex;
-  width: 100%;
-  justify-content: center;
-}
-
-.static-public {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.static-public code {
-  background-color: #eee;
-  padding: 2px 4px;
-  margin: 0 4px;
-  border-radius: 4px;
-  color: #304455;
-}
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: 0.75s;
-}
-
-.logo.vite:hover {
-  filter: drop-shadow(0 0 2em #747bff);
-}
-
-.logo.electron:hover {
-  filter: drop-shadow(0 0 2em #9FEAF9);
-}
-
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #249b73);
-}
-</style>
