@@ -1,0 +1,10 @@
+[
+    {
+        "path": "/node",
+        "component": "NodeJsVue"
+    },
+    {
+        "path": "/vue",
+        "component": "VueJsVue"
+    }
+]

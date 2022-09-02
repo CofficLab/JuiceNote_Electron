@@ -1,13 +1,13 @@
 <script setup lang="ts">
 
 import Process from './components/Process.vue'
-import Navigator from './views/Navigator.vue'
+import Navigator from './components/Navigator.vue'
 
 </script>
 
 <template>
 	<div>
-		<div class="py-8 justify-center flex flex-col bg-gradient-to-r from-sky-400 to-cyan-800/80">
+		<div class="py-8 justify-center flex flex-col bg-gradient-to-r from-sky-600/90 to-cyan-800/80">
 			<Process></Process>
 			<Navigator></Navigator>
 		</div>
