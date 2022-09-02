@@ -28,10 +28,10 @@ export default {
             console.log('current path ' + currentPath)
 
             if (fs.existsSync(currentPath + '.md')) {
-                return path.dirname(currentPath + '.md')
-            } else {
-                return currentPath
+                fs.writeFileSync(currentPath + '.md', '# ' + currentPath)
             }
+
+            return path.dirname(currentPath + '.md')
         }
     },
     computed: {
