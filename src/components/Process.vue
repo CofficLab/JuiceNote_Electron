@@ -1,8 +1,8 @@
 <template>
     <ul class="steps steps-horizontal">
         <template v-for="category in categories">
-            <li class="step" active-class="step-primary">
-                <router-link v-bind:to="getLink(category)" v-text="category">
+            <li data-content="●" class="step">
+                <router-link v-bind:to="getLink(category)" v-text="category" active-class="text-blue-400">
                 </router-link>
             </li>
         </template>
@@ -16,7 +16,7 @@ import fs from 'fs'
 export default {
     methods: {
         getLink(category: string) {
-            return '/article/' + category
+            return '/article/' + category + '@home'
         }
     },
     computed: {

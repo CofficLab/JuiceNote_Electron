@@ -14,15 +14,16 @@ export default {
 	computed: {
 		html(): string {
 			var cwd = process.cwd()
-			var markdownFile = path.join(cwd, 'src/markdown/', this.path + '.md')
-			console.log(markdownFile)
-			if (!fs.existsSync(markdownFile)) {
-				markdownFile = path.join(cwd, 'src/markdown/', this.path + '/home.md')
-			}
+			var routePath = this.path.replace('@', '/')
+
+			console.log('markdown component:' + 'current route path is ' + routePath)
+			var markdownFile = path.join(cwd, 'src/markdown/', routePath + '.md')
 
 			if (!fs.existsSync(markdownFile)) {
 				fs.writeFileSync(markdownFile, "# " + markdownFile.replace(cwd, ''))
 			}
+
+			console.log('try to find markdown file at ' + markdownFile)
 
 			var markdownContent = fs.readFileSync(markdownFile, 'utf-8')
 			var html = markdown.toHTML(markdownContent)
