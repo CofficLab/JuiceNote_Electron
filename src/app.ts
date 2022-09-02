@@ -1,8 +1,7 @@
-import {createApp} from 'vue'
-import App from './App.vue'
 import './app.css'
-
+import { createApp } from 'vue'
 import { createRouter,createWebHashHistory } from 'vue-router'
+import App from './App.vue'
 import NodeJsVue from './views/NodeJs.vue'
 import VueJsVue from './views/VueJs.vue'
 
