@@ -1,3 +1,1 @@
-# 欢迎
-
-这是一个与众不同的地方。
+# /Users/angel/Code/Yizhi/yizhi/src/markdown/Starter/home

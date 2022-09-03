@@ -5,13 +5,13 @@ import App from './App.vue'
 import MarkdownVue from './components/Markdown.vue'
 
 const routes = [
-	{ path: '/', redirect: '/article/welcome' },
-	{ path: '/article/:path', component: MarkdownVue, props: true }
+  { path: '/', redirect: '/article/welcome' },
+  { path: '/article/:path', component: MarkdownVue, props: true }
 ]
 
 const router = createRouter({
-	history: createWebHashHistory(),
-	routes,
+  history: createWebHashHistory(),
+  routes,
 })
 
 const app = createApp(App)
