@@ -1,40 +1,41 @@
 <template>
     <ul class="steps steps-horizontal">
-        <template v-for="category in categories">
+        <template v-for="navigator in navigators">
             <li data-content="●" class="step">
-                <router-link v-bind:to="getLink(category)" v-text="category" active-class="text-blue-400">
+                <router-link v-bind:to="getLink(navigator.name)" v-text="navigator.name" active-class="text-blue-400">
                 </router-link>
             </li>
         </template>
     </ul>
+
+    <div class="tabs tabs-boxed rounded-none">
+        <template v-for="child in activeNavigator.children">
+            <router-link class="tab" v-bind:to="child.name" v-text="child.name" active-class="tab-active">
+            </router-link>
+        </template>
+    </div>
 </template>
 
 <script lang="ts">
-import path from 'path'
-import fs from 'fs'
+import { navigators } from '../nav'
+
+console.log('all navigators are ', JSON.stringify(navigators))
 
 export default {
     methods: {
-        getLink(category: string) {
-            return '/article/' + category + '@home'
+        getLink(navigatorName: string) {
+            return '/article' + navigatorName + '@home'
         }
     },
     computed: {
-        categories(): string[] {
-            var categories: string[] = []
-            var files = fs.readdirSync(path.join(process.cwd(), 'src/markdown'), 'utf-8')
-            files.forEach((element) => {
-                var filePath = path.join(process.cwd(), 'src/markdown/' + element)
-                var stat = fs.lstatSync(filePath)
+        navigators() {
+            return navigators
+        },
+        activeNavigator() {
 
-                if (stat.isDirectory()) {
-                    categories.push(element)
-                }
-            })
+            console.log(navigators[0])
 
-            console.log(categories)
-
-            return categories
+            return navigators[0]
         }
     }
 }

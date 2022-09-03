@@ -43,6 +43,4 @@ function makeNode(navigator: string): navigatorNode {
     return node;
 }
 
-export default {
-    navigators: navigators
-}
+export { navigators }
