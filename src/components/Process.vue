@@ -2,7 +2,8 @@
     <ul class="steps steps-horizontal">
         <template v-for="navigator in navigators">
             <li data-content="●" class="step">
-                <router-link v-bind:to="getLink(navigator.name)" v-text="navigator.name" active-class="text-blue-400">
+                <router-link v-bind:to="getLinkForDir(navigator.name)" v-text="navigator.name"
+                    active-class="text-blue-400">
                 </router-link>
             </li>
         </template>
@@ -10,21 +11,25 @@
 
     <div class="tabs tabs-boxed rounded-none">
         <template v-for="child in activeNavigator.children">
-            <router-link class="tab" v-bind:to="child.name" v-text="child.name" active-class="tab-active">
+            <router-link class="tab" v-bind:to="getLink(child.name)" v-text="child.name" active-class="tab-active">
             </router-link>
         </template>
     </div>
 </template>
 
 <script lang="ts">
+import { getBlinkMemoryInfo } from 'process'
 import { navigators } from '../nav'
 
 // console.log('all navigators are ', JSON.stringify(navigators))
 
 export default {
     methods: {
-        getLink(navigatorName: string) {
+        getLinkForDir(navigatorName: string) {
             return '/article' + navigatorName + '@home'
+        },
+        getLink(navigatorName: string) {
+            return '/article/' + navigatorName.replaceAll('/', '@')
         }
     },
     computed: {
@@ -34,7 +39,11 @@ export default {
         activeNavigator() {
 
             // console.log(navigators[0])
-            console.log(this.$route.path)
+            console.log('active route path is ' + this.$route.path)
+
+            // navigators.forEach((navigator) => {
+            //     console.log(navigator.name)
+            // })
 
             return navigators[0]
         }
