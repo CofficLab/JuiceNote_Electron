@@ -28,7 +28,7 @@ function makeNode(navigator: string): navigatorNode {
     // console.log('now make navigator node for ' + navigator)
 
     let node = new navigatorNode
-    node.name = navigator.replace(markdownPath, '')
+    node.name = navigator.replace(markdownPath + '/', '').replaceAll('/', '@').replace('.md', '')
 
     let stat = fs.statSync(navigator)
 
@@ -43,4 +43,16 @@ function makeNode(navigator: string): navigatorNode {
     return node;
 }
 
-export { navigators }
+function shouldBeActive(node: navigatorNode, activePath: string) {
+    let result = activePath.indexOf(node.name) > 0
+
+    if (result) {
+        console.log(node.name + ' should be active')
+    } else {
+        // console.log(node.name + ' should not be active')
+    }
+
+    return result
+}
+
+export { navigators, shouldBeActive, navigatorNode }

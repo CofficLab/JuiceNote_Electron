@@ -6,9 +6,7 @@ import Process from './components/Process.vue'
 
 <template>
 	<div>
-		<div class="py-8 justify-center flex flex-col bg-gradient-to-r from-sky-600/90 to-cyan-800/80">
-			<Process></Process>
-		</div>
+		<Process></Process>
 
 		<main class="bg-gradient-to-b from-cyan-700/30 to-blue-900/20 shadow-2xl p-4">
 			<div class="container">
