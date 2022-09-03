@@ -1,1 +1,0 @@
-# /Users/angel/Code/Yizhi/yizhi/src/markdown/开天辟地/home

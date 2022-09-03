@@ -47,7 +47,7 @@ function shouldBeActive(node: navigatorNode, activePath: string) {
     let result = activePath.indexOf(node.name) > 0
 
     if (result) {
-        console.log(node.name + ' should be active')
+        // console.log(node.name + ' should be active')
     } else {
         // console.log(node.name + ' should not be active')
     }
