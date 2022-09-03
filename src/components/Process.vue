@@ -19,7 +19,7 @@
 <script lang="ts">
 import { navigators } from '../nav'
 
-console.log('all navigators are ', JSON.stringify(navigators))
+// console.log('all navigators are ', JSON.stringify(navigators))
 
 export default {
     methods: {
@@ -33,7 +33,8 @@ export default {
         },
         activeNavigator() {
 
-            console.log(navigators[0])
+            // console.log(navigators[0])
+            console.log(this.$route.path)
 
             return navigators[0]
         }

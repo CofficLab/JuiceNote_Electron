@@ -16,7 +16,7 @@ fs.readdirSync(markdownPath).forEach((navigator) => {
     navigators.push(makeNode(path.join(markdownPath, navigator)))
 })
 
-console.log(JSON.stringify(navigators))
+// console.log(JSON.stringify(navigators))
 
 /**
  * 生成一个导航节点
