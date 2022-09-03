@@ -1,1 +1,5 @@
-# /Users/angel/Code/Yizhi/yizhi/src/markdown/Starter/home
+# 欢迎
+
+这是一个与众不同的世界。
+
+在这里，你将学到软件工程世界的法则。
