@@ -1,1 +1,3 @@
-# /Users/angel/Code/Yizhi/yizhi/src/markdown/VueJs/home
+# 简介
+
+Vue.js 被定义成一个用来开发 Web 界面的前端库，是个非常轻量级的工具。 Vue.js 本身具有响应式编程和组件化的特点。
