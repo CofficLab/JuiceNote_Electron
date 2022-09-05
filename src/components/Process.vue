@@ -1,24 +1,31 @@
 <template>
-    <div class="pt-8 justify-center flex flex-col bg-gradient-to-r from-sky-600/90 to-cyan-800/80 z-50">
-        <ul class="steps steps-horizontal pb-8">
-            <template v-for="navigator in navigators">
-                <li data-content="●" class="step w-48">
-                    <router-link v-bind:to="getLinkForDir(navigator.name)" v-text="navigator.name" class="text-blue-600"
-                        v-if="navigator == activeNavigator">
-                    </router-link>
-
-                    <router-link v-bind:to="getLinkForDir(navigator.name)" v-text="navigator.name" v-else>
+    <div class="navbar fixed bg-base-100 z-50 bg-opacity-80 shadow-2xl">
+        <div class="navbar-start">
+            <div class="dropdown">
+                <label class="btn btn-ghost btn-circle" v-on:click="expand = !expand"
+                    v-bind:class="expand ? 'btn-active':''">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h7" />
+                    </svg>
+                </label>
+                <ul v-show="expand"
+                    class="menu menu-compact absolute mt-2 p-2 shadow-2xl shadow-cyan-600 bg-base-200 bg-opacity-95 rounded-box w-52 overflow-scroll h-96">
+                    <li v-for="navigator in navigators">
+                        <router-link v-bind:to="getLinkForDir(navigator.name)" v-text="navigator.name">
+                        </router-link>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="navbar-center hidden lg:flex">
+            <ul class="menu menu-horizontal p-0">
+                <li v-for="child in activeNavigator.children">
+                    <router-link v-bind:to="getLink(child.name)" v-text="getText(child)" active-class="active">
                     </router-link>
                 </li>
-            </template>
-        </ul>
-
-        <div class="tabs tabs-boxed rounded-none bg-base-100 py-0 justify-center">
-            <template v-for="child in activeNavigator.children">
-                <router-link class="tab" v-bind:to="getLink(child.name)" v-text="getText(child)"
-                    active-class="tab-active">
-                </router-link>
-            </template>
+            </ul>
         </div>
     </div>
 </template>
@@ -27,6 +34,11 @@
 import { navigators, shouldBeActive, navigatorNode } from '../nav'
 
 export default {
+    data() {
+        return {
+            expand: false
+        }
+    },
     methods: {
         getLinkForDir(navigatorName: string) {
             return '/article/' + navigatorName + '@home'
