@@ -12,7 +12,11 @@ var md = require('markdown-it')({
 });
 
 md.use(require("markdown-it-anchor").default); // Optional, but makes sense as you really want to link to something, see info about recommended plugins below
-md.use(require("markdown-it-table-of-contents"));
+md.use(require("markdown-it-table-of-contents"), {
+	transformLink: function (link: string) {
+		return window.location + '#' + link
+	}
+});
 
 export default {
 	props: ['path'],
