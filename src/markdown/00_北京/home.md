@@ -1,5 +1,3 @@
-![alt](/src/assets/beijing.jpeg)
-
 # 欢迎
 
 这是一个与众不同的世界。
