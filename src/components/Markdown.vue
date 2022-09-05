@@ -7,7 +7,12 @@
 <script lang="ts">
 import fs from 'fs'
 import path from 'path'
-import { marked } from 'marked'
+var md = require('markdown-it')({
+	html: true
+});
+
+// md.use(require("markdown-it-anchor").default); // Optional, but makes sense as you really want to link to something, see info about recommended plugins below
+md.use(require("markdown-it-table-of-contents"));
 
 export default {
 	props: ['path'],
@@ -26,7 +31,7 @@ export default {
 			// console.log('try to find markdown file at ' + markdownFile)
 
 			var markdownContent = fs.readFileSync(markdownFile, 'utf-8')
-			var html = marked.parse(markdownContent)
+			var html = md.render("[[toc]] \r\n" + markdownContent)
 
 			return html
 		}
