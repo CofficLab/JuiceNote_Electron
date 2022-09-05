@@ -7,7 +7,7 @@
 <script lang="ts">
 import fs from 'fs'
 import path from 'path'
-var markdown = require("markdown").markdown
+import { marked } from 'marked'
 
 export default {
 	props: ['path'],
@@ -26,7 +26,7 @@ export default {
 			// console.log('try to find markdown file at ' + markdownFile)
 
 			var markdownContent = fs.readFileSync(markdownFile, 'utf-8')
-			var html = markdown.toHTML(markdownContent)
+			var html = marked.parse(markdownContent)
 
 			return html
 		}
