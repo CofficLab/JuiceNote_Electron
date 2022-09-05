@@ -14,15 +14,21 @@
 
 就会进入这个帮助系统，现在提示符会变成：
 
+```python
 help>
+```
 
 一旦进入帮助系统，想要得到哪方面的帮助，只需要键入相应的名字，例如：
 
+```python
 help>time.sleep
+```
 
 或者：
 
+```python
 help>easygui.msgbox
+```
 
 你就会得到你想要的一些信息。
 
