@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 .table-of-contents {
-    @apply bg-lime-200/40 shadow-2xl rounded-none fixed left-0 px-4 mt-0;
+    @apply rounded-none fixed mx-auto;
     ul {
-        @apply list-none;
+        @apply list-none pl-1;
 
         a {
             @apply no-underline;

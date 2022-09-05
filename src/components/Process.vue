@@ -1,6 +1,5 @@
 <template>
-
-    <div class="pt-8 justify-center flex flex-col bg-gradient-to-r from-sky-600/90 to-cyan-800/80">
+    <div class="pt-8 justify-center flex flex-col bg-gradient-to-r from-sky-600/90 to-cyan-800/80 z-50">
         <ul class="steps steps-horizontal pb-8">
             <template v-for="navigator in navigators">
                 <li data-content="●" class="step w-48">
@@ -14,7 +13,7 @@
             </template>
         </ul>
 
-        <div class="tabs tabs-boxed rounded-none bg-base-200 py-0">
+        <div class="tabs tabs-boxed rounded-none bg-base-100 py-0 justify-center">
             <template v-for="child in activeNavigator.children">
                 <router-link class="tab" v-bind:to="getLink(child.name)" v-text="getText(child)"
                     active-class="tab-active">
