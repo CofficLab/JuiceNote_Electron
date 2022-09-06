@@ -2,8 +2,7 @@
     <div class="navbar fixed bg-base-100 z-50 bg-opacity-80 shadow-2xl">
         <div class="navbar-start">
             <div class="dropdown">
-                <label class="btn btn-ghost btn-circle" v-on:click="expand = !expand"
-                    v-bind:class="expand ? 'btn-active':''">
+                <label class="btn btn-ghost btn-circle" v-on:click="toggle" v-bind:class="expand ? 'btn-active':''">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -42,6 +41,9 @@ export default defineComponent({
         }
     },
     methods: {
+        toggle() {
+            this.expand = !this.expand
+        },
         getLinkForDir(navigatorName: string) {
             return '/article/' + navigatorName + '@home'
         },
