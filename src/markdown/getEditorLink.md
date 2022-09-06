@@ -1,1 +1,0 @@
-# /src/markdown/getEditorLink.md

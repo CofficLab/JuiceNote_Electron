@@ -31,9 +31,10 @@
 </template>
 
 <script lang="ts">
-import { navigators, shouldBeActive, navigatorNode } from '../nav'
+import { defineComponent } from 'vue'
+import nav from '../models/nav'
 
-export default {
+export default defineComponent({
     data() {
         return {
             expand: false
@@ -46,7 +47,7 @@ export default {
         getLink(navigatorName: string) {
             return '/article/' + navigatorName
         },
-        getText(navigator: navigatorNode) {
+        getText(navigator) {
             let splitted = navigator.name.split('@')
             let text = splitted.pop()
 
@@ -55,22 +56,24 @@ export default {
     },
     computed: {
         navigators() {
-            return navigators
+            // console.log('navigators are: ' + nav.getNavigators())
+            return nav.getNavigators()
         },
-        activeNavigator(): navigatorNode {
-            let activeNavigator = new navigatorNode
+        activeNavigator() {
+            let activeNavigator = new nav.navigatorNode
 
             // console.log('active route path is ' + this.$route.path)
 
-            navigators.forEach((navigator) => {
-                if (shouldBeActive(navigator, this.$route.path)) {
+            nav.getNavigators().forEach((navigator: any) => {
+                if (nav.shouldBeActive(navigator, this.$route.path)) {
                     activeNavigator = navigator
-                    // console.log(navigator.name + ' should be active')
                 }
             })
+
+            // console.log('activeNavigator', activeNavigator)
 
             return activeNavigator
         }
     }
-}
+})
 </script>

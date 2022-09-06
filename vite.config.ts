@@ -7,7 +7,6 @@ import pkg from './package.json'
 
 rmSync('dist', { recursive: true, force: true }) // v14.14.0
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
@@ -39,7 +38,8 @@ export default defineConfig({
       },
       // Enables use of Node.js API in the Renderer-process
       // https://github.com/electron-vite/vite-plugin-electron/tree/main/packages/electron-renderer#electron-renderervite-serve
-      renderer: {},
+      renderer: {
+      },
     }),
   ],
   server: process.env.VSCODE_DEBUG ? {

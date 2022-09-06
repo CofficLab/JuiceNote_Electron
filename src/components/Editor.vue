@@ -1,21 +1,19 @@
 <template>
     <div class="w-full flex flex-row justify-start gap-24 px-0">
         <div class="ml-48 w-full">
-            <mavon-editor class="shadow-none" v-model="html" :externalLink="external_link" />
+            <mavon-editor class="shadow-none" v-model="html" :externalLink="external_link" v-on:change="save" />
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import fs from 'fs'
-import path from 'path'
 import { defineComponent } from 'vue'
+import markdown from '/src/models/markdown.ts'
 
 export default defineComponent({
     props: ['path'],
     data() {
         return {
-            // path: '',
             html: '',
             external_link: {
                 markdown_css: function () {
@@ -52,21 +50,11 @@ export default defineComponent({
         this.html = this.getHtml()
     },
     methods: {
+        save: function () {
+            markdown.writeToMarkdownFile(this.path.replace('@', '/'), this.html)
+        },
         getHtml: function () {
-            let cwd = process.cwd()
-            var routePath = this.path.replace('@', '/')
-
-            var markdownFile = path.join(cwd, 'src/markdown/', routePath + '.md')
-
-            if (!fs.existsSync(markdownFile)) {
-                fs.writeFileSync(markdownFile, "# " + markdownFile.replace(cwd, ''))
-            }
-
-            // console.log('try to find markdown file at ' + markdownFile)
-
-            var markdownContent = fs.readFileSync(markdownFile, 'utf-8')
-
-            return markdownContent
+            return markdown.getMarkdownContent(this.$route.path)
         }
     },
 })
