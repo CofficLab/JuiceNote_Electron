@@ -3,10 +3,14 @@ import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import App from './App.vue'
 import MarkdownVue from './components/Markdown.vue'
+import EditorVue from './components/Editor.vue'
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
 
 const routes = [
   { path: '/', redirect: '/article/welcome' },
-  { path: '/article/:path', component: MarkdownVue, props: true }
+  { path: '/article/:path', component: MarkdownVue, props: true },
+  { path: '/editor/:path', component: EditorVue, props: true }
 ]
 
 const router = createRouter({
@@ -15,4 +19,6 @@ const router = createRouter({
 })
 
 const app = createApp(App)
-app.use(router).mount('#app')
+app.use(router)
+app.use(mavonEditor)
+app.mount('#app')

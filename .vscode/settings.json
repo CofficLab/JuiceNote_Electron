@@ -8,5 +8,10 @@
       ],
       "url": "https://json.schemastore.org/electron-builder"
     }
+  ],
+  "cSpell.words": [
+    "hightlight",
+    "katex",
+    "mavon"
   ]
 }
