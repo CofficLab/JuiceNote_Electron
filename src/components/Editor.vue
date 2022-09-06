@@ -1,7 +1,7 @@
 <template>
     <div class="w-full flex flex-row justify-start gap-24 px-0">
         <div class="mr-64 w-full">
-            <mavon-editor v-model="html" :externalLink="external_link" v-on:save="save" class="h-screen"
+            <mavon-editor id="editor" v-model="html" :externalLink="external_link" v-on:save="save" class="h-screen"
                 :navigation="true" :toolbarsBackground="toolbarsBackground" :toolbarsFlag="true" />
         </div>
     </div>
