@@ -5,8 +5,8 @@
 		</div>
 
 		<div class="ml-48 w-full">
-			<div class="prose min-w-max mx-auto min-h-screen pb-96 pt-12 container" v-html="html"
-				v-on:dblclick="showEditor"></div>
+			<div v-on:dblclick="showEditor" class="h-12"></div>
+			<div class="prose min-w-max mx-auto min-h-screen pb-96 container" v-html="html"></div>
 		</div>
 	</div>
 </template>
