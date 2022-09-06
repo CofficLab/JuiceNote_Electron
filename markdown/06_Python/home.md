@@ -1,4 +1,4 @@
-# 欢迎
+# Python 的帮助模式
 
 像(Python)程序员一样思考
 
@@ -44,9 +44,7 @@ help>quit
 有些帮助读起来很费劲，也很难理解，你往往找不到你想要的东西。
 不过如果你要找python某个方面的更多信息，这个系统还是值得一试。
 
-<div class="alert alert-info shadow-lg mt-24">
-  <div>
+<div class="alert alert-info shadow-lg">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current flex-shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
     <span>学会看文档，对以后的学习帮助非常大</span>
-  </div>
 </div>

@@ -5,10 +5,8 @@
 		</div>
 
 		<div class="ml-48 w-full">
-			<div class="alert alert-info">
-				<router-link v-bind:to="getEditorLink">编辑</router-link>
-			</div>
-			<div class="prose min-w-max mx-auto min-h-screen pb-96 pt-12 container" v-html="html"></div>
+			<div class="prose min-w-max mx-auto min-h-screen pb-96 pt-12 container" v-html="html"
+				v-on:dblclick="showEditor"></div>
 		</div>
 	</div>
 </template>
@@ -16,12 +14,16 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import markdown from '../models/markdown'
+import '../app.css'
 
 export default defineComponent({
 	props: ['path'],
 	methods: {
 		getContentsWithToc(): string {
 			return markdown.getMarkdownRenderedContent(this.path)
+		},
+		showEditor(): void {
+			this.$router.push('/editor/' + this.path)
 		}
 	},
 	computed: {

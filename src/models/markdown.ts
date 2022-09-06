@@ -16,6 +16,8 @@ md.use(require("markdown-it-table-of-contents"));
  * @returns 
  */
 function getAbsolutePath(markdownFile: string): string {
+    // console.log('get absolute path of ' + markdownFile)
+
     return path.join(markdownRootPath, markdownFile.replace('@', '/') + '.md')
 }
 

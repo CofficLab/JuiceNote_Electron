@@ -1,4 +1,3 @@
-import './app.css'
 import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import App from './App.vue'
@@ -6,6 +5,7 @@ import MarkdownVue from './components/Markdown.vue'
 import EditorVue from './components/Editor.vue'
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
+import './app.css'
 
 const routes = [
   { path: '/', redirect: '/article/welcome' },

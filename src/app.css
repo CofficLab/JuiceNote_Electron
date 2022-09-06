@@ -18,3 +18,19 @@
         @apply pt-20 -mt-20;
     }
 }
+
+.v-note-wrapper {
+    @apply z-10 mt-4 !important;
+}
+
+.v-note-op {
+    @apply fixed bg-base-200 shadow-2xl !important;
+}
+
+.v-note-panel {
+    @apply mt-12;
+}
+
+.v-note-navigation-wrapper {
+    @apply fixed right-0 top-32 z-20 shadow-2xl !important;
+}

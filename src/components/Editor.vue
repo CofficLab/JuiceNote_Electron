@@ -1,19 +1,21 @@
 <template>
     <div class="w-full flex flex-row justify-start gap-24 px-0">
-        <div class="ml-48 w-full">
-            <mavon-editor class="shadow-none" v-model="html" :externalLink="external_link" v-on:change="save" />
+        <div class="mr-64 w-full">
+            <mavon-editor v-model="html" :externalLink="external_link" v-on:change="save" class="h-screen"
+                :navigation="true" :toolbarsBackground="toolbarsBackground" :toolbarsFlag="true" />
         </div>
     </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import markdown from '/src/models/markdown.ts'
+import markdown from '../models/markdown'
 
 export default defineComponent({
     props: ['path'],
     data() {
         return {
+            toolbarsBackground: '#fbfbfb',
             html: '',
             external_link: {
                 markdown_css: function () {
@@ -51,10 +53,10 @@ export default defineComponent({
     },
     methods: {
         save: function () {
-            markdown.writeToMarkdownFile(this.path.replace('@', '/'), this.html)
+            markdown.writeToMarkdownFile(this.path, this.html)
         },
         getHtml: function () {
-            return markdown.getMarkdownContent(this.$route.path)
+            return markdown.getMarkdownContent(this.path)
         }
     },
 })

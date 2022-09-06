@@ -6,9 +6,11 @@ import Process from './components/Process.vue'
 
 <template>
 	<div>
-		<Process></Process>
+		<div class="h-16 z-50">
+			<Process></Process>
+		</div>
 
-		<main class="bg-gradient-to-b from-cyan-700/40 to-blue-900/40 pt-16">
+		<main class="bg-gradient-to-b from-cyan-700/40 to-blue-900/40">
 			<router-view></router-view>
 		</main>
 	</div>
