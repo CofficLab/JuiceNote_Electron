@@ -74,9 +74,11 @@ function shouldBeActive(node: navigatorNode, activePath: string) {
 }
 
 let nav = {
-    navigatorNode,
     shouldBeActive,
     getNavigators
 }
 
-export default nav
+export {
+    nav,
+    navigatorNode
+}

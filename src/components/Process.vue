@@ -32,7 +32,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import nav from '../models/nav'
+import { nav, navigatorNode } from '../models/nav'
 
 export default defineComponent({
     data() {
@@ -50,7 +50,7 @@ export default defineComponent({
         getLink(navigatorName: string) {
             return '/article/' + navigatorName
         },
-        getText(navigator) {
+        getText(navigator: navigatorNode): string {
             let splitted = navigator.name.split('@')
             let text = splitted.pop()
 
@@ -63,7 +63,7 @@ export default defineComponent({
             return nav.getNavigators()
         },
         activeNavigator() {
-            let activeNavigator = new nav.navigatorNode
+            let activeNavigator = new navigatorNode
 
             // console.log('active route path is ' + this.$route.path)
 

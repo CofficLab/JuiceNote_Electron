@@ -22,11 +22,9 @@ export default defineComponent({
 		Process
 	},
 	computed: {
-
 		hideTitleBar: function () {
 			return this.$store.state.full_screen;
 		}
-
 	},
 })
 </script>
