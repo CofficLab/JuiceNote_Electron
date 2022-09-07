@@ -1,7 +1,7 @@
 <template>
 	<div class="h-8 bg-stone-900 fixed top-0 z-50 w-full" id="title-bar" v-show="!hideTitleBar">
 	</div>
-	<div class="pt-8">
+	<div v-bind:class="hideTitleBar ? 'pt-0' : 'pt-8'">
 		<div class="h-16 z-40">
 			<Process></Process>
 		</div>
@@ -21,15 +21,12 @@ export default defineComponent({
 	components: {
 		Process
 	},
-	data() {
-		return {
-			hideTitleBar: false,
+	computed: {
+
+		hideTitleBar: function () {
+			return this.$store.state.full_screen;
 		}
+
 	},
-	watch: {
-		hideTitleBar(newValue, oldValue) {
-			console.log('change')
-		}
-	}
 })
 </script>
