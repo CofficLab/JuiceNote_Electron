@@ -15,9 +15,12 @@
 <script lang="ts">
 
 import { defineComponent } from 'vue'
-import Process from './components/Process.vue'
+import Process from './Process.vue'
 
 export default defineComponent({
+	components: {
+		Process
+	},
 	data() {
 		return {
 			hideTitleBar: false,
