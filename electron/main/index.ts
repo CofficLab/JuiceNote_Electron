@@ -33,14 +33,16 @@ const indexHtml = join(ROOT_PATH.dist, 'index.html')
 
 async function createWindow() {
   win = new BrowserWindow({
-    height: 1200,
+    height: 1000,
+    width: 1200,
     title: 'Main window',
     icon: join(ROOT_PATH.public, 'favicon.ico'),
+    frame: false, // false：不显示可拖动的那个顶栏，形成一个无边框窗口
+    // titleBarStyle: 'hidden',
+    titleBarStyle: 'hidden',
+    trafficLightPosition: { x: 10, y: 10 },
     webPreferences: {
       preload,
-      // Warning: Enable nodeIntegration and disable contextIsolation is not secure in production
-      // Consider using contextBridge.exposeInMainWorld
-      // Read more on https://www.electronjs.org/docs/latest/tutorial/context-isolation
       nodeIntegration: true,
       contextIsolation: false,
     },
@@ -50,7 +52,6 @@ async function createWindow() {
     win.loadFile(indexHtml)
   } else {
     win.loadURL(url)
-    // Open devTool if the app is not packaged
     win.webContents.openDevTools()
   }
 
@@ -64,9 +65,21 @@ async function createWindow() {
     if (url.startsWith('https:')) shell.openExternal(url)
     return { action: 'deny' }
   })
+
+  // 进入全屏状态事件
+  win.on('enter-full-screen', () => {
+    win?.webContents.send('main-process-message', 'enter-full-screen')
+  })
+
+  win.on('leave-full-screen', () => {
+    win?.webContents.send('main-process-message', 'leave-full-screen')
+  })
 }
 
-app.whenReady().then(createWindow)
+app.whenReady().then(function () {
+  createWindow()
+  console.log('event ready')
+})
 
 app.on('window-all-closed', () => {
   win = null
@@ -82,6 +95,7 @@ app.on('second-instance', () => {
 })
 
 app.on('activate', () => {
+  console.log('event: activate')
   const allWindows = BrowserWindow.getAllWindows()
   if (allWindows.length) {
     allWindows[0].focus()

@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+#title-bar {
+  -webkit-app-region: drag;
+}
+
 body {
   @apply bg-base-100 text-base-content min-h-screen;
 }

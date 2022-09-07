@@ -1,5 +1,5 @@
 <template>
-    <div class="navbar fixed bg-base-100 z-50 bg-opacity-80 shadow-2xl">
+    <div class="navbar fixed bg-base-100 z-40 bg-opacity-80 shadow-2xl">
         <div class="navbar-start">
             <div class="dropdown">
                 <label class="btn btn-ghost btn-circle" v-on:click="toggle" v-bind:class="expand ? 'btn-active':''">
