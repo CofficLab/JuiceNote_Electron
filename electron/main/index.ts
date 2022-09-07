@@ -57,7 +57,11 @@ async function createWindow() {
 
   // Test actively push message to the Electron-Renderer
   win.webContents.on('did-finish-load', () => {
-    win?.webContents.send('main-process-message', new Date().toLocaleString())
+    if (win.isFullScreen()) {
+      win?.webContents.send('main-process-message', 'enter-full-screen')
+    }
+
+    win?.webContents.send('main-process-message', 'did_finish-load')
   })
 
   // Make all links open with the browser, not with the application
@@ -78,7 +82,6 @@ async function createWindow() {
 
 app.whenReady().then(function () {
   createWindow()
-  console.log('event ready')
 })
 
 app.on('window-all-closed', () => {

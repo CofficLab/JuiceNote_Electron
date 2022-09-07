@@ -42,13 +42,13 @@ ipcRenderer.on('main-process-message', (_event, ...args) => {
     // console.log('enter full screen')
     store.commit('setFullScreen')
   }
-})
 
-ipcRenderer.on('main-process-message', (_event, ...args) => {
   if (args[0] === 'leave-full-screen') {
     // console.log('leave full screen')
     store.commit('setNotFullScreen')
   }
+
+  console.log('[main process message]', ...args)
 })
 
 const app = createApp(Layout)
