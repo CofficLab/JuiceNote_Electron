@@ -10,7 +10,7 @@ import 'mavon-editor/dist/css/index.css'
 import './app.css'
 
 const routes = [
-  { path: '/', redirect: '/article/welcome' },
+  { path: '/', redirect: '/article/welcome@home' },
   { path: '/article/:path', component: MarkdownVue, props: true },
   { path: '/editor/:path', component: EditorVue, props: true }
 ]

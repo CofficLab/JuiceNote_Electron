@@ -10,7 +10,7 @@ const md = require('markdown-it')({
 md.use(require("markdown-it-anchor").default)
 md.use(require("markdown-it-table-of-contents"))
 
-console.log('markdown root path is ', markdownRootPath)
+// console.log('markdown root path is ', markdownRootPath)
 
 /**
  * 返回markdown文件的绝对路径
@@ -19,7 +19,7 @@ console.log('markdown root path is ', markdownRootPath)
  * @returns 
  */
 function getAbsolutePath(markdownFile: string): string {
-    console.log('get absolute path of ' + markdownFile)
+    // console.log('get absolute path of ' + markdownFile)
 
     return path.join(markdownRootPath, markdownFile.replace('@', '/') + '.md')
 }
@@ -34,6 +34,7 @@ function getMarkdownContent(markdownName: string) {
     var absolutePath = getAbsolutePath(markdownName)
 
     if (!fs.existsSync(absolutePath)) {
+        console.log(absolutePath + 'not exists, generate')
         writeToMarkdownFile(markdownName, "# " + markdownName)
     }
 
@@ -49,6 +50,7 @@ function getMarkdownContent(markdownName: string) {
  * @returns 
  */
 function getMarkdownRenderedContent(markdownName: string) {
+    console.log('get markdown rendered content of ' + markdownName)
     if (!fs.existsSync(getAbsolutePath(markdownName))) {
         writeToMarkdownFile(markdownName, "# " + markdownName)
     }
@@ -102,6 +104,10 @@ function getMarkdownRenderedContentWithoutToc(markdownFile: string): string {
  * @returns 
  */
 function writeToMarkdownFile(markdownFile: string, content: string): void {
+    if (!fs.existsSync(path.dirname(getAbsolutePath(markdownFile)))) {
+        fs.mkdirSync(path.dirname(getAbsolutePath(markdownFile)))
+    }
+
     return fs.writeFileSync(getAbsolutePath(markdownFile), content)
 }
 

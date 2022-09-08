@@ -1,12 +1,14 @@
 import fs from "fs";
 import path from "path";
+import { unescape } from "querystring";
 import markdown from './markdown'
 
 /**
  * 导航节点
  */
 class navigatorNode {
-    public name: any
+    public name: string = ''
+    public active: boolean = false
     public children: navigatorNode[] = [];
 }
 
@@ -62,10 +64,10 @@ function makeNode(navigator: string): navigatorNode {
  * @returns 
  */
 function shouldBeActive(node: navigatorNode, activePath: string) {
-    let result = activePath.indexOf(node.name) > 0
+    let result = unescape(activePath).indexOf(node.name) > 0
 
     if (result) {
-        // console.log(node.name + ' should be active')
+        console.log(node.name + ' should be active', node)
     } else {
         // console.log(node.name + ' should not be active')
     }
@@ -73,9 +75,24 @@ function shouldBeActive(node: navigatorNode, activePath: string) {
     return result
 }
 
+function getActiveNavigator(activePath: string): navigatorNode {
+    // console.log('get active navigators, now path is ' + activePath)
+    let navigators = getNavigators()
+    let result = new navigatorNode
+
+    navigators.forEach(function (navigator) {
+        if (shouldBeActive(navigator, activePath)) {
+            result = navigator
+        }
+    })
+
+    return result
+}
+
 let nav = {
     shouldBeActive,
-    getNavigators
+    getNavigators,
+    getActiveNavigator
 }
 
 export {

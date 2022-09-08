@@ -1,36 +1,31 @@
 <template>
-    <div class="navbar fixed bg-base-100 z-40 bg-opacity-80 shadow-2xl">
-        <div class="navbar-start">
-            <div class="dropdown">
-                <label class="btn btn-ghost btn-circle" v-on:click="toggle" v-bind:class="expand ? 'btn-active':''">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 6h16M4 12h16M4 18h7" />
-                    </svg>
-                </label>
-                <ul v-show="expand"
-                    class="menu menu-compact absolute mt-2 p-2 shadow-2xl shadow-cyan-600 bg-base-200 bg-opacity-95 rounded-box w-52 overflow-scroll h-96">
-                    <li v-for="navigator in navigators">
-                        <router-link v-bind:to="getLinkForDir(navigator.name)" v-text="navigator.name">
-                        </router-link>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="navbar-center hidden lg:flex">
-            <ul class="menu menu-horizontal p-0">
-                <li v-for="child in activeNavigator.children">
-                    <router-link v-bind:to="getLink(child.name)" v-text="getText(child)" active-class="active">
-                    </router-link>
-                </li>
-            </ul>
-        </div>
+    <div class="dropdown w-56 fixed z-50">
+        <label tabindex="0" class="btn m-0 w-full rounded-none">
+            <span>{{activeNavigator.name}}</span>
+            <svg class="fill-current ml-2" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                viewBox="0 0 24 24">
+                <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
+            </svg>
+        </label>
+        <ul tabindex="0" class="dropdown-content menu p-2 shadow-2xl bg-blue-200 w-full z-50">
+            <li v-for="navigator in navigators" v-bind:class="navigator.name == activeNavigator.name ? 'active' : ''">
+                <router-link v-bind:to="getLinkForDir(navigator.name)" v-text="navigator.name" class="rounded-none">
+                </router-link>
+            </li>
+        </ul>
     </div>
 
+    <ul class="menu bg-base-100 w-56 mt-48 border-cyan-600 border z-2">
+        <li class="rounded-none" v-for="navigator in activeNavigator.children"
+            v-bind:class="shouldBeActive(navigator) ? 'bordered' : ''">
+            <router-link v-bind:to="getLink(navigator.name)" v-text="navigator.name">
+            </router-link>
+        </li>
+    </ul>
 </template>
 
 <script lang="ts">
+import { unescape } from 'querystring'
 import { defineComponent } from 'vue'
 import { nav, navigatorNode } from '../models/nav'
 
@@ -43,6 +38,9 @@ export default defineComponent({
     methods: {
         toggle() {
             this.expand = !this.expand
+        },
+        shouldBeActive(navigator) {
+            return navigator.name == unescape(this.$route.path).replace('/article/', '')
         },
         getLinkForDir(navigatorName: string) {
             return '/article/' + navigatorName + '@home'
@@ -63,19 +61,7 @@ export default defineComponent({
             return nav.getNavigators()
         },
         activeNavigator() {
-            let activeNavigator = new navigatorNode
-
-            // console.log('active route path is ' + this.$route.path)
-
-            nav.getNavigators().forEach((navigator: any) => {
-                if (nav.shouldBeActive(navigator, this.$route.path)) {
-                    activeNavigator = navigator
-                }
-            })
-
-            // console.log('activeNavigator', activeNavigator)
-
-            return activeNavigator
+            return nav.getActiveNavigator(this.$route.path)
         }
     }
 })
