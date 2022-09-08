@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
+    "target": "ES2022",
     "composite": true,
-    "module": "ESNext",
+    "module": "ES2022",
     "moduleResolution": "Node",
     "jsx": "preserve",
     "resolveJsonModule": true,
@@ -11,5 +11,8 @@
       "vite-plugin-electron/electron-env"
     ]
   },
-  "include": ["package.json", "electron"]
+  "include": [
+    "package.json",
+    "electron"
+  ]
 }

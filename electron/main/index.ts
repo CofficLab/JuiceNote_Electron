@@ -1,6 +1,7 @@
 import { app, BrowserWindow, shell, ipcMain } from 'electron'
 import { release } from 'os'
-import { join } from 'path'
+import fs from 'fs'
+import path from 'path'
 
 // Disable GPU Acceleration for Windows 7
 if (release().startsWith('6.1')) app.disableHardwareAcceleration()
@@ -20,23 +21,23 @@ if (!app.requestSingleInstanceLock()) {
 
 export const ROOT_PATH = {
   // /dist
-  dist: join(__dirname, '../..'),
+  dist: path.join(__dirname, '../..'),
   // /dist or /public
-  public: join(__dirname, app.isPackaged ? '../..' : '../../../public'),
+  public: path.join(__dirname, app.isPackaged ? '../..' : '../../../public'),
 }
 
 let win: BrowserWindow | null = null
 // Here, you can also use other preload
-const preload = join(__dirname, '../preload/index.js')
+const preload = path.join(__dirname, '../preload/index.js')
 const url = process.env.VITE_DEV_SERVER_URL as string
-const indexHtml = join(ROOT_PATH.dist, 'index.html')
+const indexHtml = path.join(ROOT_PATH.dist, 'index.html')
 
 async function createWindow() {
   win = new BrowserWindow({
     height: 1000,
     width: 1200,
     title: 'Main window',
-    icon: join(ROOT_PATH.public, 'favicon.ico'),
+    icon: path.join(ROOT_PATH.public, 'favicon.ico'),
     frame: false, // false：不显示可拖动的那个顶栏，形成一个无边框窗口
     // titleBarStyle: 'hidden',
     titleBarStyle: 'hidden',
@@ -82,11 +83,13 @@ async function createWindow() {
 
 app.whenReady().then(function () {
   createWindow()
+  let appPath = app.getAppPath()
+  fs.appendFileSync(path.join(app.getPath('downloads'), 'app.log'), 'APP路径：' + appPath)
 })
 
 app.on('window-all-closed', () => {
   win = null
-  if (process.platform !== 'darwin') app.quit()
+  // if (process.platform !== 'darwin') app.quit()
 })
 
 app.on('second-instance', () => {
@@ -121,4 +124,9 @@ ipcMain.handle('open-win', (event, arg) => {
     childWindow.loadURL(`${url}/#${arg}`)
     // childWindow.webContents.openDevTools({ mode: "undocked", activate: true })
   }
+})
+
+// 供子进程查询app path
+ipcMain.on('get-app-path', function (event) {
+  return event.returnValue = app.getAppPath()
 })

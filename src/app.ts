@@ -28,7 +28,7 @@ const store = createStore({
     }
   },
   mutations: {
-    setFullScreen(state) {
+    setFullScreen(state: { full_screen: boolean }) {
       state.full_screen = true
     },
     setNotFullScreen(state) {

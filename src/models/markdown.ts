@@ -1,13 +1,16 @@
-import path from 'path'
 import fs from 'fs'
+import path from 'path'
+import electron from 'electron'
 
-const markdownRootPath = path.join(process.cwd(), 'markdown')
+const markdownRootPath = path.join(electron.ipcRenderer.sendSync('get-app-path'), 'markdown')
 const md = require('markdown-it')({
     html: true
 });
 
-md.use(require("markdown-it-anchor").default);
-md.use(require("markdown-it-table-of-contents"));
+md.use(require("markdown-it-anchor").default)
+md.use(require("markdown-it-table-of-contents"))
+
+console.log('markdown root path is ', markdownRootPath)
 
 /**
  * 返回markdown文件的绝对路径
@@ -16,13 +19,13 @@ md.use(require("markdown-it-table-of-contents"));
  * @returns 
  */
 function getAbsolutePath(markdownFile: string): string {
-    // console.log('get absolute path of ' + markdownFile)
+    console.log('get absolute path of ' + markdownFile)
 
     return path.join(markdownRootPath, markdownFile.replace('@', '/') + '.md')
 }
 
 /**
- * 获取原始的的markdown内容
+ * 获取原始的markdown内容
  * 
  * @param markdownName markdown文件名，相对于markdown根目录的路径
  * @returns 
@@ -104,8 +107,8 @@ function writeToMarkdownFile(markdownFile: string, content: string): void {
 
 let markdown = {
     getMarkdownToc,
-    markdownRootPath,
     getMarkdownContent,
+    markdownRootPath,
     writeToMarkdownFile,
     getMarkdownRenderedContent,
     getMarkdownRenderedContentWithoutToc
