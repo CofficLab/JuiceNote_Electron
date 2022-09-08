@@ -39,7 +39,7 @@ export default defineComponent({
         toggle() {
             this.expand = !this.expand
         },
-        shouldBeActive(navigator) {
+        shouldBeActive(navigator: navigatorNode) {
             return navigator.name == unescape(this.$route.path).replace('/article/', '')
         },
         getLinkForDir(navigatorName: string) {
@@ -52,7 +52,11 @@ export default defineComponent({
             let splitted = navigator.name.split('@')
             let text = splitted.pop()
 
-            return text === 'home' ? '首页' : text;
+            if (text === 'home') {
+                return '首页'
+            }
+
+            return text === undefined ? '' : text;
         }
     },
     computed: {

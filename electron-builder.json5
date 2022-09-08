@@ -17,6 +17,7 @@
   mac: {
     artifactName: "${productName}_${version}.${ext}",
     target: ["dmg"],
+    icon: "./public/icon.icns",
   },
   win: {
     target: [

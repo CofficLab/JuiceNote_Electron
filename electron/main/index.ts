@@ -17,7 +17,7 @@ if (!app.requestSingleInstanceLock()) {
 // Remove electron security warnings
 // This warning only shows in development mode
 // Read more on https://www.electronjs.org/docs/latest/tutorial/security
-// process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
+process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
 
 export const ROOT_PATH = {
   // /dist
@@ -39,7 +39,6 @@ async function createWindow() {
     title: 'Main window',
     icon: path.join(ROOT_PATH.public, 'favicon.ico'),
     frame: false, // false：不显示可拖动的那个顶栏，形成一个无边框窗口
-    // titleBarStyle: 'hidden',
     titleBarStyle: 'hidden',
     trafficLightPosition: { x: 10, y: 10 },
     webPreferences: {
@@ -53,7 +52,7 @@ async function createWindow() {
     win.loadFile(indexHtml)
   } else {
     win.loadURL(url)
-    win.webContents.openDevTools()
+    // win.webContents.openDevTools()
   }
 
   // Test actively push message to the Electron-Renderer
@@ -89,7 +88,7 @@ app.whenReady().then(function () {
 
 app.on('window-all-closed', () => {
   win = null
-  // if (process.platform !== 'darwin') app.quit()
+  if (process.platform !== 'darwin') app.quit()
 })
 
 app.on('second-instance', () => {
