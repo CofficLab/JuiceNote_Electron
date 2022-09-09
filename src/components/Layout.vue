@@ -3,7 +3,7 @@
 	</div>
 	<div v-bind:class="hideTitleBar ? 'pt-0' : 'pt-8'" class="flex flex-row">
 		<div class="h-16 z-40">
-			<Process></Process>
+			<Navigator></Navigator>
 		</div>
 
 		<main class="w-full">
@@ -15,11 +15,11 @@
 <script lang="ts">
 
 import { defineComponent } from 'vue'
-import Process from './Process.vue'
+import Navigator from './Navigator.vue'
 
 export default defineComponent({
 	components: {
-		Process
+		Navigator
 	},
 	computed: {
 		hideTitleBar: function () {
