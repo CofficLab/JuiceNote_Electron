@@ -1,5 +1,5 @@
 <template>
-    <div class="dropdown w-56 fixed z-50">
+    <div class="dropdown fixed z-50 w-56">
         <label tabindex="0" class="btn m-0 w-full rounded-none">
             <span>{{activeNavigator.name}}</span>
             <svg class="fill-current ml-2" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
@@ -16,7 +16,7 @@
         </ul>
     </div>
 
-    <ul class="menu bg-base-100 w-56 mt-48 border-cyan-600 border z-2">
+    <ul class="menu bg-base-100 w-56 mt-12 sticky top-20 z-2">
         <li class="rounded-none" v-for="navigator in activeNavigator.children"
             v-bind:class="shouldBeActive(navigator) ? 'bordered' : ''">
             <router-link v-bind:to="getLink(navigator.name)" v-text="navigator.name">
