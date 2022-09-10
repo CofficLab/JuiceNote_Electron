@@ -1,41 +1,47 @@
 <template>
-	<div class="h-8 bg-stone-900 fixed top-0 z-50 w-full" id="title-bar" v-show="!hideTitleBar">
-	</div>
-	<div v-bind:class="hideTitleBar ? 'pt-0' : 'pt-8'" class="flex flex-row">
-		<!-- 左侧栏 -->
-		<aside class="z-40 w-56">
-			<Navigator></Navigator>
-		</aside>
+	<div class="h-8 bg-stone-900 fixed top-0 z-50 w-full" id="title-bar" v-show="!hideTitleBar"></div>
 
-		<!-- 正文 -->
-		<main class="flex flex-grow">
+	<div class="h-12">
+		<div class="bg-yellow-900 z-40 w-full flex flex-row fixed justify-between"
+			v-bind:class="hideTitleBar ? 'mt-0' : 'mt-8'">
+			<BookNavigator class="w-56 z-50"></BookNavigator>
+			<Actions class="w-56 z-50"></Actions>
+		</div>
+	</div>
+
+	<main class="flex flex-row">
+		<div class="w-56">
+			<div class="fixed w-56 h-screen">
+				<Navigator></Navigator>
+			</div>
+		</div>
+		<div class="flex-grow">
 			<router-view></router-view>
-		</main>
-
-		<!-- 右侧栏 -->
-		<aside class="z-40 w-56">
-			<Actions />
-			<Toc :path="this.$route.path.replace('/article/','')" />
-		</aside>
-	</div>
+		</div>
+	</main>
 </template>
 
 <script lang="ts">
 
 import { defineComponent } from 'vue'
 import Navigator from './Navigator.vue'
-import Toc from './Toc.vue'
 import Actions from './Actions.vue'
+import BookNavigator from './BookNavigator.vue'
+import Title from './Title.vue'
 
 export default defineComponent({
 	components: {
 		Navigator,
-		Toc,
-		Actions
+		Actions,
+		BookNavigator,
+		Title
 	},
 	computed: {
 		hideTitleBar: function () {
 			return this.$store.state.full_screen;
+		},
+		path: function () {
+			return this.$route.path.replace('/article', '')
 		}
 	},
 })
