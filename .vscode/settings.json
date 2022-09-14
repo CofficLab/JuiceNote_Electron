@@ -13,6 +13,8 @@
     "hightlight",
     "katex",
     "mavon",
+    "postcss",
+    "querystring",
     "vuex"
   ]
 }

@@ -1,18 +1,14 @@
 <template>
-  <div class="dropdown bg-green-400">
-    <label tabindex="0" class="btn m-0 w-full rounded-none">
-      <span>{{ activeNavigator.name }}</span>
+  <div class="dropdown w-56">
+    <label tabindex="0" class="btn btn-ghost m-0 w-full rounded-none flex flex-row justify-between h-full">
+      <h3 v-html="title" class="place-self-center my-auto"></h3>
       <svg class="fill-current ml-2" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
         <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
       </svg>
     </label>
-    <ul
-      tabindex="0"
-      class="dropdown-content menu p-2 shadow-3xl bg-cyan-800 dark:bg-info-content w-full rounded-b-3xl h-96 overflow-scroll"
-    >
-      <li v-for="navigator in navigators">
-        <router-link v-bind:to="getLinkForDir(navigator.name)" v-text="navigator.name" class="" active-class="active">
-        </router-link>
+    <ul tabindex="0" class="dropdown-content menu p-2 mt-0 shadow-2xl bg-base-200 z-50 w-full rounded-b-3xl">
+      <li v-for="navigator in activeNavigator.children">
+        <router-link v-bind:to="getLink(navigator.name)" v-text="navigator.name" active-class="active"> </router-link>
       </li>
     </ul>
   </div>
@@ -22,6 +18,7 @@
 import { unescape } from "querystring";
 import { defineComponent } from "vue";
 import { nav, navigatorNode } from "../models/nav";
+import markdown from "../models/markdown";
 
 export default defineComponent({
   data() {
@@ -35,9 +32,6 @@ export default defineComponent({
     },
     shouldBeActive(navigator: navigatorNode) {
       return navigator.name == unescape(this.$route.path).replace("/article/", "");
-    },
-    getLinkForDir(navigatorName: string) {
-      return "/article/" + navigatorName + "@home";
     },
     getLink(navigatorName: string) {
       return "/article/" + navigatorName;
@@ -61,6 +55,11 @@ export default defineComponent({
     activeNavigator() {
       return nav.getActiveNavigator(this.$route.path);
     },
+    title(): string {
+      return markdown.getMarkdownTitle(this.$route.path.replace("/article/", ""));
+    },
   },
 });
 </script>
+
+<style lang="postcss" scoped></style>

@@ -50,7 +50,7 @@ function getMarkdownContent(markdownName: string) {
  * @returns 
  */
 function getMarkdownRenderedContent(markdownName: string) {
-    console.log('get markdown rendered content of ' + markdownName)
+    // console.log('get markdown rendered content of ' + markdownName)
     if (!fs.existsSync(getAbsolutePath(markdownName))) {
         writeToMarkdownFile(markdownName, "# " + markdownName)
     }
@@ -61,17 +61,28 @@ function getMarkdownRenderedContent(markdownName: string) {
 }
 
 /**
+ * 获取markdown的标题
+ * 
+ * @param markdownName markdown文件名，相对于markdown根目录的路径
+ * @returns 
+ */
+function getMarkdownTitle(markdownName: string): string {
+    let html = getMarkdownRenderedContent(markdownName)
+    let dom = makeDom(html)
+    let title = dom.getElementsByTagName('h1')[0]
+
+    return title ? title.innerText : ''
+}
+
+/**
  * 获取markdown的table of contents
  * 
  * @param markdownName markdown文件名，相对于markdown根目录的路径
  * @returns 
  */
 function getMarkdownToc(markdownName: string): string {
-    var htmlWithToc = getMarkdownRenderedContent(markdownName)
-    var dom = document.createElement('div')
-
-    dom.innerHTML = htmlWithToc
-
+    let htmlWithToc = getMarkdownRenderedContent(markdownName)
+    let dom = makeDom(htmlWithToc)
     let toc = dom.getElementsByClassName('table-of-contents')[0]
 
     return toc ? toc.outerHTML : ''
@@ -84,16 +95,27 @@ function getMarkdownToc(markdownName: string): string {
  * @returns 
  */
 function getMarkdownRenderedContentWithoutToc(markdownFile: string): string {
-    var html = getMarkdownRenderedContent(markdownFile)
-    var dom = document.createElement('div')
+    return removeToc(getMarkdownRenderedContent(markdownFile));
+}
 
-    dom.innerHTML = html
-    let toc = dom.getElementsByClassName('table-of-contents')[0]
-    if (toc) {
-        dom.removeChild(toc)
-    }
+/**
+ * 获取markdown渲染后的不带标题的HTML
+ * 
+ * @param markdownFile markdown文件名，相对于markdown根目录的路径
+ * @returns 
+ */
+function getMarkdownRenderedContentWithoutTitle(markdownFile: string): string {
+    return removeTitle(getMarkdownRenderedContent(markdownFile))
+}
 
-    return dom.innerHTML
+/**
+ * 获取markdown渲染后的不带标题、不带TOC的正文的HTML
+ * 
+ * @param markdownFile markdown文件名，相对于markdown根目录的路径
+ * @returns 
+ */
+function getMarkdownRenderedBody(markdownFile: string): string {
+    return removeTitle(removeToc(getMarkdownRenderedContent(markdownFile)))
 }
 
 /**
@@ -111,13 +133,60 @@ function writeToMarkdownFile(markdownFile: string, content: string): void {
     return fs.writeFileSync(getAbsolutePath(markdownFile), content)
 }
 
+/**
+ * 移除TOC部分
+ * 
+ * @param html HTML代码
+ * @returns 
+ */
+function removeToc(html: string) {
+    let dom = makeDom(html)
+    let toc = dom.getElementsByClassName('table-of-contents')[0]
+
+    if (toc) dom.removeChild(toc)
+
+    return dom.innerHTML
+}
+
+/**
+ * 移除标题部分
+ * 
+ * @param html HTML代码
+ * @returns 
+ */
+function removeTitle(html: string) {
+    let dom = makeDom(html)
+    let toc = dom.getElementsByTagName('h1')[0]
+
+    if (toc) dom.removeChild(toc)
+
+    return dom.innerHTML
+}
+
+/**
+ * 
+ * 创建DOM元素
+ * 
+ * @param html HTML代码
+ * @returns 
+ */
+function makeDom(html: string) {
+    let dom = document.createElement('div')
+    dom.innerHTML = html
+
+    return dom
+}
+
 let markdown = {
     getMarkdownToc,
-    getMarkdownContent,
+    getMarkdownTitle,
     markdownRootPath,
+    getMarkdownContent,
     writeToMarkdownFile,
+    getMarkdownRenderedBody,
     getMarkdownRenderedContent,
-    getMarkdownRenderedContentWithoutToc
+    getMarkdownRenderedContentWithoutToc,
+    getMarkdownRenderedContentWithoutTitle
 }
 
 export default markdown

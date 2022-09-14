@@ -1,5 +1,5 @@
 <template>
-    <ul class="menu bg-base-100  z-2 h-full w-full">
+    <ul class="menu z-2">
         <li class="rounded-none" v-for="navigator in activeNavigator.children"
             v-bind:class="shouldBeActive(navigator) ? 'bordered' : ''">
             <router-link v-bind:to="getLink(navigator.name)" v-text="navigator.name">
