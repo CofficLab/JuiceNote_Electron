@@ -1,5 +1,5 @@
 <template>
-  <div class="dropdown bg-green-400">
+  <div class="dropdown bg-green-400 z-50">
     <label tabindex="0" class="btn m-0 w-full rounded-none">
       <span>{{ activeNavigator.name }}</span>
       <svg class="fill-current ml-2" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
@@ -8,7 +8,7 @@
     </label>
     <ul
       tabindex="0"
-      class="dropdown-content menu p-2 shadow-3xl bg-cyan-800 dark:bg-info-content w-full rounded-b-3xl h-96 overflow-scroll"
+      class="dropdown-content menu p-2 shadow-3xl bg-base-300 dark:bg-info-content w-full rounded-b-3xl h-96 overflow-scroll z-50"
     >
       <li v-for="navigator in navigators">
         <router-link v-bind:to="getLinkForDir(navigator.name)" v-text="navigator.name" class="" active-class="active">
