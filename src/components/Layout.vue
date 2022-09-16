@@ -12,13 +12,13 @@
     </div>
   </div>
 
-  <main class="bg-blue-100/40 flex justify-between z-10 min-h-screen">
+  <main class="bg-green-200/20 flex justify-between z-10 min-h-screen">
     <div class="w-56 z-10 min-h-screen">
       <div class="bg-indigo-300 rounded-r-2xl shadow-2xl fixed bottom-4 top-24 w-56 py-4 border-l-4 border-slate-500">
         <Toc></Toc>
       </div>
     </div>
-    <div class="flex flex-grow shadow-2xl shadow-black rounded-2xl bg-sky-200 my-4 mx-4">
+    <div class="flex flex-grow shadow-2xl rounded-2xl bg-sky-200 my-4 mx-4">
       <router-view></router-view>
     </div>
   </main>

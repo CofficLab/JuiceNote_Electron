@@ -1,7 +1,7 @@
 <template>
-  <div class="dropdown w-56">
+  <div class="dropdown w-96">
     <label tabindex="0" class="btn btn-ghost m-0 w-full rounded-none flex flex-row justify-between h-full">
-      <h3 v-html="title" class="place-self-center my-auto"></h3>
+      <h1 v-html="title" class="place-self-center my-auto text-xl"></h1>
       <svg class="fill-current ml-2" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
         <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
       </svg>

@@ -36,7 +36,7 @@ export default defineComponent({
 
   /* 章节名称 */
   > ul > li {
-    @apply bg-gradient-to-r from-sky-600 to-sky-400 shadow-xl  rounded-r-2xl px-4 py-1 text-lg ml-0;
+    @apply bg-gradient-to-r from-sky-600 to-sky-400 shadow-2xl rounded-none px-4 py-1 text-lg ml-0;
   }
 }
 </style>
