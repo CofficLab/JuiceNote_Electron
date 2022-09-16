@@ -89,10 +89,21 @@ function getActiveNavigator(activePath: string): navigatorNode {
     return result
 }
 
+/**
+ * 从路由的路径中解析出 Markdown 文件的名字
+ * 
+ * @param routerPath 路由的路径，如：/editor/06_Python@home
+ * @returns 
+ */
+function getMarkdownNameFromRoutePath(routerPath: string): string {
+    return routerPath.replace('/article/', '').replace('/editor/', '')
+}
+
 let nav = {
     shouldBeActive,
     getNavigators,
-    getActiveNavigator
+    getActiveNavigator,
+    getMarkdownNameFromRoutePath
 }
 
 export {

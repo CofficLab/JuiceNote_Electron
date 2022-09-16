@@ -8,7 +8,6 @@ import markdown from "../models/markdown";
 import "../app.css";
 
 export default defineComponent({
-  props: ["path"],
   methods: {
     getContentsWithToc(): string {
       return markdown.getMarkdownRenderedContent(this.path);
@@ -18,6 +17,9 @@ export default defineComponent({
     },
   },
   computed: {
+    path: function () {
+      return this.$route.path.replace("/article", "");
+    },
     getEditorLink(): string {
       return "/editor/" + this.path;
     },

@@ -56,7 +56,7 @@ export default defineComponent({
       return nav.getActiveNavigator(this.$route.path);
     },
     title(): string {
-      return markdown.getMarkdownTitle(this.$route.path.replace("/article/", ""));
+      return markdown.getMarkdownTitle(nav.getMarkdownNameFromRoutePath(this.$route.path));
     },
   },
 });

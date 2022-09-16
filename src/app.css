@@ -13,58 +13,6 @@
   h4,
   h5,
   h6 {
-    @apply pt-20 -mt-20;
-  }
-}
-
-#editor {
-  @apply mt-16 border-orange-400 border-t-8 pt-0 bg-green-900 z-10 !important;
-
-  /* 工具栏 */
-  .v-note-op {
-    @apply -mt-12 bg-base-200 border-base-100 text-base-content fixed shadow-2xl shadow-base-300 z-20 !important;
-
-    .op-icon-divider {
-      @apply border-l-base-content !important;
-    }
-
-    .v-right-item button {
-      @apply mx-2;
-    }
-
-    .op-icon.selected {
-      @apply bg-base-100;
-    }
-  }
-
-  /* 编辑展示区域 */
-  .v-note-panel {
-    @apply mt-0 z-10 bg-green-900 !important;
-
-    .v-note-edit {
-      @apply border-r-green-900 border-none !important;
-    }
-
-    .auto-textarea-wrapper .auto-textarea-input {
-      @apply text-base-content;
-    }
-
-    textarea {
-      @apply bg-base-100;
-    }
-
-    .content-input-wrapper {
-      @apply bg-base-100 !important;
-    }
-  }
-
-  /* 展示区域 */
-  .v-show-content {
-    @apply bg-base-100 text-base-content !important;
-  }
-
-  /* 标题导航 */
-  .v-note-navigation-wrapper {
-    @apply bg-base-100 text-base-content fixed right-0 top-32 z-20 shadow-2xl !important;
+    @apply pt-40 -mt-40;
   }
 }

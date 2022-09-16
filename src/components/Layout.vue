@@ -12,14 +12,20 @@
     </div>
   </div>
 
-  <main class="bg-green-200/20 flex justify-between z-10 min-h-screen">
-    <div class="w-56 z-10 min-h-screen">
-      <div class="bg-indigo-300 rounded-r-2xl shadow-2xl fixed bottom-4 top-24 w-56 py-4 border-l-4 border-slate-500">
-        <Toc></Toc>
+  <main class="bg-green-200/20 flex flex-row z-10 min-h-screen">
+    <div class="w-56">
+      <div class="bg-indigo-300 rounded-r-2xl fixed bottom-4 top-24 w-56 py-4 border-l-4 border-slate-500">
+        <router-link class="btn w-48" v-bind:to="editorLink" v-html="editorHTML"></router-link>
+        <Toc v-show="!inEditorMode"></Toc>
       </div>
     </div>
-    <div class="flex flex-grow shadow-2xl rounded-2xl bg-sky-200 my-4 mx-4">
-      <router-view></router-view>
+
+    <div class="flex-grow">
+      <div class="fixed left-60 bottom-4 top-24 right-4 bg-green-200 overflow-hidden shadow-2xl rounded-2xl p-4">
+        <div class="h-full overflow-hidden">
+          <router-view></router-view>
+        </div>
+      </div>
     </div>
   </main>
 </template>
@@ -31,6 +37,10 @@ import Books from "./Books.vue";
 import markdown from "../models/markdown";
 import Chapters from "./Chapters.vue";
 import Toc from "./Toc.vue";
+import Content from "./Content.vue";
+import Editor from "./Editor.vue";
+import { nav } from "../models/nav";
+import { unescape } from "querystring";
 
 export default defineComponent({
   components: {
@@ -38,8 +48,27 @@ export default defineComponent({
     Books,
     Chapters,
     Toc,
+    Content,
+    Editor,
+  },
+  mounted: function () {
+    console.log("now location is ", location);
+    console.log("now route path is ", this.$route.path);
+  },
+  data() {
+    return {
+      showEditor: false,
+    };
+  },
+  methods: {
+    toggleEditor: function () {
+      this.showEditor = !this.showEditor;
+    },
   },
   computed: {
+    inEditorMode: function () {
+      return unescape(this.$route.path).indexOf("editor/") > 0;
+    },
     hideTitleBar: function () {
       return this.$store.state.full_screen;
     },
@@ -51,6 +80,16 @@ export default defineComponent({
     },
     title(): string {
       return markdown.getMarkdownTitle(this.path);
+    },
+    editorLink(): string {
+      if (unescape(this.$route.path).indexOf("editor/") > 0) {
+        return "/article/" + nav.getMarkdownNameFromRoutePath(this.$route.path);
+      }
+
+      return "/editor/" + nav.getMarkdownNameFromRoutePath(this.$route.path);
+    },
+    editorHTML(): string {
+      return unescape(this.$route.path).indexOf("editor/") > 0 ? "返回" : "编辑";
     },
   },
 });

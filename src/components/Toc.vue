@@ -5,14 +5,12 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import markdown from "../models/markdown";
+import { nav } from "../models/nav";
 
 export default defineComponent({
   computed: {
-    path: function () {
-      return this.$route.path.replace("/article", "");
-    },
     toc(): string {
-      return markdown.getMarkdownToc(this.path);
+      return markdown.getMarkdownToc(nav.getMarkdownNameFromRoutePath(this.$route.path));
     },
   },
 });
