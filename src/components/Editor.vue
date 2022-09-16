@@ -113,10 +113,30 @@ export default defineComponent({
 
   /* 标题导航 */
   .v-note-navigation-wrapper {
-    @apply bg-transparent border-0 text-base-content fixed left-0 top-48 z-20 shadow-2xl w-56 !important;
+    @apply bg-transparent border-0 text-base-content fixed left-0 bottom-24 top-44 z-20   w-56 !important;
 
     .v-note-navigation-title {
       @apply hidden;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      @apply w-48 my-2  no-underline bg-gradient-to-r from-sky-600 to-sky-400  shadow-xl rounded-r-2xl px-4 py-1 text-sm ml-1 hover:to-sky-300 text-black;
+    }
+
+    h1 {
+      @apply rounded-r-none text-lg;
+    }
+    h2 {
+      @apply pl-8;
+    }
+
+    h3 {
+      @apply pl-10;
     }
   }
 }
