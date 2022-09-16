@@ -1,5 +1,5 @@
 <template>
-  <div class="dropdown bg-green-400 z-50">
+  <div class="dropdown bg-green-400 z-50 w-full">
     <label tabindex="0" class="btn m-0 w-full rounded-none">
       <span>{{ activeNavigator.name }}</span>
       <svg class="fill-current ml-2" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
