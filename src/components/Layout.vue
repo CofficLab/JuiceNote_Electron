@@ -18,6 +18,7 @@
         class="bg-gradient-to-r from-base-300/30 to-base-200/30 rounded-r-2xl fixed bottom-4 top-14 w-56 py-4 border-l-4 border-slate-500"
       >
         <router-link class="btn w-48 rounded-none" v-bind:to="editorLink" v-html="editorHTML"></router-link>
+        <router-link class="btn w-48 rounded-none" to="/sort">排序</router-link>
         <Toc v-show="!inEditorMode"></Toc>
       </div>
     </div>

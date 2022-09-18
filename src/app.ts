@@ -8,11 +8,13 @@ import mavonEditor from 'mavon-editor'
 import Content from './components/Content.vue'
 import 'mavon-editor/dist/css/index.css'
 import './app.css'
+import SortVue from './components/Sort.vue'
 
 const routes = [
   { path: '/', redirect: '/article/welcome@home' },
   { path: '/article/:path', component: Content },
-  { path: '/editor/:path', component: EditorVue }
+  { path: '/editor/:path', component: EditorVue },
+  { path: '/sort', component: SortVue }
 ]
 
 const router = createRouter({
