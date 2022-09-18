@@ -2,7 +2,7 @@
   <div class="h-8 bg-stone-900 fixed top-0 z-50 w-full" id="title-bar" v-show="!hideTitleBar"></div>
 
   <div class="h-12 z-50" v-bind:class="hideTitleBar ? 'mt-0' : 'mt-8'">
-    <div class="w-full flex flex-row fixed z-50 shadow-xl shadow-stone-500/50">
+    <div class="w-full flex flex-row fixed z-50 shadow-xl">
       <div class="w-56"><Books></Books></div>
       <div class="flex-grow h-12 bg-base-300 flex justify-center shadow-2xl">
         <div class="place-self-center">
@@ -12,17 +12,19 @@
     </div>
   </div>
 
-  <main class="bg-green-200/20 flex flex-row z-10 min-h-screen">
+  <main class="bg-green-200/20 flex flex-row z-10 min-h-screen overflow-hidden">
     <div class="w-56">
-      <div class="bg-indigo-300 rounded-r-2xl fixed bottom-4 top-24 w-56 py-4 border-l-4 border-slate-500">
+      <div
+        class="bg-gradient-to-r from-base-300 to-base-200 rounded-r-2xl fixed bottom-4 top-14 w-56 py-4 border-l-4 border-slate-500"
+      >
         <router-link class="btn w-48" v-bind:to="editorLink" v-html="editorHTML"></router-link>
         <Toc v-show="!inEditorMode"></Toc>
       </div>
     </div>
 
     <div class="flex-grow">
-      <div class="fixed left-60 bottom-4 top-24 right-4 bg-green-200 overflow-hidden shadow-2xl rounded-2xl p-4">
-        <div class="h-full overflow-hidden">
+      <div class="fixed left-60 bottom-4 top-14 right-4 bg-base-200 shadow-2xl rounded-2xl p-4">
+        <div class="h-full overflow-scroll scroll-m-48 scroll-p-52">
           <router-view></router-view>
         </div>
       </div>
