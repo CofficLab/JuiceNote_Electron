@@ -4,7 +4,7 @@
     v-model="html"
     :externalLink="external_link"
     v-on:save="save"
-    class="h-screen bg-red-800"
+    class="h-screen bg-red-800 rounded-2xl"
     :navigation="true"
     :toolbarsBackground="toolbarsBackground"
     :toolbarsFlag="true"
@@ -66,7 +66,7 @@ export default defineComponent({
 
 <style lang="postcss">
 #editor {
-  @apply border-orange-400 border-t-8 pt-0 bg-green-900 z-10 !important;
+  @apply border-orange-400 border-t-8 pt-0 bg-green-900 z-10 rounded-2xl !important;
 
   /* 工具栏 */
   /* .v-note-op {
@@ -125,7 +125,7 @@ export default defineComponent({
     h4,
     h5,
     h6 {
-      @apply w-48 my-2  no-underline bg-gradient-to-r from-sky-600 to-sky-400  shadow-xl rounded-r-2xl px-4 py-1 text-sm ml-1 hover:to-sky-300 text-black;
+      @apply w-48 my-2  no-underline bg-gradient-to-r from-base-300 to-base-200  shadow-xl px-4 py-1 text-sm ml-1 hover:to-sky-300 text-black;
     }
 
     h1 {

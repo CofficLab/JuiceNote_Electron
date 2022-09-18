@@ -15,15 +15,15 @@
   <main class="bg-green-200/20 flex flex-row z-10 min-h-screen overflow-hidden">
     <div class="w-56">
       <div
-        class="bg-gradient-to-r from-base-300 to-base-200 rounded-r-2xl fixed bottom-4 top-14 w-56 py-4 border-l-4 border-slate-500"
+        class="bg-gradient-to-r from-base-300/30 to-base-200/30 rounded-r-2xl fixed bottom-4 top-14 w-56 py-4 border-l-4 border-slate-500"
       >
-        <router-link class="btn w-48" v-bind:to="editorLink" v-html="editorHTML"></router-link>
+        <router-link class="btn w-48 rounded-none" v-bind:to="editorLink" v-html="editorHTML"></router-link>
         <Toc v-show="!inEditorMode"></Toc>
       </div>
     </div>
 
     <div class="flex-grow">
-      <div class="fixed left-60 bottom-4 top-14 right-4 bg-base-200 shadow-2xl rounded-2xl p-4">
+      <div class="fixed left-60 bottom-4 top-14 right-4 bg-base-200 shadow-2xl rounded-2xl p-0">
         <div class="h-full overflow-scroll scroll-m-48 scroll-p-52">
           <router-view></router-view>
         </div>

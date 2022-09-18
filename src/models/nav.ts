@@ -9,7 +9,7 @@ import markdown from './markdown'
 class navigatorNode {
     public name: string = ''
     public active: boolean = false
-    public children: navigatorNode[] = [];
+    public children: navigatorNode[] = []
 }
 
 /**

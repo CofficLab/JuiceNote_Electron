@@ -25,7 +25,7 @@ export default defineComponent({
 
     li {
       @apply bg-gradient-to-r from-sky-600 to-sky-500 dark:from-neutral dark:to-neutral-focus
-      shadow-xl rounded-r-2xl px-4 py-1 text-sm -ml-4 hover:to-sky-400;
+      shadow-xl px-4 py-1 text-sm -ml-4 hover:to-sky-400;
     }
 
     a {
