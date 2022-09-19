@@ -1,6 +1,8 @@
 <template>
+  <!-- 标题栏，用于显示红绿灯 -->
   <div class="h-8 bg-stone-900 fixed top-0 z-50 w-full" id="title-bar" v-show="!hideTitleBar"></div>
 
+  <!-- 导航栏 -->
   <div class="h-12 z-50" v-bind:class="hideTitleBar ? 'mt-0' : 'mt-8'">
     <div class="w-full flex flex-row fixed z-50 shadow-xl">
       <div class="w-56"><Books></Books></div>
@@ -15,16 +17,16 @@
   <main class="bg-green-200/20 flex flex-row z-10 min-h-screen overflow-hidden">
     <div class="w-56">
       <div
-        class="bg-gradient-to-r from-base-300/30 to-base-200/30 rounded-r-2xl fixed bottom-4 top-14 w-56 py-4 border-l-4 border-slate-500"
+        class="bg-gradient-to-r from-base-300/30 to-base-200/30 rounded-r-2xl fixed bottom-4 top-20 w-56 py-4 border-l-4 border-slate-500"
       >
         <router-link class="btn w-48 rounded-none" v-bind:to="editorLink" v-html="editorHTML"></router-link>
-        <router-link class="btn w-48 rounded-none" to="/sort">排序</router-link>
+        <router-link class="btn w-48 rounded-none" v-bind:to="sortLink" v-html="sortHTML"></router-link>
         <Toc v-show="!inEditorMode"></Toc>
       </div>
     </div>
 
     <div class="flex-grow">
-      <div class="fixed left-60 bottom-4 top-14 right-4 bg-base-200 shadow-2xl rounded-2xl p-0">
+      <div class="fixed left-60 bottom-4 top-20 right-4 bg-base-200 shadow-2xl rounded-2xl p-0">
         <div class="h-full overflow-scroll scroll-m-48 scroll-p-52">
           <router-view></router-view>
         </div>
@@ -91,8 +93,18 @@ export default defineComponent({
 
       return "/editor/" + nav.getMarkdownNameFromRoutePath(this.$route.path);
     },
+    sortLink(): string {
+      if (unescape(this.$route.path).indexOf("sort") > 0) {
+        return "/";
+      }
+
+      return "/sort";
+    },
     editorHTML(): string {
       return unescape(this.$route.path).indexOf("editor/") > 0 ? "返回" : "编辑";
+    },
+    sortHTML(): string {
+      return unescape(this.$route.path).indexOf("sort") > 0 ? "返回" : "排序";
     },
   },
 });

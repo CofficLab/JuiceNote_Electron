@@ -9,6 +9,7 @@ import Content from './components/Content.vue'
 import 'mavon-editor/dist/css/index.css'
 import './app.css'
 import SortVue from './components/Sort.vue'
+import { stat } from 'fs'
 
 const routes = [
   { path: '/', redirect: '/article/welcome@home' },
@@ -26,7 +27,7 @@ const router = createRouter({
 const store = createStore({
   state() {
     return {
-      full_screen: false
+      full_screen: false,
     }
   },
   mutations: {

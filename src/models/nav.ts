@@ -1,3 +1,4 @@
+import { time } from "console";
 import fs from "fs";
 import path from "path";
 import { unescape } from "querystring";
@@ -20,11 +21,19 @@ class navigatorNode {
 function getNavigators(): navigatorNode[] {
     let navigators: navigatorNode[] = []
 
-    fs.readdirSync(markdown.markdownRootPath).forEach((navigator) => {
-        navigators.push(makeNode(path.join(markdown.markdownRootPath, navigator)))
-    })
+    // fs.readdirSync(markdown.markdownRootPath).forEach((navigator) => {
+    //     navigators.push(makeNode(path.join(markdown.markdownRootPath, navigator)))
+    // })
 
     // console.log(JSON.stringify(navigators))
+
+    // fs.writeFileSync(path.join(markdown.markdownRootPath, 'navigators.json'), JSON.stringify(navigators, null, 4))
+
+    let json = fs.readFileSync(path.join(markdown.markdownRootPath, 'navigators.json'), 'utf-8')
+    let items = JSON.parse(json)
+    items.forEach(function (item: navigatorNode) {
+        navigators.push(makeNode(path.join(markdown.markdownRootPath, item.name)))
+    })
 
     return navigators
 }
@@ -40,6 +49,11 @@ function makeNode(navigator: string): navigatorNode {
 
     let node = new navigatorNode
     node.name = navigator.replace(markdown.markdownRootPath + '/', '').replaceAll('/', '@').replace('.md', '')
+
+    if (!fs.existsSync(navigator)) {
+        console.log('无法生成导航，文件不存在', navigator)
+        return new navigatorNode
+    }
 
     let stat = fs.statSync(navigator)
 
@@ -80,11 +94,15 @@ function getActiveNavigator(activePath: string): navigatorNode {
     let navigators = getNavigators()
     let result = new navigatorNode
 
-    navigators.forEach(function (navigator) {
-        if (shouldBeActive(navigator, activePath)) {
-            result = navigator
-        }
-    })
+    if (activePath.indexOf('sort') > 0) {
+        result.name = '正在排序'
+    } else {
+        navigators.forEach(function (navigator) {
+            if (shouldBeActive(navigator, activePath)) {
+                result = navigator
+            }
+        })
+    }
 
     return result
 }
@@ -99,7 +117,12 @@ function getMarkdownNameFromRoutePath(routerPath: string): string {
     return routerPath.replace('/article/', '').replace('/editor/', '')
 }
 
+function update(navigators: navigatorNode[]) {
+    fs.writeFileSync(path.join(markdown.markdownRootPath, 'navigators.json'), JSON.stringify(navigators, null, 4))
+}
+
 let nav = {
+    update,
     shouldBeActive,
     getNavigators,
     getActiveNavigator,

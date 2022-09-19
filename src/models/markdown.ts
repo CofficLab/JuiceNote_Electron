@@ -25,6 +25,18 @@ function getAbsolutePath(markdownFile: string): string {
 }
 
 /**
+ * 返回markdown目录的绝对路径
+ * 
+ * @param markdownFile markdown目录，相对于markdown根目录的路径
+ * @returns 
+ */
+function getAbsolutePathOfFolder(markdownFile: string): string {
+    // console.log('get absolute path of ' + markdownFile)
+
+    return path.join(markdownRootPath, markdownFile.replace('@', '/'))
+}
+
+/**
  * 获取原始的markdown内容
  * 
  * @param markdownName markdown文件名，相对于markdown根目录的路径
@@ -52,7 +64,8 @@ function getMarkdownContent(markdownName: string) {
 function getMarkdownRenderedContent(markdownName: string) {
     // console.log('get markdown rendered content of ' + markdownName)
     if (!fs.existsSync(getAbsolutePath(markdownName))) {
-        writeToMarkdownFile(markdownName, "# " + markdownName)
+        // writeToMarkdownFile(markdownName, "# " + markdownName)
+        return md.render("文件不存在")
     }
 
     // console.log('get markdown rendered content:' + md.render("[[toc]] \r\n" + getMarkdownContent(markdownName)))
@@ -177,7 +190,17 @@ function makeDom(html: string) {
     return dom
 }
 
+function moveTo(markdownFile: string, destination: string) {
+    fs.renameSync(getAbsolutePathOfFolder(markdownFile), getAbsolutePathOfFolder(destination))
+}
+
+function getOrder(markdownFile: string) {
+    return markdownFile.split('_')[0]
+}
+
 let markdown = {
+    moveTo,
+    getOrder,
     getMarkdownToc,
     getMarkdownTitle,
     markdownRootPath,

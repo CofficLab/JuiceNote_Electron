@@ -56,6 +56,10 @@ export default defineComponent({
       return nav.getActiveNavigator(this.$route.path);
     },
     title(): string {
+      if (this.$route.path.indexOf("sort") > 0) {
+        return "正在排序";
+      }
+
       return markdown.getMarkdownTitle(nav.getMarkdownNameFromRoutePath(this.$route.path));
     },
   },
