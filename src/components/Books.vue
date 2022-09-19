@@ -59,9 +59,13 @@ export default defineComponent({
       return nav.getNavigators();
     },
     activeNavigator() {
-      if (this.$route.path.indexOf("sort") > 0) {
-        return "正在排序";
+      if (this.$store.state.sort_mode) {
+        let navigator = new navigatorNode();
+        navigator.name = "正在排序";
+        return navigator;
       }
+
+      console.log("not in sort mode");
 
       return nav.getActiveNavigator(this.$route.path);
     },

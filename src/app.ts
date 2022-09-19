@@ -28,15 +28,22 @@ const store = createStore({
   state() {
     return {
       full_screen: false,
+      sort_mode: false,
     }
   },
   mutations: {
-    setFullScreen(state: { full_screen: boolean }) {
+    setFullScreen(state) {
       state.full_screen = true
     },
     setNotFullScreen(state) {
       state.full_screen = false
     },
+    setSortMode(state) {
+      state.sort_mode = true
+    },
+    exitSortMode(state) {
+      state.sort_mode = false
+    }
   }
 })
 

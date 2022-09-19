@@ -32,6 +32,7 @@ export default defineComponent({
   },
   mounted: function () {
     this.navigators = this.getNavigators();
+    // console.log("the state is", this.$store.state);
   },
   methods: {
     getNavigators(): navigatorNode[] {

@@ -20,11 +20,10 @@
         class="bg-gradient-to-r from-base-300/30 to-base-200/30 rounded-r-2xl fixed bottom-4 top-20 w-56 py-4 border-l-4 border-slate-500"
       >
         <router-link class="btn w-48 rounded-none" v-bind:to="editorLink" v-html="editorHTML"></router-link>
-        <router-link class="btn w-48 rounded-none" v-bind:to="sortLink" v-html="sortHTML"></router-link>
+        <div class="btn w-48 rounded-none" v-on:click="toggleSortMode" v-html="sortHTML"></div>
         <Toc v-show="!inEditorMode"></Toc>
       </div>
     </div>
-
     <div class="flex-grow">
       <div class="fixed left-60 bottom-4 top-20 right-4 bg-base-200 shadow-2xl rounded-2xl p-0">
         <div class="h-full overflow-scroll scroll-m-48 scroll-p-52">
@@ -57,8 +56,8 @@ export default defineComponent({
     Editor,
   },
   mounted: function () {
-    console.log("now location is ", location);
-    console.log("now route path is ", this.$route.path);
+    // console.log("now location is ", location);
+    // console.log("now route path is ", this.$route.path);
   },
   data() {
     return {
@@ -68,6 +67,18 @@ export default defineComponent({
   methods: {
     toggleEditor: function () {
       this.showEditor = !this.showEditor;
+    },
+    toggleSortMode: function () {
+      console.log("toggle sort mode");
+      if (this.$store.state.sort_mode) {
+        console.log("exit sort mode");
+        this.$store.commit("exitSortMode");
+        this.$router.push("/");
+      } else {
+        console.log("set sort mode");
+        this.$store.commit("setSortMode");
+        this.$router.push("/sort");
+      }
     },
   },
   computed: {
@@ -93,18 +104,11 @@ export default defineComponent({
 
       return "/editor/" + nav.getMarkdownNameFromRoutePath(this.$route.path);
     },
-    sortLink(): string {
-      if (unescape(this.$route.path).indexOf("sort") > 0) {
-        return "/";
-      }
-
-      return "/sort";
-    },
     editorHTML(): string {
       return unescape(this.$route.path).indexOf("editor/") > 0 ? "返回" : "编辑";
     },
     sortHTML(): string {
-      return unescape(this.$route.path).indexOf("sort") > 0 ? "返回" : "排序";
+      return this.$store.state.sort_mode ? "返回" : "排序";
     },
   },
 });

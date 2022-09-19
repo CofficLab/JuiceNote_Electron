@@ -82,6 +82,44 @@
         ]
     },
     {
+        "name": "Docker",
+        "active": false,
+        "children": [
+            {
+                "name": "Docker@home",
+                "active": false,
+                "children": []
+            }
+        ]
+    },
+    {
+        "name": "NodeJs",
+        "active": false,
+        "children": [
+            {
+                "name": "NodeJs@home",
+                "active": false,
+                "children": []
+            },
+            {
+                "name": "NodeJs@入门",
+                "active": false,
+                "children": []
+            }
+        ]
+    },
+    {
+        "name": "机器学习",
+        "active": false,
+        "children": [
+            {
+                "name": "机器学习@home",
+                "active": false,
+                "children": []
+            }
+        ]
+    },
+    {
         "name": "CSS",
         "active": false,
         "children": [
@@ -124,44 +162,6 @@
         "children": [
             {
                 "name": "VueJs@home",
-                "active": false,
-                "children": []
-            }
-        ]
-    },
-    {
-        "name": "Docker",
-        "active": false,
-        "children": [
-            {
-                "name": "Docker@home",
-                "active": false,
-                "children": []
-            }
-        ]
-    },
-    {
-        "name": "NodeJs",
-        "active": false,
-        "children": [
-            {
-                "name": "NodeJs@home",
-                "active": false,
-                "children": []
-            },
-            {
-                "name": "NodeJs@入门",
-                "active": false,
-                "children": []
-            }
-        ]
-    },
-    {
-        "name": "机器学习",
-        "active": false,
-        "children": [
-            {
-                "name": "机器学习@home",
                 "active": false,
                 "children": []
             }
