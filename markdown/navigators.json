@@ -11,6 +11,28 @@
         ]
     },
     {
+        "name": "Go",
+        "active": false,
+        "children": [
+            {
+                "name": "Go@home",
+                "active": false,
+                "children": []
+            }
+        ]
+    },
+    {
+        "name": "计算机网络",
+        "active": false,
+        "children": [
+            {
+                "name": "计算机网络@home",
+                "active": false,
+                "children": []
+            }
+        ]
+    },
+    {
         "name": "CSS",
         "active": false,
         "children": [
@@ -44,17 +66,6 @@
         ]
     },
     {
-        "name": "计算机网络",
-        "active": false,
-        "children": [
-            {
-                "name": "计算机网络@home",
-                "active": false,
-                "children": []
-            }
-        ]
-    },
-    {
         "name": "navigators.json",
         "active": false,
         "children": []
@@ -81,17 +92,6 @@
             },
             {
                 "name": "Python@字符串",
-                "active": false,
-                "children": []
-            }
-        ]
-    },
-    {
-        "name": "Go",
-        "active": false,
-        "children": [
-            {
-                "name": "Go@home",
                 "active": false,
                 "children": []
             }

@@ -19,7 +19,7 @@
       <div
         class="bg-gradient-to-r from-base-300/30 to-base-200/30 rounded-r-2xl fixed bottom-4 top-20 w-56 py-4 border-l-4 border-slate-500"
       >
-        <router-link class="btn w-48 rounded-none" v-bind:to="editorLink" v-html="editorHTML" disabled></router-link>
+        <div class="btn w-48 rounded-none" v-on:click="toggleEditMode" v-html="editHTML" :disabled="editDisabled"></div>
         <div class="btn w-48 rounded-none" v-on:click="toggleSortMode" v-html="sortHTML"></div>
         <Toc v-show="!inEditorMode"></Toc>
       </div>
@@ -36,7 +36,6 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import Actions from "./Actions.vue";
 import Books from "./Books.vue";
 import markdown from "../models/markdown";
 import Chapters from "./Chapters.vue";
@@ -44,20 +43,15 @@ import Toc from "./Toc.vue";
 import Content from "./Content.vue";
 import Editor from "./Editor.vue";
 import { nav } from "../models/nav";
-import { unescape } from "querystring";
+import store from "../models/store";
 
 export default defineComponent({
   components: {
-    Actions,
     Books,
     Chapters,
     Toc,
     Content,
     Editor,
-  },
-  mounted: function () {
-    // console.log("now location is ", location);
-    // console.log("now route path is ", this.$route.path);
   },
   data() {
     return {
@@ -65,28 +59,37 @@ export default defineComponent({
     };
   },
   methods: {
-    toggleEditor: function () {
+    toggleEditMode: function () {
+      console.log("toggle edit mode");
+      if (store.edit_mode) {
+        store.leaveEditMode();
+        this.$router.push("/article/" + nav.getMarkdownNameFromRoutePath(this.$route.path));
+      } else {
+        store.enterEditMode();
+        this.$router.push("/editor/" + nav.getMarkdownNameFromRoutePath(this.$route.path));
+      }
       this.showEditor = !this.showEditor;
     },
     toggleSortMode: function () {
       console.log("toggle sort mode");
-      if (this.$store.state.sort_mode) {
-        console.log("exit sort mode");
-        this.$store.commit("exitSortMode");
+      if (store.sort_mode) {
+        store.leaveSortMode();
         this.$router.push("/");
       } else {
-        console.log("set sort mode");
-        this.$store.commit("setSortMode");
+        store.enterSortMode();
         this.$router.push("/sort");
       }
     },
   },
   computed: {
+    editDisabled: function () {
+      return store.sort_mode ? true : null;
+    },
     inEditorMode: function () {
-      return unescape(this.$route.path).indexOf("editor/") > 0;
+      return store.edit_mode;
     },
     hideTitleBar: function () {
-      return this.$store.state.full_screen;
+      return store.full_screen;
     },
     path: function () {
       return this.$route.path.replace("/article", "");
@@ -97,22 +100,11 @@ export default defineComponent({
     title(): string {
       return markdown.getMarkdownTitle(this.path);
     },
-    editorLink(): string {
-      if (this.$store.state.sort_mode) {
-        return "/";
-      }
-
-      if (unescape(this.$route.path).indexOf("editor/") > 0) {
-        return "/article/" + nav.getMarkdownNameFromRoutePath(this.$route.path);
-      }
-
-      return "/editor/" + nav.getMarkdownNameFromRoutePath(this.$route.path);
-    },
-    editorHTML(): string {
-      return unescape(this.$route.path).indexOf("editor/") > 0 ? "返回" : "编辑";
+    editHTML(): string {
+      return store.edit_mode ? "返回" : "编辑";
     },
     sortHTML(): string {
-      return this.$store.state.sort_mode ? "返回" : "排序";
+      return store.sort_mode ? "返回" : "排序";
     },
   },
 });

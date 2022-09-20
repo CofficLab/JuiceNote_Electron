@@ -21,7 +21,7 @@ export default defineComponent({
   data() {
     return {
       toolbarsBackground: "#fbfbfb",
-      html: "",
+      html: markdown.getMarkdownContent(nav.getMarkdownNameFromRoutePath(this.$route.path)),
       external_link: {
         markdown_css: function () {
           return "/src/assets/github-markdown.min.css";
@@ -45,9 +45,6 @@ export default defineComponent({
       },
     };
   },
-  mounted() {
-    this.html = this.getHtml();
-  },
   methods: {
     save: function () {
       if (markdown.getMarkdownContent(this.path) != this.html) {
@@ -56,9 +53,6 @@ export default defineComponent({
       } else {
         console.log("没有变化，不保存文章");
       }
-    },
-    getHtml: function () {
-      return markdown.getMarkdownContent(nav.getMarkdownNameFromRoutePath(this.$route.path));
     },
   },
 });

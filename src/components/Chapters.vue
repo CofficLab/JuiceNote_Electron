@@ -19,44 +19,28 @@ import { unescape } from "querystring";
 import { defineComponent } from "vue";
 import { nav, navigatorNode } from "../models/nav";
 import markdown from "../models/markdown";
+import store from "../models/store";
 
 export default defineComponent({
   data() {
     return {
-      expand: false,
+      navigators: store.navigators,
     };
   },
   methods: {
-    toggle() {
-      this.expand = !this.expand;
-    },
     shouldBeActive(navigator: navigatorNode) {
-      return navigator.name == unescape(this.$route.path).replace("/article/", "");
+      return nav.shouldBeActive(navigator, this.$route.path);
     },
     getLink(navigatorName: string) {
       return "/article/" + navigatorName;
     },
-    getText(navigator: navigatorNode): string {
-      let splitted = navigator.name.split("@");
-      let text = splitted.pop();
-
-      if (text === "home") {
-        return "首页";
-      }
-
-      return text === undefined ? "" : text;
-    },
   },
   computed: {
-    navigators() {
-      // console.log('navigators are: ' + nav.getNavigators())
-      return nav.getNavigators();
-    },
     activeNavigator() {
       return nav.getActiveNavigator(this.$route.path);
     },
     title(): string {
-      if (this.$route.path.indexOf("sort") > 0) {
+      if (store.sort_mode) {
         return "正在排序";
       }
 

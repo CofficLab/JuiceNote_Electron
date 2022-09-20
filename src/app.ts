@@ -9,7 +9,8 @@ import Content from './components/Content.vue'
 import 'mavon-editor/dist/css/index.css'
 import './app.css'
 import SortVue from './components/Sort.vue'
-import { nav, navigatorNode } from './models/nav'
+import { nav } from './models/nav'
+import storeModel from './models/store'
 
 // 定义路由
 const routes = [
@@ -70,6 +71,7 @@ ipcRenderer.on('main-process-message', (_event, ...args) => {
 // 检测排序状态
 if (window.location.pathname.indexOf('sort') > 0) {
   store.commit('setSortMode')
+  storeModel.enterSortMode()
 }
 
 const app = createApp(Layout)

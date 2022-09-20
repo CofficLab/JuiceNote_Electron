@@ -19,6 +19,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { navigatorNode } from "../models/nav";
+import store from "../models/store";
 
 let navigators: navigatorNode[];
 
@@ -27,7 +28,7 @@ export default defineComponent({
     return {
       dragged: null,
       hovered: null,
-      navigators: this.$store.state.navigators,
+      navigators: store.navigators,
     };
   },
   methods: {
@@ -46,7 +47,7 @@ export default defineComponent({
       navigators.splice(newOrder, 0, navigator);
 
       // console.log(navigators);
-      this.$store.commit("updateNavigators", navigators);
+      store.updateNavigators(navigators);
       this.hovered = null;
     },
     dragEnter(navigator) {
