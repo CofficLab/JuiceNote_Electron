@@ -52,11 +52,6 @@ export default defineComponent({
     Content,
     Editor,
   },
-  data() {
-    return {
-      inEditMode: store.edit_mode,
-    };
-  },
   methods: {
     toggleEditMode: function () {
       console.log("toggle edit mode");
@@ -100,6 +95,9 @@ export default defineComponent({
     },
     sortHTML(): string {
       return store.sort_mode ? "返回" : "排序";
+    },
+    inEditMode(): boolean {
+      return store.edit_mode;
     },
   },
 });
