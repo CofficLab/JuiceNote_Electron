@@ -21,7 +21,7 @@
       >
         <div class="btn w-48 rounded-none" v-on:click="toggleEditMode" v-html="editHTML" :disabled="editDisabled"></div>
         <div class="btn w-48 rounded-none" v-on:click="toggleSortMode" v-html="sortHTML"></div>
-        <Toc v-show="!inEditorMode"></Toc>
+        <Toc v-show="!inEditMode"></Toc>
       </div>
     </div>
     <div class="flex-grow">
@@ -42,7 +42,6 @@ import Chapters from "./Chapters.vue";
 import Toc from "./Toc.vue";
 import Content from "./Content.vue";
 import Editor from "./Editor.vue";
-import { nav } from "../models/nav";
 import store from "../models/store";
 
 export default defineComponent({
@@ -55,7 +54,7 @@ export default defineComponent({
   },
   data() {
     return {
-      showEditor: false,
+      inEditMode: store.edit_mode,
     };
   },
   methods: {
@@ -63,15 +62,14 @@ export default defineComponent({
       console.log("toggle edit mode");
       if (store.edit_mode) {
         store.leaveEditMode();
-        this.$router.push("/article/" + nav.getMarkdownNameFromRoutePath(this.$route.path));
+        this.$router.push(this.$route.path.replace("editor", "article"));
       } else {
         store.enterEditMode();
-        this.$router.push("/editor/" + nav.getMarkdownNameFromRoutePath(this.$route.path));
+        this.$router.push(this.$route.path.replace("article", "editor"));
       }
-      this.showEditor = !this.showEditor;
     },
     toggleSortMode: function () {
-      console.log("toggle sort mode");
+      // console.log("toggle sort mode");
       if (store.sort_mode) {
         store.leaveSortMode();
         this.$router.push("/");
@@ -84,9 +82,6 @@ export default defineComponent({
   computed: {
     editDisabled: function () {
       return store.sort_mode ? true : null;
-    },
-    inEditorMode: function () {
-      return store.edit_mode;
     },
     hideTitleBar: function () {
       return store.full_screen;
