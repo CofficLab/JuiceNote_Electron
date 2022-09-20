@@ -19,7 +19,7 @@
       <div
         class="bg-gradient-to-r from-base-300/30 to-base-200/30 rounded-r-2xl fixed bottom-4 top-20 w-56 py-4 border-l-4 border-slate-500"
       >
-        <router-link class="btn w-48 rounded-none" v-bind:to="editorLink" v-html="editorHTML"></router-link>
+        <router-link class="btn w-48 rounded-none" v-bind:to="editorLink" v-html="editorHTML" disabled></router-link>
         <div class="btn w-48 rounded-none" v-on:click="toggleSortMode" v-html="sortHTML"></div>
         <Toc v-show="!inEditorMode"></Toc>
       </div>
@@ -98,6 +98,10 @@ export default defineComponent({
       return markdown.getMarkdownTitle(this.path);
     },
     editorLink(): string {
+      if (this.$store.state.sort_mode) {
+        return "/";
+      }
+
       if (unescape(this.$route.path).indexOf("editor/") > 0) {
         return "/article/" + nav.getMarkdownNameFromRoutePath(this.$route.path);
       }

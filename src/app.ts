@@ -9,8 +9,9 @@ import Content from './components/Content.vue'
 import 'mavon-editor/dist/css/index.css'
 import './app.css'
 import SortVue from './components/Sort.vue'
-import { stat } from 'fs'
+import { nav, navigatorNode } from './models/nav'
 
+// 定义路由
 const routes = [
   { path: '/', redirect: '/article/welcome@home' },
   { path: '/article/:path', component: Content },
@@ -23,12 +24,13 @@ const router = createRouter({
   routes,
 })
 
-// 创建一个新的 store 实例
+// 定义 store 实例
 const store = createStore({
   state() {
     return {
       full_screen: false,
       sort_mode: false,
+      navigators: nav.getNavigators()
     }
   },
   mutations: {
@@ -43,23 +45,32 @@ const store = createStore({
     },
     exitSortMode(state) {
       state.sort_mode = false
+    },
+    updateNavigators(state, navigators) {
+      // console.log('update navigators')
+      state.navigators = navigators
+      nav.update(navigators)
     }
   }
 })
 
+// 检测全屏状态
 ipcRenderer.on('main-process-message', (_event, ...args) => {
   if (args[0] === 'enter-full-screen') {
-    // console.log('enter full screen')
     store.commit('setFullScreen')
   }
 
   if (args[0] === 'leave-full-screen') {
-    // console.log('leave full screen')
     store.commit('setNotFullScreen')
   }
 
-  console.log('[main process message]', ...args)
+  // console.log('[main process message]', ...args)
 })
+
+// 检测排序状态
+if (window.location.pathname.indexOf('sort') > 0) {
+  store.commit('setSortMode')
+}
 
 const app = createApp(Layout)
 app.use(router)

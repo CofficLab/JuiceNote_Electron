@@ -27,6 +27,7 @@ export default defineComponent({
   data() {
     return {
       expand: false,
+      navigators: this.$store.state.navigators,
     };
   },
   methods: {
@@ -54,14 +55,9 @@ export default defineComponent({
     },
   },
   computed: {
-    navigators() {
-      // console.log('navigators are: ' + nav.getNavigators())
-      return nav.getNavigators();
-    },
     activeNavigator() {
       if (this.$store.state.sort_mode) {
-        let navigator = new navigatorNode();
-        navigator.name = "正在排序";
+        let navigator = new navigatorNode("正在排序");
         return navigator;
       }
 

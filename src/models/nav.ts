@@ -8,6 +8,9 @@ import markdown from './markdown'
  * 导航节点
  */
 class navigatorNode {
+    public constructor(name?: string) {
+        if (name) this.name = name
+    }
     public name: string = ''
     public active: boolean = false
     public children: navigatorNode[] = []
