@@ -7,7 +7,7 @@ const md = require('markdown-it')({
     html: true
 });
 
-// md.use(require("markdown-it-anchor").default)
+md.use(require("markdown-it-anchor").default)
 md.use(require("markdown-it-table-of-contents"))
 
 // console.log('markdown root path is ', markdownRootPath)
