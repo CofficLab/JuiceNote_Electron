@@ -14,6 +14,11 @@
         <router-link v-bind:to="getLinkForDir(navigator.name)" v-text="navigator.name" active-class="active">
         </router-link>
       </li>
+
+      <hr class="mb-4 border-green-800" />
+      <li>
+        <router-link to="/" active-class="active">增加图书</router-link>
+      </li>
     </ul>
   </div>
 </template>

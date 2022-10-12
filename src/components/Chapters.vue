@@ -10,12 +10,15 @@
       <li v-for="navigator in activeNavigator.children">
         <router-link v-bind:to="getLink(navigator.name)" v-text="navigator.name" active-class="active"> </router-link>
       </li>
+      <hr class="mb-4" />
+      <li>
+        <router-link to="/" active-class="active">增加章节</router-link>
+      </li>
     </ul>
   </div>
 </template>
 
 <script lang="ts">
-import { unescape } from "querystring";
 import { defineComponent } from "vue";
 import { nav, navigatorNode } from "../models/nav";
 import markdown from "../models/markdown";
