@@ -12,9 +12,26 @@
       </li>
       <hr class="mb-4" />
       <li>
-        <router-link to="/" active-class="active">增加章节</router-link>
+        <label for="my-modal" class="btn modal-button">增加章节</label>
       </li>
     </ul>
+  </div>
+
+  <!-- 弹层 -->
+  <input type="checkbox" id="my-modal" class="modal-toggle" />
+  <div class="modal">
+    <div class="modal-box">
+      <input
+        type="text"
+        v-model="form.title"
+        placeholder="输入标题"
+        autofocus
+        class="input input-bordered input-primary w-full max-w-xs"
+      />
+      <div class="modal-action">
+        <label for="my-modal" class="btn" v-on:click="submit">提交</label>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -23,11 +40,15 @@ import { defineComponent } from "vue";
 import { nav, navigatorNode } from "../models/nav";
 import markdown from "../models/markdown";
 import store from "../models/store";
+import path from "path";
 
 export default defineComponent({
   data() {
     return {
       navigators: store.navigators,
+      form: {
+        title: "",
+      },
     };
   },
   methods: {
@@ -36,6 +57,11 @@ export default defineComponent({
     },
     getLink(navigatorName: string) {
       return "/article/" + navigatorName;
+    },
+    submit() {
+      console.log(this.$route.path);
+      console.log(nav.getActiveNavigator(this.$route.path));
+      markdown.writeToMarkdownFile(path.join(nav.getBookName(this.$route.path), this.form.title), "");
     },
   },
   computed: {

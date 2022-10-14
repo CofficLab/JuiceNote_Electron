@@ -1,4 +1,3 @@
-import { time } from "console";
 import fs from "fs";
 import path from "path";
 import { unescape } from "querystring";
@@ -39,6 +38,19 @@ function getNavigators(): navigatorNode[] {
     })
 
     return navigators
+}
+
+/**
+ * 根据路径计算出图书的名字
+ * 
+ * @param activePath 
+ * @returns 
+ */
+function getBookName(activePath: string): string {
+    let file = activePath.replace('/article/', '').replace('/editor/', '')
+    let parts = file.split('@')
+
+    return parts[0]
 }
 
 /**
@@ -113,7 +125,7 @@ function getActiveNavigator(activePath: string): navigatorNode {
 /**
  * 从路由的路径中解析出 Markdown 文件的名字
  * 
- * @param routerPath 路由的路径，如：/editor/06_Python@home
+ * @param routerPath 路由的路径，如：/editor/Python@home
  * @returns 
  */
 function getMarkdownNameFromRoutePath(routerPath: string): string {
@@ -128,6 +140,7 @@ let nav = {
     update,
     shouldBeActive,
     getNavigators,
+    getBookName,
     getActiveNavigator,
     getMarkdownNameFromRoutePath
 }
