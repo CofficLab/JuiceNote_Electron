@@ -8,27 +8,29 @@
     </label>
     <ul tabindex="0" class="dropdown-content menu p-2 mt-0 shadow-2xl bg-base-200 z-50 w-full rounded-b-3xl">
       <li v-for="navigator in activeNavigator.children">
-        <router-link v-bind:to="getLink(navigator.name)" v-text="navigator.name" active-class="active"> </router-link>
+        <router-link v-bind:to="getLink(navigator.name)" v-text="navigator.title" active-class="active"> </router-link>
       </li>
       <hr class="mb-4" />
       <li>
-        <label for="my-modal" class="btn modal-button">增加章节</label>
+        <label for="my-modal" class="btn modal-button" v-on:click="showForm">增加章节</label>
       </li>
     </ul>
   </div>
 
   <!-- 弹层 -->
-  <input type="checkbox" id="my-modal" class="modal-toggle" />
-  <div class="modal">
+  <div class="modal" v-bind:class="showModal ? 'modal-open' : ''">
     <div class="modal-box">
       <input
+        id="title"
+        ref="title"
         type="text"
+        autofocus
         v-model="form.title"
         placeholder="输入标题"
-        autofocus
         class="input input-bordered input-primary w-full max-w-xs"
       />
       <div class="modal-action">
+        <label for="my-modal" class="btn" v-on:click="hideForm">取消</label>
         <label for="my-modal" class="btn" v-on:click="submit">提交</label>
       </div>
     </div>
@@ -38,14 +40,13 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { nav, navigatorNode } from "../models/nav";
-import markdown from "../models/markdown";
 import store from "../models/store";
 import path from "path";
 
 export default defineComponent({
   data() {
     return {
-      navigators: store.navigators,
+      showModal: false,
       form: {
         title: "",
       },
@@ -58,10 +59,20 @@ export default defineComponent({
     getLink(navigatorName: string) {
       return "/article/" + navigatorName;
     },
+    showForm() {
+      this.showModal = true;
+      this.$nextTick(function () {
+        this.$refs.title.focus();
+      });
+    },
+    hideForm() {
+      this.showModal = false;
+    },
     submit() {
+      store.makeNavigator(path.join(nav.getBookName(this.$route.path), this.form.title));
+      this.showModal = false;
       console.log(this.$route.path);
-      console.log(nav.getActiveNavigator(this.$route.path));
-      markdown.writeToMarkdownFile(path.join(nav.getBookName(this.$route.path), this.form.title), "");
+      this.$router.push(this.$route.path);
     },
   },
   computed: {
@@ -73,7 +84,15 @@ export default defineComponent({
         return "正在排序";
       }
 
-      return markdown.getMarkdownTitle(nav.getMarkdownNameFromRoutePath(this.$route.path));
+      let title = "";
+
+      this.activeNavigator.children.forEach((element) => {
+        if (this.shouldBeActive(element)) {
+          title = element.title;
+        }
+      });
+
+      return title;
     },
   },
 });

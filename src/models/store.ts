@@ -1,5 +1,5 @@
 import { reactive } from 'vue'
-import { navigatorNode, nav } from './nav'
+import { nav } from './nav'
 
 const store = reactive({
     full_screen: false,
@@ -24,10 +24,9 @@ const store = reactive({
     leaveEditMode() {
         this.edit_mode = false
     },
-    updateNavigators(navigators: navigatorNode[]) {
-        // console.log('update navigators in store')
-        this.navigators = navigators
-        nav.update(navigators)
+    makeNavigator(name: string) {
+        nav.make(name)
+        this.navigators = nav.getNavigators()
     }
 })
 

@@ -11,6 +11,8 @@ class navigatorNode {
         if (name) this.name = name
     }
     public name: string = ''
+    public path: string = ''
+    public title: string = ''
     public active: boolean = false
     public children: navigatorNode[] = []
 }
@@ -64,6 +66,8 @@ function makeNode(navigator: string): navigatorNode {
 
     let node = new navigatorNode
     node.name = navigator.replace(markdown.markdownRootPath + '/', '').replaceAll('/', '@').replace('.md', '')
+    node.path = node.name
+    node.title = node.path.split('@')[1]
 
     if (!fs.existsSync(navigator)) {
         console.log('无法生成导航，文件不存在', navigator)
@@ -132,12 +136,45 @@ function getMarkdownNameFromRoutePath(routerPath: string): string {
     return routerPath.replace('/article/', '').replace('/editor/', '')
 }
 
-function update(navigators: navigatorNode[]) {
+/**
+ * 将导航写入到navigators.json
+ * 
+ * @param navigators 
+ */
+function update(navigators?: navigatorNode[]) {
+    if (navigators === undefined) {
+        navigators = getNavigators();
+    }
+
     fs.writeFileSync(path.join(markdown.markdownRootPath, 'navigators.json'), JSON.stringify(navigators, null, 4))
 }
 
+/**
+ * 创建一个新的导航节点
+ * 
+ * @param name 节点的路径
+ */
+function make(name: string) {
+    markdown.writeToMarkdownFile(name, "# Empty Title \r\n ## 简介")
+    update()
+}
+
+/**
+ * 删除一个导航节点
+ * 
+ * @param name 节点的路径
+ */
+function deleteNav(name: string) {
+    let markdownFile = name.replace('/article/', '')
+    console.log('删除导航', markdownFile)
+    markdown.deleteMarkdownFile(markdownFile)
+    update()
+}
+
 let nav = {
+    make,
     update,
+    deleteNav,
     shouldBeActive,
     getNavigators,
     getBookName,

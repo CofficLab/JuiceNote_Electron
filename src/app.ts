@@ -8,14 +8,13 @@ import Content from './components/Content.vue'
 import 'mavon-editor/dist/css/index.css'
 import './app.css'
 import SortVue from './components/Sort.vue'
-import storeModel from './models/store'
 import store from './models/store'
 
 // 定义路由
 const routes = [
   { path: '/', redirect: '/article/welcome@home' },
   { path: '/article/:path', component: Content },
-  { path: '/editor/:path', component: EditorVue },
+  { path: '/editor/:path', component: EditorVue, props: true },
   { path: '/sort', component: SortVue }
 ]
 
@@ -39,7 +38,7 @@ ipcRenderer.on('main-process-message', (_event, ...args) => {
 
 // 检测排序状态
 if (window.location.pathname.indexOf('sort') > 0) {
-  storeModel.enterSortMode()
+  store.enterSortMode()
 }
 
 const app = createApp(Layout)

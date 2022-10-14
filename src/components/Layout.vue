@@ -19,8 +19,10 @@
       <div
         class="bg-gradient-to-r from-base-300/30 to-base-200/30 rounded-r-2xl fixed bottom-4 top-20 w-56 py-4 border-l-4 border-slate-500"
       >
+        <!-- 编辑、排序等操作菜单 -->
         <div class="btn w-48 rounded-none" v-on:click="toggleEditMode" v-html="editHTML" :disabled="editDisabled"></div>
         <div class="btn w-48 rounded-none" v-on:click="toggleSortMode" v-html="sortHTML"></div>
+        <div class="btn w-48 rounded-none" v-on:click="deleteNav" v-html="deleteHTML"></div>
         <Toc v-show="!inEditMode"></Toc>
       </div>
     </div>
@@ -43,6 +45,7 @@ import Toc from "./Toc.vue";
 import Content from "./Content.vue";
 import Editor from "./Editor.vue";
 import store from "../models/store";
+import { nav } from "../models/nav";
 
 export default defineComponent({
   components: {
@@ -73,6 +76,14 @@ export default defineComponent({
         this.$router.push("/sort");
       }
     },
+    deleteNav: function () {
+      console.log("delete button clicked");
+      console.log(this.$route.path);
+      console.log(nav.getBookName(this.$route.path));
+      this.$router.push("/article/" + nav.getBookName(this.$route.path) + "@home");
+      console.log(this.$route.path);
+      nav.deleteNav(this.$route.path);
+    },
   },
   computed: {
     editDisabled: function () {
@@ -95,6 +106,9 @@ export default defineComponent({
     },
     sortHTML(): string {
       return store.sort_mode ? "返回" : "排序";
+    },
+    deleteHTML(): string {
+      return "删除";
     },
     inEditMode(): boolean {
       return store.edit_mode;

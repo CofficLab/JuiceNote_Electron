@@ -139,11 +139,22 @@ function getMarkdownRenderedBody(markdownFile: string): string {
  * @returns 
  */
 function writeToMarkdownFile(markdownFile: string, content: string): void {
+    console.log('write to markdown file', markdownFile)
     if (!fs.existsSync(path.dirname(getAbsolutePath(markdownFile)))) {
         fs.mkdirSync(path.dirname(getAbsolutePath(markdownFile)))
     }
 
     return fs.writeFileSync(getAbsolutePath(markdownFile), content)
+}
+
+/**
+ * 删除Markdown文件
+ * 
+ * @param markdownFile markdown文件名，相对于markdown根目录的路径
+ * @returns 
+ */
+function deleteMarkdownFile(markdownFile: string): void {
+    fs.unlinkSync(getAbsolutePath(markdownFile))
 }
 
 /**
@@ -205,6 +216,7 @@ let markdown = {
     getMarkdownTitle,
     markdownRootPath,
     getMarkdownContent,
+    deleteMarkdownFile,
     writeToMarkdownFile,
     getMarkdownRenderedBody,
     getMarkdownRenderedContent,
