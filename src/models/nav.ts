@@ -25,13 +25,9 @@ class navigatorNode {
 function getNavigators(): navigatorNode[] {
     let navigators: navigatorNode[] = []
 
-    // fs.readdirSync(markdown.markdownRootPath).forEach((navigator) => {
-    //     navigators.push(makeNode(path.join(markdown.markdownRootPath, navigator)))
-    // })
-
-    // console.log(JSON.stringify(navigators))
-
-    // fs.writeFileSync(path.join(markdown.markdownRootPath, 'navigators.json'), JSON.stringify(navigators, null, 4))
+    if (!fs.existsSync(path.join(markdown.markdownRootPath, 'navigators.json'))) {
+        computeAndSaveNavigators();
+    }
 
     let json = fs.readFileSync(path.join(markdown.markdownRootPath, 'navigators.json'), 'utf-8')
     let items = JSON.parse(json)
@@ -40,6 +36,18 @@ function getNavigators(): navigatorNode[] {
     })
 
     return navigators
+}
+
+function computeAndSaveNavigators() {
+    let navigators: navigatorNode[] = []
+
+    fs.readdirSync(markdown.markdownRootPath).forEach((navigator) => {
+        navigators.push(makeNode(path.join(markdown.markdownRootPath, navigator)))
+    })
+
+    console.log(JSON.stringify(navigators))
+
+    fs.writeFileSync(path.join(markdown.markdownRootPath, 'navigators.json'), JSON.stringify(navigators, null, 4))
 }
 
 /**
