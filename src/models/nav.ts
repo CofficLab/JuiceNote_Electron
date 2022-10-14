@@ -26,7 +26,7 @@ function getNavigators(): navigatorNode[] {
     let navigators: navigatorNode[] = []
 
     if (!fs.existsSync(path.join(markdown.markdownRootPath, 'navigators.json'))) {
-        computeAndSaveNavigators();
+        update();
     }
 
     let json = fs.readFileSync(path.join(markdown.markdownRootPath, 'navigators.json'), 'utf-8')
@@ -36,18 +36,6 @@ function getNavigators(): navigatorNode[] {
     })
 
     return navigators
-}
-
-function computeAndSaveNavigators() {
-    let navigators: navigatorNode[] = []
-
-    fs.readdirSync(markdown.markdownRootPath).forEach((navigator) => {
-        navigators.push(makeNode(path.join(markdown.markdownRootPath, navigator)))
-    })
-
-    console.log(JSON.stringify(navigators))
-
-    fs.writeFileSync(path.join(markdown.markdownRootPath, 'navigators.json'), JSON.stringify(navigators, null, 4))
 }
 
 /**
@@ -147,12 +135,15 @@ function getMarkdownNameFromRoutePath(routerPath: string): string {
 /**
  * 将导航写入到navigators.json
  * 
- * @param navigators 
  */
-function update(navigators?: navigatorNode[]) {
-    if (navigators === undefined) {
-        navigators = getNavigators();
-    }
+function update() {
+    let navigators: navigatorNode[] = []
+
+    fs.readdirSync(markdown.markdownRootPath).forEach((navigator) => {
+        navigators.push(makeNode(path.join(markdown.markdownRootPath, navigator)))
+    })
+
+    // console.log(JSON.stringify(navigators))
 
     fs.writeFileSync(path.join(markdown.markdownRootPath, 'navigators.json'), JSON.stringify(navigators, null, 4))
 }
