@@ -6,11 +6,12 @@
 import { defineComponent } from "vue";
 import markdown from "../models/markdown";
 import "../app.css";
+import { escape } from "querystring";
 
 export default defineComponent({
   methods: {
     getContentsWithToc(): string {
-      return markdown.getMarkdownRenderedContent(this.path);
+      return markdown.getMarkdownRenderedContent(decodeURI(this.path));
     },
     showEditor(): void {
       this.$router.push("/editor/" + this.path);
@@ -24,7 +25,7 @@ export default defineComponent({
       return "/editor/" + this.path;
     },
     body(): string {
-      return markdown.getMarkdownRenderedBody(this.path);
+      return markdown.getMarkdownRenderedBody(decodeURI(this.path));
     },
   },
 });

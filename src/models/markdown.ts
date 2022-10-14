@@ -65,7 +65,7 @@ function getMarkdownRenderedContent(markdownName: string) {
     // console.log('get markdown rendered content of ' + markdownName)
     if (!fs.existsSync(getAbsolutePath(markdownName))) {
         // writeToMarkdownFile(markdownName, "# " + markdownName)
-        return md.render("文件不存在")
+        return md.render("文件「" + markdownName + "」不存在")
     }
 
     // console.log('get markdown rendered content:' + md.render("[[toc]] \r\n" + getMarkdownContent(markdownName)))
