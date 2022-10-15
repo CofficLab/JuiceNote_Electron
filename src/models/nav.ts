@@ -4,20 +4,20 @@ import { unescape } from "querystring";
 import markdown from './markdown'
 
 /**
- * 导航节点
+ * 导航节点的定义
  */
 class navigatorNode {
-    public constructor(name?: string) {
-        if (name) this.name = name
+    public constructor(id?: string) {
+        if (id) this.id = id
     }
-    public name: string = ''
-    public path: string = ''
+    public id: string = ''
     public title: string = ''
+    public link: string = ''
     public children: navigatorNode[] = []
 }
 
 /**
- * 返回导航节点列表
+ * 获取导航节点列表
  * 
  * @returns navigatorNode[]
  */
@@ -25,13 +25,14 @@ function getNavigators(): navigatorNode[] {
     let navigators: navigatorNode[] = []
 
     if (!fs.existsSync(path.join(markdown.markdownRootPath, 'navigators.json'))) {
+        console.log('navigators.json不存在，新建')
         update();
     }
 
     let json = fs.readFileSync(path.join(markdown.markdownRootPath, 'navigators.json'), 'utf-8')
     let items = JSON.parse(json)
     items.forEach(function (item: navigatorNode) {
-        navigators.push(makeNode(path.join(markdown.markdownRootPath, item.name)))
+        navigators.push(makeNode(path.join(markdown.markdownRootPath, item.id)))
     })
 
     return navigators
@@ -60,11 +61,12 @@ function makeNode(navigator: string): navigatorNode {
     // console.log('now make navigator node for ' + navigator)
 
     let node = new navigatorNode
-    node.name = navigator.replace(markdown.markdownRootPath + '/', '').replaceAll('/', '@').replace('.md', '')
-    node.path = node.name
+    node.id = navigator.replace(markdown.markdownRootPath + '/', '').replaceAll('/', '@').replace('.md', '')
 
-    let title = node.path.split('@').pop()
+    let title = node.id.split('@').pop()
     node.title = title != undefined ? title : ''
+
+    node.link = '/article/' + node.id
 
     if (!fs.existsSync(navigator)) {
         console.log('无法生成导航，文件不存在', navigator)
@@ -94,7 +96,7 @@ function makeNode(navigator: string): navigatorNode {
  * @returns 
  */
 function shouldBeActive(node: navigatorNode, activePath: string) {
-    let result = unescape(activePath).indexOf(node.name) > 0
+    let result = unescape(activePath).indexOf(node.id) > 0
 
     if (result) {
         // console.log(node.name + ' should be active', node)
@@ -112,7 +114,7 @@ function shouldBeActive(node: navigatorNode, activePath: string) {
  * @returns 
  */
 function getActivatedOnes(activePath: string): navigatorNode[] {
-    console.log('get active navigators, now path is ' + activePath)
+    // console.log('get active navigators, now path is ' + activePath)
     let navigators = getNavigators()
     let result: navigatorNode[] = []
     let found = false
@@ -133,7 +135,7 @@ function getActivatedOnes(activePath: string): navigatorNode[] {
         if (!found) break
     }
 
-    console.log('activated navigators', result)
+    // console.log('activated navigators', result)
 
     return result
 }
@@ -152,16 +154,18 @@ function getMarkdownNameFromRoutePath(routerPath: string): string {
  * 将导航写入到navigators.json
  * 
  */
-function update() {
-    let navigators: navigatorNode[] = []
+function update(navigators?: navigatorNode[]) {
+    let items: navigatorNode[] = []
+
+    if (navigators) items = navigators
 
     fs.readdirSync(markdown.markdownRootPath).forEach((navigator) => {
-        navigators.push(makeNode(path.join(markdown.markdownRootPath, navigator)))
+        items.push(makeNode(path.join(markdown.markdownRootPath, navigator)))
     })
 
     // console.log(JSON.stringify(navigators))
 
-    fs.writeFileSync(path.join(markdown.markdownRootPath, 'navigators.json'), JSON.stringify(navigators, null, 4))
+    fs.writeFileSync(path.join(markdown.markdownRootPath, 'navigators.json'), JSON.stringify(items, null, 4))
 }
 
 /**

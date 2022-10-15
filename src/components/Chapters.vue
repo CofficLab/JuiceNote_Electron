@@ -6,7 +6,7 @@
     </label>
     <ul tabindex="0" class="dropdown-content menu p-2 mt-0 shadow-2xl bg-base-200 z-50 w-full rounded-b-3xl">
       <li v-for="chapter in chapters">
-        <router-link v-bind:to="getLink(chapter.name)" v-text="chapter.title" active-class="active"> </router-link>
+        <router-link v-bind:to="chapter.link" v-text="chapter.title" active-class="active"> </router-link>
       </li>
     </ul>
   </div>
@@ -14,27 +14,11 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { nav, navigatorNode } from "../models/nav";
+import { nav } from "../models/nav";
 import store from "../models/store";
 import ChevronDown from "../icons/chevron-down.vue";
 
 export default defineComponent({
-  data() {
-    return {
-      showModal: false,
-      form: {
-        title: "",
-      },
-    };
-  },
-  methods: {
-    shouldBeActive(navigator: navigatorNode) {
-      return nav.shouldBeActive(navigator, this.$route.path);
-    },
-    getLink(navigatorName: string) {
-      return "/article/" + navigatorName;
-    },
-  },
   computed: {
     chapters() {
       let activatedOnes = nav.getActivatedOnes(this.$route.path);

@@ -1,16 +1,15 @@
 <template>
   <div class="dropdown z-50 w-full">
     <label tabindex="0" class="btn m-0 w-full rounded-none">
-      <span>{{ book ? book.name : "" }}</span>
+      <span>{{ book ? book.title : "" }}</span>
       <chevron-down></chevron-down>
     </label>
     <ul
       tabindex="0"
       class="dropdown-content menu shadow-3xl bg-base-300 dark:bg-info-content w-full h-96 overflow-scroll"
     >
-      <li v-for="navigator in navigators">
-        <router-link v-bind:to="getLinkForDir(navigator.name)" v-text="navigator.name" active-class="active">
-        </router-link>
+      <li v-for="book in books">
+        <router-link v-bind:to="getLinkForDir(book.id)" v-text="book.id" active-class="active"> </router-link>
       </li>
     </ul>
   </div>
@@ -25,7 +24,7 @@ import ChevronDown from "../icons/chevron-down.vue";
 export default defineComponent({
   data() {
     return {
-      navigators: store.navigators,
+      books: store.navigators,
     };
   },
   methods: {
@@ -35,7 +34,14 @@ export default defineComponent({
   },
   computed: {
     book() {
-      return store.sort_mode ? new navigatorNode("正在排序") : nav.getActivatedOnes(this.$route.path).shift();
+      if (store.sort_mode) {
+        let book = new navigatorNode("正在排序");
+        book.title = "正在排序";
+
+        return book;
+      }
+
+      return nav.getActivatedOnes(this.$route.path).shift();
     },
   },
   components: { ChevronDown },

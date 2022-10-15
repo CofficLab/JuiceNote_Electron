@@ -10,7 +10,7 @@
         v-on:dragenter="dragEnter(navigator)"
       >
         <div v-text="navigators.indexOf(navigator)" class="w-1/6"></div>
-        <div v-text="navigator.name"></div>
+        <div v-text="navigator.id"></div>
       </div>
     </li>
   </ul>
