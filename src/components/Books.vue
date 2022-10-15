@@ -2,22 +2,15 @@
   <div class="dropdown z-50 w-full">
     <label tabindex="0" class="btn m-0 w-full rounded-none">
       <span>{{ activeNavigator.name }}</span>
-      <svg class="fill-current ml-2" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-        <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
-      </svg>
+      <chevron-down></chevron-down>
     </label>
     <ul
       tabindex="0"
-      class="dropdown-content menu p-2 shadow-3xl bg-base-300 dark:bg-info-content w-full rounded-b-3xl h-96 overflow-scroll"
+      class="dropdown-content menu shadow-3xl bg-base-300 dark:bg-info-content w-full h-96 overflow-scroll"
     >
       <li v-for="navigator in navigators">
         <router-link v-bind:to="getLinkForDir(navigator.name)" v-text="navigator.name" active-class="active">
         </router-link>
-      </li>
-
-      <hr class="mb-4 border-green-800" />
-      <li>
-        <router-link to="/" active-class="active">增加图书</router-link>
       </li>
     </ul>
   </div>
@@ -27,6 +20,7 @@
 import { defineComponent } from "vue";
 import { nav, navigatorNode } from "../models/nav";
 import store from "../models/store";
+import ChevronDown from "../icons/chevron-down.vue";
 
 export default defineComponent({
   data() {
@@ -44,5 +38,6 @@ export default defineComponent({
       return store.sort_mode ? new navigatorNode("正在排序") : nav.getActiveNavigator(this.$route.path);
     },
   },
+  components: { ChevronDown },
 });
 </script>

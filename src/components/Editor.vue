@@ -107,7 +107,7 @@ export default defineComponent({
 
   /* 标题导航 */
   .v-note-navigation-wrapper {
-    @apply bg-transparent border-0 text-base-content fixed left-0 bottom-24 top-44 z-20   w-56 !important;
+    @apply bg-transparent border-0 text-base-content fixed left-0 bottom-24 top-20 z-20   w-56 !important;
 
     .v-note-navigation-title {
       @apply hidden;

@@ -1,51 +1,57 @@
 <template>
-  <!-- 标题栏，用于显示红绿灯 -->
+  <!-- 标题栏，左侧显示红绿灯，右侧可用于拖移 -->
   <div class="h-8 bg-stone-900 fixed top-0 z-50 w-full" id="title-bar" v-show="!hideTitleBar"></div>
 
-  <!-- 导航栏 -->
+  <!-- 导航栏，显示图书名和章节名 -->
   <div class="h-12 z-50" v-bind:class="hideTitleBar ? 'mt-0' : 'mt-8'">
     <div class="w-full flex flex-row fixed z-50 shadow-xl">
-      <div class="w-56"><Books></Books></div>
+      <div class="w-56">
+        <Books></Books>
+      </div>
       <div class="flex-grow h-12 bg-base-300 flex justify-center shadow-2xl">
         <div class="place-self-center">
           <Chapters></Chapters>
         </div>
       </div>
+      <div class="w-18">
+        <Manage></Manage>
+      </div>
     </div>
   </div>
 
+  <!-- 主要区域，包含左侧操作和右侧内容 -->
   <main class="bg-green-200/20 flex flex-row z-10 min-h-screen overflow-hidden">
+    <!-- 左侧栏 -->
     <div class="w-56">
       <div
-        class="bg-gradient-to-r from-base-300/30 to-base-200/30 rounded-r-2xl fixed bottom-4 top-20 w-56 py-4 border-l-4 border-slate-500"
+        class="bg-gradient-to-r from-base-300/50 to-base-200/90 rounded-r-2xl fixed top-14 bottom-10 w-56 py-4 border-l-4 border-slate-500"
       >
-        <!-- 编辑、排序等操作菜单 -->
-        <div class="btn w-48 rounded-none" v-on:click="toggleEditMode" v-html="editHTML" :disabled="editDisabled"></div>
-        <div class="btn w-48 rounded-none" v-on:click="toggleSortMode" v-html="sortHTML"></div>
-        <div class="btn w-48 rounded-none" v-on:click="deleteNav" v-html="deleteHTML"></div>
         <Toc v-show="!inEditMode"></Toc>
       </div>
     </div>
+    <!-- 内容区域 -->
     <div class="flex-grow">
-      <div class="fixed left-60 bottom-4 top-20 right-4 bg-base-200 shadow-2xl rounded-2xl p-0">
+      <div class="fixed left-60 top-24 bottom-10 right-4 bg-base-200 p-0">
         <div class="h-full overflow-scroll scroll-m-48 scroll-p-52">
           <router-view></router-view>
         </div>
       </div>
     </div>
   </main>
+
+  <!-- 底部地址栏 -->
+  <Address></Address>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import Books from "./Books.vue";
-import markdown from "../models/markdown";
 import Chapters from "./Chapters.vue";
 import Toc from "./Toc.vue";
 import Content from "./Content.vue";
-import Editor from "./Editor.vue";
 import store from "../models/store";
-import { nav } from "../models/nav";
+import Manage from "./Manage.vue";
+import Address from "./Address.vue";
 
 export default defineComponent({
   components: {
@@ -53,62 +59,12 @@ export default defineComponent({
     Chapters,
     Toc,
     Content,
-    Editor,
-  },
-  methods: {
-    toggleEditMode: function () {
-      console.log("toggle edit mode");
-      if (store.edit_mode) {
-        store.leaveEditMode();
-        this.$router.push(this.$route.path.replace("editor", "article"));
-      } else {
-        store.enterEditMode();
-        this.$router.push(this.$route.path.replace("article", "editor"));
-      }
-    },
-    toggleSortMode: function () {
-      // console.log("toggle sort mode");
-      if (store.sort_mode) {
-        store.leaveSortMode();
-        this.$router.push("/");
-      } else {
-        store.enterSortMode();
-        this.$router.push("/sort");
-      }
-    },
-    deleteNav: function () {
-      console.log("delete button clicked");
-      console.log(this.$route.path);
-      console.log(nav.getBookName(this.$route.path));
-      this.$router.push("/article/" + nav.getBookName(this.$route.path) + "@home");
-      console.log(this.$route.path);
-      nav.deleteNav(this.$route.path);
-    },
+    Manage,
+    Address,
   },
   computed: {
-    editDisabled: function () {
-      return store.sort_mode ? true : null;
-    },
     hideTitleBar: function () {
       return store.full_screen;
-    },
-    path: function () {
-      return this.$route.path.replace("/article", "");
-    },
-    toc(): string {
-      return markdown.getMarkdownToc(this.path);
-    },
-    title(): string {
-      return markdown.getMarkdownTitle(this.path);
-    },
-    editHTML(): string {
-      return store.edit_mode ? "返回" : "编辑";
-    },
-    sortHTML(): string {
-      return store.sort_mode ? "返回" : "排序";
-    },
-    deleteHTML(): string {
-      return "删除";
     },
     inEditMode(): boolean {
       return store.edit_mode;
