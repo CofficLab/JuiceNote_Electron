@@ -4,7 +4,7 @@
       <Cog></Cog>
     </label>
     <ul tabindex="0" class="dropdown-content shadow-3xl">
-      <div class="btn w-48 rounded-none" v-on:click="toggleEditMode" v-html="editHTML" :disabled="editDisabled"></div>
+      <div class="btn w-48 rounded-none" v-on:click="toggleEditMode" v-html="editHTML"></div>
       <label class="btn w-48 rounded-none modal-button" for="my-modal-4">排序</label>
       <div class="btn w-48 rounded-none" v-on:click="deleteNav" v-html="deleteHTML"></div>
       <div class="btn w-48 rounded-none" v-on:click="showForm">增加章节</div>
@@ -88,16 +88,6 @@ export default defineComponent({
         this.$router.push(this.$route.path.replace("article", "editor"));
       }
     },
-    toggleSortMode: function () {
-      // console.log("toggle sort mode");
-      if (store.sort_mode) {
-        store.leaveSortMode();
-        this.$router.push("/");
-      } else {
-        store.enterSortMode();
-        this.$router.push("/sort");
-      }
-    },
     deleteNav: function () {
       console.log("delete button clicked");
       console.log(this.$route.path);
@@ -108,17 +98,11 @@ export default defineComponent({
     },
   },
   computed: {
-    editDisabled: function () {
-      return store.sort_mode ? true : null;
-    },
     path: function () {
       return this.$route.path.replace("/article", "");
     },
     editHTML(): string {
       return store.edit_mode ? "返回" : "编辑";
-    },
-    sortHTML(): string {
-      return store.sort_mode ? "返回" : "排序";
     },
     deleteHTML(): string {
       return "删除";

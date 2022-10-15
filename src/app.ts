@@ -15,7 +15,6 @@ const routes = [
   { path: '/', redirect: '/article/welcome@home' },
   { path: '/article/:path', component: Content },
   { path: '/editor/:path', component: EditorVue, props: true },
-  { path: '/sort', component: SortVue }
 ]
 
 const router = createRouter({

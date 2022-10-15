@@ -3,7 +3,6 @@ import { nav, navigatorNode } from './nav'
 
 const store = reactive({
     full_screen: false,
-    sort_mode: false,
     edit_mode: false,
     navigator: null,
     navigators: nav.getNavigators(),
@@ -12,12 +11,6 @@ const store = reactive({
     },
     leaveFullScreen() {
         this.full_screen = false
-    },
-    enterSortMode() {
-        this.sort_mode = true
-    },
-    leaveSortMode() {
-        this.sort_mode = false
     },
     enterEditMode() {
         this.edit_mode = true
