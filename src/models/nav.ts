@@ -13,7 +13,6 @@ class navigatorNode {
     public name: string = ''
     public path: string = ''
     public title: string = ''
-    public active: boolean = false
     public children: navigatorNode[] = []
 }
 
@@ -63,7 +62,9 @@ function makeNode(navigator: string): navigatorNode {
     let node = new navigatorNode
     node.name = navigator.replace(markdown.markdownRootPath + '/', '').replaceAll('/', '@').replace('.md', '')
     node.path = node.name
-    node.title = node.path.split('@')[1]
+
+    let title = node.path.split('@').pop()
+    node.title = title != undefined ? title : ''
 
     if (!fs.existsSync(navigator)) {
         console.log('无法生成导航，文件不存在', navigator)
@@ -104,20 +105,35 @@ function shouldBeActive(node: navigatorNode, activePath: string) {
     return result
 }
 
-function getActiveNavigator(activePath: string): navigatorNode {
-    // console.log('get active navigators, now path is ' + activePath)
+/**
+ * 获取当前激活的导航
+ * 
+ * @param activePath 
+ * @returns 
+ */
+function getActivatedOnes(activePath: string): navigatorNode[] {
+    console.log('get active navigators, now path is ' + activePath)
     let navigators = getNavigators()
-    let result = new navigatorNode
+    let result: navigatorNode[] = []
+    let found = false
 
-    if (activePath.indexOf('sort') > 0) {
-        result.name = '正在排序'
-    } else {
-        navigators.forEach(function (navigator) {
-            if (shouldBeActive(navigator, activePath)) {
-                result = navigator
+    while (navigators.length > 0) {
+        found = false
+        for (const key in navigators) {
+            // console.log('check should be active', navigators[key])
+            if (shouldBeActive(navigators[key], activePath)) {
+                // console.log('should be active', navigators[key])
+                result.push(navigators[key])
+                navigators = navigators[key].children
+                found = true
+                break
             }
-        })
+        }
+
+        if (!found) break
     }
+
+    console.log('activated navigators', result)
 
     return result
 }
@@ -177,7 +193,7 @@ let nav = {
     shouldBeActive,
     getNavigators,
     getBookName,
-    getActiveNavigator,
+    getActivatedOnes,
     getMarkdownNameFromRoutePath
 }
 

@@ -5,6 +5,7 @@ const store = reactive({
     full_screen: false,
     sort_mode: false,
     edit_mode: false,
+    navigator: null,
     navigators: nav.getNavigators(),
     enterFullScreen() {
         this.full_screen = true

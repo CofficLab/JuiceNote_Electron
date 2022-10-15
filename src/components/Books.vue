@@ -1,7 +1,7 @@
 <template>
   <div class="dropdown z-50 w-full">
     <label tabindex="0" class="btn m-0 w-full rounded-none">
-      <span>{{ activeNavigator.name }}</span>
+      <span>{{ book ? book.name : "" }}</span>
       <chevron-down></chevron-down>
     </label>
     <ul
@@ -34,8 +34,8 @@ export default defineComponent({
     },
   },
   computed: {
-    activeNavigator() {
-      return store.sort_mode ? new navigatorNode("正在排序") : nav.getActiveNavigator(this.$route.path);
+    book() {
+      return store.sort_mode ? new navigatorNode("正在排序") : nav.getActivatedOnes(this.$route.path).shift();
     },
   },
   components: { ChevronDown },

@@ -5,8 +5,8 @@
       <chevron-down></chevron-down>
     </label>
     <ul tabindex="0" class="dropdown-content menu p-2 mt-0 shadow-2xl bg-base-200 z-50 w-full rounded-b-3xl">
-      <li v-for="navigator in activeNavigator.children">
-        <router-link v-bind:to="getLink(navigator.name)" v-text="navigator.title" active-class="active"> </router-link>
+      <li v-for="chapter in chapters">
+        <router-link v-bind:to="getLink(chapter.name)" v-text="chapter.title" active-class="active"> </router-link>
       </li>
     </ul>
   </div>
@@ -36,20 +36,21 @@ export default defineComponent({
     },
   },
   computed: {
-    activeNavigator() {
-      return nav.getActiveNavigator(this.$route.path);
+    chapters() {
+      let activatedOnes = nav.getActivatedOnes(this.$route.path);
+      let book = activatedOnes.shift();
+
+      return book ? book.children : [];
     },
     title(): string {
       if (store.sort_mode) {
         return "正在排序";
       }
-      let title = "";
-      this.activeNavigator.children.forEach((element) => {
-        if (this.shouldBeActive(element)) {
-          title = element.title;
-        }
-      });
-      return title;
+
+      let activatedOnes = nav.getActivatedOnes(this.$route.path);
+      let chapter = activatedOnes.pop();
+
+      return chapter ? chapter.title : "";
     },
   },
   components: { ChevronDown },
