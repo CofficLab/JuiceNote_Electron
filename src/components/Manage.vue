@@ -6,7 +6,7 @@
     <ul tabindex="0" class="dropdown-content shadow-3xl">
       <div class="btn w-48 rounded-none" v-on:click="toggleEditMode" v-html="editHTML"></div>
       <label class="btn w-48 rounded-none modal-button" for="my-modal-4">排序</label>
-      <div class="btn w-48 rounded-none" v-on:click="deleteNav" v-html="deleteHTML"></div>
+      <div class="btn w-48 rounded-none" v-on:click="deleteNav">删除</div>
       <div class="btn w-48 rounded-none" v-on:click="showForm">增加章节</div>
     </ul>
   </div>
@@ -103,9 +103,6 @@ export default defineComponent({
     },
     editHTML(): string {
       return store.edit_mode ? "返回" : "编辑";
-    },
-    deleteHTML(): string {
-      return "删除";
     },
     inEditMode(): boolean {
       return store.edit_mode;
