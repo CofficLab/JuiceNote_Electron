@@ -5,7 +5,7 @@
     </label>
     <ul tabindex="0" class="dropdown-content shadow-3xl">
       <div class="btn w-48 rounded-none" v-on:click="toggleEditMode" v-html="editHTML" :disabled="editDisabled"></div>
-      <div class="btn w-48 rounded-none" v-on:click="toggleSortMode" v-html="sortHTML"></div>
+      <label class="btn w-48 rounded-none modal-button" for="my-modal-4">排序</label>
       <div class="btn w-48 rounded-none" v-on:click="deleteNav" v-html="deleteHTML"></div>
       <div class="btn w-48 rounded-none" v-on:click="showForm">增加章节</div>
     </ul>
@@ -28,6 +28,14 @@
       </div>
     </div>
   </div>
+
+  <!-- 排序的弹层 -->
+  <input type="checkbox" id="my-modal-4" class="modal-toggle" />
+  <label for="my-modal-4" class="modal cursor-pointer">
+    <label class="modal-box relative" for="">
+      <Sort></Sort>
+    </label>
+  </label>
 </template>
 
 <script lang="ts">
@@ -36,11 +44,13 @@ import store from "../models/store";
 import { nav } from "../models/nav";
 import path from "path";
 import Cog from "../icons/cog.vue";
+import Sort from "./Sort.vue";
 
 export default defineComponent({
   data() {
     return {
       showModal: false,
+      showSortModal: false,
       form: {
         title: "",
       },
@@ -53,8 +63,14 @@ export default defineComponent({
         this.$refs.title.focus();
       });
     },
+    showSortForm() {
+      this.showSortModal = true;
+    },
     hideForm() {
       this.showModal = false;
+    },
+    hideSortForm() {
+      this.showSortForm = false;
     },
     submit() {
       store.makeNavigator(path.join(nav.getBookName(this.$route.path), this.form.title));
@@ -111,7 +127,7 @@ export default defineComponent({
       return store.edit_mode;
     },
   },
-  components: { Cog },
+  components: { Cog, Sort },
 });
 </script>
 
