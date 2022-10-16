@@ -15,6 +15,7 @@
 import { defineComponent } from "vue";
 import markdown from "../models/markdown";
 import { nav } from "../models/nav";
+import store from "../models/store";
 
 export default defineComponent({
   props: ["path"],
@@ -54,6 +55,9 @@ export default defineComponent({
         console.log("没有变化，不保存文章");
       }
     },
+  },
+  mounted: function () {
+    store.enterEditMode();
   },
 });
 </script>

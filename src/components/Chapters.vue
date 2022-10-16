@@ -15,7 +15,6 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { nav } from "../models/nav";
-import store from "../models/store";
 import ChevronDown from "../icons/chevron-down.vue";
 
 export default defineComponent({
