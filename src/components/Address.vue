@@ -1,9 +1,9 @@
 <template>
-  <div class="bg-green-500 h-8 fixed bottom-0 w-full">
-    <div class="text-sm breadcrumbs justify-center flex">
+  <div class="bg-base-300 h-8 fixed bottom-0 w-full p-0 flex justify-center">
+    <div class="text-sm breadcrumbs justify-center flex p-0">
       <ul>
         <li v-for="item in items">
-          {{ item.title }}
+          <router-link v-bind:to="item.link">{{ item.title }}</router-link>
         </li>
       </ul>
     </div>

@@ -4,7 +4,7 @@
       <h1 v-html="title" class="place-self-center my-auto text-xl"></h1>
       <chevron-down></chevron-down>
     </label>
-    <ul tabindex="0" class="dropdown-content menu p-2 mt-0 shadow-2xl bg-base-200 z-50 w-full rounded-b-3xl">
+    <ul tabindex="0" class="dropdown-content menu p-2 mt-0 shadow-2xl bg-base-200 z-50 w-full">
       <li v-for="chapter in chapters">
         <router-link v-bind:to="chapter.link" v-text="chapter.title" active-class="active"> </router-link>
       </li>
@@ -27,10 +27,6 @@ export default defineComponent({
       return book ? book.children : [];
     },
     title(): string {
-      if (store.sort_mode) {
-        return "正在排序";
-      }
-
       let activatedOnes = nav.getActivatedOnes(this.$route.path);
       let chapter = activatedOnes.pop();
 

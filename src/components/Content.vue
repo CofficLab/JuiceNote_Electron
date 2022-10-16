@@ -25,7 +25,7 @@ export default defineComponent({
       return "/editor/" + this.path;
     },
     body(): string {
-      return markdown.getMarkdownRenderedBody(decodeURI(this.path));
+      return markdown.getMarkdownRenderedContentWithoutToc(decodeURI(this.path));
     },
   },
 });

@@ -67,6 +67,7 @@ function makeNode(navigator: string): navigatorNode {
     node.title = title != undefined ? title : ''
 
     node.link = '/article/' + node.id
+    if (!node.link.includes('@')) node.link = node.link + '@home'
 
     if (!fs.existsSync(navigator)) {
         console.log('无法生成导航，文件不存在', navigator)
