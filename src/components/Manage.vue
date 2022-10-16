@@ -32,7 +32,7 @@
   <!-- 排序的弹层 -->
   <input type="checkbox" id="my-modal-4" class="modal-toggle" />
   <label for="my-modal-4" class="modal cursor-pointer">
-    <label class="modal-box relative" for="">
+    <label class="modal-box relative overflow-scroll h-3/4" for="">
       <Sort></Sort>
     </label>
   </label>
