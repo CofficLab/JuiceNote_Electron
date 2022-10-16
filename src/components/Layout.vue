@@ -42,6 +42,11 @@
 
     <!-- 底部地址栏 -->
     <div class="flex justify-center w-full"><Address></Address></div>
+    <div>
+      <label tabindex="0" class="btn my-auto w-full pb-3 rounded-none text-center align-middle">
+        <arrow-right-circle></arrow-right-circle>
+      </label>
+    </div>
   </footer>
 </template>
 
@@ -54,6 +59,7 @@ import Content from "./Content.vue";
 import store from "../models/store";
 import Manage from "./Manage.vue";
 import Address from "./Address.vue";
+import ArrowRightCircle from "../icons/arrow-right-circle.vue";
 
 export default defineComponent({
   components: {
@@ -63,6 +69,7 @@ export default defineComponent({
     Content,
     Manage,
     Address,
+    ArrowRightCircle,
   },
   computed: {
     hideTitleBar: function () {
