@@ -1,7 +1,7 @@
 <template>
   <div class="dropdown w-96">
-    <label tabindex="0" class="btn btn-ghost m-0 w-full rounded-none flex flex-row justify-between h-full">
-      <h1 v-html="title" class="place-self-center my-auto text-xl"></h1>
+    <label tabindex="0" class="btn btn-ghost m-0 w-full rounded-none flex flex-row h-full">
+      <h1 v-html="title" class="my-auto text-xl"></h1>
       <chevron-down></chevron-down>
     </label>
     <ul tabindex="0" class="dropdown-content menu p-2 mt-0 shadow-2xl bg-base-200 z-50 w-full">
