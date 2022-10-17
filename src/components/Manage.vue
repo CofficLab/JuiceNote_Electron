@@ -8,6 +8,7 @@
       <label class="btn w-48 rounded-none modal-button" for="my-modal-4">排序</label>
       <div class="btn w-48 rounded-none" v-on:click="deleteNav">删除</div>
       <div class="btn w-48 rounded-none" v-on:click="showForm">增加章节</div>
+      <div class="btn w-48 rounded-none" v-on:click="commit">Git提交</div>
     </ul>
   </div>
 
@@ -90,6 +91,14 @@ export default defineComponent({
     deleteNav: function () {
       this.$router.push("/article/" + nav.getBookName(this.$route.path) + "@home");
       nav.deleteNav(this.$route.path);
+    },
+    commit: function () {
+      let exec = require("child_process").exec;
+      exec("git commit -m '提交文档变动'", function (error, stdout, stderr) {
+        console.log("error", error);
+        console.log("out", stdout);
+        console.log("stderr", stderr);
+      });
     },
   },
   computed: {
