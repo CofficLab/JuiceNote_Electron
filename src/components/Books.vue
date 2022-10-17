@@ -1,5 +1,5 @@
 <template>
-  <div class="dropdown z-50 w-full">
+  <div class="dropdown dropdown-hover z-50 w-full">
     <label tabindex="0" class="btn m-0 w-full rounded-none">
       <span>{{ book.title }}</span>
       <!-- <chevron-down></chevron-down> -->

@@ -1,14 +1,20 @@
 <template>
-  <div class="dropdown w-96">
-    <label tabindex="0" class="btn btn-ghost m-0 w-full rounded-none flex flex-row h-full">
-      <h1 v-html="title" class="my-auto text-xl"></h1>
-      <chevron-down></chevron-down>
-    </label>
-    <ul tabindex="0" class="dropdown-content menu p-2 mt-0 max-h-96 shadow-2xl bg-base-200 z-50 w-full overflow-scroll">
-      <li v-for="chapter in chapters">
-        <router-link v-bind:to="chapter.link" v-text="chapter.title" active-class="active"> </router-link>
-      </li>
-    </ul>
+  <div class="flex flex-row justify-between">
+    <div class="w-96">
+      <label tabindex="0" class="btn btn-ghost m-0 w-full rounded-none flex flex-row h-full">
+        <h1 v-html="title" class="my-auto text-xl"></h1>
+      </label>
+    </div>
+    <div class="dropdown dropdown-end">
+      <label tabindex="0" class="btn btn-ghost m-0 w-full rounded-none flex flex-row h-full">
+        <chevron-down></chevron-down>
+      </label>
+      <ul tabindex="0" class="dropdown-content w-96 menu p-2 mt-0 max-h-96 shadow-2xl bg-base-200 z-50 overflow-scroll">
+        <li v-for="chapter in chapters">
+          <router-link v-bind:to="chapter.link" v-text="chapter.title" active-class="active"> </router-link>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
