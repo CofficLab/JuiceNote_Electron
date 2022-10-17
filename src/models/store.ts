@@ -26,6 +26,12 @@ const store = reactive({
         // console.log('update navigators in store')
         this.navigators = navigators
         nav.update(navigators)
+    },
+    getActivatedNavigators(path: string) {
+        let activatedOnes = nav.getActivatedOnes(path);
+        let book = activatedOnes.shift();
+
+        return book ? book.children : [];
     }
 })
 

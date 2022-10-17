@@ -75,8 +75,7 @@ export default defineComponent({
     submit() {
       store.makeNavigator(path.join(nav.getBookName(this.$route.path), this.form.title));
       this.showModal = false;
-      console.log(this.$route.path);
-      this.$router.push(this.$route.path);
+      window.location.reload();
     },
     toggleEditMode: function () {
       console.log("toggle edit mode");
@@ -89,11 +88,7 @@ export default defineComponent({
       }
     },
     deleteNav: function () {
-      console.log("delete button clicked");
-      console.log(this.$route.path);
-      console.log(nav.getBookName(this.$route.path));
       this.$router.push("/article/" + nav.getBookName(this.$route.path) + "@home");
-      console.log(this.$route.path);
       nav.deleteNav(this.$route.path);
     },
   },

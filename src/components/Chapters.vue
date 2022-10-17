@@ -4,7 +4,7 @@
       <h1 v-html="title" class="my-auto text-xl"></h1>
       <chevron-down></chevron-down>
     </label>
-    <ul tabindex="0" class="dropdown-content menu p-2 mt-0 shadow-2xl bg-base-200 z-50 w-full">
+    <ul tabindex="0" class="dropdown-content menu p-2 mt-0 max-h-96 shadow-2xl bg-base-200 z-50 w-full overflow-scroll">
       <li v-for="chapter in chapters">
         <router-link v-bind:to="chapter.link" v-text="chapter.title" active-class="active"> </router-link>
       </li>
