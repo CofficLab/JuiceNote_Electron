@@ -11,11 +11,12 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { nav } from "../models/nav";
+import store from "../models/store";
 
 export default defineComponent({
   computed: {
     items() {
-      return nav.getActivatedOnes(this.$route.path);
+      return store.navigators.getActivatedChildren(this.$route.path);
     },
   },
 });

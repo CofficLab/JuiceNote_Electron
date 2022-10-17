@@ -1,7 +1,7 @@
 <template>
   <div class="dropdown z-50 w-full">
     <label tabindex="0" class="btn m-0 w-full rounded-none">
-      <span>{{ book ? book.title : "" }}</span>
+      <span>{{ book.title }}</span>
       <!-- <chevron-down></chevron-down> -->
     </label>
     <ul
@@ -18,19 +18,18 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { nav } from "../models/nav";
 import store from "../models/store";
 import ChevronDown from "../icons/chevron-down.vue";
 
 export default defineComponent({
   data() {
     return {
-      books: store.navigators,
+      books: store.navigators.children,
     };
   },
   computed: {
     book() {
-      return nav.getActivatedOnes(this.$route.path).shift();
+      return store.navigators.getActivatedChild(this.$route.path);
     },
   },
   components: { ChevronDown },

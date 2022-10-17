@@ -19,16 +19,35 @@ const store = reactive({
         this.edit_mode = false
     },
     makeNavigator(name: string) {
-        nav.make(name)
+        let node = nav.make(name)
         this.navigators = nav.getNavigators()
+
+        return node
     },
-    updateNavigators(navigators: navigatorNode[]) {
+    updateNavigators(navigators: navigatorNode) {
         // console.log('update navigators in store')
         this.navigators = navigators
         nav.update(navigators)
     },
+    /**
+     * 更新单个导航
+     * 
+     * @param navigator 
+     */
+    updateNavigator(navigator: navigatorNode) {
+        console.log('update navigator in store', navigator.id)
+        let key = nav.getNavigators().children.indexOf(navigator)
+        console.log('key is ', key)
+        this.navigators.children[key] = navigator
+
+        nav.update(this.navigators)
+    },
+    deleteNavigator(navigator: navigatorNode) {
+        navigator.delete()
+        this.navigators = nav.getNavigators()
+    },
     getActivatedNavigators(path: string) {
-        let activatedOnes = nav.getActivatedOnes(path);
+        let activatedOnes = nav.getNavigators().getActivatedChildren(path);
         let book = activatedOnes.shift();
 
         return book ? book.children : [];

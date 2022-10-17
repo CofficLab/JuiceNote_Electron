@@ -14,19 +14,19 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { nav } from "../models/nav";
 import ChevronDown from "../icons/chevron-down.vue";
+import store from "../models/store";
 
 export default defineComponent({
   computed: {
     chapters() {
-      let activatedOnes = nav.getActivatedOnes(this.$route.path);
+      let activatedOnes = store.navigators.getActivatedChildren(this.$route.path);
       let book = activatedOnes.shift();
 
       return book ? book.children : [];
     },
     title(): string {
-      let activatedOnes = nav.getActivatedOnes(this.$route.path);
+      let activatedOnes = store.navigators.getActivatedChildren(this.$route.path);
       let chapter = activatedOnes.pop();
 
       return chapter ? chapter.title : "";

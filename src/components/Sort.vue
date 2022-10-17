@@ -1,6 +1,6 @@
 <template>
   <ul class="menu z-2">
-    <li class="rounded-none" v-for="navigator in navigators">
+    <li class="rounded-none" v-for="navigator in navigators.children">
       <div class="bg-base-content w-full p-0" v-bind:class="navigator == hovered ? 'h-20' : ''"></div>
       <div
         class="rounded-none border-0 h-16"
@@ -9,7 +9,7 @@
         v-on:dragstart="dragStart(navigator)"
         v-on:dragenter="dragEnter(navigator)"
       >
-        <div v-text="navigators.indexOf(navigator)" class="w-1/6"></div>
+        <div v-text="navigators.children.indexOf(navigator)" class="w-1/6"></div>
         <div v-text="navigator.id"></div>
       </div>
     </li>

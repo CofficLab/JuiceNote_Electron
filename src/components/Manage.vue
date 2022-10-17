@@ -5,7 +5,8 @@
     </label>
     <ul tabindex="0" class="dropdown-content shadow-3xl">
       <div class="btn w-48 rounded-none" v-on:click="toggleEditMode" v-html="editHTML"></div>
-      <label class="btn w-48 rounded-none modal-button" for="my-modal-4">排序</label>
+      <label class="btn w-48 rounded-none modal-button" for="my-modal-4">图书排序</label>
+      <label class="btn w-48 rounded-none modal-button" for="my-modal-5">章节排序</label>
       <div class="btn w-48 rounded-none" v-on:click="deleteNav">删除</div>
       <div class="btn w-48 rounded-none" v-on:click="showForm">增加章节</div>
       <div class="btn w-48 rounded-none" v-on:click="commit">Git提交</div>
@@ -37,15 +38,24 @@
       <Sort></Sort>
     </label>
   </label>
+
+  <!-- 章节排序的弹层 -->
+  <input type="checkbox" id="my-modal-5" class="modal-toggle" />
+  <label for="my-modal-5" class="modal cursor-pointer">
+    <label class="modal-box relative overflow-scroll h-3/4" for="">
+      <SortChapters></SortChapters>
+    </label>
+  </label>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import store from "../models/store";
-import { nav } from "../models/nav";
+import { nav, navigatorNode } from "../models/nav";
 import path from "path";
 import Cog from "../icons/cog.vue";
 import Sort from "./Sort.vue";
+import SortChapters from "./SortChapters.vue";
 
 export default defineComponent({
   data() {
@@ -74,9 +84,10 @@ export default defineComponent({
       this.showSortForm = false;
     },
     submit() {
-      store.makeNavigator(path.join(nav.getBookName(this.$route.path), this.form.title));
+      let node = store.makeNavigator(path.join(nav.getBookName(this.$route.path), this.form.title));
       this.showModal = false;
-      window.location.reload();
+      console.log("a node has just created", node);
+      this.$router.push(node.link);
     },
     toggleEditMode: function () {
       console.log("toggle edit mode");
@@ -89,8 +100,9 @@ export default defineComponent({
       }
     },
     deleteNav: function () {
-      this.$router.push("/article/" + nav.getBookName(this.$route.path) + "@home");
-      nav.deleteNav(this.$route.path);
+      console.log("parent of current navigator", this.navigator.getParent());
+      this.$router.push(this.navigator.getParent().link);
+      store.deleteNavigator(this.navigator);
     },
     commit: function () {
       let exec = require("child_process").exec;
@@ -111,8 +123,11 @@ export default defineComponent({
     inEditMode(): boolean {
       return store.edit_mode;
     },
+    navigator(): navigatorNode {
+      return store.navigators.getLastActivatedChild(this.$route.path);
+    },
   },
-  components: { Cog, Sort },
+  components: { Cog, Sort, SortChapters },
 });
 </script>
 
