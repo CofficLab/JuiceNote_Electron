@@ -1,7 +1,19 @@
 import fs from "fs";
 import path from "path";
 import markdown from './markdown';
-import { unescape } from "querystring";
+
+// null->根节点->图书1->章节1
+//                   -> 章节2 
+//                   -> 章节n
+//            ->图书2->章节1
+//                   -> 章节2 
+//                   -> 章节n
+//            ->图书3->章节1
+//                   -> 章节2 
+//                   -> 章节n
+//            ->图书n->章节1
+//                   -> 章节2 
+//                   -> 章节n
 
 /**
  * 导航节点的定义
