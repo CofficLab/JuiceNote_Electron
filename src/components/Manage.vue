@@ -1,6 +1,6 @@
 <template>
   <div class="dropdown dropdown-top z-50 w-full">
-    <label tabindex="0" class="btn my-auto w-full pb-3 rounded-none text-center align-middle">
+    <label tabindex="0" class="btn my-auto w-full pb-3 text-center align-middle">
       <Cog></Cog>
     </label>
     <ul tabindex="0" class="dropdown-content shadow-3xl">

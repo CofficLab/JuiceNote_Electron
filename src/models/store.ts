@@ -47,10 +47,7 @@ const store = reactive({
         this.navigators = nav.getNavigators()
     },
     getActivatedNavigators(path: string) {
-        let activatedOnes = nav.getNavigators().getActivatedChildren(path);
-        let book = activatedOnes.shift();
-
-        return book ? book.children : [];
+        return nav.getNavigators().getActivatedChildren(path);
     }
 })
 

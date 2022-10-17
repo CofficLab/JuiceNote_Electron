@@ -23,21 +23,32 @@ class navigatorNode {
 
         return null
     }
-    public findKey(id: string) {
-        this.children.forEach(function (child, key) {
-            if (child.id == id) {
-                return key
+    public findKey(id: string): number {
+        for (const key in this.children) {
+            if (this.children[key].id == id) {
+                return parseInt(key);
             }
-        })
+        }
 
         return -1
     }
     public isActivated(activePath: string) {
+        // 如果是根节点
+        if (this.id == getRootNavigator().id) {
+            return true;
+        }
+
+        // 当前节点的链接等于目标链接
+        if (this.link === activePath) {
+            return true;
+        }
+
         // 如果当前节点没有子节点
         if (this.children.length === 0) {
             return this.link == activePath
         }
 
+        // 如果子节点active，当前节点就active
         for (const key in this.children) {
             let child = this.children[key]
 
@@ -89,13 +100,70 @@ class navigatorNode {
         markdown.deleteMarkdownFile(this.id)
         update()
     }
-    public getParent() {
+    public getParent(): navigatorNode | null {
         // console.log('get parent of ', this)
-        // console.log('link is ', this.link)
-        let nodes = getNavigators().getActivatedChildren(this.link)
 
-        return nodes.at(-2)
+        // 空节点或根节点的父节点是null
+        if (this.id === '' || this.id === '/') {
+            return null
+        }
+
+        let rootNode = getRootNavigator()
+        let activatedNodes = [rootNode].concat(rootNode.getActivatedChildren(this.link))
+        // console.log('activated nodes,when', this.id, activatedNodes)
+        for (const key in activatedNodes) {
+            if (activatedNodes[key].id === this.id) {
+                return activatedNodes[parseInt(key) - 1]
+            }
+        }
+
+        return null
     }
+    public next(): navigatorNode | undefined {
+        let parent = this.getParent()
+        // console.log('get next,current parent is', parent)
+
+        if (parent === null) {
+            // 空节点的下一个节点是根节点
+            if (this === new navigatorNode) {
+                return getRootNavigator()
+            }
+
+            // 根节点的下一个节点是根节点的第一个节点
+            if (this === getRootNavigator()) {
+                let firstNode = this.children.shift()
+                return firstNode ? firstNode : (new navigatorNode)
+            }
+        } else {
+            let key = parent.findKey(this.id)
+            let nextKey = key + 1
+
+            // 如果同级的下一个节点不存在，返回父节点的下一个节点
+            if (parent.children[nextKey] === undefined) {
+                console.log('no brother next', this.id)
+                return parent.next()
+            }
+
+            // console.log('get next node of', this.id)
+            // console.log('parent is ', parent)
+            // console.log('get next,current key is', key)
+
+            return parent.children[nextKey]
+        }
+
+
+
+
+    }
+}
+
+/**
+ * 获取根导航节点
+ * 
+ * @returns navigatorNode[]
+ */
+function getRootNavigator(): navigatorNode {
+    return getNavigators();
 }
 
 /**
@@ -104,7 +172,7 @@ class navigatorNode {
  * @returns navigatorNode[]
  */
 function getNavigators(): navigatorNode {
-    let navigators: navigatorNode = new navigatorNode('root')
+    let navigators: navigatorNode = new navigatorNode('/')
 
     if (!fs.existsSync(path.join(markdown.markdownRootPath, 'navigators.json'))) {
         console.log('navigators.json不存在，新建')
