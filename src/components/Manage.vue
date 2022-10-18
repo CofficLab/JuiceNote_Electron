@@ -4,7 +4,7 @@
       <Cog></Cog>
     </label>
     <ul tabindex="0" class="dropdown-content shadow-3xl">
-      <div class="btn w-48 rounded-none" v-on:click="toggleEditMode" v-html="editHTML"></div>
+      <div class="btn w-48 rounded-none" v-on:click="toggleEditMode">{{ edit_mode ? "返回" : "编辑" }}</div>
       <div class="btn w-48 rounded-none" v-on:click="deleteNav">删除</div>
       <div class="btn w-48 rounded-none" v-on:click="showForm">增加章节</div>
       <div class="btn w-48 rounded-none" v-on:click="commit">Git提交</div>
@@ -34,7 +34,6 @@
 import { defineComponent } from "vue";
 import store from "../models/store";
 import { nav, navigatorNode } from "../models/nav";
-import path from "path";
 import Cog from "../icons/cog.vue";
 
 export default defineComponent({
@@ -64,10 +63,18 @@ export default defineComponent({
       this.showSortForm = false;
     },
     submit() {
-      let node = store.makeNavigator(path.join(nav.getBookName(this.$route.path), this.form.title));
-      this.showModal = false;
-      console.log("a node has just created", node);
-      this.$router.push(node.link);
+      let currentNode = nav.getRootNavigator().getLastActivatedChild(this.$route.path);
+      let currentParent = currentNode.getParent();
+
+      if (currentParent !== null) {
+        let node = store.createChild(currentParent, this.form.title);
+        this.showModal = false;
+        this.form.title = "";
+        console.log("created", node);
+        this.$router.push(node.link);
+      } else {
+        alert("父节点不存在，无法创建");
+      }
     },
     toggleEditMode: function () {
       console.log("toggle edit mode");
@@ -80,9 +87,9 @@ export default defineComponent({
       }
     },
     deleteNav: function () {
-      console.log("parent of current navigator", this.navigator.getParent());
-      this.$router.push(this.navigator.getParent().link);
-      store.deleteNavigator(this.navigator);
+      console.log("parent of current navigator", this.current.getParent());
+      this.$router.push(this.current.getParent().link);
+      store.deleteNavigator(this.current);
     },
     commit: function () {
       let exec = require("child_process").exec;
@@ -97,14 +104,11 @@ export default defineComponent({
     path: function () {
       return this.$route.path.replace("/article", "");
     },
-    editHTML(): string {
-      return store.edit_mode ? "返回" : "编辑";
-    },
-    inEditMode(): boolean {
+    edit_mode(): boolean {
       return store.edit_mode;
     },
-    navigator(): navigatorNode {
-      return store.navigators.getLastActivatedChild(this.$route.path);
+    current(): navigatorNode {
+      return store.root.getLastActivatedChild(this.$route.path);
     },
   },
   components: { Cog },

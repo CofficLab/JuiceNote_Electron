@@ -47,10 +47,7 @@ export default defineComponent({
   },
   computed: {
     breadcrumbs() {
-      // console.log("root is", store.getRootNavigator());
-      console.log("get breadcrumbs,current path is", this.$route.path);
-      let breadcrumbs = store.getRootNavigator().getActivated(this.$route.path);
-      console.log("breadcrumbs", breadcrumbs);
+      let breadcrumbs = store.root.getActivated(this.$route.path);
 
       return breadcrumbs;
     },

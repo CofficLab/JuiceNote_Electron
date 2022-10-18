@@ -21,11 +21,11 @@ const store = reactive({
     getRootNavigator() {
         return nav.getRootNavigator()
     },
-    makeNavigator(name: string) {
-        let node = nav.make(name)
+    createChild(node: navigatorNode, name: string): navigatorNode {
+        let created = node.createChild(name)
         this.root = nav.getRootNavigator()
 
-        return node
+        return created
     },
     updateNavigators(root: navigatorNode) {
         // console.log('update navigators in store')

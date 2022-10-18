@@ -26,11 +26,26 @@ class navigatorNode {
     public title: string = ''
     public link: string = ''
     public children: navigatorNode[] = []
-    public find(id: string) {
+    /**
+     * 在子孙节点中查找
+     * 
+     * @param id 要查找的节点的ID
+     * @returns 
+     */
+    public find(id: string): navigatorNode | null {
+        // console.log('try to find', id, 'now node is', this.id)
+        if (this.id === id) {
+            return this
+        }
+
+        for (const key in this.children) {
+            let node = this.children[key].find(id)
+            if (node) return node
+        }
+
         this.children.forEach(function (child) {
-            if (child.id == id) {
-                return child
-            }
+            let node = child.find(id)
+            if (node) return node
         })
 
         return null
@@ -53,8 +68,8 @@ class navigatorNode {
 
         // 当前节点的链接等于目标链接
         if (this.link === activePath) {
-            console.log('now is', this)
-            console.log(this.id + ' should be active,link is', this.link, 'active path is', activePath)
+            // console.log('now is', this)
+            // console.log(this.id + ' should be active,link is', this.link, 'active path is', activePath)
             return true;
         }
 
@@ -75,7 +90,7 @@ class navigatorNode {
         return false;
     }
     public getActivatedChild(activePath: string): navigatorNode {
-        console.log('get activated child of', this.id, 'while active path is', activePath)
+        // console.log('get activated child of', this.id, 'while active path is', activePath)
         for (const key in this.children) {
             let child = this.children[key]
 
@@ -88,7 +103,7 @@ class navigatorNode {
         let collection = this.getActivatedChildren(activePath)
         collection.unshift(this)
 
-        console.log('active path is ', activePath, 'activated are', collection)
+        // console.log('active path is ', activePath, 'activated are', collection)
 
         return collection
     }
@@ -106,7 +121,7 @@ class navigatorNode {
             }
         }
 
-        console.log('node is', this.id, 'active path is', activePath, 'activated children', collection)
+        // console.log('node is', this.id, 'active path is', activePath, 'activated children', collection)
 
         return collection
     }
@@ -223,6 +238,19 @@ class navigatorNode {
         parent.children.splice(order, 0, this);
 
         return parent.update(parent)
+    }
+    public createChild(title: string): navigatorNode {
+        let id = this.id + '@' + title
+        markdown.writeToMarkdownFile(id, "# Empty Title \r\n ## 简介")
+        update()
+
+        let created = getRootNavigator().find(id)
+        if (!created) {
+            console.error('error,can not find ', id)
+            return new navigatorNode
+        }
+
+        return created
     }
 }
 
@@ -341,20 +369,7 @@ function update(root?: navigatorNode): boolean {
     return true
 }
 
-/**
- * 创建一个新的导航节点
- * 
- * @param name 节点的路径
- */
-function make(name: string) {
-    markdown.writeToMarkdownFile(name, "# Empty Title \r\n ## 简介")
-    update()
-
-    return makeNode(path.join(markdown.markdownRootPath, name) + '.md')
-}
-
 let nav = {
-    make,
     update,
     getRootNavigator,
     getMarkdownNameFromRoutePath
