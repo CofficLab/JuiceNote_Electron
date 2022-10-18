@@ -1,11 +1,11 @@
 import { reactive } from 'vue'
-import { nav, navigatorNode } from './nav'
+import node from './node'
 
 const store = reactive({
     full_screen: false,
     edit_mode: false,
     navigator: null,
-    root: nav.getRootNavigator(),
+    root: node.getRoot(),
     enterFullScreen() {
         this.full_screen = true
     },
@@ -18,43 +18,48 @@ const store = reactive({
     leaveEditMode() {
         this.edit_mode = false
     },
-    getRootNavigator() {
-        return nav.getRootNavigator()
+    getRoot() {
+        console.log('get root navigator in store')
+        if (this.root) return this.root
+        return node.getRoot()
     },
-    createChild(node: navigatorNode, name: string): navigatorNode {
-        let created = node.createChild(name)
-        this.root = nav.getRootNavigator()
+    createChild(parent: node, name: string): node {
+        let created = parent.createChild(name)
+        this.root = node.getRoot()
 
         return created
     },
-    updateNavigators(root: navigatorNode) {
-        // console.log('update navigators in store')
-        this.root = root
-        nav.update(root)
-    },
-    updateOrder(navigator: navigatorNode, order: number) {
+    // updateNavigators(root: node) {
+    // console.log('update navigators in store')
+    // this.root = root
+    // nav.update(root)
+    // },
+    updateOrder(navigator: node, order: number) {
         navigator.setOrder(order)
-        this.root = nav.getRootNavigator()
+        this.root = node.getRoot()
     },
     /**
      * 更新单个导航
      * 
      * @param navigator 
      */
-    updateNavigator(navigator: navigatorNode) {
+    updateNavigator(navigator: node) {
         console.log('update navigator in store', navigator.id)
-        let key = nav.getRootNavigator().children.indexOf(navigator)
+        let key = node.getRoot().children.indexOf(navigator)
         console.log('key is ', key)
         this.root.children[key] = navigator
 
-        nav.update(this.root)
+        navigator.update(this.root)
     },
-    deleteNavigator(navigator: navigatorNode) {
+    deleteNavigator(navigator: node) {
         navigator.delete()
-        this.root = nav.getRootNavigator()
+        this.root = node.getRoot()
     },
-    getActivatedNavigators(path: string) {
-        return nav.getRootNavigator().getActivatedChildren(path);
+    getActivated(path: string) {
+        return this.root.getActivatedChildren(path);
+    },
+    getCurrent(path: string): node | undefined {
+        return this.root.getLastActivatedChild(path)
     }
 })
 

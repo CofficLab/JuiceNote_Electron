@@ -6,7 +6,6 @@
 import { defineComponent } from "vue";
 import markdown from "../models/markdown";
 import "../app.css";
-import { escape } from "querystring";
 
 export default defineComponent({
   methods: {

@@ -3,6 +3,7 @@ import path from 'path'
 import electron from 'electron'
 
 const markdownRootPath = path.join(electron.ipcRenderer.sendSync('get-app-path'), 'markdown')
+const root = markdownRootPath
 const md = require('markdown-it')({
     html: true
 });
@@ -148,6 +149,16 @@ function writeToMarkdownFile(markdownFile: string, content: string): void {
 }
 
 /**
+ * 重命名文件
+ * 
+ * @param markdownFile 
+ * @param name 
+ */
+function rename(markdownFile: string, name: string) {
+    fs.renameSync(getAbsolutePath(markdownFile), getAbsolutePath(name));
+}
+
+/**
  * 删除Markdown文件
  * 
  * @param markdownFile markdown文件名，相对于markdown根目录的路径
@@ -212,6 +223,8 @@ function getOrder(markdownFile: string) {
 let markdown = {
     moveTo,
     getOrder,
+    rename,
+    root,
     getMarkdownToc,
     getMarkdownTitle,
     markdownRootPath,

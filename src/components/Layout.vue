@@ -29,6 +29,7 @@
     <div><Manage></Manage></div>
     <div><Delete></Delete></div>
     <div><Add></Add></div>
+    <div><Home></Home></div>
     <div><GoToPrev></GoToPrev></div>
     <div class="flex flex-grow"><Breadcrumbs></Breadcrumbs></div>
     <div><GoToNext></GoToNext></div>
@@ -49,6 +50,7 @@ import GoToNext from "./GoToNext.vue";
 import Address from "./Address.vue";
 import Delete from "./Delete.vue";
 import Add from "./Add.vue";
+import Home from "./Home.vue";
 
 export default defineComponent({
   components: {
@@ -63,6 +65,7 @@ export default defineComponent({
     Address,
     Delete,
     Add,
+    Home,
   },
   computed: {
     hideTitleBar: function () {
@@ -70,17 +73,6 @@ export default defineComponent({
     },
     inEditMode(): boolean {
       return store.edit_mode;
-    },
-    nextLink: function () {
-      let activatedNavigators = store.getActivatedNavigators(this.$route.path);
-      let current = activatedNavigators.pop();
-      if (current === undefined) return "/";
-      let next = current.next();
-
-      // console.log("current is ", current.id);
-      // console.log("next is ", next);
-
-      return next === null || next == undefined ? "/" : next.link;
     },
   },
 });

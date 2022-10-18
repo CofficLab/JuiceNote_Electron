@@ -63,7 +63,7 @@ export default defineComponent({
       this.showSortForm = false;
     },
     submit() {
-      let currentNode = nav.getRootNavigator().getLastActivatedChild(this.$route.path);
+      let currentNode = store.getCurrent(this.$route.path);
       let currentParent = currentNode.getParent();
 
       if (currentParent !== null) {
@@ -101,14 +101,8 @@ export default defineComponent({
     },
   },
   computed: {
-    path: function () {
-      return this.$route.path.replace("/article", "");
-    },
     edit_mode(): boolean {
       return store.edit_mode;
-    },
-    current(): navigatorNode {
-      return store.root.getLastActivatedChild(this.$route.path);
     },
   },
   components: { Cog },

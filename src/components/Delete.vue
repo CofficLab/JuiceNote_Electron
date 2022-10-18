@@ -10,18 +10,9 @@ import store from "../models/store";
 import Trash from "../icons/trash.vue";
 
 export default defineComponent({
-  data() {
-    return {
-      showModal: false,
-      showSortModal: false,
-      form: {
-        title: "",
-      },
-    };
-  },
   methods: {
     del: function () {
-      let current = store.root.getLastActivatedChild(this.$route.path);
+      let current = store.getCurrent(this.$route.path);
       this.$router.push(current.getParent()?.link);
       store.deleteNavigator(current);
     },

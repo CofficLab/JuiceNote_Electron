@@ -26,14 +26,12 @@
 import { defineComponent } from "vue";
 import store from "../models/store";
 import Trash from "../icons/trash.vue";
-import { nav } from "../models/nav";
 import Plus from "../icons/plus.vue";
 
 export default defineComponent({
   data() {
     return {
       showModal: false,
-      showSortModal: false,
       form: {
         title: "",
       },
@@ -46,17 +44,11 @@ export default defineComponent({
         this.$refs.title.focus();
       });
     },
-    showSortForm() {
-      this.showSortModal = true;
-    },
     hideForm() {
       this.showModal = false;
     },
-    hideSortForm() {
-      this.showSortForm = false;
-    },
     submit() {
-      let currentNode = nav.getRootNavigator().getLastActivatedChild(this.$route.path);
+      let currentNode = store.getCurrent(this.$route.path);
       let currentParent = currentNode.getParent();
 
       if (currentParent !== null) {

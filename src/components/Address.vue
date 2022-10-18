@@ -5,12 +5,13 @@
 </template>
 
 <script lang="ts">
+import { unescape } from "querystring";
 import { defineComponent } from "vue";
 
 export default defineComponent({
   data() {
     return {
-      address: window.location.href,
+      address: unescape(window.location.href),
     };
   },
 });

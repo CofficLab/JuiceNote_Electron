@@ -15,13 +15,8 @@ export default defineComponent({
   },
   computed: {
     prevLink: function () {
-      let activatedNavigators = store.getActivatedNavigators(this.$route.path);
-      let current = activatedNavigators.pop();
-      if (current === undefined) return "/";
+      let current = store.getCurrent(this.$route.path);
       let prev = current.prev();
-
-      // console.log("current is ", current.id);
-      // console.log("next is ", next);
 
       return prev === null || prev == undefined ? "/" : prev.link;
     },
