@@ -45,6 +45,7 @@ class navigatorNode {
         return -1
     }
     public isActivated(activePath: string) {
+        // console.log('check', this.id, 'active path is ', activePath)
         // 如果是根节点
         if (this.id == getRootNavigator().id) {
             return true;
@@ -52,6 +53,8 @@ class navigatorNode {
 
         // 当前节点的链接等于目标链接
         if (this.link === activePath) {
+            console.log('now is', this)
+            console.log(this.id + ' should be active,link is', this.link, 'active path is', activePath)
             return true;
         }
 
@@ -72,7 +75,7 @@ class navigatorNode {
         return false;
     }
     public getActivatedChild(activePath: string): navigatorNode {
-        // console.log('get activated child of', this)
+        console.log('get activated child of', this.id, 'while active path is', activePath)
         for (const key in this.children) {
             let child = this.children[key]
 
@@ -81,12 +84,20 @@ class navigatorNode {
 
         return new navigatorNode;
     }
+    public getActivated(activePath: string): navigatorNode[] {
+        let collection = this.getActivatedChildren(activePath)
+        collection.unshift(this)
+
+        console.log('active path is ', activePath, 'activated are', collection)
+
+        return collection
+    }
     public getActivatedChildren(activePath: string): navigatorNode[] {
         let parent: navigatorNode | null = this
         let collection: navigatorNode[] = []
 
         while (parent !== null) {
-            let activatedChild = parent.getActivatedChild(activePath)
+            let activatedChild: navigatorNode = parent.getActivatedChild(activePath)
             if (activatedChild.id) {
                 collection.push(activatedChild)
                 parent = activatedChild
@@ -95,7 +106,7 @@ class navigatorNode {
             }
         }
 
-        // console.log('activated children', collection)
+        console.log('node is', this.id, 'active path is', activePath, 'activated children', collection)
 
         return collection
     }
@@ -162,42 +173,90 @@ class navigatorNode {
 
             return parent.children[nextKey]
         }
+    }
+    public prev(): navigatorNode | null {
+        // 空节点的上一个节点是根节点
+        if (this === new navigatorNode) {
+            return getRootNavigator()
+        }
 
+        // 根节点的上一个节点是null
+        if (this === getRootNavigator()) {
+            return null
+        }
 
+        let parent = this.getParent()
+        let nextBrother = parent?.children[parent.findKey(this.id) + 1]
+        let parentNextBrother = parent?.next()
 
+        // 同级的下一个节点存在，则返回
+        if (nextBrother !== null && nextBrother !== undefined) {
+            return nextBrother
+        }
 
+        // 如果同级的下一个节点不存在，返回父节点的下一个节点
+        return parentNextBrother !== undefined ? parentNextBrother : null
+    }
+    public update(node: navigatorNode): boolean {
+        console.log('update', this.id, 'set children to', node.children)
+        // 如果是根节点
+        if (this.id === '/') {
+            return update(node)
+        }
+
+        // 非根节点
+        let parent = this.getParent()
+        if (!parent) return false
+
+        let key = parent.findKey(this.id)
+        parent.children[key] = node
+
+        return parent.update(parent)
+    }
+    public setOrder(order: number) {
+        let parent = this.getParent()
+        if (parent === null) return false
+
+        // 从父节点的子节点列表中删除本节点
+        parent.children.splice(parent.findKey(this.id), 1);
+        // 在指定的位置增加本节点
+        parent.children.splice(order, 0, this);
+
+        return parent.update(parent)
     }
 }
 
 /**
  * 获取根导航节点
  * 
- * @returns navigatorNode[]
+ * @returns navigatorNode
  */
 function getRootNavigator(): navigatorNode {
-    return getNavigators();
-}
-
-/**
- * 获取导航节点列表
- * 
- * @returns navigatorNode[]
- */
-function getNavigators(): navigatorNode {
-    let navigators: navigatorNode = new navigatorNode('/')
-
-    if (!fs.existsSync(path.join(markdown.markdownRootPath, 'navigators.json'))) {
-        console.log('navigators.json不存在，新建')
+    if (!fs.existsSync(path.join(markdown.markdownRootPath, 'root.json'))) {
+        console.log('root.json不存在，新建')
         update();
     }
 
-    let json = fs.readFileSync(path.join(markdown.markdownRootPath, 'navigators.json'), 'utf-8')
-    let items = JSON.parse(json)
-    items.children.forEach(function (item: navigatorNode) {
-        navigators.children.push(makeNode(path.join(markdown.markdownRootPath, item.id)))
-    })
+    let jsonObject = JSON.parse(fs.readFileSync(path.join(markdown.markdownRootPath, 'root.json'), 'utf-8'))
+    let root = transformToNode(jsonObject)
 
-    return navigators
+    // console.log('root', root)
+
+    return root
+}
+
+function transformToNode(object: navigatorNode): navigatorNode {
+    let node = new navigatorNode(object.id)
+    node.title = object.title
+    node.link = object.link
+
+    if (object.children.length > 0) {
+        object.children.forEach(function (child) {
+            node.children.push(transformToNode(child))
+        })
+    }
+
+    return node
 }
 
 /**
@@ -206,12 +265,12 @@ function getNavigators(): navigatorNode {
  * @param activePath 
  * @returns 
  */
-function getBookName(activePath: string): string {
-    let file = activePath.replace('/article/', '').replace('/editor/', '')
-    let parts = file.split('@')
+// function getBookName(activePath: string): string {
+//     let file = activePath.replace('/article/', '').replace('/editor/', '')
+//     let parts = file.split('@')
 
-    return parts[0]
-}
+//     return parts[0]
+// }
 
 /**
  * 生成一个导航节点
@@ -262,21 +321,24 @@ function getMarkdownNameFromRoutePath(routerPath: string): string {
 }
 
 /**
- * 将导航写入到navigators.json
+ * 将导航写入到navigators.json，不提供root节点则自动计算
  * 
  */
-function update(navigators?: navigatorNode) {
-    let items: navigatorNode = new navigatorNode('root')
-
-    if (navigators) items = navigators
-
-    fs.readdirSync(markdown.markdownRootPath).forEach((navigator) => {
-        items.children.push(makeNode(path.join(markdown.markdownRootPath, navigator)))
-    })
+function update(root?: navigatorNode): boolean {
+    if (root === undefined) {
+        root = new navigatorNode('/')
+        root.link = '/'
+        root.title = '图书'
+        fs.readdirSync(markdown.markdownRootPath).forEach((navigator) => {
+            root?.children.push(makeNode(path.join(markdown.markdownRootPath, navigator)))
+        })
+    }
 
     // console.log(JSON.stringify(navigators))
 
-    fs.writeFileSync(path.join(markdown.markdownRootPath, 'navigators.json'), JSON.stringify(items, null, 4))
+    fs.writeFileSync(path.join(markdown.markdownRootPath, 'root.json'), JSON.stringify(root, null, 4))
+
+    return true
 }
 
 /**
@@ -294,8 +356,7 @@ function make(name: string) {
 let nav = {
     make,
     update,
-    getNavigators,
-    getBookName,
+    getRootNavigator,
     getMarkdownNameFromRoutePath
 }
 

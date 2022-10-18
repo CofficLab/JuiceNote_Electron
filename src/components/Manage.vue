@@ -1,12 +1,10 @@
 <template>
   <div class="dropdown dropdown-top z-50 w-full">
-    <label tabindex="0" class="btn my-auto w-full pb-3 text-center align-middle">
+    <label tabindex="0" class="btn my-auto w-full pb-3 text-center align-middle rounded-none">
       <Cog></Cog>
     </label>
     <ul tabindex="0" class="dropdown-content shadow-3xl">
       <div class="btn w-48 rounded-none" v-on:click="toggleEditMode" v-html="editHTML"></div>
-      <label class="btn w-48 rounded-none modal-button" for="my-modal-4">图书排序</label>
-      <label class="btn w-48 rounded-none modal-button" for="my-modal-5">章节排序</label>
       <div class="btn w-48 rounded-none" v-on:click="deleteNav">删除</div>
       <div class="btn w-48 rounded-none" v-on:click="showForm">增加章节</div>
       <div class="btn w-48 rounded-none" v-on:click="commit">Git提交</div>
@@ -30,22 +28,6 @@
       </div>
     </div>
   </div>
-
-  <!-- 排序的弹层 -->
-  <input type="checkbox" id="my-modal-4" class="modal-toggle" />
-  <label for="my-modal-4" class="modal cursor-pointer">
-    <label class="modal-box relative overflow-scroll h-3/4" for="">
-      <Sort></Sort>
-    </label>
-  </label>
-
-  <!-- 章节排序的弹层 -->
-  <input type="checkbox" id="my-modal-5" class="modal-toggle" />
-  <label for="my-modal-5" class="modal cursor-pointer">
-    <label class="modal-box relative overflow-scroll h-3/4" for="">
-      <SortChapters></SortChapters>
-    </label>
-  </label>
 </template>
 
 <script lang="ts">
@@ -54,8 +36,6 @@ import store from "../models/store";
 import { nav, navigatorNode } from "../models/nav";
 import path from "path";
 import Cog from "../icons/cog.vue";
-import Sort from "./Sort.vue";
-import SortChapters from "./SortChapters.vue";
 
 export default defineComponent({
   data() {
@@ -127,7 +107,7 @@ export default defineComponent({
       return store.navigators.getLastActivatedChild(this.$route.path);
     },
   },
-  components: { Cog, Sort, SortChapters },
+  components: { Cog },
 });
 </script>
 

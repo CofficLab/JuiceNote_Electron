@@ -1,0 +1,30 @@
+<template>
+  <router-link v-bind:to="prevLink" class="btn my-auto w-full pb-3 rounded-none text-center align-middle"
+    ><ArrowLeftCircle></ArrowLeftCircle
+  ></router-link>
+</template>
+
+<script lang="ts">
+import { defineComponent } from "vue";
+import store from "../models/store";
+import ArrowLeftCircle from "../icons/arrow-left-circle.vue";
+
+export default defineComponent({
+  components: {
+    ArrowLeftCircle,
+  },
+  computed: {
+    prevLink: function () {
+      let activatedNavigators = store.getActivatedNavigators(this.$route.path);
+      let current = activatedNavigators.pop();
+      if (current === undefined) return "/";
+      let prev = current.prev();
+
+      // console.log("current is ", current.id);
+      // console.log("next is ", next);
+
+      return prev === null || prev == undefined ? "/" : prev.link;
+    },
+  },
+});
+</script>

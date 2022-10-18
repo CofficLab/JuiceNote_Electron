@@ -5,7 +5,7 @@ const store = reactive({
     full_screen: false,
     edit_mode: false,
     navigator: null,
-    navigators: nav.getNavigators(),
+    root: nav.getRootNavigator(),
     enterFullScreen() {
         this.full_screen = true
     },
@@ -18,16 +18,23 @@ const store = reactive({
     leaveEditMode() {
         this.edit_mode = false
     },
+    getRootNavigator() {
+        return nav.getRootNavigator()
+    },
     makeNavigator(name: string) {
         let node = nav.make(name)
-        this.navigators = nav.getNavigators()
+        this.root = nav.getRootNavigator()
 
         return node
     },
-    updateNavigators(navigators: navigatorNode) {
+    updateNavigators(root: navigatorNode) {
         // console.log('update navigators in store')
-        this.navigators = navigators
-        nav.update(navigators)
+        this.root = root
+        nav.update(root)
+    },
+    updateOrder(navigator: navigatorNode, order: number) {
+        navigator.setOrder(order)
+        this.root = nav.getRootNavigator()
     },
     /**
      * 更新单个导航
@@ -36,18 +43,18 @@ const store = reactive({
      */
     updateNavigator(navigator: navigatorNode) {
         console.log('update navigator in store', navigator.id)
-        let key = nav.getNavigators().children.indexOf(navigator)
+        let key = nav.getRootNavigator().children.indexOf(navigator)
         console.log('key is ', key)
-        this.navigators.children[key] = navigator
+        this.root.children[key] = navigator
 
-        nav.update(this.navigators)
+        nav.update(this.root)
     },
     deleteNavigator(navigator: navigatorNode) {
         navigator.delete()
-        this.navigators = nav.getNavigators()
+        this.root = nav.getRootNavigator()
     },
     getActivatedNavigators(path: string) {
-        return nav.getNavigators().getActivatedChildren(path);
+        return nav.getRootNavigator().getActivatedChildren(path);
     }
 })
 

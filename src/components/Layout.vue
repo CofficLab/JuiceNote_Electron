@@ -1,6 +1,8 @@
 <template>
   <!-- 标题栏，左侧显示红绿灯，右侧可用于拖移 -->
-  <div class="h-8 bg-stone-900 fixed top-0 z-50 w-full" id="title-bar" v-show="!hideTitleBar"></div>
+  <div class="h-8 bg-stone-900 fixed top-0 z-50 w-full flex justify-center" id="title-bar" v-show="!hideTitleBar">
+    <Address></Address>
+  </div>
 
   <!-- 主要区域 -->
   <main class="bg-green-200/20 flex flex-row z-10 min-h-screen overflow-hidden">
@@ -23,17 +25,11 @@
     </div>
   </main>
 
-  <footer
-    class="h-10 fixed bottom-0 w-full p-0 flex border-t border-slate-500"
-    v-bind:class="inEditMode ? 'bg-yellow-300' : 'bg-base-300'"
-  >
-    <div class="flex justify-center text-center"><Manage></Manage></div>
-    <div class="flex justify-center w-full"><Address></Address></div>
-    <div>
-      <router-link v-bind:to="nextLink" class="btn my-auto w-full pb-3 rounded-none text-center align-middle"
-        ><arrow-right-circle></arrow-right-circle
-      ></router-link>
-    </div>
+  <footer class="h-10 fixed bottom-0 w-full p-0 flex border-t border-slate-500">
+    <div><Manage></Manage></div>
+    <div><GoToPrev></GoToPrev></div>
+    <div class="flex flex-grow"><Breadcrumbs></Breadcrumbs></div>
+    <div><GoToNext></GoToNext></div>
   </footer>
 </template>
 
@@ -43,17 +39,24 @@ import Toc from "./Toc.vue";
 import Content from "./Content.vue";
 import store from "../models/store";
 import Manage from "./Manage.vue";
-import Address from "./Address.vue";
+import Breadcrumbs from "./Breadcrumbs.vue";
 import ArrowRightCircle from "../icons/arrow-right-circle.vue";
-import anchor from "markdown-it-anchor";
+import ArrowLeftCircle from "../icons/arrow-left-circle.vue";
+import GoToPrev from "./GoToPrev.vue";
+import GoToNext from "./GoToNext.vue";
+import Address from "./Address.vue";
 
 export default defineComponent({
   components: {
     Toc,
     Content,
     Manage,
-    Address,
+    Breadcrumbs,
     ArrowRightCircle,
+    ArrowLeftCircle,
+    GoToPrev,
+    GoToNext,
+    Address,
   },
   computed: {
     hideTitleBar: function () {
