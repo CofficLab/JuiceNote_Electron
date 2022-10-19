@@ -314,33 +314,26 @@ class node {
         return parent.children[parent.findKey(this.id) - 1]
     }
 
-    // public update(node: node): boolean {
-    //     console.log('update', this.id, 'set children to', node.children)
-    //     // 如果是根节点
-    //     if (this.id === '/') {
-    //         return update(node)
-    //     }
-
-    //     // 非根节点
-    //     let parent = this.getParent()
-    //     if (!parent) return false
-
-    //     let key = parent.findKey(this.id)
-    //     parent.children[key] = node
-
-    //     return parent.update(parent)
-    // }
-
+    /**
+     * 设置新的排序值
+     * 
+     * 例如：将第5个移动到第2个
+     *  将第2个重命名为2-
+     *  将第5个重命名为2--
+     *  在文件系统中，2--会排在2-前面
+     *  实现了插入效果
+     * @param order 
+     * @returns 
+     */
     public setOrder(order: number) {
         let parent = this.getParent()
         if (parent === null) return false
 
-        // 从父节点的子节点列表中删除本节点
-        parent.children.splice(parent.findKey(this.id), 1);
-        // 在指定的位置增加本节点
-        parent.children.splice(order, 0, this);
+        let replaced = parent.children[order]
+        markdown.rename(replaced.id, replaced.id + '-')
+        markdown.rename(this.id, parent.id + '@' + order + '--')
 
-        return parent.update(parent)
+        node.refreshedRoot()
     }
 
     /**
