@@ -155,7 +155,10 @@ function writeToMarkdownFile(markdownFile: string, content: string): void {
  * @param name 
  */
 function rename(markdownFile: string, name: string) {
-    fs.renameSync(getAbsolutePath(markdownFile), getAbsolutePath(name));
+    if (markdownFile !== name) {
+        console.log('markdown:rename', markdownFile, 'to', name)
+        fs.renameSync(getAbsolutePath(markdownFile), getAbsolutePath(name));
+    }
 }
 
 /**
@@ -220,11 +223,21 @@ function getOrder(markdownFile: string) {
     return markdownFile.split('_')[0]
 }
 
+function getId(path: string) {
+    return path.replace(markdownRootPath, '').replace('.md', '').replace('/', '').replaceAll('/', '@')
+}
+
+function isExists(id: string) {
+    return fs.existsSync(getAbsolutePath(id)) || fs.existsSync(getAbsolutePathOfFolder(id))
+}
+
 let markdown = {
     moveTo,
     getOrder,
+    getId,
     rename,
     root,
+    isExists,
     getMarkdownToc,
     getMarkdownTitle,
     markdownRootPath,

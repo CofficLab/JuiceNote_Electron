@@ -367,35 +367,36 @@ class node {
     /**
      * 生成一个导航节点
      * 
-     * @param navigator 
+     * @param filePath 
      * @returns 
      */
-    public static make(navigator: string): node {
-        // console.log('now make navigator node for ' + navigator)
+    public static make(filePath: string): node {
+        // console.log('now make navigator node for ' + filePath)
 
-        let created = new node
-        created.id = navigator.replace(markdown.markdownRootPath + '/', '').replaceAll('/', '@').replace('.md', '')
-
-        let markdownTitle = markdown.getMarkdownTitle(navigator.replace(markdown.markdownRootPath + '/', '').replace('.md', ''))
-        let title = markdownTitle ? markdownTitle : created.id.split('@').pop()
-        created.title = title != undefined ? title : ''
-
-        created.link = '/article/' + created.id
-        if (!created.link.includes('@')) created.link = created.link + '@0'
-
-        if (!fs.existsSync(navigator)) {
-            console.log('无法生成导航，文件不存在', navigator)
+        if (!markdown.isExists(markdown.getId(filePath))) {
+            console.error('无法生成导航，文件不存在', filePath)
             return new node
         }
 
-        let stat = fs.statSync(navigator)
+        let isDir = fs.statSync(filePath).isDirectory()
 
-        if (stat.isDirectory()) {
-            let children = fs.readdirSync(navigator)
-            children.forEach((child) => {
-                let childNode = this.make(path.join(navigator, child))
-                created.children.push(childNode)
+        // 生成本节点
+        let created = new node
+        created.id = markdown.getId(filePath)
+        created.title = isDir ? created.id : markdown.getMarkdownTitle(created.id)
+        created.link = '/article/' + created.id
+
+        if (isDir) {
+            // 生成子节点
+            fs.readdirSync(filePath).forEach((child, key) => {
+                let id = markdown.getId(path.join(filePath, child))
+                let nodeId = markdown.getId(path.join(filePath, key.toString()))
+                markdown.rename(id, nodeId)
+                created.children.push(this.make(path.join(filePath, child)))
             })
+
+            // 修正父节点的链接
+            created.link = created.first().link
         }
 
         // console.log('navigator node for ' + navigator, node)
@@ -442,6 +443,7 @@ class node {
             root.children.push(this.make(path.join(markdown.root, node)))
         })
 
+        console.log('root node', root)
         return root
     }
 }
