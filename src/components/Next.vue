@@ -19,7 +19,7 @@ export default defineComponent({
   },
   computed: {
     next: function (): node {
-      console.log("current node is", store.current(this.$route.path));
+      // console.log("current node is", store.current(this.$route.path));
       return store.current(this.$route.path).next();
     },
   },

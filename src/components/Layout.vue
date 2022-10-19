@@ -30,9 +30,9 @@
     <div><Delete></Delete></div>
     <div><Add></Add></div>
     <div><Home></Home></div>
-    <div><GoToPrev></GoToPrev></div>
+    <div><Prev></Prev></div>
     <div class="flex flex-grow"><Breadcrumbs></Breadcrumbs></div>
-    <div><GoToNext></GoToNext></div>
+    <div><Next></Next></div>
   </footer>
 </template>
 
@@ -45,8 +45,8 @@ import Manage from "./Manage.vue";
 import Breadcrumbs from "./Breadcrumbs.vue";
 import ArrowRightCircle from "../icons/arrow-right-circle.vue";
 import ArrowLeftCircle from "../icons/arrow-left-circle.vue";
-import GoToPrev from "./GoToPrev.vue";
-import GoToNext from "./GoToNext.vue";
+import Prev from "./Prev.vue";
+import Next from "./Next.vue";
 import Address from "./Address.vue";
 import Delete from "./Delete.vue";
 import Add from "./Add.vue";
@@ -60,8 +60,8 @@ export default defineComponent({
     Breadcrumbs,
     ArrowRightCircle,
     ArrowLeftCircle,
-    GoToPrev,
-    GoToNext,
+    Prev,
+    Next,
     Address,
     Delete,
     Add,

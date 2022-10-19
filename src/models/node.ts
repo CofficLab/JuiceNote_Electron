@@ -22,41 +22,61 @@ class node {
     public constructor(id?: string) {
         if (id) this.id = id
     }
+
+    /**
+     * root节点
+     */
     public static root: node
+
     public id: string = ''
     public title: string = ''
     public link: string = ''
     public children: node[] = []
+
     /**
-     * 在子孙节点中查找
+     * 判断是否是root节点
+     * 
+     * @returns boolean
+     */
+    public isRoot(): boolean {
+        return this.id === '/'
+    }
+
+    /**
+     * 判断是否是空节点
+     * 
+     * @returns boolean
+     */
+    public isEmpty(): boolean {
+        return this.id === ''
+    }
+
+    /**
+     * 在当前节点+子孙节点中查找
      * 
      * @param id 要查找的节点的ID
-     * @returns 
+     * @returns node
      */
-    public find(id: string): node | null {
+    public find(id: string): node {
         // console.log('try to find', id, 'now node is', this.id)
         if (this.id === id) {
             return this
         }
 
         for (const key in this.children) {
-            let node = this.children[key].find(id)
-            if (node) return node
+            let item = this.children[key].find(id)
+            if (item) return item
         }
 
-        this.children.forEach(function (child) {
-            let node = child.find(id)
-            if (node) return node
-        })
+        return new node
+    }
 
-        return null
-    }
-    public isRoot() {
-        return this.id === '/'
-    }
-    public isEmpty() {
-        return this.id === ''
-    }
+    /**
+     * 在子节点中寻找，返回找到的子节点的key
+     * 
+     * @param id 
+     * @returns 
+     */
     public findKey(id: string): number {
         for (const key in this.children) {
             if (this.children[key].id == id) {
@@ -66,17 +86,32 @@ class node {
 
         return -1
     }
-    public getFirstChild(): node {
-        let first = this.children[0];
 
-        return first
+    /**
+     * 获取第一个子节点
+     * 
+     * @returns 
+     */
+    public first(): node {
+        return this.children[0];
     }
-    public getLastChild(): node {
-        let len = this.children.length
 
-        return this.children[len - 1]
+    /**
+     * 获取最后一个子节点
+     * 
+     * @returns 
+     */
+    public last(): node {
+        return this.children[this.children.length - 1]
     }
-    public isActivated(activePath: string) {
+
+    /**
+     * 判断当前节点是否应该激活
+     * 
+     * @param activePath 
+     * @returns 
+     */
+    public isActivated(activePath: string): boolean {
         // console.log('check', this.id, 'active path is ', activePath)
         // 如果是根节点
         if (this.id === '/') {
@@ -106,7 +141,14 @@ class node {
 
         return false;
     }
-    public getActivatedChild(activePath: string): node {
+
+    /**
+     * 获取激活的子节点
+     * 
+     * @param activePath 
+     * @returns 
+     */
+    public activatedChild(activePath: string): node {
         // console.log('get activated child of', this.id, 'while active path is', activePath)
         for (const key in this.children) {
             let child = this.children[key]
@@ -116,7 +158,14 @@ class node {
 
         return new node;
     }
-    public getActivated(activePath: string): node[] {
+
+    /**
+     * 获取本节点+激活的所有子孙节点
+     * 
+     * @param activePath 
+     * @returns 
+     */
+    public activated(activePath: string): node[] {
         let collection = this.getActivatedChildren(activePath)
         collection.unshift(this)
 
@@ -124,13 +173,20 @@ class node {
 
         return collection
     }
+
+    /**
+     * 获取激活的所有子孙节点
+     * 
+     * @param activePath 
+     * @returns 
+     */
     public getActivatedChildren(activePath: string): node[] {
         // console.log('get activated children of', this.id)
         let parent: node | null = this
         let collection: node[] = []
 
         while (parent !== null) {
-            let activatedChild: node = parent.getActivatedChild(activePath)
+            let activatedChild: node = parent.activatedChild(activePath)
             if (activatedChild.id) {
                 collection.push(activatedChild)
                 parent = activatedChild
@@ -143,9 +199,17 @@ class node {
 
         return collection
     }
-    public getLastActivatedChild(activePath: string): node {
+
+    /**
+     * 
+     * 激活的子孙节点中的终端节点
+     * 
+     * @param activePath 
+     * @returns 
+     */
+    public getLastActivated(activePath: string): node {
         // console.log('get last activated child of', this, 'while path is ', activePath)
-        if (activePath === '/') return node.getRoot().getFirstChild()
+        if (activePath === '/') return node.getRoot().first()
 
         // console.log('activated children are', this.getActivatedChildren(activePath))
         let last = this.getActivatedChildren(activePath).pop()
@@ -153,11 +217,20 @@ class node {
         // console.log('last activated child is', last)
         return last === undefined ? new node : last;
     }
+
+    /**
+     * 删除本节点
+     */
     public delete() {
         console.log('删除导航', this.id)
         markdown.deleteMarkdownFile(this.id)
-        // update()
     }
+
+    /**
+     * 获取父节点
+     * 
+     * @returns node
+     */
     public getParent(): node {
         // console.log('get parent of ', this)
 
@@ -177,9 +250,15 @@ class node {
 
         return new node
     }
+
+    /**
+     * 下一个节点
+     * 
+     * @returns node
+     */
     public next(): node {
         let parent = this.getParent()
-        console.log('get next of', this.id, ' parent is', parent)
+        // console.log('get next of', this.id, ' parent is', parent)
 
         // 空节点的下一个节点是空节点
         if (this.id === '') {
@@ -208,7 +287,7 @@ class node {
      * @returns node
      */
     public prev(): node {
-        console.log('get prev of ', this.id)
+        // console.log('get prev of ', this.id)
 
         let parent = this.getParent()
 
@@ -218,29 +297,31 @@ class node {
         }
 
         // 父节点不为空，且是父节点的第一个节点，上一个节点=父节点的上一个节点
-        if (this.id == parent.getFirstChild().id) {
+        if (this.id == parent.first().id) {
             return parent.prev()
         }
 
         // 父节点不为空，不是父节点的第一个节点，上一个节点=上一个兄弟节点
         return parent.children[parent.findKey(this.id) - 1]
     }
-    public update(node: node): boolean {
-        console.log('update', this.id, 'set children to', node.children)
-        // 如果是根节点
-        if (this.id === '/') {
-            return update(node)
-        }
 
-        // 非根节点
-        let parent = this.getParent()
-        if (!parent) return false
+    // public update(node: node): boolean {
+    //     console.log('update', this.id, 'set children to', node.children)
+    //     // 如果是根节点
+    //     if (this.id === '/') {
+    //         return update(node)
+    //     }
 
-        let key = parent.findKey(this.id)
-        parent.children[key] = node
+    //     // 非根节点
+    //     let parent = this.getParent()
+    //     if (!parent) return false
 
-        return parent.update(parent)
-    }
+    //     let key = parent.findKey(this.id)
+    //     parent.children[key] = node
+
+    //     return parent.update(parent)
+    // }
+
     public setOrder(order: number) {
         let parent = this.getParent()
         if (parent === null) return false
@@ -252,7 +333,14 @@ class node {
 
         return parent.update(parent)
     }
-    public createChild(title: string): node {
+
+    /**
+     * 新建一个子节点
+     * 
+     * @param title 
+     * @returns 
+     */
+    public create(title: string): node {
         let id = this.id + '@' + this.children.length
         markdown.writeToMarkdownFile(id, "# " + title + "\r\n## 简介")
         // update()
@@ -265,6 +353,7 @@ class node {
 
         return created
     }
+
     /**
      * 生成一个导航节点
      * 
@@ -303,6 +392,7 @@ class node {
 
         return created;
     }
+
     /**
      * 获取根导航节点
      * 
@@ -311,7 +401,7 @@ class node {
     public static getRoot(): node {
         if (this.root) return this.root
 
-        console.log('regenerate root node')
+        // console.log('regenerate root node')
         let root = new node('/')
         root.link = '/'
         root.title = '图书'

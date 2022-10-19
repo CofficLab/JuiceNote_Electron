@@ -47,7 +47,7 @@ export default defineComponent({
   },
   computed: {
     breadcrumbs() {
-      let breadcrumbs = store.root.getActivated(this.$route.path);
+      let breadcrumbs = store.root.activated(this.$route.path);
 
       return breadcrumbs;
     },

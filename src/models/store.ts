@@ -24,7 +24,7 @@ const store = reactive({
         return node.getRoot()
     },
     createChild(parent: node, name: string): node {
-        let created = parent.createChild(name)
+        let created = parent.create(name)
         this.root = node.getRoot()
 
         return created
@@ -59,7 +59,7 @@ const store = reactive({
         return this.root.getActivatedChildren(path);
     },
     current(path: string): node {
-        return this.root.getLastActivatedChild(path)
+        return this.root.getLastActivated(path)
     }
 })
 
