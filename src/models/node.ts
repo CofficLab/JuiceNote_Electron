@@ -67,7 +67,7 @@ class node {
      * @returns node
      */
     public find(id: string): node {
-        console.log('try to find', id, 'now node is', this.id)
+        // console.log('try to find', id, 'in all sub nodes,now node is', this.id)
         if (this.id === id) {
             return this
         }
@@ -357,7 +357,7 @@ class node {
         console.log('refreshed root', root)
         let created = root.find(id)
         if (created.isEmpty()) {
-            console.error('error,can not find ', id)
+            console.error('can not find ', id)
             return new node
         }
 

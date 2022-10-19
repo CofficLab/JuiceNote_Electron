@@ -26,7 +26,7 @@
   </main>
 
   <footer class="h-10 fixed bottom-0 w-full p-0 flex border-t border-slate-500">
-    <div><Manage></Manage></div>
+    <!-- <div><Manage></Manage></div> -->
     <div><Delete></Delete></div>
     <div><Add></Add></div>
     <div><Home></Home></div>

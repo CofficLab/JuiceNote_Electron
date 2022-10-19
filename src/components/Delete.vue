@@ -12,9 +12,9 @@ import Trash from "../icons/trash.vue";
 export default defineComponent({
   methods: {
     del: function () {
-      let current = store.getCurrent(this.$route.path);
+      let current = store.current(this.$route.path);
       this.$router.push(current.getParent()?.link);
-      store.deleteNavigator(current);
+      store.delete(current);
     },
   },
   components: { Trash },

@@ -51,9 +51,12 @@ const store = reactive({
 
         navigator.update(this.root)
     },
-    deleteNavigator(navigator: node) {
-        navigator.delete()
+    refresh() {
         this.root = node.getRoot()
+    },
+    delete(node: node) {
+        node.delete()
+        this.refresh()
     },
     getActivated(path: string) {
         return this.root.getActivatedChildren(path);
