@@ -318,20 +318,32 @@ class node {
      * 设置新的排序值
      * 
      * 例如：将第5个移动到第2个
-     *  将第2个重命名为2-
-     *  将第5个重命名为2--
-     *  在文件系统中，2--会排在2-前面
-     *  实现了插入效果
+     *  将第2个重命名为3
+     *  将第3个重命名为4
+     *  ......
+     *  将第5个重命名为2
      * @param order 
      * @returns 
      */
     public setOrder(order: number) {
+        // let debugLog = path.join(process.cwd(), 'yizhi.log')
         let parent = this.getParent()
         if (parent === null) return false
 
-        let replaced = parent.children[order]
-        markdown.rename(replaced.id, replaced.id + '-')
-        markdown.rename(this.id, parent.id + '@' + order + '--')
+        let movingId = parent.id + '@moving'
+        // fs.appendFileSync(debugLog, 'rename ' + this.id + ' to ' + movingId + "\r\n")
+        markdown.rename(this.id, movingId)
+
+        for (let index = parent.children.length - 1; index >= order; index--) {
+            let child = parent.children[index]
+            if (child.id !== this.id && index >= order) {
+                // fs.appendFileSync(debugLog, 'rename ' + child.id + ' to ' + parent.id + '@' + (index + 1).toString() + "\r\n")
+                markdown.rename(child.id, parent.id + '@' + (index + 1).toString())
+            }
+        }
+
+        // fs.appendFileSync(debugLog, 'rename ' + this.id + ' to ' + parent.id + '@' + order + "\r\n")
+        markdown.rename(movingId, parent.id + '@' + order)
 
         node.refreshedRoot()
     }

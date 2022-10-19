@@ -16,11 +16,22 @@
               v-on:dragenter="dragEnter(child)"
               class="flex flex-row min-w-fit"
             >
+              <!-- 拖移时显示 -->
               <div class="bg-base-content w-full p-0" v-bind:class="child === hovered ? 'h-4' : ''"></div>
               <router-link v-bind:to="child.link" active-class="active">
                 <span v-text="child.getParent()?.findKey(child.id)"></span>
                 <span>{{ child.title }}</span>
               </router-link>
+            </li>
+
+            <li
+              draggable="true"
+              v-on:dragend="dragEnd()"
+              v-on:dragenter="dragEnter('bottom')"
+              class="flex flex-row min-w-fit"
+            >
+              <!-- 拖移时显示 -->
+              <div class="w-full p-0 h-4" v-bind:class="'bottom' !== hovered ? '' : 'bg-base-content '"></div>
             </li>
           </ul>
         </div>
@@ -60,9 +71,13 @@ export default defineComponent({
       this.dragged = navigator;
     },
     dragEnd() {
-      let newOrder = this.dragged.getParent().findKey(this.hovered.id);
+      let newOrder =
+        "bottom" == this.hovered
+          ? this.dragged.getParent().children.length + 1
+          : this.dragged.getParent().findKey(this.hovered.id);
+
+      this.$router.push(this.hovered.link);
       store.updateOrder(this.dragged, newOrder);
-      this.hovered = null;
     },
     dragEnter(navigator) {
       this.hovered = navigator;
