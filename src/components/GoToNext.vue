@@ -1,5 +1,8 @@
 <template>
-  <router-link v-bind:to="link" class="btn my-auto w-full pb-3 rounded-none text-center align-middle"
+  <router-link
+    v-bind:to="next.link"
+    class="btn my-auto w-full pb-3 rounded-none text-center align-middle"
+    v-bind:class="next.isEmpty() ? 'btn-disabled' : ''"
     ><ArrowRightCircle></ArrowRightCircle
   ></router-link>
 </template>
@@ -8,17 +11,16 @@
 import { defineComponent } from "vue";
 import store from "../models/store";
 import ArrowRightCircle from "../icons/arrow-right-circle.vue";
+import node from "../models/node";
 
 export default defineComponent({
   components: {
     ArrowRightCircle,
   },
   computed: {
-    link: function () {
-      let current = store.getCurrent(this.$route.path);
-      let next = current.next();
-
-      return next === null || next == undefined ? "/" : next.link;
+    next: function (): node {
+      console.log("current node is", store.current(this.$route.path));
+      return store.current(this.$route.path).next();
     },
   },
 });

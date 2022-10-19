@@ -11,7 +11,7 @@ import store from './models/store'
 
 // 定义路由
 const routes = [
-  { path: '/', redirect: '/article/welcome@0' },
+  { path: '/', redirect: '/article/0@0' },
   { path: '/article/:path', component: Content },
   { path: '/editor/:path', component: EditorVue, props: true },
 ]

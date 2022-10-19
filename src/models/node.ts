@@ -51,6 +51,12 @@ class node {
 
         return null
     }
+    public isRoot() {
+        return this.id === '/'
+    }
+    public isEmpty() {
+        return this.id === ''
+    }
     public findKey(id: string): number {
         for (const key in this.children) {
             if (this.children[key].id == id) {
@@ -59,6 +65,16 @@ class node {
         }
 
         return -1
+    }
+    public getFirstChild(): node {
+        let first = this.children[0];
+
+        return first
+    }
+    public getLastChild(): node {
+        let len = this.children.length
+
+        return this.children[len - 1]
     }
     public isActivated(activePath: string) {
         // console.log('check', this.id, 'active path is ', activePath)
@@ -127,27 +143,27 @@ class node {
 
         return collection
     }
-    public getLastActivatedChild(activePath: string): node | undefined {
+    public getLastActivatedChild(activePath: string): node {
         // console.log('get last activated child of', this, 'while path is ', activePath)
-        if (activePath === '/') return node.getRoot().children.shift()
+        if (activePath === '/') return node.getRoot().getFirstChild()
 
         // console.log('activated children are', this.getActivatedChildren(activePath))
         let last = this.getActivatedChildren(activePath).pop()
 
         // console.log('last activated child is', last)
-        return last;
+        return last === undefined ? new node : last;
     }
     public delete() {
         console.log('删除导航', this.id)
         markdown.deleteMarkdownFile(this.id)
         // update()
     }
-    public getParent(): node | null {
+    public getParent(): node {
         // console.log('get parent of ', this)
 
         // 空节点或根节点的父节点是null
         if (this.id === '' || this.id === '/') {
-            return null
+            return new node
         }
 
         let rootNode = node.getRoot()
@@ -159,62 +175,55 @@ class node {
             }
         }
 
-        return null
+        return new node
     }
-    public next(): node | undefined {
+    public next(): node {
         let parent = this.getParent()
-        // console.log('get next,current parent is', parent)
+        console.log('get next of', this.id, ' parent is', parent)
 
-        if (parent === null) {
-            // 空节点的下一个节点是根节点
-            if (this === new node) {
-                return node.getRoot()
-            }
-
-            // 根节点的下一个节点是根节点的第一个节点
-            if (this.id === '/') {
-                let firstNode = this.children.shift()
-                return firstNode ? firstNode : (new node)
-            }
-        } else {
-            let key = parent.findKey(this.id)
-            let nextKey = key + 1
-
-            // 如果同级的下一个节点不存在，返回父节点的下一个节点
-            if (parent.children[nextKey] === undefined) {
-                console.log('no brother next', this.id)
-                return parent.next()
-            }
-
-            // console.log('get next node of', this.id)
-            // console.log('parent is ', parent)
-            // console.log('get next,current key is', key)
-
-            return parent.children[nextKey]
-        }
-    }
-    public prev(): node | null {
-        // 空节点的上一个节点是根节点
-        if (this === new node) {
-            return node.getRoot()
+        // 空节点的下一个节点是空节点
+        if (this.id === '') {
+            return new node;
         }
 
-        // 根节点的上一个节点是null
+        // 根节点的下一个节点是空节点
         if (this.id === '/') {
-            return null
+            return new node
         }
+
+        // 如果是父节点的最后一个节点，下一个节点=父节点的下一个节点
+        if (this.id === parent.children.at(-1)?.id) {
+            return parent.next()
+        }
+
+        let key = parent.findKey(this.id)
+        let nextKey = key + 1
+
+        return parent.children[nextKey]
+    }
+
+    /**
+     * 计算出上一个节点
+     * 
+     * @returns node
+     */
+    public prev(): node {
+        console.log('get prev of ', this.id)
 
         let parent = this.getParent()
-        let nextBrother = parent?.children[parent.findKey(this.id) + 1]
-        let parentNextBrother = parent?.next()
 
-        // 同级的下一个节点存在，则返回
-        if (nextBrother !== null && nextBrother !== undefined) {
-            return nextBrother
+        // 父节点为空，说明是空节点或根节点，上一个节点是空节点
+        if (parent.isEmpty()) {
+            return new node
         }
 
-        // 如果同级的下一个节点不存在，返回父节点的下一个节点
-        return parentNextBrother !== undefined ? parentNextBrother : null
+        // 父节点不为空，且是父节点的第一个节点，上一个节点=父节点的上一个节点
+        if (this.id == parent.getFirstChild().id) {
+            return parent.prev()
+        }
+
+        // 父节点不为空，不是父节点的第一个节点，上一个节点=上一个兄弟节点
+        return parent.children[parent.findKey(this.id) - 1]
     }
     public update(node: node): boolean {
         console.log('update', this.id, 'set children to', node.children)
@@ -308,9 +317,10 @@ class node {
         root.title = '图书'
 
         fs.readdirSync(markdown.root).forEach((node) => {
-            root?.children.push(this.make(path.join(markdown.root, node)))
+            root.children.push(this.make(path.join(markdown.root, node)))
         })
 
+        // console.log('root node', root)
         this.root = root
         return root
     }

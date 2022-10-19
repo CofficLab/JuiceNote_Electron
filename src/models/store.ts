@@ -58,7 +58,7 @@ const store = reactive({
     getActivated(path: string) {
         return this.root.getActivatedChildren(path);
     },
-    getCurrent(path: string): node | undefined {
+    current(path: string): node {
         return this.root.getLastActivatedChild(path)
     }
 })

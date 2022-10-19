@@ -14,7 +14,6 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import markdown from "../models/markdown";
-import { nav } from "../models/nav";
 import store from "../models/store";
 
 export default defineComponent({
