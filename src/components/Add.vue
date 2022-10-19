@@ -48,7 +48,7 @@ export default defineComponent({
       this.showModal = false;
     },
     submit() {
-      let currentNode = store.getCurrent(this.$route.path);
+      let currentNode = store.current(this.$route.path);
       let currentParent = currentNode.getParent();
 
       if (currentParent !== null) {

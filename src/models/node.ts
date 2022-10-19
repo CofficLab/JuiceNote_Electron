@@ -52,20 +52,29 @@ class node {
     }
 
     /**
+     * 判断是否是空节点
+     * 
+     * @returns boolean
+     */
+    public notEmpty(): boolean {
+        return this.id !== ''
+    }
+
+    /**
      * 在当前节点+子孙节点中查找
      * 
      * @param id 要查找的节点的ID
      * @returns node
      */
     public find(id: string): node {
-        // console.log('try to find', id, 'now node is', this.id)
+        console.log('try to find', id, 'now node is', this.id)
         if (this.id === id) {
             return this
         }
 
         for (const key in this.children) {
             let item = this.children[key].find(id)
-            if (item) return item
+            if (item.notEmpty()) return item
         }
 
         return new node
@@ -343,10 +352,11 @@ class node {
     public create(title: string): node {
         let id = this.id + '@' + this.children.length
         markdown.writeToMarkdownFile(id, "# " + title + "\r\n## 简介")
-        // update()
 
-        let created = node.getRoot().find(id)
-        if (!created) {
+        let root = node.refreshedRoot()
+        console.log('refreshed root', root)
+        let created = root.find(id)
+        if (created.isEmpty()) {
             console.error('error,can not find ', id)
             return new node
         }
@@ -401,7 +411,29 @@ class node {
     public static getRoot(): node {
         if (this.root) return this.root
 
-        // console.log('regenerate root node')
+        this.root = node.generateRoot()
+
+        return this.root
+    }
+
+    /**
+     * 获取刷新后的根节点
+     * 
+     * @returns 
+     */
+    public static refreshedRoot(): node {
+        this.root = node.generateRoot()
+
+        return this.root
+    }
+
+    /**
+     * 读取文件，生成根节点
+     * 
+     * @returns 
+     */
+    public static generateRoot(): node {
+        console.log('regenerate root node')
         let root = new node('/')
         root.link = '/'
         root.title = '图书'
@@ -410,8 +442,6 @@ class node {
             root.children.push(this.make(path.join(markdown.root, node)))
         })
 
-        // console.log('root node', root)
-        this.root = root
         return root
     }
 }
