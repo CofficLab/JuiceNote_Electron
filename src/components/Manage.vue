@@ -82,7 +82,7 @@ export default defineComponent({
     deleteNav: function () {
       console.log("parent of current navigator", this.current.getParent());
       this.$router.push(this.current.getParent().link);
-      store.delete(this.current);
+      store.root.delete(this.current.id);
     },
     commit: function () {
       let exec = require("child_process").exec;

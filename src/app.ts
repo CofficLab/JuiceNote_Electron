@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import { ipcRenderer } from 'electron'
 import { createRouter, createWebHistory } from 'vue-router'
-import Layout from './components/Layout.vue'
+import App from './components/App.vue'
 import EditorVue from './components/Editor.vue'
 import mavonEditor from 'mavon-editor'
 import Content from './components/Content.vue'
@@ -11,7 +11,7 @@ import store from './models/store'
 
 // 定义路由
 const routes = [
-  { path: '/', redirect: '/article/0@0' },
+  { path: '/', component: Content },
   { path: '/article/:path', component: Content },
   { path: '/editor/:path', component: EditorVue, props: true },
 ]
@@ -34,7 +34,7 @@ ipcRenderer.on('main-process-message', (_event, ...args) => {
   // console.log('[main process message]', ...args)
 })
 
-const app = createApp(Layout)
+const app = createApp(App)
 app.use(router)
 app.use(mavonEditor)
 app.mount('#app')

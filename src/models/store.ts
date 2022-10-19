@@ -25,26 +25,27 @@ const store = reactive({
     },
     createChild(parent: node, name: string): node {
         let created = parent.create(name)
-        this.root = node.getRoot()
+        this.refresh()
 
         return created
     },
     updateOrder(navigator: node, order: number) {
         navigator.setOrder(order)
-        this.root = node.getRoot()
+        this.refresh()
     },
     refresh() {
-        this.root = node.getRoot()
-    },
-    delete(node: node) {
-        node.delete()
-        this.refresh()
+        this.root = node.refreshedRoot()
+        // console.log('refreshed root node in store', this.root)
     },
     getActivated(path: string) {
         return this.root.getActivatedChildren(path);
     },
     current(path: string): node {
         return this.root.getLastActivated(path)
+    },
+    delete(id: string) {
+        this.root.delete(id)
+        this.refresh()
     }
 })
 

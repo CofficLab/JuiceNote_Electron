@@ -11,14 +11,8 @@ import store from "../models/store";
 export default defineComponent({
   computed: {
     body(): string {
-      return markdown.getMarkdownRenderedContentWithoutToc(store.current(this.$route.path).id);
+      return "xxxx";
     },
   },
-  // created: function () {
-  //   console.log("content created,current route path is", this.$route.path);
-  // },
-  // mounted: function () {
-  //   console.log("content mounted,current route path is", this.$route.path);
-  // },
 });
 </script>

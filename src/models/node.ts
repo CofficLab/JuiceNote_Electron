@@ -228,11 +228,25 @@ class node {
     }
 
     /**
-     * 删除本节点
+     * 删除某个子孙节点
      */
-    public delete() {
-        console.log('删除导航', this.id)
-        markdown.deleteMarkdownFile(this.id)
+    public delete(id: string): node {
+        console.log('删除导航', id)
+        markdown.deleteMarkdownFile(id)
+
+        // if (this.findKey(id)) {
+        //     this.children.slice(this.findKey(id), 1)
+        // } else {
+        //     let newChildren: node[] = []
+        //     this.children.forEach(function (child) {
+        //         child = child.delete(id)
+        //         newChildren.push(child)
+        //     })
+
+        //     this.children = newChildren
+        // }
+
+        return this
     }
 
     /**
@@ -395,9 +409,10 @@ class node {
             // 生成子节点
             fs.readdirSync(filePath).forEach((child, key) => {
                 let id = markdown.getId(path.join(filePath, child))
-                let nodeId = markdown.getId(path.join(filePath, key.toString()))
+                let fileNewName = key.toString() + '.md'
+                let nodeId = markdown.getId(path.join(filePath, fileNewName))
                 markdown.rename(id, nodeId)
-                created.children.push(this.make(path.join(filePath, child)))
+                created.children.push(this.make(path.join(filePath, fileNewName)))
             })
 
             // 修正父节点的链接
@@ -441,12 +456,13 @@ class node {
     public static generateRoot(): node {
         console.log('regenerate root node')
         let root = new node('/')
-        root.link = '/'
         root.title = '图书'
 
         fs.readdirSync(markdown.root).forEach((node) => {
             root.children.push(this.make(path.join(markdown.root, node)))
         })
+
+        root.link = root.first().link
 
         console.log('root node', root)
         return root

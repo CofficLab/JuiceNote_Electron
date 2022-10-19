@@ -82,8 +82,8 @@ async function createWindow() {
 
 app.whenReady().then(function () {
   createWindow()
-  let appPath = app.getAppPath()
-  fs.appendFileSync(path.join(app.getPath('downloads'), 'app.log'), 'APP路径：' + appPath)
+  // let appPath = app.getAppPath()
+  // fs.appendFileSync(path.join(app.getPath('downloads'), 'app.log'), 'APP路径：' + appPath)
 })
 
 app.on('window-all-closed', () => {

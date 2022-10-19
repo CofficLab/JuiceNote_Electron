@@ -1,8 +1,6 @@
 <template>
   <!-- 标题栏，左侧显示红绿灯，右侧可用于拖移 -->
-  <div class="h-8 bg-stone-900 fixed top-0 z-50 w-full flex justify-center" id="title-bar" v-show="!hideTitleBar">
-    <Address></Address>
-  </div>
+  <div class="h-8 bg-stone-900 fixed top-0 z-50 w-full flex justify-center" id="title-bar" v-show="!hideTitleBar"></div>
 
   <!-- 主要区域 -->
   <main class="bg-green-200/20 flex flex-row z-10 min-h-screen overflow-hidden">
@@ -47,7 +45,6 @@ import ArrowRightCircle from "../icons/arrow-right-circle.vue";
 import ArrowLeftCircle from "../icons/arrow-left-circle.vue";
 import Prev from "./Prev.vue";
 import Next from "./Next.vue";
-import Address from "./Address.vue";
 import Delete from "./Delete.vue";
 import Add from "./Add.vue";
 import Home from "./Home.vue";
@@ -62,7 +59,6 @@ export default defineComponent({
     ArrowLeftCircle,
     Prev,
     Next,
-    Address,
     Delete,
     Add,
     Home,
@@ -74,6 +70,10 @@ export default defineComponent({
     inEditMode(): boolean {
       return store.edit_mode;
     },
+  },
+  beforeCreate: function () {
+    console.log("before app created,current route path is", this.$route.path, ",redirect to root link");
+    this.$router.push(store.root.link);
   },
 });
 </script>
