@@ -33,14 +33,13 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import store from "../models/store";
-import { nav, navigatorNode } from "../models/nav";
 import Cog from "../icons/cog.vue";
+import node from "../models/node";
 
 export default defineComponent({
   data() {
     return {
       showModal: false,
-      showSortModal: false,
       form: {
         title: "",
       },
@@ -50,20 +49,14 @@ export default defineComponent({
     showForm() {
       this.showModal = true;
       this.$nextTick(function () {
-        this.$refs.title.focus();
+        (this.$refs.title as any).focus();
       });
-    },
-    showSortForm() {
-      this.showSortModal = true;
     },
     hideForm() {
       this.showModal = false;
     },
-    hideSortForm() {
-      this.showSortForm = false;
-    },
     submit() {
-      let currentNode = store.getCurrent(this.$route.path);
+      let currentNode = store.current(this.$route.path);
       let currentParent = currentNode.getParent();
 
       if (currentParent !== null) {
@@ -89,20 +82,23 @@ export default defineComponent({
     deleteNav: function () {
       console.log("parent of current navigator", this.current.getParent());
       this.$router.push(this.current.getParent().link);
-      store.deleteNavigator(this.current);
+      store.delete(this.current);
     },
     commit: function () {
       let exec = require("child_process").exec;
-      exec("git commit -m '提交文档变动'", function (error, stdout, stderr) {
-        console.log("error", error);
-        console.log("out", stdout);
-        console.log("stderr", stderr);
-      });
+      // exec("git commit -m '提交文档变动'", function (error, stdout, stderr) {
+      //   console.log("error", error);
+      //   console.log("out", stdout);
+      //   console.log("stderr", stderr);
+      // });
     },
   },
   computed: {
     edit_mode(): boolean {
       return store.edit_mode;
+    },
+    current(): node {
+      return store.current(this.$route.path);
     },
   },
   components: { Cog },

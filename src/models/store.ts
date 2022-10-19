@@ -29,27 +29,9 @@ const store = reactive({
 
         return created
     },
-    // updateNavigators(root: node) {
-    // console.log('update navigators in store')
-    // this.root = root
-    // nav.update(root)
-    // },
     updateOrder(navigator: node, order: number) {
         navigator.setOrder(order)
         this.root = node.getRoot()
-    },
-    /**
-     * 更新单个导航
-     * 
-     * @param navigator 
-     */
-    updateNavigator(navigator: node) {
-        console.log('update navigator in store', navigator.id)
-        let key = node.getRoot().children.indexOf(navigator)
-        console.log('key is ', key)
-        this.root.children[key] = navigator
-
-        navigator.update(this.root)
     },
     refresh() {
         this.root = node.getRoot()

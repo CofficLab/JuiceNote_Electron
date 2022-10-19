@@ -27,11 +27,11 @@
             <li
               draggable="true"
               v-on:dragend="dragEnd()"
-              v-on:dragenter="dragEnter('bottom')"
+              v-on:dragenter="dragEnter(bottomNode)"
               class="flex flex-row min-w-fit"
             >
               <!-- 拖移时显示 -->
-              <div class="w-full p-0 h-4" v-bind:class="'bottom' !== hovered ? '' : 'bg-base-content '"></div>
+              <div class="w-full p-0 h-4" v-bind:class="bottomNode !== hovered ? '' : 'bg-base-content '"></div>
             </li>
           </ul>
         </div>
@@ -48,12 +48,16 @@ import { defineComponent } from "vue";
 import store from "../models/store";
 import ArrowRightCircle from "../icons/arrow-right-circle.vue";
 import Address from "./Address.vue";
+import node from "../models/node";
 
 export default defineComponent({
   data() {
+    let emptyNode = new node();
     return {
-      dragged: null,
-      hovered: null,
+      dragged: emptyNode,
+      hovered: emptyNode,
+      emptyNode: emptyNode,
+      bottomNode: new node("/bottom"),
     };
   },
   computed: {
@@ -67,19 +71,19 @@ export default defineComponent({
     },
   },
   methods: {
-    dragStart(navigator) {
+    dragStart(navigator: node) {
       this.dragged = navigator;
     },
     dragEnd() {
       let newOrder =
-        "bottom" == this.hovered
+        this.bottomNode == this.hovered
           ? this.dragged.getParent().children.length + 1
           : this.dragged.getParent().findKey(this.hovered.id);
 
       this.$router.push(this.hovered.link);
       store.updateOrder(this.dragged, newOrder);
     },
-    dragEnter(navigator) {
+    dragEnter(navigator: node) {
       this.hovered = navigator;
     },
   },

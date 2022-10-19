@@ -41,7 +41,7 @@ export default defineComponent({
     showForm() {
       this.showModal = true;
       this.$nextTick(function () {
-        this.$refs.title.focus();
+        (this.$refs.title as any).focus();
       });
     },
     hideForm() {

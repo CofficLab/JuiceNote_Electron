@@ -21,7 +21,7 @@ export default defineComponent({
   data() {
     return {
       toolbarsBackground: "#fbfbfb",
-      html: markdown.getMarkdownContent(nav.getMarkdownNameFromRoutePath(this.$route.path)),
+      html: markdown.getMarkdownContent(store.current(this.$route.path).id),
       external_link: {
         markdown_css: function () {
           return "/src/assets/github-markdown.min.css";
