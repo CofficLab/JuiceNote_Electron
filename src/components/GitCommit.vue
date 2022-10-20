@@ -26,7 +26,7 @@ export default defineComponent({
             store.setToast(stdout);
             setTimeout(() => {
               store.setToast("");
-            }, 3);
+            }, 3000);
           }
           if (error) return console.error(stderr);
 
