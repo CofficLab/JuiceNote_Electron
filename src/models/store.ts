@@ -6,7 +6,7 @@ const store = reactive({
     full_screen: false,
     navigator: null,
     root: node.getRoot(),
-    toast: 'xxx',
+    toast: '',
     setToast(message: string) {
         this.toast = message
     },
