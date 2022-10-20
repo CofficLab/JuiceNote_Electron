@@ -12,7 +12,7 @@
         class="bg-gradient-to-r from-base-300/50 to-base-200/90 fixed bottom-10 w-56 py-4"
         v-bind:class="hideTitleBar ? 'top-0' : 'top-8'"
       >
-        <Toc v-show="this.$route.name !== 'editor'"></Toc>
+        <Toc v-show="!editorMode"></Toc>
       </div>
     </div>
     <!-- 内容区域 -->
@@ -79,8 +79,11 @@ export default defineComponent({
     Toast,
   },
   computed: {
-    hideTitleBar: function () {
+    hideTitleBar: function (): boolean {
       return store.full_screen;
+    },
+    editorMode: function () {
+      return this.$route.name === "editor";
     },
   },
   beforeCreate: function () {

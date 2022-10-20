@@ -48,9 +48,9 @@ function getMarkdownContent(markdownName: string) {
     var absolutePath = getAbsolutePath(markdownName)
 
     if (!fs.existsSync(absolutePath)) {
-        console.error(absolutePath + 'not exists, generate')
+        console.error(absolutePath + 'not exists')
         // writeToMarkdownFile(markdownName, "# " + markdownName)
-        return false
+        return absolutePath + 'not exists'
     }
 
     // console.log('read markdown content: ' + fs.readFileSync(absolutePath, 'utf-8'))
