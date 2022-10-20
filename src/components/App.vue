@@ -96,6 +96,12 @@ export default defineComponent({
   },
   mounted: function () {
     console.log("app mounted,current route path is", this.$route.path);
+    console.log("app mounted,current route is", this.$route);
+    console.log("app mounted,protocol is", window.location.protocol);
+    if (this.$route.path === "/" && window.location.protocol === "file:") {
+      console.log("app mounted,current route path is /,protocol is 'file:',redirect to root first child");
+      this.$router.push(store.current(this.$route.path).link);
+    }
   },
 });
 </script>

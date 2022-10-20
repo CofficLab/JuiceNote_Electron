@@ -91,9 +91,7 @@ export default defineComponent({
   // created: function () {
   //   console.log("breadcrumbs created,current route path is", this.$route.path);
   // },
-  // mounted: function () {
-  //   console.log("breadcrumbs mounted,current route path is", this.$route.path);
-  // },
+  mounted: function () {},
   components: { ArrowRightCircle, Address },
 });
 </script>

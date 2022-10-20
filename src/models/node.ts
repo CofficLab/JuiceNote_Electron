@@ -218,7 +218,7 @@ class node {
      */
     public getLastActivated(activePath: string): node {
         // console.log('get last activated child of', this, 'while path is ', activePath)
-        if (activePath === '/') return node.getRoot().first()
+        if (activePath === '/') return node.getRoot()
 
         // console.log('activated children are', this.getActivatedChildren(activePath))
         let last = this.getActivatedChildren(activePath).pop()
@@ -233,18 +233,6 @@ class node {
     public delete(id: string): node {
         console.log('删除导航', id)
         markdown.deleteMarkdownFile(id)
-
-        // if (this.findKey(id)) {
-        //     this.children.slice(this.findKey(id), 1)
-        // } else {
-        //     let newChildren: node[] = []
-        //     this.children.forEach(function (child) {
-        //         child = child.delete(id)
-        //         newChildren.push(child)
-        //     })
-
-        //     this.children = newChildren
-        // }
 
         return this
     }
@@ -416,7 +404,7 @@ class node {
             })
 
             // 修正父节点的链接
-            created.link = created.first().link
+            // created.link = created.first().link
         }
 
         // console.log('navigator node for ' + navigator, node)
@@ -457,12 +445,13 @@ class node {
         console.log('regenerate root node')
         let root = new node('/')
         root.title = '图书'
+        root.link = '/'
 
         fs.readdirSync(markdown.root).forEach((node) => {
             root.children.push(this.make(path.join(markdown.root, node)))
         })
 
-        root.link = root.first().link
+        // root.link = root.first().link
 
         console.log('root node', root)
         return root
