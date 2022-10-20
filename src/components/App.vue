@@ -1,6 +1,8 @@
 <template>
   <!-- 标题栏，左侧显示红绿灯，右侧可用于拖移 -->
-  <div class="h-8 bg-stone-900 fixed top-0 z-50 w-full flex justify-center" id="title-bar" v-show="!hideTitleBar"></div>
+  <div class="h-8 bg-stone-900 fixed top-0 z-50 w-full flex justify-center" id="title-bar" v-show="!hideTitleBar">
+    <Address></Address>
+  </div>
 
   <!-- 主要区域 -->
   <main class="bg-green-200/20 flex flex-row z-10 min-h-screen overflow-hidden">
@@ -24,7 +26,7 @@
   </main>
 
   <footer class="h-10 fixed bottom-0 w-full p-0 flex border-t border-slate-500">
-    <!-- <div><Manage></Manage></div> -->
+    <div><Manage></Manage></div>
     <div><Delete></Delete></div>
     <div><Add></Add></div>
     <div><Home></Home></div>
@@ -48,6 +50,7 @@ import Next from "./Next.vue";
 import Delete from "./Delete.vue";
 import Add from "./Add.vue";
 import Home from "./Home.vue";
+import Address from "./Address.vue";
 
 export default defineComponent({
   components: {
@@ -62,6 +65,7 @@ export default defineComponent({
     Delete,
     Add,
     Home,
+    Address,
   },
   computed: {
     hideTitleBar: function () {
@@ -72,8 +76,15 @@ export default defineComponent({
     },
   },
   beforeCreate: function () {
-    console.log("before app created,current route path is", this.$route.path, ",redirect to root link");
-    this.$router.push(store.root.link);
+    if (this.$route.path === "/") {
+      console.log("before app created,current route path is", this.$route.path);
+      // this.$router.push(store.root.link);
+    } else {
+      console.log("before app created,current route path is", this.$route.path);
+    }
+  },
+  mounted: function () {
+    console.log("app mounted,current route path is", this.$route.path);
   },
 });
 </script>

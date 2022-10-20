@@ -128,7 +128,7 @@ class node {
         }
 
         // 当前节点的链接等于目标链接
-        if (this.link === activePath) {
+        if (this.link === activePath || '/editor/' + this.id === activePath) {
             // console.log('now is', this)
             // console.log(this.id + ' should be active,link is', this.link, 'active path is', activePath)
             return true;

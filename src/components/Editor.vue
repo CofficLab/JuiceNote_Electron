@@ -12,6 +12,7 @@
 </template>
 
 <script lang="ts">
+import { unescape } from "querystring";
 import { defineComponent } from "vue";
 import markdown from "../models/markdown";
 import store from "../models/store";
@@ -19,9 +20,10 @@ import store from "../models/store";
 export default defineComponent({
   props: ["path"],
   data() {
+    console.log("editor said:current path is", unescape(this.$route.path));
     return {
       toolbarsBackground: "#fbfbfb",
-      html: markdown.getMarkdownContent(store.current(this.$route.path).id),
+      html: markdown.getMarkdownContent(store.current(unescape(this.$route.path)).id),
       external_link: {
         markdown_css: function () {
           return "/src/assets/github-markdown.min.css";
@@ -49,7 +51,8 @@ export default defineComponent({
     save: function () {
       if (markdown.getMarkdownContent(this.path) != this.html) {
         console.log("保存文章");
-        markdown.writeToMarkdownFile(this.path, this.html);
+        // console.log("current node is", store.current(this.$route.path));
+        markdown.writeToMarkdownFile(store.current(unescape(this.$route.path)).id, this.html);
       } else {
         console.log("没有变化，不保存文章");
       }

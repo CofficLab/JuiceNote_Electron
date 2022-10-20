@@ -44,11 +44,13 @@ function getAbsolutePathOfFolder(markdownFile: string): string {
  * @returns 
  */
 function getMarkdownContent(markdownName: string) {
+    // console.log('get markdown content of', markdownName)
     var absolutePath = getAbsolutePath(markdownName)
 
     if (!fs.existsSync(absolutePath)) {
-        console.log(absolutePath + 'not exists, generate')
-        writeToMarkdownFile(markdownName, "# " + markdownName)
+        console.error(absolutePath + 'not exists, generate')
+        // writeToMarkdownFile(markdownName, "# " + markdownName)
+        return false
     }
 
     // console.log('read markdown content: ' + fs.readFileSync(absolutePath, 'utf-8'))

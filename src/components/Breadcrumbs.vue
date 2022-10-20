@@ -49,6 +49,7 @@ import store from "../models/store";
 import ArrowRightCircle from "../icons/arrow-right-circle.vue";
 import Address from "./Address.vue";
 import node from "../models/node";
+import { unescape } from "querystring";
 
 export default defineComponent({
   data() {
@@ -62,7 +63,7 @@ export default defineComponent({
   },
   computed: {
     breadcrumbs() {
-      let breadcrumbs = store.root.activated(this.$route.path);
+      let breadcrumbs = store.root.activated(unescape(this.$route.path));
 
       return breadcrumbs;
     },
