@@ -33,6 +33,7 @@
     <div><Home></Home></div>
     <div><Prev></Prev></div>
     <div class="flex flex-grow"><Breadcrumbs></Breadcrumbs></div>
+    <div><GitCommit></GitCommit></div>
     <div><Next></Next></div>
   </footer>
 </template>
@@ -53,6 +54,7 @@ import Add from "./Add.vue";
 import Home from "./Home.vue";
 import Address from "./Address.vue";
 import Edit from "./Edit.vue";
+import GitCommit from "./GitCommit.vue";
 
 export default defineComponent({
   components: {
@@ -69,6 +71,7 @@ export default defineComponent({
     Home,
     Address,
     Edit,
+    GitCommit,
   },
   computed: {
     hideTitleBar: function () {
