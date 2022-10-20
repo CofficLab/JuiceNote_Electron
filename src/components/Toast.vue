@@ -16,7 +16,6 @@ import Trash from "../icons/trash.vue";
 export default defineComponent({
   computed: {
     message() {
-      console.log(store.toast);
       return store.toast;
     },
   },
