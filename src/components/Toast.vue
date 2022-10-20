@@ -1,5 +1,5 @@
 <template>
-  <div class="toast toast-start toast-bottom mb-12">
+  <div class="toast toast-start toast-bottom mb-12" v-show="message.length > 0">
     <div class="alert alert-success">
       <div>
         <span>{{ message }}</span>
