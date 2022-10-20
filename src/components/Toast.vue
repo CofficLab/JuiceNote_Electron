@@ -2,7 +2,7 @@
   <div class="toast toast-start toast-bottom mb-12" v-show="message.length > 0">
     <div class="alert alert-success">
       <div>
-        <span>{{ message }}</span>
+        <span v-html="message"></span>
       </div>
     </div>
   </div>
