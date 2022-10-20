@@ -25,6 +25,7 @@ export default defineComponent({
             console.log(stdout);
             store.setToast(stdout);
             setTimeout(() => {
+              console.log("清理toast");
               store.setToast("");
             }, 3000);
           }
