@@ -27,7 +27,7 @@
 
   <footer class="h-10 fixed bottom-0 w-full p-0 flex border-t border-slate-500">
     <Toast></Toast>
-    <div><Manage></Manage></div>
+    <!-- <div><Manage></Manage></div> -->
     <div><GitCommit></GitCommit></div>
     <div><Delete></Delete></div>
     <div><Edit></Edit></div>
