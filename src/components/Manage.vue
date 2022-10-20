@@ -84,11 +84,14 @@ export default defineComponent({
     },
     commit: function () {
       let exec = require("child_process").exec;
-      // exec("git commit -m '提交文档变动'", function (error, stdout, stderr) {
-      //   console.log("error", error);
-      //   console.log("out", stdout);
-      //   console.log("stderr", stderr);
-      // });
+      exec("git add -A", function (error, stdout, stderr) {
+        if (stdout) console.log(stdout);
+        if (error) console.error(stderr);
+      });
+      exec("git commit -m '提交文档变动'", function (error, stdout, stderr) {
+        if (stdout) console.log(stdout);
+        if (error) console.error(stderr);
+      });
     },
   },
   computed: {
