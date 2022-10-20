@@ -6,6 +6,10 @@ const store = reactive({
     full_screen: false,
     navigator: null,
     root: node.getRoot(),
+    toast: 'xxx',
+    setToast(message: string) {
+        this.toast = message
+    },
     enterFullScreen() {
         this.full_screen = true
     },

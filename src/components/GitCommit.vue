@@ -7,6 +7,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import CloudArrowUp from "../icons/cloud-arrow-up.vue";
+import store from "../models/store";
 
 export default defineComponent({
   components: {
@@ -20,7 +21,10 @@ export default defineComponent({
         if (error) return console.error(stderr);
 
         exec("git commit -m '提交文档变动'", function (error, stdout, stderr) {
-          if (stdout) console.log(stdout);
+          if (stdout) {
+            console.log(stdout);
+            store.setToast(stdout);
+          }
           if (error) return console.error(stderr);
 
           exec("git push", function (error, stdout, stderr) {

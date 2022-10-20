@@ -26,6 +26,7 @@
   </main>
 
   <footer class="h-10 fixed bottom-0 w-full p-0 flex border-t border-slate-500">
+    <Toast></Toast>
     <div><Manage></Manage></div>
     <div><GitCommit></GitCommit></div>
     <div><Delete></Delete></div>
@@ -55,6 +56,8 @@ import Home from "./Home.vue";
 import Address from "./Address.vue";
 import Edit from "./Edit.vue";
 import GitCommit from "./GitCommit.vue";
+import Alert from "./Alert.vue";
+import Toast from "./Toast.vue";
 
 export default defineComponent({
   components: {
@@ -72,6 +75,8 @@ export default defineComponent({
     Address,
     Edit,
     GitCommit,
+    Alert,
+    Toast,
   },
   computed: {
     hideTitleBar: function () {
