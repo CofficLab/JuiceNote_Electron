@@ -24,10 +24,10 @@ export default defineComponent({
           if (stdout) {
             console.log(stdout);
             store.setToast(stdout);
-            // setTimeout(() => {
-            //   console.log("清理toast");
-            //   store.setToast("");
-            // }, 3000);
+            setTimeout(() => {
+              console.log("清理toast");
+              store.setToast("");
+            }, 3000);
           }
           if (error) return console.error(stderr, error);
 
