@@ -29,7 +29,7 @@ export default defineComponent({
               store.setToast("");
             }, 3000);
           }
-          if (error) return console.error(stderr);
+          if (error) return console.error(stderr, error);
 
           exec("git push", function (error, stdout, stderr) {
             if (stdout) console.log(stdout);
