@@ -12,7 +12,7 @@ export default defineComponent({
   components: {
     CloudArrowUp,
   },
-  computed: {
+  methods: {
     commit: function () {
       let exec = require("child_process").exec;
       exec("git add -A", function (error, stdout, stderr) {
