@@ -13,10 +13,10 @@ import store from "../models/store";
 export default defineComponent({
   computed: {
     path: function () {
-      return this.$route.path;
+      return unescape(this.$route.path);
     },
     current: function () {
-      return store.current(unescape(this.$route.path));
+      return store.current(this.$route.path);
     },
   },
   beforeCreate: function () {

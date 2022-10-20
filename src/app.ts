@@ -13,7 +13,7 @@ import store from './models/store'
 const routes = [
   { path: '/', component: Content },
   { path: '/article/:path', component: Content },
-  { path: '/editor/:path', component: EditorVue, props: true },
+  { path: '/editor/:path', component: EditorVue, props: true, name: "editor" },
 ]
 
 const router = createRouter({

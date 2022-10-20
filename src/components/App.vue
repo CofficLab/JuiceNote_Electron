@@ -12,7 +12,7 @@
         class="bg-gradient-to-r from-base-300/50 to-base-200/90 fixed bottom-10 w-56 py-4"
         v-bind:class="hideTitleBar ? 'top-0' : 'top-8'"
       >
-        <Toc v-show="!inEditMode"></Toc>
+        <Toc v-show="this.$route.name !== 'editor'"></Toc>
       </div>
     </div>
     <!-- 内容区域 -->
@@ -28,6 +28,7 @@
   <footer class="h-10 fixed bottom-0 w-full p-0 flex border-t border-slate-500">
     <div><Manage></Manage></div>
     <div><Delete></Delete></div>
+    <div><Edit></Edit></div>
     <div><Add></Add></div>
     <div><Home></Home></div>
     <div><Prev></Prev></div>
@@ -51,6 +52,7 @@ import Delete from "./Delete.vue";
 import Add from "./Add.vue";
 import Home from "./Home.vue";
 import Address from "./Address.vue";
+import Edit from "./Edit.vue";
 
 export default defineComponent({
   components: {
@@ -66,13 +68,11 @@ export default defineComponent({
     Add,
     Home,
     Address,
+    Edit,
   },
   computed: {
     hideTitleBar: function () {
       return store.full_screen;
-    },
-    inEditMode(): boolean {
-      return store.edit_mode;
     },
   },
   beforeCreate: function () {

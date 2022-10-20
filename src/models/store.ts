@@ -1,9 +1,9 @@
 import { reactive } from 'vue'
 import node from './node'
+import { unescape } from "querystring";
 
 const store = reactive({
     full_screen: false,
-    edit_mode: false,
     navigator: null,
     root: node.getRoot(),
     enterFullScreen() {
@@ -11,12 +11,6 @@ const store = reactive({
     },
     leaveFullScreen() {
         this.full_screen = false
-    },
-    enterEditMode() {
-        this.edit_mode = true
-    },
-    leaveEditMode() {
-        this.edit_mode = false
     },
     getRoot() {
         console.log('get root navigator in store')
@@ -41,7 +35,7 @@ const store = reactive({
         return this.root.getActivatedChildren(path);
     },
     current(path: string): node {
-        return this.root.getLastActivated(path)
+        return this.root.getLastActivated(unescape(path))
     },
     delete(id: string) {
         this.root.delete(id)

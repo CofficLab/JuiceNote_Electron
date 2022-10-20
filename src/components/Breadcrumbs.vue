@@ -68,7 +68,7 @@ export default defineComponent({
       return breadcrumbs;
     },
     inEditMode(): boolean {
-      return store.edit_mode;
+      return this.$route.name === "editor";
     },
   },
   methods: {

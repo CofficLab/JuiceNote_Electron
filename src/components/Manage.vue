@@ -71,11 +71,9 @@ export default defineComponent({
     },
     toggleEditMode: function () {
       console.log("toggle edit mode");
-      if (store.edit_mode) {
-        store.leaveEditMode();
+      if (this.$route.name === "editor") {
         this.$router.push(this.$route.path.replace("editor", "article"));
       } else {
-        store.enterEditMode();
         this.$router.push(this.$route.path.replace("article", "editor"));
       }
     },
@@ -95,7 +93,7 @@ export default defineComponent({
   },
   computed: {
     edit_mode(): boolean {
-      return store.edit_mode;
+      return this.$route.name === "editor";
     },
     current(): node {
       return store.current(this.$route.path);

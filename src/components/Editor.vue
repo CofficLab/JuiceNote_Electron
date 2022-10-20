@@ -23,7 +23,7 @@ export default defineComponent({
     console.log("editor said:current path is", unescape(this.$route.path));
     return {
       toolbarsBackground: "#fbfbfb",
-      html: markdown.getMarkdownContent(store.current(unescape(this.$route.path)).id),
+      html: markdown.getMarkdownContent(store.current(this.$route.path).id),
       external_link: {
         markdown_css: function () {
           return "/src/assets/github-markdown.min.css";
@@ -57,9 +57,6 @@ export default defineComponent({
         console.log("没有变化，不保存文章");
       }
     },
-  },
-  mounted: function () {
-    store.enterEditMode();
   },
 });
 </script>
