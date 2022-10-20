@@ -18,7 +18,7 @@ export default defineComponent({
       let exec = require("child_process").exec;
       exec("git add -A", function (error, stdout, stderr) {
         if (stdout) console.log(stdout);
-        if (error) return console.error(stderr);
+        if (error) return console.error(stderr, error);
 
         exec("git commit -m '提交文档变动'", function (error, stdout, stderr) {
           if (stdout) {
