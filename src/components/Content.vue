@@ -1,12 +1,14 @@
 <template>
   <div class="prose mx-auto min-h-screen pb-96 container" v-html="body" v-if="!isDir"></div>
 
-  <div class="flex justify-center">
-    <ul class="menu bg-base-100 w-56 rounded-box my-auto flex" v-if="isDir">
-      <li v-for="child in current.children">
-        <router-link v-bind:to="child.link">{{ child.title }}</router-link>
-      </li>
-    </ul>
+  <div class="grid grid-cols-4 gap-4">
+    <div class="card w-52 bg-base-100 shadow-xl" v-for="child in current.children">
+      <div class="card-body">
+        <h2 class="card-title">
+          <router-link v-bind:to="child.link">{{ child.title }}</router-link>
+        </h2>
+      </div>
+    </div>
   </div>
 </template>
 
