@@ -19,7 +19,6 @@ export default defineComponent({
   },
   computed: {
     prev: function (): node {
-      // console.log("go to prev said:current node is", store.current(this.$route.path));
       return store.current(this.$route.path).prev();
     },
   },

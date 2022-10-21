@@ -24,15 +24,15 @@
               </router-link>
             </li>
 
-            <li
+            <!-- <li
               draggable="true"
               v-on:dragend="dragEnd()"
               v-on:dragenter="dragEnter(bottomNode)"
               class="flex flex-row min-w-fit"
-            >
-              <!-- 拖移时显示 -->
-              <div class="w-full p-0 h-4" v-bind:class="bottomNode !== hovered ? '' : 'bg-base-content '"></div>
-            </li>
+            > -->
+            <!-- 拖移时显示 -->
+            <!-- <div class="w-full p-0 h-4" v-bind:class="bottomNode !== hovered ? '' : 'bg-base-content '"></div>
+            </li> -->
           </ul>
         </div>
         <div class="dropdown dropdown-top flex justify-center" v-else>
@@ -46,8 +46,6 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import store from "../models/store";
-import ArrowRightCircle from "../icons/arrow-right-circle.vue";
-import Address from "./Address.vue";
 import node from "../models/node";
 import { unescape } from "querystring";
 
@@ -58,7 +56,7 @@ export default defineComponent({
       dragged: emptyNode,
       hovered: emptyNode,
       emptyNode: emptyNode,
-      bottomNode: new node("/bottom"),
+      bottomNode: emptyNode,
     };
   },
   computed: {
@@ -84,11 +82,10 @@ export default defineComponent({
     dragEnd() {
       let newOrder =
         this.bottomNode == this.hovered
-          ? this.dragged.getParent().children.length + 1
-          : this.dragged.getParent().findKey(this.hovered.id);
+          ? this.dragged.parent().children.length + 1
+          : this.dragged.parent().findKey(this.hovered.id);
 
-      this.$router.push(this.hovered.link);
-      store.updateOrder(this.dragged, newOrder);
+      this.$router.push(store.updateOrder(this.dragged, newOrder).link);
     },
     dragEnter(navigator: node) {
       this.hovered = navigator;
@@ -97,7 +94,5 @@ export default defineComponent({
   created: function () {
     console.log("breadcrumbs created,current route path is", this.$route.path);
   },
-  mounted: function () {},
-  components: { ArrowRightCircle, Address },
 });
 </script>

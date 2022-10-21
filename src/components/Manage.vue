@@ -57,7 +57,7 @@ export default defineComponent({
     },
     submit() {
       let currentNode = store.current(this.$route.path);
-      let currentParent = currentNode.getParent();
+      let currentParent = currentNode.parent();
 
       if (currentParent !== null) {
         let node = store.createChild(currentParent, this.form.title);

@@ -23,14 +23,5 @@ export default defineComponent({
       return store.current(this.$route.path);
     },
   },
-  beforeCreate: function () {
-    // console.log("before address created,current route path is", this.$route.path);
-  },
-  created() {
-    // console.log("address created,current route path is", this.$route.path);
-  },
-  mounted() {
-    // console.log("address mounted,current route path is", this.$route.path);
-  },
 });
 </script>

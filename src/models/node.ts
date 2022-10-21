@@ -1,6 +1,14 @@
 import fs from "fs"
 import path from "path"
 import markdown from "./markdown"
+import electron from 'electron'
+
+const md = require('markdown-it')({
+    html: true
+});
+
+md.use(require("markdown-it-anchor").default)
+md.use(require("markdown-it-table-of-contents"))
 
 /**
  * 导航节点的定义
@@ -19,19 +27,68 @@ import markdown from "./markdown"
  *                   -> 章节n
  */
 class node {
-    public constructor(id?: string) {
-        if (id) this.id = id
+    public constructor(file?: string) {
+        if (file) {
+            let isDir = fs.statSync(file).isDirectory()
+            this.file = file
+            this.id = node.pathToId(file)
+            this.title = this.getTitle()
+            this.link = file === node.rootPath ? '/' : '/article/' + this.id
+            this.title = file === node.rootPath ? '图书' : this.title
+
+            // console.log('generate node for', this.id)
+            if (isDir) {
+                // 生成子节点
+                // console.log('generate children for', this.id)
+                fs.readdirSync(file).forEach((child, key) => {
+                    let childPath = path.join(file, child)
+                    let childNewPath = path.join(file, key + '.md')
+                    if (!fs.statSync(childPath).isDirectory()) {
+                        fs.renameSync(childPath, childNewPath);
+                        this.children.push(new node(childNewPath))
+                    } else {
+                        this.children.push(new node(childPath))
+                    }
+                })
+            }
+
+            // console.log('new node created', this)
+        } else {
+            // console.log('empty node created')
+        }
     }
 
-    /**
-     * root节点
-     */
-    public static root: node
-
+    public static rootPath = path.join(electron.ipcRenderer.sendSync('get-app-path'), 'markdown')
+    public static rootNode: node
+    public file: string = ''
     public id: string = ''
     public title: string = ''
     public link: string = ''
     public children: node[] = []
+    public markdown: markdown = new markdown
+
+    /**
+     * 获取markdown渲染后的HTML的标题
+     * 
+     * @returns 
+     */
+    public getTitle(): string {
+        let isDir = fs.statSync(this.file).isDirectory()
+
+        if (isDir) {
+            if (!this.id.includes('-')) return this.id
+            let fileName = this.file.replace(path.dirname(this.file), '')
+            let title = fileName.split('-')[1]
+
+            return title === undefined ? '' : title
+        }
+
+        let html = this.htmlWithToc()
+        let dom = this.makeDom(html)
+        let title = dom.getElementsByTagName('h1')[0]
+
+        return title ? title.innerText : ''
+    }
 
     /**
      * 判断是否是root节点
@@ -176,6 +233,74 @@ class node {
         return collection.concat([firstChild]).concat(firstChild.itemsToFirstLeaf())
     }
 
+    public content(): string {
+        if (this.isLeaf()) {
+            return fs.readFileSync(this.file, 'utf-8')
+        }
+
+        return this.firstLeaf().content()
+    }
+
+    public getOrderFromFileName(): number {
+        let name = this.file.replace(path.dirname(this.file), '')
+
+        let order = name.split('-')[0]
+        return parseInt(order)
+    }
+
+    /**
+     * 获取markdown渲染后的HTML
+     * 
+     * @returns 
+     */
+    public html() {
+        // console.log('content of ', this.id, 'is', this.content())
+        if (!fs.existsSync(this.file)) {
+            return md.render("## 文件「" + this.id + "」不存在")
+        }
+
+        return md.render(this.content())
+    }
+
+    /**
+     * 获取markdown渲染后的HTML，带TOC
+     * 
+     * @returns 
+     */
+    public htmlWithToc() {
+        if (!fs.existsSync(this.file)) {
+            return md.render("## 文件「" + this.id + "」不存在")
+        }
+
+        return md.render("[[toc]] \r\n" + this.content())
+    }
+
+    /**
+     * 
+     * 创建DOM元素
+     * 
+     * @param html HTML代码
+     * @returns 
+     */
+    public makeDom(html: string) {
+        let dom = document.createElement('div')
+        dom.innerHTML = html
+
+        return dom
+    }
+
+    public toc(): string {
+        let htmlWithToc = this.htmlWithToc()
+        let dom = this.makeDom(htmlWithToc)
+        let toc = dom.getElementsByClassName('table-of-contents')[0]
+
+        return toc ? toc.outerHTML : ''
+    }
+
+    public save(content: string) {
+        return this.markdown.save(content);
+    }
+
     /**
      * 获取最后一个子节点
      * 
@@ -299,7 +424,7 @@ class node {
      */
     public delete(id: string): node {
         console.log('删除导航', id)
-        markdown.deleteMarkdownFile(id)
+        this.markdown.deleteFile()
 
         return this
     }
@@ -402,27 +527,45 @@ class node {
      * @param order 
      * @returns 
      */
-    public setOrder(order: number) {
+    public setOrder(order: number): node {
         // let debugLog = path.join(process.cwd(), 'yizhi.log')
         let parent = this.parent()
-        if (parent === null) return false
 
-        let movingId = parent.id + '@moving'
-        // fs.appendFileSync(debugLog, 'rename ' + this.id + ' to ' + movingId + "\r\n")
-        markdown.rename(this.id, movingId)
+        this.file = this.rename('moving');
 
         for (let index = parent.children.length - 1; index >= order; index--) {
             let child = parent.children[index]
             if (child.id !== this.id && index >= order) {
                 // fs.appendFileSync(debugLog, 'rename ' + child.id + ' to ' + parent.id + '@' + (index + 1).toString() + "\r\n")
-                markdown.rename(child.id, parent.id + '@' + (index + 1).toString())
+                // this.markdown.rename(parent.id + '@' + (index + 1).toString())
+                // fs.renameSync(child.file, path.join(path.dirname(this.file), (index + 1).toString() + 'md'));
+                child.rename(this.padding(index + 1))
             }
         }
 
-        // fs.appendFileSync(debugLog, 'rename ' + this.id + ' to ' + parent.id + '@' + order + "\r\n")
-        markdown.rename(movingId, parent.id + '@' + order)
+        this.file = this.rename(this.padding(order));
 
         node.refreshedRoot()
+
+        return new node(this.file)
+    }
+
+    public padding(num: number): string {
+        if (num < 10) return '0' + num.toString()
+
+        return num.toString()
+    }
+
+    public rename(newName: string): string {
+        if (this.isLeaf()) {
+            newName = path.join(path.dirname(this.file), newName + '.md')
+        } else {
+            newName = path.join(path.dirname(this.file), newName + '-' + this.title)
+        }
+
+        fs.renameSync(this.file, newName);
+
+        return newName
     }
 
     /**
@@ -433,7 +576,7 @@ class node {
      */
     public create(title: string): node {
         let id = this.id + '@' + this.children.length
-        markdown.writeToMarkdownFile(id, "# " + title + "\r\n## 简介")
+        this.markdown.save("# " + title + "\r\n## 简介")
 
         let root = node.refreshedRoot()
         console.log('refreshed root', root)
@@ -449,37 +592,39 @@ class node {
     /**
      * 生成一个导航节点
      * 
-     * @param filePath 
+     * @param id 节点ID 
      * @returns 
      */
-    public static make(filePath: string): node {
-        // console.log('now make navigator node for ' + filePath)
+    public static make(id: string): node {
+        console.log('now make navigator node for ' + id)
 
-        if (!markdown.isExists(markdown.getId(filePath))) {
-            console.error('无法生成导航，文件不存在', filePath)
+        let markdownItem = new markdown(id)
+        if (!markdownItem.isExists()) {
+            console.error('无法生成导航，文件不存在', id)
             return new node
         }
 
-        let isDir = fs.statSync(filePath).isDirectory()
+        let isDir = fs.statSync(markdownItem.absolutePath()).isDirectory()
 
         // 生成本节点
         let created = new node
-        created.id = markdown.getId(filePath)
-        created.title = isDir ? created.id : markdown.getMarkdownTitle(created.id)
+        created.id = id
+        created.title = isDir ? created.id : markdownItem.getTitle()
         created.link = '/article/' + created.id
 
         if (isDir) {
+            console.log('generate children for', id)
             // 生成子节点
-            fs.readdirSync(filePath).forEach((child, key) => {
-                let id = markdown.getId(path.join(filePath, child))
-                let fileNewName = key.toString() + '.md'
-                let nodeId = markdown.getId(path.join(filePath, fileNewName))
-                markdown.rename(id, nodeId)
-                created.children.push(this.make(path.join(filePath, fileNewName)))
-            })
+            fs.readdirSync(markdownItem.absolutePath()).forEach((child, key) => {
+                let childId = markdown.getId(path.join(markdown.idToPath(id, true), child))
+                let childNewId = created.id + '@' + key
+                let childNode = new node(childId)
 
-            // 修正父节点的链接
-            // created.link = created.first().link
+                console.log('now child file is', child, 'id is', childId)
+
+                childNode.markdown.rename(childNewId)
+                created.children.push(new node(childNewId))
+            })
         }
 
         // console.log('navigator node for ' + navigator, node)
@@ -493,11 +638,11 @@ class node {
      * @returns node
      */
     public static getRoot(): node {
-        if (this.root) return this.root
+        if (this.rootNode) return this.rootNode
 
-        this.root = node.generateRoot()
+        this.rootNode = node.generateRoot()
 
-        return this.root
+        return this.rootNode
     }
 
     /**
@@ -506,9 +651,9 @@ class node {
      * @returns 
      */
     public static refreshedRoot(): node {
-        this.root = node.generateRoot()
+        this.rootNode = node.generateRoot()
 
-        return this.root
+        return this.rootNode
     }
 
     /**
@@ -517,19 +662,20 @@ class node {
      * @returns 
      */
     public static generateRoot(): node {
-        console.log('regenerate root node')
-        let root = new node('/')
-        root.title = '图书'
-        root.link = '/'
+        let rootNode = new node(node.rootPath)
 
-        fs.readdirSync(markdown.root).forEach((node) => {
-            root.children.push(this.make(path.join(markdown.root, node)))
-        })
+        console.log('root node generated', rootNode)
+        return rootNode
+    }
 
-        // root.link = root.first().link
-
-        console.log('root node', root)
-        return root
+    /**
+     * 将文件路径转换成节点ID
+     * 
+     * @param path 
+     * @returns 
+     */
+    private static pathToId(path: string) {
+        return path.replace(this.rootPath, '').replace('.md', '').replace('/', '').replaceAll('/', '@')
     }
 }
 

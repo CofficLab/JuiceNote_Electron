@@ -1,5 +1,5 @@
 <template>
-  <button v-on:click="showForm" class="btn my-auto w-full pb-3 rounded-none text-center align-middle">
+  <button v-on:click="show" class="btn my-auto w-full pb-3 rounded-none text-center align-middle">
     <Plus></Plus>
   </button>
 
@@ -10,12 +10,12 @@
         ref="title"
         type="text"
         autofocus
-        v-model="form.title"
+        v-model="title"
         placeholder="输入标题"
         class="input input-bordered input-primary w-full max-w-xs"
       />
       <div class="modal-action">
-        <label for="my-modal" class="btn" v-on:click="hideForm">取消</label>
+        <label for="my-modal" class="btn" v-on:click="hide">取消</label>
         <label for="my-modal" class="btn" v-on:click="submit">提交</label>
       </div>
     </div>
@@ -25,43 +25,36 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import store from "../models/store";
-import Trash from "../icons/trash.vue";
 import Plus from "../icons/plus.vue";
 
 export default defineComponent({
   data() {
     return {
       showModal: false,
-      form: {
-        title: "",
-      },
+      title: "",
     };
   },
   methods: {
-    showForm() {
+    show() {
       this.showModal = true;
       this.$nextTick(function () {
         (this.$refs.title as any).focus();
       });
     },
-    hideForm() {
+    hide() {
       this.showModal = false;
     },
     submit() {
-      let currentNode = store.current(this.$route.path);
-      let currentParent = currentNode.getParent();
+      let current = store.current(this.$route.path);
+      let parent = current.parent();
 
-      if (currentParent !== null) {
-        let node = store.createChild(currentParent, this.form.title);
-        this.showModal = false;
-        this.form.title = "";
-        console.log("created", node);
-        this.$router.push(node.link);
-      } else {
-        alert("父节点不存在，无法创建");
-      }
+      if (parent.isEmpty()) return console.error("父节点不存在，无法创建");
+
+      this.$router.push(store.createChild(parent, this.title).link);
+      this.showModal = false;
+      this.title = "";
     },
   },
-  components: { Trash, Plus },
+  components: { Plus },
 });
 </script>

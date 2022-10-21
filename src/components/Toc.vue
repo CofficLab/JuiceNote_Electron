@@ -4,14 +4,13 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import markdown from "../models/markdown";
 import store from "../models/store";
 
 export default defineComponent({
   computed: {
     toc(): string {
       let current = store.current(this.$route.path);
-      return markdown.getMarkdownToc(current ? current.id : "/");
+      return current.toc();
     },
   },
 });

@@ -15,6 +15,7 @@
     "mavon",
     "postcss",
     "querystring",
+    "Uturn",
     "vuex"
   ]
 }

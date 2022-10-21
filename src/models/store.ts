@@ -3,6 +3,7 @@ import node from './node'
 import { unescape } from "querystring";
 
 const store = reactive({
+    node: node,
     full_screen: false,
     navigator: null,
     root: node.getRoot(),
@@ -27,9 +28,11 @@ const store = reactive({
 
         return created
     },
-    updateOrder(navigator: node, order: number) {
-        navigator.setOrder(order)
+    updateOrder(navigator: node, order: number): node {
+        let newNode = navigator.setOrder(order)
         this.refresh()
+
+        return newNode
     },
     refresh() {
         this.root = node.refreshedRoot()
