@@ -52,12 +52,48 @@ class node {
     }
 
     /**
+     * 判断是否是叶子节点
+     * 
+     * @returns boolean
+     */
+    public isLeaf(): boolean {
+        return this.children.length === 0
+    }
+
+    /**
+     * 判断是否是叶子节点
+     * 
+     * @returns boolean
+     */
+    public notLeaf(): boolean {
+        return !this.isLeaf()
+    }
+
+    /**
      * 判断是否是空节点
      * 
      * @returns boolean
      */
     public notEmpty(): boolean {
         return this.id !== ''
+    }
+
+    /**
+     * 当前节点的子节点中是否含有某个节点
+     * 
+     * @param node 
+     * @returns 
+     */
+    public has(target: node): boolean {
+        if (this.isLeaf()) return false
+
+        for (const key in this.children) {
+            if (this.children[key].id == target.id) {
+                return true
+            }
+        }
+
+        return false
     }
 
     /**
@@ -106,6 +142,41 @@ class node {
     }
 
     /**
+     * 第一个叶子节点
+     * 
+     * @returns node
+     */
+    public firstLeaf(): node {
+        if (this.isLeaf()) {
+            return this
+        }
+
+        return this.first().firstLeaf();
+    }
+
+    /**
+     * 下一个叶子节点
+     * 
+     */
+    public nextLeaf(): node {
+        let next = this.next()
+
+        if (next.isLeaf() || next.isEmpty()) return next
+
+        return next.firstLeaf();
+    }
+
+    public itemsToFirstLeaf(): node[] {
+        let collection: node[] = []
+
+        if (this.isLeaf()) return collection
+
+        let firstChild = this.first()
+
+        return collection.concat([firstChild]).concat(firstChild.itemsToFirstLeaf())
+    }
+
+    /**
      * 获取最后一个子节点
      * 
      * @returns 
@@ -123,19 +194,15 @@ class node {
     public isActivated(activePath: string): boolean {
         // console.log('check', this.id, 'active path is ', activePath)
         // 如果是根节点
-        if (this.id === '/') {
-            return true;
-        }
+        if (this.isRoot()) return true;
 
         // 当前节点的链接等于目标链接
         if (this.link === activePath || '/editor/' + this.id === activePath) {
-            // console.log('now is', this)
-            // console.log(this.id + ' should be active,link is', this.link, 'active path is', activePath)
             return true;
         }
 
-        // 如果当前节点没有子节点
-        if (this.children.length === 0) {
+        // 如果当前节点是叶子节点
+        if (this.isLeaf()) {
             return this.link == activePath
         }
 
@@ -220,7 +287,7 @@ class node {
         // console.log('get last activated child of', this, 'while path is ', activePath)
         if (activePath === '/') return node.getRoot()
 
-        // console.log('activated children are', this.getActivatedChildren(activePath))
+        console.log('activated children are', this.getActivatedChildren(activePath))
         let last = this.getActivatedChildren(activePath).pop()
 
         // console.log('last activated child is', last)
@@ -237,25 +304,33 @@ class node {
         return this
     }
 
+    public parent() {
+        // 空节点或根节点的父节点是空节点
+        if (this.isEmpty() || this.isRoot()) return new node
+
+        let parent = node.getRoot().findParent(this)
+
+        // console.log('parent of ', this.id, 'is', parent.id)
+
+        return parent;
+    }
+
     /**
      * 获取父节点
      * 
      * @returns node
      */
-    public getParent(): node {
-        // console.log('get parent of ', this)
+    private findParent(target: node): node {
+        // console.log('find parent of ', target.id, 'in', this.id)
 
-        // 空节点或根节点的父节点是null
-        if (this.id === '' || this.id === '/') {
-            return new node
+        if (this.has(target)) {
+            return this
         }
 
-        let rootNode = node.getRoot()
-        let activatedNodes = [rootNode].concat(rootNode.getActivatedChildren(this.link))
-        // console.log('activated nodes,when', this.id, activatedNodes)
-        for (const key in activatedNodes) {
-            if (activatedNodes[key].id === this.id) {
-                return activatedNodes[parseInt(key) - 1]
+        for (const key in this.children) {
+            let result = this.children[key].findParent(target)
+            if (!result.isEmpty()) {
+                return result
             }
         }
 
@@ -268,7 +343,7 @@ class node {
      * @returns node
      */
     public next(): node {
-        let parent = this.getParent()
+        let parent = this.parent()
         // console.log('get next of', this.id, ' parent is', parent)
 
         // 空节点的下一个节点是空节点
@@ -300,7 +375,7 @@ class node {
     public prev(): node {
         // console.log('get prev of ', this.id)
 
-        let parent = this.getParent()
+        let parent = this.parent()
 
         // 父节点为空，说明是空节点或根节点，上一个节点是空节点
         if (parent.isEmpty()) {
@@ -329,7 +404,7 @@ class node {
      */
     public setOrder(order: number) {
         // let debugLog = path.join(process.cwd(), 'yizhi.log')
-        let parent = this.getParent()
+        let parent = this.parent()
         if (parent === null) return false
 
         let movingId = parent.id + '@moving'

@@ -19,7 +19,7 @@
               <!-- 拖移时显示 -->
               <div class="bg-base-content w-full p-0" v-bind:class="child === hovered ? 'h-4' : ''"></div>
               <router-link v-bind:to="child.link" active-class="active">
-                <span v-text="child.getParent()?.findKey(child.id)"></span>
+                <span v-text="child.parent()?.findKey(child.id)"></span>
                 <span>{{ child.title }}</span>
               </router-link>
             </li>
@@ -65,6 +65,12 @@ export default defineComponent({
     breadcrumbs() {
       let breadcrumbs = store.root.activated(unescape(this.$route.path));
 
+      if (!store.current(this.$route.path).isLeaf()) {
+        breadcrumbs = breadcrumbs.concat(store.current(this.$route.path).itemsToFirstLeaf());
+      }
+
+      console.log("breadcrumbs", breadcrumbs);
+
       return breadcrumbs;
     },
     inEditMode(): boolean {
@@ -88,9 +94,9 @@ export default defineComponent({
       this.hovered = navigator;
     },
   },
-  // created: function () {
-  //   console.log("breadcrumbs created,current route path is", this.$route.path);
-  // },
+  created: function () {
+    console.log("breadcrumbs created,current route path is", this.$route.path);
+  },
   mounted: function () {},
   components: { ArrowRightCircle, Address },
 });

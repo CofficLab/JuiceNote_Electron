@@ -12,7 +12,6 @@ import { defineComponent } from "vue";
 import store from "../models/store";
 import ArrowRightCircle from "../icons/arrow-right-circle.vue";
 import node from "../models/node";
-import { unescape } from "querystring";
 
 export default defineComponent({
   components: {
@@ -20,8 +19,8 @@ export default defineComponent({
   },
   computed: {
     next: function (): node {
-      // console.log("current node is", store.current(this.$route.path));
-      return store.current(unescape(this.$route.path)).next();
+      let current = store.current(this.$route.path);
+      return current.notLeaf() ? current.firstLeaf().nextLeaf() : current.nextLeaf();
     },
   },
 });
