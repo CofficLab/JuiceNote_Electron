@@ -22,7 +22,7 @@ export default defineComponent({
     console.log("editor said:current path is", unescape(this.$route.path));
     return {
       toolbarsBackground: "#fbfbfb",
-      html: store.current(this.$route.path).contentWithTOC(),
+      html: store.current(this.$route.path).htmlWithToc(),
       external_link: {
         markdown_css: function () {
           return "/src/assets/github-markdown.min.css";
@@ -48,7 +48,7 @@ export default defineComponent({
   },
   methods: {
     save: function () {
-      if (store.current(this.$route.path).contentWithTOC() != this.html) {
+      if (store.current(this.$route.path).htmlWithToc() != this.html) {
         console.log("保存文章");
         store.current(this.$route.path).save(this.html);
       } else {

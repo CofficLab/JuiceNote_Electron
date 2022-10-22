@@ -1,6 +1,5 @@
 import fs from "fs"
 import path from "path"
-import markdown from "./markdown"
 import electron from 'electron'
 
 const md = require('markdown-it')({
@@ -65,7 +64,6 @@ class node {
     public title: string = ''
     public link: string = ''
     public children: node[] = []
-    public markdown: markdown = new markdown
 
     /**
      * 获取markdown渲染后的HTML的标题
@@ -84,7 +82,7 @@ class node {
         }
 
         let html = this.htmlWithToc()
-        let dom = this.makeDom(html)
+        let dom = node.makeDom(html)
         let title = dom.getElementsByTagName('h1')[0]
 
         return title ? title.innerText : ''
@@ -282,7 +280,7 @@ class node {
      * @param html HTML代码
      * @returns 
      */
-    public makeDom(html: string) {
+    public static makeDom(html: string) {
         let dom = document.createElement('div')
         dom.innerHTML = html
 
@@ -291,14 +289,18 @@ class node {
 
     public toc(): string {
         let htmlWithToc = this.htmlWithToc()
-        let dom = this.makeDom(htmlWithToc)
+        let dom = node.makeDom(htmlWithToc)
         let toc = dom.getElementsByClassName('table-of-contents')[0]
 
         return toc ? toc.outerHTML : ''
     }
 
     public save(content: string) {
-        return this.markdown.save(content);
+        if (!fs.existsSync(path.dirname(this.file))) {
+            fs.mkdirSync(path.dirname(this.file))
+        }
+
+        return fs.writeFileSync(this.file, content)
     }
 
     /**
@@ -419,14 +421,16 @@ class node {
         return last === undefined ? new node : last;
     }
 
-    /**
-     * 删除某个子孙节点
-     */
-    public delete(id: string): node {
-        console.log('删除导航', id)
-        this.markdown.deleteFile()
+    public current(activePath: string): node {
+        return this.getLastActivated(activePath).firstLeaf()
+    }
 
-        return this
+    /**
+     * 删除本节点
+     */
+    public delete() {
+        console.log('删除导航', this.id)
+        fs.unlinkSync(this.file)
     }
 
     public parent() {
@@ -575,61 +579,10 @@ class node {
      * @returns 
      */
     public create(title: string): node {
-        let id = this.id + '@' + this.children.length
-        this.markdown.save("# " + title + "\r\n## 简介")
+        let file = path.join(this.file, this.children.length + '.md')
+        fs.writeFileSync(file, "# " + title + "\r\n## 简介")
 
-        let root = node.refreshedRoot()
-        console.log('refreshed root', root)
-        let created = root.find(id)
-        if (created.isEmpty()) {
-            console.error('can not find ', id)
-            return new node
-        }
-
-        return created
-    }
-
-    /**
-     * 生成一个导航节点
-     * 
-     * @param id 节点ID 
-     * @returns 
-     */
-    public static make(id: string): node {
-        console.log('now make navigator node for ' + id)
-
-        let markdownItem = new markdown(id)
-        if (!markdownItem.isExists()) {
-            console.error('无法生成导航，文件不存在', id)
-            return new node
-        }
-
-        let isDir = fs.statSync(markdownItem.absolutePath()).isDirectory()
-
-        // 生成本节点
-        let created = new node
-        created.id = id
-        created.title = isDir ? created.id : markdownItem.getTitle()
-        created.link = '/article/' + created.id
-
-        if (isDir) {
-            console.log('generate children for', id)
-            // 生成子节点
-            fs.readdirSync(markdownItem.absolutePath()).forEach((child, key) => {
-                let childId = markdown.getId(path.join(markdown.idToPath(id, true), child))
-                let childNewId = created.id + '@' + key
-                let childNode = new node(childId)
-
-                console.log('now child file is', child, 'id is', childId)
-
-                childNode.markdown.rename(childNewId)
-                created.children.push(new node(childNewId))
-            })
-        }
-
-        // console.log('navigator node for ' + navigator, node)
-
-        return created;
+        return new node(file)
     }
 
     /**

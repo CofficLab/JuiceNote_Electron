@@ -42,10 +42,10 @@ const store = reactive({
         return this.root.getActivatedChildren(path);
     },
     current(path: string): node {
-        return this.root.getLastActivated(unescape(path))
+        return this.root.current(unescape(path))
     },
-    delete(id: string) {
-        this.root.delete(id)
+    delete(node: node) {
+        node.delete()
         this.refresh()
     }
 })

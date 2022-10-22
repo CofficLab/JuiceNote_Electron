@@ -14,7 +14,7 @@ export default defineComponent({
     del: function () {
       let current = store.current(this.$route.path);
       this.$router.push(current.parent().link);
-      store.delete(current.id);
+      store.delete(current);
     },
   },
   components: { Trash },

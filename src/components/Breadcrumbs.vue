@@ -47,7 +47,6 @@
 import { defineComponent } from "vue";
 import store from "../models/store";
 import node from "../models/node";
-import { unescape } from "querystring";
 
 export default defineComponent({
   data() {
@@ -61,11 +60,7 @@ export default defineComponent({
   },
   computed: {
     breadcrumbs() {
-      let breadcrumbs = store.root.activated(unescape(this.$route.path));
-
-      if (!store.current(this.$route.path).isLeaf()) {
-        breadcrumbs = breadcrumbs.concat(store.current(this.$route.path).itemsToFirstLeaf());
-      }
+      let breadcrumbs = store.root.activated(store.current(this.$route.path).link);
 
       console.log("breadcrumbs", breadcrumbs);
 
