@@ -6,6 +6,7 @@ const store = reactive({
     edit_mode: false,
     root: node.getRoot(),
     toast: '',
+    href: location.href,
     pathname: location.pathname,
     current: node.getRoot().current(),
     setEditMode() {
@@ -44,6 +45,7 @@ const store = reactive({
     },
     goto(link: string) {
         history.pushState([], "", link);
+        this.href = window.location.href
         this.pathname = window.location.pathname
         this.current = this.root.current()
     }

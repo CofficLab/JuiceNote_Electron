@@ -19,6 +19,10 @@ ipcRenderer.on('main-process-message', (_event, ...args) => {
   // console.log('[main process message]', ...args)
 })
 
+if (window.location.protocol === 'file:' && window.location.href.includes("index.html")) {
+  store.goto('/')
+}
+
 const app = createApp(App)
 app.use(mavonEditor)
 app.mount('#app')

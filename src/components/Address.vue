@@ -15,10 +15,10 @@ import store from "../models/store";
 export default defineComponent({
   computed: {
     href: function () {
-      return window.location.href;
+      return store.href;
     },
     path: function () {
-      return unescape(store.pathname);
+      return decodeURI(store.pathname);
     },
     current: function () {
       return store.current;
