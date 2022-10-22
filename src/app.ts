@@ -1,25 +1,10 @@
 import { createApp } from 'vue'
 import { ipcRenderer } from 'electron'
-import { createRouter, createWebHistory } from 'vue-router'
 import App from './components/App.vue'
-import EditorVue from './components/Editor.vue'
 import mavonEditor from 'mavon-editor'
-import Content from './components/Content.vue'
 import 'mavon-editor/dist/css/index.css'
 import './app.css'
 import store from './models/store'
-
-// 定义路由
-const routes = [
-  { path: '/', component: Content },
-  { path: '/article/:path', component: Content },
-  { path: '/editor/:path', component: EditorVue, props: true, name: "editor" },
-]
-
-const router = createRouter({
-  history: createWebHistory(),
-  routes,
-})
 
 // 检测全屏状态
 ipcRenderer.on('main-process-message', (_event, ...args) => {
@@ -35,6 +20,5 @@ ipcRenderer.on('main-process-message', (_event, ...args) => {
 })
 
 const app = createApp(App)
-app.use(router)
 app.use(mavonEditor)
 app.mount('#app')

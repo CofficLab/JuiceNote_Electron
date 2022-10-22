@@ -19,7 +19,8 @@
     <div class="flex-grow">
       <div class="fixed left-56 bottom-10 right-0 bg-base-200 pt-4" v-bind:class="hideTitleBar ? 'top-0' : 'top-8'">
         <div class="h-full overflow-scroll scroll-m-48 scroll-p-52">
-          <router-view></router-view>
+          <Content v-if="!editorMode"></Content>
+          <Editor v-if="editorMode"></Editor>
         </div>
       </div>
     </div>
@@ -53,6 +54,8 @@ import Edit from "./Edit.vue";
 import GitCommit from "./GitCommit.vue";
 import Alert from "./Alert.vue";
 import Toast from "./Toast.vue";
+import Content from "./Content.vue";
+import Editor from "./Editor.vue";
 
 export default defineComponent({
   components: {
@@ -68,22 +71,24 @@ export default defineComponent({
     GitCommit,
     Alert,
     Toast,
+    Content,
+    Editor,
   },
   computed: {
     hideTitleBar: function (): boolean {
       return store.full_screen;
     },
     editorMode: function () {
-      return this.$route.name === "editor";
+      return store.edit_mode;
     },
   },
   beforeCreate: function () {
-    console.log("before app created,current route path is", this.$route.path);
-    console.log("before app created,current location is", location.href);
+    // console.log("before app created,current route path is", this.$route.path);
+    // console.log("before app created,current location is", location.href);
   },
   mounted: function () {
-    console.log("app mounted,current route path is", this.$route.path);
-    console.log("app mounted,protocol is", window.location.protocol);
+    // console.log("app mounted,current route path is", this.$route.path);
+    // console.log("app mounted,protocol is", window.location.protocol);
   },
 });
 </script>

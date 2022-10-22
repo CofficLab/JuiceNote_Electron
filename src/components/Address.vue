@@ -3,6 +3,7 @@
     <span class="my-auto text-red-900">{{ href }}</span>
     <span class="my-auto text-red-900">{{ path }}</span>
     <span class="my-auto text-yellow-900">{{ current.id }}</span>
+    <span class="my-auto text-yellow-900">{{ current.title }}</span>
   </div>
 </template>
 
@@ -17,10 +18,10 @@ export default defineComponent({
       return window.location.href;
     },
     path: function () {
-      return unescape(this.$route.path);
+      return unescape(store.pathname);
     },
     current: function () {
-      return store.current(this.$route.path);
+      return store.current;
     },
   },
 });

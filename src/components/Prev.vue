@@ -1,10 +1,10 @@
 <template>
-  <router-link
-    v-bind:to="prev.link"
+  <Link
+    v-bind:href="prev.link"
     class="btn my-auto w-full pb-3 rounded-none text-center align-middle"
     v-bind:class="prev.isEmpty() ? 'btn-disabled' : ''"
     ><ArrowLeftCircle></ArrowLeftCircle
-  ></router-link>
+  ></Link>
 </template>
 
 <script lang="ts">
@@ -12,14 +12,16 @@ import { defineComponent } from "vue";
 import store from "../models/store";
 import ArrowLeftCircle from "../icons/arrow-left-circle.vue";
 import node from "../models/node";
+import Link from "./Link.vue";
 
 export default defineComponent({
   components: {
     ArrowLeftCircle,
+    Link,
   },
   computed: {
     prev: function (): node {
-      return store.current(this.$route.path).prevLeaf();
+      return store.current.prevLeaf();
     },
   },
 });

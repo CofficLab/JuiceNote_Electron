@@ -1,11 +1,19 @@
 import { reactive } from 'vue'
 import node from './node'
-import { unescape } from "querystring";
 
 const store = reactive({
     full_screen: false,
+    edit_mode: false,
     root: node.getRoot(),
     toast: '',
+    pathname: location.pathname,
+    current: node.getRoot().current(),
+    setEditMode() {
+        this.edit_mode = true
+    },
+    leaveEditMode() {
+        this.edit_mode = false
+    },
     setToast(message: string) {
         this.toast = message
     },
@@ -30,12 +38,14 @@ const store = reactive({
     refresh() {
         this.root = node.refreshedRoot()
     },
-    current(path: string): node {
-        return this.root.current(unescape(path))
-    },
     delete(node: node) {
         node.delete()
         this.refresh()
+    },
+    goto(link: string) {
+        history.pushState([], "", link);
+        this.pathname = window.location.pathname
+        this.current = this.root.current()
     }
 })
 

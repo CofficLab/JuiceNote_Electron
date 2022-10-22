@@ -12,7 +12,7 @@ md.use(require("markdown-it-table-of-contents"))
 /**
  * 导航节点的定义
  * 
- * null->根节点->图书1->章节1
+ * 空节点->根节点->图书1->章节1
  *                   -> 章节2 
  *                   -> 章节n
  *            ->图书2->章节1
@@ -26,19 +26,23 @@ md.use(require("markdown-it-table-of-contents"))
  *                   -> 章节n
  */
 class node {
+    public static rootPath = path.join(electron.ipcRenderer.sendSync('get-app-path'), 'markdown')
+    public static rootNode: node
+    public file: string = ''
+    public id: string = ''
+    public title: string = ''
+    public link: string = ''
+    public children: node[] = []
+    public order: number = 0
+
     public constructor(file?: string) {
         if (file) {
-            let isDir = fs.statSync(file).isDirectory()
             this.file = file
             this.id = node.pathToId(file)
             this.title = this.getTitle()
             this.link = file === node.rootPath ? '/' : '/article/' + this.id
-            this.title = file === node.rootPath ? '图书' : this.title
 
-            // console.log('generate node for', this.id)
-            if (isDir) {
-                // 生成子节点
-                // console.log('generate children for', this.id)
+            if (fs.statSync(file).isDirectory()) {
                 fs.readdirSync(file).forEach((child, key) => {
                     let childPath = path.join(file, child)
                     let childNewPath = path.join(file, key + '.md')
@@ -50,42 +54,10 @@ class node {
                     }
                 })
             }
-
-            // console.log('new node created', this)
+            // console.log('node created,id is', this.id)
         } else {
             // console.log('empty node created')
         }
-    }
-
-    public static rootPath = path.join(electron.ipcRenderer.sendSync('get-app-path'), 'markdown')
-    public static rootNode: node
-    public file: string = ''
-    public id: string = ''
-    public title: string = ''
-    public link: string = ''
-    public children: node[] = []
-
-    /**
-     * 获取markdown渲染后的HTML的标题
-     * 
-     * @returns 
-     */
-    public getTitle(): string {
-        let isDir = fs.statSync(this.file).isDirectory()
-
-        if (isDir) {
-            if (!this.id.includes('-')) return this.id
-            let fileName = this.file.replace(path.dirname(this.file), '')
-            let title = fileName.split('-')[1]
-
-            return title === undefined ? '' : title
-        }
-
-        let html = this.htmlWithToc()
-        let dom = node.makeDom(html)
-        let title = dom.getElementsByTagName('h1')[0]
-
-        return title ? title.innerText : ''
     }
 
     /**
@@ -133,6 +105,10 @@ class node {
         return this.id !== ''
     }
 
+    public isBook(): boolean {
+        return this.parent() === node.rootNode
+    }
+
     /**
      * 当前节点的子节点中是否含有某个节点
      * 
@@ -140,15 +116,9 @@ class node {
      * @returns 
      */
     public has(target: node): boolean {
-        if (this.isLeaf()) return false
-
-        for (const key in this.children) {
-            if (this.children[key].id == target.id) {
-                return true
-            }
-        }
-
-        return false
+        return this.children.some(function (child) {
+            return child.id === target.id
+        })
     }
 
     /**
@@ -163,12 +133,11 @@ class node {
             return this
         }
 
-        for (const key in this.children) {
-            let item = this.children[key].find(id)
-            if (item.notEmpty()) return item
-        }
+        let result = this.children.find(function (child) {
+            return child.find(id);
+        })
 
-        return new node
+        return result === undefined ? new node : result
     }
 
     /**
@@ -204,13 +173,8 @@ class node {
      * @returns node
      */
     public firstLeaf(): node {
-        console.log('get first leaf of ', this.id, this.link)
-        if (this.isLeaf()) {
-            return this
-        }
-
-        if (this.isEmpty()) {
-            console.log('empty node,first leaf is self')
+        // console.log('get first leaf of ', this.id, this.link)
+        if (this.isLeaf() || this.isEmpty()) {
             return this
         }
 
@@ -224,15 +188,13 @@ class node {
     public nextLeaf(): node {
         let next = this.next()
 
-        if (next.isLeaf() || next.isEmpty()) return next
+        if (next.isLeaf()) return next
 
-        return next.firstLeaf();
+        return this.parent().next().firstLeaf();
     }
 
     public prevLeaf(): node {
         let prev = this.prev()
-
-        console.log(this.id, 'prev is', prev)
 
         if (prev.isLeaf()) return prev
 
@@ -255,15 +217,6 @@ class node {
         }
 
         return this.firstLeaf().content()
-    }
-
-    public getOrderFromFileName(): number {
-        let name = path.basename(this.file)
-        let order = parseInt(name.split('-')[0])
-
-        // console.log('get order from file name,file name is', name, 'order is', order)
-
-        return order
     }
 
     /**
@@ -291,20 +244,6 @@ class node {
         }
 
         return md.render("[[toc]] \r\n" + this.content())
-    }
-
-    /**
-     * 
-     * 创建DOM元素
-     * 
-     * @param html HTML代码
-     * @returns 
-     */
-    public static makeDom(html: string) {
-        let dom = document.createElement('div')
-        dom.innerHTML = html
-
-        return dom
     }
 
     public toc(): string {
@@ -338,7 +277,8 @@ class node {
      * @param activePath 
      * @returns 
      */
-    public isActivated(activePath: string): boolean {
+    public isActivated(activePath?: string): boolean {
+        if (activePath === undefined) activePath = decodeURI(location.pathname)
         // console.log('check', this.id, 'active path is ', activePath)
         // 如果是根节点
         if (this.isRoot()) return true;
@@ -423,33 +363,14 @@ class node {
         return collection
     }
 
-    /**
-     * 
-     * 激活的子孙节点中的终端节点
-     * 
-     * @param activePath 
-     * @returns 
-     */
-    public getLastActivated(activePath: string): node {
-        // console.log('get last activated child of', this, 'while path is ', activePath)
-        if (activePath === '/') return node.getRoot()
-
-        // console.log('activated children are', this.getActivatedChildren(activePath))
-        let last = this.getActivatedChildren(activePath).pop()
-
-        // console.log('last activated child is', last)
-        return last === undefined ? new node : last;
-    }
-
-    public current(activePath: string): node {
-        return this.getLastActivated(activePath).firstLeaf()
+    public current(): node {
+        return this.getLastActivated(decodeURI(location.pathname)).firstLeaf()
     }
 
     /**
      * 删除本节点
      */
     public delete() {
-        console.log('删除导航', this.id)
         fs.unlinkSync(this.file)
     }
 
@@ -470,8 +391,6 @@ class node {
      * @returns node
      */
     private findParent(target: node): node {
-        // console.log('find parent of ', target.id, 'in', this.id)
-
         if (this.has(target)) {
             return this
         }
@@ -487,53 +406,6 @@ class node {
     }
 
     /**
-     * 下一个节点
-     * 
-     * @returns node
-     */
-    public next(): node {
-        let parent = this.parent()
-        // console.log('get next of', this.id, ' parent is', parent)
-
-        // 空节点的下一个节点是空节点
-        if (this.id === '') {
-            return new node;
-        }
-
-        // 根节点的下一个节点是空节点
-        if (this.id === '/') {
-            return new node
-        }
-
-        // 如果是父节点的最后一个节点，下一个节点=父节点的下一个节点
-        if (this.id === parent.children.at(-1)?.id) {
-            return parent.next()
-        }
-
-        let key = parent.findKey(this.id)
-        let nextKey = key + 1
-
-        return parent.children[nextKey]
-    }
-
-    /**
-     * 计算出上一个节点
-     * 
-     * @returns node
-     */
-    public prev(): node {
-        let parent = this.parent()
-        let currentOrder = this.getOrderFromFileName()
-        let prev = parent.children[currentOrder - 1]
-        let result = prev === undefined ? new node : prev
-
-        console.log('order of ', this.id, 'is', currentOrder)
-        console.log('prev of ', this.id, 'is', result)
-
-        return result
-    }
-
-    /**
      * 设置新的排序值
      * 
      * 例如：将第5个移动到第2个
@@ -545,7 +417,6 @@ class node {
      * @returns 
      */
     public setOrder(order: number): node {
-        // let debugLog = path.join(process.cwd(), 'yizhi.log')
         let parent = this.parent()
 
         this.file = this.rename('moving');
@@ -553,9 +424,6 @@ class node {
         for (let index = parent.children.length - 1; index >= order; index--) {
             let child = parent.children[index]
             if (child.id !== this.id && index >= order) {
-                // fs.appendFileSync(debugLog, 'rename ' + child.id + ' to ' + parent.id + '@' + (index + 1).toString() + "\r\n")
-                // this.markdown.rename(parent.id + '@' + (index + 1).toString())
-                // fs.renameSync(child.file, path.join(path.dirname(this.file), (index + 1).toString() + 'md'));
                 child.rename(this.padding(index + 1))
             }
         }
@@ -565,12 +433,6 @@ class node {
         node.refreshedRoot()
 
         return new node(this.file)
-    }
-
-    public padding(num: number): string {
-        if (num < 10) return '0' + num.toString()
-
-        return num.toString()
     }
 
     public rename(newName: string): string {
@@ -630,8 +492,35 @@ class node {
     public static generateRoot(): node {
         let rootNode = new node(node.rootPath)
 
-        console.log('root node generated', rootNode)
+        // console.log('root node generated', rootNode)
         return rootNode
+    }
+
+    /**
+     * 下一个节点
+     * 
+     * @returns node
+     */
+    private next(): node {
+        let parent = this.parent()
+        let currentOrder = parent.findKey(this.id)
+        let next = parent.children[currentOrder + 1]
+        let result = next === undefined ? new node : next
+
+        return result
+    }
+
+    /**
+     * 计算出上一个节点
+     * 
+     * @returns node
+     */
+    private prev(): node {
+        let parent = this.parent()
+        let currentOrder = parent.findKey(this.id)
+        let prev = parent.children[currentOrder - 1]
+
+        return prev === undefined ? new node : prev
     }
 
     /**
@@ -644,6 +533,69 @@ class node {
         let id = path.replace(this.rootPath, '').replace('.md', '').replace('/', '').replaceAll('/', '@')
 
         return id === '' ? '/' : id
+    }
+
+    /**
+     * 获取标题
+     * 
+     * @returns 
+     */
+    private getTitle(): string {
+        if (this.file === node.rootPath) return '图书'
+
+        let isDir = fs.statSync(this.file).isDirectory()
+        if (isDir) {
+            if (!this.id.includes('-')) return this.id
+            let fileName = this.file.replace(path.dirname(this.file), '')
+            let title = fileName.split('-')[1]
+
+            return title === undefined ? '' : title
+        }
+
+        // 获取markdown渲染后的HTML的标题
+        let html = this.htmlWithToc()
+        let dom = node.makeDom(html)
+        let title = dom.getElementsByTagName('h1')[0]
+
+        return title ? title.innerText : ''
+    }
+
+    /**
+     * 
+     * 创建DOM元素
+     * 
+     * @param html HTML代码
+     * @returns 
+     */
+    private static makeDom(html: string) {
+        let dom = document.createElement('div')
+        dom.innerHTML = html
+
+        return dom
+    }
+
+    /**
+     * 
+     * 激活的子孙节点中的终端节点
+     * 
+     * @param activePath 
+     * @returns 
+     */
+    private getLastActivated(activePath: string): node {
+        // console.log('get last activated child of', this, 'while path is ', activePath)
+        if (activePath === '/') return node.getRoot()
+
+        // console.log('activated children are', this.getActivatedChildren(activePath))
+        let last = this.getActivatedChildren(activePath).pop()
+
+        // console.log('last activated child is', last)
+        return last === undefined ? new node : last;
+    }
+
+    private padding(num: number): string {
+        if (num < 10) return '0' + num.toString()
+
+        return num.toString()
     }
 }
 

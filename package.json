@@ -39,7 +39,6 @@
     "mavon-editor": "^3.0.0-beta",
     "postcss": "^8.4.16",
     "postcss-nesting": "^10.1.10",
-    "tailwindcss": "^3.1.8",
-    "vue-router": "^4.1.5"
+    "tailwindcss": "^3.1.8"
   }
 }

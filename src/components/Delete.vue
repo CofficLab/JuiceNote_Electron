@@ -12,8 +12,8 @@ import Trash from "../icons/trash.vue";
 export default defineComponent({
   methods: {
     del: function () {
-      let current = store.current(this.$route.path);
-      this.$router.push(current.parent().link);
+      let current = store.current;
+      store.goto(current.parent().link);
       store.delete(current);
     },
   },

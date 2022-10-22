@@ -45,12 +45,12 @@ export default defineComponent({
       this.showModal = false;
     },
     submit() {
-      let current = store.current(this.$route.path);
+      let current = store.current;
       let parent = current.parent();
 
       if (parent.isEmpty()) return console.error("父节点不存在，无法创建");
 
-      this.$router.push(store.createChild(parent, this.title).link);
+      store.goto(store.createChild(parent, this.title).link);
       this.showModal = false;
       this.title = "";
     },

@@ -9,7 +9,7 @@
           <label tabindex="0" class="self-center">{{ breadcrumb.title }}</label>
           <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 h-96 overflow-scroll">
             <li
-              v-for="child in breadcrumb.children"
+              v-for="(child, key) in breadcrumb.children"
               draggable="true"
               v-on:dragend="dragEnd()"
               v-on:dragstart="dragStart(child)"
@@ -18,21 +18,22 @@
             >
               <!-- 拖移时显示 -->
               <div class="bg-base-content w-full p-0" v-bind:class="child === hovered ? 'h-4' : ''"></div>
-              <router-link v-bind:to="child.link" active-class="active">
-                <span v-text="child.parent()?.findKey(child.id)"></span>
+
+              <Link v-bind:href="child.link" v-bind:class="child.isActivated() ? 'active' : ''">
+                <span v-text="key"></span>
                 <span>{{ child.title }}</span>
-              </router-link>
+              </Link>
             </li>
 
-            <!-- <li
+            <li
               draggable="true"
               v-on:dragend="dragEnd()"
               v-on:dragenter="dragEnter(bottomNode)"
               class="flex flex-row min-w-fit"
-            > -->
-            <!-- 拖移时显示 -->
-            <!-- <div class="w-full p-0 h-4" v-bind:class="bottomNode !== hovered ? '' : 'bg-base-content '"></div>
-            </li> -->
+            >
+              <!-- 拖移时显示 -->
+              <div class="w-full p-0 h-4" v-bind:class="bottomNode !== hovered ? '' : 'bg-base-content '"></div>
+            </li>
           </ul>
         </div>
         <div class="dropdown dropdown-top flex justify-center" v-else>
@@ -47,27 +48,27 @@
 import { defineComponent } from "vue";
 import store from "../models/store";
 import node from "../models/node";
+import Link from "./Link.vue";
 
 export default defineComponent({
   data() {
     let emptyNode = new node();
+    let bottomNode = new node("/dev/null");
     return {
       dragged: emptyNode,
       hovered: emptyNode,
       emptyNode: emptyNode,
-      bottomNode: emptyNode,
+      bottomNode: bottomNode,
     };
   },
   computed: {
     breadcrumbs() {
-      let breadcrumbs = store.root.activated(store.current(this.$route.path).link);
-
-      // console.log("breadcrumbs", breadcrumbs);
+      let breadcrumbs = store.root.activated(store.current.link);
 
       return breadcrumbs;
     },
     inEditMode(): boolean {
-      return this.$route.name === "editor";
+      return store.edit_mode;
     },
   },
   methods: {
@@ -79,15 +80,12 @@ export default defineComponent({
         this.bottomNode == this.hovered
           ? this.dragged.parent().children.length + 1
           : this.dragged.parent().findKey(this.hovered.id);
-
-      this.$router.push(store.updateOrder(this.dragged, newOrder).link);
+      store.goto(store.updateOrder(this.dragged, newOrder).link);
     },
     dragEnter(navigator: node) {
       this.hovered = navigator;
     },
   },
-  created: function () {
-    console.log("breadcrumbs created,current route path is", this.$route.path);
-  },
+  components: { Link },
 });
 </script>

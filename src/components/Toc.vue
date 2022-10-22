@@ -9,7 +9,7 @@ import store from "../models/store";
 export default defineComponent({
   computed: {
     toc(): string {
-      let current = store.current(this.$route.path);
+      let current = store.current;
       return current.toc();
     },
   },

@@ -1,17 +1,11 @@
 <template>
-  <router-link
-    v-bind:to="editLink"
-    class="btn my-auto w-full pb-3 rounded-none text-center align-middle"
-    v-show="!editMode"
-    ><PencilSquare></PencilSquare
-  ></router-link>
+  <div v-on:click="edit" class="btn my-auto w-full pb-3 rounded-none text-center align-middle" v-show="!editMode">
+    <PencilSquare></PencilSquare>
+  </div>
 
-  <router-link
-    v-bind:to="showLink"
-    class="btn my-auto w-full pb-3 rounded-none text-center align-middle"
-    v-show="editMode"
-    ><ArrowUturnLeft></ArrowUturnLeft
-  ></router-link>
+  <div v-on:click="show" class="btn my-auto w-full pb-3 rounded-none text-center align-middle" v-show="editMode">
+    <ArrowUturnLeft></ArrowUturnLeft>
+  </div>
 </template>
 
 <script lang="ts">
@@ -25,18 +19,20 @@ export default defineComponent({
     PencilSquare,
     ArrowUturnLeft,
   },
+  methods: {
+    edit() {
+      store.edit_mode = true;
+    },
+    show() {
+      store.edit_mode = false;
+    },
+  },
   computed: {
     editMode() {
-      return this.$route.name === "editor";
-    },
-    editLink(): string {
-      return this.$route.path.replace("article", "editor");
-    },
-    showLink(): string {
-      return this.$route.path.replace("editor", "article");
+      return store.edit_mode;
     },
     disabled(): boolean {
-      return store.current(this.$route.path).isRoot() || store.current(this.$route.path) === store.root.first();
+      return store.current.isRoot() || store.current === store.root.first();
     },
   },
 });

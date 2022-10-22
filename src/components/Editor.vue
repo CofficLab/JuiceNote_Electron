@@ -12,17 +12,15 @@
 </template>
 
 <script lang="ts">
-import { unescape } from "querystring";
 import { defineComponent } from "vue";
 import store from "../models/store";
 
 export default defineComponent({
   props: ["path"],
   data() {
-    console.log("editor said:current path is", unescape(this.$route.path));
     return {
       toolbarsBackground: "#fbfbfb",
-      html: store.current(this.$route.path).htmlWithToc(),
+      html: store.edit_mode ? store.current.content() : store.current.htmlWithToc(),
       external_link: {
         markdown_css: function () {
           return "/src/assets/github-markdown.min.css";
@@ -48,9 +46,9 @@ export default defineComponent({
   },
   methods: {
     save: function () {
-      if (store.current(this.$route.path).htmlWithToc() != this.html) {
+      if (store.current.htmlWithToc() != this.html) {
         console.log("保存文章");
-        store.current(this.$route.path).save(this.html);
+        store.current.save(this.html);
       } else {
         console.log("没有变化，不保存文章");
       }

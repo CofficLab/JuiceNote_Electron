@@ -1,5 +1,5 @@
 <template>
-  <div class="prose mx-auto min-h-screen pb-96 container" v-html="body"></div>
+  <div v-bind:href="href" v-on:click="go"><slot></slot></div>
 </template>
 
 <script lang="ts">
@@ -7,9 +7,10 @@ import { defineComponent } from "vue";
 import "../app.css";
 import store from "../models/store";
 export default defineComponent({
-  computed: {
-    body(): string {
-      return store.edit_mode ? store.current.htmlWithToc() : store.current.html();
+  props: ["href"],
+  methods: {
+    go: function () {
+      store.goto(this.href);
     },
   },
 });
