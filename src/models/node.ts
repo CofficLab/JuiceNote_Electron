@@ -112,7 +112,7 @@ class node {
      * @returns boolean
      */
     public isLeaf(): boolean {
-        return this.children.length === 0
+        return this.notEmpty() && this.children.length === 0
     }
 
     /**
@@ -193,7 +193,9 @@ class node {
      * @returns 
      */
     public first(): node {
-        return this.children[0];
+        let first = this.children[0]
+
+        return first === undefined ? new node : first
     }
 
     /**
@@ -202,7 +204,13 @@ class node {
      * @returns node
      */
     public firstLeaf(): node {
+        console.log('get first leaf of ', this.id, this.link)
         if (this.isLeaf()) {
+            return this
+        }
+
+        if (this.isEmpty()) {
+            console.log('empty node,first leaf is self')
             return this
         }
 
@@ -219,6 +227,16 @@ class node {
         if (next.isLeaf() || next.isEmpty()) return next
 
         return next.firstLeaf();
+    }
+
+    public prevLeaf(): node {
+        let prev = this.prev()
+
+        console.log(this.id, 'prev is', prev)
+
+        if (prev.isLeaf()) return prev
+
+        return this.parent().prev().firstLeaf()
     }
 
     public itemsToFirstLeaf(): node[] {
@@ -240,10 +258,12 @@ class node {
     }
 
     public getOrderFromFileName(): number {
-        let name = this.file.replace(path.dirname(this.file), '')
+        let name = path.basename(this.file)
+        let order = parseInt(name.split('-')[0])
 
-        let order = name.split('-')[0]
-        return parseInt(order)
+        // console.log('get order from file name,file name is', name, 'order is', order)
+
+        return order
     }
 
     /**
@@ -414,7 +434,7 @@ class node {
         // console.log('get last activated child of', this, 'while path is ', activePath)
         if (activePath === '/') return node.getRoot()
 
-        console.log('activated children are', this.getActivatedChildren(activePath))
+        // console.log('activated children are', this.getActivatedChildren(activePath))
         let last = this.getActivatedChildren(activePath).pop()
 
         // console.log('last activated child is', last)
@@ -502,22 +522,15 @@ class node {
      * @returns node
      */
     public prev(): node {
-        // console.log('get prev of ', this.id)
-
         let parent = this.parent()
+        let currentOrder = this.getOrderFromFileName()
+        let prev = parent.children[currentOrder - 1]
+        let result = prev === undefined ? new node : prev
 
-        // 父节点为空，说明是空节点或根节点，上一个节点是空节点
-        if (parent.isEmpty()) {
-            return new node
-        }
+        console.log('order of ', this.id, 'is', currentOrder)
+        console.log('prev of ', this.id, 'is', result)
 
-        // 父节点不为空，且是父节点的第一个节点，上一个节点=父节点的上一个节点
-        if (this.id == parent.first().id) {
-            return parent.prev()
-        }
-
-        // 父节点不为空，不是父节点的第一个节点，上一个节点=上一个兄弟节点
-        return parent.children[parent.findKey(this.id) - 1]
+        return result
     }
 
     /**
@@ -628,7 +641,9 @@ class node {
      * @returns 
      */
     private static pathToId(path: string) {
-        return path.replace(this.rootPath, '').replace('.md', '').replace('/', '').replaceAll('/', '@')
+        let id = path.replace(this.rootPath, '').replace('.md', '').replace('/', '').replaceAll('/', '@')
+
+        return id === '' ? '/' : id
     }
 }
 

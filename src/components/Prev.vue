@@ -19,7 +19,7 @@ export default defineComponent({
   },
   computed: {
     prev: function (): node {
-      return store.current(this.$route.path).prev();
+      return store.current(this.$route.path).prevLeaf();
     },
   },
 });

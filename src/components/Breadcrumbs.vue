@@ -62,7 +62,7 @@ export default defineComponent({
     breadcrumbs() {
       let breadcrumbs = store.root.activated(store.current(this.$route.path).link);
 
-      console.log("breadcrumbs", breadcrumbs);
+      // console.log("breadcrumbs", breadcrumbs);
 
       return breadcrumbs;
     },

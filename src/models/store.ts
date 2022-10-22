@@ -3,9 +3,7 @@ import node from './node'
 import { unescape } from "querystring";
 
 const store = reactive({
-    node: node,
     full_screen: false,
-    navigator: null,
     root: node.getRoot(),
     toast: '',
     setToast(message: string) {
@@ -16,11 +14,6 @@ const store = reactive({
     },
     leaveFullScreen() {
         this.full_screen = false
-    },
-    getRoot() {
-        console.log('get root navigator in store')
-        if (this.root) return this.root
-        return node.getRoot()
     },
     createChild(parent: node, name: string): node {
         let created = parent.create(name)
@@ -36,10 +29,6 @@ const store = reactive({
     },
     refresh() {
         this.root = node.refreshedRoot()
-        // console.log('refreshed root node in store', this.root)
-    },
-    getActivated(path: string) {
-        return this.root.getActivatedChildren(path);
     },
     current(path: string): node {
         return this.root.current(unescape(path))
