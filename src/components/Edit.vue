@@ -3,7 +3,7 @@
     <PencilSquare></PencilSquare>
   </div>
 
-  <div v-on:click="show" class="btn my-auto rounded-none" v-show="editMode">
+  <div v-on:click="show" class="btn btn-sm my-auto rounded-none" v-show="editMode">
     <ArrowUturnLeft></ArrowUturnLeft>
   </div>
 </template>

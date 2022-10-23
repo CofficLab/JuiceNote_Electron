@@ -8,7 +8,7 @@
     <!-- 左侧栏 -->
     <div class="w-56">
       <div
-        class="bg-gradient-to-r from-base-300/50 to-base-200/90 fixed bottom-10 w-56 py-4"
+        class="bg-gradient-to-r from-base-300/50 to-base-200/90 fixed bottom-8 w-56 py-4"
         v-bind:class="hideTitleBar ? 'top-0' : 'top-8'"
       >
         <Toc v-show="!editorMode"></Toc>

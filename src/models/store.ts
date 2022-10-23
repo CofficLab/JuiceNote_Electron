@@ -45,6 +45,7 @@ const store = reactive({
         this.refresh()
     },
     goto(id: string) {
+        if (id === '/') id = this.root.firstLeaf().id
         history.pushState([], "", location.pathname + "?id=" + id);
         this.href = window.location.href
         this.search = window.location.search
