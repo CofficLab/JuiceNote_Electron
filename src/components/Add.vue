@@ -50,7 +50,7 @@ export default defineComponent({
 
       if (parent.isEmpty()) return console.error("父节点不存在，无法创建");
 
-      store.goto(store.createChild(parent, this.title).link);
+      store.goto(store.createChild(parent, this.title).id);
       this.showModal = false;
       this.title = "";
     },
