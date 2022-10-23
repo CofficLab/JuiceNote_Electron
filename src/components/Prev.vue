@@ -1,7 +1,7 @@
 <template>
   <Link
-    v-bind:href="prev.link"
-    class="btn my-auto w-full pb-3 rounded-none text-center align-middle"
+    v-bind:href="prev.id"
+    class="btn btn-sm my-auto rounded-none"
     v-bind:class="prev.isEmpty() ? 'btn-disabled' : ''"
     ><ArrowLeftCircle></ArrowLeftCircle
   ></Link>

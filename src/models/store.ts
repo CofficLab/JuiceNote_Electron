@@ -7,6 +7,7 @@ const store = reactive({
     root: node.getRoot(),
     toast: '',
     href: location.href,
+    search: location.search,
     pathname: location.pathname,
     current: node.getRoot().current(),
     setEditMode() {
@@ -43,9 +44,10 @@ const store = reactive({
         node.delete()
         this.refresh()
     },
-    goto(link: string) {
-        history.pushState([], "", link);
+    goto(id: string) {
+        history.pushState([], "", location.pathname + "?id=" + id);
         this.href = window.location.href
+        this.search = window.location.search
         this.pathname = window.location.pathname
         this.current = this.root.current()
     }

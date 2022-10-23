@@ -17,7 +17,7 @@
 
     <!-- 内容区域 -->
     <div class="flex-grow">
-      <div class="fixed left-56 bottom-10 right-0 bg-base-200 pt-4" v-bind:class="hideTitleBar ? 'top-0' : 'top-8'">
+      <div class="fixed left-56 bottom-8 right-0 bg-base-200 pt-4" v-bind:class="hideTitleBar ? 'top-0' : 'top-8'">
         <div class="h-full overflow-scroll scroll-m-48 scroll-p-52">
           <Content v-if="!editorMode"></Content>
           <Editor v-if="editorMode"></Editor>
@@ -26,16 +26,16 @@
     </div>
   </main>
 
-  <footer class="h-10 fixed bottom-0 w-full p-0 flex border-t border-slate-500">
+  <footer class="h-8 fixed bottom-0 w-full p-0 flex border-t border-slate-500">
     <Toast></Toast>
-    <div><GitCommit></GitCommit></div>
-    <div><Delete></Delete></div>
-    <div><Edit></Edit></div>
-    <div><Add></Add></div>
-    <div><Home></Home></div>
-    <div><Prev></Prev></div>
+    <div class="flex"><GitCommit></GitCommit></div>
+    <div class="flex"><Delete></Delete></div>
+    <div class="flex"><Edit></Edit></div>
+    <div class="flex"><Add></Add></div>
+    <div class="flex"><Home></Home></div>
+    <div class="flex"><Prev></Prev></div>
     <div class="flex flex-grow"><Breadcrumbs></Breadcrumbs></div>
-    <div><Next></Next></div>
+    <div class="flex"><Next></Next></div>
   </footer>
 </template>
 

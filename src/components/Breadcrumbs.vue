@@ -19,7 +19,7 @@
               <!-- 拖移时显示 -->
               <div class="bg-base-content w-full p-0" v-bind:class="child === hovered ? 'h-4' : ''"></div>
 
-              <Link v-bind:href="child.link" v-bind:class="child.isActivated() ? 'active' : ''">
+              <Link v-bind:href="child.id" v-bind:class="child.isActivated() ? 'active' : ''">
                 <span v-text="key"></span>
                 <span>{{ child.title }}</span>
               </Link>
@@ -63,7 +63,7 @@ export default defineComponent({
   },
   computed: {
     breadcrumbs() {
-      let breadcrumbs = store.root.activated(store.current.link);
+      let breadcrumbs = store.root.activated(store.current.id);
 
       return breadcrumbs;
     },

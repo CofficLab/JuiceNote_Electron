@@ -1,5 +1,5 @@
 <template>
-  <button v-on:click="del" class="btn my-auto w-full pb-3 rounded-none text-center align-middle">
+  <button v-on:click="del" class="btn btn-sm my-auto rounded-none">
     <Trash></Trash>
   </button>
 </template>

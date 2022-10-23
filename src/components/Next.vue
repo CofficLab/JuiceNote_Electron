@@ -1,5 +1,5 @@
 <template>
-  <Link v-bind:href="next.link" class="btn my-auto w-full pb-3 rounded-none text-center align-middle">
+  <Link v-bind:href="next.id" class="btn btn-sm my-auto rounded-none">
     <ArrowRightCircle></ArrowRightCircle>
   </Link>
 </template>

@@ -10,7 +10,7 @@ md.use(require("markdown-it-anchor").default)
 md.use(require("markdown-it-table-of-contents"))
 
 /**
- * 导航节点的定义
+ * 导航节点的定义，基于“树”数据结构
  * 
  * 空节点->根节点->图书1->章节1
  *                   -> 章节2 
@@ -31,7 +31,6 @@ class node {
     public file: string = ''
     public id: string = ''
     public title: string = ''
-    public link: string = ''
     public children: node[] = []
     public order: number = 0
 
@@ -40,7 +39,6 @@ class node {
             this.file = file
             this.id = node.pathToId(file)
             this.title = this.getTitle()
-            this.link = file === node.rootPath ? '/' : '/article/' + this.id
 
             if (fs.statSync(file).isDirectory()) {
                 fs.readdirSync(file).forEach((child, key) => {
@@ -54,7 +52,6 @@ class node {
                     }
                 })
             }
-            // console.log('node created,id is', this.id)
         } else {
             // console.log('empty node created')
         }
@@ -173,7 +170,6 @@ class node {
      * @returns node
      */
     public firstLeaf(): node {
-        // console.log('get first leaf of ', this.id, this.link)
         if (this.isLeaf() || this.isEmpty()) {
             return this
         }
@@ -274,30 +270,28 @@ class node {
     /**
      * 判断当前节点是否应该激活
      * 
-     * @param activePath 
+     * @param id 节点ID 
      * @returns 
      */
-    public isActivated(activePath?: string): boolean {
-        if (activePath === undefined) activePath = decodeURI(location.pathname)
-        // console.log('check', this.id, 'active path is ', activePath)
+    public isActivated(id?: string): boolean {
+        if (id === undefined) {
+            let queryId = (new URL(location.href)).searchParams.get('id')
+            if (queryId !== null) id = queryId
+        }
+
         // 如果是根节点
         if (this.isRoot()) return true;
 
-        // 当前节点的链接等于目标链接
-        if (this.link === activePath || '/editor/' + this.id === activePath) {
-            return true;
-        }
+        if (this.id === id) return true;
 
         // 如果当前节点是叶子节点
-        if (this.isLeaf()) {
-            return this.link == activePath
-        }
+        if (this.isLeaf()) return this.id == id
 
         // 如果子节点active，当前节点就active
         for (const key in this.children) {
             let child = this.children[key]
 
-            if (child.isActivated(activePath)) {
+            if (child.isActivated(id)) {
                 return true;
             }
         }
@@ -364,7 +358,10 @@ class node {
     }
 
     public current(): node {
-        return this.getLastActivated(decodeURI(location.pathname)).firstLeaf()
+        let url = new URL(location.href)
+        let id = url.searchParams.get('id')
+
+        return this.getLastActivated(id ? decodeURI(id) : '/').firstLeaf()
     }
 
     /**

@@ -1,8 +1,5 @@
 <template>
-  <Link
-    v-bind:href="link"
-    class="btn my-auto w-full pb-3 rounded-none text-center align-middle"
-    v-bind:class="disabled ? 'btn-disabled' : ''"
+  <Link v-bind:href="link" class="btn btn-sm my-auto rounded-none" v-bind:class="disabled ? 'btn-disabled' : ''"
     ><Home></Home
   ></Link>
 </template>
@@ -20,7 +17,7 @@ export default defineComponent({
   },
   computed: {
     link(): string {
-      return store.root.link;
+      return store.root.id;
     },
     disabled(): boolean {
       return store.current.isRoot() || store.current === store.root.first();
