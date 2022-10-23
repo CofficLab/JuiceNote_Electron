@@ -1,7 +1,7 @@
 <template>
   <!-- 标题栏，左侧显示红绿灯，右侧可用于拖移 -->
   <div class="h-8 bg-stone-900 fixed top-0 z-50 w-full flex justify-center" id="title-bar" v-show="!hideTitleBar">
-    <Address></Address>
+    <Address v-if="!isProd"></Address>
   </div>
 
   <main class="bg-green-200/20 flex flex-row z-10 min-h-screen overflow-hidden">
