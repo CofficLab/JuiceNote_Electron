@@ -28,10 +28,10 @@
 
   <footer class="h-8 fixed bottom-0 w-full p-0 flex border-t border-slate-500">
     <Toast></Toast>
-    <div class="flex"><GitCommit></GitCommit></div>
-    <div class="flex"><Delete></Delete></div>
-    <div class="flex"><Edit></Edit></div>
-    <div class="flex"><Add></Add></div>
+    <div class="flex" v-if="!isProd"><GitCommit></GitCommit></div>
+    <div class="flex" v-if="!isProd"><Delete></Delete></div>
+    <div class="flex" v-if="!isProd"><Edit></Edit></div>
+    <div class="flex" v-if="!isProd"><Add></Add></div>
     <div class="flex"><Home></Home></div>
     <div class="flex"><Prev></Prev></div>
     <div class="flex flex-grow"><Breadcrumbs></Breadcrumbs></div>
@@ -75,6 +75,9 @@ export default defineComponent({
     Editor,
   },
   computed: {
+    isProd: function (): boolean {
+      return store.isProd;
+    },
     hideTitleBar: function (): boolean {
       return store.full_screen;
     },
