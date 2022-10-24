@@ -220,6 +220,10 @@ class node {
             return md.render("## 文件「" + this.id + "」不存在")
         }
 
+        if (path.extname(this.file) === '.py') {
+            return md.render("```python\r\n" + this.content() + "\r\n```")
+        }
+
         return md.render(this.content())
     }
 
@@ -410,16 +414,16 @@ class node {
     public setOrder(order: number): node {
         let parent = this.parent()
 
-        for (let index = parent.children.length - 1; index >= order; index--) {
+        let newNode = this.renameWithOrder(order);
+
+        for (let index = parent.children.length - 1; index + 1 >= order; index--) {
             let child = parent.children[index]
-            if (child.id !== this.id && index >= order) {
-                child.renameWithOrder(index + 1)
+            if (child.id !== this.id && index + 1 >= order) {
+                child.renameWithOrder(index + 2)
             }
         }
 
-        let newNode = this.renameWithOrder(order);
-
-        node.refreshedRoot()
+        // node.refreshedRoot()
 
         return newNode
     }
