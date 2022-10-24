@@ -9,7 +9,7 @@
           <label tabindex="0" class="self-center">{{ breadcrumb.title }}</label>
           <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 h-96 overflow-scroll">
             <li
-              v-for="(child, key) in breadcrumb.children"
+              v-for="child in breadcrumb.children"
               draggable="true"
               v-on:dragend="dragEnd()"
               v-on:dragstart="dragStart(child)"
@@ -20,7 +20,7 @@
               <div class="bg-base-content w-full p-0" v-bind:class="child === hovered ? 'h-4' : ''"></div>
 
               <Link v-bind:href="child.id" v-bind:class="child.isActivated() ? 'active' : ''">
-                <span v-text="key"></span>
+                <span v-text="child.order"></span>
                 <span>{{ child.title }}</span>
               </Link>
             </li>
@@ -76,11 +76,8 @@ export default defineComponent({
       this.dragged = navigator;
     },
     dragEnd() {
-      let newOrder =
-        this.bottomNode == this.hovered
-          ? this.dragged.parent().children.length + 1
-          : this.dragged.parent().findKey(this.hovered.id);
-      store.goto(store.updateOrder(this.dragged, newOrder).link);
+      let newOrder = this.bottomNode == this.hovered ? this.dragged.parent().children.length + 1 : this.hovered.order;
+      store.goto(store.updateOrder(this.dragged, newOrder).id);
     },
     dragEnter(navigator: node) {
       this.hovered = navigator;

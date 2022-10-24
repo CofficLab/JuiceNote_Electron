@@ -39,21 +39,15 @@ class node {
             this.file = file
             this.id = node.pathToId(file)
             this.title = this.getTitle()
+            this.order = this.getOrder()
 
             if (fs.statSync(file).isDirectory()) {
                 fs.readdirSync(file).forEach((child, key) => {
-                    let childPath = path.join(file, child)
-                    let childNewPath = path.join(file, key + '.md')
-                    if (!fs.statSync(childPath).isDirectory()) {
-                        fs.renameSync(childPath, childNewPath);
-                        this.children.push(new node(childNewPath))
-                    } else {
-                        this.children.push(new node(childPath))
-                    }
+                    let order = key + 1
+                    let fullPath = path.join(file, child)
+                    this.children.push((new node(fullPath)).renameWithOrder(order))
                 })
             }
-        } else {
-            // console.log('empty node created')
         }
     }
 
@@ -416,32 +410,18 @@ class node {
     public setOrder(order: number): node {
         let parent = this.parent()
 
-        this.file = this.rename('moving');
-
         for (let index = parent.children.length - 1; index >= order; index--) {
             let child = parent.children[index]
             if (child.id !== this.id && index >= order) {
-                child.rename(this.padding(index + 1))
+                child.renameWithOrder(index + 1)
             }
         }
 
-        this.file = this.rename(this.padding(order));
+        let newNode = this.renameWithOrder(order);
 
         node.refreshedRoot()
 
-        return new node(this.file)
-    }
-
-    public rename(newName: string): string {
-        if (this.isLeaf()) {
-            newName = path.join(path.dirname(this.file), newName + '.md')
-        } else {
-            newName = path.join(path.dirname(this.file), newName + '-' + this.title)
-        }
-
-        fs.renameSync(this.file, newName);
-
-        return newName
+        return newNode
     }
 
     /**
@@ -451,10 +431,10 @@ class node {
      * @returns 
      */
     public create(title: string): node {
-        let file = path.join(this.file, this.children.length + '.md')
+        let file = path.join(this.file, title + '.md')
         fs.writeFileSync(file, "# " + title + "\r\n## 简介")
 
-        return new node(file)
+        return (new node(file)).renameWithOrder(this.children.length + 1)
     }
 
     /**
@@ -558,6 +538,20 @@ class node {
     }
 
     /**
+     * 获取顺序
+     * 
+     * @returns 
+     */
+    private getOrder(): number {
+        if (this.file === node.rootPath) return 0
+
+        let basename = path.basename(this.file)
+        let order = basename.split('-')[0]
+
+        return parseInt(order)
+    }
+
+    /**
      * 
      * 创建DOM元素
      * 
@@ -593,6 +587,15 @@ class node {
         if (num < 10) return '0' + num.toString()
 
         return num.toString()
+    }
+
+    private renameWithOrder(order: number): node {
+        let extname = path.extname(this.file)
+        let name = this.padding(order) + '-' + this.title
+        let fileNewPath = path.join(path.dirname(this.file), name + extname)
+        fs.renameSync(this.file, fileNewPath)
+
+        return new node(fileNewPath)
     }
 }
 
