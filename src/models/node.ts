@@ -221,7 +221,7 @@ class node {
         }
 
         if (path.extname(this.file) === '.py') {
-            return md.render("```python\r\n" + this.content() + "\r\n```")
+            return md.render("# " + this.title + "\r\n```python\r\n" + this.content() + "\r\n```")
         }
 
         return md.render(this.content())
