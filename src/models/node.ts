@@ -433,8 +433,8 @@ class node {
     public create(title: string): node {
         let extname = path.extname(title)
         let fileName = title.replace(extname, '')
-
         let file = path.join(this.file, fileName + (extname ? extname : '.md'))
+
         fs.writeFileSync(file, "# " + fileName + "\r\n## 简介")
 
         return (new node(file)).renameWithOrder(this.children.length + 1)
@@ -523,6 +523,8 @@ class node {
     private getTitle(): string {
         if (this.file === node.rootPath) return '图书'
 
+        let basename = path.basename(this.file)
+        let extname = path.extname(this.file)
         let isDir = fs.statSync(this.file).isDirectory()
         if (isDir) {
             if (!this.id.includes('-')) return this.id
@@ -530,6 +532,16 @@ class node {
             let title = fileName.split('-')[1]
 
             return title === undefined ? '' : title
+        }
+
+        if (extname !== '.md') {
+            // console.log('get title of', this.file)
+            // console.log('result is', basename.replace(extname, '').split('-')[1])
+            if (!basename.replace(extname, '').includes('-')) {
+                return basename.replace(extname, '')
+            }
+
+            return basename.replace(extname, '').split('-')[1]
         }
 
         // 获取markdown渲染后的HTML的标题
