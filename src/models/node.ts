@@ -431,8 +431,11 @@ class node {
      * @returns 
      */
     public create(title: string): node {
-        let file = path.join(this.file, title + '.md')
-        fs.writeFileSync(file, "# " + title + "\r\n## 简介")
+        let extname = path.extname(title)
+        let fileName = title.replace(extname, '')
+
+        let file = path.join(this.file, fileName + (extname ? extname : '.md'))
+        fs.writeFileSync(file, "# " + fileName + "\r\n## 简介")
 
         return (new node(file)).renameWithOrder(this.children.length + 1)
     }
