@@ -14,3 +14,14 @@ def quicksort(array):
 
 
 print(quicksort([10, 5, 2, 3, 9]))
+
+# 数组大小不知道
+arr = []
+
+for i in range(0, 11):
+    brr = []
+    for j in range(0, 6):
+        brr.append(i*j)
+    arr.append(brr)
+
+print(arr[3][3])
