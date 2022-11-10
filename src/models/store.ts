@@ -7,7 +7,7 @@ const store = reactive({
     root: node.getRoot(),
     toast: '',
     href: location.href,
-    search: location.search,
+    search: decodeURI(location.search),
     pathname: location.pathname,
     current: node.getRoot().current(),
     isProd: location.protocol === 'file:',
@@ -49,7 +49,7 @@ const store = reactive({
         if (id === '/') id = this.root.firstLeaf().id
         history.pushState([], "", location.pathname + "?id=" + id);
         this.href = window.location.href
-        this.search = window.location.search
+        this.search = decodeURI(location.search)
         this.pathname = window.location.pathname
         this.current = this.root.current()
     }

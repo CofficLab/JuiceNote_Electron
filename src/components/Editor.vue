@@ -59,7 +59,7 @@ export default defineComponent({
 
 <style lang="postcss">
 #editor {
-  @apply border-orange-400 border-t-8 pt-0 bg-green-900 z-10 rounded-2xl !important;
+  @apply border-orange-400 border-t-8 pt-0 bg-base-100 z-10 rounded-2xl !important;
 
   /* 工具栏 */
   /* .v-note-op {
@@ -80,7 +80,7 @@ export default defineComponent({
 
   /* 编辑展示区域 */
   .v-note-panel {
-    @apply mt-0 z-10 bg-green-900 !important;
+    @apply mt-0 z-10 !important;
 
     .v-note-edit {
       @apply border-r-green-900 border-none !important;
