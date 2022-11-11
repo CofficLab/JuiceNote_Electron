@@ -5,6 +5,7 @@ import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 import './app.css'
 import store from './models/store'
+import Alpine from 'alpinejs'
 
 // 检测全屏状态
 ipcRenderer.on('main-process-message', (_event, ...args) => {
@@ -26,3 +27,6 @@ ipcRenderer.on('main-process-message', (_event, ...args) => {
 const app = createApp(App)
 app.use(mavonEditor)
 app.mount('#app')
+
+window.Alpine = Alpine
+Alpine.start()
