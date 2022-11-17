@@ -33,8 +33,8 @@
     <div class="flex" v-if="!isProd"><Edit></Edit></div>
     <div class="flex" v-if="!isProd"><Add></Add></div>
     <div class="flex"><Home></Home></div>
-    <div class="flex"><Prev></Prev></div>
     <div class="flex flex-grow"><Breadcrumbs></Breadcrumbs></div>
+    <div class="flex"><Prev></Prev></div>
     <div class="flex"><Next></Next></div>
   </footer>
 </template>
