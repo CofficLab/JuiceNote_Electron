@@ -52,15 +52,15 @@ connect:
     cp -r markdown /www/wwwroot/wiki.kuaiyc.com/production/markdown
     # cd /www/wwwroot/wiki.kuaiyc.com/production && php artisan lesson:sync
 
-run:
-  stage: run
-  only:
-    - main
-  tags:
-    - tencent
-  script: |
-    cnpm i
-    npm run build
+# run:
+#   stage: run
+#   only:
+#     - main
+#   tags:
+#     - tencent
+#   script: |
+#     cnpm i
+#     npm run build
 
 clear:
   stage: clear
