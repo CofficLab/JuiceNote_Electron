@@ -17,10 +17,13 @@
 
     <!-- 内容区域 -->
     <div class="flex-grow">
-      <div class="fixed left-56 bottom-8 right-0 bg-base-200 pt-4" v-bind:class="hideTitleBar ? 'top-0' : 'top-8'">
-        <div class="h-full overflow-scroll scroll-m-48 scroll-p-52">
+      <div class="fixed left-56 right-0 bottom-8 bg-base-200 pt-4" v-bind:class="hideTitleBar ? 'top-0' : 'top-8'">
+        <div class="h-full overflow-scroll scroll-m-48 scroll-p-52 flex flex-row">
           <Content v-if="!editorMode"></Content>
           <Editor v-if="editorMode"></Editor>
+
+          <!-- 右侧栏 -->
+          <SideMenu class="mr-4 fixed right-0"></SideMenu>
         </div>
       </div>
     </div>
@@ -56,6 +59,7 @@ import Alert from "./Alert.vue";
 import Toast from "./Toast.vue";
 import Content from "./Content.vue";
 import Editor from "./Editor.vue";
+import SideMenu from "./SideMenu.vue";
 
 export default defineComponent({
   components: {
@@ -73,6 +77,7 @@ export default defineComponent({
     Toast,
     Content,
     Editor,
+    SideMenu,
   },
   computed: {
     isProd: function (): boolean {
