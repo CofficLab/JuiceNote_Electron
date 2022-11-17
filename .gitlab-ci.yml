@@ -59,7 +59,7 @@ run:
   tags:
     - tencent
   script: |
-    npm i
+    cnpm i
     npm run build
 
 clear:
