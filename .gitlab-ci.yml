@@ -1,0 +1,72 @@
+cache:
+  paths:
+    - node_modules/
+
+before_script:
+  - whoami
+  - hostname
+
+variables:
+  DOMAIN: ${CI_PROJECT_NAME}.kuaiyc.com
+  WORK_DIR: /www/wwwroot/${DOMAIN}/production
+  RELEASE_DIR: /www/wwwroot/${DOMAIN}/${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
+
+stages:
+  - config
+  - sync
+  - prepare
+  - link
+  - connect
+  - run
+  - clear
+
+sync:
+  stage: sync
+  only:
+    - main
+  tags:
+    - tencent
+  script: |
+    if [ ! -d $RELEASE_DIR ]; then
+      mkdir -p $RELEASE_DIR
+    fi
+    rsync -rapq ./ $RELEASE_DIR
+
+link:
+  stage: link
+  only:
+    - main
+  tags:
+    - tencent
+  script:
+    - ln -snf ${RELEASE_DIR} ${WORK_DIR}
+
+# 将markdown数据库同步到网页版
+connect:
+  stage: connect
+  only:
+    - main
+  tags:
+    - tencent
+  script: |
+    cp -r markdown /www/wwwroot/wiki.kuaiyc.com/production/markdown
+    cd /www/wwwroot/wiki.kuaiyc.com/production && php artisan lesson:sync
+
+run:
+  stage: run
+  only:
+    - main
+  tags:
+    - tencent
+  script: |
+    npm i
+    npm run build
+
+clear:
+  stage: clear
+  only:
+    - main
+  tags:
+    - tencent
+  script:
+    - cd ${RELEASE_DIR}/.. && ls -lt | grep ^d | awk 'NR>3' | xargs rm -rf
