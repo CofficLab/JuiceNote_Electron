@@ -50,7 +50,9 @@ connect:
     - tencent
   script: |
     cp -r markdown /www/wwwroot/wiki.kuaiyc.com/production/markdown
-    # cd /www/wwwroot/wiki.kuaiyc.com/production && php artisan lesson:sync
+    cd /www/wwwroot/wiki.kuaiyc.com/production
+    npm run mix
+    php artisan lesson:sync
 
 # run:
 #   stage: run
