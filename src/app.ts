@@ -29,18 +29,17 @@ app.use(mavonEditor)
 app.mount('#app')
 
 window.Alpine = Alpine
+window.document.addEventListener('alpine:init', () => {
+  Alpine.store('runner_result', '')
+})
 Alpine.start()
 
 window.runner = function (code = '') {
   console.log('code is')
   console.log(code)
 
-  let exec = require("child_process").exec;
-  exec("php -r '" + code + "'", function (error: any, stdout: any, stderr: any) {
-    if (stdout) {
-      console.log(stdout);
-      window.runner_result = stdout
-    }
-    if (error) return console.error(stderr, error);
-  });
+  let execSync = require("child_process").execSync;
+  let output = execSync("php -r '" + code + "'");
+
+  return output.toString()
 }
