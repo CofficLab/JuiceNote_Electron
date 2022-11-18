@@ -439,7 +439,7 @@ class node {
         let fileName = title.replace(extname, '')
         let file = path.join(this.file, fileName + (extname ? extname : '.md'))
 
-        fs.writeFileSync(file, "# " + fileName + "\r\n## 简介")
+        fs.writeFileSync(file, "# " + fileName)
 
         return (new node(file)).renameWithOrder(this.children.length + 1)
     }
