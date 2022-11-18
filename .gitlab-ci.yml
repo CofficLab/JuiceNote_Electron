@@ -49,7 +49,7 @@ connect:
   tags:
     - tencent
   script: |
-    cp -r markdown /www/wwwroot/wiki.kuaiyc.com/production/markdown
+    cp -rf markdown /www/wwwroot/wiki.kuaiyc.com/production/markdown
     cd /www/wwwroot/wiki.kuaiyc.com/production
     npm run mix
     php artisan lesson:sync
