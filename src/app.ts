@@ -30,3 +30,17 @@ app.mount('#app')
 
 window.Alpine = Alpine
 Alpine.start()
+
+window.runner = function (code = '') {
+  console.log('code is')
+  console.log(code)
+
+  let exec = require("child_process").exec;
+  exec("php -r '" + code + "'", function (error: any, stdout: any, stderr: any) {
+    if (stdout) {
+      console.log(stdout);
+      window.runner_result = stdout
+    }
+    if (error) return console.error(stderr, error);
+  });
+}
