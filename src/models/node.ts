@@ -530,10 +530,12 @@ class node {
         let basename = path.basename(this.file)
         let extname = path.extname(this.file)
         let isDir = fs.statSync(this.file).isDirectory()
+        let fileName = this.file.replace(path.dirname(this.file), '')
+        let titleFromSplitted = fileName.split('-')[1]
+        let title = titleFromSplitted ? titleFromSplitted : fileName.replace('/', '')
+
         if (isDir) {
             if (!this.id.includes('-')) return this.id
-            let fileName = this.file.replace(path.dirname(this.file), '')
-            let title = fileName.split('-')[1]
 
             return title === undefined ? '' : title
         }
@@ -551,9 +553,9 @@ class node {
         // 获取markdown渲染后的HTML的标题
         let html = this.htmlWithToc()
         let dom = node.makeDom(html)
-        let title = dom.getElementsByTagName('h1')[0]
+        let titleDom = dom.getElementsByTagName('h1')[0]
 
-        return title ? title.innerText : ''
+        return titleDom ? titleDom.innerText : title.replace('.md', '')
     }
 
     /**
@@ -612,7 +614,11 @@ class node {
         let extname = path.extname(this.file)
         let name = this.padding(order) + '-' + this.title
         let fileNewPath = path.join(path.dirname(this.file), name + extname)
-        fs.renameSync(this.file, fileNewPath)
+
+        if (this.file != fileNewPath) {
+            console.log('rename', this.file, 'to', fileNewPath)
+            fs.renameSync(this.file, fileNewPath)
+        }
 
         return new node(fileNewPath)
     }
