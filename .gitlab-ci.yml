@@ -49,7 +49,10 @@ connect:
   tags:
     - tencent
   script: |
-    cp -rf markdown /www/wwwroot/wiki.kuaiyc.com/production/markdown
+    if [ -d rm -rf /www/wwwroot/wiki.kuaiyc.com/production/markdown ]; then 
+      rm -rf /www/wwwroot/wiki.kuaiyc.com/production/markdown
+    fi
+    cp -r markdown /www/wwwroot/wiki.kuaiyc.com/production/markdown
     cd /www/wwwroot/wiki.kuaiyc.com/production
     npm run mix
     php artisan lesson:sync
