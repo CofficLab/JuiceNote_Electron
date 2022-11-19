@@ -6,6 +6,8 @@ import 'mavon-editor/dist/css/index.css'
 import './app.css'
 import store from './models/store'
 import Alpine from 'alpinejs'
+import fs from 'fs'
+import path from 'path'
 
 // 检测全屏状态
 ipcRenderer.on('main-process-message', (_event, ...args) => {
@@ -32,11 +34,13 @@ window.Alpine = Alpine
 // Alpine.start()
 
 window.runner = function (code = '') {
+  let tmpFilePath = path.join(process.cwd(), 'tmp.php')
+  fs.writeFileSync(tmpFilePath, '<?php ' + code)
   console.log('code is')
-  console.log(code)
+  console.log(fs.readFileSync(tmpFilePath).toString())
 
   let execSync = require("child_process").execSync;
-  let output = execSync("php -r '" + code + "'");
+  let output = execSync("php tmp.php");
 
   return output.toString()
 }
