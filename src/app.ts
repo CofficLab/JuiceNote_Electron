@@ -29,10 +29,7 @@ app.use(mavonEditor)
 app.mount('#app')
 
 window.Alpine = Alpine
-window.document.addEventListener('alpine:init', () => {
-  Alpine.store('runner_result', '')
-})
-Alpine.start()
+// Alpine.start()
 
 window.runner = function (code = '') {
   console.log('code is')
