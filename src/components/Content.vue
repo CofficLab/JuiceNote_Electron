@@ -7,27 +7,23 @@ import { defineComponent } from "vue";
 import "../app.css";
 import store from "../models/store";
 export default defineComponent({
-  data: function () {
-    return {
-      body: "",
-    };
-  },
+  computed: {
+    body(): string {
+      let dom = document.createElement("div");
+      dom.innerHTML = store.edit_mode ? store.current.htmlWithToc() : store.current.html();
 
-  created: function () {
-    let dom = document.createElement("div");
-    dom.innerHTML = store.edit_mode ? store.current.htmlWithToc() : store.current.html();
+      // 插入可执行的脚本
+      let script = dom.getElementsByTagName("script").item(0);
+      let scriptDom = document.createElement("script");
 
-    this.body = dom.innerHTML;
+      if (script != undefined) scriptDom.innerHTML = script.innerHTML;
 
-    // 插入可执行的脚本
-    let script = dom.getElementsByTagName("script").item(0);
-    let scriptDom = document.createElement("script");
+      this.$nextTick(() => {
+        this.$refs.content.append(scriptDom);
+      });
 
-    if (script != undefined) scriptDom.innerHTML = script.innerHTML;
-
-    this.$nextTick(() => {
-      this.$refs.content.append(scriptDom);
-    });
+      return dom.innerHTML;
+    },
   },
 });
 </script>
