@@ -235,8 +235,12 @@ class node {
      */
     public html() {
         // console.log('content of ', this.id, 'is', this.content())
+        if (this.isEmpty()) {
+            return md.render("## 当前页面是空节点 \r\n ## 返回 <a href=\"/\">首页</a>")
+        }
+
         if (!fs.existsSync(this.file)) {
-            return md.render("## 文件「" + this.id + "」不存在")
+            return md.render("## 文件「" + this.file + "」不存在")
         }
 
         if (path.extname(this.file) === '.py') {
@@ -263,6 +267,9 @@ class node {
         let htmlWithToc = this.htmlWithToc()
         let dom = node.makeDom(htmlWithToc)
         let toc = dom.getElementsByClassName('table-of-contents')[0]
+
+        if (toc == undefined) return ''
+
         let tocWithoutTitle = toc.getElementsByTagName('ul')[0].getElementsByTagName('ul')[0]
 
         return tocWithoutTitle ? tocWithoutTitle.outerHTML : ''

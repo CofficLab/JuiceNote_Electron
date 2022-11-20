@@ -8,7 +8,7 @@
       >
     </div>
 
-    <div class="overscroll-auto overflow-auto h-screen mt-12">
+    <div class="overscroll-auto overflow-auto h-screen mt-12 pb-24">
       <ul class="menu menu-compact flex flex-col p-0 px-1 overflow-scroll" v-for="item in book.children">
         <li></li>
         <SideMenuItem :item="item"></SideMenuItem>
