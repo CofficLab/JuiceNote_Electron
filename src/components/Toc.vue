@@ -1,5 +1,7 @@
 <template>
-  <div v-html="toc" class="w-56 h-full mb-8"></div>
+  <div class="h-full w-full border border-l-2 border-gray-400/10">
+    <div class="table-of-contents" v-html="toc"></div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -18,23 +20,18 @@ export default defineComponent({
 
 <style lang="postcss">
 .table-of-contents {
-  @apply rounded-none mx-auto prose z-10 w-full fixed mb-8;
+  @apply prose-sm w-full;
 
   ul {
-    @apply z-10 w-auto ml-0 pl-0 !important;
+    @apply m-0 w-full !important;
 
     li {
-      @apply px-4 py-1 text-sm -ml-4;
-    }
+      @apply m-0 p-2 text-sm w-full h-full hover:bg-sky-300/30 rounded;
 
-    a {
-      @apply no-underline z-0;
+      a {
+        @apply no-underline z-0 h-full w-full;
+      }
     }
-  }
-
-  /* 章节名称 */
-  > ul > li {
-    @apply shadow-2xl rounded-none px-4 py-1 text-lg ml-0;
   }
 }
 </style>

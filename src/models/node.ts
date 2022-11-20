@@ -250,8 +250,9 @@ class node {
         let htmlWithToc = this.htmlWithToc()
         let dom = node.makeDom(htmlWithToc)
         let toc = dom.getElementsByClassName('table-of-contents')[0]
+        let tocWithoutTitle = toc.getElementsByTagName('ul')[0].getElementsByTagName('ul')[0]
 
-        return toc ? toc.outerHTML : ''
+        return tocWithoutTitle ? tocWithoutTitle.outerHTML : ''
     }
 
     public save(content: string) {

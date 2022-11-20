@@ -4,37 +4,27 @@
     <Address v-if="!isProd"></Address>
   </div>
 
-  <main
-    class="bg-green-200/20 flex flex-row z-10 min-h-screen overflow-scroll"
-    v-bind:class="hideTitleBar ? 'top-0' : 'top-8'"
-  >
+  <main class="bg-green-200/20 flex flex-row z-10 mb-8" v-bind:class="hideTitleBar ? 'top-0' : 'top-8'">
     <!-- 左侧栏 -->
     <aside class="hidden lg:block w-56 min-h-screen bg-gradient-to-r from-sky-200/50 to-base-200">
-      <div class="py-4 overflow-scroll">
+      <div class="fixed top-12">
         <SideMenu v-if="!editorMode"></SideMenu>
       </div>
     </aside>
 
     <!-- 内容区域 -->
-    <div class="flex-grow">
-      <div
-        class="fixed left-0 lg:left-56 right-0 bottom-8 bg-base-200 pt-4"
-        v-bind:class="hideTitleBar ? 'top-0' : 'top-8'"
-      >
-        <div class="h-full overflow-scroll scroll-m-48 scroll-p-52 flex flex-row">
-          <Content v-if="!editorMode"></Content>
-          <Editor v-if="editorMode"></Editor>
-        </div>
-      </div>
+    <div class="flex-grow bg-base-200 pt-20 pb-48 min-h-screen">
+      <Content v-if="!editorMode"></Content>
+      <Editor v-if="editorMode"></Editor>
     </div>
 
     <!-- 右侧栏 -->
-    <aside class="hidden lg:block w-56 min-h-screen">
+    <aside class="hidden lg:block w-48 min-h-screen bg-base-200 pt-8">
       <Toc v-show="!editorMode"></Toc>
     </aside>
   </main>
 
-  <footer class="h-8 fixed bottom-0 w-full p-0 flex border-t border-slate-500">
+  <footer class="h-8 fixed z-10 bottom-0 w-full p-0 flex border-t border-slate-500 bg-base-200">
     <Toast></Toast>
     <div class="flex" v-if="!isProd"><GitCommit></GitCommit></div>
     <div class="flex" v-if="!isProd"><Delete></Delete></div>
