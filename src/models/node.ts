@@ -178,6 +178,19 @@ class node {
     }
 
     /**
+     * 最后一个叶子节点
+     * 
+     * @returns node
+     */
+    public lastLeaf(): node {
+        if (this.isLeaf() || this.isEmpty()) {
+            return this
+        }
+
+        return this.last().lastLeaf();
+    }
+
+    /**
      * 下一个叶子节点
      * 
      */
@@ -194,7 +207,7 @@ class node {
 
         if (prev.isLeaf()) return prev
 
-        return this.parent().prev().firstLeaf()
+        return this.parent().prev().lastLeaf()
     }
 
     public itemsToFirstLeaf(): node[] {
@@ -388,7 +401,7 @@ class node {
     }
 
     public book(): node {
-        if (this.isRoot() || this.parent().isRoot()) return this;
+        if (this.isRoot() || this.parent().isRoot() || this.isEmpty()) return this;
 
         return this.parent().book();
     }

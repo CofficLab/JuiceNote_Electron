@@ -106,7 +106,7 @@ export default defineComponent({
 
   /* 标题导航 */
   .v-note-navigation-wrapper {
-    @apply bg-transparent border-0 text-base-content fixed left-0 bottom-24 top-20 z-20   w-56 !important;
+    @apply bg-transparent border-0 text-base-content fixed right-0 bottom-24 top-40 z-20 w-56 !important;
 
     .v-note-navigation-title {
       @apply hidden;
@@ -118,7 +118,7 @@ export default defineComponent({
     h4,
     h5,
     h6 {
-      @apply w-48 my-2  no-underline bg-gradient-to-r from-base-300 to-base-200  shadow-xl px-4 py-1 text-sm ml-1 hover:to-sky-300 text-black;
+      @apply w-48 my-0  no-underline bg-gradient-to-r from-base-300 to-base-200  shadow-xl px-4 py-1 text-sm ml-1 hover:to-sky-300 text-black;
     }
 
     h1 {

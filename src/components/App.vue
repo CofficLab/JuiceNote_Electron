@@ -6,7 +6,9 @@
 
   <main class="bg-green-200/20 flex flex-row z-10 mb-8" v-bind:class="hideTitleBar ? 'top-0' : 'top-8'">
     <!-- 左侧栏 -->
-    <aside class="hidden lg:block w-56 min-h-screen bg-gradient-to-r from-sky-200/50 to-base-200">
+    <aside
+      class="hidden lg:block w-56 min-h-screen bg-gradient-to-r from-sky-200/50 to-base-200 dark:from-gray-900/60 dark:to-base-200"
+    >
       <div class="fixed top-12">
         <SideMenu v-if="!editorMode"></SideMenu>
       </div>
