@@ -4,14 +4,14 @@
     <Address v-if="!isProd"></Address>
   </div>
 
-  <main class="bg-green-200/20 flex flex-row z-10 min-h-screen overflow-hidden">
+  <main class="bg-green-200/20 flex flex-row z-10 min-h-screen overflow-scroll">
     <!-- 左侧栏 -->
     <div class="w-56">
       <div
-        class="bg-gradient-to-r from-base-300/50 to-base-200/90 fixed bottom-8 w-56 py-4"
+        class="bg-gradient-to-r from-base-300/50 to-base-200/90 fixed bottom-8 w-56 py-4 overflow-scroll"
         v-bind:class="hideTitleBar ? 'top-0' : 'top-8'"
       >
-        <Toc v-show="!editorMode"></Toc>
+        <SideMenu v-if="!editorMode" class="mr-4 fixed left-0"></SideMenu>
       </div>
     </div>
 
@@ -23,7 +23,7 @@
           <Editor v-if="editorMode"></Editor>
 
           <!-- 右侧栏 -->
-          <SideMenu class="mr-4 fixed right-0"></SideMenu>
+          <Toc v-show="!editorMode"></Toc>
         </div>
       </div>
     </div>

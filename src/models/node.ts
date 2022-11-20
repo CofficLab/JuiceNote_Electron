@@ -380,6 +380,12 @@ class node {
         return parent;
     }
 
+    public book(): node {
+        if (this.isRoot() || this.parent().isRoot()) return this;
+
+        return this.parent().book();
+    }
+
     /**
      * 获取父节点
      * 

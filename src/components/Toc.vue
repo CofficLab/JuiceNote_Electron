@@ -1,5 +1,5 @@
 <template>
-  <div v-html="toc" class="w-full h-full mb-8"></div>
+  <div v-html="toc" class="w-56 h-full mb-8"></div>
 </template>
 
 <script lang="ts">
