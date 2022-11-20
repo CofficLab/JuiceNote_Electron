@@ -4,29 +4,34 @@
     <Address v-if="!isProd"></Address>
   </div>
 
-  <main class="bg-green-200/20 flex flex-row z-10 min-h-screen overflow-scroll">
+  <main
+    class="bg-green-200/20 flex flex-row z-10 min-h-screen overflow-scroll"
+    v-bind:class="hideTitleBar ? 'top-0' : 'top-8'"
+  >
     <!-- 左侧栏 -->
-    <div class="w-56">
-      <div
-        class="bg-gradient-to-r from-base-300/50 to-base-200/90 fixed bottom-8 w-56 py-4 overflow-scroll"
-        v-bind:class="hideTitleBar ? 'top-0' : 'top-8'"
-      >
-        <SideMenu v-if="!editorMode" class="mr-4 fixed left-0"></SideMenu>
+    <aside class="hidden lg:block w-56 min-h-screen bg-gradient-to-r from-sky-200/50 to-base-200">
+      <div class="py-4 overflow-scroll">
+        <SideMenu v-if="!editorMode"></SideMenu>
       </div>
-    </div>
+    </aside>
 
     <!-- 内容区域 -->
     <div class="flex-grow">
-      <div class="fixed left-56 right-0 bottom-8 bg-base-200 pt-4" v-bind:class="hideTitleBar ? 'top-0' : 'top-8'">
+      <div
+        class="fixed left-0 lg:left-56 right-0 bottom-8 bg-base-200 pt-4"
+        v-bind:class="hideTitleBar ? 'top-0' : 'top-8'"
+      >
         <div class="h-full overflow-scroll scroll-m-48 scroll-p-52 flex flex-row">
           <Content v-if="!editorMode"></Content>
           <Editor v-if="editorMode"></Editor>
-
-          <!-- 右侧栏 -->
-          <Toc v-show="!editorMode"></Toc>
         </div>
       </div>
     </div>
+
+    <!-- 右侧栏 -->
+    <aside class="hidden lg:block w-56 min-h-screen">
+      <Toc v-show="!editorMode"></Toc>
+    </aside>
   </main>
 
   <footer class="h-8 fixed bottom-0 w-full p-0 flex border-t border-slate-500">

@@ -5,11 +5,11 @@
   >
     <ul class="flex flex-row justify-center">
       <li v-for="breadcrumb in breadcrumbs" class="flex justify-center">
-        <div class="dropdown dropdown-top flex justify-center" v-if="breadcrumb.children.length > 0">
+        <div class="dropdown dropdown-top flex justify-center" v-if="breadcrumb.brothers().length > 0">
           <label tabindex="0" class="self-center">{{ breadcrumb.title }}</label>
           <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 h-96 overflow-scroll">
             <li
-              v-for="child in breadcrumb.children"
+              v-for="child in breadcrumb.brothers()"
               draggable="true"
               v-on:dragend="dragEnd()"
               v-on:dragstart="dragStart(child)"

@@ -24,8 +24,7 @@ export default defineComponent({
     @apply z-10 w-auto ml-0 pl-0 !important;
 
     li {
-      @apply bg-gradient-to-r from-sky-600 to-sky-500 dark:from-neutral dark:to-neutral-focus
-      shadow-xl px-4 py-1 text-sm -ml-4 hover:to-sky-400;
+      @apply px-4 py-1 text-sm -ml-4;
     }
 
     a {

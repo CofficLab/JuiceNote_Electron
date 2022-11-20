@@ -147,6 +147,12 @@ class node {
         return -1
     }
 
+    public brothers(): node[] {
+        let parent = this.parent();
+
+        return parent.children;
+    }
+
     /**
      * 获取第一个子节点
      * 
