@@ -2,7 +2,7 @@
   <button class="btn btn-sm my-auto rounded-none">
     <div class="dropdown dropdown-top dropdown-hover">
       <label tabindex="0"><Plus></Plus></label>
-      <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-neutral rounded-box w-52">
+      <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-neutral rounded-box w-52 -ml-8">
         <li><a v-on:click="showChapterForm">添加章节</a></li>
         <li><a v-on:click="showPageForm">添加页面</a></li>
       </ul>
