@@ -1,2 +1,5 @@
-str = 'HELLO'
-str[1:] = 'F'
+
+andy = ['Andy Lee', 22]
+john = ['John Smith', 23]
+students = [andy, john]
+print(students)
