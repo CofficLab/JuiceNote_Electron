@@ -2,6 +2,10 @@
 
 这个文件夹存储了教程的 markdown 文件，可以在多个项目件共享。
 
+## 注意
+
+展示或渲染时，应忽略本文件。
+
 ## 渲染
 
 这里的 Markdown 使用了 TailwindCSS 的 Class，以及 AlpineJS 的语法。  

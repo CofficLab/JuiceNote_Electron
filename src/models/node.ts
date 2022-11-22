@@ -43,9 +43,11 @@ class node {
 
             if (fs.statSync(file).isDirectory()) {
                 fs.readdirSync(file).forEach((child, key) => {
-                    let order = key + 1
-                    let fullPath = path.join(file, child)
-                    this.children.push((new node(fullPath)).renameWithOrder(order))
+                    if (child != 'README.md') {
+                        let order = key + 1
+                        let fullPath = path.join(file, child)
+                        this.children.push((new node(fullPath)).renameWithOrder(order))
+                    }
                 })
             }
         }
