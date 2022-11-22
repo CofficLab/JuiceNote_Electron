@@ -17,6 +17,7 @@
         type="text"
         autofocus
         v-model="title"
+        @keyup.enter.native="submitPageForm"
         placeholder="输入章节的标题"
         class="input input-bordered input-primary w-full max-w-xs"
       />
@@ -36,6 +37,7 @@
         autofocus
         v-model="title"
         placeholder="输入页面的标题"
+        @keyup.enter.native="submitPageForm"
         class="input input-bordered input-primary w-full max-w-xs"
       />
       <div class="modal-action">

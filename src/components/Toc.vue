@@ -29,7 +29,7 @@ export default defineComponent({
       @apply m-0 p-2 text-sm w-full h-full hover:bg-sky-300/30 rounded;
 
       a {
-        @apply no-underline z-0 h-full w-full;
+        @apply no-underline z-0 h-full w-full block;
       }
     }
   }

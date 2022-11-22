@@ -13,7 +13,7 @@ export default defineComponent({
   methods: {
     del: function () {
       let current = store.current;
-      store.goto(current.parent().link);
+      store.goto(current.parent().id);
       store.delete(current);
     },
   },
