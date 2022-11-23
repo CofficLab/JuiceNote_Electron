@@ -67,11 +67,11 @@ connect:
 #     cnpm i
 #     npm run build
 
-clear:
-  stage: clear
-  only:
-    - main
-  tags:
-    - tencent
-  script:
-    - cd ${RELEASE_DIR}/.. && ls -lt | grep ^d | awk 'NR>3' | xargs rm -rf
+# clear:
+#   stage: clear
+#   only:
+#     - main
+#   tags:
+#     - tencent
+#   script:
+#     - cd ${RELEASE_DIR}/.. && ls -lt | grep ^d | awk 'NR>3' | xargs rm -rf
