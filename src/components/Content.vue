@@ -16,7 +16,10 @@ export default defineComponent({
       let script = dom.getElementsByTagName("script").item(0);
       let scriptDom = document.createElement("script");
 
-      if (script != undefined) scriptDom.innerHTML = script.innerHTML;
+      if (script != undefined) {
+        script.remove();
+        scriptDom.innerHTML = script.innerHTML;
+      }
 
       this.$nextTick(() => {
         this.$refs.content.append(scriptDom);
