@@ -2,6 +2,51 @@
 
 <script>
 
+// 砖块状的样式
+for (i = 0;i<document.getElementsByClassName('brick').length;i++) {
+    let brick = document.getElementsByClassName('brick').item(i)
+    brick.classList.add('bg-sky-500')
+    brick.classList.add('dark:bg-sky-800')
+    brick.classList.add('rounded')
+    brick.classList.add('text-center')
+    brick.classList.add('hover:scale-110')
+    brick.classList.add('transition')
+    brick.classList.add('duration-500')
+}
+
+// 红色砖块的样式
+for (i = 0;i<document.getElementsByClassName('brick-red').length;i++) {
+    let brick = document.getElementsByClassName('brick-red').item(i)
+    brick.classList.add('bg-red-500')
+    brick.classList.add('dark:bg-red-800')
+    brick.classList.add('rounded')
+    brick.classList.add('text-center')
+}
+
+// 黄色砖块的样式
+for (i = 0;i<document.getElementsByClassName('brick-yellow').length;i++) {
+    let brick = document.getElementsByClassName('brick-yellow').item(i)
+    brick.classList.add('bg-yellow-500')
+    brick.classList.add('dark:bg-yellow-800')
+    brick.classList.add('rounded')
+    brick.classList.add('text-center')
+}
+
+// 蓝绿色背景的样式
+for (i = 0;i<document.getElementsByClassName('bg-cyan').length;i++) {
+    let brick = document.getElementsByClassName('bg-cyan').item(i)
+    brick.classList.add('bg-cyan-500')
+    brick.classList.add('dark:bg-cyan-800')
+}
+
+// 天空色背景的样式
+for (i = 0;i<document.getElementsByClassName('bg-sky').length;i++) {
+    let brick = document.getElementsByClassName('bg-sky').item(i)
+    brick.classList.add('bg-sky-500')
+    brick.classList.add('dark:bg-sky-800')
+}
+
+// 生成代码运行相关的dom
 if (window.runner != undefined) {
     for (i = 0; i< document.getElementsByClassName('run').length; i++) {
         let target = document.getElementsByClassName('run').item(i).nextElementSibling
@@ -30,6 +75,7 @@ if (window.runner != undefined) {
     }
 }
 
+// 运行代码
 function run(target) {
     if (window.runner == undefined) {
         alert('在 APP 版本中才可以运行')
