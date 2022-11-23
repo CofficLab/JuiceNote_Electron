@@ -20,6 +20,7 @@ if (window.runner != undefined) {
         pre.classList.add('flex-grow')
         pre.classList.add('hidden')
         pre.classList.add('bg-base-content')
+        pre.classList.add('dark:bg-base-100')
         btn.parentElement.classList.add("flex")
         btn.parentElement.classList.add('flex-row')
         btn.parentElement.classList.add('justify-end')
