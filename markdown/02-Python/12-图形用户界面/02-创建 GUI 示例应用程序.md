@@ -8,3 +8,24 @@
 - 让用户能够编辑文本文件。
 - 让用户能够保存文本文件。
 - 让用户能够退出。
+
+
+<script>
+function run(target) {
+    if (window.runner == undefined) {
+        alert('在APP版本中才可以运行')
+        return
+    }
+
+    if (target.innerHTML == '收起') {
+        target.innerHTML = '运行'
+        target.parentElement.getElementsByTagName('pre').item(0).style.display = 'none'
+    } else {
+        target.innerHTML = '收起'
+        code = target.parentElement.parentElement.getElementsByTagName('code').item(0).innerText
+        result = window.runner(code,'python')
+        target.parentElement.getElementsByTagName('code').item(0).innerHTML = result
+        target.parentElement.getElementsByTagName('pre').item(0).style.display = 'block'
+    }
+}
+</script>

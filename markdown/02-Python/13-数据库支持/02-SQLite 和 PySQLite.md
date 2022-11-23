@@ -2,3 +2,23 @@
 
 前面说过，可用的 SQL 数据库引擎有很多，它们都有相应的 Python 模块。这些数据库引擎大 都作为服务器程序运行，连安装都需要有管理员权限。为降低 Python DB API 的使用门槛，我选 择了一个名为 SQLite 的小型数据库引擎。它不需要作为独立的服务器运行，且可直接使用本地文 件，而不需要集中式数据库存储机制。
 在较新的 Python 版本(从 2.5 开始)中，SQLite 更具优势，因为标准库包含一个 SQLite 包装 器:使用模块 sqlite3 实现的 PySQLite。除非从源代码编译 Python，否则 Python 很可能包含这个 数据库。你可能应尝试运行 13.2.1 节中的程序片段，如果它能够运行，就无需专门安装 PySQLite 和 SQLite 了。
+
+<script>
+function run(target) {
+    if (window.runner == undefined) {
+        alert('在APP版本中才可以运行')
+        return
+    }
+
+    if (target.innerHTML == '收起') {
+        target.innerHTML = '运行'
+        target.parentElement.getElementsByTagName('pre').item(0).style.display = 'none'
+    } else {
+        target.innerHTML = '收起'
+        code = target.parentElement.parentElement.getElementsByTagName('code').item(0).innerText
+        result = window.runner(code,'python')
+        target.parentElement.getElementsByTagName('code').item(0).innerHTML = result
+        target.parentElement.getElementsByTagName('pre').item(0).style.display = 'block'
+    }
+}
+</script>

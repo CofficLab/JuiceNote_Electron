@@ -27,3 +27,23 @@ DB API 定义了多种异常，让你能够细致地处理错误。然而，这�
 ## 连接和游标
 
 要使用底层的数据库系统，必须先连接到它，为此可使用名称贴切的函数 connect。这个函 数接受多个参数，具体是哪些取决于要使用的数据库。作为指南，DB API 定义了表 13-3 所示的参 数。推荐将这些参数定义为关键字参数，并按表 13-3 所示的顺序排列。这些参数都应该是字符串。
+
+<script>
+function run(target) {
+    if (window.runner == undefined) {
+        alert('在APP版本中才可以运行')
+        return
+    }
+
+    if (target.innerHTML == '收起') {
+        target.innerHTML = '运行'
+        target.parentElement.getElementsByTagName('pre').item(0).style.display = 'none'
+    } else {
+        target.innerHTML = '收起'
+        code = target.parentElement.parentElement.getElementsByTagName('code').item(0).innerText
+        result = window.runner(code,'python')
+        target.parentElement.getElementsByTagName('code').item(0).innerHTML = result
+        target.parentElement.getElementsByTagName('pre').item(0).style.display = 'block'
+    }
+}
+</script>

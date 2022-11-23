@@ -43,7 +43,7 @@ class node {
 
             if (fs.statSync(file).isDirectory()) {
                 fs.readdirSync(file).forEach((child, key) => {
-                    if (child != 'README.md') {
+                    if (child != 'README.md' && child != 'footer.md') {
                         let order = key + 1
                         let fullPath = path.join(file, child)
                         this.children.push((new node(fullPath)).renameWithOrder(order))
@@ -224,7 +224,8 @@ class node {
 
     public content(): string {
         if (this.isLeaf()) {
-            return fs.readFileSync(this.file, 'utf-8')
+            // 需要补上markdown文件共同的footer
+            return fs.readFileSync(this.file, 'utf-8') + fs.readFileSync(path.join(node.rootPath, 'footer.md'), 'utf-8')
         }
 
         return this.firstLeaf().content()
