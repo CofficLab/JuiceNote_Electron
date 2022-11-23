@@ -93,4 +93,6 @@ function run(target) {
         target.parentElement.getElementsByTagName('pre').item(0).style.display = 'block'
     }
 }
+
+window.Alpine.start()
 </script>
