@@ -32,6 +32,15 @@ for (i = 0;i<document.getElementsByClassName('brick-yellow').length;i++) {
     brick.classList.add('text-center')
 }
 
+// 蓝绿色砖块的样式
+for (i = 0;i<document.getElementsByClassName('brick-cyan').length;i++) {
+    let brick = document.getElementsByClassName('brick-cyan').item(i)
+    brick.classList.add('bg-cyan-500')
+    brick.classList.add('dark:bg-cyan-800')
+    brick.classList.add('rounded')
+    brick.classList.add('text-center')
+}
+
 // 蓝绿色背景的样式
 for (i = 0;i<document.getElementsByClassName('bg-cyan').length;i++) {
     let brick = document.getElementsByClassName('bg-cyan').item(i)

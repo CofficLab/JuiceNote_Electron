@@ -8,6 +8,8 @@
 
 ## 渲染
 
+### Javascript 相关操作
+
 这里的 Markdown 使用了 TailwindCSS 的 Class，以及 AlpineJS 的语法。  
 比如可能会有这样的片段：
 
@@ -24,6 +26,10 @@
 ```
 
 所以在渲染时，要保证加载了 AlpineJS 和 TailwindCSS。
+
+### 共用代码
+
+每个 Markdown 文件都使用的代码放在了 `footer.md`，在渲染时需要将 `footer.md` 的内容拼接到原 Markdown 文档底部。
 
 ## 测试
 
