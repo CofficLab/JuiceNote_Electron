@@ -43,9 +43,14 @@ window.runner = function (code = '', language = 'PHP') {
 
     case 'python':
       suffix = 'py'
+      break;
+
+    case 'java':
+      suffix = 'java'
+      break;
 
     default:
-      break;
+      return '未识别编程语言：' + language
   }
 
   // 确定文件内容
@@ -74,7 +79,7 @@ window.runner = function (code = '', language = 'PHP') {
       }
       break;
     default:
-      output = 'unknown'
+      output = '缺少' + suffix + '的解析器'
   }
 
   return output.toString()
