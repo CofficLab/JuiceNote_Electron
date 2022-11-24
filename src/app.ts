@@ -50,13 +50,13 @@ window.runner = function (code = '', language = 'PHP') {
 
   // 确定文件内容
   let content = code
-  if (suffix == 'php') content = '<?php ' + content
+  if (suffix == 'php') content = "<?php \r\n" + content
 
   // 写入临时文件
   let tmpFilePath = path.join(process.cwd(), 'tmp.' + suffix)
   fs.writeFileSync(tmpFilePath, content)
 
-  console.log('code is')
+  console.log('language is', language, 'code is')
   console.log(fs.readFileSync(tmpFilePath).toString())
 
   // 执行文件

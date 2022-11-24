@@ -87,11 +87,27 @@ function run(target) {
         target.parentElement.getElementsByTagName('pre').item(0).style.display = 'none'
     } else {
         target.innerHTML = '收起'
-        code = target.parentElement.parentElement.getElementsByTagName('code').item(0).innerText
-        result = window.runner(code,'python')
+        codeDom = target.parentElement.parentElement.getElementsByTagName('code').item(0)
+        language = findOutTheLanguage(codeDom.className)
+        result = window.runner(codeDom.innerText,language)
         target.parentElement.getElementsByTagName('code').item(0).innerHTML = result
         target.parentElement.getElementsByTagName('pre').item(0).style.display = 'block'
     }
+}
+
+function findOutTheLanguage(className) {
+    console.log('find out the language,class name is',className)
+    language = ''
+
+    if (className.includes('language-python3')) {
+        language = 'python'
+    }
+
+    if (className.includes('language-php')) {
+        language = 'php'
+    }
+    
+    return language
 }
 
 window.Alpine.start()

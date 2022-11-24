@@ -481,6 +481,45 @@ class node {
     }
 
     /**
+     * 按照标题查找节点
+     * 
+     * @param title 标题
+     * @returns node[]
+     */
+    public search(title: string): node[] {
+        if (this.isEmpty() || this.isLeaf()) return []
+
+        let result: node[] = []
+        let children = this.children
+
+        children.forEach(function (child) {
+            // console.log('search for title', title, 'current is', child.title)
+            if (child.title == title) {
+                result.push(child)
+            }
+
+            result = result.concat(child.search(title))
+        })
+
+        return result
+    }
+
+    /**
+     * 完整的标题
+     * 
+     * @returns string
+     */
+    public fullTitle(): string {
+        if (this.isRoot()) return ''
+
+        if (this.parent().isRoot()) {
+            return this.title
+        }
+
+        return this.parent().fullTitle() + '-' + this.title
+    }
+
+    /**
      * 获取根导航节点
      * 
      * @returns node

@@ -15,7 +15,8 @@
     </aside>
 
     <!-- 内容区域 -->
-    <div class="flex-grow bg-base-200 pt-20 pb-48 min-h-screen">
+    <div class="flex-grow flex flex-col gap-4 bg-base-200 pt-20 pb-48 min-h-screen">
+      <div class="flex justify-end"><Others></Others></div>
       <Content v-if="!editorMode"></Content>
       <Editor v-if="editorMode"></Editor>
     </div>
@@ -57,6 +58,7 @@ import Toast from "./Toast.vue";
 import Content from "./Content.vue";
 import Editor from "./Editor.vue";
 import SideMenu from "./SideMenu.vue";
+import Others from "./Others.vue";
 
 export default defineComponent({
   components: {
@@ -75,6 +77,7 @@ export default defineComponent({
     Content,
     Editor,
     SideMenu,
+    Others,
   },
   computed: {
     isProd: function (): boolean {
