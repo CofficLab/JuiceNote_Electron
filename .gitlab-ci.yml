@@ -57,15 +57,15 @@ connect:
     npm run mix
     php artisan lesson:sync
 
-# run:
-#   stage: run
-#   only:
-#     - main
-#   tags:
-#     - tencent
-#   script: |
-#     cnpm i
-#     npm run build
+run:
+  stage: run
+  only:
+    - main
+  tags:
+    - tencent
+  script: |
+    cnpm i
+    npm run build
 
 clear:
   stage: clear
