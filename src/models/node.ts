@@ -7,7 +7,9 @@ const md = require('markdown-it')({
 });
 
 md.use(require("markdown-it-anchor").default)
-md.use(require("markdown-it-table-of-contents"))
+md.use(require("markdown-it-table-of-contents"), {
+    'includeLevel': [1, 2, 3, 4]
+})
 
 /**
  * 导航节点的定义，基于“树”数据结构
