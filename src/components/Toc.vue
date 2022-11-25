@@ -20,16 +20,16 @@ export default defineComponent({
 
 <style lang="postcss">
 .table-of-contents {
-  @apply prose-sm w-full;
+  @apply prose-sm w-full fixed top-12;
 
   ul {
-    @apply m-0 w-full !important;
+    @apply w-full relative hover:bg-transparent !important;
 
     li {
-      @apply m-0 p-2 text-sm w-full h-full hover:bg-sky-300/30 rounded;
+      @apply m-2 text-sm w-full h-full rounded;
 
       a {
-        @apply no-underline z-0 h-full w-full block;
+        @apply no-underline z-0 h-full w-full p-2 block hover:bg-sky-300/30;
       }
     }
   }
