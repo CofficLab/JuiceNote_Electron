@@ -1,6 +1,6 @@
 <template>
-  <div class="h-full w-full border border-l-2 border-gray-400/10">
-    <div class="table-of-contents" v-html="toc"></div>
+  <div class="h-full overflow-scroll border border-l-2 border-gray-400/10 shadow">
+    <div class="table-of-contents overflow-scroll" v-html="toc"></div>
   </div>
 </template>
 
@@ -20,7 +20,7 @@ export default defineComponent({
 
 <style lang="postcss">
 .table-of-contents {
-  @apply prose-sm w-full fixed top-12;
+  @apply prose-sm w-full;
 
   ul {
     @apply w-full relative hover:bg-transparent !important;

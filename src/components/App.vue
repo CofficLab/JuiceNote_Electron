@@ -15,14 +15,14 @@
     </aside>
 
     <!-- 内容区域 -->
-    <div class="flex-grow flex flex-col gap-4 bg-base-200 pt-20 pb-48 min-h-screen">
+    <div class="flex-grow flex flex-col gap-4 bg-base-200 pt-20 pb-48 mr-56 min-h-screen">
       <div class="flex justify-end"><Others></Others></div>
       <Content v-if="!editorMode"></Content>
       <Editor v-if="editorMode"></Editor>
     </div>
 
     <!-- 右侧栏 -->
-    <aside class="hidden lg:block w-48 min-h-screen bg-base-200 pt-8">
+    <aside class="hidden lg:block w-56 min-h-screen bg-base-200 pt-8 overflow-scroll fixed top-0 right-0">
       <Toc v-show="!editorMode"></Toc>
     </aside>
   </main>
