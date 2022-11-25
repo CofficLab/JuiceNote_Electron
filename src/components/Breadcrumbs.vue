@@ -78,7 +78,8 @@ export default defineComponent({
     dragEnd() {
       let newOrder = this.bottomNode == this.hovered ? this.dragged.parent().children.length + 1 : this.hovered.order;
       console.log(newOrder);
-      store.goto(store.updateOrder(this.dragged, newOrder).id);
+      store.goto(this.dragged.parent().id);
+      store.updateOrder(this.dragged, newOrder).id;
     },
     dragEnter(navigator: node) {
       this.hovered = navigator;

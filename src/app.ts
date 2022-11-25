@@ -78,6 +78,13 @@ window.runner = function (code = '', language = 'PHP') {
         output = err.message.trim()
       }
       break;
+    case 'java':
+      try {
+        output = execSync("java " + tmpFilePath);
+      } catch (err) {
+        output = err.message.trim()
+      }
+      break;
     default:
       output = '缺少' + suffix + '的解析器'
   }
