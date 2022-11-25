@@ -64,6 +64,7 @@ run:
   tags:
     - tencent
   script: |
+    cd ${WORK_DIR}
     cnpm i
     npm run build
 
