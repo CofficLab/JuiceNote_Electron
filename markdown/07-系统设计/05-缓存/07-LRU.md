@@ -96,8 +96,5 @@ public class LRU<K, V> implements Iterable<K> {
 
 ## 参考资料
 
-- 大规模分布式存储系统
-- [缓存那些事](https://tech.meituan.com/cache_about.html)
-- [一致性哈希算法](https://my.oschina.net/jayhu/blog/732849)
-- [内容分发网络](https://zh.wikipedia.org/wiki/%E5%85%A7%E5%AE%B9%E5%82%B3%E9%81%9E%E7%B6%B2%E8%B7%AF)
-- [How Aspiration CDN helps to improve your website loading speed?](https://www.aspirationhosting.com/aspiration-cdn/)
+- <a href="https://tech.meituan.com/cache_about.html" target="_blank">缓存那些事</a>
+- <a href="https://my.oschina.net/jayhu/blog/732849" target="_blank">一致性哈希算法</a>

@@ -36,7 +36,3 @@
 - 需要去实现存取 Session 的代码。
 
 <div align="center"> <img src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/fdc45a09-f838-4348-8959-d2c793727788.png" width="600px"/> </div><br>
-
-参考：
-
-- [Session Management using Spring Session with JDBC DataStore](https://sivalabs.in/2018/02/session-management-using-spring-session-jdbc-datastore/)

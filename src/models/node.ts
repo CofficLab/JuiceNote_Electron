@@ -602,7 +602,7 @@ class node {
      * @returns 
      */
     private getTitle(): string {
-        if (this.file === node.rootPath) return '图书'
+        if (this.file === node.rootPath) return '教程'
 
         let basename = path.basename(this.file)
         let extname = path.extname(this.file)
