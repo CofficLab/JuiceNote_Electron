@@ -116,8 +116,12 @@ function findOutTheLanguage(className) {
         language = 'php'
     }
 
-     if (className.includes('language-java')) {
+    if (className.includes('language-java')) {
         language = 'java'
+    }
+
+    if (className.includes('language-sh')) {
+        language = 'sh'
     }
     
     return language

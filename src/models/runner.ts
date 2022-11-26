@@ -17,6 +17,10 @@ let code_runner = function (code = '', language = 'PHP') {
         case 'java':
             suffix = 'java'
             break;
+        case 'sh':
+        case 'bash':
+            suffix = 'sh'
+            break;
 
         default:
             return '未识别编程语言：' + language
@@ -54,6 +58,13 @@ let code_runner = function (code = '', language = 'PHP') {
                 output = err.message.trim()
             }
             break;
+        case 'sh':
+            try {
+                output = execSync("sh " + tmpFilePath);
+            } catch (err) {
+                output = err.message.trim()
+            }
+            break;
         default:
             output = '缺少' + suffix + '的解析器'
     }
@@ -74,7 +85,7 @@ let shell_runner = function (code = '') {
     let output = ''
 
     try {
-        output = execSync("python3 " + tmpFilePath);
+        output = execSync("sh " + tmpFilePath);
     } catch (err) {
         output = err.message.trim()
     }
