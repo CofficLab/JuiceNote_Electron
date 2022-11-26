@@ -17,6 +17,12 @@ let code_runner = function (code = '', language = 'PHP') {
         case 'java':
             suffix = 'java'
             break;
+
+        case 'js':
+        case 'javascript':
+            suffix = 'js'
+            break;
+
         case 'sh':
         case 'bash':
             suffix = 'sh'
@@ -39,6 +45,7 @@ let code_runner = function (code = '', language = 'PHP') {
 
     // 执行文件
     let execSync = require("child_process").execSync;
+    let exec = require("child_process").exec
     let output = ''
     switch (suffix) {
         case 'php':
@@ -58,6 +65,13 @@ let code_runner = function (code = '', language = 'PHP') {
                 output = err.message.trim()
             }
             break;
+        case 'js':
+            try {
+                output = exec("node " + tmpFilePath);
+            } catch (err) {
+                output = err.message.trim()
+            }
+            break;
         case 'sh':
             try {
                 output = execSync("sh " + tmpFilePath);
@@ -72,44 +86,6 @@ let code_runner = function (code = '', language = 'PHP') {
     return output.toString()
 }
 
-let shell_runner = function (code = '') {
-    console.log('code is')
-    console.log(code)
-
-    // 写入临时文件
-    let tmpFilePath = path.join(process.cwd(), 'tmp.sh')
-    fs.writeFileSync(tmpFilePath, code)
-
-    // 执行文件
-    let execSync = require("child_process").execSync;
-    let output = ''
-
-    try {
-        output = execSync("sh " + tmpFilePath);
-    } catch (err) {
-        output = err.message.trim()
-    }
-
-    return output.toString()
-}
-
-let http_runner = function () {
-    // 1. 导入http模块
-    const http = require('http')
-    // 2. 创建web服务器实例
-    const server = http.createServer()
-    // 3. 为服务器实例绑定request事件，监听客户端的请求
-    server.on('request', function (req, res) {
-        console.log('Someone visit our web server.')
-    })
-    // 4. 启动服务器
-    server.listen(8080, function () {
-        console.log('server running at http://127.0.0.1:8080')
-    })
-}
-
 export default {
-    code_runner,
-    shell_runner,
-    http_runner,
+    code_runner
 }

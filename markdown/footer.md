@@ -95,12 +95,13 @@ function run(target) {
         target.innerHTML = '运行'
         target.parentElement.getElementsByTagName('pre').item(0).style.display = 'none'
     } else {
-        target.innerHTML = '收起'
+        target.innerHTML = '运行中...'
         codeDom = target.parentElement.parentElement.getElementsByTagName('code').item(0)
         language = findOutTheLanguage(codeDom.className)
         result = window.runner(codeDom.innerText,language)
         target.parentElement.getElementsByTagName('code').item(0).innerHTML = result
         target.parentElement.getElementsByTagName('pre').item(0).style.display = 'block'
+        target.innerHTML = '收起'
     }
 }
 
@@ -122,6 +123,10 @@ function findOutTheLanguage(className) {
 
     if (className.includes('language-sh')) {
         language = 'sh'
+    }
+
+    if (className.includes('language-js') || className.includes('language-javascript')) {
+        language = 'javascript'
     }
     
     return language
