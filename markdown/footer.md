@@ -55,6 +55,13 @@ for (i = 0;i<document.getElementsByClassName('bg-sky').length;i++) {
     brick.classList.add('dark:bg-sky-800')
 }
 
+// 黄色背景的样式
+for (i = 0;i<document.getElementsByClassName('bg-yellow').length;i++) {
+    let brick = document.getElementsByClassName('bg-yellow').item(i)
+    brick.classList.add('bg-yellow-500')
+    brick.classList.add('dark:bg-yellow-800')
+}
+
 // 生成代码运行相关的dom
 if (window.runner != undefined) {
     for (i = 0; i< document.getElementsByClassName('run').length; i++) {
