@@ -67,7 +67,7 @@ let code_runner = function (code = '', language = 'PHP') {
             break;
         case 'js':
             try {
-                output = exec("node " + tmpFilePath);
+                output = execSync("node " + tmpFilePath);
             } catch (err) {
                 output = err.message.trim()
             }

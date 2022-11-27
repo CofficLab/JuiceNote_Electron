@@ -44,7 +44,7 @@ for (i = 0;i<document.getElementsByClassName('brick-cyan').length;i++) {
 // 蓝绿色背景的样式
 for (i = 0;i<document.getElementsByClassName('bg-cyan').length;i++) {
     let brick = document.getElementsByClassName('bg-cyan').item(i)
-    brick.classList.add('bg-cyan-500')
+    brick.classList.add('bg-cyan-200/60')
     brick.classList.add('dark:bg-cyan-800')
 }
 
