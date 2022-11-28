@@ -21,6 +21,9 @@ for (i = 0;i<document.getElementsByClassName('brick-red').length;i++) {
     brick.classList.add('dark:bg-red-800')
     brick.classList.add('rounded')
     brick.classList.add('text-center')
+    brick.classList.add('hover:scale-110')
+    brick.classList.add('transition')
+    brick.classList.add('duration-500')
 }
 
 // 黄色砖块的样式
@@ -30,6 +33,9 @@ for (i = 0;i<document.getElementsByClassName('brick-yellow').length;i++) {
     brick.classList.add('dark:bg-yellow-800')
     brick.classList.add('rounded')
     brick.classList.add('text-center')
+    brick.classList.add('hover:scale-110')
+    brick.classList.add('transition')
+    brick.classList.add('duration-500')
 }
 
 // 蓝绿色砖块的样式
@@ -39,6 +45,9 @@ for (i = 0;i<document.getElementsByClassName('brick-cyan').length;i++) {
     brick.classList.add('dark:bg-cyan-800')
     brick.classList.add('rounded')
     brick.classList.add('text-center')
+    brick.classList.add('hover:scale-110')
+    brick.classList.add('transition')
+    brick.classList.add('duration-500')
 }
 
 // 蓝绿色背景的样式
