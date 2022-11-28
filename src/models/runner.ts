@@ -1,7 +1,6 @@
 import fs from 'fs'
 import path from 'path'
 
-
 let code_runner = function (code = '', language = 'PHP') {
     let suffix = 'unknown'
     switch (language) {
@@ -21,6 +20,10 @@ let code_runner = function (code = '', language = 'PHP') {
         case 'js':
         case 'javascript':
             suffix = 'js'
+            break;
+
+        case 'go':
+            suffix = 'go'
             break;
 
         case 'sh':
@@ -75,6 +78,14 @@ let code_runner = function (code = '', language = 'PHP') {
         case 'sh':
             try {
                 output = execSync("sh " + tmpFilePath);
+            } catch (err) {
+                output = err.message.trim()
+            }
+            break;
+
+        case 'go':
+            try {
+                output = execSync("go run " + tmpFilePath);
             } catch (err) {
                 output = err.message.trim()
             }

@@ -19,6 +19,7 @@
     "mavon",
     "postcss",
     "querystring",
+    "uintptr",
     "Uturn",
     "vuex"
   ]

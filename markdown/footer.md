@@ -132,6 +132,10 @@ function findOutTheLanguage(className) {
         language = 'sh'
     }
 
+    if (className.includes('language-go') || className.includes('language-golang')) {
+        language = 'go'
+    }
+
     if (className.includes('language-js') || className.includes('language-javascript')) {
         language = 'javascript'
     }
