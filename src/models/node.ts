@@ -1,9 +1,19 @@
 import fs from "fs"
 import path from "path"
 import electron from 'electron'
+import hljs from 'highlight.js'
 
 const md = require('markdown-it')({
-    html: true
+    html: true,
+    highlight: function (str: any, lang: any) {
+        if (lang && hljs.getLanguage(lang)) {
+            try {
+                return hljs.highlight(str, { language: lang }).value;
+            } catch (__) { }
+        }
+
+        return ''; // 使用额外的默认转义
+    }
 });
 
 md.use(require("markdown-it-anchor").default)

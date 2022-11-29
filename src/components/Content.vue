@@ -1,5 +1,4 @@
 <template>
-  <Languages class="prose px-8"></Languages>
   <div ref="content" class="prose mx-auto min-h-screen container px-8" v-html="body"></div>
 </template>
 

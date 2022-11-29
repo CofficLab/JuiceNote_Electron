@@ -4,7 +4,7 @@
 
 <div class="run"></div>
 
-```python3
+```python
 import sqlite3
 
 conn = sqlite3.connect('tmp.db')
@@ -19,7 +19,7 @@ conn.close()
 
 <div class="run"></div>
 
-```python3
+```python
 import sqlite3
 
 conn = sqlite3.connect('tmp.db')
@@ -45,7 +45,7 @@ conn.close()
 
 <div class="run"></div>
 
-```python3
+```python
 import sqlite3
 
 conn = sqlite3.connect('tmp.db')
