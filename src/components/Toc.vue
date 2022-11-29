@@ -1,5 +1,5 @@
 <template>
-  <div class="h-full overflow-scroll border border-l-2 border-gray-400/10 shadow">
+  <div class="h-full overflow-scroll">
     <div class="table-of-contents overflow-scroll" v-html="toc"></div>
   </div>
 </template>
@@ -23,13 +23,13 @@ export default defineComponent({
   @apply prose-sm w-full;
 
   ul {
-    @apply w-full relative hover:bg-transparent !important;
+    @apply w-full pr-4 relative hover:bg-transparent !important;
 
     li {
       @apply m-2 text-sm w-full h-full rounded;
 
       a {
-        @apply no-underline z-0 h-full w-full p-2 block hover:bg-sky-300/30;
+        @apply no-underline rounded-lg z-0 h-full w-full p-2 block hover:bg-sky-300/30;
       }
     }
   }

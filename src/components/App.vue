@@ -4,10 +4,10 @@
     <Address v-if="!isProd"></Address>
   </div>
 
-  <main class="bg-green-200/20 flex flex-row z-10 mb-8" v-bind:class="hideTitleBar ? 'top-0' : 'top-8'">
+  <main class="flex flex-row z-10" v-bind:class="hideTitleBar ? 'top-0' : 'top-8'">
     <!-- 左侧栏 -->
     <aside
-      class="hidden lg:block w-56 min-h-screen bg-gradient-to-r from-sky-200/50 to-base-300 dark:from-gray-900/60 dark:to-base-200 relative"
+      class="hidden lg:block w-56 min-h-screen bg-gradient-to-r from-sky-200/40 to-cyan-800/10 dark:from-gray-900/60 dark:to-base-200 relative"
     >
       <div class="fixed top-12">
         <SideMenu v-if="!editorMode"></SideMenu>
@@ -15,19 +15,21 @@
     </aside>
 
     <!-- 内容区域 -->
-    <div class="flex-grow flex flex-col gap-4 bg-base-300 pt-20 pb-48 mr-56 min-h-screen">
+    <div class="flex-grow flex flex-col gap-4 pt-20 bg-cyan-800/10 pb-48 mr-56 min-h-screen">
       <div class="flex justify-end"><Others></Others></div>
       <Content v-if="!editorMode"></Content>
       <Editor v-if="editorMode"></Editor>
     </div>
 
     <!-- 右侧栏 -->
-    <aside class="hidden lg:block w-56 min-h-screen bg-base-300 pt-8 overflow-scroll fixed top-0 right-0">
+    <aside
+      class="hidden lg:flex w-56 min-h-screen bg-gradient-to-r from-cyan-800/10 to-sky-200/40 pt-32 overflow-scroll fixed top-0 right-0 justify-end"
+    >
       <Toc v-show="!editorMode"></Toc>
     </aside>
   </main>
 
-  <footer class="h-8 fixed z-10 bottom-0 w-full p-0 flex border-t border-slate-500 bg-base-200">
+  <footer class="h-8 fixed z-10 bottom-0 w-full p-0 flex">
     <Toast></Toast>
     <div class="flex" v-if="!isProd"><GitCommit></GitCommit></div>
     <div class="flex" v-if="!isProd"><Delete></Delete></div>
