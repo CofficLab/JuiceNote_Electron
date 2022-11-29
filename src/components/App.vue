@@ -40,7 +40,7 @@
       class="bg-gradient-to-r from-sky-200/40 via-sky-200/90 to-sky-200/40 dark:from-sky-800/80 dark:via-sky-900 dark:to-sky-800/80"
     ></Breadcrumbs>
     <Toast></Toast>
-    <div class="bg-sky-100/90 flex flex-row">
+    <div class="bg-sky-100/90 dark:bg-gray-500/20 flex flex-row">
       <div class="flex"><Prev></Prev></div>
       <div class="flex"><Home></Home></div>
       <div class="flex"><Next></Next></div>
