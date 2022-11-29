@@ -5,7 +5,7 @@
   >
     <ul class="flex flex-row justify-center">
       <li v-for="breadcrumb in breadcrumbs" class="flex justify-center">
-        <div class="dropdown dropdown-bottom flex justify-center" v-if="breadcrumb.brothers().length > 0">
+        <div class="dropdown dropdown-top flex justify-center" v-if="breadcrumb.brothers().length > 0">
           <label tabindex="0" class="self-center">{{ breadcrumb.title }}</label>
           <ul
             tabindex="0"

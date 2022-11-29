@@ -1,6 +1,7 @@
 <template>
   <div class="drawer-side w-full">
-    <div class="z-20 items-center gap-2 px-1 py-2 hidden lg:flex fixed top-8 bg-transparent">
+    <!-- 图书名 -->
+    <div class="z-20 items-center gap-2 px-1 py-2 flex bg-transparent">
       <ul class="menu z-20">
         <li tabindex="0">
           <a href="javascript:void(0)" aria-current="page" aria-label="Homepage" class="flex-0 px-2">
@@ -17,7 +18,8 @@
       </ul>
     </div>
 
-    <div class="overscroll-auto overflow-auto h-screen mt-12 mb-24 pb-48">
+    <!-- 章节 -->
+    <div class="overscroll-auto overflow-auto h-screen mt-0 mb-24 pb-48">
       <ul class="menu menu-compact flex flex-col p-0 px-1 overflow-scroll" v-for="item in book.children">
         <li></li>
         <SideMenuItem :item="item"></SideMenuItem>
