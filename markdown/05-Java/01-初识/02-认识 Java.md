@@ -12,10 +12,12 @@ Java 是当下最流行的编程语言之一，广泛应用于各个领域。
 
 ## 第一个 Java 程序
 
+<div class="run"></div>
+
 ```java
 public class MyFirstJavaProgram {
     public static void main(String []args) {
-        System.out.println("Hello")
+        System.out.println("Hello");
     }
 }
 ```
