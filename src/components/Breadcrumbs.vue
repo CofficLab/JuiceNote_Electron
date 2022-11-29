@@ -1,27 +1,41 @@
 <template>
   <div
-    class="justify-center flex flex-grow p-0 breadcrumbs overflow-visible bg-gradient-to-r from-sky-200/50 via-sky-200 to-sky-200/50"
-    v-bind:class="inEditMode ? 'text-yellow-500' : ''"
+    class="justify-center flex flex-grow p-0 breadcrumbs overflow-visible"
+    v-bind:class="{ 'text-yellow-500': inEditMode }"
   >
     <ul class="flex flex-row justify-center">
       <li v-for="breadcrumb in breadcrumbs" class="flex justify-center">
-        <div class="dropdown dropdown-top flex justify-center" v-if="breadcrumb.brothers().length > 0">
+        <div class="dropdown dropdown-bottom flex justify-center" v-if="breadcrumb.brothers().length > 0">
           <label tabindex="0" class="self-center">{{ breadcrumb.title }}</label>
-          <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 h-96 overflow-scroll">
+          <ul
+            tabindex="0"
+            class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 h-96 mt-8 overflow-scroll"
+          >
             <li
-              v-for="child in breadcrumb.brothers()"
+              v-for="brother in breadcrumb.brothers()"
               draggable="true"
               v-on:dragend="dragEnd()"
-              v-on:dragstart="dragStart(child)"
-              v-on:dragenter="dragEnter(child)"
+              v-on:dragstart="dragStart(brother)"
+              v-on:dragenter="dragEnter(brother)"
               class="flex flex-row min-w-fit"
             >
               <!-- 拖移时显示 -->
-              <div class="bg-base-content w-full p-0" v-bind:class="child === hovered ? 'h-4' : ''"></div>
+              <div
+                class="w-full mx-0 min-w-fit overflow-hidden"
+                v-bind:class="brother.id == hovered.id ? 'h-12 py-6 px-0' : 'h-0 py-0 px-0'"
+              >
+                <div class="bg-base-content/10 w-full h-12 rounded"></div>
+              </div>
 
-              <Link v-bind:href="child.id" v-bind:class="child.isActivated() ? 'active' : ''">
-                <span v-text="child.order"></span>
-                <span>{{ child.title }}</span>
+              <Link
+                v-bind:href="brother.id"
+                v-bind:class="{
+                  active: brother.isActivated(),
+                  'hover:bg-transparent': dragged !== emptyNode,
+                }"
+              >
+                <span v-text="brother.order"></span>
+                <span>{{ brother.title }}</span>
               </Link>
             </li>
 
@@ -32,7 +46,7 @@
               class="flex flex-row min-w-fit"
             >
               <!-- 拖移时显示 -->
-              <div class="w-full p-0 h-4" v-bind:class="bottomNode !== hovered ? '' : 'bg-base-content '"></div>
+              <div class="w-full px-0 h-0" v-bind:class="bottomNode !== hovered ? '' : 'bg-base-content/10 h-12'"></div>
             </li>
           </ul>
         </div>
@@ -77,9 +91,9 @@ export default defineComponent({
     },
     dragEnd() {
       let newOrder = this.bottomNode == this.hovered ? this.dragged.parent().children.length + 1 : this.hovered.order;
-      console.log(newOrder);
       store.goto(this.dragged.parent().id);
       store.updateOrder(this.dragged, newOrder).id;
+      this.hovered = null;
     },
     dragEnter(navigator: node) {
       this.hovered = navigator;

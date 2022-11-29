@@ -39,9 +39,9 @@ class node {
     public constructor(file?: string) {
         if (file) {
             this.file = file
+            this.order = this.getOrder()
             this.id = node.pathToId(file)
             this.title = this.getTitle()
-            this.order = this.getOrder()
 
             if (fs.statSync(file).isDirectory()) {
                 fs.readdirSync(file).forEach((child, key) => {
@@ -102,6 +102,14 @@ class node {
 
     public isBook(): boolean {
         return this.parent() === node.rootNode
+    }
+
+    public linkId(): string {
+        if (this.isRoot()) return ''
+
+        if (this.parent().isRoot()) return this.order.toString()
+
+        return this.parent().linkId() + '@' + this.order
     }
 
     /**

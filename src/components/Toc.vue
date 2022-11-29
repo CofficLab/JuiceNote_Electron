@@ -1,5 +1,12 @@
 <template>
   <div class="h-full overflow-scroll">
+    <div>
+      <ul class="menu p-2 mr-1 shadow w-36 bg-base-100 rounded-box" v-show="menus.length > 1">
+        <li v-for="menu in menus">
+          <Link v-bind:href="menu.id">{{ menu.book().title }}</Link>
+        </li>
+      </ul>
+    </div>
     <div class="table-of-contents overflow-scroll" v-html="toc"></div>
   </div>
 </template>
@@ -7,6 +14,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import store from "../models/store";
+import Link from "./Link.vue";
 
 export default defineComponent({
   computed: {
@@ -14,7 +22,17 @@ export default defineComponent({
       let current = store.current;
       return current.toc();
     },
+    menus: function () {
+      let menus = store.root.search(store.current.title);
+
+      menus = menus.filter(function (menu) {
+        return menu.parent().title == store.current.parent().title;
+      });
+
+      return menus;
+    },
   },
+  components: { Link },
 });
 </script>
 
@@ -23,7 +41,7 @@ export default defineComponent({
   @apply prose-sm w-full;
 
   ul {
-    @apply w-full pr-4 relative hover:bg-transparent !important;
+    @apply w-full relative hover:bg-transparent !important;
 
     li {
       @apply m-2 text-sm w-full h-full rounded;

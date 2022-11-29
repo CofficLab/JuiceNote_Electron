@@ -1,9 +1,9 @@
 <template>
-  <div class="dropdown dropdown-hover dropdown-bottom dropdown-end" v-show="show">
-    <label tabindex="0" class="btn m-1">其他编程语言</label>
-    <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-72">
+  <div class="dropdown dropdown-hover dropdown-bottom dropdown-end z-20" v-show="show">
+    <label tabindex="0" class="btn m-1 w-36">其他编程语言</label>
+    <ul tabindex="0" class="dropdown-content menu p-2 mr-1 shadow w-36 bg-base-100 rounded-box z-30">
       <li v-for="menu in menus">
-        <Link v-bind:href="menu.id">{{ menu.fullTitle() }}</Link>
+        <Link v-bind:href="menu.id">{{ menu.book().title }}</Link>
       </li>
     </ul>
   </div>
