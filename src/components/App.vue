@@ -18,7 +18,7 @@
   <main class="flex flex-row z-10" v-bind:class="hideTitleBar ? 'mt-0' : 'mt-8'">
     <!-- 左侧栏 -->
     <aside
-      class="hidden lg:block w-56 min-h-screen bg-gradient-to-r from-sky-200/40 to-cyan-800/10 dark:from-gray-900/60 dark:to-base-200 relative"
+      class="hidden lg:block w-56 min-h-screen bg-gradient-to-r from-sky-200/40 to-cyan-800/10 dark:from-cyan-800/10 dark:to-cyan-800/10 relative"
     >
       <div class="fixed top-12">
         <SideMenu v-if="!editorMode"></SideMenu>
@@ -33,7 +33,7 @@
 
     <!-- 右侧栏 -->
     <aside
-      class="z-10 hidden lg:flex lg:flex-col w-56 pt-24 pr-0 h-full bg-gradient-to-r from-cyan-800/10 to-sky-200/80 overflow-scroll fixed top-0 right-0 justify-start"
+      class="z-10 hidden lg:flex lg:flex-col w-56 pt-24 pr-0 h-full bg-gradient-to-r from-cyan-800/10 to-sky-200/80 dark:to-cyan-800/10 dark:from-cyan-800/10 overflow-scroll fixed top-0 right-0 justify-start"
     >
       <div class="flex flex-row justify-end">
         <Toc v-show="!editorMode"></Toc>
