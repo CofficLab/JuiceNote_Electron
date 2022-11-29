@@ -15,7 +15,7 @@
     </aside>
 
     <!-- 内容区域 -->
-    <div class="flex-grow flex flex-col gap-4 pt-20 bg-cyan-800/10 pb-48 mr-56 min-h-screen">
+    <div class="flex-grow flex flex-col gap-4 pt-20 bg-cyan-800/10 pb-48 mr-0 lg:mr-56 min-h-screen">
       <div class="flex justify-end"><Others></Others></div>
       <Content v-if="!editorMode"></Content>
       <Editor v-if="editorMode"></Editor>
