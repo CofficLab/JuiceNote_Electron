@@ -23,7 +23,7 @@
     <!-- 右侧栏 -->
     <aside
       v-bind:class="{ 'pt-12': !hideTitleBar, 'pt-4': hideTitleBar }"
-      class="z-10 hidden lg:flex lg:flex-col w-56 pr-0 h-full bg-gradient-to-r from-cyan-800/10 to-sky-200/80 dark:to-cyan-800/10 dark:from-cyan-800/10 overflow-scroll fixed top-0 right-0 justify-start"
+      class="z-10 hidden lg:flex lg:flex-col w-56 pr-0 h-full bg-gradient-to-r from-cyan-800/10 to-sky-200/40 dark:to-cyan-800/10 dark:from-cyan-800/10 overflow-scroll fixed top-0 right-0 justify-start"
     >
       <div class="flex flex-row justify-end">
         <Toc v-show="!editorMode"></Toc>
