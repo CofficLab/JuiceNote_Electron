@@ -13,7 +13,7 @@
   <div class="modal z-50" v-bind:class="chapterFormSwitcher ? 'modal-open' : ''">
     <div class="modal-box">
       <input
-        ref="title"
+        ref="chapter_title"
         type="text"
         autofocus
         v-model="title"
@@ -32,7 +32,7 @@
   <div class="modal z-50" v-bind:class="pageFormSwitcher ? 'modal-open' : ''">
     <div class="modal-box">
       <input
-        ref="title"
+        ref="page_title"
         type="text"
         autofocus
         v-model="title"
@@ -65,13 +65,13 @@ export default defineComponent({
     showPageForm() {
       this.pageFormSwitcher = true;
       this.$nextTick(function () {
-        (this.$refs.title as any).focus();
+        (this.$refs.page_title as any).focus();
       });
     },
     showChapterForm() {
       this.chapterFormSwitcher = true;
       this.$nextTick(function () {
-        (this.$refs.title as any).focus();
+        (this.$refs.chapter_title as any).focus();
       });
     },
     hidePageForm() {
