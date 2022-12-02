@@ -2,6 +2,7 @@ import fs from "fs"
 import path from "path"
 import electron from 'electron'
 import hljs from 'highlight.js'
+import project from "./project";
 
 const md = require('markdown-it')({
     html: true,
@@ -40,6 +41,9 @@ md.use(require("markdown-it-table-of-contents"), {
 class node {
     public static rootPath = path.join(electron.ipcRenderer.sendSync('get-app-path'), 'markdown')
     public static rootNode: node
+    public static excepts = ['README.md', 'footer.md', 'projects']
+    public isFolder = false
+    public project: project = new project
     public file: string = ''
     public id: string = ''
     public title: string = ''
@@ -52,13 +56,21 @@ class node {
             this.order = this.getOrder()
             this.id = node.pathToId(file)
             this.title = this.getTitle()
+            this.isFolder = fs.statSync(this.file).isDirectory()
+            if (this.file.includes('项目') || this.file.includes('projects')) {
+                this.project = new project(path.join(node.rootPath, '02-Python', 'projects', 'crm'))
+            }
 
             if (fs.statSync(file).isDirectory()) {
                 fs.readdirSync(file).forEach((child, key) => {
-                    if (child != 'README.md' && child != 'footer.md') {
+                    if (!node.excepts.includes(child)) {
                         let order = key + 1
                         let fullPath = path.join(file, child)
-                        this.children.push((new node(fullPath)).renameWithOrder(order))
+                        if (this.project.notEmpty()) {
+                            this.children.push(new node(fullPath))
+                        } else {
+                            this.children.push((new node(fullPath)).renameWithOrder(order))
+                        }
                     }
                 })
             }
@@ -639,10 +651,10 @@ class node {
             // console.log('get title of', this.file)
             // console.log('result is', basename.replace(extname, '').split('-')[1])
             if (!basename.replace(extname, '').includes('-')) {
-                return basename.replace(extname, '')
+                return basename
             }
 
-            return basename.replace(extname, '').split('-')[1]
+            return basename
         }
 
         // 获取markdown渲染后的HTML的标题

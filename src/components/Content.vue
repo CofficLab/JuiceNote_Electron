@@ -1,5 +1,5 @@
 <template>
-  <div ref="content" class="prose mx-auto min-h-screen container px-8" v-html="body"></div>
+  <div ref="content" class="prose mx-auto container px-8" v-html="body"></div>
 </template>
 
 <script lang="ts">
@@ -10,6 +10,7 @@ import store from "../models/store";
 export default defineComponent({
   computed: {
     body(): string {
+      console.log("get content of", store.current.id);
       let dom = document.createElement("div");
       dom.innerHTML = store.edit_mode ? store.current.htmlWithToc() : store.current.html();
 

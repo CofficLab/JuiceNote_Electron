@@ -11,6 +11,8 @@ const store = reactive({
     pathname: location.pathname,
     current: node.getRoot().current(),
     isProd: location.protocol === 'file:',
+    codeId: '',
+    code: '',
     setEditMode() {
         this.edit_mode = true
     },
