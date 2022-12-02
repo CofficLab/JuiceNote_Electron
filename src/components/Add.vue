@@ -1,46 +1,21 @@
 <template>
-  <button class="btn btn-sm my-auto rounded-none">
-    <div class="dropdown dropdown-top dropdown-hover">
-      <label tabindex="0"><Plus></Plus></label>
-      <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-neutral rounded-box w-52 -ml-8">
-        <li><a v-on:click="showChapterForm">添加章节</a></li>
-        <li><a v-on:click="showPageForm">添加页面</a></li>
-      </ul>
-    </div>
-  </button>
+  <button class="btn btn-sm my-auto rounded-none" @click="showForm"><Plus></Plus></button>
 
-  <!-- 增加章节的弹层 -->
-  <div class="modal z-50" v-bind:class="chapterFormSwitcher ? 'modal-open' : ''">
+  <!-- 弹层 -->
+  <div class="modal modal-open" v-bind:class="formSwitcher ? '' : 'hidden'">
     <div class="modal-box">
       <input
-        ref="chapter_title"
+        ref="title"
         type="text"
         v-model="title"
-        @keyup.enter.native="submitPageForm"
-        placeholder="输入章节的标题"
+        autofocus
+        placeholder="输入标题"
         class="input input-bordered input-primary w-full max-w-xs"
       />
       <div class="modal-action">
-        <label for="my-modal" class="btn" v-on:click="hideChapterForm">取消</label>
-        <label for="my-modal" class="btn" v-on:click="submitChapterForm">提交</label>
-      </div>
-    </div>
-  </div>
-
-  <!-- 增加页面的弹层 -->
-  <div class="modal z-50 modal-open" v-bind:class="pageFormSwitcher ? '' : 'hidden'">
-    <div class="modal-box">
-      <input
-        ref="page_title"
-        type="text"
-        v-model="title"
-        placeholder="输入页面的标题"
-        @keyup.enter.native="submitPageForm"
-        class="input input-bordered input-primary w-full max-w-xs"
-      />
-      <div class="modal-action">
-        <label for="my-modal" class="btn" v-on:click="hidePageForm">取消</label>
-        <label for="my-modal" class="btn" v-on:click="submitPageForm">提交</label>
+        <label for="my-modal" class="btn" v-on:click="hideForm">取消</label>
+        <label for="my-modal" class="btn" v-on:click="submitChapterForm">创建章节</label>
+        <label for="my-modal" class="btn" v-on:click="submitPageForm">创建页面</label>
       </div>
     </div>
   </div>
@@ -54,29 +29,21 @@ import Plus from "../icons/plus.vue";
 export default defineComponent({
   data() {
     return {
-      pageFormSwitcher: false,
-      chapterFormSwitcher: false,
+      formSwitcher: false,
       title: "",
     };
   },
   methods: {
-    showPageForm() {
-      this.pageFormSwitcher = true;
+    showForm() {
+      this.$refs.title.focus();
+      this.formSwitcher = true;
+      this.$refs.title.focus();
       this.$nextTick(function () {
-        (this.$refs.page_title as any).focus();
+        this.$refs.title.focus();
       });
     },
-    showChapterForm() {
-      this.chapterFormSwitcher = true;
-      this.$nextTick(function () {
-        (this.$refs.chapter_title as any).focus();
-      });
-    },
-    hidePageForm() {
-      this.pageFormSwitcher = false;
-    },
-    hideChapterForm() {
-      this.chapterFormSwitcher = false;
+    hideForm() {
+      this.formSwitcher = false;
     },
     submitPageForm() {
       let current = store.current;
@@ -85,7 +52,7 @@ export default defineComponent({
       if (parent.isEmpty()) return console.error("父节点不存在，无法创建");
 
       store.goto(store.createChild(parent, this.title).id);
-      this.pageFormSwitcher = false;
+      this.formSwitcher = false;
       this.title = "";
     },
     submitChapterForm() {
@@ -95,7 +62,7 @@ export default defineComponent({
       if (parent.isEmpty()) return console.error("父节点不存在，无法创建");
 
       store.goto(store.createFolderChild(parent, this.title).id);
-      this.chapterFormSwitcher = false;
+      this.formSwitcher = false;
       this.title = "";
     },
   },
