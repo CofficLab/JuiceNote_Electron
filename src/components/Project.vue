@@ -1,8 +1,8 @@
 <template>
   <div class="flex flex-col gap-0 justify-start h-screen pb-16 w-56 text-gray-300">
     <div class="bg-slate-900 px-6 py-2">{{ project.title }}</div>
-    <div class="px-4 bg-slate-800/90 h-full">
-      <ul class="mr-4" v-for="menu in project.children">
+    <div class="px-0 bg-slate-900/80 h-full">
+      <ul v-for="menu in project.children">
         <li><ProjectItem :item="menu"></ProjectItem></li>
       </ul>
     </div>

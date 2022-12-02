@@ -3,18 +3,18 @@
     href="javascript:void(0)"
     v-on:click="go"
     v-if="!item.isFolder"
-    class="ml-10 w-full"
-    :class="{ 'bg-primary': currentCodeId == item.id }"
-    >{{ item.title }}666</a
+    class="pl-10 w-full py-1 my-1 flex"
+    :class="{ 'bg-primary': currentCodeId == item.id, 'hover:bg-slate-500/50': currentCodeId != item.id }"
+    >{{ item.title }}</a
   >
 
-  <div class="flex flex-row" v-if="item.isFolder">
-    <chevron-down class="pl-0 ml-0 mr-1 w-4" :class="{ '-rotate-90': !open }"></chevron-down>
-    <a href="javascript:void(0)" class="ml-0" @click="showChildren">{{ item.title }}</a>
+  <div class="flex flex-row hover:bg-slate-500/50 py-1" v-if="item.isFolder">
+    <chevron-down class="pl-0 ml-0 mr-1 w-4 my-auto" :class="{ '-rotate-90': !open }"></chevron-down>
+    <a href="javascript:void(0)" class="ml-0 w-full" @click="showChildren">{{ item.title }}</a>
   </div>
   <ul v-if="item.isFolder && item.children.length > 0" class="my-0">
-    <li v-for="child in item.children" v-show="open" class="mx-2">
-      <ProjectItem v-bind:item="child" class="ml-4"></ProjectItem>
+    <li v-for="child in item.children" v-show="open" class="my-1 pl-1">
+      <ProjectItem v-bind:item="child"></ProjectItem>
     </li>
   </ul>
 </template>

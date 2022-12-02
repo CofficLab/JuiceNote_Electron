@@ -24,7 +24,7 @@ md.use(require("markdown-it-table-of-contents"), {
  * 项目的定义
  */
 class project {
-    public static excepts = ['.DS_store']
+    public static excepts = ['.DS_Store']
     public file: string = ''
     public id: string = ''
     public title: string = ''
@@ -53,7 +53,6 @@ class project {
     }
 
     public notEmpty(): boolean {
-        console.log(this.file)
         return !this.isEmpty()
     }
 
@@ -63,11 +62,13 @@ class project {
         let folders: project[] = []
 
         fs.readdirSync(this.file).forEach(function (child) {
-            let childPath = path.join(projectPath, child)
-            if (fs.statSync(childPath).isDirectory()) {
-                folders.push(new project(childPath))
-            } else {
-                files.push(new project(childPath))
+            if (!project.excepts.includes(child)) {
+                let childPath = path.join(projectPath, child)
+                if (fs.statSync(childPath).isDirectory()) {
+                    folders.push(new project(childPath))
+                } else {
+                    files.push(new project(childPath))
+                }
             }
         })
 
@@ -75,8 +76,25 @@ class project {
     }
 
     public getContent(): string {
-        let wrap = "```python\r\nxxx ```"
+        let wrap = "```" + this.getLanguage() + "\r\nxxx ```"
         return md.render(wrap.replace('xxx', fs.readFileSync(this.file, 'utf-8')))
+    }
+
+    public getLanguage(): string {
+        let extname = path.extname(this.file)
+        console.log(extname)
+
+        switch (extname) {
+            case '.ts':
+                return 'typescript'
+            case '.css':
+                return 'css'
+            case '.go':
+                return 'go'
+            case '.py':
+            default:
+                return 'python'
+        }
     }
 }
 
