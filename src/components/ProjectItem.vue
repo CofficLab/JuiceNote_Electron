@@ -22,7 +22,6 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import Link from "./Link.vue";
-import VJstree from "vue-jstree";
 import ChevronDown from "../icons/chevron-down.vue";
 import store from "../models/store";
 import project from "../models/project";
@@ -49,6 +48,6 @@ export default defineComponent({
       console.log(store);
     },
   },
-  components: { Link, VJstree, ChevronDown },
+  components: { Link, ChevronDown },
 });
 </script>
