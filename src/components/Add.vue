@@ -82,7 +82,7 @@ export default defineComponent({
     },
     submitPageForm() {
       let current = store.current;
-      let parent = current.parent();
+      let parent = current.isLeaf() ? current.parent() : current;
 
       if (parent.isEmpty()) return console.error("父节点不存在，无法创建");
 
@@ -96,7 +96,7 @@ export default defineComponent({
 
       if (parent.isEmpty()) return console.error("父节点不存在，无法创建");
 
-      store.goto(store.createChild(parent, this.title).id);
+      store.goto(store.createFolderChild(parent, this.title).id);
       this.chapterFormSwitcher = false;
       this.title = "";
     },

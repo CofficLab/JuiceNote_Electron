@@ -10,7 +10,7 @@ export default defineComponent({
   props: ["href"],
   methods: {
     shouldActive: function (id) {
-      return store.current.id == id;
+      return store.current.firstLeaf().id == id || store.current.id == id;
     },
     go: function () {
       this.active = true;

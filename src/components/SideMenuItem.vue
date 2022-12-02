@@ -1,18 +1,23 @@
 <template>
   <li v-if="item.isLeaf()">
     <Link class="flex gap-4" v-bind:href="item.id">
-      <span class="flex-1">{{ item.title }}</span>
+      <span class="ml-1" v-if="item.level > 3" v-for="i in item.level - 3"></span>
+      {{ item.title }}
     </Link>
   </li>
 
-  <li class="menu-title" v-if="item.notLeaf()">
-    <span>{{ item.title }}</span>
+  <!-- 目录节点，有子节点 -->
+  <li class="menu-title" v-if="item.notLeaf() && item.children.length > 0">
+    <span> <span class="ml-1" v-if="item.level > 3" v-for="i in item.level - 3"></span>{{ item.title }}</span>
   </li>
+  <SideMenuItem v-for="sub in item.children" v-if="item.notLeaf()" :item="sub"></SideMenuItem>
 
-  <li v-for="sub in item.children" v-if="item.notLeaf()">
-    <Link class="flex gap-4" v-bind:href="sub.id">
-      <span class="flex-1">{{ sub.title }}</span>
-    </Link>
+  <!-- 目录节点，无子节点 -->
+  <li class="menu-title" v-if="item.notLeaf() && item.children.length == 0">
+    <span> <span class="ml-1" v-if="item.level > 3" v-for="i in item.level - 3"></span>{{ item.title }}</span>
+  </li>
+  <li v-if="item.notLeaf() && item.children.length == 0">
+    <Link class="flex gap-4" v-bind:href="item.id"> _空_ </Link>
   </li>
 </template>
 

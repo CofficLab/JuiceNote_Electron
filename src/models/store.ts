@@ -34,6 +34,12 @@ const store = reactive({
 
         return created
     },
+    createFolderChild(parent: node, name: string): node {
+        let created = parent.createFolder(name)
+        this.refresh()
+
+        return created
+    },
     updateOrder(navigator: node, order: number): node {
         let newNode = navigator.setOrder(order)
         this.refresh()

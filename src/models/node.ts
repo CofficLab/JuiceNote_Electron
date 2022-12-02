@@ -49,6 +49,7 @@ class node {
     public title: string = ''
     public children: node[] = []
     public order: number = 0
+    public level: number = 0
 
     public constructor(file?: string) {
         if (file) {
@@ -57,6 +58,7 @@ class node {
             this.id = node.pathToId(file)
             this.title = this.getTitle()
             this.isFolder = fs.statSync(this.file).isDirectory()
+            this.level = file.split('/').length - node.rootPath.split('/').length
             if (this.file.includes('项目') || this.file.includes('projects')) {
                 this.project = new project(path.join(node.rootPath, '02-Python', 'projects', 'crm'))
             }
@@ -101,7 +103,7 @@ class node {
      * @returns boolean
      */
     public isLeaf(): boolean {
-        return this.notEmpty() && this.children.length === 0
+        return this.notEmpty() && !fs.statSync(this.file).isDirectory()
     }
 
     /**
@@ -260,7 +262,9 @@ class node {
             return fs.readFileSync(this.file, 'utf-8') + fs.readFileSync(path.join(node.rootPath, 'footer.md'), 'utf-8')
         }
 
-        return this.firstLeaf().content()
+        if (this.firstLeaf().notEmpty()) return this.firstLeaf().content()
+
+        return md.render("## 当前节点没有页面，请新建\r\n" + this.id)
     }
 
     /**
@@ -269,7 +273,6 @@ class node {
      * @returns 
      */
     public html() {
-        // console.log('content of ', this.id, 'is', this.content())
         if (this.isEmpty()) {
             return md.render("## 当前页面是空节点 \r\n ## 返回 <a href=\"/\">首页</a>")
         }
@@ -421,14 +424,16 @@ class node {
         let url = new URL(location.href)
         let id = url.searchParams.get('id')
 
-        return this.getLastActivated(id ? decodeURI(id) : '/').firstLeaf()
+        return this.getLastActivated(id ? decodeURI(id) : '/')
     }
 
     /**
      * 删除本节点
      */
     public delete() {
-        fs.unlinkSync(this.file)
+        if (this.isLeaf()) fs.unlinkSync(this.file)
+
+        fs.rmdirSync(this.file)
     }
 
     public parent() {
@@ -508,6 +513,20 @@ class node {
         let file = path.join(this.file, fileName + (extname ? extname : '.md'))
 
         fs.writeFileSync(file, "# " + fileName)
+
+        return (new node(file)).renameWithOrder(this.children.length + 1)
+    }
+
+    /**
+     * 新建一个目录子节点
+     * 
+     * @param title 
+     * @returns 
+     */
+    public createFolder(title: string): node {
+        let file = path.join(this.file, title)
+
+        fs.mkdirSync(file)
 
         return (new node(file)).renameWithOrder(this.children.length + 1)
     }
