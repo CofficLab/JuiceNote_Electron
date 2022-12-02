@@ -15,7 +15,6 @@
       <input
         ref="chapter_title"
         type="text"
-        autofocus
         v-model="title"
         @keyup.enter.native="submitPageForm"
         placeholder="输入章节的标题"
@@ -29,12 +28,11 @@
   </div>
 
   <!-- 增加页面的弹层 -->
-  <div class="modal z-50" v-bind:class="pageFormSwitcher ? 'modal-open' : ''">
+  <div class="modal z-50 modal-open" v-bind:class="pageFormSwitcher ? '' : 'hidden'">
     <div class="modal-box">
       <input
         ref="page_title"
         type="text"
-        autofocus
         v-model="title"
         placeholder="输入页面的标题"
         @keyup.enter.native="submitPageForm"
