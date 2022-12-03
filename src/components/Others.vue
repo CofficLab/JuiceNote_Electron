@@ -1,5 +1,5 @@
 <template>
-  <div class="dropdown dropdown-hover dropdown-bottom dropdown-end z-20" v-show="show">
+  <div class="dropdown dropdown-hover dropdown-bottom dropdown-end z-20 pt-8" v-show="show">
     <label tabindex="0" class="btn m-1 w-36">其他编程语言</label>
     <ul tabindex="0" class="dropdown-content menu p-2 mr-1 shadow w-36 bg-base-100 rounded-box z-30">
       <li v-for="menu in menus">
