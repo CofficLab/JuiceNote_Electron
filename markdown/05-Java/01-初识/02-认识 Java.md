@@ -21,3 +21,23 @@ public class MyFirstJavaProgram {
     }
 }
 ```
+
+这样是定义了一个类：
+
+```java
+public class MyFirstJavaProgram {
+}
+```
+
+这样是定义了一个方法：
+
+```java
+public static void main(String []args) {
+}
+```
+
+这是一条语句，表示输出`Hello`:
+
+```java
+System.out.println("Hello");
+```

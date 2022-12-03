@@ -58,7 +58,7 @@ for (i = 0;i<document.getElementsByClassName('brick-cyan').length;i++) {
 for (i = 0;i<document.getElementsByClassName('bg-cyan').length;i++) {
     let brick = document.getElementsByClassName('bg-cyan').item(i)
     brick.classList.add('bg-cyan-500/40')
-    brick.classList.add('dark:bg-cyan-800')
+    brick.classList.add('dark:bg-cyan-800/20')
     brick.classList.add('shadow')
 }
 
