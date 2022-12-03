@@ -52,7 +52,11 @@ let code_runner = function (code = '', language = 'PHP') {
     let output = ''
     switch (suffix) {
         case 'php':
-            output = execSync("php " + tmpFilePath);
+            try {
+                output = execSync("php " + tmpFilePath);
+            } catch (err) {
+                output = err.message.trim()
+            }
             break;
         case 'py':
             try {
