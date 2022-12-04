@@ -76,6 +76,27 @@ for (i = 0;i<document.getElementsByClassName('bg-yellow').length;i++) {
     brick.classList.add('dark:bg-yellow-800')
 }
 
+// 增加代码块的横幅
+for (i = 0; i< document.getElementsByTagName('code').length; i++) {
+    codeDom = document.getElementsByTagName('code').item(i)
+    target = codeDom.parentElement
+    language = findOutTheLanguage(codeDom.className)
+
+    let banner = document.createElement('div')
+    banner.innerHTML = language
+    banner.classList.add('bg-gradient-to-l')
+    banner.classList.add('from-transparent')
+    banner.classList.add('via-transparent')
+    banner.classList.add('to-cyan-500/20')
+    banner.classList.add('-mt-3')
+    banner.classList.add('-mx-4')
+    banner.classList.add('mb-4')
+    banner.classList.add('px-2')
+    banner.classList.add('text-start')
+    banner.classList.add('text-gray-100/40')
+    target.prepend(banner)
+}
+
 // 生成代码运行相关的dom
 if (window.runner != undefined) {
     for (i = 0; i< document.getElementsByClassName('run').length; i++) {
