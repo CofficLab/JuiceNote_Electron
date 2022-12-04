@@ -25,4 +25,3 @@ release
 .vscode/.debug.env
 markdown/navigators.json
 playground
-temp/*
