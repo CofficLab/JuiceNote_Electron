@@ -40,7 +40,7 @@ let code_runner = function (code = '', language = 'PHP') {
     if (suffix == 'php') content = "<?php \r\n" + content
 
     // 写入临时文件
-    let tmpFilePath = path.join(process.cwd(), 'tmp.' + suffix)
+    let tmpFilePath = path.join(process.cwd(), 'temp', 'tmp.' + suffix)
     fs.writeFileSync(tmpFilePath, content)
 
     console.log('language is', language, 'code is')
