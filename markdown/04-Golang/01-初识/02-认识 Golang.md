@@ -100,3 +100,11 @@ func main() {
 这个`main`函数做的事是：
 
 **_使用`fmt`包的`Println`函数，输出`hello`这串字。_**
+
+## 查看本机 Go 程序信息
+
+<div class="run"></div>
+
+```shell
+go version
+```

@@ -41,3 +41,11 @@ public static void main(String []args) {
 ```java
 System.out.println("Hello");
 ```
+
+## 查看本机 Java 程序信息
+
+<div class="run"></div>
+
+```shell
+java --version
+```

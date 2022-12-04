@@ -41,3 +41,11 @@ Python 3 相对于 Python 2，升级非常大，很多语法都发生了改变�
 这件事对我们接下来的学习没有影响，知道有这个故事就行。
 
 本教程使用 Python 3。
+
+## 查看本机 Python 程序信息
+
+<div class="run"></div>
+
+```shell
+python -V
+```
