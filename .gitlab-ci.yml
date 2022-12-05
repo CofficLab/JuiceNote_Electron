@@ -47,6 +47,10 @@ run:
     - main
   tags:
     - tencent
+  artifacts:
+    paths:
+      - release
+    expire_in: 20 mins
   script: |
     cd ${WORK_DIR}
     cnpm i
