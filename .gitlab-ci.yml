@@ -8,7 +8,6 @@ before_script:
 
 stages:
   - run
-  - connect
 
 run:
   stage: run
@@ -16,23 +15,11 @@ run:
     - main
   tags:
     - tencent
-  artifacts:
-    paths:
-      - release
-    expire_in: 20 mins
   script: |
     pwd
     cnpm i
     npm run build
-
-# 将markdown数据库、构建好的APP同步到网页版
-connect:
-  stage: connect
-  only:
-    - main
-  tags:
-    - tencent
-  script: |
+    # 将markdown数据库、构建好的APP同步到网页版
     if [ -d /www/wwwroot/wiki.kuaiyc.com/production/markdown ]; then
       rm -rf /www/wwwroot/wiki.kuaiyc.com/production/markdown
     fi
