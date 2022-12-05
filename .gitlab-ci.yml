@@ -16,8 +16,8 @@ stages:
   - sync
   - prepare
   - link
-  - connect
   - run
+  - connect
   - clear
 
 sync:
@@ -41,7 +41,18 @@ link:
   script:
     - ln -snf ${RELEASE_DIR} ${WORK_DIR}
 
-# 将markdown数据库同步到网页版
+run:
+  stage: run
+  only:
+    - main
+  tags:
+    - tencent
+  script: |
+    cd ${WORK_DIR}
+    cnpm i
+    npm run build
+
+# 将markdown数据库、构建好的APP同步到网页版
 connect:
   stage: connect
   only:
@@ -53,21 +64,11 @@ connect:
       rm -rf /www/wwwroot/wiki.kuaiyc.com/production/markdown
     fi
     cp -r markdown /www/wwwroot/wiki.kuaiyc.com/production/markdown
+    cp release/Kuaiyizhi_0.1.1.dmg /www/wwwroot/wiki.kuaiyc.com/production/public/
     cd /www/wwwroot/wiki.kuaiyc.com/production
     npm run mix
     php artisan lesson:sync
     php artisan page-cache:clear
-
-run:
-  stage: run
-  only:
-    - main
-  tags:
-    - tencent
-  script: |
-    cd ${WORK_DIR}
-    cnpm i
-    npm run build
 
 clear:
   stage: clear

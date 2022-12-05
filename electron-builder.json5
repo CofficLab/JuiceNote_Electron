@@ -5,7 +5,7 @@
   appId: "YourAppID",
   asar: false,
   directories: {
-    output: "release/${version}",
+    output: "release/",
   },
   files: [
     "dist",

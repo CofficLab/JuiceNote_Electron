@@ -54,35 +54,35 @@ let code_runner = function (code = '', language = 'PHP') {
     switch (suffix) {
         case 'php':
             try {
-                output = execSync("php " + tmpFilePath);
+                output = execSync("PATH=/usr/local/bin:$PATH && php " + tmpFilePath);
             } catch (err) {
                 output = err.message.trim()
             }
             break;
         case 'py':
             try {
-                output = execSync("python3 " + tmpFilePath);
+                output = execSync("PATH=/usr/local/bin:$PATH && python3 " + tmpFilePath);
             } catch (err) {
                 output = err.message.trim()
             }
             break;
         case 'java':
             try {
-                output = execSync("java " + tmpFilePath);
+                output = execSync("PATH=/usr/local/bin:$PATH && java " + tmpFilePath);
             } catch (err) {
                 output = err.message.trim()
             }
             break;
         case 'js':
             try {
-                output = execSync("node " + tmpFilePath);
+                output = execSync("PATH=/usr/local/bin:$PATH && node " + tmpFilePath);
             } catch (err) {
                 output = err.message.trim()
             }
             break;
         case 'sh':
             try {
-                output = execSync("sh " + tmpFilePath);
+                output = execSync("PATH=/usr/local/bin:$PATH && sh " + tmpFilePath);
             } catch (err) {
                 output = err.message.trim()
             }
@@ -90,7 +90,7 @@ let code_runner = function (code = '', language = 'PHP') {
 
         case 'go':
             try {
-                output = execSync("go run " + tmpFilePath);
+                output = execSync("PATH=/usr/local/bin:$PATH && go run " + tmpFilePath);
             } catch (err) {
                 output = err.message.trim()
             }
