@@ -9,6 +9,13 @@ before_script:
 stages:
   - run
 
+build_win:
+  stage: run 
+  image: electronuserland/builder:wine
+  only:
+    - main
+  script: npm i && npm run build:win
+
 run:
   stage: run
   only:
