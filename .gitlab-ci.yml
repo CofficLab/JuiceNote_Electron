@@ -64,7 +64,7 @@ connect:
       rm -rf /www/wwwroot/wiki.kuaiyc.com/production/markdown
     fi
     cp -r markdown /www/wwwroot/wiki.kuaiyc.com/production/markdown
-    cp release/Kuaiyizhi_0.1.1.dmg /www/wwwroot/wiki.kuaiyc.com/production/public/
+    cp release /www/wwwroot/wiki.kuaiyc.com/production/public/release
     cd /www/wwwroot/wiki.kuaiyc.com/production
     npm run mix
     php artisan lesson:sync
