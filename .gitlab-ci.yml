@@ -31,7 +31,7 @@ build_linux:
     paths:
       - release
     expire_in: 30 mins
-  script: cnpm i && npm run build
+  script: cnpm i && npm run build:linux
 
 sync:
   stage: sync
