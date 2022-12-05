@@ -76,25 +76,51 @@ for (i = 0;i<document.getElementsByClassName('bg-yellow').length;i++) {
     brick.classList.add('dark:bg-yellow-800')
 }
 
+// 提示横幅的样式
+for (i = 0; i< document.getElementsByClassName('banner').length; i++) {
+    let banner = document.getElementsByClassName('banner').item(i)
+    let p = document.createElement('p')
+    let text = banner.innerText
+    banner.classList.add('bg-gradient-to-r')
+    banner.classList.add('from-cyan-800/30')
+    banner.classList.add('rounded-xl')
+    banner.classList.add('py-2')
+    banner.classList.add('px-2')
+    banner.classList.add('mb-4')
+    banner.classList.add('flex')
+    banner.classList.add('flex-row')
+    banner.classList.add('justify-start')
+
+    banner.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current flex-shrink-0 w-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>'
+
+    p.classList.add("my-0")
+    p.classList.add("ml-1")
+    p.innerText = text
+
+    banner.append(p)
+}
+
 // 增加代码块的横幅
 for (i = 0; i< document.getElementsByTagName('code').length; i++) {
+    let banner = document.createElement('div')
     codeDom = document.getElementsByTagName('code').item(i)
-    codeDom.classList.add('pr-4');
     target = codeDom.parentElement
-    target.classList.add('pt-0')
-    target.classList.add('pr-0')
     language = findOutTheLanguage(codeDom.className)
 
-    let banner = document.createElement('div')
-    banner.innerHTML = language
-    banner.classList.add('bg-gradient-to-r')
-    banner.classList.add('from-transparent')
-    banner.classList.add('via-transparent')
-    banner.classList.add('to-cyan-500/20')
-    banner.classList.add('px-2')
-    banner.classList.add('text-end')
-    banner.classList.add('text-gray-100/40')
-    target.prepend(banner)
+    if (language != '') {
+        codeDom.classList.add('pr-4');
+        target.classList.add('pt-0')
+        target.classList.add('pr-0')
+        banner.innerHTML = language
+        banner.classList.add('bg-gradient-to-r')
+        banner.classList.add('from-transparent')
+        banner.classList.add('via-transparent')
+        banner.classList.add('to-cyan-500/20')
+        banner.classList.add('px-2')
+        banner.classList.add('text-end')
+        banner.classList.add('text-gray-100/40')
+        target.prepend(banner)
+    }
 }
 
 // 生成代码运行相关的dom

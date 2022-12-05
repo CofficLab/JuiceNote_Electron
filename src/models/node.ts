@@ -60,12 +60,12 @@ class node {
             this.isFolder = fs.statSync(this.file).isDirectory()
             this.level = file.split('/').length - node.rootPath.split('/').length
             if (this.file.includes('项目') || this.file.includes('projects')) {
-                this.project = new project(path.join(node.rootPath, '02-Python', 'projects', 'crm'))
+                // this.project = new project(path.join(node.rootPath, '02-Python', 'projects', 'crm'))
             }
 
             if (fs.statSync(file).isDirectory()) {
                 fs.readdirSync(file).forEach((child, key) => {
-                    if (!node.excepts.includes(child)) {
+                    if (!node.excepts.includes(child) && path.basename(child) != '.DS_Store') {
                         let order = key + 1
                         let fullPath = path.join(file, child)
                         if (this.project.notEmpty()) {
