@@ -47,7 +47,7 @@ sync:
     pwd
     ls -alh
     cp -r markdown /www/wwwroot/wiki.kuaiyc.com/production/markdown
-    cp -r release/* /www/wwwroot/wiki.kuaiyc.com/production/public/release/
+    # cp -r release/* /www/wwwroot/wiki.kuaiyc.com/production/public/release/
     cd /www/wwwroot/wiki.kuaiyc.com/production
     npm run mix
     php artisan lesson:sync
