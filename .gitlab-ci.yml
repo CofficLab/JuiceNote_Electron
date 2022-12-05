@@ -7,25 +7,39 @@ before_script:
   - hostname
 
 stages:
-  - run
+  - build
+  - sync
 
 build_win:
-  stage: run 
+  stage: build
   image: electronuserland/builder:wine
   only:
     - main
+  artifacts:
+    paths:
+      - release
+    expire_in: 30 mins
   script: npm i && npm run build:win
 
-run:
-  stage: run
+build_linux:
+  stage: build
+  only:
+    - main
+  tags:
+    - tencent
+  artifacts:
+    paths:
+      - release
+    expire_in: 30 mins
+  script: cnpm i && npm run build
+
+sync:
+  stage: sync
   only:
     - main
   tags:
     - tencent
   script: |
-    pwd
-    cnpm i
-    npm run build
     # 将markdown数据库、构建好的APP同步到网页版
     if [ -d /www/wwwroot/wiki.kuaiyc.com/production/markdown ]; then
       rm -rf /www/wwwroot/wiki.kuaiyc.com/production/markdown
