@@ -50,6 +50,7 @@ const store = reactive({
         this.root = node.refreshedRoot()
     },
     delete(node: node) {
+        this.goto(node.prevLeaf().id);
         node.delete()
         this.refresh()
     },
@@ -60,6 +61,11 @@ const store = reactive({
         this.search = decodeURI(location.search)
         this.pathname = window.location.pathname
         this.current = this.root.current()
+
+        // 如果不是叶子且有子节点，跳到第一个子节点
+        if (!this.current.isLeaf() && this.current.children.length > 0) {
+            this.goto(this.current.first().id)
+        }
     }
 })
 

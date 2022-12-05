@@ -13,7 +13,6 @@ export default defineComponent({
   methods: {
     del: function () {
       let current = store.current;
-      store.goto(current.prevLeaf().id);
       store.delete(current);
     },
   },
