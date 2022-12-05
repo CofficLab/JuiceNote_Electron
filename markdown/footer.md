@@ -103,11 +103,12 @@ for (i = 0; i< document.getElementsByClassName('banner').length; i++) {
 // 增加代码块的横幅
 for (i = 0; i< document.getElementsByTagName('code').length; i++) {
     let banner = document.createElement('div')
+    let bannerClass = 'code-banner'
     codeDom = document.getElementsByTagName('code').item(i)
     target = codeDom.parentElement
     language = findOutTheLanguage(codeDom.className)
 
-    if (language != '') {
+    if (language != '' && target.getElementsByClassName(bannerClass).length == 0) {
         codeDom.classList.add('pr-4');
         target.classList.add('pt-0')
         target.classList.add('lg:pt-0')
@@ -118,6 +119,7 @@ for (i = 0; i< document.getElementsByTagName('code').length; i++) {
         target.classList.add('xl:pr-0')
         target.classList.add('2xl:pr-0')
         banner.innerHTML = language
+        banner.classList.add(bannerClass)
         banner.classList.add('bg-gradient-to-r')
         banner.classList.add('from-transparent')
         banner.classList.add('via-transparent')
@@ -134,6 +136,8 @@ if (window.runner != undefined) {
     for (i = 0; i< document.getElementsByClassName('run').length; i++) {
         let target = document.getElementsByClassName('run').item(i).nextElementSibling
         let runner = document.createElement('div')
+        let runnerClass = 'code-runner'
+        runner.classList.add(runnerClass)
         runner.classList.add('flex')
         runner.classList.add('flex-row')
         runner.classList.add('justify-end')
@@ -155,7 +159,7 @@ if (window.runner != undefined) {
         btn.parentElement.classList.add('justify-end')
         btn.parentElement.classList.add('gap-4')
 
-        target.append(runner)
+        if (target.getElementsByClassName(runnerClass).length == 0) target.append(runner)
     }
 } else {
     for (i = 0; i< document.getElementsByClassName('run').length; i++) {
