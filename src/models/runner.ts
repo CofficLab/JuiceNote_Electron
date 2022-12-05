@@ -1,5 +1,6 @@
 import fs from 'fs'
 import path from 'path'
+import electron from 'electron'
 
 let code_runner = function (code = '', language = 'PHP') {
     let suffix = 'unknown'
@@ -40,7 +41,7 @@ let code_runner = function (code = '', language = 'PHP') {
     if (suffix == 'php') content = "<?php \r\n" + content
 
     // 写入临时文件
-    let tmpFilePath = path.join(process.cwd(), 'temp', 'tmp.' + suffix)
+    let tmpFilePath = path.join(electron.ipcRenderer.sendSync('get-app-path'), 'temp', 'tmp.' + suffix)
     fs.writeFileSync(tmpFilePath, content)
 
     console.log('language is', language, 'code is')

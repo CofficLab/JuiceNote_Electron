@@ -1,6 +1,6 @@
 {
-  "name": "kuaiyizhi",
-  "version": "0.1",
+  "name": "Kuaiyizhi",
+  "version": "0.1.1",
   "main": "dist/electron/main/index.js",
   "private": true,
   "scripts": {
