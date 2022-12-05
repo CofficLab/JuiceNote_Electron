@@ -10,28 +10,28 @@ stages:
   - build
   - sync
 
-build_win:
-  stage: build
-  image: electronuserland/builder:wine
-  only:
-    - main
-  artifacts:
-    paths:
-      - release
-    expire_in: 30 mins
-  script: npm i && npm run build:win
+# build_win:
+#   stage: build
+#   image: electronuserland/builder:wine
+#   only:
+#     - main
+#   artifacts:
+#     paths:
+#       - release
+#     expire_in: 30 mins
+#   script: npm i && npm run build:win
 
-build_linux:
-  stage: build
-  only:
-    - main
-  tags:
-    - tencent
-  artifacts:
-    paths:
-      - release
-    expire_in: 30 mins
-  script: cnpm i && npm run build:linux
+# build_linux:
+#   stage: build
+#   only:
+#     - main
+#   tags:
+#     - tencent
+#   artifacts:
+#     paths:
+#       - release
+#     expire_in: 30 mins
+#   script: cnpm i && npm run build:linux
 
 sync:
   stage: sync
@@ -47,7 +47,7 @@ sync:
     pwd
     ls -alh
     cp -r markdown /www/wwwroot/wiki.kuaiyc.com/production/markdown
-    cp -r release /www/wwwroot/wiki.kuaiyc.com/production/public/release
+    cp -r release/* /www/wwwroot/wiki.kuaiyc.com/production/public/release/
     cd /www/wwwroot/wiki.kuaiyc.com/production
     npm run mix
     php artisan lesson:sync
