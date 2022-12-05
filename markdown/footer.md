@@ -79,20 +79,20 @@ for (i = 0;i<document.getElementsByClassName('bg-yellow').length;i++) {
 // 增加代码块的横幅
 for (i = 0; i< document.getElementsByTagName('code').length; i++) {
     codeDom = document.getElementsByTagName('code').item(i)
+    codeDom.classList.add('pr-4');
     target = codeDom.parentElement
+    target.classList.add('pt-0')
+    target.classList.add('pr-0')
     language = findOutTheLanguage(codeDom.className)
 
     let banner = document.createElement('div')
     banner.innerHTML = language
-    banner.classList.add('bg-gradient-to-l')
+    banner.classList.add('bg-gradient-to-r')
     banner.classList.add('from-transparent')
     banner.classList.add('via-transparent')
     banner.classList.add('to-cyan-500/20')
-    banner.classList.add('-mt-3')
-    banner.classList.add('-mx-4')
-    banner.classList.add('mb-4')
     banner.classList.add('px-2')
-    banner.classList.add('text-start')
+    banner.classList.add('text-end')
     banner.classList.add('text-gray-100/40')
     target.prepend(banner)
 }
@@ -107,6 +107,7 @@ if (window.runner != undefined) {
         runner.classList.add('justify-end')
         runner.classList.add('gap-4')
         runner.classList.add('mt-4')
+        runner.classList.add('mr-4')
         runner.innerHTML = '<pre><code><\/code><\/pre><button onclick=run(this)>运行</button>'
         let btn = runner.getElementsByTagName('button').item(0)
         let pre = runner.getElementsByTagName('pre').item(0)
@@ -121,6 +122,19 @@ if (window.runner != undefined) {
         btn.parentElement.classList.add('flex-row')
         btn.parentElement.classList.add('justify-end')
         btn.parentElement.classList.add('gap-4')
+
+        target.append(runner)
+    }
+} else {
+    for (i = 0; i< document.getElementsByClassName('run').length; i++) {
+        let target = document.getElementsByClassName('run').item(i).nextElementSibling
+        let runner = document.createElement('div')
+        runner.classList.add('text-end')
+        runner.classList.add('py-1')
+        runner.classList.add('text-xs')
+        runner.classList.add('text-gray-100/40')
+        runner.classList.add('pr-2')
+        runner.innerHTML = 'APP 版本支持运行代码'
 
         target.append(runner)
     }
