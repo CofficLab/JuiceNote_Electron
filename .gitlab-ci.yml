@@ -6,40 +6,9 @@ before_script:
   - whoami
   - hostname
 
-variables:
-  DOMAIN: ${CI_PROJECT_NAME}.kuaiyc.com
-  WORK_DIR: /www/wwwroot/${DOMAIN}/production
-  RELEASE_DIR: /www/wwwroot/${DOMAIN}/${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}
-
 stages:
-  - config
-  - sync
-  - prepare
-  - link
   - run
   - connect
-  - clear
-
-sync:
-  stage: sync
-  only:
-    - main
-  tags:
-    - tencent
-  script: |
-    if [ ! -d $RELEASE_DIR ]; then
-      mkdir -p $RELEASE_DIR
-    fi
-    rsync -rapq ./ $RELEASE_DIR
-
-link:
-  stage: link
-  only:
-    - main
-  tags:
-    - tencent
-  script:
-    - ln -snf ${RELEASE_DIR} ${WORK_DIR}
 
 run:
   stage: run
@@ -52,7 +21,7 @@ run:
       - release
     expire_in: 20 mins
   script: |
-    cd ${WORK_DIR}
+    pwd
     cnpm i
     npm run build
 
@@ -67,18 +36,11 @@ connect:
     if [ -d /www/wwwroot/wiki.kuaiyc.com/production/markdown ]; then
       rm -rf /www/wwwroot/wiki.kuaiyc.com/production/markdown
     fi
+    pwd
+    ls -alh
     cp -r markdown /www/wwwroot/wiki.kuaiyc.com/production/markdown
-    cp release /www/wwwroot/wiki.kuaiyc.com/production/public/release
+    cp -r release /www/wwwroot/wiki.kuaiyc.com/production/public/release
     cd /www/wwwroot/wiki.kuaiyc.com/production
     npm run mix
     php artisan lesson:sync
     php artisan page-cache:clear
-
-clear:
-  stage: clear
-  only:
-    - main
-  tags:
-    - tencent
-  script:
-    - cd ${RELEASE_DIR}/.. && ls -lt | grep ^d | awk 'NR>5' | xargs rm -rf
