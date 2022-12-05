@@ -5,7 +5,9 @@
       <ul class="menu z-20">
         <li tabindex="0">
           <a href="javascript:void(0)" aria-current="page" aria-label="Homepage" class="flex-0 px-2">
-            <div class="font-title text-primary inline-flex text-lg transition-all duration-200 md:text-3xl">
+            <div
+              class="font-title text-primary inline-flex text-lg transition-all duration-200 md:text-3xl lg:text-4xl xl:text-5xl"
+            >
               <span>{{ book.title }}</span>
             </div>
           </a>
@@ -19,7 +21,7 @@
     </div>
 
     <!-- 章节 -->
-    <div class="overscroll-auto overflow-auto h-screen mt-0 mb-24 pb-48">
+    <div class="overscroll-auto overflow-auto h-screen mt-0 mb-24 pb-48 pr-24">
       <ul class="menu menu-compact flex flex-col p-0 px-1 overflow-scroll" v-for="item in book.children">
         <li></li>
         <SideMenuItem :item="item"></SideMenuItem>

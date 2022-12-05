@@ -110,7 +110,13 @@ for (i = 0; i< document.getElementsByTagName('code').length; i++) {
     if (language != '') {
         codeDom.classList.add('pr-4');
         target.classList.add('pt-0')
+        target.classList.add('lg:pt-0')
+        target.classList.add('xl:pt-0')
+        target.classList.add('2xl:pt-0')
         target.classList.add('pr-0')
+        target.classList.add('lg:pr-0')
+        target.classList.add('xl:pr-0')
+        target.classList.add('2xl:pr-0')
         banner.innerHTML = language
         banner.classList.add('bg-gradient-to-r')
         banner.classList.add('from-transparent')

@@ -1,6 +1,6 @@
 <template>
   <li v-if="item.isLeaf()">
-    <Link class="flex gap-4" v-bind:href="item.id">
+    <Link class="flex gap-4 xl:text-lg" v-bind:href="item.id">
       <span class="ml-1" v-if="item.level > 3" v-for="i in item.level - 3"></span>
       {{ item.title }}
     </Link>

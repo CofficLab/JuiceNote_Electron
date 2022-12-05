@@ -1,7 +1,7 @@
 <template>
   <div class="h-full overflow-scroll">
     <!-- 其他编程语言 -->
-    <ul class="menu p-2 mr-1 shadow w-36 bg-base-100 rounded-box mt-2" v-show="menus.length > 1">
+    <ul class="menu p-2 mr-4 shadow w-full bg-base-100 rounded-box mt-2" v-show="menus.length > 1">
       <li v-for="menu in menus">
         <Link v-bind:href="menu.id">{{ menu.book().title }}</Link>
       </li>
@@ -37,13 +37,13 @@ export default defineComponent({
 
 <style lang="postcss">
 .table-of-contents {
-  @apply prose-sm w-full;
+  @apply w-full;
 
   ul {
     @apply w-full relative hover:bg-transparent !important;
 
     li {
-      @apply m-2 text-sm w-full h-full rounded;
+      @apply m-2 w-full h-full rounded;
 
       a {
         @apply no-underline rounded-lg z-0 h-full w-full p-2 block hover:bg-sky-300/30;

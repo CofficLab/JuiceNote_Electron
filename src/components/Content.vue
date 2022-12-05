@@ -1,5 +1,5 @@
 <template>
-  <div ref="content" class="prose mx-auto container px-8" v-html="body"></div>
+  <div ref="content" class="prose lg:prose-lg xl:prose-xl 2xl:prose-2xl mx-auto px-8" v-html="body"></div>
 </template>
 
 <script lang="ts">
