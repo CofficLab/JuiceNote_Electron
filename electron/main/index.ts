@@ -34,8 +34,8 @@ const indexHtml = path.join(ROOT_PATH.dist, 'index.html')
 
 async function createWindow() {
   win = new BrowserWindow({
-    height: 1000,
-    width: 1200,
+    height: 880,
+    width: 1030,
     title: 'Main window',
     icon: path.join(ROOT_PATH.public, 'favicon.ico'),
     frame: false, // false：不显示可拖动的那个顶栏，形成一个无边框窗口
