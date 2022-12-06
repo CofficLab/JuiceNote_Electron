@@ -9,7 +9,7 @@ const store = reactive({
     href: location.href,
     search: decodeURI(location.search),
     pathname: location.pathname,
-    current: node.getRoot().current(),
+    current: node.getRoot().current().isLeaf() ? node.getRoot().current() : node.getRoot().current().firstLeaf(),
     isProd: location.protocol === 'file:',
     codeId: '',
     code: '',

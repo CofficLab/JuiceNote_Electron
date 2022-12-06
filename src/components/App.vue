@@ -7,7 +7,7 @@
   <main class="flex flex-row z-10" v-bind:class="hideTitleBar ? 'mt-0' : 'mt-8'">
     <!-- 左侧栏 -->
     <aside
-      class="hidden justify-center md:flex w-56 lg:w-72 xl:w-96 min-h-screen bg-gradient-to-r from-sky-200/40 to-cyan-800/10 dark:from-cyan-800/10 dark:to-cyan-800/10 relative"
+      class="hidden justify-start md:flex w-56 lg:w-72 xl:w-96 min-h-screen bg-gradient-to-r from-sky-200/40 to-cyan-800/10 dark:from-cyan-800/10 dark:to-cyan-800/10 relative"
     >
       <div class="fixed" v-bind:class="{ 'top-12': !hideTitleBar, 'top-4': hideTitleBar }">
         <SideMenu v-if="!editorMode"></SideMenu>
