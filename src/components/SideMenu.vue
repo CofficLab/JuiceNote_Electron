@@ -21,7 +21,7 @@
     </div>
 
     <!-- 章节 -->
-    <div class="overscroll-auto overflow-auto h-screen mt-0 mb-24 pb-48 pr-24">
+    <div class="overscroll-auto overflow-auto h-screen mt-0 mb-24 pb-48 pr-4">
       <ul class="menu menu-compact flex flex-col p-0 px-1 overflow-scroll" v-for="item in book.children">
         <li></li>
         <SideMenuItem :item="item"></SideMenuItem>
