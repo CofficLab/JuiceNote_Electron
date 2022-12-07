@@ -33,7 +33,7 @@
     </aside>
   </main>
 
-  <footer class="h-8 fixed z-10 bottom-0 w-full p-0 flex justify-center shadow-2xl">
+  <footer class="h-12 fixed z-10 bottom-0 w-full p-0 flex justify-center shadow-2xl">
     <div class="flex" v-if="!isProd"><GitCommit></GitCommit></div>
     <div class="flex" v-if="!isProd"><Delete></Delete></div>
     <div class="flex" v-if="!isProd"><Edit></Edit></div>

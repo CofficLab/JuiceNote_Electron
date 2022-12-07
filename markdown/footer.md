@@ -84,7 +84,7 @@ for (i = 0; i< document.getElementsByClassName('banner').length; i++) {
     banner.classList.add('bg-gradient-to-r')
     banner.classList.add('from-cyan-800/30')
     banner.classList.add('rounded-xl')
-    banner.classList.add('py-2')
+    banner.classList.add('py-0')
     banner.classList.add('px-2')
     banner.classList.add('mb-4')
     banner.classList.add('flex')

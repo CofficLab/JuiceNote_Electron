@@ -1,5 +1,5 @@
 <template>
-  <div v-on:click="edit" class="btn btn-sm my-auto rounded-none" v-show="!editMode">
+  <div v-on:click="edit" class="btn my-auto rounded-none" v-show="!editMode">
     <PencilSquare></PencilSquare>
   </div>
 

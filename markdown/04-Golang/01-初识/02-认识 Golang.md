@@ -79,6 +79,12 @@ Go 规定，我们写的程序必须有一个`main`包。
 
 这个内置包的集合的官方名称是：**Standard Library**，中文译为：**标准库**。
 
+> 标准库里包含了哪些包？
+
+这个答案在其官方文档里：<a href="https://pkg.go.dev/std" target="_blank">https://pkg.go.dev/std</a>
+
+<div class="banner">一定要学会查询官方文档</div>
+
 ## 导入包
 
 ```go
@@ -86,6 +92,8 @@ import "fmt"
 ```
 
 如果你要使用一个包，就必须在程序的开头导入要使用的包。
+
+`fmt` 是内置的非常常用的包，主要用于输出内容。
 
 ## main 函数
 

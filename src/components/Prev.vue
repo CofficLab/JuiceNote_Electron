@@ -1,8 +1,5 @@
 <template>
-  <Link
-    v-bind:href="prev.id"
-    class="btn btn-sm my-auto rounded-none"
-    v-bind:class="prev.isEmpty() ? 'btn-disabled' : ''"
+  <Link v-bind:href="prev.id" class="btn my-auto rounded-none" v-bind:class="prev.isEmpty() ? 'btn-disabled' : ''"
     ><ArrowLeftCircle></ArrowLeftCircle
   ></Link>
 </template>
