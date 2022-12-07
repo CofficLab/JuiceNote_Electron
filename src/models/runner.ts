@@ -57,7 +57,7 @@ let code_runner = function (code = '', language = 'PHP') {
             try {
                 output = execSync(envPath + " && php " + tmpFilePath);
             } catch (err) {
-                output = err.message.trim()
+                output = err.message
             }
             break;
         case 'py':
