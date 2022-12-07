@@ -15,7 +15,7 @@
     </aside>
 
     <!-- 内容区域 -->
-    <div class="flex-grow flex flex-col gap-4 pt-12 pb-48 mr-0 lg:mr-56 xl:mr-72 min-h-screen bg-cyan-800/10">
+    <div class="flex-grow flex flex-col gap-4 pt-12 pb-48 mr-0 md:mr-56 xl:mr-72 min-h-screen bg-cyan-800/10">
       <Content v-if="!editorMode"></Content>
       <Editor v-if="editorMode"></Editor>
       <Code v-if="code != ''"></Code>
@@ -24,7 +24,7 @@
     <!-- 右侧栏 -->
     <aside
       v-bind:class="{ 'pt-8': !hideTitleBar, 'pt-4': hideTitleBar }"
-      class="z-10 hidden lg:flex lg:flex-col w-56 xl:w-72 pr-0 h-full bg-gradient-to-r from-cyan-800/10 to-sky-200/40 dark:to-cyan-800/10 dark:from-cyan-800/10 overflow-scroll fixed top-0 right-0 justify-start lg:text-lg xl:text-2xl"
+      class="z-10 hidden md:flex lg:flex-col w-56 xl:w-72 pr-0 h-full bg-gradient-to-r from-cyan-800/10 to-sky-200/40 dark:to-cyan-800/10 dark:from-cyan-800/10 overflow-scroll fixed top-0 right-0 justify-end lg:justify-start lg:text-lg xl:text-2xl"
     >
       <div class="flex flex-row justify-end pr-4 2xl:justify-start">
         <Project v-if="current.project.notEmpty()"></Project>
