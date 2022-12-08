@@ -4,10 +4,10 @@
     <Address v-if="!isProd"></Address>
   </div>
 
-  <main class="flex flex-row z-10" v-bind:class="hideTitleBar ? 'mt-0' : 'mt-8'">
+  <main class="flex flex-row justify-between" v-bind:class="hideTitleBar ? 'mt-0' : 'mt-8'">
     <!-- 左侧栏 -->
     <aside
-      class="hidden justify-start md:flex w-56 lg:w-56 xl:w-56 min-h-screen bg-gradient-to-r from-sky-200/40 to-cyan-800/10 dark:from-cyan-800/10 dark:to-cyan-800/10 relative"
+      class="hidden w-56 md:flex bg-gradient-to-r from-sky-200/40 to-cyan-800/10 dark:from-cyan-800/10 dark:to-cyan-800/10"
     >
       <div class="fixed" v-bind:class="{ 'top-12': !hideTitleBar, 'top-4': hideTitleBar }">
         <SideMenu v-if="!editorMode"></SideMenu>
@@ -15,8 +15,8 @@
     </aside>
 
     <!-- 内容区域 -->
-    <div class="flex-grow flex flex-col gap-4 pt-12 pb-48 mr-0 md:mr-56 xl:mr-72 min-h-screen bg-cyan-800/10">
-      <Content v-if="!editorMode"></Content>
+    <div class="flex flex-col flex-grow gap-4 pt-12 pb-48 min-h-screen bg-cyan-800/10">
+      <Content v-if="!editorMode" class="prose mx-auto"></Content>
       <Editor v-if="editorMode"></Editor>
       <Code v-if="code != ''"></Code>
     </div>
@@ -24,16 +24,16 @@
     <!-- 右侧栏 -->
     <aside
       v-bind:class="{ 'pt-8': !hideTitleBar, 'pt-4': hideTitleBar }"
-      class="z-10 hidden md:flex lg:flex-col w-56 xl:w-72 pr-0 h-full bg-gradient-to-r from-cyan-800/10 to-sky-200/40 dark:to-cyan-800/10 dark:from-cyan-800/10 overflow-scroll fixed top-0 right-0 justify-end lg:justify-start lg:text-lg xl:text-2xl"
+      class="hidden md:flex flex-row justify-end w-56 bg-gradient-to-r from-cyan-800/10 to-sky-200/40 dark:to-cyan-800/10 dark:from-cyan-800/10"
     >
-      <div class="flex flex-row justify-end pr-4 2xl:justify-start">
+      <div class="flex flex-row justify-end fixed top-12 right-0 h-screen">
         <Project v-if="current.project.notEmpty()"></Project>
         <Toc v-show="!editorMode"></Toc>
       </div>
     </aside>
   </main>
 
-  <footer class="h-12 fixed z-10 bottom-0 w-full p-0 flex justify-center shadow-2xl">
+  <footer class="h-8 lg:h-12 fixed z-10 bottom-0 w-full p-0 flex justify-center shadow-2xl md:text-lg">
     <div class="flex" v-if="!isProd"><GitCommit></GitCommit></div>
     <div class="flex" v-if="!isProd"><Delete></Delete></div>
     <div class="flex" v-if="!isProd"><Edit></Edit></div>
@@ -43,9 +43,9 @@
     ></Breadcrumbs>
     <Toast></Toast>
     <div class="bg-sky-100/90 dark:bg-gray-500/20 flex flex-row">
-      <div class="flex"><Prev></Prev></div>
-      <div class="flex"><Home></Home></div>
-      <div class="flex"><Next></Next></div>
+      <div class="flex"><Prev class="btn-sm btn lg:btn-md"></Prev></div>
+      <div class="flex"><Home class="btn-sm btn lg:btn-md"></Home></div>
+      <div class="flex"><Next class="btn-sm btn lg:btn-md"></Next></div>
     </div>
   </footer>
 </template>

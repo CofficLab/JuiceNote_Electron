@@ -1,6 +1,6 @@
 <template>
   <div
-    class="justify-center flex flex-grow p-0 breadcrumbs overflow-visible md:text-xl"
+    class="justify-center flex flex-grow p-0 breadcrumbs overflow-visible"
     v-bind:class="{ 'text-yellow-500': inEditMode }"
   >
     <ul class="flex flex-row justify-center">
