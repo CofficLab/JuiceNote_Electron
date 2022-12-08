@@ -30,7 +30,7 @@ package main
 Go 规定，我们写的程序必须有一个`main`包。
 
 <div class="bg-cyan flex flex-col gap-2">
-    <div class="flex flex-row gap-2">
+    <div class="flex flex-row gap-2 px-4 justify-center pt-4">
         <div class="flex flex-col bg-yellow">
             <div class="text-center bg-cyan mt-0 pt-0">用户程序1</div>
             <div class="bg-red grid grid-cols-1 p-4 gap-4">
