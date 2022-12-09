@@ -11,19 +11,24 @@ let code_runner = function (code = '', language = 'PHP') {
             break;
 
         case 'python':
+        case 'Python':
             suffix = 'py'
             break;
 
         case 'java':
+        case 'Java':
             suffix = 'java'
             break;
 
         case 'js':
         case 'javascript':
+        case 'javaScript':
+        case 'JavaScript':
             suffix = 'js'
             break;
 
         case 'go':
+        case 'Go':
             suffix = 'go'
             break;
 
