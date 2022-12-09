@@ -242,7 +242,7 @@ function run(target) {
 }
 
 function findOutTheLanguage(className) {
-    console.log('find out the language,class name is',className)
+    // console.log('find out the language,class name is',className)
     language = ''
 
     if (className.includes('language-python3') || className.includes('language-Python3') || className.includes('language-python')) {
