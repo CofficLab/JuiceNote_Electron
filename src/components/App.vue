@@ -7,7 +7,7 @@
   <main class="flex flex-row justify-between" v-bind:class="hideTitleBar ? 'mt-0' : 'mt-8'">
     <!-- 左侧栏 -->
     <aside
-      class="hidden w-56 md:flex bg-gradient-to-r from-sky-200/40 to-cyan-800/10 dark:from-cyan-800/10 dark:to-cyan-800/10"
+      class="hidden w-56 lg:flex bg-gradient-to-r from-sky-200/40 to-cyan-800/10 dark:from-cyan-800/10 dark:to-cyan-800/10"
     >
       <div class="fixed" v-bind:class="{ 'top-12': !hideTitleBar, 'top-4': hideTitleBar }">
         <SideMenu v-if="!editorMode"></SideMenu>
@@ -24,7 +24,7 @@
     <!-- 右侧栏 -->
     <aside
       v-bind:class="{ 'pt-8': !hideTitleBar, 'pt-4': hideTitleBar }"
-      class="hidden md:flex flex-row justify-end w-56 bg-gradient-to-r from-cyan-800/10 to-sky-200/40 dark:to-cyan-800/10 dark:from-cyan-800/10"
+      class="hidden lg:flex flex-row justify-end w-56 bg-gradient-to-r from-cyan-800/10 to-sky-200/40 dark:to-cyan-800/10 dark:from-cyan-800/10"
     >
       <div class="flex flex-row justify-end fixed top-12 right-0 h-screen">
         <Project v-if="current.project.notEmpty()"></Project>
@@ -33,19 +33,19 @@
     </aside>
   </main>
 
-  <footer class="h-8 lg:h-12 fixed z-10 bottom-0 w-full p-0 flex justify-center shadow-2xl md:text-lg">
-    <div class="flex" v-if="!isProd"><GitCommit></GitCommit></div>
-    <div class="flex" v-if="!isProd"><Delete></Delete></div>
-    <div class="flex" v-if="!isProd"><Edit></Edit></div>
-    <div class="flex" v-if="!isProd"><Add></Add></div>
+  <footer class="h-8 xl:h-12 fixed z-10 bottom-0 w-full p-0 flex justify-center shadow-2xl md:text-lg">
+    <div class="flex" v-if="!isProd"><GitCommit class="btn-sm btn xl:btn-md my-auto rounded-none"></GitCommit></div>
+    <div class="flex" v-if="!isProd"><Delete class="btn-sm btn xl:btn-md my-auto rounded-none"></Delete></div>
+    <div class="flex" v-if="!isProd"><Edit class="btn-sm btn xl:btn-md my-auto rounded-none"></Edit></div>
+    <div class="flex" v-if="!isProd"><Add class="btn-sm btn xl:btn-md my-auto rounded-none"></Add></div>
     <Breadcrumbs
-      class="bg-gradient-to-r from-sky-200/40 via-sky-200/90 to-sky-200/40 dark:from-sky-800/80 dark:via-sky-900 dark:to-sky-800/80"
+      class="bg-gradient-to-r from-sky-200/60 via-sky-200/90 to-sky-200/60 dark:from-sky-800/80 dark:via-sky-900 dark:to-sky-800/80"
     ></Breadcrumbs>
     <Toast></Toast>
     <div class="bg-sky-100/90 dark:bg-gray-500/20 flex flex-row">
-      <div class="flex"><Prev class="btn-sm btn lg:btn-md"></Prev></div>
-      <div class="flex"><Home class="btn-sm btn lg:btn-md"></Home></div>
-      <div class="flex"><Next class="btn-sm btn lg:btn-md"></Next></div>
+      <div class="flex"><Prev class="btn-sm btn xl:btn-md rounded-none"></Prev></div>
+      <div class="flex"><Home class="btn-sm btn xl:btn-md rounded-none"></Home></div>
+      <div class="flex"><Next class="btn-sm btn xl:btn-md rounded-none"></Next></div>
     </div>
   </footer>
 </template>

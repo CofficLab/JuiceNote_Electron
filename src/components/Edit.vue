@@ -1,9 +1,9 @@
 <template>
-  <div v-on:click="edit" class="btn-sm btn lg:btn-md my-auto rounded-none" v-show="!editMode">
+  <div v-on:click="edit" class="btn-sm btn xl:btn-md my-auto rounded-none" v-show="!editMode">
     <PencilSquare></PencilSquare>
   </div>
 
-  <div v-on:click="show" class="btn-sm btn lg:btn-md my-auto rounded-none" v-show="editMode">
+  <div v-on:click="show" class="btn-sm btn xl:btn-md my-auto rounded-none" v-show="editMode">
     <ArrowUturnLeft></ArrowUturnLeft>
   </div>
 </template>

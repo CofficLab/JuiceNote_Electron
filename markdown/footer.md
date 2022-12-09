@@ -128,6 +128,21 @@ for (i = 0; i< document.getElementsByClassName('warning').length; i++) {
     banner.append(p)
 }
 
+// 生成a标签
+for (i = 0; i< document.getElementsByClassName('link').length; i++) {
+    let target = document.getElementsByClassName('link').item(i)
+    let link = target.innerText
+
+    let div = document.createElement('div')
+    div.innerHTML = '<a href="" target="_blank"></a>'
+
+    let a = div.getElementsByTagName('a').item(0)
+    a.innerText = link
+    a.href = link
+
+    target.innerHTML = div.innerHTML
+}
+
 // 增加代码块的横幅
 for (i = 0; i< document.getElementsByTagName('code').length; i++) {
     let banner = document.createElement('div')

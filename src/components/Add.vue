@@ -1,5 +1,5 @@
 <template>
-  <button class="btn-sm btn lg:btn-md rounded-none" @click="showForm"><Plus></Plus></button>
+  <button class="btn-sm btn xl:btn-md rounded-none" @click="showForm"><Plus></Plus></button>
 
   <!-- 弹层 -->
   <div class="modal modal-open" v-bind:class="formSwitcher ? '' : 'hidden'">
