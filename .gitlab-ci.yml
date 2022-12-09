@@ -40,14 +40,8 @@ sync:
   tags:
     - tencent
   script: |
-    # 将markdown数据库、构建好的APP同步到网页版
-    if [ -d /www/wwwroot/wiki.kuaiyc.com/production/markdown ]; then
-      rm -rf /www/wwwroot/wiki.kuaiyc.com/production/markdown
-    fi
-    pwd
-    ls -alh
-    cp -r markdown /www/wwwroot/wiki.kuaiyc.com/production/markdown
-    # cp -r release/* /www/wwwroot/wiki.kuaiyc.com/production/public/release/
+    # 将markdown数据库同步到网页版
+    cp -rf markdown /www/wwwroot/wiki.kuaiyc.com/production/markdown
     cd /www/wwwroot/wiki.kuaiyc.com/production
     npm run mix
     php artisan lesson:sync
