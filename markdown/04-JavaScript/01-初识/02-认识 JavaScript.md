@@ -12,6 +12,12 @@ JavaScript 是什么？有什么特点？
 - 代码简洁，清晰易懂
 - 应用广泛
 
+## 理念
+
+在 JavaScript 中，一切皆对象。
+
+<div class="banner">在以后的学习中，会逐步理解这句话</div>
+
 ## JavaScript 与 Java
 
 JavaScript 与 Java 没有关系。

@@ -143,6 +143,53 @@ for (i = 0; i< document.getElementsByClassName('link').length; i++) {
     target.innerHTML = div.innerHTML
 }
 
+// 生成官方文档的链接
+for (i = 0; i< document.getElementsByClassName('o').length; i++) {
+    let target = document.getElementsByClassName('o').item(i)
+    let href = target.innerText
+    
+    target.innerHTML = ''
+    target.classList.add('w-full')
+    target.classList.add('sticky')
+    target.classList.add('top-12')
+    target.classList.add('shadow-2xl')
+    target.classList.add('flex')
+    target.classList.add('flex-col')
+    target.classList.add('gap-8')
+    target.classList.add('p-4')
+    target.classList.add('mb-6')
+    target.classList.add('rounded-xl')
+    target.classList.add('bg-cyan-500/30')
+    target.classList.add('dark:bg-cyan-900/100')
+
+    let content = document.createElement('div')
+    let title = document.createElement('div')
+    let link = document.createElement('div')
+    let tips = document.createElement('div')
+
+    content.classList.add('flex')
+    content.classList.add('flex-col')
+    content.classList.add('gap-4')
+    content.classList.add('items-center')
+
+    title.innerText = '官方文档'
+    title.classList.add('text-xl')
+
+    link.innerHTML = '<a href="" target="_blank"></a>'
+    link.getElementsByTagName('a').item(0).innerText = '点击打开'
+    link.getElementsByTagName('a').item(0).href = href
+
+    tips.classList.add('text-sm')
+    tips.classList.add('text-center')
+    tips.innerText = '互联网环境已今非昔比，不要对搜索引擎充满期待，官方文档才是最权威的'
+
+    content.append(title)
+    content.append(link)
+
+    target.append(content)
+    target.append(tips)
+}
+
 // 增加代码块的横幅
 for (i = 0; i< document.getElementsByTagName('code').length; i++) {
     let banner = document.createElement('div')
@@ -265,7 +312,7 @@ function findOutTheLanguage(className) {
         language = 'go'
     }
 
-    if (className.includes('language-js') || className.includes('language-JavaScript')) {
+    if (className.includes('language-js') || className.includes('language-JavaScript') || className.includes('language-javaScript')  || className.includes('language-javascript')) {
         language = 'JavaScript'
     }
     
