@@ -151,42 +151,32 @@ for (i = 0; i< document.getElementsByClassName('o').length; i++) {
     target.innerHTML = ''
     target.classList.add('w-full')
     target.classList.add('sticky')
-    target.classList.add('top-12')
+    target.classList.add('top-16')
     target.classList.add('shadow-2xl')
     target.classList.add('flex')
     target.classList.add('flex-col')
-    target.classList.add('gap-8')
-    target.classList.add('p-4')
+    target.classList.add('gap-2')
+    target.classList.add('p-2')
     target.classList.add('mb-6')
     target.classList.add('rounded-xl')
+    target.classList.add('items-center')
     target.classList.add('bg-cyan-500/30')
     target.classList.add('dark:bg-cyan-900/100')
 
-    let content = document.createElement('div')
-    let title = document.createElement('div')
     let link = document.createElement('div')
     let tips = document.createElement('div')
 
-    content.classList.add('flex')
-    content.classList.add('flex-col')
-    content.classList.add('gap-4')
-    content.classList.add('items-center')
-
-    title.innerHTML = '官方文档'
-    title.classList.add('text-xl')
-
     link.innerHTML = '<a href="" target="_blank"></a>'
-    link.getElementsByTagName('a').item(0).innerHTML = '点击打开'
+    link.classList.add('text-xl')
+    link.getElementsByTagName('a').item(0).classList.add('no-underline')
+    link.getElementsByTagName('a').item(0).innerHTML = '官方文档'
     link.getElementsByTagName('a').item(0).href = href
 
     tips.classList.add('text-sm')
     tips.classList.add('text-center')
     tips.innerHTML = '互联网环境已今非昔比，不要对搜索引擎充满期待，官方文档才是最权威的'
 
-    content.append(title)
-    content.append(link)
-
-    target.append(content)
+    target.append(link)
     target.append(tips)
 }
 
