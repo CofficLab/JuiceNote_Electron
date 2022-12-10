@@ -172,16 +172,16 @@ for (i = 0; i< document.getElementsByClassName('o').length; i++) {
     content.classList.add('gap-4')
     content.classList.add('items-center')
 
-    title.innerText = '官方文档'
+    title.innerHTML = '官方文档'
     title.classList.add('text-xl')
 
     link.innerHTML = '<a href="" target="_blank"></a>'
-    link.getElementsByTagName('a').item(0).innerText = '点击打开'
+    link.getElementsByTagName('a').item(0).innerHTML = '点击打开'
     link.getElementsByTagName('a').item(0).href = href
 
     tips.classList.add('text-sm')
     tips.classList.add('text-center')
-    tips.innerText = '互联网环境已今非昔比，不要对搜索引擎充满期待，官方文档才是最权威的'
+    tips.innerHTML = '互联网环境已今非昔比，不要对搜索引擎充满期待，官方文档才是最权威的'
 
     content.append(title)
     content.append(link)
