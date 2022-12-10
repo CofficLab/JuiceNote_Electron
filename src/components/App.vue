@@ -2,7 +2,7 @@
   <div>
     <!-- 标题栏，左侧显示红绿灯，右侧可用于拖移 -->
     <div class="h-8 bg-stone-900 fixed top-0 z-50 w-full flex justify-center" id="title-bar" v-show="!hideTitleBar">
-      <Address v-if="!isProd"></Address>
+      <!-- <Address v-if="!isProd"></Address> -->
     </div>
 
     <main class="flex flex-row justify-between" v-bind:class="hideTitleBar ? 'mt-0' : 'mt-8'">
@@ -17,7 +17,7 @@
 
       <!-- 内容区域 -->
       <div class="flex flex-col flex-grow gap-4 pt-12 pb-48 min-h-screen bg-cyan-800/10">
-        <Content v-if="!editorMode" class="prose mx-auto"></Content>
+        <Content v-if="!editorMode" class="prose mx-auto w-full"></Content>
         <Editor v-if="editorMode"></Editor>
         <Code v-if="code != ''"></Code>
       </div>

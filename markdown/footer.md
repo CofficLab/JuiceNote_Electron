@@ -89,6 +89,7 @@ for (i = 0; i< document.getElementsByClassName('banner').length; i++) {
     banner.classList.add('mb-4')
     banner.classList.add('flex')
     banner.classList.add('flex-row')
+    banner.classList.add('gap-4')
     banner.classList.add('ring-1')
     banner.classList.add('justify-start')
     banner.classList.add('shadow-xl')
@@ -159,6 +160,7 @@ for (i = 0; i< document.getElementsByClassName('o').length; i++) {
     target.classList.add('p-2')
     target.classList.add('mb-6')
     target.classList.add('rounded-xl')
+    target.classList.add('ring-1')
     target.classList.add('items-center')
     target.classList.add('bg-cyan-500/30')
     target.classList.add('dark:bg-cyan-900/100')
@@ -217,6 +219,7 @@ if (window.runner != undefined) {
         let target = document.getElementsByClassName('run').item(i).nextElementSibling
         let runner = document.createElement('div')
         let runnerClass = 'code-runner'
+        // target.classList.add('w-full')
         // target.classList.add('ring-1')
         runner.classList.add(runnerClass)
         runner.classList.add('flex')
