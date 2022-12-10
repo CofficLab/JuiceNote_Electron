@@ -163,17 +163,18 @@ for (i = 0; i< document.getElementsByClassName('o').length; i++) {
     target.classList.add('bg-cyan-500/30')
     target.classList.add('dark:bg-cyan-900/100')
 
-    let link = document.createElement('div')
+    let link = document.createElement('a')
     let tips = document.createElement('div')
 
-    link.innerHTML = '<a href="" target="_blank">Official Documents 官方文档</a>'
     link.classList.add('text-xl')
-    link.getElementsByTagName('a').item(0).classList.add('no-underline')
-    link.getElementsByTagName('a').item(0).href = href
+    link.classList.add('no-underline')
+    link.innerHTML = '官方文档'
+    link.target = "_blank"
+    link.href = href
 
     tips.classList.add('text-sm')
     tips.classList.add('text-center')
-    tips.innerHTML = '<span>互联网环境已今非昔比，不要对搜索引擎充满期待，官方文档才是最权威的</span>'
+    tips.innerHTML = '互联网环境已今非昔比，不要对搜索引擎充满期待，官方文档才是最权威的'
 
     target.append(link)
     target.append(tips)
