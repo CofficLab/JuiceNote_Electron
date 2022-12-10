@@ -41,6 +41,7 @@ sync:
     - tencent
   script: |
     # 将markdown数据库同步到网页版
+    rm -rf /www/wwwroot/wiki.kuaiyc.com/production/markdown
     cp -rf markdown /www/wwwroot/wiki.kuaiyc.com/production/markdown
     cd /www/wwwroot/wiki.kuaiyc.com/production
     npm run mix
