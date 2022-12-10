@@ -29,10 +29,13 @@ let code_runner = function (code = '', language = 'PHP') {
 
         case 'go':
         case 'Go':
+        case 'Golang':
             suffix = 'go'
             break;
 
         case 'sh':
+        case 'shell':
+        case 'Shell':
         case 'bash':
             suffix = 'sh'
             break;

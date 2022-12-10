@@ -286,23 +286,23 @@ function findOutTheLanguage(className) {
     language = ''
 
     if (className.includes('language-python3') || className.includes('language-Python3') || className.includes('language-python')) {
-        language = 'python'
+        language = 'Python'
     }
 
     if (className.includes('language-php')) {
-        language = 'php'
+        language = 'PHP'
     }
 
     if (className.includes('language-java')) {
-        language = 'java'
+        language = 'Java'
     }
 
     if (className.includes('language-sh')) {
-        language = 'sh'
+        language = 'Shell'
     }
 
     if (className.includes('language-go') || className.includes('language-golang')) {
-        language = 'go'
+        language = 'Golang'
     }
 
     if (className.includes('language-js') || className.includes('language-JavaScript') || className.includes('language-javaScript')  || className.includes('language-javascript')) {
