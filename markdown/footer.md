@@ -162,7 +162,7 @@ for (i = 0; i< document.getElementsByClassName('o').length; i++) {
     target.classList.add('rounded-xl')
     target.classList.add('ring-1')
     target.classList.add('items-center')
-    target.classList.add('bg-cyan-500/30')
+    target.classList.add('bg-cyan-500/100')
     target.classList.add('dark:bg-cyan-900/100')
 
     let link = document.createElement('a')

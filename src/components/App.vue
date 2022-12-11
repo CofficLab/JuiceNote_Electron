@@ -35,18 +35,18 @@
     </main>
 
     <footer class="h-8 xl:h-12 fixed z-10 bottom-0 w-full p-0 flex justify-center shadow-2xl md:text-lg">
-      <div class="flex" v-if="!isProd"><GitCommit class="btn-sm btn xl:btn-md my-auto rounded-none"></GitCommit></div>
-      <div class="flex" v-if="!isProd"><Delete class="btn-sm btn xl:btn-md my-auto rounded-none"></Delete></div>
-      <div class="flex" v-if="!isProd"><Edit class="btn-sm btn xl:btn-md my-auto rounded-none"></Edit></div>
-      <div class="flex" v-if="!isProd"><Add class="btn-sm btn xl:btn-md my-auto rounded-none"></Add></div>
-      <Breadcrumbs
-        class="bg-gradient-to-r from-sky-200/60 via-sky-200/90 to-sky-200/60 dark:from-sky-800/80 dark:via-sky-900 dark:to-sky-800/80"
-      ></Breadcrumbs>
+      <div v-if="!isProd">
+        <GitCommit></GitCommit>
+        <Delete></Delete>
+        <Edit></Edit>
+        <Add></Add>
+      </div>
+      <Breadcrumbs></Breadcrumbs>
       <Toast></Toast>
-      <div class="bg-sky-100/90 dark:bg-gray-500/20 flex flex-row">
-        <div class="flex"><Prev class="btn-sm btn xl:btn-md rounded-none"></Prev></div>
-        <div class="flex"><Home class="btn-sm btn xl:btn-md rounded-none"></Home></div>
-        <div class="flex"><Next class="btn-sm btn xl:btn-md rounded-none"></Next></div>
+      <div class="flex flex-row bg-sky-100/90 dark:bg-gray-500/20">
+        <Prev></Prev>
+        <Home></Home>
+        <Next></Next>
       </div>
     </footer>
   </div>

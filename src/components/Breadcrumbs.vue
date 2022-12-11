@@ -1,6 +1,6 @@
 <template>
   <div
-    class="justify-center flex flex-grow p-0 breadcrumbs overflow-visible"
+    class="justify-center flex flex-grow p-0 breadcrumbs overflow-visible bg-gradient-to-r from-sky-200/60 via-sky-200/90 to-sky-200/60 dark:from-sky-800/80 dark:via-sky-900 dark:to-sky-800/80"
     v-bind:class="{ 'text-yellow-500': inEditMode }"
   >
     <ul class="flex flex-row justify-center">

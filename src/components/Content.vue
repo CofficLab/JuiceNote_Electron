@@ -10,7 +10,7 @@ import store from "../models/store";
 export default defineComponent({
   computed: {
     body(): string {
-      console.log("get content of", store.current.id);
+      // console.log("get content of", store.current.id);
       let dom = document.createElement("div");
       dom.innerHTML = store.edit_mode ? store.current.htmlWithToc() : store.current.html();
 
