@@ -24,10 +24,9 @@
 
       <!-- 右侧栏 -->
       <aside
-        v-bind:class="{ 'pt-8': !hideTitleBar, 'pt-4': hideTitleBar }"
         class="hidden lg:flex flex-row justify-end w-56 bg-gradient-to-r from-cyan-800/10 to-sky-200/40 dark:to-cyan-800/10 dark:from-cyan-800/10"
       >
-        <div class="flex flex-row justify-end fixed top-12 right-0 h-screen">
+        <div class="flex flex-row justify-end fixed top-36 right-0 h-screen">
           <Project v-if="current.project.notEmpty()"></Project>
           <Toc v-show="!editorMode"></Toc>
         </div>

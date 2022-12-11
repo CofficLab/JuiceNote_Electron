@@ -147,39 +147,22 @@ for (i = 0; i< document.getElementsByClassName('link').length; i++) {
 // 生成官方文档的链接
 for (i = 0; i< document.getElementsByClassName('o').length; i++) {
     let target = document.getElementsByClassName('o').item(i)
+    let link = document.createElement('a')
     let href = target.innerText
     
     target.innerHTML = ''
-    target.classList.add('w-full')
-    target.classList.add('sticky')
-    target.classList.add('top-16')
-    target.classList.add('shadow-2xl')
-    target.classList.add('flex')
-    target.classList.add('flex-col')
-    target.classList.add('gap-2')
-    target.classList.add('p-2')
-    target.classList.add('mb-6')
-    target.classList.add('rounded-xl')
-    target.classList.add('ring-1')
-    target.classList.add('items-center')
-    target.classList.add('bg-cyan-500/100')
-    target.classList.add('dark:bg-cyan-900/100')
 
-    let link = document.createElement('a')
-    let tips = document.createElement('div')
-
-    link.classList.add('text-xl')
-    link.classList.add('no-underline')
     link.innerHTML = '官方文档'
     link.target = "_blank"
     link.href = href
+    link.classList.add('no-underline', 'text-xl', 'text-center')
+    link.classList.add('fixed', 'right-8', 'top-16')
+    link.classList.add('w-36', 'px-4', 'py-2')
+    link.classList.add('ring-1', 'border-t-8', 'border-yellow-900/50', 'rounded-sm')
+    link.classList.add('bg-cyan-500/70','dark:bg-cyan-900/70','official-link')
 
-    tips.classList.add('text-sm')
-    tips.classList.add('text-center')
-    tips.innerHTML = '互联网环境已今非昔比，不要对搜索引擎充满期待，官方文档才是最权威的'
 
     target.append(link)
-    target.append(tips)
 }
 
 // 增加代码块的横幅
@@ -258,6 +241,15 @@ if (window.runner != undefined) {
 
         target.append(runner)
     }
+}
+
+// 返回课程的平台，可能是网页或者桌面APP
+function getPlatform() {
+    if (window.runner == undefined) {
+        return 'WEB'
+    }
+
+    return 'APP'
 }
 
 // 运行代码

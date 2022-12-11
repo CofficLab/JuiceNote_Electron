@@ -1,23 +1,21 @@
 <template>
-  <div>
-    <button class="btn-sm btn xl:btn-md rounded-none" @click="showForm"><Plus></Plus></button>
+  <button class="btn-sm btn xl:btn-md rounded-none" @click="showForm"><Plus></Plus></button>
 
-    <!-- 弹层 -->
-    <div class="modal modal-open" v-bind:class="formSwitcher ? '' : 'hidden'">
-      <div class="modal-box">
-        <input
-          ref="title"
-          type="text"
-          v-model="title"
-          autofocus
-          placeholder="输入标题"
-          class="input input-bordered input-primary w-full max-w-xs"
-        />
-        <div class="modal-action">
-          <label for="my-modal" class="btn" v-on:click="hideForm">取消</label>
-          <label for="my-modal" class="btn" v-on:click="submitChapterForm">创建章节</label>
-          <label for="my-modal" class="btn" v-on:click="submitPageForm">创建页面</label>
-        </div>
+  <!-- 弹层 -->
+  <div class="modal modal-open" v-bind:class="formSwitcher ? '' : 'hidden'">
+    <div class="modal-box">
+      <input
+        ref="title"
+        type="text"
+        v-model="title"
+        autofocus
+        placeholder="输入标题"
+        class="input input-bordered input-primary w-full max-w-xs"
+      />
+      <div class="modal-action">
+        <label for="my-modal" class="btn" v-on:click="hideForm">取消</label>
+        <label for="my-modal" class="btn" v-on:click="submitChapterForm">创建章节</label>
+        <label for="my-modal" class="btn" v-on:click="submitPageForm">创建页面</label>
       </div>
     </div>
   </div>
