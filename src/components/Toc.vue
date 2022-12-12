@@ -1,15 +1,15 @@
 <template>
-  <div class="h-full overflow-scroll">
+  <div class="h-full overflow-scroll flex flex-col items-end">
     <!-- 其他编程语言 -->
-    <ul class="menu mr-4 shadow bg-base-100/80 rounded-none w-36 mt-2" v-show="menus.length > 1">
+    <ul class="menu shadow bg-base-100/80 rounded-none w-40 mt-2" v-show="menus.length > 1">
       <li v-for="menu in menus">
         <Link v-bind:href="menu.id">{{ menu.book().title }}</Link>
       </li>
     </ul>
     <!-- 官方文档 -->
-    <div class="official-link flex flex-col gap-1 w-36 mt-2"></div>
+    <div class="official-link flex flex-col gap-1 w-40 mt-2"></div>
 
-    <div class="table-of-contents overflow-scroll" v-html="toc"></div>
+    <div class="table-of-contents overflow-scroll w-40 bg-cyan-700/10" v-html="toc"></div>
   </div>
 </template>
 
@@ -75,8 +75,6 @@ export default defineComponent({
 
 <style lang="postcss">
 .table-of-contents {
-  @apply w-full;
-
   ul {
     @apply w-full relative hover:bg-transparent !important;
 

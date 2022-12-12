@@ -162,7 +162,7 @@ for (i = 0; i< document.getElementsByClassName('o').length; i++) {
     link.href = href
     link.classList.add('no-underline', 'text-base')
     link.classList.add('px-4', 'py-2', 'w-full')
-    link.classList.add('shadow-lg')
+    // link.classList.add('shadow-lg')
     link.classList.add('ring-1', 'border-t-8', 'border-yellow-900/50', 'rounded-sm')
     link.classList.add('bg-cyan-500/50','dark:bg-cyan-900/70')
 
