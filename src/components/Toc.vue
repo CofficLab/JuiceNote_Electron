@@ -1,11 +1,14 @@
 <template>
   <div class="h-full overflow-scroll">
     <!-- 其他编程语言 -->
-    <ul class="menu p-2 mr-4 shadow w-full bg-base-100 rounded-box mt-2" v-show="menus.length > 1">
+    <ul class="menu mr-4 shadow bg-base-100/80 rounded-none w-36 mt-2" v-show="menus.length > 1">
       <li v-for="menu in menus">
         <Link v-bind:href="menu.id">{{ menu.book().title }}</Link>
       </li>
     </ul>
+    <!-- 官方文档 -->
+    <div class="official-link flex flex-col gap-1 w-36 mt-2"></div>
+
     <div class="table-of-contents overflow-scroll" v-html="toc"></div>
   </div>
 </template>

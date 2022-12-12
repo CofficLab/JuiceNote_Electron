@@ -145,24 +145,28 @@ for (i = 0; i< document.getElementsByClassName('link').length; i++) {
 }
 
 // 生成官方文档的链接
+if (document.getElementsByClassName('official-link').item(0) != undefined) {
+    document.getElementsByClassName('official-link').item(0).innerHTML = ''
+}
 for (i = 0; i< document.getElementsByClassName('o').length; i++) {
     let target = document.getElementsByClassName('o').item(i)
     let link = document.createElement('a')
     let href = target.innerText
-    
+    let preset = document.getElementsByClassName('official-link').item(0)
+
     target.innerHTML = ''
+    target.classList.add('w-full', 'flex', 'mb-2', 'text-center')
 
     link.innerHTML = '官方文档'
     link.target = "_blank"
     link.href = href
-    link.classList.add('no-underline', 'text-xl', 'text-center')
-    link.classList.add('fixed', 'right-8', 'top-16')
-    link.classList.add('w-36', 'px-4', 'py-2')
+    link.classList.add('no-underline', 'text-base')
+    link.classList.add('px-4', 'py-2', 'w-full')
+    link.classList.add('shadow-lg')
     link.classList.add('ring-1', 'border-t-8', 'border-yellow-900/50', 'rounded-sm')
-    link.classList.add('bg-cyan-500/70','dark:bg-cyan-900/70','official-link')
+    link.classList.add('bg-cyan-500/50','dark:bg-cyan-900/70')
 
-
-    target.append(link)
+    preset != undefined ? preset.append(link) : target.append(link)
 }
 
 // 增加代码块的横幅
