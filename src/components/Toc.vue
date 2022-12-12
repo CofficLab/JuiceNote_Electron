@@ -7,7 +7,7 @@
       </li>
     </ul>
     <!-- 官方文档 -->
-    <div class="official-link flex flex-col gap-1 w-40 mt-2"></div>
+    <div class="official-link flex flex-col gap-1 w-40 my-2"></div>
 
     <div class="table-of-contents overflow-scroll w-40 bg-cyan-700/10" v-html="toc"></div>
   </div>

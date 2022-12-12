@@ -92,7 +92,7 @@ for (i = 0; i< document.getElementsByClassName('banner').length; i++) {
     banner.classList.add('gap-4')
     banner.classList.add('ring-1')
     banner.classList.add('justify-start')
-    banner.classList.add('shadow-xl')
+    // banner.classList.add('shadow-xl')
 
     banner.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current flex-shrink-0 w-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>'
 
@@ -127,6 +127,16 @@ for (i = 0; i< document.getElementsByClassName('warning').length; i++) {
     p.innerText = text
 
     banner.append(p)
+}
+
+// ask的样式
+for (i = 0; i< document.getElementsByClassName('ask').length; i++) {
+    let banner = document.getElementsByClassName('ask').item(i)
+    banner.classList.add('bg-sky-800/20')
+    banner.classList.add('py-2','px-2','mb-4')
+    banner.classList.add('flex','flex-col', 'gap-0')
+    banner.classList.add('ring-1', 'rounded-sm')
+    // banner.classList.add('text-sm')
 }
 
 // 生成a标签

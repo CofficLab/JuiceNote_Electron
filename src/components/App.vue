@@ -33,8 +33,8 @@
       </aside>
     </main>
 
-    <footer class="h-8 xl:h-12 fixed z-10 bottom-0 w-full p-0 flex justify-center shadow-2xl md:text-lg">
-      <div v-if="!isProd">
+    <footer class="h-8 fixed z-10 bottom-0 w-full p-0 flex flex-row items-center justify-center shadow-2xl md:text-lg">
+      <div v-if="!isProd" class="h-full flex flex-row items-center">
         <GitCommit></GitCommit>
         <Delete></Delete>
         <Edit></Edit>
@@ -42,7 +42,7 @@
       </div>
       <Breadcrumbs></Breadcrumbs>
       <Toast></Toast>
-      <div class="flex flex-row bg-sky-100/90 dark:bg-gray-500/20">
+      <div class="flex flex-row bg-sky-100/90 dark:bg-gray-500/20 items-center h-full">
         <Prev></Prev>
         <Home></Home>
         <Next></Next>

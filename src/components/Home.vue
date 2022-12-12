@@ -1,5 +1,5 @@
 <template>
-  <Link v-bind:href="link" v-bind:class="disabled ? 'btn-disabled' : ''" class="btn-sm btn xl:btn-md rounded-none"
+  <Link v-bind:href="link" v-bind:class="disabled ? 'btn-disabled' : ''" class="btn-sm btn rounded-none"
     ><Home></Home
   ></Link>
 </template>

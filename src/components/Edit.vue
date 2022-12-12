@@ -1,5 +1,5 @@
 <template>
-  <div v-on:click="switcher" class="btn-sm btn xl:btn-md my-auto rounded-none">
+  <div v-on:click="switcher" class="btn-sm btn my-auto rounded-none">
     <PencilSquare v-if="!editMode"></PencilSquare>
     <ArrowUturnLeft v-if="editMode"></ArrowUturnLeft>
   </div>
