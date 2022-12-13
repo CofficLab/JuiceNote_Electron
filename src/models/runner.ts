@@ -11,23 +11,31 @@ let code_runner = function (code = '', language = 'PHP') {
             break;
 
         case 'python':
+        case 'Python':
             suffix = 'py'
             break;
 
         case 'java':
+        case 'Java':
             suffix = 'java'
             break;
 
         case 'js':
         case 'javascript':
+        case 'javaScript':
+        case 'JavaScript':
             suffix = 'js'
             break;
 
         case 'go':
+        case 'Go':
+        case 'Golang':
             suffix = 'go'
             break;
 
         case 'sh':
+        case 'shell':
+        case 'Shell':
         case 'bash':
             suffix = 'sh'
             break;
@@ -51,38 +59,39 @@ let code_runner = function (code = '', language = 'PHP') {
     let execSync = require("child_process").execSync;
     let exec = require("child_process").exec
     let output = ''
+    let envPath = 'PATH=/opt/homebrew/bin/:/usr/local/bin:$PATH'
     switch (suffix) {
         case 'php':
             try {
-                output = execSync("PATH=/usr/local/bin:$PATH && php " + tmpFilePath);
+                output = execSync(envPath + " && php " + tmpFilePath);
             } catch (err) {
-                output = err.message.trim()
+                output = err.message
             }
             break;
         case 'py':
             try {
-                output = execSync("PATH=/usr/local/bin:$PATH && python3 " + tmpFilePath);
+                output = execSync(envPath + " && python3 " + tmpFilePath);
             } catch (err) {
                 output = err.message.trim()
             }
             break;
         case 'java':
             try {
-                output = execSync("PATH=/usr/local/bin:$PATH && java " + tmpFilePath);
+                output = execSync(envPath + " && java " + tmpFilePath);
             } catch (err) {
                 output = err.message.trim()
             }
             break;
         case 'js':
             try {
-                output = execSync("PATH=/usr/local/bin:$PATH && node " + tmpFilePath);
+                output = execSync(envPath + " && node " + tmpFilePath);
             } catch (err) {
                 output = err.message.trim()
             }
             break;
         case 'sh':
             try {
-                output = execSync("PATH=/usr/local/bin:$PATH && sh " + tmpFilePath);
+                output = execSync(envPath + " && sh " + tmpFilePath);
             } catch (err) {
                 output = err.message.trim()
             }
@@ -90,7 +99,7 @@ let code_runner = function (code = '', language = 'PHP') {
 
         case 'go':
             try {
-                output = execSync("PATH=/usr/local/bin:$PATH && go run " + tmpFilePath);
+                output = execSync(envPath + " && go run " + tmpFilePath);
             } catch (err) {
                 output = err.message.trim()
             }

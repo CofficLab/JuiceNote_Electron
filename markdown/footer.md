@@ -84,12 +84,15 @@ for (i = 0; i< document.getElementsByClassName('banner').length; i++) {
     banner.classList.add('bg-gradient-to-r')
     banner.classList.add('from-cyan-800/30')
     banner.classList.add('rounded-xl')
-    banner.classList.add('py-2')
+    banner.classList.add('py-3')
     banner.classList.add('px-2')
     banner.classList.add('mb-4')
     banner.classList.add('flex')
     banner.classList.add('flex-row')
+    banner.classList.add('gap-4')
+    banner.classList.add('ring-1')
     banner.classList.add('justify-start')
+    // banner.classList.add('shadow-xl')
 
     banner.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current flex-shrink-0 w-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>'
 
@@ -100,18 +103,102 @@ for (i = 0; i< document.getElementsByClassName('banner').length; i++) {
     banner.append(p)
 }
 
+// 警告横幅的样式
+for (i = 0; i< document.getElementsByClassName('warning').length; i++) {
+    let banner = document.getElementsByClassName('warning').item(i)
+    let p = document.createElement('p')
+    let text = banner.innerText
+    banner.classList.add('bg-gradient-to-r')
+    banner.classList.add('from-yellow-800/30')
+    banner.classList.add('rounded-xl')
+    banner.classList.add('py-3')
+    banner.classList.add('px-2')
+    banner.classList.add('mb-4')
+    banner.classList.add('flex')
+    banner.classList.add('flex-row')
+    banner.classList.add('ring-1')
+    banner.classList.add('justify-start')
+    // banner.classList.add('shadow-xl')
+
+    banner.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current flex-shrink-0 w-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>'
+
+    p.classList.add("my-0")
+    p.classList.add("ml-1")
+    p.innerText = text
+
+    banner.append(p)
+}
+
+// ask的样式
+for (i = 0; i< document.getElementsByClassName('ask').length; i++) {
+    let banner = document.getElementsByClassName('ask').item(i)
+    banner.classList.add('bg-sky-800/20')
+    banner.classList.add('py-2','px-2','mb-4')
+    banner.classList.add('flex','flex-col', 'gap-0')
+    banner.classList.add('ring-1', 'rounded-sm')
+    // banner.classList.add('text-sm')
+}
+
+// 生成a标签
+for (i = 0; i< document.getElementsByClassName('link').length; i++) {
+    let target = document.getElementsByClassName('link').item(i)
+    let link = target.innerText
+
+    let div = document.createElement('div')
+    div.innerHTML = '<a href="" target="_blank"></a>'
+
+    let a = div.getElementsByTagName('a').item(0)
+    a.innerText = link
+    a.href = link
+
+    target.innerHTML = div.innerHTML
+}
+
+// 生成官方文档的链接
+if (document.getElementsByClassName('official-link').item(0) != undefined) {
+    document.getElementsByClassName('official-link').item(0).innerHTML = ''
+}
+for (i = 0; i< document.getElementsByClassName('o').length; i++) {
+    let target = document.getElementsByClassName('o').item(i)
+    let link = document.createElement('a')
+    let href = target.innerText
+    let preset = document.getElementsByClassName('official-link').item(0)
+
+    target.innerHTML = ''
+    target.classList.add('w-full', 'flex', 'mb-2', 'text-center')
+
+    link.innerHTML = '官方文档'
+    link.target = "_blank"
+    link.href = href
+    link.classList.add('no-underline', 'text-base')
+    link.classList.add('px-4', 'py-2', 'w-full')
+    // link.classList.add('shadow-lg')
+    link.classList.add('ring-1', 'border-t-8', 'border-yellow-900/50', 'rounded-sm')
+    link.classList.add('bg-cyan-500/50','dark:bg-cyan-900/70')
+
+    preset != undefined ? preset.append(link) : target.append(link)
+}
+
 // 增加代码块的横幅
 for (i = 0; i< document.getElementsByTagName('code').length; i++) {
     let banner = document.createElement('div')
+    let bannerClass = 'code-banner'
     codeDom = document.getElementsByTagName('code').item(i)
     target = codeDom.parentElement
     language = findOutTheLanguage(codeDom.className)
 
-    if (language != '') {
+    if (language != '' && target.getElementsByClassName(bannerClass).length == 0) {
         codeDom.classList.add('pr-4');
         target.classList.add('pt-0')
+        target.classList.add('lg:pt-0')
+        target.classList.add('xl:pt-0')
+        target.classList.add('2xl:pt-0')
         target.classList.add('pr-0')
+        target.classList.add('lg:pr-0')
+        target.classList.add('xl:pr-0')
+        target.classList.add('2xl:pr-0')
         banner.innerHTML = language
+        banner.classList.add(bannerClass)
         banner.classList.add('bg-gradient-to-r')
         banner.classList.add('from-transparent')
         banner.classList.add('via-transparent')
@@ -128,6 +215,10 @@ if (window.runner != undefined) {
     for (i = 0; i< document.getElementsByClassName('run').length; i++) {
         let target = document.getElementsByClassName('run').item(i).nextElementSibling
         let runner = document.createElement('div')
+        let runnerClass = 'code-runner'
+        // target.classList.add('w-full')
+        // target.classList.add('ring-1')
+        runner.classList.add(runnerClass)
         runner.classList.add('flex')
         runner.classList.add('flex-row')
         runner.classList.add('justify-end')
@@ -149,7 +240,7 @@ if (window.runner != undefined) {
         btn.parentElement.classList.add('justify-end')
         btn.parentElement.classList.add('gap-4')
 
-        target.append(runner)
+        if (target.getElementsByClassName(runnerClass).length == 0) target.append(runner)
     }
 } else {
     for (i = 0; i< document.getElementsByClassName('run').length; i++) {
@@ -164,6 +255,15 @@ if (window.runner != undefined) {
 
         target.append(runner)
     }
+}
+
+// 返回课程的平台，可能是网页或者桌面APP
+function getPlatform() {
+    if (window.runner == undefined) {
+        return 'WEB'
+    }
+
+    return 'APP'
 }
 
 // 运行代码
@@ -188,31 +288,31 @@ function run(target) {
 }
 
 function findOutTheLanguage(className) {
-    console.log('find out the language,class name is',className)
+    // console.log('find out the language,class name is',className)
     language = ''
 
     if (className.includes('language-python3') || className.includes('language-Python3') || className.includes('language-python')) {
-        language = 'python'
+        language = 'Python'
     }
 
     if (className.includes('language-php')) {
-        language = 'php'
+        language = 'PHP'
     }
 
     if (className.includes('language-java')) {
-        language = 'java'
+        language = 'Java'
     }
 
     if (className.includes('language-sh')) {
-        language = 'sh'
+        language = 'Shell'
     }
 
     if (className.includes('language-go') || className.includes('language-golang')) {
-        language = 'go'
+        language = 'Golang'
     }
 
-    if (className.includes('language-js') || className.includes('language-javascript')) {
-        language = 'javascript'
+    if (className.includes('language-js') || className.includes('language-JavaScript') || className.includes('language-javaScript')  || className.includes('language-javascript')) {
+        language = 'JavaScript'
     }
     
     return language

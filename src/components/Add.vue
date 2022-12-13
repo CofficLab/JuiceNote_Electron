@@ -1,5 +1,5 @@
 <template>
-  <button class="btn btn-sm my-auto rounded-none" @click="showForm"><Plus></Plus></button>
+  <button class="btn-sm btn rounded-none" @click="showForm"><Plus></Plus></button>
 
   <!-- 弹层 -->
   <div class="modal modal-open" v-bind:class="formSwitcher ? '' : 'hidden'">
@@ -11,6 +11,7 @@
         autofocus
         placeholder="输入标题"
         class="input input-bordered input-primary w-full max-w-xs"
+        @keyup.enter="submitPageForm"
       />
       <div class="modal-action">
         <label for="my-modal" class="btn" v-on:click="hideForm">取消</label>

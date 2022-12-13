@@ -8,7 +8,7 @@
 
 ## 渲染
 
-### Javascript 相关操作
+### JavaScript 相关操作
 
 这里的 Markdown 使用了 TailwindCSS 的 Class，以及 AlpineJS 的语法。  
 比如可能会有这样的片段：

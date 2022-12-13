@@ -47,5 +47,5 @@ Python 3 相对于 Python 2，升级非常大，很多语法都发生了改变�
 <div class="run"></div>
 
 ```shell
-python -V
+python3 -V
 ```

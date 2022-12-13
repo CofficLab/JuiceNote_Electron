@@ -1,10 +1,7 @@
 <template>
-  <div v-on:click="edit" class="btn btn-sm my-auto rounded-none" v-show="!editMode">
-    <PencilSquare></PencilSquare>
-  </div>
-
-  <div v-on:click="show" class="btn btn-sm my-auto rounded-none" v-show="editMode">
-    <ArrowUturnLeft></ArrowUturnLeft>
+  <div v-on:click="switcher" class="btn-sm btn my-auto rounded-none">
+    <PencilSquare v-if="!editMode"></PencilSquare>
+    <ArrowUturnLeft v-if="editMode"></ArrowUturnLeft>
   </div>
 </template>
 
@@ -20,19 +17,13 @@ export default defineComponent({
     ArrowUturnLeft,
   },
   methods: {
-    edit() {
-      store.edit_mode = true;
-    },
-    show() {
-      store.edit_mode = false;
+    switcher() {
+      store.edit_mode = !store.edit_mode;
     },
   },
   computed: {
     editMode() {
       return store.edit_mode;
-    },
-    disabled(): boolean {
-      return store.current.isRoot() || store.current === store.root.first();
     },
   },
 });
