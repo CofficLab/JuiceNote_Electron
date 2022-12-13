@@ -1,5 +1,5 @@
 <template>
-  <div class="h-full overflow-scroll flex flex-col items-end">
+  <div class="h-full overflow-scroll flex flex-col items-end pb-24">
     <!-- 其他编程语言 -->
     <ul class="menu shadow bg-base-100/80 rounded-none w-40 mt-2" v-show="menus.length > 1">
       <li v-for="menu in menus">
