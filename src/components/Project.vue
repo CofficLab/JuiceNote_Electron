@@ -19,7 +19,7 @@ import ProjectItem from "./ProjectItem.vue";
 export default defineComponent({
   computed: {
     project: function () {
-      let project = store.current.project;
+      let project = store.current.parent().project;
 
       return project;
     },

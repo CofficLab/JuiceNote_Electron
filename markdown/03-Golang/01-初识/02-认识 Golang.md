@@ -21,6 +21,8 @@ func main() {
 
 ## 包
 
+<div class="o">https://pkg.go.dev/std</div>
+
 ```go
 package main
 ```
@@ -79,7 +81,7 @@ Go 规定，我们写的程序必须有一个`main`包。
 
 这个内置包的集合的官方名称是：**Standard Library**，中文译为：**标准库**。
 
-> 标准库里包含了哪些包？
+<div class="ask">标准库里包含了哪些包？</div>
 
 这个答案在其官方文档里：<a href="https://pkg.go.dev/std" target="_blank">https://pkg.go.dev/std</a>
 

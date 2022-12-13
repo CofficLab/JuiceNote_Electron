@@ -11,6 +11,7 @@
         autofocus
         placeholder="输入标题"
         class="input input-bordered input-primary w-full max-w-xs"
+        @keyup.enter="submitPageForm"
       />
       <div class="modal-action">
         <label for="my-modal" class="btn" v-on:click="hideForm">取消</label>

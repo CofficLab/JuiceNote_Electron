@@ -41,7 +41,7 @@ md.use(require("markdown-it-table-of-contents"), {
 class node {
     public static rootPath = path.join(electron.ipcRenderer.sendSync('get-app-path'), 'markdown')
     public static rootNode: node
-    public static excepts = ['README.md', 'footer.md', 'projects']
+    public static excepts = ['README.md', 'footer.md', 'projects', 'codes']
     public isFolder = false
     public project: project = new project
     public file: string = ''
@@ -59,20 +59,16 @@ class node {
             this.title = this.getTitle()
             this.isFolder = fs.statSync(this.file).isDirectory()
             this.level = file.split('/').length - node.rootPath.split('/').length
-            if (this.file.includes('项目') || this.file.includes('projects')) {
-                // this.project = new project(path.join(node.rootPath, '02-Python', 'projects', 'crm'))
-            }
 
             if (fs.statSync(file).isDirectory()) {
                 fs.readdirSync(file).forEach((child, key) => {
-                    if (!node.excepts.includes(child) && path.basename(child) != '.DS_Store') {
+                    if (child == 'codes' || child == 'project') {
+                        // 子节点是一个项目
+                        this.project = new project(path.join(this.file, child))
+                    } else if (!node.excepts.includes(child) && path.basename(child) != '.DS_Store') {
                         let order = key + 1
                         let fullPath = path.join(file, child)
-                        if (this.project.notEmpty()) {
-                            this.children.push(new node(fullPath))
-                        } else {
-                            this.children.push((new node(fullPath)).renameWithOrder(order))
-                        }
+                        this.children.push((new node(fullPath)).renameWithOrder(order))
                     }
                 })
             }
@@ -655,33 +651,19 @@ class node {
 
         let basename = path.basename(this.file)
         let extname = path.extname(this.file)
-        let isDir = fs.statSync(this.file).isDirectory()
-        let fileName = this.file.replace(path.dirname(this.file), '')
-        let titleFromSplitted = fileName.split('-')[1]
-        let title = titleFromSplitted ? titleFromSplitted : fileName.replace('/', '')
+        let lastElement = basename.replace(extname, '').split('-').pop() ?? basename
 
-        if (isDir) {
-            if (!this.id.includes('-')) return this.id
-
-            return title === undefined ? '' : title
-        }
-
+        // 如果不是markdown文件，标题 = 分割后的最后一个元素
         if (extname !== '.md') {
-            // console.log('get title of', this.file)
-            // console.log('result is', basename.replace(extname, '').split('-')[1])
-            if (!basename.replace(extname, '').includes('-')) {
-                return basename
-            }
-
-            return basename
+            return lastElement
         }
 
-        // 获取markdown渲染后的HTML的标题
+        // 如果是markdown文件，获取markdown渲染后的HTML的标题
         let html = this.htmlWithToc()
         let dom = node.makeDom(html)
         let titleDom = dom.getElementsByTagName('h1')[0]
 
-        return titleDom ? titleDom.innerText : title.replace('.md', '')
+        return titleDom ? titleDom.innerText : lastElement
     }
 
     /**

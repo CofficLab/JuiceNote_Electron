@@ -27,8 +27,8 @@
         class="hidden lg:flex flex-row justify-end w-56 bg-gradient-to-r from-cyan-800/10 to-sky-200/40 dark:to-cyan-800/10 dark:from-cyan-800/10"
       >
         <div class="flex flex-row justify-end fixed top-12 right-0 h-screen">
-          <Project v-if="current.project.notEmpty()"></Project>
-          <Toc v-show="!editorMode"></Toc>
+          <Project v-if="current.parent().project.notEmpty()"></Project>
+          <Toc v-show="!editorMode" v-if="current.parent().project.isEmpty()"></Toc>
         </div>
       </aside>
     </main>
