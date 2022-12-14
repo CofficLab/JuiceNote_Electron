@@ -19,7 +19,7 @@
       <div class="flex flex-col flex-grow gap-4 pt-12 pb-48 min-h-screen bg-cyan-800/10">
         <Content v-if="!editorMode" class="prose mx-auto w-full"></Content>
         <Editor v-if="editorMode"></Editor>
-        <Code v-if="code != ''"></Code>
+        <CodeContainer v-if="code != ''"></CodeContainer>
       </div>
 
       <!-- 右侧栏 -->
@@ -71,7 +71,7 @@ import Editor from "./Editor.vue";
 import SideMenu from "./SideMenu.vue";
 import Others from "./Others.vue";
 import Project from "./Project.vue";
-import Code from "./Code.vue";
+import CodeContainer from "./CodeContainer.vue";
 
 export default defineComponent({
   components: {
@@ -92,7 +92,7 @@ export default defineComponent({
     SideMenu,
     Others,
     Project,
-    Code,
+    CodeContainer,
   },
   computed: {
     code: function () {

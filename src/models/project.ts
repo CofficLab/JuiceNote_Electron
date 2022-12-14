@@ -76,8 +76,7 @@ class project {
     }
 
     public getContent(): string {
-        let wrap = "```" + this.getLanguage() + "\r\nxxx \r\n```"
-        return md.render(wrap.replace('xxx', fs.readFileSync(this.file, 'utf-8')))
+        return fs.readFileSync(this.file, 'utf-8')
     }
 
     public getLanguage(): string {
