@@ -5,8 +5,8 @@
     :style="{ height: '400px' }"
     :autofocus="true"
     :indent-with-tab="true"
-    :tab-size="2"
     :extensions="extensions"
+    :tab-size="4"
     @ready="handleReady"
     @change="log('change', $event)"
     @focus="log('focus', $event)"
@@ -18,6 +18,12 @@
 import { defineComponent, ref, shallowRef } from "vue";
 import { Codemirror } from "vue-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
+import { json } from "@codemirror/lang-json";
+import { python } from "@codemirror/lang-python";
+import { sql } from "@codemirror/lang-sql";
+import { java } from "@codemirror/lang-java";
+import { cpp } from "@codemirror/lang-cpp";
+import { php } from "@codemirror/lang-php";
 import { oneDark } from "@codemirror/theme-one-dark";
 import store from "../models/store";
 
@@ -25,34 +31,22 @@ export default defineComponent({
   components: {
     Codemirror,
   },
-  setup() {
-    const code = store.code;
-    const extensions = [javascript(), oneDark];
-
-    // Codemirror EditorView instance ref
-    const view = shallowRef();
-    const handleReady = (payload) => {
-      view.value = payload.view;
-    };
-
-    // Status is available at all times via Codemirror EditorView
-    const getCodemirrorStates = () => {
-      const state = view.value.state;
-      const ranges = state.selection.ranges;
-      const selected = ranges.reduce((r, range) => r + range.to - range.from, 0);
-      const cursor = ranges[0].anchor;
-      const length = state.doc.length;
-      const lines = state.doc.lines;
-      // more state info ...
-      // return ...
-    };
-
+  data() {
     return {
-      code,
-      extensions,
-      handleReady,
-      log: console.log,
+      extensions: [javascript(), json(), python(), sql(), java(), cpp(), php(), oneDark],
     };
+  },
+  computed: {
+    code: function () {
+      return store.code;
+    },
+  },
+  methods: {
+    handleReady: (payload) => {
+      const view = shallowRef();
+      view.value = payload.view;
+    },
+    log: console.log,
   },
 });
 </script>
