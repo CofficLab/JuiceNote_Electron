@@ -1,17 +1,19 @@
 <template>
-  <codemirror
-    v-model="code"
-    placeholder="Code goes here..."
-    :style="{ height: '400px' }"
-    :autofocus="true"
-    :indent-with-tab="true"
-    :extensions="extensions"
-    :tab-size="4"
-    @ready="handleReady"
-    @change="log('change', $event)"
-    @focus="log('focus', $event)"
-    @blur="log('blur', $event)"
-  />
+  <div>
+    <codemirror
+      v-model="code"
+      placeholder="Code goes here..."
+      :style="{ height: '400px' }"
+      :autofocus="true"
+      :indent-with-tab="true"
+      :extensions="extensions"
+      :tab-size="4"
+      @ready="handleReady"
+      @change="log('change', $event)"
+      @focus="log('focus', $event)"
+      @blur="log('blur', $event)"
+    />
+  </div>
 </template>
 
 <script>

@@ -16,17 +16,20 @@
       </aside>
 
       <!-- 内容区域 -->
-      <div class="flex flex-col flex-grow gap-4 pt-12 pb-48 min-h-screen bg-cyan-800/10">
-        <Content v-if="!editorMode" class="prose mx-auto w-full"></Content>
+      <div class="flex flex-col items-center flex-grow gap-4 pt-12 pb-48 min-h-screen bg-cyan-800/10">
+        <Content v-if="!editorMode" class="prose"></Content>
         <Editor v-if="editorMode"></Editor>
-        <CodeContainer v-if="code != ''"></CodeContainer>
+        <CodeContainer v-if="code != ''" class="w-full prose mx-auto"></CodeContainer>
       </div>
 
       <!-- 右侧栏 -->
       <aside
         class="hidden lg:flex flex-row justify-end w-56 bg-gradient-to-r from-cyan-800/10 to-sky-200/40 dark:to-cyan-800/10 dark:from-cyan-800/10"
       >
-        <div class="flex flex-row justify-end fixed top-12 right-0 h-screen">
+        <div
+          class="flex flex-row justify-end fixed right-0 h-screen"
+          v-bind:class="{ 'top-8': !hideTitleBar, 'top-0': hideTitleBar }"
+        >
           <Project v-if="current.parent().project.notEmpty()"></Project>
           <Toc v-show="!editorMode" v-if="current.parent().project.isEmpty()"></Toc>
         </div>
