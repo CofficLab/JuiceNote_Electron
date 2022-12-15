@@ -19,7 +19,7 @@
       <div class="flex flex-col items-center flex-grow gap-4 pt-12 pb-48 min-h-screen bg-cyan-800/10">
         <Content v-if="!editorMode" class="prose"></Content>
         <Editor v-if="editorMode"></Editor>
-        <CodeContainer v-if="code != ''" class="w-full prose mx-auto"></CodeContainer>
+        <CodeContainer v-if="code != ''" class="w-full max-w-2xl mx-auto"></CodeContainer>
       </div>
 
       <!-- 右侧栏 -->
@@ -30,7 +30,7 @@
           class="flex flex-row justify-end fixed right-0 h-screen"
           v-bind:class="{ 'top-8': !hideTitleBar, 'top-0': hideTitleBar }"
         >
-          <Project v-if="current.parent().project.notEmpty()"></Project>
+          <ProjectTree v-if="current.parent().project.notEmpty()"></ProjectTree>
           <Toc v-show="!editorMode" v-if="current.parent().project.isEmpty()"></Toc>
         </div>
       </aside>
@@ -73,7 +73,7 @@ import Content from "./Content.vue";
 import Editor from "./Editor.vue";
 import SideMenu from "./SideMenu.vue";
 import Others from "./Others.vue";
-import Project from "./Project.vue";
+import ProjectTree from "./ProjectTree.vue";
 import CodeContainer from "./CodeContainer.vue";
 
 export default defineComponent({
@@ -94,7 +94,7 @@ export default defineComponent({
     Editor,
     SideMenu,
     Others,
-    Project,
+    ProjectTree,
     CodeContainer,
   },
   computed: {

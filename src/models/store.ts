@@ -13,6 +13,7 @@ const store = reactive({
     isProd: location.protocol === 'file:',
     codeId: '',
     code: '',
+    project: node.getRoot().current().isLeaf() ? node.getRoot().current().parent().project : node.getRoot().current().firstLeaf().parent().project,
     setEditMode() {
         this.edit_mode = true
     },
@@ -48,6 +49,7 @@ const store = reactive({
     },
     refresh() {
         this.root = node.refreshedRoot()
+        this.project = this.root.current().isLeaf() ? this.root.current().parent().project : this.root.current().firstLeaf().parent().project
     },
     delete(node: node) {
         this.goto(node.prevLeaf().id);

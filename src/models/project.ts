@@ -52,8 +52,35 @@ class project {
         return this.file == '' || this.file == undefined
     }
 
+    /**
+     * 不是空项目则返回true
+     * 
+     * @returns boolean
+     */
     public notEmpty(): boolean {
         return !this.isEmpty()
+    }
+
+    /**
+     * 新建文件
+     * 
+     * @param $name 
+     * @returns 
+     */
+    public makeFile($name = ''): void {
+        fs.writeFileSync(path.join(this.file, $name), '')
+        this.children = this.getChildren()
+    }
+
+    /**
+     * 删除文件
+     * 
+     * @param $name 
+     * @returns 
+     */
+    public deleteFile($name = ''): void {
+        fs.unlinkSync(path.join(this.file, $name))
+        this.children = this.getChildren()
     }
 
     private getChildren(): project[] {
