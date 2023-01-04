@@ -17,7 +17,7 @@
 
       <!-- 内容区域 -->
       <div class="flex flex-col items-center flex-grow gap-4 pt-12 pb-48 min-h-screen bg-cyan-800/10">
-        <Content v-if="!editorMode" class="prose"></Content>
+        <Content v-if="!editorMode" class="prose w-full"></Content>
         <Editor v-if="editorMode"></Editor>
         <CodeContainer v-if="code != ''" class="w-full max-w-2xl mx-auto"></CodeContainer>
       </div>
