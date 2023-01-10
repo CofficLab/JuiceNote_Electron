@@ -1,4 +1,4 @@
-# 字符串
+# `strings` 字符串
 
 <div class="o">https://pkg.go.dev/strings@go1.19.4</div>
 

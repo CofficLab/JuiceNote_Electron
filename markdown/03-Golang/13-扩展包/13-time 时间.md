@@ -1,4 +1,4 @@
-# 时间
+# `time` 时间
 
 <div class="o">https://pkg.go.dev/time@go1.19.4</div>
 

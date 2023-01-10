@@ -1,4 +1,4 @@
-# 日志
+# `log` 日志
 
 <div class="o">https://pkg.go.dev/log@go1.19.4</div>
 
