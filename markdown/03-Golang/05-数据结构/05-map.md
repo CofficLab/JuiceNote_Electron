@@ -1,13 +1,37 @@
-# 映射
+# map
 
-映射是通过键来访问每一个值的集合。
+## 简介
+
+维基百科里对 map 的定义：
+
+> In computer science, an associative array, map, symbol table, or dictionary is an abstract data type composed of a collection of (key, value) pairs, such that each possible key appears at most once in the collection.
+
+翻译成中文：
+
+> 在计算机科学里，map 被称为相关数组、map、符号表或者字典，是由一组 <key, value> 对组成的抽象数据结构，，并且同一个 key 只会出现一次。
+
+有两个关键点：
+
+- map 是由 key-value 对组成的；
+- key 只会出现一次。
 
 在不同的编程语言中有不同的名字：
 
-| 编程语言 | 英文 | 中文 |
-| -------- | ---- | ---- |
-| Go       | Map  | Map  |
-| Python   | Dict | 字典 |
+| 编程语言 | 英文 | 中文      |
+| -------- | ---- | --------- |
+| Go       | Map  | Map、映射 |
+| Python   | Dict | 字典      |
+
+## 操作
+
+和 map 相关的操作主要是：
+
+- 增加一个 k-v 对 —— Add or insert
+- 删除一个 k-v 对 —— Remove or delete
+- 修改某个 k 对应的 v —— Reassign
+- 查询某个 k 对应的 v —— Lookup
+
+简单说就是最基本的 增删查改。
 
 ## 声明
 
