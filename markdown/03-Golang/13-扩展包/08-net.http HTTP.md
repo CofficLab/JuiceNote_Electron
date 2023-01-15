@@ -1,4 +1,4 @@
-# `net:http` HTTP
+# `net/http` HTTP
 
 <div class="o">https://pkg.go.dev/net/http@go1.19.4</div>
 

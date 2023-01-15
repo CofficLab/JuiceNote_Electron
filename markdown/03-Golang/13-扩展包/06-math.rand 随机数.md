@@ -1,4 +1,4 @@
-# `math:rand` 随机数
+# `math/rand` 随机数
 
 <div class="o">https://pkg.go.dev/math/rand@go1.19.4</div>
 

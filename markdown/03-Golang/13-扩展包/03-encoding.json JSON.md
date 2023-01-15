@@ -1,4 +1,4 @@
-# `encoding:json` JSON
+# `encoding/json` JSON
 
 <div class="o">https://pkg.go.dev/encoding/json@go1.19.4</div>
 

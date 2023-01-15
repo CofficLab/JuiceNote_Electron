@@ -1,4 +1,4 @@
-# `net:url` URL
+# `net/url` URL
 
 <div class="o">https://pkg.go.dev/net/url@go1.19.4</div>
 
