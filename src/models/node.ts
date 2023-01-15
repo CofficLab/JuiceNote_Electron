@@ -720,7 +720,7 @@ class node {
 
     private renameWithOrder(order: number): node {
         let extname = path.extname(this.file)
-        let name = this.padding(order) + '-' + this.title
+        let name = this.padding(order) + '-' + this.title.replaceAll("/", ".")
         let fileNewPath = path.join(path.dirname(this.file), name + extname)
 
         if (this.file != fileNewPath) {
