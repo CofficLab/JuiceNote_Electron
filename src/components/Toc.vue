@@ -1,15 +1,15 @@
 <template>
   <div class="h-full overflow-scroll flex flex-col items-end pb-24">
     <!-- 其他编程语言 -->
-    <ul class="menu shadow bg-base-100/80 rounded-none w-40 mt-2" v-show="menus.length > 1">
+    <ul class="menu shadow bg-base-100/80 rounded-none w-56 mt-2" v-show="menus.length > 1">
       <li v-for="menu in menus">
         <Link v-bind:href="menu.id">{{ menu.book().title }}</Link>
       </li>
     </ul>
     <!-- 官方文档 -->
-    <div class="official-link flex flex-col gap-1 w-40 my-2"></div>
+    <div class="official-link flex flex-col gap-1 w-56 my-2"></div>
 
-    <div class="table-of-contents overflow-scroll w-40 bg-cyan-700/10" v-html="toc"></div>
+    <div class="table-of-contents overflow-scroll w-56 bg-cyan-700/10" v-html="toc"></div>
   </div>
 </template>
 

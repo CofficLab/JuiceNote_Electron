@@ -24,7 +24,7 @@
 
       <!-- 右侧栏 -->
       <aside
-        class="hidden lg:flex flex-row justify-end w-56 bg-gradient-to-r from-cyan-800/10 to-sky-200/40 dark:to-cyan-800/10 dark:from-cyan-800/10"
+        class="hidden lg:flex flex-row justify-end w-72 bg-gradient-to-r from-cyan-800/10 to-sky-200/40 dark:to-cyan-800/10 dark:from-cyan-800/10"
       >
         <div
           class="flex flex-row justify-end fixed right-0 h-screen"
