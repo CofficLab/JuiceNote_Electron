@@ -541,9 +541,7 @@ class node {
 
         children.forEach(function (child) {
             // console.log('search for title', title, 'current is', child.title)
-            if (child.title == title) {
-                result.push(child)
-            }
+            if (child.title == title) result.push(child)
 
             result = result.concat(child.search(title))
         })
