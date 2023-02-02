@@ -19,5 +19,3 @@ console.log(typeof true);
 console.log(typeof undeclaredVariable);
 // Expected output: "undefined"
 ```
-
-结束

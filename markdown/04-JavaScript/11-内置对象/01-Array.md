@@ -100,6 +100,7 @@ let staff = new Array("佟湘玉", "白展堂", "莫小贝");
 staff[2] = '燕小六'
 
 console.log(staff[2]);
+console.log(staff)
 ```
 
 ### 删除
@@ -125,7 +126,7 @@ pop 方法从一个数组中删除并返回最后一个元素。
 ```JavaScript
 let stuff = ["佟湘玉", "白展堂", "莫小贝", "刑育森"];
 
-delete stuff[3];
+delete stuff[2];
 
 console.log(stuff);
 ```
