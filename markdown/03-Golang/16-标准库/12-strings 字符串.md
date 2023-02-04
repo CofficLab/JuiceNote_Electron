@@ -2,7 +2,13 @@
 
 <div class="o">https://pkg.go.dev/strings@go1.19.4</div>
 
-## 前缀和后缀
+## 方法
+
+### join
+
+## 常见场景
+
+### 前缀和后缀
 
 `HasPrefix` 用于判断字符串是否以某个字符串开头。
 
@@ -32,7 +38,7 @@ func main() {
 }
 ```
 
-## 包含关系
+### 包含关系
 
 `Contains` 用于判断字符串是否包含某个字符串。
 
@@ -48,7 +54,7 @@ func main() {
 }
 ```
 
-## 大小写转换
+### 大小写转换
 
 <div class="run"></div>
 
