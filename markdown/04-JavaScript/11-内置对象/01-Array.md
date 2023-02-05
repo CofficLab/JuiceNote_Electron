@@ -58,6 +58,67 @@ console.log(staff.length);
 
 ## 方法
 
+### at
+
+```javaScript
+at(index)
+```
+
+at() 方法接收一个整数值并返回该索引对应的元素，允许正数和负数。负整数从数组中的最后一个元素开始倒数。
+
+<div class="run"></div>
+
+```javaScript
+const array1 = [5, 12, 8, 130, 44];
+
+let index = 2;
+
+console.log(`Using an index of ${index} the item returned is ${array1.at(index)}`);
+// Expected output: "Using an index of 2 the item returned is 8"
+
+index = -2;
+
+console.log(`Using an index of ${index} item returned is ${array1.at(index)}`);
+// Expected output: "Using an index of -2 item returned is 130"
+
+```
+
+### slice
+
+```javaScript
+slice()
+slice(start)
+slice(start, end)
+```
+
+slice() 方法返回一个新的数组对象，这一对象是一个由 begin 和 end 决定的原数组的浅拷贝（包括 begin，不包括 end）。原始数组不会被改变。
+
+<div class="run"></div>
+
+```javaScript
+const animals = ['ant', 'bison', 'camel', 'duck', 'elephant'];
+
+console.log(animals.slice(2));
+// Expected output: Array ["camel", "duck", "elephant"]
+
+console.log(animals.slice(2, 4));
+// Expected output: Array ["camel", "duck"]
+
+console.log(animals.slice(1, 5));
+// Expected output: Array ["bison", "camel", "duck", "elephant"]
+
+console.log(animals.slice(-2));
+// Expected output: Array ["duck", "elephant"]
+
+console.log(animals.slice(2, -1));
+// Expected output: Array ["camel", "duck"]
+
+console.log(animals.slice());
+// Expected output: Array ["ant", "bison", "camel", "duck", "elephant"]
+```
+
+## 场景
+
 ### 访问元素
 
 <div class="run"></div>
