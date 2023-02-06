@@ -541,9 +541,7 @@ class node {
 
         children.forEach(function (child) {
             // console.log('search for title', title, 'current is', child.title)
-            if (child.title == title) {
-                result.push(child)
-            }
+            if (child.title == title) result.push(child)
 
             result = result.concat(child.search(title))
         })
@@ -720,7 +718,7 @@ class node {
 
     private renameWithOrder(order: number): node {
         let extname = path.extname(this.file)
-        let name = this.padding(order) + '-' + this.title
+        let name = this.padding(order) + '-' + this.title.replaceAll("/", ".").replaceAll("%", "percent")
         let fileNewPath = path.join(path.dirname(this.file), name + extname)
 
         if (this.file != fileNewPath) {
