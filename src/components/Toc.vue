@@ -9,7 +9,8 @@
     <!-- 官方文档 -->
     <div class="official-link flex flex-col gap-1 w-56 my-2"></div>
 
-    <div class="table-of-contents overflow-scroll w-56 bg-cyan-700/10" v-html="toc"></div>
+    <!-- TOC -->
+    <div class="table-of-contents overflow-scroll w-56 bg-cyan-800/10" v-html="toc"></div>
   </div>
 </template>
 
