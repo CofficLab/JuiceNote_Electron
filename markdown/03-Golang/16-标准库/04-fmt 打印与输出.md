@@ -54,3 +54,31 @@
 | 格式 | 含义                      |
 | ---- | ------------------------- |
 | %p   | 地址的十六进制，前缀为 0x |
+
+## 场景
+
+### 前补齐
+
+<div class="run"></div>
+
+```go
+package main
+import "fmt"
+
+func main() {
+    fmt.Printf("->%20s<-", "***")
+}
+```
+
+### 后补齐
+
+<div class="run"></div>
+
+```go
+package main
+import "fmt"
+
+func main() {
+    fmt.Printf("->%-20s<-", "***")
+}
+```

@@ -68,3 +68,51 @@ func main() {
     fmt.Println(strings.ToUpper("aBcDEF"))
 }
 ```
+
+### 重复
+
+<div class="run"></div>
+
+```go
+package main
+import "fmt"
+import "strings"
+
+func main() {
+    fmt.Println(strings.Repeat("*", 10))
+}
+```
+
+### 替换
+
+<div class="run"></div>
+
+```go
+package main
+import "fmt"
+import "strings"
+
+func main() {
+    fmt.Println(strings.Replace("AbcDEF","DEF","edf",1))
+}
+```
+
+### 删除开头的字符串
+
+<div class="run"></div>
+
+```go
+package main
+
+import (
+	"fmt"
+	"strings"
+)
+
+func main() {
+	var s = "¡¡¡Hello, Gophers!!!"
+	s = strings.TrimPrefix(s, "¡¡¡Hello, ")
+	s = strings.TrimPrefix(s, "¡¡¡Howdy, ")
+	fmt.Print(s)
+}
+```
