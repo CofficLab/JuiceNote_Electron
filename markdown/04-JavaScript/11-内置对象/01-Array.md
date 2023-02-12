@@ -194,32 +194,44 @@ console.log(stuff);
 
 ### 遍历
 
-<div class="run"></div>
+- for
 
-```JavaScript
-let staff = ["佟湘玉", "白展堂", "莫小贝"];
+  <div class="run"></div>
 
-// 第一种方法
-for (let i = 0; i < staff.length; i = i + 1) {
-  console.log(staff[i]);
-}
+  ```JavaScript
+  let staff = ["佟湘玉", "白展堂", "莫小贝"];
 
-console.log('---')
+  // 第一种方法
+  for (let i = 0; i < staff.length; i = i + 1) {
+    console.log(staff[i]);
+  }
+  ```
 
-// 第二种方法
-staff.forEach(function (element) {
-  console.log(element);
-});
+- foreach
 
-console.log('---')
+  <div class="run"></div>
 
-// 第三种方法
-var x = 0;
-while (x < staff.length) {
-  console.log(staff[x]);
-  x = x + 1;
-}
-```
+  ```JavaScript
+  let staff = ["佟湘玉", "白展堂", "莫小贝"];
+
+  staff.forEach(function (element) {
+    console.log(element);
+  });
+  ```
+
+- while
+
+  <div class="run"></div>
+
+  ```JavaScript
+  let staff = ["佟湘玉", "白展堂", "莫小贝"];
+
+  var x = 0;
+  while (x < staff.length) {
+    console.log(staff[x]);
+    x = x + 1;
+  }
+  ```
 
 ### 搜索
 
