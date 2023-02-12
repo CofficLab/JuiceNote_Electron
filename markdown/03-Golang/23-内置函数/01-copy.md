@@ -55,6 +55,8 @@ func main() {
 }
 ```
 
+值类型的数据，默认全部都是深复制，Array、Int、String、Struct、Float，Bool。
+
 ## 浅拷贝(Shadow Copy)
 
 ```
@@ -82,3 +84,5 @@ func main() {
     fmt.Printf("%[1]p %[1]v\n", b)
 }
 ```
+
+引用类型的数据，默认全部都是浅复制，Slice，Map。
