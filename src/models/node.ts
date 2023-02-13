@@ -41,7 +41,7 @@ md.use(require("markdown-it-table-of-contents"), {
 class node {
     public static rootPath = path.join(electron.ipcRenderer.sendSync('get-app-path'), 'markdown')
     public static rootNode: node
-    public static excepts = ['README.md', 'footer.md', 'projects', 'code', '.DS_Store']
+    public static excepts = ['README.md', 'footer.md', 'projects', 'code', '.DS_Store', 'node_modules']
     public isFolder = false
     public project: project = new project
     public file: string = ''
@@ -52,6 +52,7 @@ class node {
     public level: number = 0
 
     public constructor(file?: string) {
+        console.log('初始化节点', file)
         if (file) {
             this.file = file
             this.order = this.getOrder()
