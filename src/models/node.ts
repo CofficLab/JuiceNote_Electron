@@ -41,7 +41,7 @@ md.use(require("markdown-it-table-of-contents"), {
 class node {
     public static rootPath = path.join(electron.ipcRenderer.sendSync('get-app-path'), 'markdown')
     public static rootNode: node
-    public static excepts = ['README.md', 'footer.md', 'projects', 'codes', '.DS_Store']
+    public static excepts = ['README.md', 'footer.md', 'projects', 'code', '.DS_Store']
     public isFolder = false
     public project: project = new project
     public file: string = ''
@@ -63,7 +63,7 @@ class node {
             if (fs.statSync(file).isDirectory()) {
                 var order = 0;
                 fs.readdirSync(file).forEach((child) => {
-                    if (child == 'codes' || child == 'project') {
+                    if (child == 'code' || child == 'project') {
                         // 子节点是一个项目
                         this.project = new project(path.join(this.file, child))
                     } else if (!node.excepts.includes(child)) {
