@@ -316,4 +316,13 @@ console.log(sumWithInitial);
 // expected output: 10
 ```
 
+### 变成一行字符串
+
+<div class="run"></div>
+
+```javaScript
+const arr = [1,2,3,4]
+console.log(arr.join("-"))
+```
+
 <div class="banner">当你看到一个对象时，第一反应应该是：它有哪些属性和方法，官方文档在哪里</div>

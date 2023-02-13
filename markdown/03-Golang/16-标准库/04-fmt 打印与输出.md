@@ -1,5 +1,7 @@
 # `fmt` 打印与输出
 
+<div class="o">https://pkg.go.dev/fmt@go1.20</div>
+
 ## 通用
 
 | 格式 | 含义                                       |
