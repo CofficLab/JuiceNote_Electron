@@ -3,6 +3,7 @@ import path from "path"
 import electron from 'electron'
 import hljs from 'highlight.js'
 import project from "./project";
+import log from "./log";
 
 const md = require('markdown-it')({
     html: true,
@@ -52,7 +53,7 @@ class node {
     public level: number = 0
 
     public constructor(file?: string) {
-        console.log('初始化节点', file)
+        // console.log('初始化节点', file)
         if (file) {
             this.file = file
             this.order = this.getOrder()
@@ -418,10 +419,25 @@ class node {
     }
 
     public current(): node {
+        log.info('node.current', 'find current node by id')
         let url = new URL(location.href)
         let id = url.searchParams.get('id')
+        if (id == null) {
+            console.error("can not get id from url")
+            return new node
+        }
 
-        return this.getLastActivated(id ? decodeURI(id) : '/')
+        let filePath = node.rootPath + '/' + node.idToPath(id)
+
+        if (fs.existsSync(filePath + '.md')) {
+            return new node(filePath + '.md')
+        }
+
+        if (fs.existsSync(filePath)) {
+            return new node(filePath)
+        }
+
+        return new node
     }
 
     /**
@@ -638,6 +654,15 @@ class node {
         let id = path.replace(this.rootPath, '').replace('.md', '').replace('/', '').replaceAll('/', '@')
 
         return id === '' ? '/' : id
+    }
+
+    /**
+     * 将节点ID转换成文件路径
+     */
+    private static idToPath(id: string) {
+        let filePath = id.replaceAll('@', '/')
+
+        return filePath
     }
 
     /**
