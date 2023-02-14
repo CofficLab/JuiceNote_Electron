@@ -1,19 +1,21 @@
 import { reactive } from 'vue'
 import node from './node'
+import log from './log'
 
 const store = reactive({
     full_screen: false,
     edit_mode: false,
-    root: node.getRoot(),
+    root: new node,
     toast: '',
     href: location.href,
     search: decodeURI(location.search),
     pathname: location.pathname,
-    current: node.getRoot().current().isLeaf() ? node.getRoot().current() : node.getRoot().current().firstLeaf(),
+    current: new node,
     isProd: location.protocol === 'file:',
     codeId: '',
     code: '',
-    project: node.getRoot().current().isLeaf() ? node.getRoot().current().parent().project : node.getRoot().current().firstLeaf().parent().project,
+    project: (new node).project,
+
     setEditMode() {
         this.edit_mode = true
     },
@@ -48,6 +50,7 @@ const store = reactive({
         return newNode
     },
     refresh() {
+        log.info('store.refresh', 'refresh in store')
         this.root = node.refreshedRoot()
         this.project = this.root.current().isLeaf() ? this.root.current().parent().project : this.root.current().firstLeaf().parent().project
     },
@@ -62,12 +65,37 @@ const store = reactive({
         this.href = window.location.href
         this.search = decodeURI(location.search)
         this.pathname = window.location.pathname
-        this.current = this.root.current()
+        log.info('store.goto', 'get current node')
+        this.current = this.getCurrentNode(true)
 
         // 如果不是叶子且有子节点，跳到第一个子节点
         if (!this.current.isLeaf() && this.current.children.length > 0) {
             this.goto(this.current.first().id)
         }
+    },
+    getCurrentNode(refresh: boolean = false) {
+        log.info('store.getCurrentNode', 'should refresh: ' + refresh.toString())
+
+        if (this.current.notEmpty() && !refresh) {
+            return this.current
+        }
+
+        let current = node.getRoot().current()
+        this.current = current.isLeaf() ? current : current.firstLeaf()
+
+        return this.current
+    },
+    getProject() {
+        console.log('store.getProject', 'get current node')
+        let current = this.getCurrentNode()
+        current.isLeaf() ? current.parent().project : current.firstLeaf().parent().project
+    },
+    getRoot() {
+        if (this.root.notEmpty()) {
+            return this.root
+        }
+
+        return node.getRoot()
     }
 })
 

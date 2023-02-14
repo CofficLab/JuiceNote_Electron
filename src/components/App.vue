@@ -58,6 +58,7 @@
 import { defineComponent } from "vue";
 import Toc from "./Toc.vue";
 import store from "../models/store";
+import log from "../models/log";
 import Breadcrumbs from "./Breadcrumbs.vue";
 import Prev from "./Prev.vue";
 import Next from "./Next.vue";
@@ -102,7 +103,8 @@ export default defineComponent({
       return store.code;
     },
     current: function () {
-      return store.current;
+      log.info("App.vue", "get current node from store");
+      return store.getCurrentNode();
     },
     isProd: function (): boolean {
       return store.isProd;
