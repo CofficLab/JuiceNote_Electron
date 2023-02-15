@@ -422,22 +422,9 @@ class node {
         log.info('node.current', 'find current node by id')
         let url = new URL(location.href)
         let id = url.searchParams.get('id')
-        if (id == null) {
-            console.error("can not get id from url")
-            return new node
-        }
+        let filePath = node.idToPath(id)
 
-        let filePath = node.rootPath + '/' + node.idToPath(id)
-
-        if (fs.existsSync(filePath + '.md')) {
-            return new node(filePath + '.md')
-        }
-
-        if (fs.existsSync(filePath)) {
-            return new node(filePath)
-        }
-
-        return new node
+        return new node(filePath)
     }
 
     /**
@@ -659,10 +646,19 @@ class node {
     /**
      * 将节点ID转换成文件路径
      */
-    private static idToPath(id: string) {
-        let filePath = id.replaceAll('@', '/')
+    private static idToPath(id: string | null) {
+        if (id == null || id == '') {
+            return node.rootPath
+        }
 
-        return filePath
+        let folderPath = path.join(node.rootPath, id.replaceAll('@', '/'))
+        let markdownFilePath = folderPath + '.md'
+
+        if (fs.existsSync(markdownFilePath)) {
+            return markdownFilePath
+        }
+
+        return folderPath
     }
 
     /**
