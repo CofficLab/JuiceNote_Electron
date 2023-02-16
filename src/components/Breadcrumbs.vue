@@ -63,6 +63,7 @@ import { defineComponent } from "vue";
 import store from "../models/store";
 import node from "../models/node";
 import Link from "./Link.vue";
+import log from "../models/log";
 
 export default defineComponent({
   data() {
@@ -77,7 +78,8 @@ export default defineComponent({
   },
   computed: {
     breadcrumbs() {
-      let breadcrumbs = store.root.activated(store.current.id);
+      log.info("Breadcrumbs.vue", "获取breadcrumbs");
+      let breadcrumbs = store.getRoot().activated(store.getCurrentNode().id);
 
       return breadcrumbs;
     },
