@@ -9,7 +9,10 @@
 
     <!-- 目录节点，有子节点 -->
     <li class="menu-title" v-if="item.notLeaf() && item.children.length > 0">
-      <span> <span class="ml-1" v-if="item.level > 3" v-for="i in item.level - 3"></span>{{ item.title }}</span>
+      <span v-bind:class="{ 'text-xl text-cyan-900': item.level < 3, 'text-lg': item.level >= 3 }">
+        <span class="ml-1" v-if="item.level > 3" v-for="i in item.level - 3"></span>
+        {{ item.title }}
+      </span>
     </li>
     <SideMenuItem v-for="sub in item.children" v-if="item.notLeaf()" :item="sub"></SideMenuItem>
 
