@@ -42,7 +42,7 @@ md.use(require("markdown-it-table-of-contents"), {
 class node {
     public static rootPath = path.join(electron.ipcRenderer.sendSync('get-app-path'), 'markdown')
     public static rootNode: node
-    public static excepts = ['README.md', 'footer.md', 'projects', 'code', '.DS_Store', 'node_modules']
+    public static excepts = ['README.md', 'footer.md', 'projects', 'code', '.DS_Store', 'node_modules', 'images', 'playground.go']
     public isFolder = false
     public project: project = new project
     public file: string = ''
