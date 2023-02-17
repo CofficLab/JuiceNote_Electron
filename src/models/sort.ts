@@ -11,12 +11,16 @@ const ignore = [
 ]
 
 class sort {
-    static getSort(file: string): string[] {
-        if (!fs.existsSync(path.join(file, 'sort.json'))) {
+    static getSortJsonFilePath(dir: string) {
+        return path.join(dir, 'sort.json')
+    }
+
+    static getSort(dir: string): string[] {
+        if (!fs.existsSync(sort.getSortJsonFilePath(dir))) {
             return []
         }
 
-        let json = fs.readFileSync(path.join(file, 'sort.json')).toString()
+        let json = fs.readFileSync(sort.getSortJsonFilePath(dir)).toString()
         if (json == "") {
             return []
         }
@@ -98,19 +102,6 @@ class sort {
         log.info('sort.setOrder', 'new sort.json is ' + children)
 
         sort.writeSortJson(file, children)
-    }
-
-    static getOrder(file: string, child: string): number {
-        let children = sort.getSort(file)
-
-        for (let i = 0; i < children.length; i++) {
-            console.log('current is', children[i], 'child is ', child)
-            if (children[i] == child) {
-                return i
-            }
-        }
-
-        return -1
     }
 }
 

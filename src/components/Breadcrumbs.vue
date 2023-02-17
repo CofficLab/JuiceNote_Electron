@@ -12,29 +12,29 @@
             class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 h-96 mt-8 overflow-scroll"
           >
             <li
-              v-for="brother in breadcrumb.brothers()"
+              v-for="(item, index) in breadcrumb.brothers()"
               draggable="true"
               v-on:dragend="dragEnd()"
-              v-on:dragstart="dragStart(brother)"
-              v-on:dragenter="dragEnter(brother)"
+              v-on:dragstart="dragStart(item)"
+              v-on:dragenter="dragEnter(item, index)"
               class="flex flex-row min-w-fit"
             >
               <!-- 拖移时显示 -->
               <div
                 class="w-full mx-0 min-w-fit overflow-hidden"
-                v-bind:class="hovered != null && brother.id == hovered.id ? 'h-12 py-6 px-0' : 'h-0 py-0 px-0'"
+                v-bind:class="hovered != null && item.id == hovered.id ? 'h-12 py-6 px-0' : 'h-0 py-0 px-0'"
               >
                 <div class="bg-base-content/10 w-full h-12 rounded"></div>
               </div>
 
               <Link
-                v-bind:href="brother.id"
+                v-bind:href="item.id"
                 v-bind:class="{
-                  active: brother.isActivated(),
+                  active: item.isActivated(),
                   'hover:bg-transparent': dragged !== emptyNode,
                 }"
               >
-                <span>{{ brother.title }}</span>
+                <span>{{ item.title }}</span>
               </Link>
             </li>
 
@@ -73,6 +73,7 @@ export default defineComponent({
       hovered: emptyNode,
       emptyNode: emptyNode,
       bottomNode: bottomNode,
+      index: 0,
     };
   },
   computed: {
@@ -91,13 +92,13 @@ export default defineComponent({
       this.dragged = navigator;
     },
     dragEnd() {
-      let newOrder = this.bottomNode == this.hovered ? this.dragged.parent().children.length + 1 : this.hovered.order;
       store.goto(this.dragged.parent().id);
-      store.updateOrder(this.dragged, newOrder);
+      store.updateOrder(this.dragged, this.index);
       this.hovered = null;
     },
-    dragEnter(navigator: node) {
+    dragEnter(navigator: node, index) {
       this.hovered = navigator;
+      this.index = index;
     },
   },
   components: { Link },

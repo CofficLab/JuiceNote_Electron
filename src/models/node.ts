@@ -54,8 +54,8 @@ class node {
     public level: number = 0
 
     public constructor(file?: string) {
-        // console.log('初始化节点', file)
         if (file) {
+            // console.log('初始化节点', file)
             this.file = file
             this.id = node.pathToId(file)
             this.title = this.getTitle()
