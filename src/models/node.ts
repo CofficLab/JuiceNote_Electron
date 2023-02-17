@@ -4,6 +4,7 @@ import electron from 'electron'
 import hljs from 'highlight.js'
 import project from "./project";
 import log from "./log";
+import sort from "./sort";
 
 const md = require('markdown-it')({
     html: true,
@@ -42,7 +43,7 @@ md.use(require("markdown-it-table-of-contents"), {
 class node {
     public static rootPath = path.join(electron.ipcRenderer.sendSync('get-app-path'), 'markdown')
     public static rootNode: node
-    public static excepts = ['README.md', 'footer.md', 'projects', 'code', '.DS_Store', 'node_modules', 'images', 'playground.go']
+    public static excepts = ['README.md', 'footer.md', 'projects', 'code', '.DS_Store', 'node_modules', 'images', 'playground.go', 'sort.json']
     public isFolder = false
     public project: project = new project
     public file: string = ''
@@ -61,20 +62,28 @@ class node {
             this.title = this.getTitle()
             this.isFolder = fs.statSync(this.file).isDirectory()
             this.level = file.split('/').length - node.rootPath.split('/').length
-
-            if (fs.statSync(file).isDirectory()) {
-                var order = 0;
-                fs.readdirSync(file).forEach((child) => {
-                    if (child == 'code' || child == 'project') {
-                        // 子节点是一个项目
-                        this.project = new project(path.join(this.file, child))
-                    } else if (!node.excepts.includes(child)) {
-                        let fullPath = path.join(file, child)
-                        this.children.push((new node(fullPath)).renameWithOrder(++order))
-                    }
-                })
-            }
+            sort.initSortFile(this.file)
+            this.setChildren()
         }
+    }
+
+    public setChildren() {
+        let items = sort.getSort(this.file)
+
+        if (items.length == 0 && fs.statSync(this.file).isDirectory()) {
+            items = fs.readdirSync(this.file)
+        }
+
+        var order = 0;
+        items.forEach((child) => {
+            if (child == 'code' || child == 'project') {
+                // 子节点是一个项目
+                this.project = new project(path.join(this.file, child))
+            } else if (!node.excepts.includes(child)) {
+                let fullPath = path.join(this.file, child)
+                this.children.push((new node(fullPath)).renameWithOrder(++order))
+            }
+        })
     }
 
     /**
@@ -745,7 +754,10 @@ class node {
 
         if (this.file != fileNewPath) {
             console.log('rename', this.file, 'to', fileNewPath)
-            fs.renameSync(this.file, fileNewPath)
+            fs.rename(this.file, fileNewPath, function (err) {
+                if (err) throw err
+                console.log('rename completed')
+            })
         }
 
         return new node(fileNewPath)
