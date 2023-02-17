@@ -29,31 +29,13 @@ class sort {
             return
         }
 
-        if (!fs.existsSync(path.join(file, 'sort.json'))) {
-            log.info('sort.initSortFile', file + ' 下无sort.json，创建')
-            this.createSortFile(file)
-            return
-        }
-
-        let subFilesCount = 0
-        fs.readdirSync(file).forEach(child => {
-            if (!ignore.includes(child)) {
-                subFilesCount++
-            }
-        })
-
-        if (this.getSort(file).length != subFilesCount) {
-            log.info('sort.initSortFile', file + ' 下共 ' + subFilesCount + ' 个有效节点')
-            log.info('sort.initSortFile', file + ' 下sort.json记录了 ' + this.getSort(file).length + ' 个有效节点')
+        if (!sort.isSortJsonFileValid(file)) {
             this.createSortFile(file)
             return
         }
     }
 
     static writeSortJson(file: string, sort: string[]) {
-        log.info('sort.writeSortJson', 'file=' + file)
-        log.info('sort.writeSortJson', 'sort=' + sort)
-        log.info('sort.writeSortJson', '写入=' + JSON.stringify(sort, null, 2))
         fs.writeFileSync(path.join(file, 'sort.json'), JSON.stringify(sort, null, 2))
     }
 
@@ -68,6 +50,34 @@ class sort {
         this.writeSortJson(file, sort)
     }
 
+    static isSortJsonFileValid(file: string): boolean {
+        if (!fs.existsSync(path.join(file, 'sort.json'))) {
+            log.info('sort.initSortFile', file + ' 下无sort.json，创建')
+
+            return false
+        }
+
+        let subFilesCount = 0
+        fs.readdirSync(file).forEach(child => {
+            if (!ignore.includes(child)) {
+                subFilesCount++
+            }
+        })
+
+        if (this.getSort(file).length != subFilesCount) {
+            return false
+        }
+
+        let result = true
+        sort.getSort(file).forEach(element => {
+            if (!fs.existsSync(path.join(file, element))) {
+                result = false
+            }
+        })
+
+        return result
+    }
+
     /**
     * 设置新的排序值
     * 
@@ -80,14 +90,27 @@ class sort {
     static setOrder(file: string, order: number, newOrder: number) {
         log.info('sort.setOrder', file + ' index of ' + order + ' to ' + newOrder)
         let children = sort.getSort(file)
-        let target = children[order - 1]
+        let target = children[order]
 
-        children.splice(order - 1, 1)
-        children.splice(newOrder - 1, 0, target)
+        children.splice(order, 1)
+        children.splice(newOrder, 0, target)
         console.log(children)
         log.info('sort.setOrder', 'new sort.json is ' + children)
 
         sort.writeSortJson(file, children)
+    }
+
+    static getOrder(file: string, child: string): number {
+        let children = sort.getSort(file)
+
+        for (let i = 0; i < children.length; i++) {
+            console.log('current is', children[i], 'child is ', child)
+            if (children[i] == child) {
+                return i
+            }
+        }
+
+        return -1
     }
 }
 

@@ -57,7 +57,6 @@ class node {
         // console.log('初始化节点', file)
         if (file) {
             this.file = file
-            this.order = this.getOrder()
             this.id = node.pathToId(file)
             this.title = this.getTitle()
             this.isFolder = fs.statSync(this.file).isDirectory()
@@ -70,11 +69,6 @@ class node {
     public setChildren() {
         let items = sort.getSort(this.file)
 
-        if (items.length == 0 && fs.statSync(this.file).isDirectory()) {
-            items = fs.readdirSync(this.file)
-        }
-
-        var order = 0;
         items.forEach((child) => {
             if (child == 'code' || child == 'project') {
                 // 子节点是一个项目
@@ -570,6 +564,7 @@ class node {
      * @returns node
      */
     public static getRoot(): node {
+        log.info('node.getRoot', '获取root')
         if (this.rootNode) return this.rootNode
 
         this.rootNode = node.generateRoot()
@@ -594,9 +589,10 @@ class node {
      * @returns 
      */
     public static generateRoot(): node {
+        log.info('node.generateRoot', '重新生成root')
         let rootNode = new node(node.rootPath)
 
-        // console.log('root node generated', rootNode)
+        console.log('root node generated', rootNode)
         return rootNode
     }
 
@@ -688,12 +684,7 @@ class node {
      * @returns 
      */
     private getOrder(): number {
-        if (this.file === node.rootPath) return 0
-
-        let basename = path.basename(this.file)
-        let order = basename.split('-')[0]
-
-        return parseInt(order)
+        return sort.getOrder(this.parent().file, this.file.replace(this.parent().file + '/', ''))
     }
 
     /**

@@ -34,7 +34,6 @@
                   'hover:bg-transparent': dragged !== emptyNode,
                 }"
               >
-                <span v-text="brother.order"></span>
                 <span>{{ brother.title }}</span>
               </Link>
             </li>
