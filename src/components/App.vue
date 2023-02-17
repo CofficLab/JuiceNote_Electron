@@ -2,7 +2,7 @@
   <div>
     <!-- 标题栏，左侧显示红绿灯，右侧可用于拖移 -->
     <div class="h-8 bg-stone-900 fixed top-0 z-50 w-full flex justify-center" id="title-bar" v-show="!hideTitleBar">
-      <!-- <Address v-if="!isProd"></Address> -->
+      <Address v-if="!isProd"></Address>
     </div>
 
     <main class="flex flex-row justify-between" v-bind:class="hideTitleBar ? 'mt-0' : 'mt-8'">
@@ -58,6 +58,7 @@
 import { defineComponent } from "vue";
 import Toc from "./Toc.vue";
 import store from "../models/store";
+import log from "../models/log";
 import Breadcrumbs from "./Breadcrumbs.vue";
 import Prev from "./Prev.vue";
 import Next from "./Next.vue";
@@ -102,7 +103,8 @@ export default defineComponent({
       return store.code;
     },
     current: function () {
-      return store.current;
+      log.info("App.vue", "get current node from store");
+      return store.getCurrentNode();
     },
     isProd: function (): boolean {
       return store.isProd;

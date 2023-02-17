@@ -3,6 +3,7 @@ import path from "path"
 import electron from 'electron'
 import hljs from 'highlight.js'
 import project from "./project";
+import log from "./log";
 
 const md = require('markdown-it')({
     html: true,
@@ -41,7 +42,7 @@ md.use(require("markdown-it-table-of-contents"), {
 class node {
     public static rootPath = path.join(electron.ipcRenderer.sendSync('get-app-path'), 'markdown')
     public static rootNode: node
-    public static excepts = ['README.md', 'footer.md', 'projects', 'codes', '.DS_Store']
+    public static excepts = ['README.md', 'footer.md', 'projects', 'code', '.DS_Store', 'node_modules', 'images', 'playground.go']
     public isFolder = false
     public project: project = new project
     public file: string = ''
@@ -52,6 +53,7 @@ class node {
     public level: number = 0
 
     public constructor(file?: string) {
+        // console.log('初始化节点', file)
         if (file) {
             this.file = file
             this.order = this.getOrder()
@@ -63,7 +65,7 @@ class node {
             if (fs.statSync(file).isDirectory()) {
                 var order = 0;
                 fs.readdirSync(file).forEach((child) => {
-                    if (child == 'codes' || child == 'project') {
+                    if (child == 'code' || child == 'project') {
                         // 子节点是一个项目
                         this.project = new project(path.join(this.file, child))
                     } else if (!node.excepts.includes(child)) {
@@ -417,10 +419,12 @@ class node {
     }
 
     public current(): node {
+        log.info('node.current', 'find current node by id')
         let url = new URL(location.href)
         let id = url.searchParams.get('id')
+        let filePath = node.idToPath(id)
 
-        return this.getLastActivated(id ? decodeURI(id) : '/')
+        return new node(filePath)
     }
 
     /**
@@ -637,6 +641,24 @@ class node {
         let id = path.replace(this.rootPath, '').replace('.md', '').replace('/', '').replaceAll('/', '@')
 
         return id === '' ? '/' : id
+    }
+
+    /**
+     * 将节点ID转换成文件路径
+     */
+    private static idToPath(id: string | null) {
+        if (id == null || id == '') {
+            return node.rootPath
+        }
+
+        let folderPath = path.join(node.rootPath, id.replaceAll('@', '/'))
+        let markdownFilePath = folderPath + '.md'
+
+        if (fs.existsSync(markdownFilePath)) {
+            return markdownFilePath
+        }
+
+        return folderPath
     }
 
     /**

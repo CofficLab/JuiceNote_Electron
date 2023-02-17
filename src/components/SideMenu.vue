@@ -12,7 +12,7 @@
                 <span>{{ book.title }}</span>
               </div>
             </a>
-            <ul class="bg-base-300 shadow-2xl">
+            <ul class="bg-base-300 shadow-2xl overflow-auto h-96">
               <li v-for="book in books">
                 <Link v-bind:href="book.id">{{ book.title }}</Link>
               </li>
