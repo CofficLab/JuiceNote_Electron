@@ -43,14 +43,16 @@ md.use(require("markdown-it-table-of-contents"), {
 class node {
     public static rootPath = path.join(electron.ipcRenderer.sendSync('get-app-path'), 'markdown')
     public static rootNode: node
-    public static excepts = ['README.md', 'footer.md', 'projects', 'code', '.DS_Store', 'node_modules', 'images', 'playground.go', 'sort.json']
+    public static excepts = [
+        'README.md', 'footer.md', 'projects', 'code', '.DS_Store',
+        'node_modules', 'images', 'playground.go', 'sort.json'
+    ]
     public isFolder = false
     public project: project = new project
     public file: string = ''
     public id: string = ''
     public title: string = ''
     public children: node[] = []
-    public order: number = 0
     public level: number = 0
 
     public constructor(file?: string) {
@@ -127,14 +129,6 @@ class node {
 
     public isBook(): boolean {
         return this.parent() === node.rootNode
-    }
-
-    public linkId(): string {
-        if (this.isRoot()) return ''
-
-        if (this.parent().isRoot()) return this.order.toString()
-
-        return this.parent().linkId() + '@' + this.order
     }
 
     /**
@@ -488,7 +482,19 @@ class node {
      * @returns 
      */
     public setOrder(order: number) {
-        sort.setOrder(this.parent().file, this.order, order)
+        sort.setOrder(this.parent().file, this.getOrder(), order)
+    }
+
+    public getOrder(): number {
+        let order = 0
+        this.parent().children.forEach((child, index) => {
+            if (child.id == this.id) {
+                order = index
+            }
+        })
+
+        console.log('order of ', this.id, 'is ', order)
+        return order
     }
 
     /**
@@ -564,7 +570,7 @@ class node {
      * @returns node
      */
     public static getRoot(): node {
-        log.info('node.getRoot', '获取root')
+        // log.info('node.getRoot', '获取root')
         if (this.rootNode) return this.rootNode
 
         this.rootNode = node.generateRoot()
@@ -676,15 +682,6 @@ class node {
         let titleDom = dom.getElementsByTagName('h1')[0]
 
         return titleDom ? titleDom.innerText : lastElement
-    }
-
-    /**
-     * 获取顺序
-     * 
-     * @returns 
-     */
-    private getOrder(): number {
-        return sort.getOrder(this.parent().file, this.file.replace(this.parent().file + '/', ''))
     }
 
     /**
