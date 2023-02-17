@@ -81,7 +81,7 @@ class node {
                 this.project = new project(path.join(this.file, child))
             } else if (!node.excepts.includes(child)) {
                 let fullPath = path.join(this.file, child)
-                this.children.push((new node(fullPath)).renameWithOrder(++order))
+                this.children.push((new node(fullPath)))
             }
         })
     }
@@ -493,21 +493,8 @@ class node {
      * @param order 
      * @returns 
      */
-    public setOrder(order: number): node {
-        let parent = this.parent()
-
-        let newNode = this.renameWithOrder(order);
-
-        for (let index = parent.children.length - 1; index + 1 >= order; index--) {
-            let child = parent.children[index]
-            if (child.id !== this.id && index + 1 >= order) {
-                child.renameWithOrder(index + 2)
-            }
-        }
-
-        // node.refreshedRoot()
-
-        return newNode
+    public setOrder(order: number) {
+        sort.setOrder(this.parent().file, this.order, order)
     }
 
     /**

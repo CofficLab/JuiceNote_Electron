@@ -3,6 +3,5 @@
   "02-for.md",
   "03-panic.md",
   "04-defer.md",
-  "05-range.md",
-  "playground.go"
+  "05-range.md"
 ]

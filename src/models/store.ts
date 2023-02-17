@@ -43,11 +43,10 @@ const store = reactive({
 
         return created
     },
-    updateOrder(navigator: node, order: number): node {
-        let newNode = navigator.setOrder(order)
+    updateOrder(navigator: node, order: number) {
+        log.info('store.updateOrder', navigator.id + '移动到' + order)
+        navigator.setOrder(order)
         this.refresh()
-
-        return newNode
     },
     refresh() {
         log.info('store.refresh', 'refresh in store')

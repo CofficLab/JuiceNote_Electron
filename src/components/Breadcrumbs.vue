@@ -22,7 +22,7 @@
               <!-- 拖移时显示 -->
               <div
                 class="w-full mx-0 min-w-fit overflow-hidden"
-                v-bind:class="brother.id == hovered.id ? 'h-12 py-6 px-0' : 'h-0 py-0 px-0'"
+                v-bind:class="hovered != null && brother.id == hovered.id ? 'h-12 py-6 px-0' : 'h-0 py-0 px-0'"
               >
                 <div class="bg-base-content/10 w-full h-12 rounded"></div>
               </div>
@@ -94,7 +94,7 @@ export default defineComponent({
     dragEnd() {
       let newOrder = this.bottomNode == this.hovered ? this.dragged.parent().children.length + 1 : this.hovered.order;
       store.goto(this.dragged.parent().id);
-      store.updateOrder(this.dragged, newOrder).id;
+      store.updateOrder(this.dragged, newOrder);
       this.hovered = null;
     },
     dragEnter(navigator: node) {
