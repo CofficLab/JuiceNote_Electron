@@ -1,28 +1,10 @@
 import fs from "fs"
 import path from "path"
-import electron from 'electron'
-import hljs from 'highlight.js'
 import project from "./project";
 import log from "./log";
 import sort from "./sort";
-
-const md = require('markdown-it')({
-    html: true,
-    highlight: function (str: any, lang: any) {
-        if (lang && hljs.getLanguage(lang)) {
-            try {
-                return hljs.highlight(str, { language: lang }).value;
-            } catch (__) { }
-        }
-
-        return ''; // 使用额外的默认转义
-    }
-});
-
-md.use(require("markdown-it-anchor").default)
-md.use(require("markdown-it-table-of-contents"), {
-    'includeLevel': [1, 2, 3, 4]
-})
+import markdown from "./markdown";
+import variables from "./variables";
 
 /**
  * 导航节点的定义，基于“树”数据结构
@@ -41,12 +23,10 @@ md.use(require("markdown-it-table-of-contents"), {
  *                   -> 章节n
  */
 class node {
-    public static rootPath = path.join(electron.ipcRenderer.sendSync('get-app-path'), 'markdown')
     public static rootNode: node
-    public static excepts = [
-        'README.md', 'footer.md', 'projects', 'code', '.DS_Store',
-        'node_modules', 'images', 'playground.go', 'sort.json'
-    ]
+    public static rootPath = variables.rootPath
+    public static excepts = variables.nodeExcepts
+
     public isFolder = false
     public project: project = new project
     public file: string = ''
@@ -252,14 +232,7 @@ class node {
     }
 
     public content(): string {
-        if (this.isLeaf()) {
-            // 需要补上markdown文件共同的footer
-            return fs.readFileSync(this.file, 'utf-8') + fs.readFileSync(path.join(node.rootPath, 'footer.md'), 'utf-8')
-        }
-
-        if (this.firstLeaf().notEmpty()) return this.firstLeaf().content()
-
-        return md.render("## 当前节点没有页面，请新建\r\n" + this.id)
+        return (new markdown(this.file)).content()
     }
 
     /**
@@ -268,19 +241,7 @@ class node {
      * @returns 
      */
     public html() {
-        if (this.isEmpty()) {
-            return md.render("## 当前页面是空节点 \r\n ## 返回 <a href=\"/\">首页</a>")
-        }
-
-        if (!fs.existsSync(this.file)) {
-            return md.render("## 文件「" + this.file + "」不存在")
-        }
-
-        if (path.extname(this.file) === '.py') {
-            return md.render("# " + this.title + "\r\n```python\r\n" + this.content() + "\r\n```")
-        }
-
-        return md.render(this.content())
+        return (new markdown(this.file)).html()
     }
 
     /**
@@ -289,23 +250,11 @@ class node {
      * @returns 
      */
     public htmlWithToc() {
-        if (!fs.existsSync(this.file)) {
-            return md.render("## 文件「" + this.id + "」不存在")
-        }
-
-        return md.render("[[toc]] \r\n" + this.content())
+        return (new markdown(this.file)).htmlWithToc()
     }
 
     public toc(): string {
-        let htmlWithToc = this.htmlWithToc()
-        let dom = node.makeDom(htmlWithToc)
-        let toc = dom.getElementsByClassName('table-of-contents')[0]
-
-        if (toc == undefined) return ''
-
-        let tocWithoutTitle = toc.getElementsByTagName('ul')[0].getElementsByTagName('ul')[0]
-
-        return tocWithoutTitle ? tocWithoutTitle.outerHTML : ''
+        return (new markdown(this.file)).toc()
     }
 
     public save(content: string) {
@@ -510,7 +459,7 @@ class node {
 
         fs.writeFileSync(file, "# " + fileName)
 
-        return (new node(file)).renameWithOrder(this.children.length + 1)
+        return (new node(file))
     }
 
     /**
@@ -524,7 +473,7 @@ class node {
 
         fs.mkdirSync(file)
 
-        return (new node(file)).renameWithOrder(this.children.length + 1)
+        return (new node(file))
     }
 
     /**
@@ -550,21 +499,6 @@ class node {
     }
 
     /**
-     * 完整的标题
-     * 
-     * @returns string
-     */
-    public fullTitle(): string {
-        if (this.isRoot()) return ''
-
-        if (this.parent().isRoot()) {
-            return this.title
-        }
-
-        return this.parent().fullTitle() + '-' + this.title
-    }
-
-    /**
      * 获取根导航节点
      * 
      * @returns node
@@ -573,7 +507,7 @@ class node {
         // log.info('node.getRoot', '获取root')
         if (this.rootNode) return this.rootNode
 
-        this.rootNode = node.generateRoot()
+        this.rootNode = node.refreshedRoot()
 
         return this.rootNode
     }
@@ -584,17 +518,6 @@ class node {
      * @returns 
      */
     public static refreshedRoot(): node {
-        this.rootNode = node.generateRoot()
-
-        return this.rootNode
-    }
-
-    /**
-     * 读取文件，生成根节点
-     * 
-     * @returns 
-     */
-    public static generateRoot(): node {
         log.info('node.generateRoot', '重新生成root')
         let rootNode = new node(node.rootPath)
 
@@ -677,65 +600,9 @@ class node {
         }
 
         // 如果是markdown文件，获取markdown渲染后的HTML的标题
-        let html = this.htmlWithToc()
-        let dom = node.makeDom(html)
-        let titleDom = dom.getElementsByTagName('h1')[0]
+        let markdownTitle = (new markdown(this.file)).getTitle()
 
-        return titleDom ? titleDom.innerText : lastElement
-    }
-
-    /**
-     * 
-     * 创建DOM元素
-     * 
-     * @param html HTML代码
-     * @returns 
-     */
-    private static makeDom(html: string) {
-        let dom = document.createElement('div')
-        dom.innerHTML = html
-
-        return dom
-    }
-
-    /**
-     * 
-     * 激活的子孙节点中的终端节点
-     * 
-     * @param activePath 
-     * @returns 
-     */
-    private getLastActivated(activePath: string): node {
-        // console.log('get last activated child of', this, 'while path is ', activePath)
-        if (activePath === '/') return node.getRoot()
-
-        // console.log('activated children are', this.getActivatedChildren(activePath))
-        let last = this.getActivatedChildren(activePath).pop()
-
-        // console.log('last activated child is', last)
-        return last === undefined ? new node : last;
-    }
-
-    private padding(num: number): string {
-        if (num < 10) return '0' + num.toString()
-
-        return num.toString()
-    }
-
-    private renameWithOrder(order: number): node {
-        let extname = path.extname(this.file)
-        let name = this.padding(order) + '-' + this.title.replaceAll("/", ".").replaceAll("%", "percent")
-        let fileNewPath = path.join(path.dirname(this.file), name + extname)
-
-        if (this.file != fileNewPath) {
-            console.log('rename', this.file, 'to', fileNewPath)
-            fs.rename(this.file, fileNewPath, function (err) {
-                if (err) throw err
-                console.log('rename completed')
-            })
-        }
-
-        return new node(fileNewPath)
+        return markdownTitle ? markdownTitle : lastElement
     }
 }
 
