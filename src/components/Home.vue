@@ -15,7 +15,7 @@ export default defineComponent({
   },
   computed: {
     disabled(): boolean {
-      return RouteController.isHomePage();
+      return RouteController.isHomePage;
     },
   },
 });

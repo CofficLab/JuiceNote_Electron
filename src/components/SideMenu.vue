@@ -21,11 +21,11 @@
         </ul>
       </div>
 
-      <!-- 章节 -->
+      <!-- 章节与页面 -->
       <div class="overscroll-auto overflow-auto h-screen mt-0 mb-24 pb-48 pr-4">
-        <ul class="menu menu-compact flex flex-col p-0 px-1 overflow-scroll" v-for="item in book.getChapters()">
+        <ul class="menu menu-compact flex flex-col p-0 px-1 overflow-scroll" v-for="item in chapters">
           <li></li>
-          <SideMenuItem :item="item" :id="item.dir"></SideMenuItem>
+          <SideMenuItem :item="item" :id="item.id"></SideMenuItem>
         </ul>
         <div class="pointer-events-none sticky bottom-0 flex h-20"></div>
       </div>
@@ -36,7 +36,6 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import RouteController from "../controllers/RouteController";
-import store from "../entities/Store";
 import Link from "./Link.vue";
 import SideMenuItem from "./SideMenuItem.vue";
 
@@ -48,11 +47,14 @@ export default defineComponent({
     books() {
       return this.book.siblings();
     },
+    chapters() {
+      return this.book.getChildren();
+    },
   },
   mounted: function () {
     // 滚动到激活的菜单的章节
     var current = RouteController.getCurrentPage();
-    var target = document.getElementById(current.getChapter().id);
+    var target = document.getElementById(current.getParent().id);
 
     if (target) target.scrollIntoView();
   },

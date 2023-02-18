@@ -1,60 +1,37 @@
 import { reactive } from 'vue'
-import fs from 'fs'
-import FileTree from '../tools/FileTree'
 import Id from '../entities/Id'
-import Page from '../entities/Page'
-import TreeNode from '../entities/TreeNode'
+import BookNode from '../entities/BookNode'
 
 const RouteController = reactive({
-    root: new TreeNode,
-    href: location.href,
     search: decodeURI(location.search),
-    pathname: location.pathname,
+    currentPage: undefined,
     isProd: location.protocol === 'file:',
-    currentPage: null,
+    isHomePage: (new URL(location.href)).searchParams.get('id') == '/',
 
     goto(id: string) {
-        if (id === '/') id = this.root.firstLeaf().id
         history.pushState([], "", location.pathname + "?id=" + id);
-        this.href = window.location.href
         this.search = decodeURI(location.search)
-        this.pathname = window.location.pathname
         this.refreshCurrentPage()
+        this.checkHomePage()
     },
-    getCurrentPage() {
-        if (this.currentPage == null) {
-            this.refreshCurrentPage()
-        }
+    getCurrentPage(): BookNode {
+        // console.log('get current page')
+        if (this.currentPage == undefined) this.refreshCurrentPage()
 
         return this.currentPage
     },
     refreshCurrentPage() {
-        let id = (new URL(location.href)).searchParams.get('id')
+        console.log('refresh current page')
+        let id = (new URL(location.href)).searchParams.get('id') || ''
         let path = Id.idToPath(id ? id : '/')
-
-        if (fs.statSync(path).isDirectory()) {
-            let firstLeaf = (new FileTree(path)).firstLeaf()?.path
-
-            if (firstLeaf == null) {
-                throw '文件夹下没有可展示的页面：' + path
-            }
-
-            path = firstLeaf
-        }
-
-        console.log(path)
-        this.currentPage = new Page(path)
+        this.currentPage = (new BookNode(path)).firstPage()
     },
-    isHomePage() {
-        return location.pathname == ''
+    getBreadcrumbs(): BookNode[] {
+        return this.getCurrentPage().getParents()
     },
-    getRoot() {
-        if (this.root.notEmpty()) {
-            return this.root
-        }
-
-        return TreeNode.getRoot()
-    },
+    checkHomePage() {
+        this.isHomePage = (new URL(location.href)).searchParams.get('id') == '/'
+    }
 })
 
 export default RouteController

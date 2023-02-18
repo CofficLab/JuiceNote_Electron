@@ -57,7 +57,6 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import Toc from "../components/Toc.vue";
-import log from "../tools/Log";
 import Breadcrumbs from "../components/Breadcrumbs.vue";
 import Prev from "../components/Prev.vue";
 import Next from "../components/Next.vue";
@@ -106,7 +105,7 @@ export default defineComponent({
       return CodeController.code;
     },
     current: function () {
-      log.info("App.vue", "get current page from store");
+      console.log("get current page");
       return RouteController.getCurrentPage();
     },
     isProd: function (): boolean {

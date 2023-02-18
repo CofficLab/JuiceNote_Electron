@@ -1,7 +1,5 @@
-import Chapter from '../entities/Chapter'
+
 import { reactive } from 'vue'
-import Log from '../tools/Log'
-import Page from 'src/entities/Page'
 
 const OrderController = reactive({
     codeId: '',
@@ -20,12 +18,12 @@ const OrderController = reactive({
         return created
     },
     updateOrder(navigator: node, order: number) {
-        Log.info('store.updateOrder', navigator.id + '移动到' + order)
+        console.log('store.updateOrder', navigator.id + '移动到' + order)
         navigator.setOrder(order)
         this.refresh()
     },
     refresh() {
-        Log.info('store.refresh', 'refresh in store')
+        console.log('store.refresh', 'refresh in store')
         this.root = node.refreshedRoot()
         this.project = this.root.current().isLeaf() ? this.root.current().parent().project : this.root.current().firstLeaf().parent().project
     },

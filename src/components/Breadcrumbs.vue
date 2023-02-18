@@ -5,14 +5,14 @@
   >
     <ul class="flex flex-row justify-center">
       <li v-for="breadcrumb in breadcrumbs" class="flex justify-center">
-        <div class="dropdown dropdown-top flex justify-center" v-if="breadcrumb.brothers().length > 0">
-          <label tabindex="0" class="self-center">{{ breadcrumb.title }}</label>
+        <div class="dropdown dropdown-top flex justify-center" v-if="breadcrumb.siblings().length > 0">
+          <label tabindex="0" class="self-center">{{ breadcrumb.name }}</label>
           <ul
             tabindex="0"
             class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 h-96 mt-8 overflow-scroll"
           >
             <li
-              v-for="(item, index) in breadcrumb.brothers()"
+              v-for="(item, index) in breadcrumb.siblings()"
               draggable="true"
               v-on:dragend="dragEnd()"
               v-on:dragstart="dragStart(item)"
@@ -34,7 +34,7 @@
                   'hover:bg-transparent': dragged !== emptyNode,
                 }"
               >
-                <span>{{ item.title }}</span>
+                <span>{{ item.name }}</span>
               </Link>
             </li>
 
@@ -50,7 +50,7 @@
           </ul>
         </div>
         <div class="dropdown dropdown-top flex justify-center" v-else>
-          <label tabindex="0" class="rounded-none self-center">{{ breadcrumb.title }}</label>
+          <label tabindex="0" class="rounded-none self-center">{{ breadcrumb.name }}</label>
         </div>
       </li>
     </ul>
@@ -59,17 +59,16 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import node from "../entities/TreeNode";
 import Link from "./Link.vue";
-import log from "../tools/Log";
 import RouteController from "../controllers/RouteController";
 import EditModeController from "../controllers/EditModeController";
 import OrderController from "../controllers/OrderController";
+import BookNode from "../entities/BookNode";
 
 export default defineComponent({
   data() {
-    let emptyNode = new node();
-    let bottomNode = new node("/dev/null");
+    let emptyNode = new BookNode();
+    let bottomNode = new BookNode("/dev/null");
     return {
       dragged: emptyNode,
       hovered: emptyNode,
@@ -80,8 +79,8 @@ export default defineComponent({
   },
   computed: {
     breadcrumbs() {
-      log.info("Breadcrumbs.vue", "获取breadcrumbs");
-      let breadcrumbs = RouteController.getRoot().activated(RouteController.getCurrentPage().id);
+      console.log("Breadcrumbs.vue", "获取breadcrumbs");
+      let breadcrumbs = RouteController.getBreadcrumbs();
 
       return breadcrumbs;
     },
@@ -90,7 +89,7 @@ export default defineComponent({
     },
   },
   methods: {
-    dragStart(navigator: node) {
+    dragStart(navigator: BookNode) {
       this.dragged = navigator;
     },
     dragEnd() {
@@ -98,7 +97,7 @@ export default defineComponent({
       OrderController.updateOrder(this.dragged, this.index);
       this.hovered = null;
     },
-    dragEnter(navigator: node, index) {
+    dragEnter(navigator: BookNode, index) {
       this.hovered = navigator;
       this.index = index;
     },

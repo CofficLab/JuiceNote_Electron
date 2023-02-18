@@ -1,8 +1,7 @@
 import { reactive } from 'vue'
-import node from '../entities/TreeNode'
 
 const ProjectController = reactive({
-    project: (new node).project,
+    // project: (new node).project,
 
     getProject() {
         console.log('store.getProject', 'get current node')

@@ -24,6 +24,15 @@ md.use(require("markdown-it-table-of-contents"), {
 class Markdown {
     public absoluteFilePath: string = ''
 
+    static renderErrorPage(title: string, lines?: string[]): string {
+        title = '## ' + title
+        let linesAsString = lines == undefined ? '' : lines.map(line => {
+            return '### ' + line
+        }).join("\n")
+
+        return md.render(title + "\n" + linesAsString)
+    }
+
     public constructor(absoluteFilePath: string) {
         if (!fs.existsSync(absoluteFilePath)) {
             throw '要初始化的markdown文件「' + absoluteFilePath + '」不存在'

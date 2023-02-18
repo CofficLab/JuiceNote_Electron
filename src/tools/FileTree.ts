@@ -113,15 +113,30 @@ class FileTree {
         return new FileTree(path.dirname(this.path))
     }
 
-    // 当前节点的祖先节点列表
-    public getParents(): FileTree[] {
+    // 当前节点的祖先节点列表，直到until不继续往上找
+    private getParents(until: string): FileTree[] {
         let result: FileTree[] = []
         let current = this.getParent()
 
         while (current != null) {
+            if (current.path == until) {
+                break;
+            }
             result.push(current)
             current = current.getParent()
         }
+
+        return result
+    }
+
+    // 当前节点的祖先列表（字符串数组形式），直到until不继续往上找
+    public getParentsPaths(until: string): string[] {
+        let parents = this.getParents(until)
+        let result: string[] = []
+
+        parents.forEach(parent => {
+            result.push(parent.path)
+        })
 
         return result
     }

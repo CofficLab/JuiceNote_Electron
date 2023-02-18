@@ -51,7 +51,7 @@ class Order {
 
     static isSortJsonFileValid(file: string): boolean {
         if (!fs.existsSync(this.getSortJsonFilePath(file))) {
-            Log.info('sort.initSortFile', file + ' 下无sort.json，创建')
+            console.log('sort.initSortFile', file + ' 下无sort.json，创建')
 
             return false
         }
@@ -79,14 +79,14 @@ class Order {
 
     // 设置新的排序值
     static setOrder(file: string, order: number, newOrder: number) {
-        Log.info('sort.setOrder', file + ' index of ' + order + ' to ' + newOrder)
+        console.log('sort.setOrder', file + ' index of ' + order + ' to ' + newOrder)
         let children = Order.getSort(file)
         let target = children[order]
 
         children.splice(order, 1)
         children.splice(newOrder, 0, target)
         console.log(children)
-        Log.info('sort.setOrder', 'new sort.json is ' + children)
+        console.log('sort.setOrder', 'new sort.json is ' + children)
 
         Order.writeSortJson(file, children)
     }
