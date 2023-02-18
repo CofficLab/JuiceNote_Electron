@@ -48,10 +48,7 @@ class BookNode {
     }
 
     public getChildren(): BookNode[] {
-        if (this.isPage()) {
-            console.warn('不能获取子节点，因为当前是一个页面', this.path)
-            return []
-        }
+        if (this.isPage()) return []
 
         return fs.readdirSync(this.path).filter(element => {
             return !BookNode.shouldIgnore(element)
@@ -66,17 +63,9 @@ class BookNode {
 
     public siblings(): BookNode[] {
         // console.log('get siblings', this.id)
-        let parentDir = path.dirname(this.path)
-        let siblings: BookNode[] = []
-
-        fs.readdirSync(parentDir).forEach(element => {
-            let dir = path.join(parentDir, element)
-            if (dir != this.path) {
-                siblings.push(new BookNode(dir))
-            }
+        return this.getParent().getChildren().filter(child => {
+            return child.id != this.id
         })
-
-        return siblings
     }
 
     public getParent(): BookNode {
@@ -147,32 +136,33 @@ class BookNode {
         return this.hasError() ? Markdown.renderErrorPage(this.errorTitle, this.errorLines) : (new Markdown(this.path)).toc()
     }
 
-    public prev(): BookNode | null {
-        if (this.isEmpty()) return Variables.emptyBookNode
-
-        let prevNode = (new FileTree(this.path)).prev()
-        if (prevNode == null) {
-            return null
-        }
-
-        return new BookNode(prevNode.path)
-    }
 
     public firstPage(): BookNode {
-        if (this.isPage()) return this
+        return this.isPage() ? this : this.getFirstChild().firstPage()
+    }
 
-        return this.getFirstChild().firstPage()
+    public prev(): BookNode | null {
+        let siblingsIncludeCurrent = this.getParent().getChildren()
+        for (let i = 0; i < siblingsIncludeCurrent.length; i++) {
+            let current = siblingsIncludeCurrent[i]
+            if (current.id == this.id && i - 1 >= 0) {
+                return siblingsIncludeCurrent[i - 1]
+            }
+        }
+
+        return new BookNode
     }
 
     public next(): BookNode {
-        if (this.isEmpty()) return Variables.emptyBookNode
-
-        let nextNode = (new FileTree(this.path)).next()
-        if (nextNode == null) {
-            return Variables.emptyBookNode
+        let siblingsIncludeCurrent = this.getParent().getChildren()
+        for (let i = 0; i < siblingsIncludeCurrent.length; i++) {
+            let current = siblingsIncludeCurrent[i]
+            if (current.id == this.id && i + 1 < siblingsIncludeCurrent.length) {
+                return siblingsIncludeCurrent[i + 1]
+            }
         }
 
-        return new BookNode(nextNode.path)
+        return new BookNode
     }
 }
 
