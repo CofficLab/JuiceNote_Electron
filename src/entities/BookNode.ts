@@ -5,6 +5,7 @@ import Variables from "./Variables";
 import RouteController from "../controllers/RouteController";
 import Markdown from "./Markdown";
 import FileTree from "../tools/FileTree";
+import Config from "./Config";
 
 class BookNode {
     public path: string = ''
@@ -49,6 +50,8 @@ class BookNode {
 
     public getChildren(): BookNode[] {
         if (this.isPage()) return []
+
+        Config.getChildren(this.id)
 
         return fs.readdirSync(this.path).filter(element => {
             return !BookNode.shouldIgnore(element)
