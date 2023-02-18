@@ -2,6 +2,7 @@ import fs from "fs"
 import path from "path"
 import hljs from 'highlight.js'
 import variables from "./variables";
+import log from "./log";
 
 const md = require('markdown-it')({
     html: true,
@@ -41,11 +42,15 @@ class markdown {
     public file: string = ''
     private rootPath = variables.rootPath
 
-    public constructor(file: string) {
-        this.file = file
+    public constructor(file?: string) {
+        if (file) {
+            // console.log('初始化markdown', file)
+            this.file = file
+        }
     }
 
     public content(): string {
+        // log.info('markdown.content', 'file is' + this.file)
         // 需要补上markdown文件共同的footer
         return fs.readFileSync(this.file, 'utf-8') + fs.readFileSync(path.join(this.rootPath, 'footer.md'), 'utf-8')
     }

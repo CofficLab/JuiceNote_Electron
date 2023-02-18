@@ -27,13 +27,14 @@ class node {
     public static rootPath = variables.rootPath
     public static excepts = variables.nodeExcepts
 
-    public isFolder = false
+    public isFolder: boolean = false
     public project: project = new project
     public file: string = ''
     public id: string = ''
     public title: string = ''
     public children: node[] = []
     public level: number = 0
+    public markdown: markdown = new markdown
 
     public constructor(file?: string) {
         if (file) {
@@ -86,7 +87,7 @@ class node {
      * @returns boolean
      */
     public isLeaf(): boolean {
-        return this.notEmpty() && !fs.statSync(this.file).isDirectory()
+        return this.notEmpty() && fs.statSync(this.file).isFile()
     }
 
     /**
@@ -104,11 +105,16 @@ class node {
      * @returns boolean
      */
     public notEmpty(): boolean {
-        return this.id !== ''
+        return !this.isEmpty()
     }
 
+    /**
+     * 判断是否是图书根节点
+     * 
+     * @returns boolean
+     */
     public isBook(): boolean {
-        return this.parent() === node.rootNode
+        return this.parent().isRoot()
     }
 
     /**
@@ -118,7 +124,7 @@ class node {
      * @returns 
      */
     public has(target: node): boolean {
-        return this.children.some(function (child) {
+        return this.children.some(child => {
             return child.id === target.id
         })
     }
@@ -159,9 +165,7 @@ class node {
     }
 
     public brothers(): node[] {
-        let parent = this.parent();
-
-        return parent.children;
+        return this.parent().children;
     }
 
     /**
@@ -181,11 +185,7 @@ class node {
      * @returns node
      */
     public firstLeaf(): node {
-        if (this.isLeaf() || this.isEmpty()) {
-            return this
-        }
-
-        return this.first().firstLeaf();
+        return (this.isLeaf() || this.isEmpty()) ? this : this.first().firstLeaf();
     }
 
     /**
@@ -194,11 +194,7 @@ class node {
      * @returns node
      */
     public lastLeaf(): node {
-        if (this.isLeaf() || this.isEmpty()) {
-            return this
-        }
-
-        return this.last().lastLeaf();
+        return (this.isLeaf() || this.isEmpty()) ? this : this.last().lastLeaf();
     }
 
     /**
@@ -208,17 +204,13 @@ class node {
     public nextLeaf(): node {
         let next = this.next()
 
-        if (next.isLeaf()) return next
-
-        return this.parent().next().firstLeaf();
+        return (next.isLeaf()) ? next : this.parent().next().firstLeaf();
     }
 
     public prevLeaf(): node {
         let prev = this.prev()
 
-        if (prev.isLeaf()) return prev
-
-        return this.parent().prev().lastLeaf()
+        return (prev.isLeaf()) ? prev : this.parent().prev().lastLeaf()
     }
 
     public itemsToFirstLeaf(): node[] {
@@ -232,7 +224,7 @@ class node {
     }
 
     public content(): string {
-        return (new markdown(this.file)).content()
+        return (new markdown(this.firstLeaf().file)).content()
     }
 
     /**
@@ -241,7 +233,7 @@ class node {
      * @returns 
      */
     public html() {
-        return (new markdown(this.file)).html()
+        return (new markdown(this.firstLeaf().file)).html()
     }
 
     /**
@@ -250,11 +242,11 @@ class node {
      * @returns 
      */
     public htmlWithToc() {
-        return (new markdown(this.file)).htmlWithToc()
+        return (new markdown(this.firstLeaf().file)).htmlWithToc()
     }
 
     public toc(): string {
-        return (new markdown(this.file)).toc()
+        return (new markdown(this.firstLeaf().file)).toc()
     }
 
     public save(content: string) {
@@ -365,10 +357,11 @@ class node {
     }
 
     public current(): node {
-        log.info('node.current', 'find current node by id')
         let url = new URL(location.href)
         let id = url.searchParams.get('id')
         let filePath = node.idToPath(id)
+
+        log.info('node.current', 'find current node by id:' + id)
 
         return new node(filePath)
     }
@@ -387,8 +380,6 @@ class node {
         if (this.isEmpty() || this.isRoot()) return new node
 
         let parent = node.getRoot().findParent(this)
-
-        // console.log('parent of ', this.id, 'is', parent.id)
 
         return parent;
     }
@@ -422,11 +413,6 @@ class node {
     /**
      * 设置新的排序值
      * 
-     * 例如：将第5个移动到第2个
-     *  将第2个重命名为3
-     *  将第3个重命名为4
-     *  ......
-     *  将第5个重命名为2
      * @param order 
      * @returns 
      */
@@ -504,7 +490,6 @@ class node {
      * @returns node
      */
     public static getRoot(): node {
-        // log.info('node.getRoot', '获取root')
         if (this.rootNode) return this.rootNode
 
         this.rootNode = node.refreshedRoot()
@@ -518,11 +503,7 @@ class node {
      * @returns 
      */
     public static refreshedRoot(): node {
-        log.info('node.generateRoot', '重新生成root')
-        let rootNode = new node(node.rootPath)
-
-        console.log('root node generated', rootNode)
-        return rootNode
+        return new node(node.rootPath)
     }
 
     /**
