@@ -29,7 +29,7 @@ import Link from "./Link.vue";
 import ChevronDown from "../icons/chevron-down.vue";
 import ProjectController from "../controllers/ProjectController";
 import ProjectItem from "./ProjectItem.vue";
-import project from "../models/Project";
+import project from "../entities/Project";
 
 export default defineComponent({
   data() {

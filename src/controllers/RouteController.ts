@@ -1,11 +1,12 @@
 import { reactive } from 'vue'
 import fs from 'fs'
 import FileTree from '../tools/FileTree'
-import Id from '../models/Id'
-import Page from '../models/Page'
+import Id from '../entities/Id'
+import Page from '../entities/Page'
+import TreeNode from '../entities/TreeNode'
 
 const RouteController = reactive({
-    // root: new node,
+    root: new TreeNode,
     href: location.href,
     search: decodeURI(location.search),
     pathname: location.pathname,
@@ -47,13 +48,13 @@ const RouteController = reactive({
     isHomePage() {
         return location.pathname == ''
     },
-    // getRoot() {
-    //     if (this.root.notEmpty()) {
-    //         return this.root
-    //     }
+    getRoot() {
+        if (this.root.notEmpty()) {
+            return this.root
+        }
 
-    //     return node.getRoot()
-    // },
+        return TreeNode.getRoot()
+    },
 })
 
 export default RouteController

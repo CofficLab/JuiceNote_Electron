@@ -103,6 +103,28 @@ class FileTree {
 
         return null
     }
+
+    // 当前节点的父节点
+    public getParent(): FileTree | null {
+        if (path.dirname(this.path) === '/') {
+            return null
+        }
+
+        return new FileTree(path.dirname(this.path))
+    }
+
+    // 当前节点的祖先节点列表
+    public getParents(): FileTree[] {
+        let result: FileTree[] = []
+        let current = this.getParent()
+
+        while (current != null) {
+            result.push(current)
+            current = current.getParent()
+        }
+
+        return result
+    }
 }
 
 export default FileTree

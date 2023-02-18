@@ -1,5 +1,5 @@
 import { reactive } from 'vue'
-import node from '../models/TreeNode'
+import node from '../entities/TreeNode'
 
 const ProjectController = reactive({
     project: (new node).project,

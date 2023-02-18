@@ -43,7 +43,7 @@
         <Edit></Edit>
         <Add></Add>
       </div>
-      <!-- <Breadcrumbs></Breadcrumbs> -->
+      <Breadcrumbs></Breadcrumbs>
       <Toast></Toast>
       <div class="flex flex-row bg-sky-100/90 dark:bg-gray-500/20 items-center h-full">
         <Prev></Prev>
@@ -56,25 +56,25 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import Toc from "./Toc.vue";
+import Toc from "../components/Toc.vue";
 import log from "../tools/Log";
-import Breadcrumbs from "./Breadcrumbs.vue";
-import Prev from "./Prev.vue";
-import Next from "./Next.vue";
-import Delete from "./Delete.vue";
-import Add from "./Add.vue";
-import Home from "./Home.vue";
-import Address from "./Address.vue";
-import Edit from "./Edit.vue";
-import GitCommit from "./GitCommit.vue";
-import Alert from "./Alert.vue";
-import Toast from "./Toast.vue";
-import Content from "./Content.vue";
-import Editor from "./Editor.vue";
-import SideMenu from "./SideMenu.vue";
-import Others from "./Others.vue";
-import ProjectTree from "./ProjectTree.vue";
-import CodeContainer from "./CodeContainer.vue";
+import Breadcrumbs from "../components/Breadcrumbs.vue";
+import Prev from "../components/Prev.vue";
+import Next from "../components/Next.vue";
+import Delete from "../components/Delete.vue";
+import Add from "../components/Add.vue";
+import Home from "../components/Home.vue";
+import Address from "../components/Address.vue";
+import Edit from "../components/Edit.vue";
+import GitCommit from "../components/GitCommit.vue";
+import Alert from "../components/Alert.vue";
+import Toast from "../components/Toast.vue";
+import Content from "../components/Content.vue";
+import Editor from "../components/Editor.vue";
+import SideMenu from "../components/SideMenu.vue";
+import Others from "../components/Others.vue";
+import ProjectTree from "../components/ProjectTree.vue";
+import CodeContainer from "../components/CodeContainer.vue";
 import CodeController from "../controllers/CodeController";
 import RouteController from "../controllers/RouteController";
 import FullScreenController from "../controllers/FullScreenController";

@@ -59,7 +59,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import node from "../models/TreeNode";
+import node from "../entities/TreeNode";
 import Link from "./Link.vue";
 import log from "../tools/Log";
 import RouteController from "../controllers/RouteController";

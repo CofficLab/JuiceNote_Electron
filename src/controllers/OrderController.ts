@@ -1,22 +1,19 @@
+import Chapter from '../entities/Chapter'
 import { reactive } from 'vue'
 import Log from '../tools/Log'
-import Page from './Page'
-import Id from './Id'
-import fs from 'fs'
-import FileTree from '../tools/FileTree'
+import Page from 'src/entities/Page'
 
 const OrderController = reactive({
-    // root: new node,
     codeId: '',
     code: '',
 
-    createChild(parent: node, name: string): node {
+    createChild(parent: Chapter, name: string): Page {
         let created = parent.create(name)
         this.refresh()
 
         return created
     },
-    createFolderChild(parent: node, name: string): node {
+    createFolderChild(parent: Chapter, name: string): Chapter {
         let created = parent.createFolder(name)
         this.refresh()
 
@@ -37,13 +34,6 @@ const OrderController = reactive({
         node.delete()
         this.refresh()
     },
-    // getRoot() {
-    //     if (this.root.notEmpty()) {
-    //         return this.root
-    //     }
-
-    //     return node.getRoot()
-    // },
 })
 
 export default OrderController

@@ -27,8 +27,6 @@ import { java } from "@codemirror/lang-java";
 import { cpp } from "@codemirror/lang-cpp";
 import { php } from "@codemirror/lang-php";
 import { oneDark } from "@codemirror/theme-one-dark";
-import store from "../models/store";
-
 export default defineComponent({
   components: {
     Codemirror,

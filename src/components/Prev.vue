@@ -6,9 +6,9 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import store from "../models/Store";
+import store from "../entities/Store";
 import ArrowLeftCircle from "../icons/arrow-left-circle.vue";
-import node from "../models/TreeNode";
+import node from "../entities/TreeNode";
 import Link from "./Link.vue";
 import RouteController from "../controllers/RouteController";
 

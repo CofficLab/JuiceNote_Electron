@@ -36,7 +36,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import RouteController from "../controllers/RouteController";
-import store from "../models/Store";
+import store from "../entities/Store";
 import Link from "./Link.vue";
 import SideMenuItem from "./SideMenuItem.vue";
 

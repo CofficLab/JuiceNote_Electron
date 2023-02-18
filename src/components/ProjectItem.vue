@@ -37,7 +37,7 @@
 import { defineComponent } from "vue";
 import Link from "./Link.vue";
 import ChevronDown from "../icons/chevron-down.vue";
-import project from "../models/Project";
+import project from "../entities/Project";
 
 export default defineComponent({
   props: ["item"],
