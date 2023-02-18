@@ -60,6 +60,12 @@ class BookNode {
         })
     }
 
+    public getChildrenIds(): string[] {
+        return this.getChildren().map(child => {
+            return child.id
+        })
+    }
+
     public isBook(): boolean {
         return path.dirname(this.path) == Variables.markdownRootPath
     }

@@ -1,6 +1,13 @@
 import fs from "fs"
 import path from "path"
+import FileTree from "../tools/FileTree"
+import BookNode from "./BookNode"
+import Id from "./Id"
 import Variables from "./Variables"
+
+interface LooseObject {
+    [key: string]: any
+}
 
 class Settings {
     children: object = {}
@@ -24,17 +31,14 @@ class Config {
 
     static getChildren(id: string) {
         let settings = Config.getSettings()
-        let childrenSettings = settings.children
+        let childrenSettings: LooseObject = settings.children
         let childrenSetting = Object.getOwnPropertyDescriptor(childrenSettings, id)
 
-        if (childrenSetting == undefined) {
-            Object.defineProperty(childrenSettings, id, {
-                value: 0,
-                writable: true
-            })
-            settings.children = childrenSettings
-            Config.updateSettings(settings)
-        }
+
+        childrenSettings[id] = id.split('@')
+        settings.children = childrenSettings
+        Config.updateSettings(settings)
+
 
         return null
     }
@@ -57,9 +61,7 @@ class Config {
     }
 
     static updateSettings(settings: Settings) {
-        console.log('要更新的settings', settings)
-        console.log('要更新的内容转换成JSON', JSON.stringify(settings))
-
+        console.log('更新配置', settings)
         fs.writeFileSync(Config.getConfigFilePath(), JSON.stringify(settings, null, 2))
     }
 }
