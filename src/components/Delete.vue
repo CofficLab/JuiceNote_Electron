@@ -6,7 +6,6 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import store from "../models/store";
 import Trash from "../icons/trash.vue";
 
 export default defineComponent({

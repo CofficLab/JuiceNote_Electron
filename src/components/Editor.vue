@@ -13,14 +13,17 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import store from "../models/store";
+import EditModeController from "../controllers/EditModeController";
+import RouteController from "../controllers/RouteController";
 
 export default defineComponent({
   props: ["path"],
   data() {
     return {
       toolbarsBackground: "#fbfbfb",
-      html: store.edit_mode ? store.current.content() : store.current.htmlWithToc(),
+      html: EditModeController.edit_mode
+        ? RouteController.getCurrentPage().content()
+        : RouteController.getCurrentPage().htmlWithToc(),
       external_link: {
         markdown_css: function () {
           return "/src/assets/github-markdown.min.css";

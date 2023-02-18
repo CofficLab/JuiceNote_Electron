@@ -30,8 +30,8 @@
           class="flex flex-row justify-end fixed right-0 h-screen"
           v-bind:class="{ 'top-8': !hideTitleBar, 'top-0': hideTitleBar }"
         >
-          <ProjectTree v-if="current.parent().project.notEmpty()"></ProjectTree>
-          <Toc v-show="!editorMode" v-if="current.parent().project.isEmpty()"></Toc>
+          <!-- <ProjectTree v-if="current.parent().project.notEmpty()"></ProjectTree> -->
+          <!-- <Toc v-show="!editorMode" v-if="current.parent().project.isEmpty()"></Toc> -->
         </div>
       </aside>
     </main>
@@ -43,7 +43,7 @@
         <Edit></Edit>
         <Add></Add>
       </div>
-      <Breadcrumbs></Breadcrumbs>
+      <!-- <Breadcrumbs></Breadcrumbs> -->
       <Toast></Toast>
       <div class="flex flex-row bg-sky-100/90 dark:bg-gray-500/20 items-center h-full">
         <Prev></Prev>
@@ -57,8 +57,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import Toc from "./Toc.vue";
-import store from "../models/store";
-import log from "../models/log";
+import log from "../tools/Log";
 import Breadcrumbs from "./Breadcrumbs.vue";
 import Prev from "./Prev.vue";
 import Next from "./Next.vue";
@@ -76,6 +75,10 @@ import SideMenu from "./SideMenu.vue";
 import Others from "./Others.vue";
 import ProjectTree from "./ProjectTree.vue";
 import CodeContainer from "./CodeContainer.vue";
+import CodeController from "../controllers/CodeController";
+import RouteController from "../controllers/RouteController";
+import FullScreenController from "../controllers/FullScreenController";
+import EditModeController from "../controllers/EditModeController";
 
 export default defineComponent({
   components: {
@@ -100,20 +103,20 @@ export default defineComponent({
   },
   computed: {
     code: function () {
-      return store.code;
+      return CodeController.code;
     },
     current: function () {
-      log.info("App.vue", "get current node from store");
-      return store.getCurrentNode();
+      log.info("App.vue", "get current page from store");
+      return RouteController.getCurrentPage();
     },
     isProd: function (): boolean {
-      return store.isProd;
+      return RouteController.isProd;
     },
     hideTitleBar: function (): boolean {
-      return store.full_screen;
+      return FullScreenController.full_screen;
     },
     editorMode: function () {
-      return store.edit_mode;
+      return EditModeController.edit_mode;
     },
   },
   methods: {},

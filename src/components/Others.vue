@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import store from "../models/store";
+import RouteController from "../controllers/RouteController";
 import Link from "./Link.vue";
 
 export default defineComponent({
@@ -20,10 +20,13 @@ export default defineComponent({
       return this.menus.length > 0;
     },
     menus: function () {
-      let menus = store.root.search(store.current.title);
+      let menus = RouteController.root.search(RouteController.getCurrentPage().title);
 
       menus = menus.filter(function (menu) {
-        return menu.parent().title == store.current.parent().title && menu.id != store.current.id;
+        return (
+          menu.parent().title == RouteController.getCurrentPage().parent().title &&
+          menu.id != RouteController.getCurrentPage().id
+        );
       });
       return menus;
     },

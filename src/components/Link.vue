@@ -5,16 +5,16 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import "../app.css";
-import store from "../models/store";
+import RouteController from "../controllers/RouteController";
 export default defineComponent({
   props: ["href"],
   methods: {
     shouldActive: function (id) {
-      return store.current.firstLeaf().id == id || store.current.id == id;
+      return RouteController.getCurrentPage().id == id;
     },
     go: function () {
       this.active = true;
-      store.goto(this.href);
+      RouteController.goto(this.href);
     },
   },
 });

@@ -1,15 +1,16 @@
 <template>
-  <Link v-bind:href="prev.id" v-bind:class="prev.isEmpty() ? 'btn-disabled' : ''" class="btn-sm btn rounded-none"
+  <Link v-bind:href="prev?.id" v-bind:class="!prev ? 'btn-disabled' : ''" class="btn-sm btn rounded-none"
     ><ArrowLeftCircle></ArrowLeftCircle
   ></Link>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import store from "../models/store";
+import store from "../models/Store";
 import ArrowLeftCircle from "../icons/arrow-left-circle.vue";
-import node from "../models/node";
+import node from "../models/TreeNode";
 import Link from "./Link.vue";
+import RouteController from "../controllers/RouteController";
 
 export default defineComponent({
   components: {
@@ -17,8 +18,8 @@ export default defineComponent({
     Link,
   },
   computed: {
-    prev: function (): node {
-      return store.current.prevLeaf();
+    prev: function () {
+      return RouteController.getCurrentPage().prev();
     },
   },
 });

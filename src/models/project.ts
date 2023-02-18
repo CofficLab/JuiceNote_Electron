@@ -23,12 +23,12 @@ md.use(require("markdown-it-table-of-contents"), {
 /**
  * 项目的定义
  */
-class project {
+class Project {
     public static excepts = ['.DS_Store']
     public file: string = ''
     public id: string = ''
     public title: string = ''
-    public children: project[] = []
+    public children: Project[] = []
     public isFolder: boolean = false
 
     public constructor(file?: string) {
@@ -83,18 +83,18 @@ class project {
         this.children = this.getChildren()
     }
 
-    private getChildren(): project[] {
+    private getChildren(): Project[] {
         let projectPath = this.file
-        let files: project[] = []
-        let folders: project[] = []
+        let files: Project[] = []
+        let folders: Project[] = []
 
         fs.readdirSync(this.file).forEach(function (child) {
-            if (!project.excepts.includes(child)) {
+            if (!Project.excepts.includes(child)) {
                 let childPath = path.join(projectPath, child)
                 if (fs.statSync(childPath).isDirectory()) {
-                    folders.push(new project(childPath))
+                    folders.push(new Project(childPath))
                 } else {
-                    files.push(new project(childPath))
+                    files.push(new Project(childPath))
                 }
             }
         })
@@ -124,4 +124,4 @@ class project {
     }
 }
 
-export default project
+export default Project

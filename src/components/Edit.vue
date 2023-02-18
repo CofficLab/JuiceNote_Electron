@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import store from "../models/store";
+import EditModeController from "../controllers/EditModeController";
 import PencilSquare from "../icons/pencil-square.vue";
 import ArrowUturnLeft from "../icons/arrow-uturn-left.vue";
 
@@ -18,12 +18,12 @@ export default defineComponent({
   },
   methods: {
     switcher() {
-      store.edit_mode = !store.edit_mode;
+      EditModeController.edit_mode = !EditModeController.edit_mode;
     },
   },
   computed: {
     editMode() {
-      return store.edit_mode;
+      return EditModeController.edit_mode;
     },
   },
 });

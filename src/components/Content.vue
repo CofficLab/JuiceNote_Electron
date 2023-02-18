@@ -5,14 +5,17 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import "../app.css";
-import store from "../models/store";
+import RouteController from "../controllers/RouteController";
+import EditModeController from "../controllers/EditModeController";
 
 export default defineComponent({
   computed: {
     body(): string {
       // console.log("get content of", store.current.id);
       let dom = document.createElement("div");
-      dom.innerHTML = store.edit_mode ? store.current.htmlWithToc() : store.current.html();
+      dom.innerHTML = EditModeController.edit_mode
+        ? RouteController.getCurrentPage().htmlWithToc()
+        : RouteController.getCurrentPage().html();
 
       // 插入可执行的脚本
       let script = dom.getElementsByTagName("script").item(0);

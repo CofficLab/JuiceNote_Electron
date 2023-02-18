@@ -7,7 +7,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import CloudArrowUp from "../icons/cloud-arrow-up.vue";
-import store from "../models/store";
+import ToastController from "../controllers/ToastController";
 
 export default defineComponent({
   components: {
@@ -23,10 +23,10 @@ export default defineComponent({
         exec("git commit -m '提交文档变动'", function (error: any, stdout: string, stderr: any) {
           if (stdout) {
             console.log(stdout);
-            store.setToast(stdout);
+            ToastController.setToast(stdout);
             setTimeout(() => {
               console.log("清理toast");
-              store.setToast("");
+              ToastController.setToast("");
             }, 3000);
           }
           if (error) return console.error(stderr, error);

@@ -1,6 +1,5 @@
 import { app, BrowserWindow, shell, ipcMain } from 'electron'
 import { release } from 'os'
-import fs from 'fs'
 import path from 'path'
 
 // Disable GPU Acceleration for Windows 7

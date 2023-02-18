@@ -1,15 +1,16 @@
 <template>
-  <Link v-bind:href="next.id" v-bind:class="next.isEmpty() ? 'btn-disabled' : ''" class="btn-sm btn rounded-none">
+  <Link v-bind:href="next?.id" v-bind:class="!next ? 'btn-disabled' : ''" class="btn-sm btn rounded-none">
     <ArrowRightCircle></ArrowRightCircle>
   </Link>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import store from "../models/store";
+import store from "../models/Store";
 import ArrowRightCircle from "../icons/arrow-right-circle.vue";
-import node from "../models/node";
+import node from "../models/TreeNode";
 import Link from "./Link.vue";
+import RouteController from "../controllers/RouteController";
 
 export default defineComponent({
   components: {
@@ -18,8 +19,7 @@ export default defineComponent({
   },
   computed: {
     next: function (): node {
-      let current = store.current;
-      return current.notLeaf() ? current.firstLeaf().nextLeaf() : current.nextLeaf();
+      return RouteController.getCurrentPage().next();
     },
   },
 });

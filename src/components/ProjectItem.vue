@@ -1,7 +1,7 @@
 <template>
   <a
     href="javascript:void(0)"
-    v-if="!item.isFolder"
+    v-if="!item.notLeaf()"
     class="pl-10 w-full py-1 my-1 flex justify-between pr-4"
     :class="{ 'bg-primary': currentCodeId == item.id, 'hover:bg-slate-500/50': currentCodeId != item.id }"
   >
@@ -9,14 +9,14 @@
     <span @click="deleteFile(item.title)">-</span>
   </a>
 
-  <div class="flex flex-row hover:bg-slate-500/50 py-1" v-if="item.isFolder">
+  <div class="flex flex-row hover:bg-slate-500/50 py-1" v-if="item.notLeaf()">
     <chevron-down class="pl-0 ml-0 mr-1 w-4 my-auto" :class="{ '-rotate-90': !open }"></chevron-down>
     <a href="javascript:void(0)" class="ml-0 w-full flex justify-between pr-4">
       <span @click="showChildren">{{ item.title }}</span>
       <span @click="toggleFileForm">+</span>
     </a>
   </div>
-  <ul v-if="item.isFolder && item.children.length > 0" class="my-0 bg-gray-600">
+  <ul v-if="item.notLeaf() && item.children.length > 0" class="my-0 bg-gray-600">
     <li class="mt-1 flex justify-center px-4">
       <input
         type="text"
@@ -37,8 +37,7 @@
 import { defineComponent } from "vue";
 import Link from "./Link.vue";
 import ChevronDown from "../icons/chevron-down.vue";
-import store from "../models/store";
-import project from "../models/project";
+import project from "../models/Project";
 
 export default defineComponent({
   props: ["item"],

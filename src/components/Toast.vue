@@ -10,12 +10,12 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import store from "../models/store";
+import ToastController from "../controllers/ToastController";
 
 export default defineComponent({
   computed: {
     message() {
-      return store.toast;
+      return ToastController.toast;
     },
   },
 });

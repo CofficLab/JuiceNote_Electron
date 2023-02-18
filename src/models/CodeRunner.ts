@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import electron from 'electron'
 
-let code_runner = function (code = '', language = 'PHP') {
+let CodeRunner = function (code = '', language = 'PHP') {
     let suffix = 'unknown'
     switch (language) {
         case 'PHP':
@@ -112,5 +112,5 @@ let code_runner = function (code = '', language = 'PHP') {
 }
 
 export default {
-    code_runner
+    code_runner: CodeRunner
 }

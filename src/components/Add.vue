@@ -24,7 +24,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import store from "../models/store";
+import RouteController from "../controllers/RouteController";
 import Plus from "../icons/plus.vue";
 
 export default defineComponent({
@@ -47,22 +47,22 @@ export default defineComponent({
       this.formSwitcher = false;
     },
     submitPageForm() {
-      let current = store.current;
+      let current = RouteController.getCurrentPage();
       let parent = current.isLeaf() ? current.parent() : current;
 
       if (parent.isEmpty()) return console.error("父节点不存在，无法创建");
 
-      store.goto(store.createChild(parent, this.title).id);
+      RouteController.goto(store.createChild(parent, this.title).id);
       this.formSwitcher = false;
       this.title = "";
     },
     submitChapterForm() {
-      let current = store.current;
+      let current = RouteController.getCurrentPage();
       let parent = current.parent();
 
       if (parent.isEmpty()) return console.error("父节点不存在，无法创建");
 
-      store.goto(store.createFolderChild(parent, this.title).id);
+      RouteController.goto(store.createFolderChild(parent, this.title).id);
       this.formSwitcher = false;
       this.title = "";
     },

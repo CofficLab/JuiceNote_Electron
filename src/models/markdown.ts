@@ -1,8 +1,7 @@
 import fs from "fs"
 import path from "path"
 import hljs from 'highlight.js'
-import variables from "./variables";
-import log from "./log";
+import variables from "./Variables";
 
 const md = require('markdown-it')({
     html: true,
@@ -22,47 +21,26 @@ md.use(require("markdown-it-table-of-contents"), {
     'includeLevel': [1, 2, 3, 4]
 })
 
-/**
- * 导航节点的定义，基于“树”数据结构
- * 
- * 空节点->根节点->图书1->章节1
- *                   -> 章节2 
- *                   -> 章节n
- *            ->图书2->章节1
- *                   -> 章节2 
- *                   -> 章节n
- *            ->图书3->章节1
- *                   -> 章节2 
- *                   -> 章节n
- *            ->图书n->章节1
- *                   -> 章节2 
- *                   -> 章节n
- */
-class markdown {
-    public file: string = ''
-    private rootPath = variables.rootPath
+class Markdown {
+    public absoluteFilePath: string = ''
 
-    public constructor(file?: string) {
-        if (file) {
-            // console.log('初始化markdown', file)
-            this.file = file
+    public constructor(absoluteFilePath: string) {
+        if (!fs.existsSync(absoluteFilePath)) {
+            throw '要初始化的markdown文件「' + absoluteFilePath + '」不存在'
         }
+
+        this.absoluteFilePath = absoluteFilePath
     }
 
     public content(): string {
-        // log.info('markdown.content', 'file is' + this.file)
         // 需要补上markdown文件共同的footer
-        return fs.readFileSync(this.file, 'utf-8') + fs.readFileSync(path.join(this.rootPath, 'footer.md'), 'utf-8')
+        return fs.readFileSync(this.absoluteFilePath, 'utf-8') + fs.readFileSync(path.join(variables.markdownRootPath, 'footer.md'), 'utf-8')
     }
 
-    /**
-     * 获取markdown渲染后的HTML
-     * 
-     * @returns 
-     */
+    // 获取markdown渲染后的HTML
     public html() {
-        if (!fs.existsSync(this.file)) {
-            return md.render("## 文件「" + this.file + "」不存在")
+        if (!fs.existsSync(this.absoluteFilePath)) {
+            return md.render("## 文件「" + this.absoluteFilePath + "」不存在")
         }
 
         // if (path.extname(this.file) === '.py') {
@@ -72,14 +50,10 @@ class markdown {
         return md.render(this.content())
     }
 
-    /**
-     * 获取markdown渲染后的HTML，带TOC
-     * 
-     * @returns 
-     */
+    // 获取markdown渲染后的HTML，带TOC
     public htmlWithToc() {
-        if (!fs.existsSync(this.file)) {
-            return md.render("## 文件「" + this.file + "」不存在")
+        if (!fs.existsSync(this.absoluteFilePath)) {
+            return md.render("## 文件「" + this.absoluteFilePath + "」不存在")
         }
 
         return md.render("[[toc]] \r\n" + this.content())
@@ -87,7 +61,7 @@ class markdown {
 
     public toc(): string {
         let htmlWithToc = this.htmlWithToc()
-        let dom = markdown.makeDom(htmlWithToc)
+        let dom = Markdown.makeDom(htmlWithToc)
         let toc = dom.getElementsByClassName('table-of-contents')[0]
 
         if (toc == undefined) return ''
@@ -105,7 +79,7 @@ class markdown {
     public getTitle(): string {
         // 如果是markdown文件，获取markdown渲染后的HTML的标题
         let html = this.htmlWithToc()
-        let dom = markdown.makeDom(html)
+        let dom = Markdown.makeDom(html)
         let titleDom = dom.getElementsByTagName('h1')[0]
 
         return titleDom ? titleDom.innerText : ''
@@ -126,4 +100,4 @@ class markdown {
     }
 }
 
-export default markdown
+export default Markdown

@@ -59,10 +59,12 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import store from "../models/store";
-import node from "../models/node";
+import node from "../models/TreeNode";
 import Link from "./Link.vue";
-import log from "../models/log";
+import log from "../tools/Log";
+import RouteController from "../controllers/RouteController";
+import EditModeController from "../controllers/EditModeController";
+import OrderController from "../controllers/OrderController";
 
 export default defineComponent({
   data() {
@@ -79,12 +81,12 @@ export default defineComponent({
   computed: {
     breadcrumbs() {
       log.info("Breadcrumbs.vue", "获取breadcrumbs");
-      let breadcrumbs = store.getRoot().activated(store.getCurrentNode().id);
+      let breadcrumbs = RouteController.getRoot().activated(RouteController.getCurrentPage().id);
 
       return breadcrumbs;
     },
     inEditMode(): boolean {
-      return store.edit_mode;
+      return EditModeController.edit_mode;
     },
   },
   methods: {
@@ -92,8 +94,8 @@ export default defineComponent({
       this.dragged = navigator;
     },
     dragEnd() {
-      store.goto(this.dragged.parent().id);
-      store.updateOrder(this.dragged, this.index);
+      RouteController.goto(this.dragged.parent().id);
+      OrderController.updateOrder(this.dragged, this.index);
       this.hovered = null;
     },
     dragEnter(navigator: node, index) {

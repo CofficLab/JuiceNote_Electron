@@ -27,16 +27,16 @@
 import { defineComponent } from "vue";
 import Link from "./Link.vue";
 import ChevronDown from "../icons/chevron-down.vue";
-import store from "../models/store";
+import ProjectController from "../controllers/ProjectController";
 import ProjectItem from "./ProjectItem.vue";
-import project from "../models/project";
+import project from "../models/Project";
 
 export default defineComponent({
   data() {
     return {
       newFileName: "",
       showFileForm: false,
-      project: store.project,
+      project: ProjectController.project,
     };
   },
   methods: {
