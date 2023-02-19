@@ -31,7 +31,7 @@
           v-bind:class="{ 'top-8': !hideTitleBar, 'top-0': hideTitleBar }"
         >
           <!-- <ProjectTree v-if="current.parent().project.notEmpty()"></ProjectTree> -->
-          <!-- <Toc v-show="!editorMode" v-if="current.parent().project.isEmpty()"></Toc> -->
+          <Toc v-show="!editorMode"></Toc>
         </div>
       </aside>
     </main>

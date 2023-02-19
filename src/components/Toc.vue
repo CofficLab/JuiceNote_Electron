@@ -16,15 +16,17 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import RouteController from "../controllers/RouteController";
 import Link from "./Link.vue";
 
 export default defineComponent({
   computed: {
     toc(): string {
-      let current = store.current;
+      let current = RouteController.getCurrentPage();
       return current.toc();
     },
     menus: function () {
+      return [];
       let menus = store.root.search(store.current.title);
 
       menus = menus.filter(function (menu) {
