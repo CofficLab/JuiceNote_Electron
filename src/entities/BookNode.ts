@@ -29,7 +29,7 @@ class BookNode {
             }
 
             this.path = absolutePath
-            this.name = path.basename(this.path)
+            this.name = path.basename(this.path, '.md')
             this.id = Id.pathToId(this.path)
         } else {
             this.errorTitle = '当前节点为空节点'
@@ -197,6 +197,7 @@ class BookNode {
 
     // 按照名称查找节点
     public search(name: string): BookNode[] {
+        // console.log('search 「' + name + '」in ' + this.id)
         if (this.isEmpty() || this.isPage()) return []
 
         let result: BookNode[] = []
