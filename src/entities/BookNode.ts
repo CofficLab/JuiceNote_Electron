@@ -55,6 +55,7 @@ class BookNode {
     }
 
     public getChildrenIds(): string[] {
+        if (this.isPage()) return []
         let fromConfig = Config.get('children_settings:' + this.id)
         let fromFileSystem = fs.readdirSync(this.path).filter(child => {
             return !Config.get('nodeExcepts').includes(child)

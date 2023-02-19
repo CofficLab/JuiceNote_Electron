@@ -34,7 +34,7 @@
       "面向对象"
     ],
     "Docker": [
-      "Docker@01-初识"
+      "Docker@初识"
     ],
     "Docker@01-初识": [
       "Docker@01-初识@01-认识计算机",
@@ -43,33 +43,33 @@
       "Docker@01-初识@04-认识进制"
     ],
     "开始": [
-      "开始@01-欢迎",
-      "开始@02-做事方式"
+      "开始@做事方式",
+      "开始@欢迎"
     ],
     "Golang": [
-      "Golang@01-安装与配置",
-      "Golang@02-初识",
-      "Golang@03-数据类型",
-      "Golang@04-变量与常量",
-      "Golang@05-数据结构",
-      "Golang@06-常用语句",
-      "Golang@07-函数",
-      "Golang@08-文件",
-      "Golang@09-面向对象",
-      "Golang@10-并发",
-      "Golang@11-异常",
-      "Golang@12-关键字",
-      "Golang@13-表达式和运算符",
-      "Golang@14-特性",
-      "Golang@15-总结",
-      "Golang@16-标准库",
-      "Golang@17-扩展包",
-      "Golang@18-短链接生成",
-      "Golang@19-命令",
-      "Golang@20-算法",
-      "Golang@21-搜索引擎",
-      "Golang@22-数据库",
-      "Golang@23-内置函数"
+      "Golang@关键字",
+      "Golang@内置函数",
+      "Golang@函数",
+      "Golang@初识",
+      "Golang@变量与常量",
+      "Golang@命令",
+      "Golang@安装与配置",
+      "Golang@常用语句",
+      "Golang@并发",
+      "Golang@异常",
+      "Golang@总结",
+      "Golang@扩展包",
+      "Golang@搜索引擎",
+      "Golang@数据库",
+      "Golang@数据类型",
+      "Golang@数据结构",
+      "Golang@文件",
+      "Golang@标准库",
+      "Golang@特性",
+      "Golang@短链接生成",
+      "Golang@算法",
+      "Golang@表达式和运算符",
+      "Golang@面向对象"
     ],
     "Golang@01-安装与配置": [
       "Golang@01-安装与配置@02-macOS",
@@ -268,14 +268,14 @@
       "Golang@23-内置函数@01-copy"
     ],
     "Java": [
-      "Java@02-数据类型",
-      "Java@03-数据结构",
-      "Java@01-初识",
-      "Java@05-函数",
-      "Java@04-常用语句",
-      "Java@06-文件",
-      "Java@07-面向对象",
-      "Java@08-异常"
+      "Java@函数",
+      "Java@初识",
+      "Java@常用语句",
+      "Java@异常",
+      "Java@数据类型",
+      "Java@数据结构",
+      "Java@文件",
+      "Java@面向对象"
     ],
     "Java@01-初识": [
       "Java@01-初识@01-认识计算机",
@@ -322,18 +322,18 @@
       "Java@08-异常@04-抛出异常"
     ],
     "Python": [
-      "Python@01-初识",
-      "Python@03-数据结构",
-      "Python@02-数据类型",
-      "Python@04-常用语句",
-      "Python@05-函数",
-      "Python@06-文件",
-      "Python@07-面向对象",
-      "Python@08-异常",
-      "Python@09-数据库支持",
-      "Python@10-模块",
-      "Python@11-应用",
-      "Python@12-Flask"
+      "Python@Flask",
+      "Python@函数",
+      "Python@初识",
+      "Python@常用语句",
+      "Python@应用",
+      "Python@异常",
+      "Python@数据库支持",
+      "Python@数据类型",
+      "Python@数据结构",
+      "Python@文件",
+      "Python@模块",
+      "Python@面向对象"
     ],
     "Python@01-初识": [
       "Python@01-初识@01-认识计算机",
@@ -402,6 +402,653 @@
       "Python@12-Flask@02-安装",
       "Python@12-Flask@03-应用的基本结构",
       "Python@12-Flask@04-数据库迁移"
+    ],
+    "面向对象": [
+      "面向对象@设计模式目录",
+      "面向对象@面向对象思想"
+    ],
+    "数据库": [
+      "数据库@MySQL",
+      "数据库@Redis",
+      "数据库@SQL",
+      "数据库@数据库系统原理"
+    ],
+    "数据库@数据库系统原理": [
+      "数据库@数据库系统原理@Next-Key Locks",
+      "数据库@数据库系统原理@事务",
+      "数据库@数据库系统原理@关系数据库设计理论",
+      "数据库@数据库系统原理@多版本并发控制",
+      "数据库@数据库系统原理@封锁",
+      "数据库@数据库系统原理@并发一致性问题",
+      "数据库@数据库系统原理@隔离级别"
+    ],
+    "数据库@MySQL": [
+      "数据库@MySQL@MySQL"
+    ],
+    "数据库@Redis": [
+      "数据库@Redis@Redis"
+    ],
+    "数据库@SQL": [
+      "数据库@SQL@SQL 练习",
+      "数据库@SQL@SQL 语法"
+    ],
+    "算法": [
+      "算法@CRC",
+      "算法@LFU",
+      "算法@LRU",
+      "算法@MD5",
+      "算法@MurmurHash",
+      "算法@一致性哈希",
+      "算法@二分查找",
+      "算法@希尔排序",
+      "算法@快速排序",
+      "算法@简单排序",
+      "算法@选择排序"
+    ],
+    "系统设计": [
+      "系统设计@准备",
+      "系统设计@分布式",
+      "系统设计@基础",
+      "系统设计@攻击技术",
+      "系统设计@案例",
+      "系统设计@消息队列",
+      "系统设计@缓存",
+      "系统设计@网站的架构演进之旅",
+      "系统设计@集群"
+    ],
+    "系统设计@准备": [
+      "系统设计@准备@简介"
+    ],
+    "系统设计@分布式": [
+      "系统设计@分布式@BASE",
+      "系统设计@分布式@CAP",
+      "系统设计@分布式@Paxos",
+      "系统设计@分布式@Raft",
+      "系统设计@分布式@分布式事务",
+      "系统设计@分布式@分布式锁"
+    ],
+    "系统设计@基础": [
+      "系统设计@基础@伸缩性",
+      "系统设计@基础@可用性",
+      "系统设计@基础@安全性",
+      "系统设计@基础@性能指标",
+      "系统设计@基础@扩展性"
+    ],
+    "系统设计@攻击技术": [
+      "系统设计@攻击技术@SQL 注入攻击",
+      "系统设计@攻击技术@拒绝服务攻击",
+      "系统设计@攻击技术@跨站脚本攻击",
+      "系统设计@攻击技术@跨站请求伪造"
+    ],
+    "系统设计@案例": [
+      "系统设计@案例@Twitter 时间线和搜索",
+      "系统设计@案例@短链接",
+      "系统设计@案例@网页爬虫"
+    ],
+    "系统设计@消息队列": [
+      "系统设计@消息队列@使用场景",
+      "系统设计@消息队列@可靠性",
+      "系统设计@消息队列@消息类型"
+    ],
+    "系统设计@缓存": [
+      "系统设计@缓存@CDN",
+      "系统设计@缓存@LRU",
+      "系统设计@缓存@一致性哈希",
+      "系统设计@缓存@数据分布",
+      "系统设计@缓存@缓存位置",
+      "系统设计@缓存@缓存特征",
+      "系统设计@缓存@缓存问题"
+    ],
+    "系统设计@网站的架构演进之旅": [
+      "系统设计@网站的架构演进之旅@NoSQL 与搜索引擎",
+      "系统设计@网站的架构演进之旅@业务拆分",
+      "系统设计@网站的架构演进之旅@分布式文件服务器",
+      "系统设计@网站的架构演进之旅@反向代理和 CDN",
+      "系统设计@网站的架构演进之旅@应用和数据分离",
+      "系统设计@网站的架构演进之旅@异步",
+      "系统设计@网站的架构演进之旅@数据库读写分离",
+      "系统设计@网站的架构演进之旅@缓存",
+      "系统设计@网站的架构演进之旅@网站初始化",
+      "系统设计@网站的架构演进之旅@集群"
+    ],
+    "系统设计@集群": [
+      "系统设计@集群@负载均衡",
+      "系统设计@集群@集群下的 Session 管理"
+    ],
+    "正则表达式": [
+      "正则表达式@简介"
+    ],
+    "Docker@初识": [
+      "Docker@初识@官网与文档",
+      "Docker@初识@认识 Golang",
+      "Docker@初识@认识计算机",
+      "Docker@初识@认识进制"
+    ],
+    "Flutter": [
+      "Flutter@初识"
+    ],
+    "Flutter@初识": [
+      "Flutter@初识@安装",
+      "Flutter@初识@简介"
+    ],
+    "Golang@安装与配置": [
+      "Golang@安装与配置@Linux",
+      "Golang@安装与配置@Windows",
+      "Golang@安装与配置@macOS"
+    ],
+    "Golang@关键字": [
+      "Golang@关键字@defer",
+      "Golang@关键字@for",
+      "Golang@关键字@panic",
+      "Golang@关键字@range",
+      "Golang@关键字@简介"
+    ],
+    "Golang@内置函数": [
+      "Golang@内置函数@copy"
+    ],
+    "Golang@函数": [
+      "Golang@函数@init 函数",
+      "Golang@函数@作用域",
+      "Golang@函数@内置函数",
+      "Golang@函数@内部函数",
+      "Golang@函数@参数",
+      "Golang@函数@简介",
+      "Golang@函数@自定义函数",
+      "Golang@函数@装饰器",
+      "Golang@函数@返回值",
+      "Golang@函数@递归"
+    ],
+    "Golang@初识": [
+      "Golang@初识@参考资料",
+      "Golang@初识@字符编码",
+      "Golang@初识@官网与文档",
+      "Golang@初识@认识 Golang",
+      "Golang@初识@认识计算机",
+      "Golang@初识@认识进制"
+    ],
+    "Golang@变量与常量": [
+      "Golang@变量与常量@变量",
+      "Golang@变量与常量@常量",
+      "Golang@变量与常量@指针"
+    ],
+    "Golang@命令": [
+      "Golang@命令@go get",
+      "Golang@命令@go mod"
+    ],
+    "Golang@常用语句": [
+      "Golang@常用语句@位运算",
+      "Golang@常用语句@循环",
+      "Golang@常用语句@条件判断",
+      "Golang@常用语句@注释",
+      "Golang@常用语句@缩进与换行",
+      "Golang@常用语句@输出",
+      "Golang@常用语句@运算与比较",
+      "Golang@常用语句@返回值",
+      "Golang@常用语句@迭代"
+    ],
+    "Golang@并发": [
+      "Golang@并发@协程",
+      "Golang@并发@通信"
+    ],
+    "Golang@异常": [
+      "Golang@异常@简介",
+      "Golang@异常@错误"
+    ],
+    "Golang@总结": [
+      "Golang@总结@理解编程语言",
+      "Golang@总结@重新认识"
+    ],
+    "Golang@扩展包": [
+      "Golang@扩展包@JWT",
+      "Golang@扩展包@ORM",
+      "Golang@扩展包@参数校验",
+      "Golang@扩展包@日志相关",
+      "Golang@扩展包@简介",
+      "Golang@扩展包@配置相关"
+    ],
+    "Golang@搜索引擎": [
+      "Golang@搜索引擎@Lucene"
+    ],
+    "Golang@数据库": [
+      "Golang@数据库@Memcached",
+      "Golang@数据库@Redis"
+    ],
+    "Golang@数据类型": [
+      "Golang@数据类型@复数类型",
+      "Golang@数据类型@字符",
+      "Golang@数据类型@字符串",
+      "Golang@数据类型@存储",
+      "Golang@数据类型@布尔",
+      "Golang@数据类型@整型",
+      "Golang@数据类型@浮点型",
+      "Golang@数据类型@简介",
+      "Golang@数据类型@类型比较",
+      "Golang@数据类型@类型转换",
+      "Golang@数据类型@自定义",
+      "Golang@数据类型@零值"
+    ],
+    "Golang@数据类型@字符串": [
+      "Golang@数据类型@字符串@常见场景",
+      "Golang@数据类型@字符串@常见问题",
+      "Golang@数据类型@字符串@简介"
+    ],
+    "Golang@数据结构": [
+      "Golang@数据结构@切片",
+      "Golang@数据结构@列表",
+      "Golang@数据结构@堆",
+      "Golang@数据结构@数组",
+      "Golang@数据结构@映射",
+      "Golang@数据结构@简介",
+      "Golang@数据结构@自定义",
+      "Golang@数据结构@链表",
+      "Golang@数据结构@集合"
+    ],
+    "Golang@数据结构@切片": [
+      "Golang@数据结构@切片@常见报错",
+      "Golang@数据结构@切片@常见问题",
+      "Golang@数据结构@切片@应用场景",
+      "Golang@数据结构@切片@简介"
+    ],
+    "Golang@数据结构@数组": [
+      "Golang@数据结构@数组@常见问题",
+      "Golang@数据结构@数组@简介"
+    ],
+    "Golang@数据结构@映射": [
+      "Golang@数据结构@映射@常见报错",
+      "Golang@数据结构@映射@常见问题",
+      "Golang@数据结构@映射@简介"
+    ],
+    "Golang@文件": [
+      "Golang@文件@MIMEHeader",
+      "Golang@文件@上传文件",
+      "Golang@文件@文件操作",
+      "Golang@文件@认识文件"
+    ],
+    "Golang@标准库": [
+      "Golang@标准库@encoding 加密解密",
+      "Golang@标准库@encoding.json JSON",
+      "Golang@标准库@fmt 打印与输出",
+      "Golang@标准库@log 日志",
+      "Golang@标准库@math.big",
+      "Golang@标准库@math",
+      "Golang@标准库@math.rand 随机数",
+      "Golang@标准库@net.http HTTP",
+      "Golang@标准库@net.url URL",
+      "Golang@标准库@os 命令行",
+      "Golang@标准库@os 进程",
+      "Golang@标准库@regexp 正则表达式",
+      "Golang@标准库@sort 排序",
+      "Golang@标准库@strconv 字符串转换",
+      "Golang@标准库@strings 字符串",
+      "Golang@标准库@time 时间",
+      "Golang@标准库@简介"
+    ],
+    "Golang@特性": [
+      "Golang@特性@defer",
+      "Golang@特性@recover",
+      "Golang@特性@关键字",
+      "Golang@特性@包",
+      "Golang@特性@单元测试",
+      "Golang@特性@可见性与作用域",
+      "Golang@特性@基准测试",
+      "Golang@特性@指针",
+      "Golang@特性@接口",
+      "Golang@特性@空白标识符",
+      "Golang@特性@线程安全",
+      "Golang@特性@结构体",
+      "Golang@特性@范型",
+      "Golang@特性@运算符优先级",
+      "Golang@特性@预定义标识符"
+    ],
+    "Golang@短链接生成": [
+      "Golang@短链接生成@简介"
+    ],
+    "Golang@算法": [
+      "Golang@算法@LFU",
+      "Golang@算法@LRU",
+      "Golang@算法@Min Sketch",
+      "Golang@算法@Murmurhash",
+      "Golang@算法@PageRank",
+      "Golang@算法@RangeList",
+      "Golang@算法@Top K",
+      "Golang@算法@分布式 ID 生成器",
+      "Golang@算法@布隆过滤器",
+      "Golang@算法@快速排序",
+      "Golang@算法@数字求和",
+      "Golang@算法@数组运算"
+    ],
+    "Golang@表达式和运算符": [
+      "Golang@表达式和运算符@..."
+    ],
+    "Golang@面向对象": [
+      "Golang@面向对象@简介",
+      "Golang@面向对象@继承",
+      "Golang@面向对象@重载",
+      "Golang@面向对象@魔术方法"
+    ],
+    "Java@数据类型": [
+      "Java@数据类型@字符",
+      "Java@数据类型@存储",
+      "Java@数据类型@布尔",
+      "Java@数据类型@数值",
+      "Java@数据类型@简介",
+      "Java@数据类型@类型转换"
+    ],
+    "Java@函数": [
+      "Java@函数@简介"
+    ],
+    "Java@初识": [
+      "Java@初识@基础知识",
+      "Java@初识@官网与文档",
+      "Java@初识@认识 Java",
+      "Java@初识@认识计算机",
+      "Java@初识@认识进制"
+    ],
+    "Java@常用语句": [
+      "Java@常用语句@循环",
+      "Java@常用语句@条件判断",
+      "Java@常用语句@注释"
+    ],
+    "Java@异常": [
+      "Java@异常@异常与函数",
+      "Java@异常@抛出异常",
+      "Java@异常@捕获异常",
+      "Java@异常@简介"
+    ],
+    "Java@数据结构": [
+      "Java@数据结构@二维数组",
+      "Java@数据结构@数组",
+      "Java@数据结构@简介"
+    ],
+    "Java@文件": [
+      "Java@文件@文件操作",
+      "Java@文件@认识文件"
+    ],
+    "Java@面向对象": [
+      "Java@面向对象@包",
+      "Java@面向对象@简介",
+      "Java@面向对象@类",
+      "Java@面向对象@继承"
+    ],
+    "JavaScript": [
+      "JavaScript@内置函数",
+      "JavaScript@内置对象",
+      "JavaScript@函数",
+      "JavaScript@初识",
+      "JavaScript@场景",
+      "JavaScript@常用语句",
+      "JavaScript@数据类型",
+      "JavaScript@数据结构",
+      "JavaScript@文件",
+      "JavaScript@测试",
+      "JavaScript@短链接",
+      "JavaScript@表达式和运算符",
+      "JavaScript@语句和声明",
+      "JavaScript@面向对象"
+    ],
+    "JavaScript@初识": [
+      "JavaScript@初识@基础知识",
+      "JavaScript@初识@官网与文档",
+      "JavaScript@初识@认识 JavaScript",
+      "JavaScript@初识@认识计算机",
+      "JavaScript@初识@认识进制"
+    ],
+    "JavaScript@内置函数": [
+      "JavaScript@内置函数@alert",
+      "JavaScript@内置函数@eval",
+      "JavaScript@内置函数@isFinite",
+      "JavaScript@内置函数@isNaN",
+      "JavaScript@内置函数@parseFloat",
+      "JavaScript@内置函数@parseInt"
+    ],
+    "JavaScript@内置对象": [
+      "JavaScript@内置对象@Array",
+      "JavaScript@内置对象@Math"
+    ],
+    "JavaScript@函数": [
+      "JavaScript@函数@作用域",
+      "JavaScript@函数@内置函数",
+      "JavaScript@函数@匿名函数",
+      "JavaScript@函数@简介",
+      "JavaScript@函数@闭包"
+    ],
+    "JavaScript@场景": [
+      "JavaScript@场景@打开新链接"
+    ],
+    "JavaScript@常用语句": [
+      "JavaScript@常用语句@循环",
+      "JavaScript@常用语句@条件判断",
+      "JavaScript@常用语句@输出",
+      "JavaScript@常用语句@运算与比较"
+    ],
+    "JavaScript@数据类型": [
+      "JavaScript@数据类型@字符",
+      "JavaScript@数据类型@存储",
+      "JavaScript@数据类型@布尔",
+      "JavaScript@数据类型@数值",
+      "JavaScript@数据类型@简介",
+      "JavaScript@数据类型@类型转换"
+    ],
+    "JavaScript@数据结构": [
+      "JavaScript@数据结构@列表",
+      "JavaScript@数据结构@数组",
+      "JavaScript@数据结构@映射",
+      "JavaScript@数据结构@简介"
+    ],
+    "JavaScript@文件": [
+      "JavaScript@文件@文件操作",
+      "JavaScript@文件@认识文件"
+    ],
+    "JavaScript@测试": [
+      "JavaScript@测试@断言"
+    ],
+    "JavaScript@短链接": [
+      "JavaScript@短链接@codes",
+      "JavaScript@短链接@简介"
+    ],
+    "JavaScript@短链接@codes": [
+      "JavaScript@短链接@codes@01-hello.js"
+    ],
+    "JavaScript@表达式和运算符": [
+      "JavaScript@表达式和运算符@...",
+      "JavaScript@表达式和运算符@=",
+      "JavaScript@表达式和运算符@percent",
+      "JavaScript@表达式和运算符@typeof"
+    ],
+    "JavaScript@语句和声明": [
+      "JavaScript@语句和声明@let",
+      "JavaScript@语句和声明@var"
+    ],
+    "JavaScript@面向对象": [
+      "JavaScript@面向对象@原型",
+      "JavaScript@面向对象@对象",
+      "JavaScript@面向对象@属性",
+      "JavaScript@面向对象@方法",
+      "JavaScript@面向对象@简介"
+    ],
+    "MySQL": [
+      "MySQL@初识",
+      "MySQL@架构"
+    ],
+    "MySQL@初识": [
+      "MySQL@初识@03",
+      "MySQL@初识@基本概念",
+      "MySQL@初识@安装"
+    ],
+    "MySQL@架构": [
+      "MySQL@架构@逻辑架构"
+    ],
+    "Node": [
+      "Node@初识"
+    ],
+    "Node@初识": [
+      "Node@初识@官网与文档",
+      "Node@初识@认识 Node.js",
+      "Node@初识@认识计算机"
+    ],
+    "PHP": [
+      "PHP@函数",
+      "PHP@初识",
+      "PHP@变量",
+      "PHP@常用语句",
+      "PHP@数据类型",
+      "PHP@数据结构",
+      "PHP@文件",
+      "PHP@短链接",
+      "PHP@编程基础"
+    ],
+    "PHP@初识": [
+      "PHP@初识@官网与文档",
+      "PHP@初识@认识 PHP",
+      "PHP@初识@认识计算机",
+      "PHP@初识@认识进制"
+    ],
+    "PHP@函数": [
+      "PHP@函数@作用域",
+      "PHP@函数@内置函数",
+      "PHP@函数@简介",
+      "PHP@函数@自定义函数",
+      "PHP@函数@装饰器"
+    ],
+    "PHP@变量": [
+      "PHP@变量@变量类型",
+      "PHP@变量@常量",
+      "PHP@变量@数据类型",
+      "PHP@变量@简介"
+    ],
+    "PHP@常用语句": [
+      "PHP@常用语句@循环",
+      "PHP@常用语句@条件判断",
+      "PHP@常用语句@注释"
+    ],
+    "PHP@数据类型": [
+      "PHP@数据类型@字符",
+      "PHP@数据类型@存储",
+      "PHP@数据类型@布尔",
+      "PHP@数据类型@数值",
+      "PHP@数据类型@简介"
+    ],
+    "PHP@数据结构": [
+      "PHP@数据结构@数组",
+      "PHP@数据结构@简介"
+    ],
+    "PHP@文件": [
+      "PHP@文件@文件操作",
+      "PHP@文件@认识文件"
+    ],
+    "PHP@短链接": [
+      "PHP@短链接@简介"
+    ],
+    "PHP@编程基础": [
+      "PHP@编程基础@常见函数",
+      "PHP@编程基础@正则表达式",
+      "PHP@编程基础@类",
+      "PHP@编程基础@自定义函数",
+      "PHP@编程基础@退出程序"
+    ],
+    "PostgreSQL": [
+      "PostgreSQL@使用",
+      "PostgreSQL@初识"
+    ],
+    "PostgreSQL@初识": [
+      "PostgreSQL@初识@01",
+      "PostgreSQL@初识@基本概念",
+      "PostgreSQL@初识@安装",
+      "PostgreSQL@初识@连接"
+    ],
+    "PostgreSQL@使用": [
+      "PostgreSQL@使用@元命令"
+    ],
+    "Python@初识": [
+      "Python@初识@官网与文档",
+      "Python@初识@编译与解释",
+      "Python@初识@认识 Python",
+      "Python@初识@认识计算机",
+      "Python@初识@认识进制"
+    ],
+    "Python@Flask": [
+      "Python@Flask@安装",
+      "Python@Flask@应用的基本结构",
+      "Python@Flask@数据库迁移",
+      "Python@Flask@简介"
+    ],
+    "Python@函数": [
+      "Python@函数@作用域",
+      "Python@函数@内置函数",
+      "Python@函数@简介",
+      "Python@函数@自定义函数",
+      "Python@函数@装饰器"
+    ],
+    "Python@常用语句": [
+      "Python@常用语句@其他语句",
+      "Python@常用语句@循环",
+      "Python@常用语句@推导",
+      "Python@常用语句@条件判断",
+      "Python@常用语句@注释",
+      "Python@常用语句@缩进与换行",
+      "Python@常用语句@输出",
+      "Python@常用语句@迭代"
+    ],
+    "Python@应用": [
+      "Python@应用@屏幕抓取"
+    ],
+    "Python@异常": [
+      "Python@异常@异常与函数",
+      "Python@异常@捕获异常",
+      "Python@异常@简介"
+    ],
+    "Python@数据库支持": [
+      "Python@数据库支持@SQLite"
+    ],
+    "Python@数据类型": [
+      "Python@数据类型@字符",
+      "Python@数据类型@存储",
+      "Python@数据类型@布尔",
+      "Python@数据类型@数值",
+      "Python@数据类型@简介",
+      "Python@数据类型@类型转换"
+    ],
+    "Python@数据结构": [
+      "Python@数据结构@元组",
+      "Python@数据结构@列表",
+      "Python@数据结构@字典",
+      "Python@数据结构@简介",
+      "Python@数据结构@集合"
+    ],
+    "Python@文件": [
+      "Python@文件@文件操作",
+      "Python@文件@认识文件"
+    ],
+    "Python@模块": [
+      "Python@模块@标准库",
+      "Python@模块@模块"
+    ],
+    "Python@面向对象": [
+      "Python@面向对象@简介",
+      "Python@面向对象@魔术方法"
+    ],
+    "Redis": [
+      "Redis@应用场景"
+    ],
+    "Shell": [
+      "Shell@envsubst",
+      "Shell@export",
+      "Shell@if",
+      "Shell@初识"
+    ],
+    "Shell@初识": [
+      "Shell@初识@官网与文档",
+      "Shell@初识@认识 Golang",
+      "Shell@初识@认识计算机",
+      "Shell@初识@认识进制"
+    ],
+    "Vue": [
+      "Vue@初识"
+    ],
+    "Vue@初识": [
+      "Vue@初识@官网与文档",
+      "Vue@初识@认识 Vue",
+      "Vue@初识@认识计算机"
     ]
   }
 }
