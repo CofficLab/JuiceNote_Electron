@@ -27,7 +27,7 @@ const RouteController = reactive({
         this.currentPage = (new BookNode(path)).firstPage()
     },
     getBreadcrumbs(): BookNode[] {
-        return this.getCurrentPage().getParents()
+        return this.getCurrentPage().getParents().concat([this.getCurrentPage()])
     },
     checkHomePage() {
         this.isHomePage = (new URL(location.href)).searchParams.get('id') == '/'

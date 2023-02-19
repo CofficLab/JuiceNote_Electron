@@ -12,7 +12,7 @@
             class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 h-96 mt-8 overflow-scroll"
           >
             <li
-              v-for="(item, index) in breadcrumb.siblings()"
+              v-for="(item, index) in breadcrumb.getParent().getChildren()"
               draggable="true"
               v-on:dragend="dragEnd()"
               v-on:dragstart="dragStart(item)"
@@ -79,8 +79,8 @@ export default defineComponent({
   },
   computed: {
     breadcrumbs() {
-      console.log("Breadcrumbs.vue", "获取breadcrumbs");
       let breadcrumbs = RouteController.getBreadcrumbs();
+      console.log("获取breadcrumbs", breadcrumbs);
 
       return breadcrumbs;
     },
@@ -93,7 +93,7 @@ export default defineComponent({
       this.dragged = navigator;
     },
     dragEnd() {
-      RouteController.goto(this.dragged.parent().id);
+      RouteController.goto(this.dragged.getParent().id);
       OrderController.updateOrder(this.dragged, this.index);
       this.hovered = null;
     },

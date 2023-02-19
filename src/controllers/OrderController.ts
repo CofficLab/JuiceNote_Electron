@@ -1,4 +1,5 @@
 
+import BookNode from 'src/entities/BookNode'
 import { reactive } from 'vue'
 
 const OrderController = reactive({
@@ -17,10 +18,9 @@ const OrderController = reactive({
 
         return created
     },
-    updateOrder(navigator: node, order: number) {
+    updateOrder(navigator: BookNode, order: number) {
         console.log('store.updateOrder', navigator.id + '移动到' + order)
         navigator.setOrder(order)
-        this.refresh()
     },
     refresh() {
         console.log('store.refresh', 'refresh in store')

@@ -21,6 +21,7 @@ class Config {
     }
 
     static set(key: string, value: string | string[]) {
+        console.log('set', key, value)
         nconf.file({ file: Config.getConfigFilePath() });
         nconf.set(key, value)
 

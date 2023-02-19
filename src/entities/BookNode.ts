@@ -134,6 +134,19 @@ class BookNode {
         return this.errorTitle.length > 0
     }
 
+    // 设置新的排序值
+    public setOrder(newOrder: number) {
+        console.log('sort.setOrder', newOrder)
+        let children = this.getParent().getChildrenIds()
+        let order = children.indexOf(this.id)
+
+        children.splice(order, 1)
+        children.splice(newOrder, 0, this.id)
+        // console.log(children)
+
+        this.getParent().setChildrenConfig(children)
+    }
+
     public isActivated() {
         let currentPage = RouteController.getCurrentPage()
         let activatedBookNodes = currentPage.getParents()
