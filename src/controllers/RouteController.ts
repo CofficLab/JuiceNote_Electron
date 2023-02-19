@@ -10,20 +10,20 @@ const RouteController = reactive({
 
     goto(id: string) {
         history.pushState([], "", location.pathname + "?id=" + id);
-        this.search = decodeURI(location.search)
-        this.refreshCurrentPage()
+        this.refresh()
         this.checkHomePage()
     },
     getCurrentPage(): BookNode {
         // console.log('get current page')
-        if (this.currentPage == undefined) this.refreshCurrentPage()
+        if (this.currentPage == undefined) this.refresh()
 
         return this.currentPage
     },
-    refreshCurrentPage() {
+    refresh() {
         console.log('refresh current page')
         let id = (new URL(location.href)).searchParams.get('id') || ''
         let path = Id.idToPath(id ? id : '/')
+        this.search = decodeURI(location.search)
         this.currentPage = (new BookNode(path)).firstPage()
     },
     getBreadcrumbs(): BookNode[] {
