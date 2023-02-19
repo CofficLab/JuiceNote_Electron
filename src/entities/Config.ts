@@ -1,10 +1,17 @@
+import fs from 'fs'
 import path from "path"
 import Variables from "./Variables"
 var nconf = require('nconf');
 
 class Config {
     static getConfigFilePath(): string {
-        return path.join(Variables.markdownRootPath, 'config.json')
+        let configFilePath = path.join(Variables.markdownRootPath, 'config.json')
+
+        if (!fs.existsSync(configFilePath)) {
+            fs.writeFileSync(configFilePath, '{}')
+        }
+
+        return configFilePath
     }
 
     static get(key: string) {

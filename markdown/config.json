@@ -11,10 +11,12 @@
       "PHP",
       "PostgreSQL",
       "Python",
+      "README",
       "Redis",
       "Shell",
       "Vue",
       "config.json",
+      "footer",
       "开始",
       "数据库",
       "正则表达式",
@@ -22,113 +24,6 @@
       "系统设计",
       "面向对象"
     ],
-    "Docker": [
-      "Docker@01-初识"
-    ],
-    "Docker@01-初识": [
-      "Docker@01-初识@01-认识计算机",
-      "Docker@01-初识@02-认识 Golang",
-      "Docker@01-初识@03-官网与文档",
-      "Docker@01-初识@04-认识进制"
-    ],
-    "JavaScript": [
-      "JavaScript@01-初识",
-      "JavaScript@02-数据类型",
-      "JavaScript@03-数据结构",
-      "JavaScript@04-常用语句",
-      "JavaScript@05-函数",
-      "JavaScript@06-文件",
-      "JavaScript@07-测试",
-      "JavaScript@08-面向对象",
-      "JavaScript@09-短链接",
-      "JavaScript@10-内置函数",
-      "JavaScript@11-内置对象",
-      "JavaScript@12-表达式和运算符",
-      "JavaScript@13-语句和声明",
-      "JavaScript@14-场景",
-      "JavaScript@15-算法"
-    ],
-    "JavaScript@01-初识": [
-      "JavaScript@01-初识@01-认识计算机",
-      "JavaScript@01-初识@02-认识 JavaScript",
-      "JavaScript@01-初识@03-官网与文档",
-      "JavaScript@01-初识@04-认识进制",
-      "JavaScript@01-初识@05-基础知识"
-    ],
-    "JavaScript@02-数据类型": [
-      "JavaScript@02-数据类型@01-简介",
-      "JavaScript@02-数据类型@02-存储",
-      "JavaScript@02-数据类型@03-字符",
-      "JavaScript@02-数据类型@04-数值",
-      "JavaScript@02-数据类型@05-布尔",
-      "JavaScript@02-数据类型@06-类型转换"
-    ],
-    "JavaScript@03-数据结构": [
-      "JavaScript@03-数据结构@01-简介",
-      "JavaScript@03-数据结构@02-列表",
-      "JavaScript@03-数据结构@03-映射",
-      "JavaScript@03-数据结构@04-数组"
-    ],
-    "JavaScript@04-常用语句": [
-      "JavaScript@04-常用语句@01-输出",
-      "JavaScript@04-常用语句@02-条件判断",
-      "JavaScript@04-常用语句@03-循环",
-      "JavaScript@04-常用语句@04-运算与比较"
-    ],
-    "JavaScript@05-函数": [
-      "JavaScript@05-函数@01-简介",
-      "JavaScript@05-函数@02-内置函数",
-      "JavaScript@05-函数@03-作用域",
-      "JavaScript@05-函数@04-匿名函数",
-      "JavaScript@05-函数@05-闭包"
-    ],
-    "JavaScript@06-文件": [
-      "JavaScript@06-文件@01-认识文件",
-      "JavaScript@06-文件@02-文件操作"
-    ],
-    "JavaScript@07-测试": [
-      "JavaScript@07-测试@01-断言"
-    ],
-    "JavaScript@08-面向对象": [
-      "JavaScript@08-面向对象@01-简介",
-      "JavaScript@08-面向对象@02-对象",
-      "JavaScript@08-面向对象@03-属性",
-      "JavaScript@08-面向对象@04-方法",
-      "JavaScript@08-面向对象@05-原型"
-    ],
-    "JavaScript@09-短链接": [
-      "JavaScript@09-短链接@01-简介",
-      "JavaScript@09-短链接@02-codes"
-    ],
-    "JavaScript@09-短链接@02-codes": [
-      "JavaScript@09-短链接@02-codes@01-hello.js"
-    ],
-    "JavaScript@10-内置函数": [
-      "JavaScript@10-内置函数@01-alert",
-      "JavaScript@10-内置函数@02-eval",
-      "JavaScript@10-内置函数@03-isFinite",
-      "JavaScript@10-内置函数@04-isNaN",
-      "JavaScript@10-内置函数@05-parseFloat",
-      "JavaScript@10-内置函数@06-parseInt"
-    ],
-    "JavaScript@11-内置对象": [
-      "JavaScript@11-内置对象@01-Array",
-      "JavaScript@11-内置对象@02-Math"
-    ],
-    "JavaScript@12-表达式和运算符": [
-      "JavaScript@12-表达式和运算符@01-...",
-      "JavaScript@12-表达式和运算符@02-=",
-      "JavaScript@12-表达式和运算符@03-percent",
-      "JavaScript@12-表达式和运算符@04-typeof"
-    ],
-    "JavaScript@13-语句和声明": [
-      "JavaScript@13-语句和声明@01-let",
-      "JavaScript@13-语句和声明@02-var"
-    ],
-    "JavaScript@14-场景": [
-      "JavaScript@14-场景@01-打开新链接"
-    ],
-    "JavaScript@15-算法": [],
     "Golang": [
       "Golang@01-安装与配置",
       "Golang@02-初识",
@@ -179,7 +74,8 @@
       "Golang@03-数据类型@09-零值",
       "Golang@03-数据类型@10-类型转换",
       "Golang@03-数据类型@11-类型比较",
-      "Golang@03-数据类型@12-字符串"
+      "Golang@03-数据类型@12-字符串",
+      "Golang@03-数据类型@playground.go"
     ],
     "Golang@03-数据类型@12-字符串": [
       "Golang@03-数据类型@12-字符串@01-简介",
@@ -200,7 +96,8 @@
       "Golang@05-数据结构@06-链表",
       "Golang@05-数据结构@07-切片",
       "Golang@05-数据结构@08-数组",
-      "Golang@05-数据结构@09-映射"
+      "Golang@05-数据结构@09-映射",
+      "Golang@05-数据结构@playground.go"
     ],
     "Golang@05-数据结构@07-切片": [
       "Golang@05-数据结构@07-切片@01-简介",
@@ -265,7 +162,8 @@
       "Golang@12-关键字@02-for",
       "Golang@12-关键字@03-panic",
       "Golang@12-关键字@04-defer",
-      "Golang@12-关键字@05-range"
+      "Golang@12-关键字@05-range",
+      "Golang@12-关键字@playground.go"
     ],
     "Golang@13-表达式和运算符": [
       "Golang@13-表达式和运算符@01-..."
@@ -319,7 +217,8 @@
       "Golang@17-扩展包@06-JWT"
     ],
     "Golang@18-短链接生成": [
-      "Golang@18-短链接生成@01-简介"
+      "Golang@18-短链接生成@01-简介",
+      "Golang@18-短链接生成@code"
     ],
     "Golang@19-命令": [
       "Golang@19-命令@01-go get",
@@ -338,7 +237,8 @@
       "Golang@20-算法@10-数字求和",
       "Golang@20-算法@11-数组运算",
       "Golang@20-算法@12-快速排序",
-      "Golang@20-算法@13-RangeList"
+      "Golang@20-算法@13-RangeList",
+      "Golang@20-算法@code"
     ],
     "Golang@21-搜索引擎": [
       "Golang@21-搜索引擎@01-Lucene"
@@ -349,160 +249,6 @@
     ],
     "Golang@23-内置函数": [
       "Golang@23-内置函数@01-copy"
-    ],
-    "Java": [
-      "Java@01-初识",
-      "Java@02-数据类型",
-      "Java@03-数据结构",
-      "Java@04-常用语句",
-      "Java@05-函数",
-      "Java@06-文件",
-      "Java@07-面向对象",
-      "Java@08-异常"
-    ],
-    "Java@01-初识": [
-      "Java@01-初识@01-认识计算机",
-      "Java@01-初识@02-认识 Java",
-      "Java@01-初识@03-官网与文档",
-      "Java@01-初识@04-认识进制",
-      "Java@01-初识@05-基础知识"
-    ],
-    "Java@02-数据类型": [
-      "Java@02-数据类型@01-简介",
-      "Java@02-数据类型@02-存储",
-      "Java@02-数据类型@03-布尔",
-      "Java@02-数据类型@04-数值",
-      "Java@02-数据类型@05-字符",
-      "Java@02-数据类型@06-类型转换"
-    ],
-    "Java@03-数据结构": [
-      "Java@03-数据结构@01-简介",
-      "Java@03-数据结构@02-数组",
-      "Java@03-数据结构@03-二维数组"
-    ],
-    "Java@04-常用语句": [
-      "Java@04-常用语句@01-条件判断",
-      "Java@04-常用语句@02-循环",
-      "Java@04-常用语句@03-注释"
-    ],
-    "Java@05-函数": [
-      "Java@05-函数@01-简介"
-    ],
-    "Java@06-文件": [
-      "Java@06-文件@01-认识文件",
-      "Java@06-文件@02-文件操作"
-    ],
-    "Java@07-面向对象": [
-      "Java@07-面向对象@01-简介",
-      "Java@07-面向对象@02-类",
-      "Java@07-面向对象@03-继承",
-      "Java@07-面向对象@04-包"
-    ],
-    "Java@08-异常": [
-      "Java@08-异常@01-简介",
-      "Java@08-异常@02-捕获异常",
-      "Java@08-异常@03-异常与函数",
-      "Java@08-异常@04-抛出异常"
-    ],
-    "MySQL": [
-      "MySQL@01-初识",
-      "MySQL@02-架构"
-    ],
-    "MySQL@01-初识": [
-      "MySQL@01-初识@01-基本概念",
-      "MySQL@01-初识@02-安装",
-      "MySQL@01-初识@03-03"
-    ],
-    "MySQL@02-架构": [
-      "MySQL@02-架构@01-逻辑架构"
-    ],
-    "Node": [
-      "Node@01-初识"
-    ],
-    "Node@01-初识": [
-      "Node@01-初识@01-认识计算机",
-      "Node@01-初识@02-认识 Node.js",
-      "Node@01-初识@03-官网与文档"
-    ],
-    "PHP": [
-      "PHP@01-初识",
-      "PHP@02-数据类型",
-      "PHP@03-变量",
-      "PHP@04-数据结构",
-      "PHP@05-函数",
-      "PHP@06-常用语句",
-      "PHP@07-文件",
-      "PHP@08-编程基础",
-      "PHP@09-短链接"
-    ],
-    "PHP@01-初识": [
-      "PHP@01-初识@01-认识计算机",
-      "PHP@01-初识@02-认识 PHP",
-      "PHP@01-初识@03-官网与文档",
-      "PHP@01-初识@04-认识进制"
-    ],
-    "PHP@02-数据类型": [
-      "PHP@02-数据类型@01-简介",
-      "PHP@02-数据类型@02-存储",
-      "PHP@02-数据类型@03-字符",
-      "PHP@02-数据类型@04-布尔",
-      "PHP@02-数据类型@05-数值"
-    ],
-    "PHP@03-变量": [
-      "PHP@03-变量@01-简介",
-      "PHP@03-变量@02-变量类型",
-      "PHP@03-变量@03-数据类型",
-      "PHP@03-变量@04-常量"
-    ],
-    "PHP@04-数据结构": [
-      "PHP@04-数据结构@01-简介",
-      "PHP@04-数据结构@02-数组"
-    ],
-    "PHP@05-函数": [
-      "PHP@05-函数@01-简介",
-      "PHP@05-函数@02-自定义函数",
-      "PHP@05-函数@03-作用域",
-      "PHP@05-函数@04-内置函数",
-      "PHP@05-函数@05-装饰器"
-    ],
-    "PHP@06-常用语句": [
-      "PHP@06-常用语句@01-条件判断",
-      "PHP@06-常用语句@02-循环",
-      "PHP@06-常用语句@03-注释"
-    ],
-    "PHP@07-文件": [
-      "PHP@07-文件@01-认识文件",
-      "PHP@07-文件@02-文件操作"
-    ],
-    "PHP@08-编程基础": [
-      "PHP@08-编程基础@01-常见函数",
-      "PHP@08-编程基础@02-正则表达式",
-      "PHP@08-编程基础@03-退出程序",
-      "PHP@08-编程基础@04-自定义函数",
-      "PHP@08-编程基础@05-类"
-    ],
-    "PHP@09-短链接": [
-      "PHP@09-短链接@01-简介"
-    ],
-    "PostgreSQL": [
-      "PostgreSQL@01-初识",
-      "PostgreSQL@02-使用"
-    ],
-    "PostgreSQL@01-初识": [
-      "PostgreSQL@01-初识@01-01",
-      "PostgreSQL@01-初识@02-基本概念",
-      "PostgreSQL@01-初识@03-安装",
-      "PostgreSQL@01-初识@04-连接"
-    ],
-    "PostgreSQL@02-使用": [
-      "PostgreSQL@02-使用@01-元命令"
-    ],
-    "Flutter": [
-      "Flutter@01-初识"
-    ],
-    "Flutter@01-初识": [
-      "Flutter@01-初识@01-简介",
-      "Flutter@01-初识@02-安装"
     ]
   }
 }

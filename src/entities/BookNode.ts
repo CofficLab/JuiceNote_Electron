@@ -48,47 +48,40 @@ class BookNode {
         return !this.isPage() && !this.isBook()
     }
 
-    public refreshChildren(): BookNode[] {
-        if (this.isPage()) return []
-
-        // 从配置文件读取
-        let childrenConfig = this.getChildrenConfig()
-        if (childrenConfig.length > 0) {
-            return childrenConfig.map((childId: string) => {
-                return new BookNode(Id.idToPath(childId))
-            });
-        }
-
-        // 从文件系统读取
-        let children = fs.readdirSync(this.path).filter(element => {
-            return !BookNode.shouldIgnore(element)
-        }).map(child => {
-            return new BookNode(path.join(this.path, child))
-        })
-
-        this.setChildrenConfig(children)
-
-        return children
-    }
-
     public getChildren(): BookNode[] {
-        return this.refreshChildren()
+        return this.getChildrenIds().map((childId: string) => {
+            return new BookNode(Id.idToPath(childId))
+        });
     }
 
     public getChildrenIds(): string[] {
-        return this.getChildren().map(child => {
-            return child.id
+        let fromConfig = Config.get('children_settings:' + this.id)
+        let fromFileSystem = fs.readdirSync(this.path).map(child => {
+            return Id.pathToId(path.join(this.path, child))
         })
+
+        if (fromConfig == undefined) {
+            this.setChildrenConfig(fromFileSystem)
+            return fromFileSystem
+        }
+
+        if (fromConfig.length != fromFileSystem.length) {
+            this.setChildrenConfig(fromFileSystem)
+            return fromFileSystem
+        }
+
+        fromFileSystem.forEach(child => {
+            if (fromConfig.indexOf(child) < 0) {
+                this.setChildrenConfig(fromFileSystem)
+                return fromFileSystem
+            }
+        })
+
+        return fromConfig
     }
 
-    private getChildrenConfig(): string[] {
-        return Config.get('children_settings:' + this.id)
-    }
-
-    private setChildrenConfig(children: BookNode[]) {
-        Config.set('children_settings:' + this.id, children.map(child => {
-            return child.id
-        }))
+    private setChildrenConfig(children: string[]) {
+        Config.set('children_settings:' + this.id, children)
     }
 
     public isBook(): boolean {
