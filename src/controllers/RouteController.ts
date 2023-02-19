@@ -31,6 +31,18 @@ const RouteController = reactive({
     },
     checkHomePage() {
         this.isHomePage = (new URL(location.href)).searchParams.get('id') == '/'
+    },
+    setChildrenIds(children: BookNode[]) {
+        let parent = children.at(0)?.getParent()
+        if (parent == undefined) {
+            throw '更新children发生错误，找不到parent'
+        }
+
+        parent.setChildrenConfig(children.map(child => {
+            return child.id
+        }))
+
+        this.goto(this.currentPage.id)
     }
 })
 

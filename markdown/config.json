@@ -1,8 +1,20 @@
 {
+  "nodeExcepts": [
+    "README.md",
+    "footer.md",
+    "projects",
+    "code",
+    ".DS_Store",
+    "node_modules",
+    "images",
+    "playground.go",
+    "sort.json"
+  ],
   "children_settings": {
     "/": [
       "开始",
       "Golang",
+      "Python",
       "Docker",
       "Flutter",
       "Java",
@@ -11,18 +23,28 @@
       "Node",
       "PHP",
       "PostgreSQL",
-      "Python",
-      "README",
       "Redis",
       "Shell",
       "Vue",
       "config.json",
-      "footer",
       "数据库",
       "正则表达式",
       "算法",
       "系统设计",
       "面向对象"
+    ],
+    "Docker": [
+      "Docker@01-初识"
+    ],
+    "Docker@01-初识": [
+      "Docker@01-初识@01-认识计算机",
+      "Docker@01-初识@02-认识 Golang",
+      "Docker@01-初识@03-官网与文档",
+      "Docker@01-初识@04-认识进制"
+    ],
+    "开始": [
+      "开始@01-欢迎",
+      "开始@02-做事方式"
     ],
     "Golang": [
       "Golang@01-安装与配置",
@@ -50,16 +72,16 @@
       "Golang@23-内置函数"
     ],
     "Golang@01-安装与配置": [
-      "Golang@01-安装与配置@01-Windows",
       "Golang@01-安装与配置@02-macOS",
-      "Golang@01-安装与配置@03-Linux"
+      "Golang@01-安装与配置@03-Linux",
+      "Golang@01-安装与配置@01-Windows"
     ],
     "Golang@02-初识": [
       "Golang@02-初识@01-认识计算机",
-      "Golang@02-初识@05-字符编码",
       "Golang@02-初识@02-认识 Golang",
       "Golang@02-初识@03-官网与文档",
       "Golang@02-初识@04-认识进制",
+      "Golang@02-初识@05-字符编码",
       "Golang@02-初识@06-参考资料"
     ],
     "Golang@03-数据类型": [
@@ -74,8 +96,7 @@
       "Golang@03-数据类型@09-零值",
       "Golang@03-数据类型@10-类型转换",
       "Golang@03-数据类型@11-类型比较",
-      "Golang@03-数据类型@12-字符串",
-      "Golang@03-数据类型@playground.go"
+      "Golang@03-数据类型@12-字符串"
     ],
     "Golang@03-数据类型@12-字符串": [
       "Golang@03-数据类型@12-字符串@01-简介",
@@ -96,8 +117,7 @@
       "Golang@05-数据结构@06-链表",
       "Golang@05-数据结构@07-切片",
       "Golang@05-数据结构@08-数组",
-      "Golang@05-数据结构@09-映射",
-      "Golang@05-数据结构@playground.go"
+      "Golang@05-数据结构@09-映射"
     ],
     "Golang@05-数据结构@07-切片": [
       "Golang@05-数据结构@07-切片@01-简介",
@@ -162,8 +182,7 @@
       "Golang@12-关键字@02-for",
       "Golang@12-关键字@03-panic",
       "Golang@12-关键字@04-defer",
-      "Golang@12-关键字@05-range",
-      "Golang@12-关键字@playground.go"
+      "Golang@12-关键字@05-range"
     ],
     "Golang@13-表达式和运算符": [
       "Golang@13-表达式和运算符@01-..."
@@ -217,8 +236,7 @@
       "Golang@17-扩展包@06-JWT"
     ],
     "Golang@18-短链接生成": [
-      "Golang@18-短链接生成@01-简介",
-      "Golang@18-短链接生成@code"
+      "Golang@18-短链接生成@01-简介"
     ],
     "Golang@19-命令": [
       "Golang@19-命令@01-go get",
@@ -237,8 +255,7 @@
       "Golang@20-算法@10-数字求和",
       "Golang@20-算法@11-数组运算",
       "Golang@20-算法@12-快速排序",
-      "Golang@20-算法@13-RangeList",
-      "Golang@20-算法@code"
+      "Golang@20-算法@13-RangeList"
     ],
     "Golang@21-搜索引擎": [
       "Golang@21-搜索引擎@01-Lucene"
@@ -250,25 +267,141 @@
     "Golang@23-内置函数": [
       "Golang@23-内置函数@01-copy"
     ],
-    "开始": [
-      "开始@01-欢迎",
-      "开始@02-做事方式"
+    "Java": [
+      "Java@02-数据类型",
+      "Java@03-数据结构",
+      "Java@01-初识",
+      "Java@05-函数",
+      "Java@04-常用语句",
+      "Java@06-文件",
+      "Java@07-面向对象",
+      "Java@08-异常"
     ],
-    "Docker": [
-      "Docker@01-初识"
+    "Java@01-初识": [
+      "Java@01-初识@01-认识计算机",
+      "Java@01-初识@02-认识 Java",
+      "Java@01-初识@03-官网与文档",
+      "Java@01-初识@04-认识进制",
+      "Java@01-初识@05-基础知识"
     ],
-    "Docker@01-初识": [
-      "Docker@01-初识@01-认识计算机",
-      "Docker@01-初识@02-认识 Golang",
-      "Docker@01-初识@03-官网与文档",
-      "Docker@01-初识@04-认识进制"
+    "Java@02-数据类型": [
+      "Java@02-数据类型@01-简介",
+      "Java@02-数据类型@02-存储",
+      "Java@02-数据类型@03-布尔",
+      "Java@02-数据类型@04-数值",
+      "Java@02-数据类型@05-字符",
+      "Java@02-数据类型@06-类型转换"
     ],
-    "Flutter": [
-      "Flutter@01-初识"
+    "Java@03-数据结构": [
+      "Java@03-数据结构@01-简介",
+      "Java@03-数据结构@02-数组",
+      "Java@03-数据结构@03-二维数组"
     ],
-    "Flutter@01-初识": [
-      "Flutter@01-初识@01-简介",
-      "Flutter@01-初识@02-安装"
+    "Java@04-常用语句": [
+      "Java@04-常用语句@01-条件判断",
+      "Java@04-常用语句@02-循环",
+      "Java@04-常用语句@03-注释"
+    ],
+    "Java@05-函数": [
+      "Java@05-函数@01-简介"
+    ],
+    "Java@06-文件": [
+      "Java@06-文件@01-认识文件",
+      "Java@06-文件@02-文件操作"
+    ],
+    "Java@07-面向对象": [
+      "Java@07-面向对象@01-简介",
+      "Java@07-面向对象@02-类",
+      "Java@07-面向对象@03-继承",
+      "Java@07-面向对象@04-包"
+    ],
+    "Java@08-异常": [
+      "Java@08-异常@01-简介",
+      "Java@08-异常@02-捕获异常",
+      "Java@08-异常@03-异常与函数",
+      "Java@08-异常@04-抛出异常"
+    ],
+    "Python": [
+      "Python@01-初识",
+      "Python@03-数据结构",
+      "Python@02-数据类型",
+      "Python@04-常用语句",
+      "Python@05-函数",
+      "Python@06-文件",
+      "Python@07-面向对象",
+      "Python@08-异常",
+      "Python@09-数据库支持",
+      "Python@10-模块",
+      "Python@11-应用",
+      "Python@12-Flask"
+    ],
+    "Python@01-初识": [
+      "Python@01-初识@01-认识计算机",
+      "Python@01-初识@02-认识 Python",
+      "Python@01-初识@03-认识进制",
+      "Python@01-初识@04-编译与解释",
+      "Python@01-初识@05-官网与文档"
+    ],
+    "Python@02-数据类型": [
+      "Python@02-数据类型@02-存储",
+      "Python@02-数据类型@03-字符",
+      "Python@02-数据类型@05-布尔",
+      "Python@02-数据类型@04-数值",
+      "Python@02-数据类型@06-类型转换",
+      "Python@02-数据类型@01-简介"
+    ],
+    "Python@03-数据结构": [
+      "Python@03-数据结构@01-简介",
+      "Python@03-数据结构@02-列表",
+      "Python@03-数据结构@03-字典",
+      "Python@03-数据结构@04-元组",
+      "Python@03-数据结构@05-集合"
+    ],
+    "Python@04-常用语句": [
+      "Python@04-常用语句@01-输出",
+      "Python@04-常用语句@02-条件判断",
+      "Python@04-常用语句@03-循环",
+      "Python@04-常用语句@04-迭代",
+      "Python@04-常用语句@05-推导",
+      "Python@04-常用语句@06-其他语句",
+      "Python@04-常用语句@07-注释",
+      "Python@04-常用语句@08-缩进与换行"
+    ],
+    "Python@05-函数": [
+      "Python@05-函数@01-简介",
+      "Python@05-函数@02-自定义函数",
+      "Python@05-函数@03-作用域",
+      "Python@05-函数@04-内置函数",
+      "Python@05-函数@05-装饰器"
+    ],
+    "Python@06-文件": [
+      "Python@06-文件@01-认识文件",
+      "Python@06-文件@02-文件操作"
+    ],
+    "Python@07-面向对象": [
+      "Python@07-面向对象@01-简介",
+      "Python@07-面向对象@02-魔术方法"
+    ],
+    "Python@08-异常": [
+      "Python@08-异常@01-简介",
+      "Python@08-异常@02-捕获异常",
+      "Python@08-异常@03-异常与函数"
+    ],
+    "Python@09-数据库支持": [
+      "Python@09-数据库支持@01-SQLite"
+    ],
+    "Python@10-模块": [
+      "Python@10-模块@01-模块",
+      "Python@10-模块@02-标准库"
+    ],
+    "Python@11-应用": [
+      "Python@11-应用@01-屏幕抓取"
+    ],
+    "Python@12-Flask": [
+      "Python@12-Flask@01-简介",
+      "Python@12-Flask@02-安装",
+      "Python@12-Flask@03-应用的基本结构",
+      "Python@12-Flask@04-数据库迁移"
     ]
   }
 }

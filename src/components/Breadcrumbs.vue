@@ -9,44 +9,9 @@
           <label tabindex="0" class="self-center">{{ breadcrumb.name }}</label>
           <ul
             tabindex="0"
-            class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 h-96 mt-8 overflow-scroll"
+            class="dropdown-content shadow p-2 gap-2 bg-cyan-900/80 rounded-box w-52 h-96 overflow-y-scroll"
           >
-            <li
-              v-for="(item, index) in breadcrumb.getParent().getChildren()"
-              draggable="true"
-              v-on:dragend="dragEnd()"
-              v-on:dragstart="dragStart(item)"
-              v-on:dragenter="dragEnter(item, index)"
-              class="flex flex-row min-w-fit"
-            >
-              <!-- 拖移时显示 -->
-              <div
-                class="w-full mx-0 min-w-fit overflow-hidden"
-                v-bind:class="hovered != null && item.id == hovered.id ? 'h-12 py-6 px-0' : 'h-0 py-0 px-0'"
-              >
-                <div class="bg-base-content/10 w-full h-12 rounded"></div>
-              </div>
-
-              <Link
-                v-bind:href="item.id"
-                v-bind:class="{
-                  active: item.isActivated(),
-                  'hover:bg-transparent': dragged !== emptyNode,
-                }"
-              >
-                <span>{{ item.name }}</span>
-              </Link>
-            </li>
-
-            <li
-              draggable="true"
-              v-on:dragend="dragEnd()"
-              v-on:dragenter="dragEnter(bottomNode)"
-              class="flex flex-row min-w-fit"
-            >
-              <!-- 拖移时显示 -->
-              <div class="w-full px-0 h-0" v-bind:class="bottomNode !== hovered ? '' : 'bg-base-content/10 h-12'"></div>
-            </li>
+            <Children :list="breadcrumb.getParent().getChildren()"></Children>
           </ul>
         </div>
         <div class="dropdown dropdown-top flex justify-center" v-else>
@@ -62,46 +27,27 @@ import { defineComponent } from "vue";
 import Link from "./Link.vue";
 import RouteController from "../controllers/RouteController";
 import EditModeController from "../controllers/EditModeController";
-import OrderController from "../controllers/OrderController";
 import BookNode from "../entities/BookNode";
+import Children from "./Children.vue";
 
 export default defineComponent({
   data() {
     let emptyNode = new BookNode();
-    let bottomNode = new BookNode("/dev/null");
     return {
+      dragging: false,
       dragged: emptyNode,
       hovered: emptyNode,
-      emptyNode: emptyNode,
-      bottomNode: bottomNode,
       index: 0,
     };
   },
   computed: {
     breadcrumbs() {
-      let breadcrumbs = RouteController.getBreadcrumbs();
-      console.log("获取breadcrumbs", breadcrumbs);
-
-      return breadcrumbs;
+      return RouteController.getBreadcrumbs();
     },
     inEditMode(): boolean {
       return EditModeController.edit_mode;
     },
   },
-  methods: {
-    dragStart(navigator: BookNode) {
-      this.dragged = navigator;
-    },
-    dragEnd() {
-      RouteController.goto(this.dragged.getParent().id);
-      OrderController.updateOrder(this.dragged, this.index);
-      this.hovered = null;
-    },
-    dragEnter(navigator: BookNode, index) {
-      this.hovered = navigator;
-      this.index = index;
-    },
-  },
-  components: { Link },
+  components: { Link, Children },
 });
 </script>

@@ -56,7 +56,9 @@ class BookNode {
 
     public getChildrenIds(): string[] {
         let fromConfig = Config.get('children_settings:' + this.id)
-        let fromFileSystem = fs.readdirSync(this.path).map(child => {
+        let fromFileSystem = fs.readdirSync(this.path).filter(child => {
+            return !Config.get('nodeExcepts').includes(child)
+        }).map(child => {
             return Id.pathToId(path.join(this.path, child))
         })
 
@@ -80,7 +82,7 @@ class BookNode {
         return fromConfig
     }
 
-    private setChildrenConfig(children: string[]) {
+    public setChildrenConfig(children: string[]) {
         Config.set('children_settings:' + this.id, children)
     }
 
@@ -134,19 +136,6 @@ class BookNode {
         return this.errorTitle.length > 0
     }
 
-    // 设置新的排序值
-    public setOrder(newOrder: number) {
-        console.log('sort.setOrder', newOrder)
-        let children = this.getParent().getChildrenIds()
-        let order = children.indexOf(this.id)
-
-        children.splice(order, 1)
-        children.splice(newOrder, 0, this.id)
-        // console.log(children)
-
-        this.getParent().setChildrenConfig(children)
-    }
-
     public isActivated() {
         let currentPage = RouteController.getCurrentPage()
         let activatedBookNodes = currentPage.getParents()
@@ -155,7 +144,7 @@ class BookNode {
     }
 
     static shouldIgnore(absolutePath: string) {
-        return Variables.nodeExcepts.includes(path.basename(absolutePath))
+        return Config.get('nodeExcepts').includes(path.basename(absolutePath))
     }
 
     public content(): string {

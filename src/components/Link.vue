@@ -3,9 +3,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
 import "../app.css";
+import { defineComponent } from "vue";
 import RouteController from "../controllers/RouteController";
+
 export default defineComponent({
   props: ["href"],
   methods: {
