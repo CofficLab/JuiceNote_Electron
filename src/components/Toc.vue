@@ -3,7 +3,7 @@
     <!-- 其他编程语言 -->
     <ul class="menu shadow bg-base-100/80 rounded-none w-56 mt-2" v-show="menus.length > 1">
       <li v-for="menu in menus">
-        <Link v-bind:href="menu.id">{{ menu.book().title }}</Link>
+        <Link v-bind:href="menu.id">{{ menu.getBook().name }}</Link>
       </li>
     </ul>
     <!-- 官方文档 -->
@@ -17,6 +17,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import RouteController from "../controllers/RouteController";
+import BookController from "../controllers/BookController";
 import Link from "./Link.vue";
 
 export default defineComponent({
@@ -26,11 +27,10 @@ export default defineComponent({
       return current.toc();
     },
     menus: function () {
-      return [];
-      let menus = store.root.search(store.current.title);
+      let menus = BookController.search(RouteController.getCurrentPage().name);
 
       menus = menus.filter(function (menu) {
-        return menu.parent().title == store.current.parent().title;
+        return menu.getParent().name == RouteController.getCurrentPage().getParent().name;
       });
 
       return menus;

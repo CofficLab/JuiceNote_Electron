@@ -194,6 +194,23 @@ class BookNode {
 
         return new BookNode
     }
+
+    // 按照名称查找节点
+    public search(name: string): BookNode[] {
+        if (this.isEmpty() || this.isPage()) return []
+
+        let result: BookNode[] = []
+        let children = this.getChildren()
+
+        children.forEach(function (child) {
+            // console.log('search for name', name, 'current is', child.name)
+            if (child.name == name) result.push(child)
+
+            result = result.concat(child.search(name))
+        })
+
+        return result
+    }
 }
 
 export default BookNode
