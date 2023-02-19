@@ -48,16 +48,24 @@ class BookNode {
         return !this.isPage() && !this.isBook()
     }
 
-    public getChildren(): BookNode[] {
+    public refreshChildren(): BookNode[] {
         if (this.isPage()) return []
 
-        Config.getChildren(this.id)
-
-        return fs.readdirSync(this.path).filter(element => {
+        let children = fs.readdirSync(this.path).filter(element => {
             return !BookNode.shouldIgnore(element)
         }).map(child => {
             return new BookNode(path.join(this.path, child))
         })
+
+        Config.set('children_settings:' + this.id, children.map(child => {
+            return child.id
+        }))
+
+        return children
+    }
+
+    public getChildren(): BookNode[] {
+        return this.refreshChildren()
     }
 
     public getChildrenIds(): string[] {

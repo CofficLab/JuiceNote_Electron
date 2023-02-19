@@ -55,6 +55,7 @@
     "markdown-it-toc": "^1.1.0",
     "marked": "^4.1.0",
     "mavon-editor": "^3.0.0-beta",
+    "nconf": "^0.12.0",
     "postcss": "^8.4.16",
     "postcss-nesting": "^10.1.10",
     "tailwindcss": "^3.1.8",
