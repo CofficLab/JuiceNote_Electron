@@ -1,13 +1,14 @@
 {
   "nodeExcepts": [
-    "README.md",
-    "footer.md",
-    "projects",
-    "code",
     ".DS_Store",
-    "node_modules",
+    "config.json",
+    "code",
+    "footer.md",
     "images",
+    "node_modules",
+    "projects",
     "playground.go",
+    "README.md",
     "sort.json"
   ],
   "children_settings": {
@@ -15,23 +16,22 @@
       "开始",
       "Golang",
       "Python",
-      "Docker",
-      "Flutter",
       "Java",
       "JavaScript",
-      "MySQL",
       "Node",
       "PHP",
+      "MySQL",
       "PostgreSQL",
       "Redis",
+      "Docker",
       "Shell",
+      "Flutter",
       "Vue",
-      "config.json",
+      "面向对象",
       "数据库",
       "正则表达式",
       "算法",
-      "系统设计",
-      "面向对象"
+      "系统设计"
     ],
     "Docker": [
       "Docker@初识"
