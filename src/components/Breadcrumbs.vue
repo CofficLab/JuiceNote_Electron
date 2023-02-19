@@ -24,7 +24,6 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import Link from "./Link.vue";
 import RouteController from "../controllers/RouteController";
 import EditModeController from "../controllers/EditModeController";
 import BookNode from "../entities/BookNode";
@@ -48,6 +47,6 @@ export default defineComponent({
       return EditModeController.edit_mode;
     },
   },
-  components: { Link, Children },
+  components: { Children },
 });
 </script>
