@@ -559,12 +559,12 @@
       "Golang@函数@递归"
     ],
     "Golang@初识": [
-      "Golang@初识@参考资料",
+      "Golang@初识@认识计算机",
+      "Golang@初识@认识进制",
+      "Golang@初识@认识 Golang",
       "Golang@初识@字符编码",
       "Golang@初识@官网与文档",
-      "Golang@初识@认识 Golang",
-      "Golang@初识@认识计算机",
-      "Golang@初识@认识进制"
+      "Golang@初识@参考资料"
     ],
     "Golang@变量与常量": [
       "Golang@变量与常量@变量",
