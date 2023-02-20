@@ -1,8 +1,18 @@
 <template>
   <div>
     <!-- 标题栏，左侧显示红绿灯，右侧可用于拖移 -->
-    <div class="h-8 bg-stone-900 fixed top-0 z-50 w-full flex justify-center" id="title-bar" v-show="!hideTitleBar">
-      <Address v-if="!isProd"></Address>
+    <div class="h-8 bg-base-200 fixed top-0 z-50 w-full flex justify-end" id="title-bar" v-show="!hideTitleBar">
+      <!-- <Address v-if="!isProd"></Address> -->
+      <div v-if="!isProd" class="h-full flex flex-row items-center">
+        <GitCommit></GitCommit>
+        <Delete></Delete>
+        <Edit></Edit>
+        <Add></Add>
+        <Copy></Copy>
+      </div>
+      <Prev></Prev>
+      <Home></Home>
+      <Next></Next>
     </div>
 
     <main class="flex flex-row justify-between" v-bind:class="hideTitleBar ? 'mt-0' : 'mt-8'">
@@ -37,20 +47,8 @@
     </main>
 
     <footer class="h-8 fixed z-10 bottom-0 w-full p-0 flex flex-row items-center justify-center shadow-2xl md:text-lg">
-      <div v-if="!isProd" class="h-full flex flex-row items-center">
-        <GitCommit></GitCommit>
-        <Delete></Delete>
-        <Edit></Edit>
-        <Add></Add>
-        <Copy></Copy>
-      </div>
       <Breadcrumbs></Breadcrumbs>
       <Toast></Toast>
-      <div class="flex flex-row bg-sky-100/90 dark:bg-gray-500/20 items-center h-full">
-        <Prev></Prev>
-        <Home></Home>
-        <Next></Next>
-      </div>
     </footer>
   </div>
 </template>
