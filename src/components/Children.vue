@@ -1,5 +1,5 @@
 <template>
-  <draggable :list="list" item-key="name" class="flex flex-col gap-3" ghost-class="btn-ghost" @end="checkEnd"
+  <draggable :list="list" item-key="name" class="flex flex-col gap-3" ghost-class="btn-ghost" @end="dragEnd"
     ><template #item="{ element }">
       <Link class="flex gap-4 btn" v-bind:href="element.id">{{ element.name }}</Link>
     </template>
@@ -20,7 +20,9 @@ export default defineComponent({
     Link,
   },
   methods: {
-    checkEnd: () => RouteController.setChildrenIds(this.list),
+    dragEnd() {
+      return RouteController.setChildrenIds(this.list);
+    },
   },
 });
 </script>
