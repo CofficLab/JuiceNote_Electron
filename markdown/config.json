@@ -803,7 +803,8 @@
     ],
     "JavaScript@内置对象": [
       "JavaScript@内置对象@Array",
-      "JavaScript@内置对象@Math"
+      "JavaScript@内置对象@Math",
+      "JavaScript@内置对象@String"
     ],
     "JavaScript@函数": [
       "JavaScript@函数@简介",

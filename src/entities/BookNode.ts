@@ -10,6 +10,7 @@ class BookNode {
     public path: string = ''
     public name: string = ''
     public id: string = ''
+    public level: number = 0
     public errorTitle: string = ''
     public errorLines: string[] = []
 
@@ -30,6 +31,7 @@ class BookNode {
             this.path = absolutePath
             this.name = path.basename(this.path, '.md')
             this.id = Id.pathToId(this.path)
+            this.level = this.id.split('@').length
         } else {
             this.errorTitle = '当前节点为空节点'
         }

@@ -12,10 +12,8 @@
                 <span>{{ book.name }}</span>
               </div>
             </a>
-            <ul class="bg-base-300 shadow-2xl overflow-auto h-96">
-              <li v-for="book in books">
-                <Link v-bind:href="book.id">{{ book.name }}</Link>
-              </li>
+            <ul class="bg-cyan-900/80 shadow-2xl overflow-auto h-96 rounded-2xl gap-4 p-4">
+              <Children :list="books"></Children>
             </ul>
           </li>
         </ul>
@@ -36,6 +34,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import RouteController from "../controllers/RouteController";
+import Children from "./Children.vue";
 import Link from "./Link.vue";
 import SideMenuItem from "./SideMenuItem.vue";
 
@@ -56,6 +55,6 @@ export default defineComponent({
 
     if (target) target.scrollIntoView();
   },
-  components: { Link, SideMenuItem },
+  components: { Link, SideMenuItem, Children },
 });
 </script>

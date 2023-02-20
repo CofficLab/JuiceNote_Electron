@@ -9,17 +9,16 @@
     </li>
 
     <!-- 是一个章节 -->
-    <li class="menu-title" v-if="item.isChapter()">
+    <li class="text-indigo-400/90" v-if="item.isChapter()">
       <span v-bind:class="{ 'text-xl': item.level < 3, 'text-lg': item.level >= 3 }">
         <span class="ml-1" v-if="item.level > 3" v-for="i in item.level - 3"></span>
         {{ item.name }}
       </span>
     </li>
-    <!-- <SideMenuItem v-for="sub in item.getChapters()" v-if="item.isChapter()" :item="sub"></SideMenuItem> -->
     <SideMenuItem v-for="sub in item.getChildren()" v-if="item.isChapter()" :item="sub"></SideMenuItem>
 
     <!-- 目录节点，无子节点 -->
-    <li class="menu-title" v-if="item.isChapter() && item.getChildren().length == 0">
+    <li class="text-indigo-400/90" v-if="item.isChapter() && item.getChildren().length == 0">
       <span> <span class="ml-1" v-if="item.level > 3" v-for="i in item.level - 3"></span>{{ item.name }}</span>
     </li>
     <li v-if="item.isChapter() && item.getChildren().length == 0">
