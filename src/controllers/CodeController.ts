@@ -16,11 +16,6 @@ const CodeController = reactive({
 
         return created
     },
-    updateOrder(navigator: node, order: number) {
-        console.log('store.updateOrder', navigator.id + '移动到' + order)
-        navigator.setOrder(order)
-        this.refresh()
-    },
     refresh() {
         console.log('store.refresh', 'refresh in store')
         this.root = node.refreshedRoot()

@@ -6,9 +6,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import store from "../entities/Store";
 import ArrowLeftCircle from "../icons/arrow-left-circle.vue";
-import node from "../entities/TreeNode";
 import Link from "./Link.vue";
 import RouteController from "../controllers/RouteController";
 
@@ -18,9 +16,7 @@ export default defineComponent({
     Link,
   },
   computed: {
-    prev: function () {
-      return RouteController.getCurrentPage().prev();
-    },
+    prev: () => RouteController.getCurrentPage().prev(),
   },
 });
 </script>

@@ -1,32 +1,20 @@
-import fs from 'fs'
-import path from "path"
-import Variables from "./Variables"
-var nconf = require('nconf');
+import path from 'path'
+import electron from 'electron'
 
-class Config {
-    static getConfigFilePath(): string {
-        let configFilePath = path.join(Variables.markdownRootPath, 'config.json')
+const markdownRootPath = path.join(electron.ipcRenderer.sendSync('get-app-path'), 'markdown')
+const configFilePath = path.join(markdownRootPath, 'config.json')
+const nconf = require('nconf').use('file', { file: configFilePath });
 
-        if (!fs.existsSync(configFilePath)) {
-            fs.writeFileSync(configFilePath, '{}')
-        }
-
-        return configFilePath
-    }
-
-    static get(key: string) {
-        nconf.file({ file: Config.getConfigFilePath() });
-
-        return nconf.get(key)
-    }
-
-    static set(key: string, value: string | string[]) {
-        console.log('set', key, value)
-        nconf.file({ file: Config.getConfigFilePath() });
-        nconf.set(key, value)
-
-        nconf.save();
-    }
+const get = (key: string) => nconf.get(key)
+const set = function (key: string, value: string | string[]) {
+    console.log('set', key, value)
+    nconf.set(key, value)
+    nconf.save();
 }
 
-export default Config
+export default {
+    get,
+    set,
+    markdownRootPath,
+    configFilePath
+}

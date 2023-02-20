@@ -322,18 +322,18 @@
       "Java@08-异常@04-抛出异常"
     ],
     "Python": [
-      "Python@Flask",
-      "Python@函数",
       "Python@初识",
-      "Python@常用语句",
-      "Python@应用",
-      "Python@异常",
-      "Python@数据库支持",
       "Python@数据类型",
       "Python@数据结构",
+      "Python@常用语句",
+      "Python@函数",
+      "Python@异常",
       "Python@文件",
       "Python@模块",
-      "Python@面向对象"
+      "Python@面向对象",
+      "Python@数据库支持",
+      "Python@Flask",
+      "Python@应用"
     ],
     "Python@01-初识": [
       "Python@01-初识@01-认识计算机",
@@ -960,11 +960,11 @@
       "PostgreSQL@使用@元命令"
     ],
     "Python@初识": [
-      "Python@初识@官网与文档",
-      "Python@初识@编译与解释",
-      "Python@初识@认识 Python",
       "Python@初识@认识计算机",
-      "Python@初识@认识进制"
+      "Python@初识@认识 Python",
+      "Python@初识@认识进制",
+      "Python@初识@编译与解释",
+      "Python@初识@官网与文档"
     ],
     "Python@Flask": [
       "Python@Flask@安装",

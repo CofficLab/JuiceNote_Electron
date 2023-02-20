@@ -41,9 +41,7 @@ import SideMenuItem from "./SideMenuItem.vue";
 
 export default defineComponent({
   computed: {
-    book() {
-      return RouteController.getCurrentPage().getBook();
-    },
+    book: () => RouteController.getCurrentPage().getBook(),
     books() {
       return this.book.siblings();
     },

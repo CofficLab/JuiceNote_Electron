@@ -43,6 +43,7 @@
     "@codemirror/language": "^6.3.1",
     "@codemirror/theme-one-dark": "^6.1.0",
     "@tailwindcss/typography": "^0.5.6",
+    "@types/nconf": "^0.10.3",
     "@types/vue": "^2.0.0",
     "alpinejs": "^3.10.5",
     "autoprefixer": "^10.4.8",

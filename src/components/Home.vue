@@ -14,9 +14,7 @@ export default defineComponent({
     Link,
   },
   computed: {
-    disabled(): boolean {
-      return RouteController.isHomePage;
-    },
+    disabled: () => RouteController.isHomePage,
   },
 });
 </script>

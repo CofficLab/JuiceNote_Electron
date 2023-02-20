@@ -1,7 +1,6 @@
 import fs from "fs"
 import path from "path"
 import Id from "./Id";
-import Variables from "./Variables";
 import RouteController from "../controllers/RouteController";
 import Markdown from "./Markdown";
 import FileTree from "../tools/FileTree";
@@ -82,7 +81,7 @@ class BookNode {
     }
 
     public isBook(): boolean {
-        return path.dirname(this.path) == Variables.markdownRootPath
+        return path.dirname(this.path) == Config.markdownRootPath
     }
 
     public siblings(): BookNode[] {
@@ -93,7 +92,7 @@ class BookNode {
     }
 
     public getParent(): BookNode {
-        if (this.isEmpty()) return Variables.emptyBookNode
+        if (this.isEmpty()) return new BookNode
 
         let dir = path.dirname(this.path)
 
@@ -103,7 +102,7 @@ class BookNode {
     public getParents(): BookNode[] {
         if (this.isEmpty()) return []
 
-        let parents = (new FileTree(this.path)).getParentsPaths(Variables.markdownRootPath)
+        let parents = (new FileTree(this.path)).getParentsPaths(Config.markdownRootPath)
 
         return parents.map(parent => {
             return new BookNode(parent)
@@ -118,7 +117,7 @@ class BookNode {
     }
 
     public getBook(): BookNode {
-        if (this.isEmpty()) return Variables.emptyBookNode
+        if (this.isEmpty()) return new BookNode
 
         let parent = this.getParent()
 
@@ -191,7 +190,6 @@ class BookNode {
 
     // 按照名称查找节点
     public search(name: string): BookNode[] {
-        return []
         // console.log('search 「' + name + '」in ' + this.id)
         if (this.isEmpty() || this.isPage()) return []
 

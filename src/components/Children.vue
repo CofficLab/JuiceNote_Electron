@@ -20,9 +20,7 @@ export default defineComponent({
     Link,
   },
   methods: {
-    checkEnd: function () {
-      RouteController.setChildrenIds(this.list);
-    },
+    checkEnd: () => RouteController.setChildrenIds(this.list),
   },
 });
 </script>

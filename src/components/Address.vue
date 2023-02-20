@@ -10,9 +10,7 @@ import RouteController from "../controllers/RouteController";
 
 export default defineComponent({
   computed: {
-    search: function () {
-      return RouteController.search;
-    },
+    search: () => RouteController.search,
   },
 });
 </script>

@@ -6,9 +6,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import store from "../entities/Store";
 import ArrowRightCircle from "../icons/arrow-right-circle.vue";
-import node from "../entities/TreeNode";
 import Link from "./Link.vue";
 import RouteController from "../controllers/RouteController";
 
@@ -18,9 +16,7 @@ export default defineComponent({
     Link,
   },
   computed: {
-    next: function (): node {
-      return RouteController.getCurrentPage().next();
-    },
+    next: () => RouteController.getCurrentPage().next(),
   },
 });
 </script>

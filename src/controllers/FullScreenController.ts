@@ -1,13 +1,14 @@
 import { reactive } from 'vue'
 
 const FullScreenController = reactive({
-    full_screen: false,
+    full: false,
 
-    enterFullScreen() {
-        this.full_screen = true
+    enter(): void {
+        this.full = true
     },
-    leaveFullScreen() {
-        this.full_screen = false
+
+    leave(): void {
+        this.full = false
     },
 })
 

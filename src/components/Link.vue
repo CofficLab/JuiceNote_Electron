@@ -10,7 +10,7 @@ import RouteController from "../controllers/RouteController";
 export default defineComponent({
   props: ["href"],
   methods: {
-    shouldActive: function (id) {
+    shouldActive: function (id: string) {
       return RouteController.getCurrentPage().id == id;
     },
     go: function () {

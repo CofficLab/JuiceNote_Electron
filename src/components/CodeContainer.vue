@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, shallowRef } from "vue";
+import { defineComponent, shallowRef } from "vue";
 import { Codemirror } from "vue-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 import { json } from "@codemirror/lang-json";
@@ -27,6 +27,7 @@ import { java } from "@codemirror/lang-java";
 import { cpp } from "@codemirror/lang-cpp";
 import { php } from "@codemirror/lang-php";
 import { oneDark } from "@codemirror/theme-one-dark";
+import CodeController from "../controllers/CodeController";
 export default defineComponent({
   components: {
     Codemirror,
@@ -37,9 +38,7 @@ export default defineComponent({
     };
   },
   computed: {
-    code: function () {
-      return store.code;
-    },
+    code: CodeController.code,
   },
   methods: {
     handleReady: (payload) => {

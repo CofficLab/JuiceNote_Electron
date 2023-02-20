@@ -40,12 +40,8 @@ export default defineComponent({
     };
   },
   computed: {
-    breadcrumbs() {
-      return RouteController.getBreadcrumbs();
-    },
-    inEditMode(): boolean {
-      return EditModeController.edit_mode;
-    },
+    breadcrumbs: () => RouteController.getBreadcrumbs(),
+    inEditMode: () => EditModeController.edit_mode,
   },
   components: { Children },
 });

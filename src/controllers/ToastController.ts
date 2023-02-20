@@ -3,7 +3,7 @@ import { reactive } from 'vue'
 const ToastController = reactive({
     toast: '',
 
-    setToast(message: string) {
+    set(message: string): void {
         this.toast = message
     },
 })

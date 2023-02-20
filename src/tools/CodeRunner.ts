@@ -57,42 +57,41 @@ let CodeRunner = function (code = '', language = 'PHP') {
 
     // 执行文件
     let execSync = require("child_process").execSync;
-    let exec = require("child_process").exec
     let output = ''
     let envPath = 'PATH=/opt/homebrew/bin/:/usr/local/bin:$PATH'
     switch (suffix) {
         case 'php':
             try {
                 output = execSync(envPath + " && php " + tmpFilePath);
-            } catch (err) {
+            } catch (err: any) {
                 output = err.message
             }
             break;
         case 'py':
             try {
                 output = execSync(envPath + " && python3 " + tmpFilePath);
-            } catch (err) {
+            } catch (err: any) {
                 output = err.message.trim()
             }
             break;
         case 'java':
             try {
                 output = execSync(envPath + " && java " + tmpFilePath);
-            } catch (err) {
+            } catch (err: any) {
                 output = err.message.trim()
             }
             break;
         case 'js':
             try {
                 output = execSync(envPath + " && node " + tmpFilePath);
-            } catch (err) {
+            } catch (err: any) {
                 output = err.message.trim()
             }
             break;
         case 'sh':
             try {
                 output = execSync(envPath + " && sh " + tmpFilePath);
-            } catch (err) {
+            } catch (err: any) {
                 output = err.message.trim()
             }
             break;
@@ -100,7 +99,7 @@ let CodeRunner = function (code = '', language = 'PHP') {
         case 'go':
             try {
                 output = execSync(envPath + " && go run " + tmpFilePath);
-            } catch (err) {
+            } catch (err: any) {
                 output = err.message.trim()
             }
             break;
@@ -111,6 +110,4 @@ let CodeRunner = function (code = '', language = 'PHP') {
     return output.toString()
 }
 
-export default {
-    code_runner: CodeRunner
-}
+export default CodeRunner

@@ -101,22 +101,11 @@ export default defineComponent({
     CodeContainer,
   },
   computed: {
-    code: function () {
-      return CodeController.code;
-    },
-    current: function () {
-      console.log("get current page");
-      return RouteController.getCurrentPage();
-    },
-    isProd: function (): boolean {
-      return RouteController.isProd;
-    },
-    hideTitleBar: function (): boolean {
-      return FullScreenController.full_screen;
-    },
-    editorMode: function () {
-      return EditModeController.edit_mode;
-    },
+    code: () => CodeController.code,
+    hideTitleBar: () => FullScreenController.full,
+    isProd: (): boolean => RouteController.isProd,
+    current: RouteController.getCurrentPage,
+    editorMode: () => EditModeController.edit_mode,
   },
   methods: {},
   beforeCreate: function () {
