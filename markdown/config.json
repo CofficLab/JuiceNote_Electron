@@ -544,7 +544,10 @@
       "Golang@关键字@range"
     ],
     "Golang@内置函数": [
-      "Golang@内置函数@copy"
+      "Golang@内置函数@copy",
+      "Golang@内置函数@len",
+      "Golang@内置函数@make",
+      "Golang@内置函数@new"
     ],
     "Golang@函数": [
       "Golang@函数@简介",
@@ -599,11 +602,11 @@
       "Golang@总结@重新认识"
     ],
     "Golang@扩展包": [
+      "Golang@扩展包@简介",
       "Golang@扩展包@JWT",
       "Golang@扩展包@ORM",
       "Golang@扩展包@参数校验",
       "Golang@扩展包@日志相关",
-      "Golang@扩展包@简介",
       "Golang@扩展包@配置相关"
     ],
     "Golang@搜索引擎": [
@@ -634,8 +637,8 @@
     ],
     "Golang@数据结构": [
       "Golang@数据结构@简介",
-      "Golang@数据结构@数组",
       "Golang@数据结构@列表",
+      "Golang@数据结构@数组",
       "Golang@数据结构@切片",
       "Golang@数据结构@映射",
       "Golang@数据结构@堆",
@@ -650,13 +653,14 @@
       "Golang@数据结构@切片@常见问题"
     ],
     "Golang@数据结构@数组": [
-      "Golang@数据结构@数组@常见问题",
-      "Golang@数据结构@数组@简介"
+      "Golang@数据结构@数组@简介",
+      "Golang@数据结构@数组@应用场景",
+      "Golang@数据结构@数组@常见问题"
     ],
     "Golang@数据结构@映射": [
-      "Golang@数据结构@映射@常见报错",
+      "Golang@数据结构@映射@简介",
       "Golang@数据结构@映射@常见问题",
-      "Golang@数据结构@映射@简介"
+      "Golang@数据结构@映射@常见报错"
     ],
     "Golang@文件": [
       "Golang@文件@认识文件",
@@ -681,19 +685,17 @@
       "Golang@标准库@sort 排序",
       "Golang@标准库@strconv 字符串转换",
       "Golang@标准库@strings 字符串",
-      "Golang@标准库@time 时间"
+      "Golang@标准库@time"
     ],
     "Golang@特性": [
       "Golang@特性@defer",
       "Golang@特性@recover",
-      "Golang@特性@关键字",
       "Golang@特性@包",
       "Golang@特性@单元测试",
       "Golang@特性@可见性与作用域",
       "Golang@特性@基准测试",
       "Golang@特性@指针",
       "Golang@特性@接口",
-      "Golang@特性@空白标识符",
       "Golang@特性@线程安全",
       "Golang@特性@结构体",
       "Golang@特性@范型",
@@ -718,6 +720,7 @@
       "Golang@算法@数组运算"
     ],
     "Golang@表达式和运算符": [
+      "Golang@表达式和运算符@空白标识符",
       "Golang@表达式和运算符@..."
     ],
     "Golang@面向对象": [
