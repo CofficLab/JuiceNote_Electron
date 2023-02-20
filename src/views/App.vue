@@ -1,55 +1,60 @@
 <template>
-  <div>
-    <!-- 标题栏，左侧显示红绿灯，右侧可用于拖移 -->
-    <div class="h-8 bg-base-200 fixed top-0 z-50 w-full flex justify-end" id="title-bar" v-show="!hideTitleBar">
-      <!-- <Address v-if="!isProd"></Address> -->
-      <div v-if="!isProd" class="h-full flex flex-row items-center">
-        <GitCommit></GitCommit>
-        <Delete></Delete>
-        <Edit></Edit>
-        <Add></Add>
-        <Copy></Copy>
-      </div>
-      <Prev></Prev>
-      <Home></Home>
-      <Next></Next>
-    </div>
-
-    <main class="flex flex-row justify-between" v-bind:class="hideTitleBar ? 'mt-0' : 'mt-8'">
+  <div class="flex flex-row">
+    <div class="w-56">
       <!-- 左侧栏 -->
       <aside
-        class="hidden shadow-2xl w-56 lg:flex bg-base-200 border-r border-gray-300 dark:from-cyan-800/10 dark:to-cyan-800/10"
+        class="hidden shadow-xl w-56 lg:flex bg-base-200 border-r border-gray-300 dark:from-cyan-800/10 dark:to-cyan-800/10"
       >
         <div class="fixed" v-bind:class="{ 'top-12': !hideTitleBar, 'top-4': hideTitleBar }">
           <SideMenu v-if="!editorMode"></SideMenu>
         </div>
       </aside>
-
-      <!-- 内容区域 -->
-      <div class="flex flex-col items-center flex-grow gap-4 pt-12 pb-48 min-h-screen bg-cyan-800/10">
-        <Content v-if="!editorMode" class="prose w-full"></Content>
-        <Editor v-if="editorMode"></Editor>
-        <CodeContainer v-if="code != ''" class="w-full max-w-2xl mx-auto"></CodeContainer>
+    </div>
+    <div class="flex flex-col ml-56">
+      <!-- 标题栏，左侧显示红绿灯，右侧可用于拖移 -->
+      <div class="h-8 bg-base-200 fixed top-0 z-50 w-full flex justify-end" id="title-bar" v-show="!hideTitleBar">
+        <!-- <Address v-if="!isProd"></Address> -->
+        <div v-if="!isProd" class="h-full flex flex-row items-center">
+          <GitCommit></GitCommit>
+          <Delete></Delete>
+          <Edit></Edit>
+          <Add></Add>
+          <Copy></Copy>
+        </div>
+        <Prev></Prev>
+        <Home></Home>
+        <Next></Next>
       </div>
 
-      <!-- 右侧栏 -->
-      <aside
-        class="hidden lg:flex flex-row justify-end w-72 bg-gradient-to-r from-cyan-800/10 to-sky-200/40 dark:to-cyan-800/10 dark:from-cyan-800/10"
-      >
-        <div
-          class="flex flex-row justify-end fixed right-0 h-screen"
-          v-bind:class="{ 'top-8': !hideTitleBar, 'top-0': hideTitleBar }"
-        >
-          <!-- <ProjectTree v-if="current.parent().project.notEmpty()"></ProjectTree> -->
-          <Toc v-show="!editorMode"></Toc>
+      <main class="flex flex-row justify-between" v-bind:class="hideTitleBar ? 'mt-0' : 'mt-8'">
+        <!-- 内容区域 -->
+        <div class="flex flex-col items-center flex-grow gap-4 pt-12 pb-48 min-h-screen bg-cyan-800/10">
+          <Content v-if="!editorMode" class="prose w-full"></Content>
+          <Editor v-if="editorMode"></Editor>
+          <CodeContainer v-if="code != ''" class="w-full max-w-2xl mx-auto"></CodeContainer>
         </div>
-      </aside>
-    </main>
 
-    <footer class="h-8 fixed z-10 bottom-0 w-full p-0 flex flex-row items-center justify-center shadow-2xl md:text-lg">
-      <Breadcrumbs></Breadcrumbs>
-      <Toast></Toast>
-    </footer>
+        <!-- 右侧栏 -->
+        <aside
+          class="hidden lg:flex flex-row justify-end w-72 bg-gradient-to-r from-cyan-800/10 to-sky-200/40 dark:to-cyan-800/10 dark:from-cyan-800/10"
+        >
+          <div
+            class="flex flex-row justify-end fixed right-0 h-screen"
+            v-bind:class="{ 'top-8': !hideTitleBar, 'top-0': hideTitleBar }"
+          >
+            <!-- <ProjectTree v-if="current.parent().project.notEmpty()"></ProjectTree> -->
+            <Toc v-show="!editorMode"></Toc>
+          </div>
+        </aside>
+      </main>
+
+      <footer
+        class="h-8 fixed z-10 bottom-0 w-full p-0 flex flex-row items-center justify-center shadow-2xl md:text-lg"
+      >
+        <Breadcrumbs></Breadcrumbs>
+        <Toast></Toast>
+      </footer>
+    </div>
   </div>
 </template>
 
