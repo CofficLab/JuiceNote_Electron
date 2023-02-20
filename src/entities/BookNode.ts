@@ -56,31 +56,25 @@ class BookNode {
 
     public getChildrenIds(): string[] {
         if (this.isPage()) return []
-        let fromConfig = Config.get('children_settings:' + this.id)
-        let fromFileSystem = fs.readdirSync(this.path).filter(child => {
+
+        let config = Config.get('children_settings:' + this.id)
+
+        // 从文件系统读取children，然后根据配置文件确定排序
+        let children = fs.readdirSync(this.path).filter(child => {
             return !Config.get('nodeExcepts').includes(child)
         }).map(child => {
-            return Id.pathToId(path.join(this.path, child))
+            let id = Id.pathToId(path.join(this.path, child))
+            return config.indexOf(id).toString().padStart(3, '0') + id
+        }).sort().map(child => {
+            return child.slice(3)
         })
 
-        if (fromConfig == undefined) {
-            this.setChildrenConfig(fromFileSystem)
-            return fromFileSystem
+        if (JSON.stringify(children) != JSON.stringify(config)) {
+            console.log('从文件系统获取的children和从配置文件获取的children不相等，更新配置文件')
+            this.setChildrenConfig(children)
         }
 
-        if (fromConfig.length != fromFileSystem.length) {
-            this.setChildrenConfig(fromFileSystem)
-            return fromFileSystem
-        }
-
-        fromFileSystem.forEach(child => {
-            if (fromConfig.indexOf(child) < 0) {
-                this.setChildrenConfig(fromFileSystem)
-                return fromFileSystem
-            }
-        })
-
-        return fromConfig
+        return children
     }
 
     public setChildrenConfig(children: string[]) {
@@ -197,6 +191,7 @@ class BookNode {
 
     // 按照名称查找节点
     public search(name: string): BookNode[] {
+        return []
         // console.log('search 「' + name + '」in ' + this.id)
         if (this.isEmpty() || this.isPage()) return []
 

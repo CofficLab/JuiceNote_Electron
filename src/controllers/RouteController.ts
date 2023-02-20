@@ -4,7 +4,7 @@ import BookNode from '../entities/BookNode'
 
 const RouteController = reactive({
     search: decodeURI(location.search),
-    currentPage: undefined,
+    currentPage: new BookNode,
     isProd: location.protocol === 'file:',
     isHomePage: (new URL(location.href)).searchParams.get('id') == '/',
 
@@ -15,7 +15,7 @@ const RouteController = reactive({
     },
     getCurrentPage(): BookNode {
         // console.log('get current page')
-        if (this.currentPage == undefined) this.refresh()
+        if (this.currentPage.isEmpty()) this.refresh()
 
         return this.currentPage
     },

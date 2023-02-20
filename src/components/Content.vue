@@ -11,7 +11,7 @@ import EditModeController from "../controllers/EditModeController";
 export default defineComponent({
   computed: {
     body(): string {
-      // console.log("get content of", store.current.id);
+      console.log("get content of", RouteController.currentPage.id);
       let dom = document.createElement("div");
       dom.innerHTML = EditModeController.edit_mode
         ? RouteController.getCurrentPage().htmlWithToc()
