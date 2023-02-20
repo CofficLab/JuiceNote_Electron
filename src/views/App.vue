@@ -18,7 +18,7 @@
     <main class="flex flex-row justify-between" v-bind:class="hideTitleBar ? 'mt-0' : 'mt-8'">
       <!-- 左侧栏 -->
       <aside
-        class="hidden w-56 lg:flex bg-gradient-to-r from-sky-200/40 to-cyan-800/10 dark:from-cyan-800/10 dark:to-cyan-800/10"
+        class="hidden shadow-2xl w-56 lg:flex bg-base-200 border-r border-gray-300 dark:from-cyan-800/10 dark:to-cyan-800/10"
       >
         <div class="fixed" v-bind:class="{ 'top-12': !hideTitleBar, 'top-4': hideTitleBar }">
           <SideMenu v-if="!editorMode"></SideMenu>
