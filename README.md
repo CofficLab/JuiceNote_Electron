@@ -17,3 +17,10 @@
 npm i
 npm run dev
 ```
+
+## Thanks To
+
+- 🖥 [Electron.js](https://www.electronjs.org)
+- 🏃 [Vue.js](https://cn.vuejs.org)
+- 🌈 [TailwindCSS](https://www.electronjs.org)
+- 🍞 [HeroIcons](https://heroicons.com)

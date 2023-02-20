@@ -42,6 +42,7 @@
         <Delete></Delete>
         <Edit></Edit>
         <Add></Add>
+        <Copy></Copy>
       </div>
       <Breadcrumbs></Breadcrumbs>
       <Toast></Toast>
@@ -56,6 +57,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import Copy from "../components/Copy.vue";
 import Toc from "../components/Toc.vue";
 import Breadcrumbs from "../components/Breadcrumbs.vue";
 import Prev from "../components/Prev.vue";
@@ -83,6 +85,7 @@ export default defineComponent({
   components: {
     Toc,
     Breadcrumbs,
+    Copy,
     Prev,
     Next,
     Delete,

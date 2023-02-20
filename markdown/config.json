@@ -47,29 +47,29 @@
       "开始@做事方式"
     ],
     "Golang": [
-      "Golang@初识",
       "Golang@安装与配置",
-      "Golang@常用语句",
-      "Golang@变量与常量",
+      "Golang@初识",
       "Golang@数据类型",
       "Golang@数据结构",
-      "Golang@内置函数",
+      "Golang@变量与常量",
+      "Golang@常用语句",
       "Golang@函数",
       "Golang@异常",
+      "Golang@文件",
+      "Golang@并发",
+      "Golang@面向对象",
       "Golang@总结",
+      "Golang@表达式和运算符",
+      "Golang@内置函数",
       "Golang@关键字",
       "Golang@命令",
-      "Golang@并发",
-      "Golang@文件",
       "Golang@扩展包",
       "Golang@搜索引擎",
       "Golang@数据库",
       "Golang@特性",
       "Golang@标准库",
       "Golang@短链接生成",
-      "Golang@算法",
-      "Golang@表达式和运算符",
-      "Golang@面向对象"
+      "Golang@算法"
     ],
     "Golang@01-安装与配置": [
       "Golang@01-安装与配置@02-macOS",
@@ -771,27 +771,27 @@
       "Java@面向对象@继承"
     ],
     "JavaScript": [
-      "JavaScript@内置函数",
-      "JavaScript@内置对象",
-      "JavaScript@函数",
       "JavaScript@初识",
-      "JavaScript@场景",
-      "JavaScript@常用语句",
       "JavaScript@数据类型",
       "JavaScript@数据结构",
+      "JavaScript@函数",
+      "JavaScript@常用语句",
       "JavaScript@文件",
+      "JavaScript@面向对象",
+      "JavaScript@内置函数",
       "JavaScript@测试",
-      "JavaScript@短链接",
-      "JavaScript@表达式和运算符",
       "JavaScript@语句和声明",
-      "JavaScript@面向对象"
+      "JavaScript@内置对象",
+      "JavaScript@表达式和运算符",
+      "JavaScript@场景",
+      "JavaScript@短链接"
     ],
     "JavaScript@初识": [
-      "JavaScript@初识@基础知识",
-      "JavaScript@初识@官网与文档",
-      "JavaScript@初识@认识 JavaScript",
       "JavaScript@初识@认识计算机",
-      "JavaScript@初识@认识进制"
+      "JavaScript@初识@认识 JavaScript",
+      "JavaScript@初识@认识进制",
+      "JavaScript@初识@官网与文档",
+      "JavaScript@初识@基础知识"
     ],
     "JavaScript@内置函数": [
       "JavaScript@内置函数@alert",
@@ -806,10 +806,10 @@
       "JavaScript@内置对象@Math"
     ],
     "JavaScript@函数": [
+      "JavaScript@函数@简介",
       "JavaScript@函数@作用域",
       "JavaScript@函数@内置函数",
       "JavaScript@函数@匿名函数",
-      "JavaScript@函数@简介",
       "JavaScript@函数@闭包"
     ],
     "JavaScript@场景": [
@@ -822,18 +822,18 @@
       "JavaScript@常用语句@运算与比较"
     ],
     "JavaScript@数据类型": [
+      "JavaScript@数据类型@简介",
       "JavaScript@数据类型@字符",
       "JavaScript@数据类型@存储",
       "JavaScript@数据类型@布尔",
       "JavaScript@数据类型@数值",
-      "JavaScript@数据类型@简介",
       "JavaScript@数据类型@类型转换"
     ],
     "JavaScript@数据结构": [
+      "JavaScript@数据结构@简介",
       "JavaScript@数据结构@列表",
       "JavaScript@数据结构@数组",
-      "JavaScript@数据结构@映射",
-      "JavaScript@数据结构@简介"
+      "JavaScript@数据结构@映射"
     ],
     "JavaScript@文件": [
       "JavaScript@文件@文件操作",

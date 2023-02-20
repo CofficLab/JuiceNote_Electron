@@ -5,6 +5,11 @@ const ToastController = reactive({
 
     set(message: string): void {
         this.toast = message
+
+        setTimeout(() => {
+            console.log("清理toast")
+            this.toast = ""
+        }, 3000)
     },
 })
 

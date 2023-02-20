@@ -141,6 +141,10 @@ class BookNode {
         return Config.get('nodeExcepts').includes(path.basename(absolutePath))
     }
 
+    public markdownSourceCode(): string {
+        return fs.readFileSync(this.path).toString()
+    }
+
     public content(): string {
         return this.hasError() ? Markdown.renderErrorPage(this.errorTitle, this.errorLines) : (new Markdown(this.path)).content()
     }

@@ -23,11 +23,7 @@ export default defineComponent({
         exec("git commit -m '提交文档变动'", function (error: any, stdout: string, stderr: any) {
           if (stdout) {
             console.log(stdout);
-            ToastController.setToast(stdout);
-            setTimeout(() => {
-              console.log("清理toast");
-              ToastController.setToast("");
-            }, 3000);
+            ToastController.set(stdout);
           }
           if (error) return console.error(stderr, error);
 
