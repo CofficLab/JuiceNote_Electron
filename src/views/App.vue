@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-row">
     <!-- 左侧栏 -->
-    <aside class="hidden shadow-xl lg:flex lg:flex-col bg-base-200 border-r-2 border-gray-300 w-56">
+    <aside class="hidden shadow-xl xl:flex xl:flex-col bg-base-200 border-r-2 border-gray-300 w-56">
       <div v-bind:class="{ 'h-12': !hideTitleBar, 'h-0': hideTitleBar }" class="draggable w-56"></div>
       <div class="fixed w-56" v-bind:class="{ 'top-12': !hideTitleBar, 'top-0': hideTitleBar }">
         <SideMenu v-if="!editorMode" class="w-full"></SideMenu>
@@ -10,8 +10,8 @@
 
     <div class="flex flex-col flex-grow bg-cyan-800/10">
       <!-- 顶栏 -->
-      <div class="h-12 bg-base-200 border-b border-gray-300 shadow fixed z-50 w-full flex justify-between draggable">
-        <div class="w-full items-center flex pl-8">
+      <div class="h-12 bg-base-200 border-b border-gray-300 shadow fixed z-50 w-full flex justify-between">
+        <div class="w-full items-center flex pl-4 ml-24 xl:ml-0">
           <!-- <Address v-if="!isProd"></Address> -->
           <Breadcrumbs></Breadcrumbs>
         </div>
@@ -30,16 +30,16 @@
       </div>
 
       <!-- 内容区域与右侧导航 -->
-      <main class="flex flex-row justify-between pt-12">
+      <main class="flex flex-row gap-2 px-4 justify-between pt-12">
         <!-- 文章内容 -->
-        <div class="flex flex-col items-center flex-grow gap-4 pt-12 pb-48 min-h-screen">
-          <Content v-if="!editorMode" class="prose w-full"></Content>
+        <div class="flex flex-col ml-8 xl:ml-0 xl:items-center flex-grow gap-4 pt-12 pb-48 min-h-screen">
+          <Content v-if="!editorMode" class="prose w-full lg:prose-lg xl:prose-xl"></Content>
           <Editor v-if="editorMode"></Editor>
           <CodeContainer v-if="code != ''" class="w-full max-w-2xl mx-auto"></CodeContainer>
         </div>
 
         <!-- 右侧栏 -->
-        <aside class="hidden lg:flex flex-row justify-end w-72">
+        <aside class="hidden md:fixed lg:flex lg:flex-row justify-end w-72">
           <div class="flex flex-row justify-end fixed right-0 h-screen">
             <!-- <ProjectTree v-if="current.parent().project.notEmpty()"></ProjectTree> -->
             <Toc v-show="!editorMode"></Toc>

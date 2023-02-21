@@ -8,7 +8,7 @@
     </ul>
 
     <!-- TOC -->
-    <div class="table-of-contents overflow-scroll w-56 bg-cyan-800/10 rounded-2xl" v-html="toc"></div>
+    <div class="table-of-contents overflow-scroll w-56 bg-base-200/90 rounded-2xl" v-html="toc"></div>
   </div>
 </template>
 
