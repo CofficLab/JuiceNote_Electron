@@ -1,5 +1,10 @@
 <template>
-  <Link v-bind:href="next?.id" v-bind:class="!next ? 'btn-disabled' : ''" class="btn-sm btn btn-ghost">
+  <Link
+    v-bind:href="next?.id"
+    v-bind:class="!next ? 'btn-disabled' : ''"
+    class="btn-sm btn btn-ghost tooltip tooltip-bottom flex items-center"
+    data-tip="下一页"
+  >
     <ArrowRightCircle></ArrowRightCircle>
   </Link>
 </template>

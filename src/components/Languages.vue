@@ -1,11 +1,9 @@
 <template>
-  <div class="h-full flex overflow-visible mr-8" v-if="menus.length > 1">
+  <div class="h-full flex overflow-visible" v-if="menus.length > 1">
     <div class="dropdown dropdown-bottom flex justify-center dropdown-hover">
-      <label
-        tabindex="0"
-        class="self-center rounded p-1 hover:scale-105 duration-200 transition hover:ring-2 ring-primary ring-opacity-30 ring"
-        >{{ current.getBook().name }}</label
-      >
+      <button tabindex="0" class="btn btn-sm my-auto btn-ghost tooltip tooltip-left" data-tip="查看其他语言的同一内容">
+        {{ current.getBook().name }}
+      </button>
       <div class="mt-0 pt-4 dropdown-content">
         <ul tabindex="0" class="shadow p-2 gap-2 bg-cyan-900/80 rounded-box w-52 h-56 overflow-y-scroll">
           <Children
@@ -35,10 +33,6 @@ export default defineComponent({
     },
     menus: function () {
       let menus = BookController.search(RouteController.getCurrentPage().name);
-
-      menus = menus.filter(function (menu) {
-        return menu.getParent().name == RouteController.getCurrentPage().getParent().name;
-      });
 
       return menus;
     },

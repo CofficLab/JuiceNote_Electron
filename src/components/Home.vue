@@ -1,5 +1,11 @@
 <template>
-  <Link href="/" v-bind:class="disabled ? 'btn-disabled' : ''" class="btn-sm btn btn-ghost"><Home></Home></Link>
+  <Link
+    href="/"
+    data-tip="首页"
+    v-bind:class="disabled ? 'btn-disabled' : ''"
+    class="btn-sm btn btn-ghost my-auto items-center tooltip tooltip-bottom flex"
+    ><Home></Home
+  ></Link>
 </template>
 
 <script lang="ts">

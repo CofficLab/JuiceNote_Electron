@@ -1,5 +1,9 @@
 <template>
-  <Link v-bind:href="prev?.id" v-bind:class="!prev ? 'btn-disabled' : ''" class="btn-sm btn btn-ghost"
+  <Link
+    v-bind:href="prev?.id"
+    v-bind:class="!prev ? 'btn-disabled' : ''"
+    class="btn-sm btn btn-ghost tooltip tooltip-bottom flex items-center"
+    data-tip="上一页"
     ><ArrowLeftCircle></ArrowLeftCircle
   ></Link>
 </template>
