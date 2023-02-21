@@ -1,5 +1,9 @@
 <template>
-  <div v-on:click="switcher" class="btn-sm btn btn-ghost my-auto">
+  <div
+    v-on:click="switcher"
+    class="btn-sm btn btn-ghost my-auto tooltip-bottom tooltip flex items-center"
+    data-tip="编辑页面"
+  >
     <PencilSquare v-if="!editMode"></PencilSquare>
     <ArrowUturnLeft v-if="editMode"></ArrowUturnLeft>
   </div>

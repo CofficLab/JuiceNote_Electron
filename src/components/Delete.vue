@@ -1,5 +1,5 @@
 <template>
-  <button v-on:click="del" class="btn-sm btn btn-ghost my-auto">
+  <button v-on:click="del" class="btn-sm btn btn-ghost my-auto tooltip tooltip-bottom" data-tip="删除章节或页面">
     <Trash></Trash>
   </button>
 </template>

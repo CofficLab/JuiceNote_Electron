@@ -1,5 +1,7 @@
 <template>
-  <button class="btn-sm btn btn-ghost" @click="showForm"><Plus></Plus></button>
+  <button class="btn-sm btn btn-ghost tooltip tooltip-bottom" data-tip="添加章节或页面" @click="showForm">
+    <Plus></Plus>
+  </button>
 
   <!-- 弹层 -->
   <div class="modal modal-open" v-bind:class="formSwitcher ? '' : 'hidden'">

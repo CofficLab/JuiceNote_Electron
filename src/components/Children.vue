@@ -1,5 +1,11 @@
 <template>
-  <draggable :list="list" item-key="name" class="flex flex-col gap-3" ghost-class="btn-ghost" @end="dragEnd"
+  <draggable
+    :disabled="drag_disabled"
+    :list="list"
+    item-key="name"
+    class="flex flex-col gap-3"
+    ghost-class="btn-ghost"
+    @end="dragEnd"
     ><template #item="{ element }">
       <Link class="flex gap-4 btn" v-bind:href="element.id">{{ element.name }}</Link>
     </template>
@@ -13,7 +19,7 @@ import RouteController from "../controllers/RouteController";
 import Link from "./Link.vue";
 
 export default defineComponent({
-  props: ["list"],
+  props: ["list", "drag_disabled"],
   order: 0,
   components: {
     draggable,

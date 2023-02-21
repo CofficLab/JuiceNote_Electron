@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-row">
     <!-- 左侧栏 -->
-    <aside class="hidden shadow-xl xl:flex xl:flex-col bg-base-200 border-r-2 border-gray-300 w-56">
+    <aside class="hidden shadow-xl lg:flex xl:flex-col bg-base-200 border-r-2 border-gray-300 w-56">
       <div v-bind:class="{ 'h-12': !hideTitleBar, 'h-0': hideTitleBar }" class="draggable w-56"></div>
       <div class="fixed w-56" v-bind:class="{ 'top-12': !hideTitleBar, 'top-0': hideTitleBar }">
         <SideMenu v-if="!editorMode" class="w-full"></SideMenu>
@@ -11,7 +11,7 @@
     <div class="flex flex-col flex-grow bg-cyan-800/10">
       <!-- 顶栏 -->
       <div class="h-12 bg-base-200 border-b border-gray-300 shadow fixed z-50 w-full flex justify-between draggable">
-        <div class="w-full items-center flex pl-4 ml-24 xl:ml-0">
+        <div class="w-full items-center flex ml-20 lg:ml-2">
           <!-- <Address v-if="!isProd"></Address> -->
           <Breadcrumbs></Breadcrumbs>
         </div>
@@ -30,11 +30,6 @@
         </div>
       </div>
 
-      <!-- 导航栏 -->
-      <!-- <div class="h-12 border-b border-gray-300 shadow top-12 left-56 fixed z-50 flex justify-start">
-        <div class="flex justify-end pr-4 flex-row items-center bg-base-200"></div>
-      </div> -->
-
       <!-- 内容区域与右侧导航 -->
       <main class="flex flex-row gap-2 px-4 justify-between pt-12">
         <!-- 文章内容 -->
@@ -45,8 +40,8 @@
         </div>
 
         <!-- 右侧栏 -->
-        <aside class="hidden md:fixed lg:flex lg:flex-row justify-end w-72">
-          <div class="flex flex-row justify-end fixed right-0 h-screen">
+        <aside class="hidden xl:flex xl:flex-row justify-end w-56 min-h-screen">
+          <div class="flex flex-row justify-end fixed w-56 h-screen">
             <!-- <ProjectTree v-if="current.parent().project.notEmpty()"></ProjectTree> -->
             <Toc v-show="!editorMode"></Toc>
           </div>

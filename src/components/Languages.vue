@@ -1,12 +1,13 @@
 <template>
   <div class="h-full flex overflow-visible" v-if="menus.length > 1">
     <div class="dropdown dropdown-bottom flex justify-center dropdown-hover">
-      <button tabindex="0" class="btn btn-sm my-auto btn-ghost tooltip tooltip-left" data-tip="查看其他语言的同一内容">
+      <button tabindex="0" class="btn btn-sm my-auto btn-ghost tooltip tooltip-left" data-tip="查看其他语言的相似内容">
         {{ current.getBook().name }}
       </button>
       <div class="mt-0 pt-4 dropdown-content">
-        <ul tabindex="0" class="shadow p-2 gap-2 bg-cyan-900/80 rounded-box w-52 h-56 overflow-y-scroll">
+        <ul tabindex="0" class="shadow p-2 gap-2 bg-cyan-900/80 rounded-box w-52 overflow-y-scroll">
           <Children
+            :drag_disabled="true"
             :list="
               menus.map((menu) => {
                 menu.name = menu.getBook().name;
