@@ -10,7 +10,7 @@
         </div>
       </aside>
     </div>
-    <div class="flex flex-col ml-56">
+    <div class="flex flex-col w-full bg-cyan-800/10">
       <!-- 标题栏，左侧显示红绿灯，右侧可用于拖移 -->
       <div class="h-8 bg-base-200 fixed top-0 z-50 w-full flex justify-end" id="title-bar" v-show="!hideTitleBar">
         <!-- <Address v-if="!isProd"></Address> -->
