@@ -10,12 +10,13 @@
 
     <div class="flex flex-col flex-grow bg-cyan-800/10">
       <!-- 顶栏 -->
-      <div class="h-12 bg-base-200 border-b border-gray-300 fixed z-50 w-full flex justify-between draggable">
-        <div class="w-full items-center flex pl-24">
+      <div class="h-12 bg-base-200 border-b border-gray-300 shadow fixed z-50 w-full flex justify-between draggable">
+        <div class="w-full items-center flex pl-8">
           <!-- <Address v-if="!isProd"></Address> -->
           <Breadcrumbs></Breadcrumbs>
         </div>
         <div class="flex justify-end w-full mr-56 pr-4 flex-row items-center">
+          <OfficialLink></OfficialLink>
           <Toast></Toast>
           <GitCommit v-if="!isProd"></GitCommit>
           <Delete v-if="!isProd"></Delete>
@@ -39,7 +40,7 @@
 
         <!-- 右侧栏 -->
         <aside class="hidden lg:flex flex-row justify-end w-72">
-          <div class="flex flex-row justify-end fixed right-0 h-screen pb-24">
+          <div class="flex flex-row justify-end fixed right-0 h-screen">
             <!-- <ProjectTree v-if="current.parent().project.notEmpty()"></ProjectTree> -->
             <Toc v-show="!editorMode"></Toc>
           </div>
@@ -74,6 +75,7 @@ import CodeController from "../controllers/CodeController";
 import RouteController from "../controllers/RouteController";
 import FullScreenController from "../controllers/FullScreenController";
 import EditModeController from "../controllers/EditModeController";
+import OfficialLink from "../components/OfficialLink.vue";
 
 export default defineComponent({
   components: {
@@ -96,6 +98,7 @@ export default defineComponent({
     Others,
     ProjectTree,
     CodeContainer,
+    OfficialLink,
   },
   computed: {
     code: () => CodeController.code,

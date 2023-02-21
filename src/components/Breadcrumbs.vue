@@ -5,14 +5,20 @@
   >
     <ul class="flex flex-row justify-center">
       <li v-for="breadcrumb in breadcrumbs" class="flex justify-center">
-        <div class="dropdown dropdown-bottom flex justify-center" v-if="breadcrumb.siblings().length > 0">
-          <label tabindex="0" class="self-center hover:scale-105 duration-200 transition">{{ breadcrumb.name }}</label>
-          <ul
+        <div
+          class="dropdown dropdown-bottom flex justify-center dropdown-hover"
+          v-if="breadcrumb.siblings().length > 0"
+        >
+          <label
             tabindex="0"
-            class="dropdown-content shadow mt-4 p-2 gap-2 bg-cyan-900/80 rounded-box w-52 h-96 overflow-y-scroll"
+            class="self-center rounded p-1 hover:scale-105 duration-200 transition hover:ring-2 ring-primary ring-opacity-30"
+            >{{ breadcrumb.name }}</label
           >
-            <Children :list="breadcrumb.getParent().getChildren()"></Children>
-          </ul>
+          <div class="mt-0 pt-4 dropdown-content">
+            <ul tabindex="0" class="shadow p-2 gap-2 bg-cyan-900/80 rounded-box w-52 h-96 overflow-y-scroll ml-32">
+              <Children :list="breadcrumb.getParent().getChildren()"></Children>
+            </ul>
+          </div>
         </div>
         <div class="dropdown dropdown-top flex justify-center" v-else>
           <label tabindex="0" class="rounded-none self-center">{{ breadcrumb.name }}</label>

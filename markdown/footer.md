@@ -156,27 +156,41 @@ for (i = 0; i< document.getElementsByClassName('link').length; i++) {
 
 // 生成官方文档的链接
 if (document.getElementsByClassName('official-link').item(0) != undefined) {
-    document.getElementsByClassName('official-link').item(0).innerHTML = ''
-}
-for (i = 0; i< document.getElementsByClassName('o').length; i++) {
-    let target = document.getElementsByClassName('o').item(i)
-    let link = document.createElement('a')
-    let href = target.innerText
-    let preset = document.getElementsByClassName('official-link').item(0)
+    let officialLinkPlaceholder = document.getElementsByClassName('official-link').item(0)
+    officialLinkPlaceholder.href = ''
+    officialLinkPlaceholder.classList.add('hidden')
 
-    target.innerHTML = ''
-    target.classList.add('w-full', 'flex', 'mb-2', 'text-center')
+    for (i = 0; i< document.getElementsByClassName('o').length; i++) {
+        let target = document.getElementsByClassName('o').item(i)
+        let link = document.createElement('a')
+        let href = target.innerText
 
-    link.innerHTML = '官方文档'
-    link.target = "_blank"
-    link.href = href
-    link.classList.add('no-underline', 'text-base')
-    link.classList.add('px-4', 'py-2', 'w-full')
-    // link.classList.add('shadow-lg')
-    link.classList.add('ring-1', 'border-t-8', 'border-yellow-900/50', 'rounded-sm')
-    link.classList.add('bg-cyan-500/50','dark:bg-cyan-900/70')
+        target.html=''
 
-    preset != undefined ? preset.append(link) : target.append(link)
+        officialLinkPlaceholder.href = href
+        officialLinkPlaceholder.classList.remove('hidden')
+    }
+} else {
+    // 没有预定义位置时，自动生成样式
+    for (i = 0; i< document.getElementsByClassName('o').length; i++) {
+        let target = document.getElementsByClassName('o').item(i)
+        let link = document.createElement('a')
+        let href = target.innerText
+
+        target.innerHTML = ''
+        target.classList.add('w-full', 'flex', 'mb-2', 'text-center')
+
+        link.innerHTML = '官方文档'
+        link.target = "_blank"
+        link.href = href
+        link.classList.add('no-underline', 'text-base')
+        link.classList.add('px-4', 'py-2', 'w-full')
+        // link.classList.add('shadow-lg')
+        link.classList.add('ring-1', 'border-t-8', 'border-yellow-900/50', 'rounded-sm')
+        link.classList.add('bg-cyan-500/50','dark:bg-cyan-900/70')
+
+        target.append(link)
+    }
 }
 
 // 增加代码块的横幅
