@@ -29,6 +29,20 @@
         </div>
       </div>
 
+      <div
+        class="h-12 bg-base-200 border-b border-gray-300 shadow top-12 fixed z-50 w-full flex justify-between draggable"
+      >
+        <div class="w-full items-center flex pl-4 ml-24 xl:ml-0">
+          <!-- <Address v-if="!isProd"></Address> -->
+          <Breadcrumbs></Breadcrumbs>
+        </div>
+        <div class="flex justify-end w-full xl:mr-56 pr-4 flex-row items-center">
+          <Prev></Prev>
+          <Home></Home>
+          <Next></Next>
+        </div>
+      </div>
+
       <!-- 内容区域与右侧导航 -->
       <main class="flex flex-row gap-2 px-4 justify-between pt-12">
         <!-- 文章内容 -->
