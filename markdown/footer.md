@@ -165,7 +165,7 @@ if (document.getElementsByClassName('official-link').item(0) != undefined) {
         let link = document.createElement('a')
         let href = target.innerText
 
-        target.html=''
+        target.innerHTML=''
 
         officialLinkPlaceholder.href = href
         officialLinkPlaceholder.classList.remove('hidden')
