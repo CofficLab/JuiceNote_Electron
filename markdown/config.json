@@ -13,8 +13,8 @@
   ],
   "children_settings": {
     "/": [
-      "Golang",
       "开始",
+      "Golang",
       "Python",
       "Java",
       "JavaScript",
@@ -404,8 +404,8 @@
       "Python@12-Flask@04-数据库迁移"
     ],
     "面向对象": [
-      "面向对象@设计模式目录.md",
-      "面向对象@面向对象思想.md"
+      "面向对象@面向对象思想.md",
+      "面向对象@设计模式目录.md"
     ],
     "数据库": [
       "数据库@MySQL",
@@ -433,17 +433,17 @@
       "数据库@SQL@SQL 语法.md"
     ],
     "算法": [
+      "算法@二分查找.md",
+      "算法@简单排序.md",
+      "算法@快速排序.md",
+      "算法@希尔排序.md",
+      "算法@选择排序.md",
+      "算法@一致性哈希.md",
       "算法@CRC.md",
       "算法@LFU.md",
       "算法@LRU.md",
       "算法@MD5.md",
-      "算法@MurmurHash.md",
-      "算法@一致性哈希.md",
-      "算法@二分查找.md",
-      "算法@希尔排序.md",
-      "算法@快速排序.md",
-      "算法@简单排序.md",
-      "算法@选择排序.md"
+      "算法@MurmurHash.md"
     ],
     "系统设计": [
       "系统设计@准备",
@@ -519,10 +519,10 @@
       "正则表达式@简介.md"
     ],
     "Docker@初识": [
-      "Docker@初识@官网与文档.md",
-      "Docker@初识@认识 Golang.md",
       "Docker@初识@认识计算机.md",
-      "Docker@初识@认识进制.md"
+      "Docker@初识@认识进制.md",
+      "Docker@初识@认识 Golang.md",
+      "Docker@初识@官网与文档.md"
     ],
     "Flutter": [
       "Flutter@初识"
@@ -566,6 +566,7 @@
       "Golang@初识@认识 Golang.md",
       "Golang@初识@认识进制.md",
       "Golang@初识@字符编码.md",
+      "Golang@初识@编译与解释.md",
       "Golang@初识@官网与文档.md",
       "Golang@初识@参考资料.md"
     ],
@@ -730,22 +731,24 @@
       "Golang@面向对象@魔术方法.md"
     ],
     "Java@数据类型": [
-      "Java@数据类型@字符.md",
-      "Java@数据类型@存储.md",
-      "Java@数据类型@布尔.md",
-      "Java@数据类型@数值.md",
       "Java@数据类型@简介.md",
+      "Java@数据类型@存储.md",
+      "Java@数据类型@数值.md",
+      "Java@数据类型@字符.md",
+      "Java@数据类型@布尔.md",
       "Java@数据类型@类型转换.md"
     ],
     "Java@函数": [
       "Java@函数@简介.md"
     ],
     "Java@初识": [
-      "Java@初识@基础知识.md",
-      "Java@初识@官网与文档.md",
-      "Java@初识@认识 Java.md",
       "Java@初识@认识计算机.md",
-      "Java@初识@认识进制.md"
+      "Java@初识@认识 Java.md",
+      "Java@初识@认识进制.md",
+      "Java@初识@编译与解释.md",
+      "Java@初识@字符编码.md",
+      "Java@初识@官网与文档.md",
+      "Java@初识@基础知识.md"
     ],
     "Java@常用语句": [
       "Java@常用语句@循环.md",
@@ -753,23 +756,23 @@
       "Java@常用语句@注释.md"
     ],
     "Java@异常": [
+      "Java@异常@简介.md",
       "Java@异常@异常与函数.md",
       "Java@异常@抛出异常.md",
-      "Java@异常@捕获异常.md",
-      "Java@异常@简介.md"
+      "Java@异常@捕获异常.md"
     ],
     "Java@数据结构": [
-      "Java@数据结构@二维数组.md",
+      "Java@数据结构@简介.md",
       "Java@数据结构@数组.md",
-      "Java@数据结构@简介.md"
+      "Java@数据结构@二维数组.md"
     ],
     "Java@文件": [
-      "Java@文件@文件操作.md",
-      "Java@文件@认识文件.md"
+      "Java@文件@认识文件.md",
+      "Java@文件@文件操作.md"
     ],
     "Java@面向对象": [
-      "Java@面向对象@包.md",
       "Java@面向对象@简介.md",
+      "Java@面向对象@包.md",
       "Java@面向对象@类.md",
       "Java@面向对象@继承.md"
     ],
@@ -790,11 +793,13 @@
       "JavaScript@短链接"
     ],
     "JavaScript@初识": [
-      "JavaScript@初识@基础知识.md",
-      "JavaScript@初识@官网与文档.md",
-      "JavaScript@初识@认识 JavaScript.md",
       "JavaScript@初识@认识计算机.md",
-      "JavaScript@初识@认识进制.md"
+      "JavaScript@初识@认识 JavaScript.md",
+      "JavaScript@初识@编译与解释.md",
+      "JavaScript@初识@认识进制.md",
+      "JavaScript@初识@字符编码.md",
+      "JavaScript@初识@官网与文档.md",
+      "JavaScript@初识@基础知识.md"
     ],
     "JavaScript@内置函数": [
       "JavaScript@内置函数@alert.md",
@@ -810,10 +815,10 @@
       "JavaScript@内置对象@String.md"
     ],
     "JavaScript@函数": [
+      "JavaScript@函数@简介.md",
       "JavaScript@函数@作用域.md",
       "JavaScript@函数@内置函数.md",
       "JavaScript@函数@匿名函数.md",
-      "JavaScript@函数@简介.md",
       "JavaScript@函数@闭包.md"
     ],
     "JavaScript@场景": [
@@ -826,22 +831,22 @@
       "JavaScript@常用语句@运算与比较.md"
     ],
     "JavaScript@数据类型": [
-      "JavaScript@数据类型@字符.md",
-      "JavaScript@数据类型@存储.md",
-      "JavaScript@数据类型@布尔.md",
-      "JavaScript@数据类型@数值.md",
       "JavaScript@数据类型@简介.md",
+      "JavaScript@数据类型@存储.md",
+      "JavaScript@数据类型@数值.md",
+      "JavaScript@数据类型@字符.md",
+      "JavaScript@数据类型@布尔.md",
       "JavaScript@数据类型@类型转换.md"
     ],
     "JavaScript@数据结构": [
+      "JavaScript@数据结构@简介.md",
       "JavaScript@数据结构@列表.md",
       "JavaScript@数据结构@数组.md",
-      "JavaScript@数据结构@映射.md",
-      "JavaScript@数据结构@简介.md"
+      "JavaScript@数据结构@映射.md"
     ],
     "JavaScript@文件": [
-      "JavaScript@文件@文件操作.md",
-      "JavaScript@文件@认识文件.md"
+      "JavaScript@文件@认识文件.md",
+      "JavaScript@文件@文件操作.md"
     ],
     "JavaScript@测试": [
       "JavaScript@测试@断言.md"
@@ -864,11 +869,11 @@
       "JavaScript@语句和声明@var.md"
     ],
     "JavaScript@面向对象": [
-      "JavaScript@面向对象@原型.md",
+      "JavaScript@面向对象@简介.md",
       "JavaScript@面向对象@对象.md",
       "JavaScript@面向对象@属性.md",
       "JavaScript@面向对象@方法.md",
-      "JavaScript@面向对象@简介.md"
+      "JavaScript@面向对象@原型.md"
     ],
     "MySQL": [
       "MySQL@初识",
@@ -902,23 +907,25 @@
       "PHP@短链接"
     ],
     "PHP@初识": [
-      "PHP@初识@官网与文档.md",
-      "PHP@初识@认识 PHP.md",
       "PHP@初识@认识计算机.md",
-      "PHP@初识@认识进制.md"
+      "PHP@初识@认识 PHP.md",
+      "PHP@初识@认识进制.md",
+      "PHP@初识@编译与解释.md",
+      "PHP@初识@字符编码.md",
+      "PHP@初识@官网与文档.md"
     ],
     "PHP@函数": [
-      "PHP@函数@作用域.md",
-      "PHP@函数@内置函数.md",
       "PHP@函数@简介.md",
+      "PHP@函数@内置函数.md",
+      "PHP@函数@作用域.md",
       "PHP@函数@自定义函数.md",
       "PHP@函数@装饰器.md"
     ],
     "PHP@变量": [
+      "PHP@变量@简介.md",
       "PHP@变量@变量类型.md",
       "PHP@变量@常量.md",
-      "PHP@变量@数据类型.md",
-      "PHP@变量@简介.md"
+      "PHP@变量@数据类型.md"
     ],
     "PHP@常用语句": [
       "PHP@常用语句@循环.md",
@@ -926,19 +933,19 @@
       "PHP@常用语句@注释.md"
     ],
     "PHP@数据类型": [
-      "PHP@数据类型@字符.md",
+      "PHP@数据类型@简介.md",
       "PHP@数据类型@存储.md",
-      "PHP@数据类型@布尔.md",
       "PHP@数据类型@数值.md",
-      "PHP@数据类型@简介.md"
+      "PHP@数据类型@字符.md",
+      "PHP@数据类型@布尔.md"
     ],
     "PHP@数据结构": [
-      "PHP@数据结构@数组.md",
-      "PHP@数据结构@简介.md"
+      "PHP@数据结构@简介.md",
+      "PHP@数据结构@数组.md"
     ],
     "PHP@文件": [
-      "PHP@文件@文件操作.md",
-      "PHP@文件@认识文件.md"
+      "PHP@文件@认识文件.md",
+      "PHP@文件@文件操作.md"
     ],
     "PHP@短链接": [
       "PHP@短链接@简介.md"
@@ -951,8 +958,8 @@
       "PHP@编程基础@退出程序.md"
     ],
     "PostgreSQL": [
-      "PostgreSQL@使用",
-      "PostgreSQL@初识"
+      "PostgreSQL@初识",
+      "PostgreSQL@使用"
     ],
     "PostgreSQL@初识": [
       "PostgreSQL@初识@01.md",
@@ -964,68 +971,69 @@
       "PostgreSQL@使用@元命令.md"
     ],
     "Python@初识": [
-      "Python@初识@官网与文档.md",
-      "Python@初识@编译与解释.md",
-      "Python@初识@认识 Python.md",
       "Python@初识@认识计算机.md",
-      "Python@初识@认识进制.md"
+      "Python@初识@认识 Python.md",
+      "Python@初识@认识进制.md",
+      "Python@初识@编译与解释.md",
+      "Python@初识@字符编码.md",
+      "Python@初识@官网与文档.md"
     ],
     "Python@Flask": [
+      "Python@Flask@简介.md",
       "Python@Flask@安装.md",
       "Python@Flask@应用的基本结构.md",
-      "Python@Flask@数据库迁移.md",
-      "Python@Flask@简介.md"
+      "Python@Flask@数据库迁移.md"
     ],
     "Python@函数": [
-      "Python@函数@作用域.md",
-      "Python@函数@内置函数.md",
       "Python@函数@简介.md",
-      "Python@函数@自定义函数.md",
-      "Python@函数@装饰器.md"
+      "Python@函数@内置函数.md",
+      "Python@函数@作用域.md",
+      "Python@函数@装饰器.md",
+      "Python@函数@自定义函数.md"
     ],
     "Python@常用语句": [
-      "Python@常用语句@其他语句.md",
+      "Python@常用语句@输出.md",
+      "Python@常用语句@缩进与换行.md",
+      "Python@常用语句@注释.md",
       "Python@常用语句@循环.md",
       "Python@常用语句@推导.md",
       "Python@常用语句@条件判断.md",
-      "Python@常用语句@注释.md",
-      "Python@常用语句@缩进与换行.md",
-      "Python@常用语句@输出.md",
-      "Python@常用语句@迭代.md"
+      "Python@常用语句@迭代.md",
+      "Python@常用语句@其他语句.md"
     ],
     "Python@应用": [
       "Python@应用@屏幕抓取.md"
     ],
     "Python@异常": [
+      "Python@异常@简介.md",
       "Python@异常@异常与函数.md",
-      "Python@异常@捕获异常.md",
-      "Python@异常@简介.md"
+      "Python@异常@捕获异常.md"
     ],
     "Python@数据库支持": [
       "Python@数据库支持@SQLite.md"
     ],
     "Python@数据类型": [
-      "Python@数据类型@字符.md",
-      "Python@数据类型@存储.md",
-      "Python@数据类型@布尔.md",
-      "Python@数据类型@数值.md",
       "Python@数据类型@简介.md",
+      "Python@数据类型@存储.md",
+      "Python@数据类型@数值.md",
+      "Python@数据类型@字符.md",
+      "Python@数据类型@布尔.md",
       "Python@数据类型@类型转换.md"
     ],
     "Python@数据结构": [
-      "Python@数据结构@元组.md",
+      "Python@数据结构@简介.md",
       "Python@数据结构@列表.md",
       "Python@数据结构@字典.md",
-      "Python@数据结构@简介.md",
+      "Python@数据结构@元组.md",
       "Python@数据结构@集合.md"
     ],
     "Python@文件": [
-      "Python@文件@文件操作.md",
-      "Python@文件@认识文件.md"
+      "Python@文件@认识文件.md",
+      "Python@文件@文件操作.md"
     ],
     "Python@模块": [
-      "Python@模块@标准库.md",
-      "Python@模块@模块.md"
+      "Python@模块@模块.md",
+      "Python@模块@标准库.md"
     ],
     "Python@面向对象": [
       "Python@面向对象@简介.md",
@@ -1035,10 +1043,10 @@
       "Redis@应用场景.md"
     ],
     "Shell": [
+      "Shell@初识",
       "Shell@envsubst.md",
       "Shell@export.md",
-      "Shell@if.md",
-      "Shell@初识"
+      "Shell@if.md"
     ],
     "Shell@初识": [
       "Shell@初识@官网与文档.md",
