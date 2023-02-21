@@ -1,14 +1,6 @@
 <template>
   <div class="h-full overflow-scroll flex flex-col gap-4 items-end py-4 mr-4 pb-48">
-    <!-- 其他编程语言 -->
-    <ul class="menu shadow-lg bg-green-100/90 rounded-2xl w-56 mt-2" v-show="menus.length > 1">
-      <li v-for="menu in menus">
-        <Link v-bind:href="menu.id">{{ menu.getBook().name }}</Link>
-      </li>
-    </ul>
-
-    <!-- TOC -->
-    <div class="table-of-contents overflow-scroll w-56 bg-green-100/90 rounded-2xl" v-html="toc"></div>
+    <div class="table-of-contents overflow-scroll w-56 bg-cyan-800/10 rounded-2xl" v-html="toc"></div>
   </div>
 </template>
 
@@ -23,15 +15,6 @@ export default defineComponent({
     toc(): string {
       let current = RouteController.getCurrentPage();
       return current.toc();
-    },
-    menus: function () {
-      let menus = BookController.search(RouteController.getCurrentPage().name);
-
-      menus = menus.filter(function (menu) {
-        return menu.getParent().name == RouteController.getCurrentPage().getParent().name;
-      });
-
-      return menus;
     },
   },
   mounted: function () {

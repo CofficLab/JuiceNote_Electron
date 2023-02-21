@@ -16,6 +16,7 @@
           <Breadcrumbs></Breadcrumbs>
         </div>
         <div class="flex justify-end w-full xl:mr-56 pr-4 flex-row items-center">
+          <Languages></Languages>
           <OfficialLink></OfficialLink>
           <Toast></Toast>
           <GitCommit v-if="!isProd"></GitCommit>
@@ -29,26 +30,15 @@
         </div>
       </div>
 
-      <div
-        class="h-12 bg-base-200 border-b border-gray-300 shadow top-12 fixed z-50 w-full flex justify-between draggable"
-      >
-        <div class="w-full items-center flex pl-4 ml-24 xl:ml-0">
-          <!-- <Address v-if="!isProd"></Address> -->
-          <Breadcrumbs></Breadcrumbs>
-        </div>
-        <div class="flex justify-end w-full xl:mr-56 pr-4 flex-row items-center">
-          <Prev></Prev>
-          <Home></Home>
-          <Next></Next>
-        </div>
-      </div>
+      <!-- 导航栏 -->
+      <!-- <div class="h-12 border-b border-gray-300 shadow top-12 left-56 fixed z-50 flex justify-start">
+        <div class="flex justify-end pr-4 flex-row items-center bg-base-200"></div>
+      </div> -->
 
       <!-- 内容区域与右侧导航 -->
       <main class="flex flex-row gap-2 px-4 justify-between pt-12">
         <!-- 文章内容 -->
-        <div
-          class="flex flex-col ml-8 items-center lg:items-start xl:items-start 2xl:ml-0 2xl:items-center flex-grow gap-4 pt-12 pb-48 min-h-screen"
-        >
+        <div class="flex flex-col ml-8 items-center flex-grow gap-4 pt-12 pb-48 min-h-screen">
           <Content v-if="!editorMode" class="prose w-full 2xl:prose-lg 3xl:prose-xl"></Content>
           <Editor v-if="editorMode"></Editor>
           <CodeContainer v-if="code != ''" class="w-full max-w-2xl mx-auto"></CodeContainer>
@@ -92,6 +82,7 @@ import RouteController from "../controllers/RouteController";
 import FullScreenController from "../controllers/FullScreenController";
 import EditModeController from "../controllers/EditModeController";
 import OfficialLink from "../components/OfficialLink.vue";
+import Languages from "../components/Languages.vue";
 
 export default defineComponent({
   components: {
@@ -115,6 +106,7 @@ export default defineComponent({
     ProjectTree,
     CodeContainer,
     OfficialLink,
+    Languages,
   },
   computed: {
     code: () => CodeController.code,
