@@ -1,7 +1,7 @@
 <template>
   <div class="h-full overflow-scroll flex flex-col gap-4 items-end py-4 mr-4 pb-48">
     <!-- 其他编程语言 -->
-    <ul class="menu shadow-xl bg-cyan-800/10 rounded-2xl w-56 mt-2" v-show="menus.length > 1">
+    <ul class="menu drop-shadow-2xl bg-base-200/90 rounded-2xl w-56 mt-2" v-show="menus.length > 1">
       <li v-for="menu in menus">
         <Link v-bind:href="menu.id">{{ menu.getBook().name }}</Link>
       </li>

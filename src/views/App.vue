@@ -10,12 +10,12 @@
 
     <div class="flex flex-col flex-grow bg-cyan-800/10">
       <!-- 顶栏 -->
-      <div class="h-12 bg-base-200 border-b border-gray-300 shadow fixed z-50 w-full flex justify-between">
+      <div class="h-12 bg-base-200 border-b border-gray-300 shadow fixed z-50 w-full flex justify-between draggable">
         <div class="w-full items-center flex pl-4 ml-24 xl:ml-0">
           <!-- <Address v-if="!isProd"></Address> -->
           <Breadcrumbs></Breadcrumbs>
         </div>
-        <div class="flex justify-end w-full mr-56 pr-4 flex-row items-center">
+        <div class="flex justify-end w-full xl:mr-56 pr-4 flex-row items-center">
           <OfficialLink></OfficialLink>
           <Toast></Toast>
           <GitCommit v-if="!isProd"></GitCommit>
@@ -32,8 +32,10 @@
       <!-- 内容区域与右侧导航 -->
       <main class="flex flex-row gap-2 px-4 justify-between pt-12">
         <!-- 文章内容 -->
-        <div class="flex flex-col ml-8 xl:ml-0 xl:items-center flex-grow gap-4 pt-12 pb-48 min-h-screen">
-          <Content v-if="!editorMode" class="prose w-full lg:prose-lg xl:prose-xl"></Content>
+        <div
+          class="flex flex-col ml-8 items-center lg:items-start xl:items-start 2xl:ml-0 2xl:items-center flex-grow gap-4 pt-12 pb-48 min-h-screen"
+        >
+          <Content v-if="!editorMode" class="prose w-full 2xl:prose-lg 3xl:prose-xl"></Content>
           <Editor v-if="editorMode"></Editor>
           <CodeContainer v-if="code != ''" class="w-full max-w-2xl mx-auto"></CodeContainer>
         </div>

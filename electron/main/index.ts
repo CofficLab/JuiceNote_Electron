@@ -33,6 +33,7 @@ const indexHtml = path.join(ROOT_PATH.dist, 'index.html')
 
 async function createWindow() {
   win = new BrowserWindow({
+    minWidth: 780,
     height: 880,
     width: 1030,
     title: 'Main window',
