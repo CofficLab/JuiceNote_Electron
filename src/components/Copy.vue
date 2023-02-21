@@ -1,5 +1,5 @@
 <template>
-  <button class="btn-sm btn btn-ghost rounded-none" v-bind:data-clipboard-text="markdownSourceCode">
+  <button class="btn-sm btn btn-ghost" v-bind:data-clipboard-text="markdownSourceCode">
     <IconCopy></IconCopy>
   </button>
 </template>

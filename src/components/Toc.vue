@@ -1,5 +1,5 @@
 <template>
-  <div class="h-full overflow-scroll flex flex-col gap-4 items-end py-4 mr-4 pb-48">
+  <div class="h-full overflow-scroll flex flex-col gap-4 items-end py-4 mr-4">
     <div class="table-of-contents overflow-scroll w-56 bg-cyan-800/10 rounded-2xl" v-html="toc"></div>
   </div>
 </template>
@@ -7,7 +7,6 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import RouteController from "../controllers/RouteController";
-import BookController from "../controllers/BookController";
 import Link from "./Link.vue";
 
 export default defineComponent({

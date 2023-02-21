@@ -1,7 +1,11 @@
 <template>
-  <button class="btn-sm btn btn-ghost tooltip tooltip-bottom my-auto" data-tip="在浏览器中打开官方文档">
-    <a href="/" target="_blank" class="official-link"><ArrowTopRightOnSquare></ArrowTopRightOnSquare></a>
-  </button>
+  <a
+    href="/"
+    target="_blank"
+    class="official-link btn-sm btn btn-ghost tooltip tooltip-bottom my-auto items-center flex"
+    data-tip="在浏览器中打开官方文档"
+    ><ArrowTopRightOnSquare></ArrowTopRightOnSquare
+  ></a>
 </template>
 
 <script lang="ts">
