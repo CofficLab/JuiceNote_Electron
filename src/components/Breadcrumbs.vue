@@ -1,15 +1,15 @@
 <template>
   <div
-    class="justify-center h-full flex flex-grow p-0 breadcrumbs overflow-visible bg-gradient-to-r from-sky-200/60 via-sky-200/90 to-sky-200/60 dark:from-sky-800/80 dark:via-sky-900 dark:to-sky-800/80"
+    class="justify-start h-full flex flex-grow breadcrumbs overflow-visible"
     v-bind:class="{ 'text-yellow-500': inEditMode }"
   >
     <ul class="flex flex-row justify-center">
       <li v-for="breadcrumb in breadcrumbs" class="flex justify-center">
-        <div class="dropdown dropdown-top flex justify-center" v-if="breadcrumb.siblings().length > 0">
-          <label tabindex="0" class="self-center">{{ breadcrumb.name }}</label>
+        <div class="dropdown dropdown-bottom flex justify-center" v-if="breadcrumb.siblings().length > 0">
+          <label tabindex="0" class="self-center hover:scale-105 duration-200 transition">{{ breadcrumb.name }}</label>
           <ul
             tabindex="0"
-            class="dropdown-content shadow p-2 gap-2 bg-cyan-900/80 rounded-box w-52 h-96 overflow-y-scroll"
+            class="dropdown-content shadow mt-4 p-2 gap-2 bg-cyan-900/80 rounded-box w-52 h-96 overflow-y-scroll"
           >
             <Children :list="breadcrumb.getParent().getChildren()"></Children>
           </ul>

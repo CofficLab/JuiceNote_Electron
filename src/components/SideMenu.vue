@@ -1,32 +1,21 @@
 <template>
-  <div>
-    <div class="drawer-side w-full">
-      <!-- 图书名 -->
-      <div class="z-20 items-center gap-2 px-1 py-2 flex bg-transparent">
-        <ul class="menu z-20">
-          <li tabindex="0">
-            <a href="javascript:void(0)" aria-current="page" aria-label="Homepage" class="flex-0 px-2">
-              <div
-                class="font-title text-primary inline-flex text-lg transition-all duration-200 md:text-3xl lg:text-4xl xl:text-5xl"
-              >
-                <span>{{ book.name }}</span>
-              </div>
-            </a>
-            <ul class="bg-cyan-900/80 shadow-2xl overflow-auto h-96 rounded-2xl gap-4 p-4">
-              <Children :list="books"></Children>
-            </ul>
-          </li>
-        </ul>
-      </div>
+  <div class="w-full flex flex-col">
+    <!-- 图书名 -->
+    <div class="fixed w-56 z-50 border-b h-12 border-gray-300 shadow-sm">
+      <h1
+        class="text-primary bg-base-200 h-full border-r-2 border-gray-300 flex justify-center text-lg md:text-2xl lg:text-3xl xl:text-3xl"
+      >
+        {{ book.name }}
+      </h1>
+    </div>
 
-      <!-- 章节与页面 -->
-      <div class="overscroll-auto overflow-auto h-screen mt-0 mb-24 pb-48 pr-4">
-        <ul class="menu menu-compact flex flex-col p-0 px-1 overflow-scroll" v-for="item in chapters">
-          <li></li>
-          <SideMenuItem :item="item" :id="item.id"></SideMenuItem>
-        </ul>
-        <div class="pointer-events-none sticky bottom-0 flex h-20"></div>
-      </div>
+    <!-- 章节与页面 -->
+    <div class="overscroll-auto overflow-auto h-screen mt-0 mb-24 pb-48 pr-4 pt-12">
+      <ul class="menu menu-compact flex flex-col w-full p-0 px-1 overflow-scroll" v-for="(item, index) in chapters">
+        <li v-if="index > 0"></li>
+        <SideMenuItem :item="item" :id="item.id"></SideMenuItem>
+      </ul>
+      <div class="pointer-events-none sticky bottom-0 flex h-20"></div>
     </div>
   </div>
 </template>

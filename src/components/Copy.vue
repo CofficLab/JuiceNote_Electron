@@ -1,5 +1,7 @@
 <template>
-  <button class="btn-sm btn rounded-none" v-bind:data-clipboard-text="markdownSourceCode"><IconCopy></IconCopy></button>
+  <button class="btn-sm btn btn-ghost rounded-none" v-bind:data-clipboard-text="markdownSourceCode">
+    <IconCopy></IconCopy>
+  </button>
 </template>
 
 <script lang="ts">

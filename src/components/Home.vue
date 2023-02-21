@@ -1,5 +1,7 @@
 <template>
-  <Link href="/" v-bind:class="disabled ? 'btn-disabled' : ''" class="btn-sm btn rounded-none"><Home></Home></Link>
+  <Link href="/" v-bind:class="disabled ? 'btn-disabled' : ''" class="btn-sm btn btn-ghost rounded-none"
+    ><Home></Home
+  ></Link>
 </template>
 
 <script lang="ts">

@@ -1,5 +1,5 @@
 <template>
-  <button v-on:click="commit" class="btn-sm btn my-auto rounded-none">
+  <button v-on:click="commit" class="btn-sm btn btn-ghost my-auto rounded-none">
     <CloudArrowUp></CloudArrowUp>
   </button>
 </template>
