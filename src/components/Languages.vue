@@ -34,6 +34,11 @@ export default defineComponent({
     menus: function () {
       let menus = BookController.search(RouteController.getCurrentPage().name);
 
+      // 只关注和当前页面的章节名称一样的
+      menus = menus.filter(function (menu) {
+        return menu.getParent().name == RouteController.getCurrentPage().getParent().name;
+      });
+
       return menus;
     },
   },
