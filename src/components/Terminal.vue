@@ -74,9 +74,9 @@ export default {
         ipc.on(that.channels[0], (event, data) => {
           xterm.write(data);
         });
-        window.onresize = function () {
-          that.fitSize();
-        };
+        // window.onresize = function () {
+        //   that.fitSize();
+        // };
         that.fitSize();
         xterm.focus();
       });

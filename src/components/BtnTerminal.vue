@@ -5,6 +5,7 @@
         <div
           tabindex="0"
           class="dropdown-content card card-compact w-auto p-0 shadow-2xl bg-black ring text-primary-content"
+          :draggable="true"
         >
           <div class="card-body">
             <Terminal :id="1" :showFlag="true"></Terminal>
