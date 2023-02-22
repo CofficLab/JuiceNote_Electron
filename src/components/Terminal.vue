@@ -1,6 +1,21 @@
 <template>
-  <VueDragResize :isActive="true" :w="800" :h="600" v-on:resizing="resize" v-on:dragging="resize" class="p-0">
-    <div class="bg-black h-full w-full ring rounded-2xl p-4">
+  <VueDragResize
+    :isActive="false"
+    :minw="300"
+    :minh="100"
+    :w="800"
+    :h="600"
+    :x="0"
+    :y="0"
+    :sticks="['br']"
+    :stickSize="12"
+    :preventActiveBehavior="false"
+    :parentLimitation="false"
+    v-on:resizing="resize"
+    v-on:dragging="resize"
+    contentClass="terminal"
+  >
+    <div class="bg-black h-full w-full rounded-2xl p-4">
       <div :id="'terminal' + id" class="h-full w-full flex justify-center"></div>
     </div>
   </VueDragResize>
@@ -20,6 +35,9 @@ export default {
     id: {
       type: Number,
     },
+    showFlag: {
+      type: Boolean,
+    },
   },
   watch: {
     showFlag: {
@@ -37,8 +55,6 @@ export default {
       channels: null,
       width: 0,
       height: 0,
-      top: 0,
-      left: 0,
     };
   },
   beforeDestroy() {
@@ -46,6 +62,7 @@ export default {
   },
   mounted() {
     this.initConnect();
+    this.fitSize();
   },
   methods: {
     initConnect() {
@@ -58,6 +75,9 @@ export default {
           fontSize: 20,
           fontFamily: "Monaco",
           fontWeight: 22,
+          cursorBlink: true,
+          //  'block' | 'underline' | 'bar'
+          cursorStyle: "bar",
           theme: xtermTheme.Atom,
         });
         let fitAddon = new FitAddon();
@@ -122,3 +142,9 @@ export default {
   components: { DraggableWindow, VueDragResize },
 };
 </script>
+
+<style scoped lang="postcss">
+.terminal {
+  @apply p-0 shadow-2xl shadow-black rounded-2xl ring bg-red-400;
+}
+</style>
