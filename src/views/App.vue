@@ -16,9 +16,9 @@
           <Breadcrumbs></Breadcrumbs>
         </div>
         <div class="flex justify-end w-full lg:mr-56 pr-4 flex-row items-center">
-          <BtnTerminal></BtnTerminal>
           <Languages></Languages>
           <OfficialLink></OfficialLink>
+          <BtnTerminal></BtnTerminal>
           <Toast></Toast>
           <GitCommit v-if="!isProd" class="hidden lg:flex"></GitCommit>
           <Delete v-if="!isProd" class="hidden lg:flex"></Delete>
