@@ -54,17 +54,17 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import Copy from "../components/Copy.vue";
+import Copy from "../components/BtnCopy.vue";
 import Toc from "../components/Toc.vue";
 import Breadcrumbs from "../components/Breadcrumbs.vue";
-import Prev from "../components/Prev.vue";
-import Next from "../components/Next.vue";
-import Delete from "../components/Delete.vue";
-import Add from "../components/Add.vue";
-import Home from "../components/Home.vue";
+import Prev from "../components/BtnPrev.vue";
+import Next from "../components/BtnNext.vue";
+import Delete from "../components/BtnDelete.vue";
+import Add from "../components/BtnAdd.vue";
+import Home from "../components/BtnHome.vue";
 import Address from "../components/Address.vue";
-import Edit from "../components/Edit.vue";
-import GitCommit from "../components/GitCommit.vue";
+import Edit from "../components/BtnEdit.vue";
+import GitCommit from "../components/BtnGitCommit.vue";
 import Alert from "../components/Alert.vue";
 import Toast from "../components/Toast.vue";
 import Content from "../components/Content.vue";
@@ -77,7 +77,7 @@ import CodeController from "../controllers/CodeController";
 import RouteController from "../controllers/RouteController";
 import FullScreenController from "../controllers/FullScreenController";
 import EditModeController from "../controllers/EditModeController";
-import OfficialLink from "../components/OfficialLink.vue";
+import OfficialLink from "../components/BtnOfficialLink.vue";
 import Languages from "../components/Languages.vue";
 import BtnTerminal from "../components/BtnTerminal.vue";
 

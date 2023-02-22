@@ -13,8 +13,8 @@
   ],
   "children_settings": {
     "/": [
-      "开始",
       "Golang",
+      "开始",
       "Python",
       "Java",
       "JavaScript",
