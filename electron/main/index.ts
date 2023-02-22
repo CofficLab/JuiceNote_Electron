@@ -128,7 +128,7 @@ ipcMain.handle('open-win', (event, arg) => {
 // 实时的终端
 const pty = require("node-pty");
 const os = require("os");
-const shellType = os.platform() === "win32" ? "powershell.exe" : "bash";
+const shellType = os.platform() === "win32" ? "powershell.exe" : "zsh";
 ipcMain.handle("terminal-create", (event) => {
   let term = pty.spawn(shellType, [], {
     name: "xterm-color",

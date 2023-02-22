@@ -7,6 +7,8 @@ import "xterm/css/xterm.css";
 const ipc = require("electron").ipcRenderer;
 import { Terminal } from "xterm";
 import { FitAddon } from "xterm-addon-fit";
+import xtermTheme from "xterm-theme";
+import * as XtermWebfont from "xterm-webfont";
 
 export default {
   props: {
@@ -45,7 +47,13 @@ export default {
       let that = this;
       ipc.invoke("terminal-create").then((res) => {
         let pid = res;
-        let xterm = new Terminal();
+        let xterm = new Terminal({
+          allowTransparency: true,
+          fontSize: 20,
+          fontFamily: "Monaco",
+          fontWeight: 22,
+          theme: xtermTheme.Atom,
+        });
         let fitAddon = new FitAddon();
         xterm.loadAddon(fitAddon);
         xterm.open(document.getElementById("terminal" + this.id));

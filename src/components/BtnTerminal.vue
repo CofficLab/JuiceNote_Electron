@@ -1,37 +1,49 @@
 <template>
-  <div class="dropdown dropdown-end">
-    <button
-      tabindex="0"
-      class="btn m-1 btn-sm btn-ghost my-auto items-center tooltip tooltip-left flex"
-      data-tip="打开终端"
-    >
-      <CommandLine></CommandLine>
-    </button>
-    <div tabindex="0" class="dropdown-content card card-compact w-auto p-2 shadow bg-cyan-900/20 text-primary-content">
-      <div class="card-body">
-        <Terminal :id="1" :showFlag="true" class="shadow-2xl"></Terminal>
+  <div class="dropdown dropdown-end mt-12" v-bind:class="{ 'dropdown-open': open == true }">
+    <label class="swap" v-bind:class="{ 'swap-active': open }">
+      <div class="swap-on">
+        <div
+          tabindex="0"
+          class="dropdown-content card card-compact w-auto p-0 shadow-2xl bg-black ring text-primary-content"
+        >
+          <div class="card-body">
+            <Terminal :id="1" :showFlag="true"></Terminal>
+          </div>
+        </div>
       </div>
-    </div>
+    </label>
   </div>
+
+  <button
+    tabindex="0"
+    class="btn m-1 btn-sm btn-ghost my-auto items-center tooltip tooltip-left flex"
+    data-tip="打开终端"
+    v-bind:onClick="click"
+    v-bind:class="{ 'btn-active': open }"
+  >
+    <CommandLine></CommandLine>
+  </button>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import Home from "../icons/home.vue";
 import CommandLine from "../icons/command-line.vue";
-import Link from "./Link.vue";
-import RouteController from "../controllers/RouteController";
-import Terminal from "./Terminal.vue";
+import Terminal from "../components/Terminal.vue";
 
 export default defineComponent({
   components: {
-    Home,
-    Link,
     CommandLine,
     Terminal,
   },
-  computed: {
-    disabled: () => RouteController.isHomePage,
+  data() {
+    return {
+      open: false,
+    };
+  },
+  methods: {
+    click() {
+      this.open = !this.open;
+    },
   },
 });
 </script>
