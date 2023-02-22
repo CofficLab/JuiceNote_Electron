@@ -1,5 +1,9 @@
 <template>
-  <div :id="'terminal' + id"></div>
+  <VueDragResize :isActive="true" :w="800" :h="600" v-on:resizing="resize" v-on:dragging="resize" class="p-0">
+    <div class="bg-black h-full w-full ring rounded-2xl p-4">
+      <div :id="'terminal' + id" class="h-full w-full flex justify-center"></div>
+    </div>
+  </VueDragResize>
 </template>
 
 <script>
@@ -8,15 +12,13 @@ const ipc = require("electron").ipcRenderer;
 import { Terminal } from "xterm";
 import { FitAddon } from "xterm-addon-fit";
 import xtermTheme from "xterm-theme";
-import * as XtermWebfont from "xterm-webfont";
+import DraggableWindow from "./DraggableWindow.vue";
+import VueDragResize from "vue-drag-resize/src";
 
 export default {
   props: {
     id: {
       type: Number,
-    },
-    showFlag: {
-      type: Boolean,
     },
   },
   watch: {
@@ -33,6 +35,10 @@ export default {
       xterm: null,
       fitAddon: null,
       channels: null,
+      width: 0,
+      height: 0,
+      top: 0,
+      left: 0,
     };
   },
   beforeDestroy() {
@@ -74,9 +80,9 @@ export default {
         ipc.on(that.channels[0], (event, data) => {
           xterm.write(data);
         });
-        // window.onresize = function () {
-        //   that.fitSize();
-        // };
+        window.onresize = function () {
+          that.fitSize();
+        };
         that.fitSize();
         xterm.focus();
       });
@@ -97,10 +103,22 @@ export default {
       }
     },
     fitSize() {
-      if (this.showFlag && this.fitAddon) {
+      if (this.fitAddon) {
+        // console.log("fit size");
         this.fitAddon.fit();
       }
     },
+    resize(newRect) {
+      this.width = newRect.width;
+      this.height = newRect.height;
+      this.top = newRect.top;
+      this.left = newRect.left;
+      //   console.log("resize");
+      //   console.log("new width", newRect.width);
+      //   console.log("new height", newRect.height);
+      this.fitSize();
+    },
   },
+  components: { DraggableWindow, VueDragResize },
 };
 </script>

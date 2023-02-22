@@ -1,16 +1,8 @@
 <template>
   <div class="dropdown dropdown-end mt-12" v-bind:class="{ 'dropdown-open': open == true }">
     <label class="swap" v-bind:class="{ 'swap-active': open }">
-      <div class="swap-on">
-        <div
-          tabindex="0"
-          class="dropdown-content card card-compact w-auto p-0 shadow-2xl bg-black ring text-primary-content"
-          :draggable="true"
-        >
-          <div class="card-body">
-            <Terminal :id="1" :showFlag="true"></Terminal>
-          </div>
-        </div>
+      <div class="swap-on -translate-x-96 mr-96">
+        <Terminal></Terminal>
       </div>
     </label>
   </div>
