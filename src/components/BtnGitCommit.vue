@@ -1,7 +1,13 @@
 <template>
-  <button v-on:click="commit" class="btn-sm btn btn-ghost my-auto tooltip tooltip-bottom" data-tip="提交变动到代码仓库">
-    <CloudArrowUp></CloudArrowUp>
-  </button>
+  <div>
+    <button
+      v-on:click="commit"
+      class="btn-sm btn btn-ghost my-auto tooltip tooltip-bottom"
+      data-tip="提交变动到代码仓库"
+    >
+      <CloudArrowUp></CloudArrowUp>
+    </button>
+  </div>
 </template>
 
 <script lang="ts">

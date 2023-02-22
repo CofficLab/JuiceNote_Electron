@@ -20,14 +20,15 @@
           <Languages></Languages>
           <OfficialLink></OfficialLink>
           <Toast></Toast>
-          <GitCommit v-if="!isProd"></GitCommit>
-          <Delete v-if="!isProd"></Delete>
-          <Edit v-if="!isProd"></Edit>
-          <Add v-if="!isProd"></Add>
+          <GitCommit v-if="!isProd" class="hidden lg:flex"></GitCommit>
+          <Delete v-if="!isProd" class="hidden lg:flex"></Delete>
+          <Edit v-if="!isProd" class="hidden lg:flex"></Edit>
+          <Add v-if="!isProd" class="hidden lg:flex"></Add>
           <Copy v-if="!isProd"></Copy>
           <Prev></Prev>
           <Home></Home>
           <Next></Next>
+          <BtnMore class="lg:hidden"></BtnMore>
         </div>
       </div>
 
@@ -80,11 +81,13 @@ import EditModeController from "../controllers/EditModeController";
 import OfficialLink from "../components/BtnOfficialLink.vue";
 import Languages from "../components/Languages.vue";
 import BtnTerminal from "../components/BtnTerminal.vue";
+import BtnMore from "../components/BtnMore.vue";
 
 export default defineComponent({
   components: {
     Toc,
     Breadcrumbs,
+    BtnMore,
     BtnTerminal,
     Copy,
     Prev,
