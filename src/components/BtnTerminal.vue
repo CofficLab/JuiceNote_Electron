@@ -1,5 +1,5 @@
 <template>
-  <div class="dropdown dropdown-end mt-12" v-bind:class="{ 'dropdown-open': open == true }">
+  <div class="dropdown dropdown-end w-0 bg-red-300 mt-12" v-bind:class="{ 'dropdown-open': open == true }">
     <label class="swap" v-bind:class="{ 'swap-active': open }">
       <div class="swap-on -translate-x-96 mr-96">
         <Terminal></Terminal>

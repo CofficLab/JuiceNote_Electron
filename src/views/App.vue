@@ -15,7 +15,7 @@
           <!-- <Address v-if="!isProd"></Address> -->
           <Breadcrumbs></Breadcrumbs>
         </div>
-        <div class="flex justify-end w-full xl:mr-56 pr-4 flex-row items-center">
+        <div class="flex justify-end w-full lg:mr-56 pr-4 flex-row items-center">
           <BtnTerminal></BtnTerminal>
           <Languages></Languages>
           <OfficialLink></OfficialLink>
