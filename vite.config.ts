@@ -39,6 +39,14 @@ export default defineConfig({
       // Enables use of Node.js API in the Renderer-process
       // https://github.com/electron-vite/vite-plugin-electron/tree/main/packages/electron-renderer#electron-renderervite-serve
       renderer: {
+        // Enables use of Node.js API in the Renderer-process
+        nodeIntegration: true,
+        // Like Vite's pre bundling
+        optimizeDeps: {
+          include: [
+            'node-pty'
+          ],
+        },
       },
     }),
   ],

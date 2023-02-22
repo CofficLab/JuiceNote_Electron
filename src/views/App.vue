@@ -18,6 +18,7 @@
         <div class="flex justify-end w-full xl:mr-56 pr-4 flex-row items-center">
           <Languages></Languages>
           <OfficialLink></OfficialLink>
+          <BtnTerminal></BtnTerminal>
           <Toast></Toast>
           <GitCommit v-if="!isProd"></GitCommit>
           <Delete v-if="!isProd"></Delete>
@@ -78,11 +79,13 @@ import FullScreenController from "../controllers/FullScreenController";
 import EditModeController from "../controllers/EditModeController";
 import OfficialLink from "../components/OfficialLink.vue";
 import Languages from "../components/Languages.vue";
+import BtnTerminal from "../components/BtnTerminal.vue";
 
 export default defineComponent({
   components: {
     Toc,
     Breadcrumbs,
+    BtnTerminal,
     Copy,
     Prev,
     Next,
