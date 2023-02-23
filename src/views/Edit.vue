@@ -80,12 +80,8 @@ export default defineComponent({
   },
   methods: {
     change: function () {
-      console.log("render html with js");
-      let scriptDom = document.createElement("script");
-      scriptDom.innerHTML = fs.readFileSync(path.join(Config.markdownRootPath, "/footer.js")).toString();
-      this.$nextTick(() => {
-        this.$refs.script.append(scriptDom);
-      });
+      console.log("editor changed: 加载自定义JS");
+      this.loadMyJS();
     },
     save: function () {
       if (RouteController.getCurrentPage().markdownSourceCode() != this.markdownSourceCode) {
@@ -95,10 +91,19 @@ export default defineComponent({
         ToastController.set("没有变化，无需保存文章");
       }
     },
+    loadMyJS: function () {
+      let scriptDom = document.createElement("script");
+      scriptDom.innerHTML = fs.readFileSync(path.join(Config.markdownRootPath, "/footer.js")).toString();
+      this.$nextTick(() => {
+        this.$refs.script.append(scriptDom);
+      });
+    },
   },
   mounted: function () {
     // 渲染完成后加载自定义的JS代码，因为mavon editor没提供这个事件，所以用setTimeout
+    // change函数是mavon editor的函数
     this.$refs.editor.$nextTick(function () {
+      console.log("editor mounted: 触发change事件");
       setTimeout(() => this.change(), 400);
     });
   },
