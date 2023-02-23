@@ -86,6 +86,10 @@ class Markdown {
         return titleDom ? titleDom.innerText : ''
     }
 
+    public update(content: string) {
+        fs.writeFileSync(this.absoluteFilePath, content)
+    }
+
     // 创建DOM元素
     private static makeDom(html: string): HTMLDivElement {
         let dom = document.createElement('div')

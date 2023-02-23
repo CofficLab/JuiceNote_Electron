@@ -4,7 +4,7 @@
     <aside class="hidden shadow-xl lg:flex xl:flex-col bg-base-200 border-r-2 border-gray-300 w-56">
       <div v-bind:class="{ 'h-12': !hideTitleBar, 'h-0': hideTitleBar }" class="draggable w-56"></div>
       <div class="fixed w-56" v-bind:class="{ 'top-12': !hideTitleBar, 'top-0': hideTitleBar }">
-        <SideMenu v-if="!editorMode" class="w-full"></SideMenu>
+        <SideMenu class="w-full"></SideMenu>
       </div>
     </aside>
 
@@ -36,7 +36,7 @@
       <main class="flex flex-row gap-2 px-4 justify-between pt-12">
         <!-- 文章内容 -->
         <div class="flex flex-col ml-8 items-center flex-grow gap-4 pt-12 pb-48 min-h-screen">
-          <Content v-if="!editorMode" class="prose w-full 2xl:prose-lg 3xl:prose-xl"></Content>
+          <Content v-if="!editorMode" class="prose w-full 2xl:prose-xl 3xl:prose-xl"></Content>
           <Editor v-if="editorMode"></Editor>
           <CodeContainer v-if="code != ''" class="w-full max-w-2xl mx-auto"></CodeContainer>
         </div>

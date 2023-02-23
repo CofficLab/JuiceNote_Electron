@@ -4,7 +4,7 @@
     v-model="html"
     :externalLink="external_link"
     v-on:save="save"
-    class="h-screen bg-red-800 rounded-2xl"
+    class="h-screen bg-red-800 rounded-2xl w-full"
     :navigation="true"
     :toolbarsBackground="toolbarsBackground"
     :toolbarsFlag="true"
@@ -13,7 +13,6 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import EditModeController from "../controllers/EditModeController";
 import RouteController from "../controllers/RouteController";
 
 export default defineComponent({
@@ -21,9 +20,7 @@ export default defineComponent({
   data() {
     return {
       toolbarsBackground: "#fbfbfb",
-      html: EditModeController.edit_mode
-        ? RouteController.getCurrentPage().content()
-        : RouteController.getCurrentPage().htmlWithToc(),
+      html: RouteController.getCurrentPage().markdownSourceCode(),
       external_link: {
         markdown_css: function () {
           return "/src/assets/github-markdown.min.css";
@@ -49,9 +46,10 @@ export default defineComponent({
   },
   methods: {
     save: function () {
-      if (store.current.htmlWithToc() != this.html) {
+      let current = RouteController.getCurrentPage();
+      if (current.markdownSourceCode() != this.html) {
         console.log("保存文章");
-        store.current.save(this.html);
+        current.save(this.html);
       } else {
         console.log("没有变化，不保存文章");
       }

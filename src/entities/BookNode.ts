@@ -180,6 +180,7 @@ class BookNode {
         return Config.get('nodeExcepts').includes(path.basename(absolutePath))
     }
 
+    // 获取markdown源码
     public markdownSourceCode(): string {
         return this.hasError() ? '' : fs.readFileSync(this.path).toString()
     }
@@ -247,6 +248,11 @@ class BookNode {
         })
 
         return result
+    }
+
+    // 保存文章内容
+    public save(content: string) {
+        return (new Markdown(this.path)).update(content)
     }
 }
 

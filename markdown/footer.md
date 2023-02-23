@@ -79,7 +79,7 @@ for (i = 0;i<document.getElementsByClassName('bg-yellow').length;i++) {
 // 提示横幅的样式
 for (i = 0; i< document.getElementsByClassName('banner').length; i++) {
     let banner = document.getElementsByClassName('banner').item(i)
-    let p = document.createElement('p')
+    let p = document.createElement('div')
     let text = banner.innerText
     banner.classList.add('bg-gradient-to-r')
     banner.classList.add('from-cyan-800/30')

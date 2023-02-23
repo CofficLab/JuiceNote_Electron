@@ -3,7 +3,7 @@
     <!-- 图书名 -->
     <div class="fixed flex bg-base-200 flex-col w-56 z-50 border-b h-24 border-gray-300 shadow-sm">
       <h1
-        class="text-primary h-full border-r-2 border-gray-300 flex justify-center text-lg md:text-2xl lg:text-3xl xl:text-3xl"
+        class="text-primary h-full items-center border-r-2 border-gray-300 flex justify-center text-lg md:text-2xl lg:text-3xl xl:text-3xl"
       >
         {{ book.name }}
       </h1>
@@ -17,7 +17,7 @@
     </div>
 
     <!-- 章节与页面 -->
-    <div class="overscroll-auto overflow-auto h-screen mt-0 mb-24 pb-48 pr-4 pt-36">
+    <div class="overscroll-auto overflow-auto h-screen mt-0 mb-24 pb-48 pr-4 pt-24">
       <ul class="menu menu-compact flex flex-col w-full p-0 px-1 overflow-scroll" v-for="(item, index) in chapters">
         <li v-if="index > 0"></li>
         <SideMenuItem :item="item" :id="item.id"></SideMenuItem>

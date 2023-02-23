@@ -1,5 +1,5 @@
 <template>
-  <span class="ml-1" v-for="i in count"></span>
+  <span class="ml-1" v-for="i in Math.max(0, count)"></span>
 </template>
 
 <script>

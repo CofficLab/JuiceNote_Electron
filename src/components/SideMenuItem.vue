@@ -3,7 +3,7 @@
     <!-- 是一个页面 -->
     <li v-if="item.isPage()">
       <Link class="flex gap-4 xl:text-lg" v-bind:href="item.id">
-        <span class="ml-1" v-if="item.level > 3" v-for="i in item.level - 3"></span>
+        <DynamicPadding :count="item.level - 3"></DynamicPadding>
         {{ item.name }}
       </Link>
     </li>
@@ -18,7 +18,7 @@
       v-bind:id="item.id"
     >
       <span v-bind:class="{ 'text-xl': item.level < 3, 'text-lg': item.level >= 3 }">
-        <span class="ml-1" v-if="item.level > 3" v-for="i in item.level - 3"></span>
+        <DynamicPadding :count="item.level - 3"></DynamicPadding>
         {{ item.name }}
       </span>
     </li>
@@ -43,10 +43,11 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import BookNode from "../entities/BookNode";
+import DynamicPadding from "./DynamicPadding.vue";
 import Link from "./Link.vue";
 
 export default defineComponent({
-  components: { Link },
+  components: { Link, DynamicPadding },
   props: {
     item: {
       type: BookNode,

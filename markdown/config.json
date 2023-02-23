@@ -1422,11 +1422,11 @@
       "Golang@lessons@函数@递归.md"
     ],
     "Golang@手册": [
-      "Golang@手册@关键字",
       "Golang@手册@内置函数",
-      "Golang@手册@命令",
+      "Golang@手册@表达式和运算符",
       "Golang@手册@标准库",
-      "Golang@手册@表达式和运算符"
+      "Golang@手册@关键字",
+      "Golang@手册@命令"
     ],
     "Golang@手册@函数": [
       "Golang@手册@函数@init 函数.md",
@@ -1634,18 +1634,18 @@
       "Golang@教程@变量与常量@指针.md"
     ],
     "Golang@教程@安装与配置": [
-      "Golang@教程@安装与配置@Linux.md",
       "Golang@教程@安装与配置@Windows.md",
-      "Golang@教程@安装与配置@macOS.md"
+      "Golang@教程@安装与配置@macOS.md",
+      "Golang@教程@安装与配置@Linux.md"
     ],
     "Golang@教程@常用语句": [
-      "Golang@教程@常用语句@位运算.md",
-      "Golang@教程@常用语句@循环.md",
-      "Golang@教程@常用语句@条件判断.md",
-      "Golang@教程@常用语句@注释.md",
-      "Golang@教程@常用语句@缩进与换行.md",
       "Golang@教程@常用语句@输出.md",
+      "Golang@教程@常用语句@注释.md",
       "Golang@教程@常用语句@运算与比较.md",
+      "Golang@教程@常用语句@条件判断.md",
+      "Golang@教程@常用语句@循环.md",
+      "Golang@教程@常用语句@缩进与换行.md",
+      "Golang@教程@常用语句@位运算.md",
       "Golang@教程@常用语句@返回值.md",
       "Golang@教程@常用语句@迭代.md"
     ],
