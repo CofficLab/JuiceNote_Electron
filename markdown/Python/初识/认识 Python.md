@@ -36,9 +36,7 @@ Python 是目前最流行的编程语言之一。
 
 最新的 Python 版本是 Python 3。
 
-Python 3 相对于 Python 2，升级非常大，很多语法都发生了改变，Python 3 不是向后兼容的。
-
-这件事对我们接下来的学习没有影响，知道有这个故事就行。
+Python 3 相对于 Python 2，很多语法发生了改变，Python 3 不是向后兼容的。
 
 本教程使用 Python 3。
 
