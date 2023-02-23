@@ -6,8 +6,6 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import EditModeController from "../controllers/EditModeController";
-import RouteController from "../controllers/RouteController";
 import Markdown from "../entities/Markdown";
 import Link from "./Link.vue";
 
@@ -18,7 +16,6 @@ export default defineComponent({
       let markdownSourceCode = this.markdownSourceCode;
       let toc = Markdown.renderToc(markdownSourceCode);
 
-      console.log(toc);
       return toc;
     },
   },
