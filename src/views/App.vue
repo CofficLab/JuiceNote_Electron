@@ -16,7 +16,7 @@
           <Breadcrumbs></Breadcrumbs>
         </div>
         <div class="flex justify-end w-full lg:mr-56 pr-4 flex-row items-center">
-          <BtnSave v-if="editorMode"></BtnSave>
+          <!-- <BtnSave v-if="editorMode"></BtnSave> -->
           <span class="ml-4" v-if="editorMode"></span>
           <Languages></Languages>
           <OfficialLink></OfficialLink>
@@ -35,7 +35,7 @@
       </div>
 
       <!-- 内容区域与右侧导航 -->
-      <main class="flex px-4 justify-center w-full pt-12">
+      <main class="flex px-4 justify-center w-full mt-16">
         <Show v-if="!editorMode"></Show>
         <Edit v-if="editorMode"></Edit>
       </main>
@@ -66,7 +66,6 @@ import CodeContainer from "../components/CodeContainer.vue";
 import CodeController from "../controllers/CodeController";
 import RouteController from "../controllers/RouteController";
 import FullScreenController from "../controllers/FullScreenController";
-import EditModeController from "../controllers/EditModeController";
 import OfficialLink from "../components/BtnOfficialLink.vue";
 import Languages from "../components/Languages.vue";
 import BtnTerminal from "../components/BtnTerminal.vue";
@@ -113,7 +112,7 @@ export default defineComponent({
     hideTitleBar: () => FullScreenController.full,
     isProd: (): boolean => RouteController.isProd,
     current: RouteController.getCurrentPage,
-    editorMode: () => EditModeController.edit_mode,
+    editorMode: () => RouteController.isEditMode(),
   },
   methods: {},
   beforeCreate: function () {

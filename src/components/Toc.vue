@@ -1,5 +1,5 @@
 <template>
-  <div class="h-full overflow-scroll flex flex-col gap-4 items-end py-4">
+  <div class="h-full overflow-scroll flex flex-col gap-4 items-end">
     <div class="table-of-contents overflow-scroll w-56 bg-cyan-800/10 rounded-2xl" v-html="toc"></div>
   </div>
 </template>

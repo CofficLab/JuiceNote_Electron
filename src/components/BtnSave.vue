@@ -13,7 +13,6 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import EditModeController from "../controllers/EditModeController";
 import PencilSquare from "../icons/pencil-square.vue";
 import InboxArrowDown from "../icons/inbox-arrow-down.vue";
 import RouteController from "../controllers/RouteController";
@@ -43,7 +42,7 @@ export default defineComponent({
   },
   computed: {
     editMode() {
-      return EditModeController.edit_mode;
+      return RouteController.isEditMode();
     },
   },
 });

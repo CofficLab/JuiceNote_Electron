@@ -31,7 +31,6 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import RouteController from "../controllers/RouteController";
-import EditModeController from "../controllers/EditModeController";
 import BookNode from "../entities/BookNode";
 import Children from "./Children.vue";
 
@@ -47,7 +46,7 @@ export default defineComponent({
   },
   computed: {
     breadcrumbs: () => RouteController.getBreadcrumbs(),
-    inEditMode: () => EditModeController.edit_mode,
+    inEditMode: () => RouteController.isEditMode(),
   },
   components: { Children },
 });

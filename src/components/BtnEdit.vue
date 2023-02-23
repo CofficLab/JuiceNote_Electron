@@ -2,20 +2,20 @@
   <div>
     <div
       v-on:click="switcher"
-      class="btn-sm btn btn-ghost my-auto tooltip-bottom tooltip flex items-center"
+      class="btn-sm btn btn-ghost tooltip-bottom tooltip flex items-center"
       data-tip="编辑页面"
     >
-      <PencilSquare v-if="!editMode"></PencilSquare>
-      <ArrowUturnLeft v-if="editMode"></ArrowUturnLeft>
+      <PencilSquare v-if="!editing"></PencilSquare>
+      <ArrowUturnLeft v-if="editing"></ArrowUturnLeft>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import EditModeController from "../controllers/EditModeController";
 import PencilSquare from "../icons/pencil-square.vue";
 import ArrowUturnLeft from "../icons/arrow-uturn-left.vue";
+import RouteController from "../controllers/RouteController";
 
 export default defineComponent({
   components: {
@@ -23,14 +23,10 @@ export default defineComponent({
     ArrowUturnLeft,
   },
   methods: {
-    switcher() {
-      EditModeController.toggle();
-    },
+    switcher: () => RouteController.toggleEditMode(),
   },
   computed: {
-    editMode() {
-      return EditModeController.edit_mode;
-    },
+    editing: () => RouteController.editMode,
   },
 });
 </script>

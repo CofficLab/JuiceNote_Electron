@@ -7,9 +7,31 @@ const RouteController = reactive({
     currentPage: new BookNode,
     isProd: location.protocol === 'file:',
     isHomePage: (new URL(location.href)).searchParams.get('id') == '/',
+    editMode: (new URL(location.href)).searchParams.get('edit_mode') != undefined,
+
+    isEditMode() {
+        return this.editMode
+    },
+
+    toggleEditMode(): void {
+        if (this.isEditMode()) {
+            history.pushState([], "", location.pathname + "?id=" + this.getCurrentPage().id);
+        } else {
+            history.pushState([], "", location.pathname + "?id=" + this.getCurrentPage().id + '&edit_mode=1');
+        }
+
+        this.editMode = !this.editMode
+        this.refresh()
+        this.checkHomePage()
+    },
 
     goto(id: string) {
-        history.pushState([], "", location.pathname + "?id=" + id);
+        if (this.isEditMode()) {
+            history.pushState([], "", location.pathname + "?id=" + id + '&edit_mode=1');
+        } else {
+            history.pushState([], "", location.pathname + "?id=" + id);
+        }
+
         this.refresh()
         this.checkHomePage()
     },
@@ -25,6 +47,7 @@ const RouteController = reactive({
         let path = Id.idToPath(id ? id : '/')
         this.search = decodeURI(location.search)
         this.currentPage = (new BookNode(path)).firstPage()
+        this.editMode = (new URL(location.href)).searchParams.get('edit_mode') != undefined
     },
     getBreadcrumbs(): BookNode[] {
         return this.getCurrentPage().getParents().concat([this.getCurrentPage()])
@@ -43,7 +66,7 @@ const RouteController = reactive({
         }))
 
         this.goto(this.currentPage.id)
-    }
+    },
 })
 
 export default RouteController
