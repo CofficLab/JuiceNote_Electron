@@ -1,28 +1,24 @@
 <template>
-  <div class="flex flex-row flex-grow gap-4 overflow-scroll pb-48 h-screen">
+  <div class="flex flex-row flex-grow gap-4 overflow-scroll pb-48 h-screen z-0">
     <!-- 编辑器 -->
-    <div class="w-1/2">
+    <div class="w-full">
       <mavon-editor
+        ref="editor"
         id="editor"
+        :value="markdownSourceCode"
         v-model="markdownSourceCode"
         :externalLink="external_link"
         v-on:save="save"
         v-on:change="change"
         class="h-screen bg-red-800 rounded-2xl"
+        :html="true"
         :navigation="false"
         :toolbarsBackground="toolbarsBackground"
         :toolbarsFlag="true"
-        :subfield="true"
-        :defaultOpen="'edit'"
       />
     </div>
 
-    <!-- 文章内容 -->
-    <div
-      ref="content"
-      class="prose w-1/2 2xl:prose-xl 3xl:prose-xl rounded-2xl bg-cyan-800/10 p-8 overflow-scroll h-screen"
-      v-html="html"
-    ></div>
+    <div ref="script" class="hidden"></div>
 
     <!-- TOC -->
     <aside class="hidden xl:flex xl:flex-row justify-end w-64">
@@ -39,7 +35,6 @@ import path from "path";
 import { defineComponent } from "vue";
 import Toc from "../components/Toc.vue";
 import RouteController from "../controllers/RouteController";
-import Markdown from "../entities/Markdown";
 import Config from "../entities/Config";
 import ToastController from "../controllers/ToastController";
 
@@ -50,7 +45,6 @@ export default defineComponent({
   data() {
     return {
       markdownSourceCode: RouteController.currentPage.markdownSourceCode(),
-      html: "",
       toolbarsBackground: "#fbfbfb",
 
       external_link: {
@@ -86,14 +80,12 @@ export default defineComponent({
   },
   methods: {
     change: function () {
-      let dom = document.createElement("div");
+      console.log("render html with js");
       let scriptDom = document.createElement("script");
-      dom.innerHTML = Markdown.renderWithoutToc(this.markdownSourceCode);
       scriptDom.innerHTML = fs.readFileSync(path.join(Config.markdownRootPath, "/footer.js")).toString();
       this.$nextTick(() => {
-        this.$refs.content.append(scriptDom);
+        this.$refs.script.append(scriptDom);
       });
-      this.html = dom.innerHTML;
     },
     save: function () {
       if (RouteController.getCurrentPage().markdownSourceCode() != this.markdownSourceCode) {
@@ -103,6 +95,13 @@ export default defineComponent({
         ToastController.set("没有变化，无需保存文章");
       }
     },
+  },
+  mounted: function () {
+    console.log("检查refs.editor", this.$refs.editor);
+    this.$nextTick(() => {
+      this.change();
+      // console.log("检查refs.editor", this.$refs.editor);
+    });
   },
 });
 </script>

@@ -1,5 +1,5 @@
 // 砖块状的样式
-for (i = 0; i < document.getElementsByClassName("brick").length; i++) {
+for (let i = 0; i < document.getElementsByClassName("brick").length; i++) {
   let brick = document.getElementsByClassName("brick").item(i);
   brick.classList.add("bg-sky-500");
   brick.classList.add("dark:bg-sky-800");
@@ -12,7 +12,7 @@ for (i = 0; i < document.getElementsByClassName("brick").length; i++) {
 }
 
 // 红色砖块的样式
-for (i = 0; i < document.getElementsByClassName("brick-red").length; i++) {
+for (let i = 0; i < document.getElementsByClassName("brick-red").length; i++) {
   let brick = document.getElementsByClassName("brick-red").item(i);
   brick.classList.add("bg-red-500");
   brick.classList.add("dark:bg-red-800");
@@ -25,7 +25,7 @@ for (i = 0; i < document.getElementsByClassName("brick-red").length; i++) {
 }
 
 // 黄色砖块的样式
-for (i = 0; i < document.getElementsByClassName("brick-yellow").length; i++) {
+for (let i = 0; i < document.getElementsByClassName("brick-yellow").length; i++) {
   let brick = document.getElementsByClassName("brick-yellow").item(i);
   brick.classList.add("bg-yellow-500");
   brick.classList.add("dark:bg-yellow-800");
@@ -38,7 +38,7 @@ for (i = 0; i < document.getElementsByClassName("brick-yellow").length; i++) {
 }
 
 // 蓝绿色砖块的样式
-for (i = 0; i < document.getElementsByClassName("brick-cyan").length; i++) {
+for (let i = 0; i < document.getElementsByClassName("brick-cyan").length; i++) {
   let brick = document.getElementsByClassName("brick-cyan").item(i);
   brick.classList.add("bg-cyan-500");
   brick.classList.add("dark:bg-cyan-800");
@@ -51,7 +51,7 @@ for (i = 0; i < document.getElementsByClassName("brick-cyan").length; i++) {
 }
 
 // 蓝绿色背景的样式
-for (i = 0; i < document.getElementsByClassName("bg-cyan").length; i++) {
+for (let i = 0; i < document.getElementsByClassName("bg-cyan").length; i++) {
   let brick = document.getElementsByClassName("bg-cyan").item(i);
   brick.classList.add("bg-cyan-500/40");
   brick.classList.add("dark:bg-cyan-800/20");
@@ -59,21 +59,21 @@ for (i = 0; i < document.getElementsByClassName("bg-cyan").length; i++) {
 }
 
 // 天空色背景的样式
-for (i = 0; i < document.getElementsByClassName("bg-sky").length; i++) {
+for (let i = 0; i < document.getElementsByClassName("bg-sky").length; i++) {
   let brick = document.getElementsByClassName("bg-sky").item(i);
   brick.classList.add("bg-sky-500");
   brick.classList.add("dark:bg-sky-800");
 }
 
 // 黄色背景的样式
-for (i = 0; i < document.getElementsByClassName("bg-yellow").length; i++) {
+for (let i = 0; i < document.getElementsByClassName("bg-yellow").length; i++) {
   let brick = document.getElementsByClassName("bg-yellow").item(i);
   brick.classList.add("bg-yellow-500");
   brick.classList.add("dark:bg-yellow-800");
 }
 
 // 提示横幅的样式
-for (i = 0; i < document.getElementsByClassName("banner").length; i++) {
+for (let i = 0; i < document.getElementsByClassName("banner").length; i++) {
   let banner = document.getElementsByClassName("banner").item(i);
   // 如果创建p元素会被.prose的样式影响
   let p = document.createElement("div");
@@ -102,7 +102,7 @@ for (i = 0; i < document.getElementsByClassName("banner").length; i++) {
 }
 
 // 警告横幅的样式
-for (i = 0; i < document.getElementsByClassName("warning").length; i++) {
+for (let i = 0; i < document.getElementsByClassName("warning").length; i++) {
   let banner = document.getElementsByClassName("warning").item(i);
   let p = document.createElement("p");
   let text = banner.innerText;
@@ -129,7 +129,7 @@ for (i = 0; i < document.getElementsByClassName("warning").length; i++) {
 }
 
 // ask的样式
-for (i = 0; i < document.getElementsByClassName("ask").length; i++) {
+for (let i = 0; i < document.getElementsByClassName("ask").length; i++) {
   let banner = document.getElementsByClassName("ask").item(i);
   banner.classList.add("bg-sky-800/20");
   banner.classList.add("py-2", "px-2", "mb-4");
@@ -139,7 +139,7 @@ for (i = 0; i < document.getElementsByClassName("ask").length; i++) {
 }
 
 // 生成a标签
-for (i = 0; i < document.getElementsByClassName("link").length; i++) {
+for (let i = 0; i < document.getElementsByClassName("link").length; i++) {
   let target = document.getElementsByClassName("link").item(i);
   let link = target.innerText;
 
@@ -159,7 +159,7 @@ if (document.getElementsByClassName("official-link").item(0) != undefined) {
   officialLinkPlaceholder.href = "";
   officialLinkPlaceholder.classList.add("hidden");
 
-  for (i = 0; i < document.getElementsByClassName("o").length; i++) {
+  for (let i = 0; i < document.getElementsByClassName("o").length; i++) {
     let target = document.getElementsByClassName("o").item(i);
     let link = document.createElement("a");
     let href = target.innerText;
@@ -171,7 +171,7 @@ if (document.getElementsByClassName("official-link").item(0) != undefined) {
   }
 } else {
   // 没有预定义位置时，自动生成样式
-  for (i = 0; i < document.getElementsByClassName("o").length; i++) {
+  for (let i = 0; i < document.getElementsByClassName("o").length; i++) {
     let target = document.getElementsByClassName("o").item(i);
     let link = document.createElement("a");
     let href = target.innerText;
@@ -193,7 +193,7 @@ if (document.getElementsByClassName("official-link").item(0) != undefined) {
 }
 
 // 增加代码块的横幅
-for (i = 0; i < document.getElementsByTagName("code").length; i++) {
+for (let i = 0; i < document.getElementsByTagName("code").length; i++) {
   let banner = document.createElement("div");
   let bannerClass = "code-banner";
   codeDom = document.getElementsByTagName("code").item(i);
@@ -217,7 +217,7 @@ for (i = 0; i < document.getElementsByTagName("code").length; i++) {
 
 // 生成代码运行相关的dom
 if (window.runner != undefined) {
-  for (i = 0; i < document.getElementsByClassName("run").length; i++) {
+  for (let i = 0; i < document.getElementsByClassName("run").length; i++) {
     let target = document.getElementsByClassName("run").item(i).nextElementSibling;
     let runner = document.createElement("div");
     let runnerClass = "code-runner";
@@ -248,7 +248,7 @@ if (window.runner != undefined) {
     if (target.getElementsByClassName(runnerClass).length == 0) target.append(runner);
   }
 } else {
-  for (i = 0; i < document.getElementsByClassName("run").length; i++) {
+  for (let i = 0; i < document.getElementsByClassName("run").length; i++) {
     let target = document.getElementsByClassName("run").item(i).nextElementSibling;
     let runner = document.createElement("div");
     runner.classList.add("text-end");
