@@ -97,10 +97,9 @@ export default defineComponent({
     },
   },
   mounted: function () {
-    console.log("检查refs.editor", this.$refs.editor);
-    this.$nextTick(() => {
-      this.change();
-      // console.log("检查refs.editor", this.$refs.editor);
+    // 渲染完成后加载自定义的JS代码，因为mavon editor没提供这个事件，所以用setTimeout
+    this.$refs.editor.$nextTick(function () {
+      setTimeout(() => this.change(), 400);
     });
   },
 });
