@@ -24,7 +24,7 @@ export default defineComponent({
   },
   methods: {
     switcher() {
-      EditModeController.edit_mode = !EditModeController.edit_mode;
+      EditModeController.toggle();
     },
   },
   computed: {

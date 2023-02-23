@@ -1,137 +1,46 @@
 <template>
-  <mavon-editor
-    id="editor"
-    v-model="html"
-    :externalLink="external_link"
-    v-on:save="save"
-    class="h-screen bg-red-800 rounded-2xl w-full"
-    :navigation="true"
-    :toolbarsBackground="toolbarsBackground"
-    :toolbarsFlag="true"
-  />
+  <div class="flex flex-row w-full gap-8 justify-center">
+    <textarea v-model="source" id="editor-content" class="w-1/2 p-8 rounded-2xl overflow-scroll px-8 h-full"></textarea>
+
+    <div
+      ref="content"
+      class="prose w-full 2xl:prose-xl 3xl:prose-xl rounded-2xl bg-cyan-800/10 p-8 h-screen"
+      v-html="html"
+    ></div>
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import "../app.css";
 import RouteController from "../controllers/RouteController";
+import fs from "fs";
+import path from "path";
+import Config from "../entities/Config";
+import Markdown from "../entities/Markdown";
+import Content from "./Content.vue";
 
 export default defineComponent({
-  props: ["path"],
   data() {
     return {
-      toolbarsBackground: "#fbfbfb",
-      html: RouteController.getCurrentPage().markdownSourceCode(),
-      external_link: {
-        markdown_css: function () {
-          return "/src/assets/github-markdown.min.css";
-        },
-        hljs_js: function () {
-          return "/src/assets/hightlight.min.js";
-        },
-        katex_js: function () {
-          return "/src/assets/katex.min.js";
-        },
-        katex_css: "/src/assets/katex.min.css",
-        hljs_lang: function (lang: string) {
-          return "https://cdn.bootcdn.net/ajax/libs/highlight.js/11.3.1/languages/" + lang + ".min.js";
-        },
-        hljs_css: function (css: string) {
-          if (css) {
-            return "https://cdn.bootcdn.net/ajax/libs/highlight.js/11.3.1/styles/" + css + ".min.css";
-          }
-          return "";
-        },
-      },
+      source: RouteController.getCurrentPage().markdownSourceCode(),
     };
   },
-  methods: {
-    save: function () {
-      let current = RouteController.getCurrentPage();
-      if (current.markdownSourceCode() != this.html) {
-        console.log("保存文章");
-        current.save(this.html);
-      } else {
-        console.log("没有变化，不保存文章");
-      }
+  computed: {
+    html(): string {
+      let dom = document.createElement("div");
+      let scriptDom = document.createElement("script");
+
+      dom.innerHTML = Markdown.render(this.source);
+      scriptDom.innerHTML = fs.readFileSync(path.join(Config.markdownRootPath, "/footer.js")).toString();
+
+      this.$nextTick(() => {
+        this.$refs.content.append(scriptDom);
+      });
+
+      return dom.innerHTML;
     },
   },
+  components: { Content },
 });
 </script>
-
-<style lang="postcss">
-#editor {
-  @apply border-orange-400 border-t-8 pt-0 bg-base-100 z-10 rounded-2xl !important;
-
-  /* 工具栏 */
-  /* .v-note-op {
-    @apply -mt-12 bg-base-200 border-base-100 text-base-content fixed shadow-2xl shadow-base-300 z-20 !important;
-
-    .op-icon-divider {
-      @apply border-l-base-content !important;
-    }
-
-    .v-right-item button {
-      @apply mx-2;
-    }
-
-    .op-icon.selected {
-      @apply bg-base-100;
-    }
-  } */
-
-  /* 编辑展示区域 */
-  .v-note-panel {
-    @apply mt-0 z-10 !important;
-
-    .v-note-edit {
-      @apply border-r-green-900 border-none !important;
-    }
-
-    .auto-textarea-wrapper .auto-textarea-input {
-      @apply text-base-content;
-    }
-
-    textarea {
-      @apply bg-base-100;
-    }
-
-    .content-input-wrapper {
-      @apply bg-base-100 !important;
-    }
-  }
-
-  /* 展示区域 */
-  .v-show-content {
-    @apply bg-base-100 text-base-content !important;
-  }
-
-  /* 标题导航 */
-  .v-note-navigation-wrapper {
-    @apply bg-transparent border-0 text-base-content fixed right-0 bottom-24 top-40 z-20 w-56 !important;
-
-    .v-note-navigation-title {
-      @apply hidden;
-    }
-
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-      @apply w-48 my-0  no-underline bg-gradient-to-r from-base-300 to-base-200  shadow-xl px-4 py-1 text-sm ml-1 hover:to-sky-300 text-black;
-    }
-
-    h1 {
-      @apply rounded-r-none text-lg;
-    }
-    h2 {
-      @apply pl-8;
-    }
-
-    h3 {
-      @apply pl-10;
-    }
-  }
-}
-</style>

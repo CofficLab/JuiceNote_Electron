@@ -1,30 +1,24 @@
 <template>
-  <div ref="content" v-html="body"></div>
+  <div ref="content" v-html="html"></div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import "../app.css";
 import RouteController from "../controllers/RouteController";
-import EditModeController from "../controllers/EditModeController";
+import fs from "fs";
+import path from "path";
+import Config from "../entities/Config";
 
 export default defineComponent({
   computed: {
-    body(): string {
+    html(): string {
       console.log("get content of", RouteController.currentPage.id);
       let dom = document.createElement("div");
-      dom.innerHTML = EditModeController.edit_mode
-        ? RouteController.getCurrentPage().htmlWithToc()
-        : RouteController.getCurrentPage().html();
-
-      // 插入可执行的脚本
-      let script = dom.getElementsByTagName("script").item(0);
       let scriptDom = document.createElement("script");
 
-      if (script != undefined) {
-        script.remove();
-        scriptDom.innerHTML = script.innerHTML;
-      }
+      dom.innerHTML = RouteController.getCurrentPage().html();
+      scriptDom.innerHTML = fs.readFileSync(path.join(Config.markdownRootPath, "/footer.js")).toString();
 
       this.$nextTick(() => {
         this.$refs.content.append(scriptDom);

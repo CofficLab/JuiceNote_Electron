@@ -29,7 +29,7 @@
 
 ### 共用代码
 
-每个 Markdown 文件都使用的代码放在了 `footer.md`，在渲染时需要将 `footer.md` 的内容拼接到原 Markdown 文档底部。
+每个 Markdown 文件都使用的代码放在了 `footer.js`，在渲染时需要将 `footer.js` 的内容拼接到原 Markdown 文档底部。
 
 ## 测试
 

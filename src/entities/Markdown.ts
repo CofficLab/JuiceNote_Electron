@@ -1,11 +1,8 @@
 import fs from "fs"
-import path from "path"
 import hljs from 'highlight.js'
-import Config from "./Config";
 
 class Markdown {
     public absoluteFilePath: string = ''
-    private static footer = fs.readFileSync(path.join(Config.markdownRootPath, 'footer.md'), 'utf-8')
     private static md = require('markdown-it')({
         html: true,
         highlight: function (str: any, lang: any) {
@@ -39,8 +36,7 @@ class Markdown {
     }
 
     public content(): string {
-        // 需要补上markdown文件共同的footer
-        return fs.readFileSync(this.absoluteFilePath, 'utf-8') + Markdown.footer
+        return fs.readFileSync(this.absoluteFilePath, 'utf-8')
     }
 
     // 获取markdown渲染后的HTML
@@ -48,10 +44,6 @@ class Markdown {
         if (!fs.existsSync(this.absoluteFilePath)) {
             return Markdown.md.render("## 文件「" + this.absoluteFilePath + "」不存在")
         }
-
-        // if (path.extname(this.file) === '.py') {
-        //     return Markdown.md.render("# " + this.title + "\r\n```python\r\n" + this.content() + "\r\n```")
-        // }
 
         return Markdown.md.render(this.content())
     }
@@ -86,8 +78,13 @@ class Markdown {
         return titleDom ? titleDom.innerText : ''
     }
 
+    // 更新源文件
     public update(content: string) {
         fs.writeFileSync(this.absoluteFilePath, content)
+    }
+
+    static render(sourceCode: string): string {
+        return Markdown.md.render(sourceCode)
     }
 
     // 创建DOM元素

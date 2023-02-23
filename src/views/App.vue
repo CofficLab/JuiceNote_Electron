@@ -16,6 +16,8 @@
           <Breadcrumbs></Breadcrumbs>
         </div>
         <div class="flex justify-end w-full lg:mr-56 pr-4 flex-row items-center">
+          <BtnSave v-if="editorMode"></BtnSave>
+          <span class="ml-4" v-if="editorMode"></span>
           <Languages></Languages>
           <OfficialLink></OfficialLink>
           <BtnTerminal></BtnTerminal>
@@ -45,7 +47,7 @@
         <aside class="hidden xl:flex xl:flex-row justify-end w-56 min-h-screen">
           <div class="flex flex-row justify-end fixed w-56 h-screen">
             <!-- <ProjectTree v-if="current.parent().project.notEmpty()"></ProjectTree> -->
-            <Toc v-show="!editorMode"></Toc>
+            <Toc></Toc>
           </div>
         </aside>
       </main>
@@ -82,6 +84,7 @@ import OfficialLink from "../components/BtnOfficialLink.vue";
 import Languages from "../components/Languages.vue";
 import BtnTerminal from "../components/BtnTerminal.vue";
 import BtnMore from "../components/BtnMore.vue";
+import BtnSave from "../components/BtnSave.vue";
 
 export default defineComponent({
   components: {
@@ -108,6 +111,7 @@ export default defineComponent({
     CodeContainer,
     OfficialLink,
     Languages,
+    BtnSave,
   },
   computed: {
     code: () => CodeController.code,
