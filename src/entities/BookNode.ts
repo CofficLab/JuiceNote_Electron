@@ -23,7 +23,7 @@ class BookNode {
                 this.errorLines.push(absolutePath)
             }
 
-            if (BookNode.shouldIgnore(absolutePath) && path.basename(absolutePath) != 'manuals') {
+            if (BookNode.shouldIgnore(absolutePath)) {
                 this.errorTitle = '该节点应该被忽略'
                 this.errorLines.push(absolutePath)
             }
@@ -43,6 +43,10 @@ class BookNode {
         return (new BookNode(manualsPath)).getChildren()
     }
 
+    public getChildById(id: string): BookNode {
+        return new BookNode(Id.idToPath(id))
+    }
+
     public isEmpty(): boolean {
         return this.hasError()
     }
@@ -55,10 +59,28 @@ class BookNode {
         return !this.isPage() && !this.isBook()
     }
 
+    public isLesson(): boolean {
+        return !this.isManual()
+    }
+
+    public isManual(): boolean {
+        if (this.isEmpty()) return false
+
+        return this.name == '手册' ? true : this.getParent().isManual()
+    }
+
+    public isRoot(): boolean {
+        return this.id == '/'
+    }
+
     public getChildren(): BookNode[] {
         return this.getChildrenIds().map((childId: string) => {
             return new BookNode(Id.idToPath(childId))
         });
+    }
+
+    public first(): BookNode {
+        return new BookNode(Id.idToPath(this.getChildrenIds().at(0)))
     }
 
     public getChildrenIds(): string[] {
@@ -103,7 +125,7 @@ class BookNode {
     }
 
     public getParent(): BookNode {
-        if (this.isEmpty()) return new BookNode
+        if (this.isEmpty() || this.isRoot()) return new BookNode
 
         let dir = path.dirname(this.path)
 
@@ -145,7 +167,13 @@ class BookNode {
         let currentPage = RouteController.getCurrentPage()
         let activatedBookNodes = currentPage.getParents()
 
-        return activatedBookNodes.includes(this)
+        return activatedBookNodes.some(node => {
+            return node.id == this.id
+        })
+    }
+
+    public shouldActive() {
+        return this.isActivated()
     }
 
     static shouldIgnore(absolutePath: string) {
@@ -153,7 +181,7 @@ class BookNode {
     }
 
     public markdownSourceCode(): string {
-        return fs.readFileSync(this.path).toString()
+        return this.hasError() ? '' : fs.readFileSync(this.path).toString()
     }
 
     public content(): string {
@@ -171,7 +199,7 @@ class BookNode {
     }
 
     public toc(): string {
-        return this.hasError() ? Markdown.renderErrorPage(this.errorTitle, this.errorLines) : (new Markdown(this.path)).toc()
+        return this.hasError() ? '' : (new Markdown(this.path)).toc()
     }
 
 

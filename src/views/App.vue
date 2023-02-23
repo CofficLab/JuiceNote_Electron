@@ -50,16 +50,6 @@
         </aside>
       </main>
     </div>
-
-    <!-- 右侧栏 -->
-    <aside
-      class="hidden shadow-xl lg:flex xl:flex-col bg-base-200 border-r-2 border-gray-300 w-56 h-1/2 overflow-scroll fixed right-0 top-1/2"
-    >
-      <div v-bind:class="{ 'h-12': !hideTitleBar, 'h-0': hideTitleBar }" class="draggable w-56"></div>
-      <div class="w-56" v-bind:class="{ 'top-12': !hideTitleBar, 'top-0': hideTitleBar }">
-        <Manuals v-if="!editorMode" class="w-full"></Manuals>
-      </div>
-    </aside>
   </div>
 </template>
 
@@ -92,7 +82,6 @@ import OfficialLink from "../components/BtnOfficialLink.vue";
 import Languages from "../components/Languages.vue";
 import BtnTerminal from "../components/BtnTerminal.vue";
 import BtnMore from "../components/BtnMore.vue";
-import Manuals from "../components/Manuals.vue";
 
 export default defineComponent({
   components: {
@@ -100,7 +89,6 @@ export default defineComponent({
     Breadcrumbs,
     BtnMore,
     BtnTerminal,
-    Manuals,
     Copy,
     Prev,
     Next,
