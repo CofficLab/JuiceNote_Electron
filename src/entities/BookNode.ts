@@ -23,7 +23,7 @@ class BookNode {
                 this.errorLines.push(absolutePath)
             }
 
-            if (BookNode.shouldIgnore(absolutePath)) {
+            if (BookNode.shouldIgnore(absolutePath) && path.basename(absolutePath) != 'manuals') {
                 this.errorTitle = '该节点应该被忽略'
                 this.errorLines.push(absolutePath)
             }
@@ -35,6 +35,12 @@ class BookNode {
         } else {
             this.errorTitle = '当前节点为空节点'
         }
+    }
+
+    public getManuals(): BookNode[] {
+        let manualsPath = path.join(this.path, 'manuals')
+        console.log('获取操作手册', manualsPath)
+        return (new BookNode(manualsPath)).getChildren()
     }
 
     public isEmpty(): boolean {
@@ -65,6 +71,9 @@ class BookNode {
             return !Config.get('nodeExcepts').includes(child)
         }).map(child => {
             let id = Id.pathToId(path.join(this.path, child))
+            if (config == undefined) {
+                return '000' + id
+            }
             return config.indexOf(id).toString().padStart(3, '0') + id
         }).sort().map(child => {
             return child.slice(3)

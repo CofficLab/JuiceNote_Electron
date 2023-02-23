@@ -9,7 +9,8 @@
     "projects",
     "playground.go",
     "README.md",
-    "sort.json"
+    "sort.json",
+    "manuals"
   ],
   "children_settings": {
     "/": [
@@ -62,12 +63,10 @@
       "Golang@表达式和运算符",
       "Golang@内置函数",
       "Golang@关键字",
-      "Golang@命令",
       "Golang@扩展包",
       "Golang@搜索引擎",
       "Golang@数据库",
       "Golang@特性",
-      "Golang@标准库",
       "Golang@短链接生成",
       "Golang@算法"
     ],
@@ -1061,6 +1060,33 @@
       "Vue@初识@官网与文档.md",
       "Vue@初识@认识 Vue.md",
       "Vue@初识@认识计算机.md"
+    ],
+    "Golang@manuals": [
+      "Golang@manuals@命令",
+      "Golang@manuals@标准库"
+    ],
+    "Golang@manuals@命令": [
+      "Golang@manuals@命令@go get.md",
+      "Golang@manuals@命令@go mod.md"
+    ],
+    "Golang@manuals@标准库": [
+      "Golang@manuals@标准库@简介.md",
+      "Golang@manuals@标准库@encoding 加密解密.md",
+      "Golang@manuals@标准库@encoding.json JSON.md",
+      "Golang@manuals@标准库@fmt 打印与输出.md",
+      "Golang@manuals@标准库@log 日志.md",
+      "Golang@manuals@标准库@math.big.md",
+      "Golang@manuals@标准库@math.md",
+      "Golang@manuals@标准库@math.rand 随机数.md",
+      "Golang@manuals@标准库@net.http HTTP.md",
+      "Golang@manuals@标准库@net.url URL.md",
+      "Golang@manuals@标准库@os 命令行.md",
+      "Golang@manuals@标准库@os 进程.md",
+      "Golang@manuals@标准库@regexp 正则表达式.md",
+      "Golang@manuals@标准库@sort 排序.md",
+      "Golang@manuals@标准库@strconv 字符串转换.md",
+      "Golang@manuals@标准库@strings 字符串.md",
+      "Golang@manuals@标准库@time.md"
     ]
   }
 }
