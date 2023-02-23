@@ -59,14 +59,8 @@ class Markdown {
 
     public toc(): string {
         let htmlWithToc = this.htmlWithToc()
-        let dom = Markdown.makeDom(htmlWithToc)
-        let toc = dom.getElementsByClassName('table-of-contents')[0]
 
-        if (toc == undefined) return ''
-
-        let tocWithoutTitle = toc.getElementsByTagName('ul')[0].getElementsByTagName('ul')[0]
-
-        return tocWithoutTitle ? tocWithoutTitle.outerHTML : ''
+        return Markdown.getTocFromHtml(htmlWithToc)
     }
 
     // 获取markdown渲染后的HTML的标题
@@ -83,8 +77,30 @@ class Markdown {
         fs.writeFileSync(this.absoluteFilePath, content)
     }
 
-    static render(sourceCode: string): string {
+    static renderWithToc(sourceCode: string): string {
+        return Markdown.md.render("[[toc]] \r\n" + sourceCode)
+    }
+
+    static renderWithoutToc(sourceCode: string): string {
         return Markdown.md.render(sourceCode)
+    }
+
+    static renderToc(sourceCode: string): string {
+        let html = Markdown.renderWithToc(sourceCode)
+        let toc = Markdown.getTocFromHtml(html)
+
+        return toc
+    }
+
+    private static getTocFromHtml(html: string): string {
+        let dom = Markdown.makeDom(html)
+        let toc = dom.getElementsByClassName('table-of-contents')[0]
+
+        if (toc == undefined) return ''
+
+        let tocWithoutTitle = toc.getElementsByTagName('ul')[0].getElementsByTagName('ul')[0]
+
+        return tocWithoutTitle ? tocWithoutTitle.outerHTML : ''
     }
 
     // 创建DOM元素

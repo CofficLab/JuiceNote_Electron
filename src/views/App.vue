@@ -24,7 +24,7 @@
           <Toast></Toast>
           <GitCommit v-if="!isProd" class="hidden lg:flex"></GitCommit>
           <Delete v-if="!isProd" class="hidden lg:flex"></Delete>
-          <Edit v-if="!isProd" class="hidden lg:flex"></Edit>
+          <BtnEdit v-if="!isProd" class="hidden lg:flex"></BtnEdit>
           <Add v-if="!isProd" class="hidden lg:flex"></Add>
           <Copy v-if="!isProd"></Copy>
           <Prev></Prev>
@@ -35,21 +35,9 @@
       </div>
 
       <!-- 内容区域与右侧导航 -->
-      <main class="flex flex-row gap-2 px-4 justify-between pt-12">
-        <!-- 文章内容 -->
-        <div class="flex flex-col ml-8 items-center flex-grow gap-4 pt-12 pb-48 min-h-screen">
-          <Content v-if="!editorMode" class="prose w-full 2xl:prose-xl 3xl:prose-xl"></Content>
-          <Editor v-if="editorMode"></Editor>
-          <CodeContainer v-if="code != ''" class="w-full max-w-2xl mx-auto"></CodeContainer>
-        </div>
-
-        <!-- 文章的右侧栏 -->
-        <aside class="hidden xl:flex xl:flex-row justify-end w-56 min-h-screen">
-          <div class="flex flex-row justify-end fixed w-56 h-screen">
-            <!-- <ProjectTree v-if="current.parent().project.notEmpty()"></ProjectTree> -->
-            <Toc></Toc>
-          </div>
-        </aside>
+      <main class="flex px-4 justify-center w-full pt-12">
+        <Show v-if="!editorMode"></Show>
+        <Edit v-if="editorMode"></Edit>
       </main>
     </div>
   </div>
@@ -66,12 +54,11 @@ import Delete from "../components/BtnDelete.vue";
 import Add from "../components/BtnAdd.vue";
 import Home from "../components/BtnHome.vue";
 import Address from "../components/Address.vue";
-import Edit from "../components/BtnEdit.vue";
+import Edit from "../views/Edit.vue";
 import GitCommit from "../components/BtnGitCommit.vue";
 import Alert from "../components/Alert.vue";
 import Toast from "../components/Toast.vue";
 import Content from "../components/Content.vue";
-import Editor from "../components/Editor.vue";
 import SideMenu from "../components/SideMenu.vue";
 import Others from "../components/Others.vue";
 import ProjectTree from "../components/ProjectTree.vue";
@@ -85,6 +72,8 @@ import Languages from "../components/Languages.vue";
 import BtnTerminal from "../components/BtnTerminal.vue";
 import BtnMore from "../components/BtnMore.vue";
 import BtnSave from "../components/BtnSave.vue";
+import BtnEdit from "../components/BtnEdit.vue";
+import Show from "./Show.vue";
 
 export default defineComponent({
   components: {
@@ -92,6 +81,7 @@ export default defineComponent({
     Breadcrumbs,
     BtnMore,
     BtnTerminal,
+    BtnEdit,
     Copy,
     Prev,
     Next,
@@ -104,7 +94,6 @@ export default defineComponent({
     Alert,
     Toast,
     Content,
-    Editor,
     SideMenu,
     Others,
     ProjectTree,
@@ -112,6 +101,12 @@ export default defineComponent({
     OfficialLink,
     Languages,
     BtnSave,
+    Show,
+  },
+  data() {
+    return {
+      markdownSourceCode: RouteController.getCurrentPage().markdownSourceCode(),
+    };
   },
   computed: {
     code: () => CodeController.code,
