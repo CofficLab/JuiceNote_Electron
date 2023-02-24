@@ -42,11 +42,11 @@
         </div>
 
         <!-- 文章的右侧栏 -->
-        <aside class="hidden min-h-screen w-56 justify-end xl:flex xl:flex-row">
+        <!-- <aside class="hidden min-h-screen w-56 justify-end xl:flex xl:flex-row">
           <div class="fixed right-0 flex h-screen w-56 flex-row justify-end">
             <Toc :markdownSourceCode="markdownSourceCode"></Toc>
           </div>
-        </aside>
+        </aside> -->
 
         <!-- 编辑器 -->
         <Edit v-show="editorMode"></Edit>

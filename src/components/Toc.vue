@@ -1,12 +1,11 @@
 <template>
-  <div class="h-full overflow-scroll flex flex-col gap-4 items-end">
-    <div class="table-of-contents overflow-scroll w-56 bg-cyan-800/10 rounded-2xl" v-html="toc"></div>
+  <div class="flex h-full flex-col items-end gap-4 overflow-scroll">
+    <div class="table-of-contents w-56 overflow-scroll rounded-2xl bg-cyan-800/10" v-html="toc"></div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import Markdown from "../entities/Markdown";
 import Link from "./Link.vue";
 
 export default defineComponent({
@@ -63,13 +62,13 @@ export default defineComponent({
   @apply rounded-2xl shadow !important;
 
   ul {
-    @apply w-full relative hover:bg-transparent  !important;
+    @apply relative w-full hover:bg-transparent  !important;
 
     li {
-      @apply m-2 w-full h-full rounded;
+      @apply m-2 h-full w-full rounded;
 
       a {
-        @apply no-underline rounded-lg z-0 h-full w-full p-2 block hover:bg-sky-300/30;
+        @apply z-0 block h-full w-full rounded-lg p-2 no-underline hover:bg-sky-300/30;
       }
     }
   }

@@ -2,9 +2,9 @@ import fs from "fs"
 import path from "path"
 import Id from "./Id";
 import RouteController from "../controllers/RouteController";
-import Markdown from "./Markdown";
 import FileTree from "../tools/FileTree";
 import Config from "./Config";
+import { writeFileSync } from "fs";
 
 class BookNode {
     public path: string = ''
@@ -185,25 +185,6 @@ class BookNode {
         return this.hasError() ? '' : fs.readFileSync(this.path).toString()
     }
 
-    public content(): string {
-        return this.hasError() ? Markdown.renderErrorPage(this.errorTitle, this.errorLines) : (new Markdown(this.path)).content()
-    }
-
-    // 获取markdown渲染后的HTML
-    public html() {
-        return this.hasError() ? Markdown.renderErrorPage(this.errorTitle, this.errorLines) : (new Markdown(this.path)).html()
-    }
-
-    // 获取markdown渲染后的HTML，带TOC
-    public htmlWithToc() {
-        return this.hasError() ? Markdown.renderErrorPage(this.errorTitle, this.errorLines) : (new Markdown(this.path)).htmlWithToc()
-    }
-
-    public toc(): string {
-        return this.hasError() ? '' : (new Markdown(this.path)).toc()
-    }
-
-
     public firstPage(): BookNode {
         return this.isPage() ? this : this.getFirstChild().firstPage()
     }
@@ -252,7 +233,7 @@ class BookNode {
 
     // 保存文章内容
     public save(content: string) {
-        return (new Markdown(this.path)).update(content)
+        return writeFileSync(this.path, content)
     }
 }
 
