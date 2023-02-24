@@ -79,6 +79,11 @@ import Prism from "prismjs";
 import "tui-color-picker/dist/tui-color-picker.css";
 import "@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css";
 import colorSyntax from "@toast-ui/editor-plugin-color-syntax";
+import "@toast-ui/chart/dist/toastui-chart.css";
+import chart from "@toast-ui/editor-plugin-chart";
+import "@toast-ui/editor-plugin-table-merged-cell/dist/toastui-editor-plugin-table-merged-cell.css";
+
+import tableMergedCell from "@toast-ui/editor-plugin-table-merged-cell";
 
 export default defineComponent({
   components: {
@@ -132,7 +137,7 @@ export default defineComponent({
     initEditor: function () {
       let editor = new Editor({
         autofocus: true,
-        el: document.querySelector("#editor") ?? document.createElement("div"),
+        el: document.querySelector("#editor"),
         height: "800px",
         // initialEditType: "markdown",
         initialEditType: "wysiwyg",
@@ -141,6 +146,20 @@ export default defineComponent({
         language: "zh-cn",
         initialValue: RouteController.getCurrentPage().markdownSourceCode(),
         plugins: [[codeSyntaxHighlight, { highlighter: Prism }], colorSyntax],
+        plugins: [
+          [codeSyntaxHighlight, { highlighter: Prism }],
+          colorSyntax,
+          tableMergedCell,
+          [
+            chart,
+            {
+              minWidth: 100,
+              maxWidth: 600,
+              minHeight: 100,
+              maxHeight: 300,
+            },
+          ],
+        ],
         // toolbarItems: [],
         events: {
           load: function () {
@@ -196,5 +215,9 @@ export default defineComponent({
 
 .h1 {
   @apply text-3xl;
+}
+
+.toastui-editor-contents {
+  @apply prose-xl !important;
 }
 </style>

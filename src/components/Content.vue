@@ -17,6 +17,10 @@ import Prism from "prismjs";
 import Viewer from "@toast-ui/editor/dist/toastui-editor-viewer";
 import "prismjs/themes/prism.css";
 import "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css";
+import "@toast-ui/chart/dist/toastui-chart.css";
+import chart from "@toast-ui/editor-plugin-chart";
+import "@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css";
+import colorSyntax from "@toast-ui/editor-plugin-color-syntax";
 
 export default defineComponent({
   computed: {
@@ -43,7 +47,19 @@ export default defineComponent({
       new Viewer({
         el: document.querySelector("#viewer") ?? document.createElement("div"),
         initialValue: RouteController.getCurrentPage().markdownSourceCode(),
-        plugins: [[codeSyntaxHighlight, { highlighter: Prism }]],
+        plugins: [
+          // colorSyntax,
+          [codeSyntaxHighlight, { highlighter: Prism }],
+          [
+            chart,
+            {
+              minWidth: 100,
+              maxWidth: 600,
+              minHeight: 100,
+              maxHeight: 300,
+            },
+          ],
+        ],
       });
       // this.loadMyJS();
     },
