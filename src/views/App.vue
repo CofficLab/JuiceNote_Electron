@@ -74,6 +74,11 @@ import BtnSave from "../components/BtnSave.vue";
 import BtnEdit from "../components/BtnEdit.vue";
 import Show from "./Show.vue";
 import Editor from "@toast-ui/editor";
+import codeSyntaxHighlight from "@toast-ui/editor-plugin-code-syntax-highlight";
+import Prism from "prismjs";
+import "tui-color-picker/dist/tui-color-picker.css";
+import "@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css";
+import colorSyntax from "@toast-ui/editor-plugin-color-syntax";
 
 export default defineComponent({
   components: {
@@ -129,11 +134,13 @@ export default defineComponent({
         autofocus: true,
         el: document.querySelector("#editor") ?? document.createElement("div"),
         height: "800px",
-        initialEditType: "markdown",
+        // initialEditType: "markdown",
+        initialEditType: "wysiwyg",
         previewStyle: "vertical",
+        // previewStyle: "tab",
         language: "zh-cn",
         initialValue: RouteController.getCurrentPage().markdownSourceCode(),
-        // plugins: [[codeSyntaxHighlight, { highlighter: Prism }]],
+        plugins: [[codeSyntaxHighlight, { highlighter: Prism }], colorSyntax],
         // toolbarItems: [],
         events: {
           load: function () {
