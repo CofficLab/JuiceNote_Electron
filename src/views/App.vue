@@ -1,21 +1,21 @@
 <template>
   <div class="flex flex-row">
     <!-- 左侧栏 -->
-    <aside class="hidden shadow-xl lg:flex xl:flex-col bg-base-200 border-r-2 border-gray-300 w-56">
+    <aside class="hidden w-56 border-r-2 border-gray-300 bg-base-200 shadow-xl lg:flex xl:flex-col">
       <div v-bind:class="{ 'h-12': !hideTitleBar, 'h-0': hideTitleBar }" class="draggable w-56"></div>
       <div class="fixed w-56" v-bind:class="{ 'top-12': !hideTitleBar, 'top-0': hideTitleBar }">
         <SideMenu class="w-full"></SideMenu>
       </div>
     </aside>
 
-    <div class="flex flex-col flex-grow bg-cyan-800/10">
+    <div class="flex flex-grow flex-col bg-cyan-800/10">
       <!-- 顶栏 -->
-      <div class="h-12 bg-base-200 border-b border-gray-300 shadow fixed z-50 w-full flex justify-between draggable">
-        <div class="w-full items-center flex ml-20 lg:ml-2">
+      <div class="draggable fixed z-50 flex h-12 w-full justify-between border-b border-gray-300 bg-base-200 shadow">
+        <div class="ml-20 flex w-full items-center lg:ml-2">
           <!-- <Address v-if="!isProd"></Address> -->
           <Breadcrumbs></Breadcrumbs>
         </div>
-        <div class="flex justify-end w-full lg:mr-56 pr-4 flex-row items-center">
+        <div class="flex w-full flex-row items-center justify-end pr-4 lg:mr-56">
           <!-- <BtnSave v-if="editorMode"></BtnSave> -->
           <span class="ml-4" v-if="editorMode"></span>
           <Languages></Languages>
@@ -35,9 +35,9 @@
       </div>
 
       <!-- 内容区域与右侧导航 -->
-      <main class="flex px-4 justify-center w-full mt-16">
+      <main class="mt-16 flex w-full justify-center px-4">
         <Show v-if="!editorMode"></Show>
-        <Edit v-if="editorMode"></Edit>
+        <TinyMCE v-if="editorMode"></TinyMCE>
       </main>
     </div>
   </div>
@@ -73,6 +73,7 @@ import BtnMore from "../components/BtnMore.vue";
 import BtnSave from "../components/BtnSave.vue";
 import BtnEdit from "../components/BtnEdit.vue";
 import Show from "./Show.vue";
+import TinyMCE from "./TinyMCE.vue";
 
 export default defineComponent({
   components: {
@@ -101,6 +102,7 @@ export default defineComponent({
     Languages,
     BtnSave,
     Show,
+    TinyMCE,
   },
   data() {
     return {
@@ -128,12 +130,12 @@ export default defineComponent({
 
 <style lang="postcss">
 .table-of-contents {
-  @apply rounded-none mx-auto prose z-10;
+  @apply prose z-10 mx-auto rounded-none;
   ul {
-    @apply list-none pl-1 fixed z-10;
+    @apply fixed z-10 list-none pl-1;
 
     a {
-      @apply no-underline z-0;
+      @apply z-0 no-underline;
     }
   }
 }
