@@ -11,6 +11,7 @@ import "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin
 import { readFileSync } from 'fs'
 import { join } from 'path'
 import Config from './entities/Config'
+import "../markdown/footer.js";
 
 // 检测全屏状态
 ipcRenderer.on('main-process-message', (_event, ...args) => {
@@ -26,14 +27,6 @@ ipcRenderer.on('main-process-message', (_event, ...args) => {
 Object.assign(window, {
   Alpine: Alpine,
   runner: CodeRunner,
-  loadMyJS: function () {
-    // return
-    console.log("load my js");
-    let scriptDom = document.createElement("script");
-    scriptDom.innerHTML = readFileSync(join(Config.markdownRootPath, "/footer.js")).toString();
-
-    document.getElementsByTagName('body').item(0)?.append(scriptDom)
-  },
 })
 
 const app = createApp(App)

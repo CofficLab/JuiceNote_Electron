@@ -153,45 +153,6 @@ for (let i = 0; i < document.getElementsByClassName("link").length; i++) {
   target.innerHTML = div.innerHTML;
 }
 
-// 生成官方文档的链接
-if (document.getElementsByClassName("official-link").item(0) != undefined) {
-  let officialLinkPlaceholder = document.getElementsByClassName("official-link").item(0);
-  officialLinkPlaceholder.href = "";
-  officialLinkPlaceholder.classList.add("hidden");
-
-  for (let i = 0; i < document.getElementsByClassName("o").length; i++) {
-    let target = document.getElementsByClassName("o").item(i);
-    let link = document.createElement("a");
-    let href = target.innerText;
-
-    target.innerHTML = "";
-
-    officialLinkPlaceholder.href = href;
-    officialLinkPlaceholder.classList.remove("hidden");
-  }
-} else {
-  // 没有预定义位置时，自动生成样式
-  for (let i = 0; i < document.getElementsByClassName("o").length; i++) {
-    let target = document.getElementsByClassName("o").item(i);
-    let link = document.createElement("a");
-    let href = target.innerText;
-
-    target.innerHTML = "";
-    target.classList.add("w-full", "flex", "mb-2", "text-center");
-
-    link.innerHTML = "官方文档";
-    link.target = "_blank";
-    link.href = href;
-    link.classList.add("no-underline", "text-base");
-    link.classList.add("px-4", "py-2", "w-full");
-    // link.classList.add('shadow-lg')
-    link.classList.add("ring-1", "border-t-8", "border-yellow-900/50", "rounded-sm");
-    link.classList.add("bg-cyan-500/50", "dark:bg-cyan-900/70");
-
-    target.append(link);
-  }
-}
-
 // 增加代码块的横幅
 for (let i = 0; i < document.getElementsByTagName("code").length; i++) {
   let banner = document.createElement("div");
@@ -336,4 +297,83 @@ function findOutTheLanguage(className) {
   return language;
 }
 
-window.Alpine.start();
+// window.Alpine.start();
+
+function renderOfficialLink(link) {
+  console.log("渲染官方链接，链接是", link);
+  // 生成官方文档的链接
+  if (document.getElementsByClassName("official-link").item(0) != undefined) {
+    let officialLinkPlaceholder = document.getElementsByClassName("official-link").item(0);
+    officialLinkPlaceholder.href = link;
+    officialLinkPlaceholder.classList.remove("hidden");
+  } else {
+    // 没有预定义位置时，自动生成样式
+    for (let i = 0; i < document.getElementsByClassName("o").length; i++) {
+      let target = document.getElementsByClassName("o").item(i);
+      let link = document.createElement("a");
+      let href = target.innerText;
+
+      target.innerHTML = "";
+      target.classList.add("w-full", "flex", "mb-2", "text-center");
+
+      link.innerHTML = "官方文档";
+      link.target = "_blank";
+      link.href = href;
+      link.classList.add("no-underline", "text-base");
+      link.classList.add("px-4", "py-2", "w-full");
+      // link.classList.add('shadow-lg')
+      link.classList.add("ring-1", "border-t-8", "border-yellow-900/50", "rounded-sm");
+      link.classList.add("bg-cyan-500/50", "dark:bg-cyan-900/70");
+
+      target.append(link);
+    }
+  }
+}
+
+window.customHTMLRenderer = {
+  // document(node, context) {
+  //   console.log("自定义渲染document", node);
+  // },
+  htmlBlock(node) {
+    console.log("自定义渲染htmlBlock", node);
+    console.log(node.literal);
+    if (node.literal.includes('class="o"') || node.literal.includes("o:")) {
+      console.log("渲染官方链接");
+      let dom = document.createElement("div");
+      dom.innerHTML = node.literal;
+      let text = dom.innerText;
+      renderOfficialLink(text);
+      return { type: "html", content: "{官方链接}" };
+    }
+
+    return { type: "html", content: node.literal };
+  },
+  // heading(node, context) {
+  //   return {
+  //     type: context.entering ? "openTag" : "closeTag",
+  //     tagName: "div",
+  //     classNames: [`heading-${node.level}`],
+  //   };
+  // },
+  text(node, context) {
+    console.log("自定义渲染text", node);
+    const strongContent = node.parent.type === "strong";
+
+    if (node.literal.includes('class="o"') || node.literal.includes("o:")) {
+      console.log("渲染官方链接");
+      let dom = document.createElement("div");
+      dom.innerHTML = node.literal;
+      let text = node.literal.replace("o:", "");
+      renderOfficialLink(text);
+      return { type: "html", content: "{官方链接}" };
+    }
+
+    return { type: "text", content: node.literal };
+  },
+  // linebreak(node, context) {
+  //   return {
+  //     type: "html",
+  //     content: "\n<br />\n",
+  //   };
+  // },
+};

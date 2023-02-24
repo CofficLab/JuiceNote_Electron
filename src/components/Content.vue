@@ -47,36 +47,6 @@ const plugins = [
 ];
 const height = "h-full";
 
-var customHTMLRenderer = {
-  // document(node, context) {
-  //   console.log("自定义渲染document", node);
-  // },
-  // htmlBlock(node, context) {
-  //   console.log("自定义渲染htmlBlock", node);
-  // },
-  // heading(node, context) {
-  //   return {
-  //     type: context.entering ? "openTag" : "closeTag",
-  //     tagName: "div",
-  //     classNames: [`heading-${node.level}`],
-  //   };
-  // },
-  // text(node, context) {
-  //   console.log("自定义渲染text", node);
-  //   const strongContent = node.parent.type === "strong";
-  //   return {
-  //     type: "text",
-  //     content: strongContent ? node.literal.toUpperCase() : node.literal,
-  //   };
-  // },
-  // linebreak(node, context) {
-  //   return {
-  //     type: "html",
-  //     content: "\n<br />\n",
-  //   };
-  // },
-};
-
 export default defineComponent({
   data() {
     return {
@@ -115,6 +85,7 @@ export default defineComponent({
           tableMergedCellPlugin,
           [chartPlugin, chartOptions],
         ],
+        customHTMLRenderer: window.customHTMLRenderer,
         // toolbarItems: [],
         events: {
           load: function () {
@@ -142,9 +113,8 @@ export default defineComponent({
           [codeSyntaxHighlight, { highlighter: Prism }],
           [chart, chartOptions],
         ],
-        customHTMLRenderer: customHTMLRenderer,
+        customHTMLRenderer: window.customHTMLRenderer,
       });
-      window.loadMyJS();
 
       RouteController.renderedHtml = document.querySelector(".toastui-editor-contents")?.innerHTML ?? "";
       this.current.saveRendered(document.querySelector(".toastui-editor-contents")?.innerHTML);
