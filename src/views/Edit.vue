@@ -1,7 +1,7 @@
 <template>
-  <div class="z-0 flex h-screen w-full flex-grow flex-row gap-4 overflow-scroll pb-48">
+  <div class="z-0 flex h-screen w-full flex-grow flex-row gap-4 overflow-scroll pb-16">
     <main class="w-full">
-      <div id="editor" class="h-screen w-full"></div>
+      <div id="editor" class="h-full w-full"></div>
     </main>
 
     <textarea class="hidden" id="editor-content" v-text="markdownSourceCode"></textarea>

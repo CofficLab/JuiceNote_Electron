@@ -138,7 +138,7 @@ export default defineComponent({
       let editor = new Editor({
         autofocus: true,
         el: document.querySelector("#editor"),
-        height: "800px",
+        height: "h-full",
         // initialEditType: "markdown",
         initialEditType: "wysiwyg",
         previewStyle: "vertical",
@@ -217,6 +217,6 @@ export default defineComponent({
 }
 
 .toastui-editor-contents {
-  @apply prose-xl !important;
+  @apply prose-xl bg-white p-8 pb-12 shadow-lg !important;
 }
 </style>

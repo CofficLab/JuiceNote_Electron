@@ -30,7 +30,7 @@ export default defineComponent({
       if (markdownSourceCode != undefined) {
         console.log("要保存的内容\n", markdownSourceCode);
         if (markdownSourceCode == current.markdownSourceCode()) {
-          console.log("没有变化，无需保存");
+          ToastController.set("没有变化，无需保存");
         } else {
           current.save(markdownSourceCode);
           console.log("已保存");
