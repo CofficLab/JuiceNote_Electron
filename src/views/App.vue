@@ -37,7 +37,7 @@
       <!-- 内容区域与右侧导航 -->
       <main class="mt-16 flex w-full justify-center px-4">
         <Show v-if="!editorMode"></Show>
-        <TinyMCE v-if="editorMode"></TinyMCE>
+        <Edit v-if="editorMode"></Edit>
       </main>
     </div>
   </div>
@@ -137,6 +137,20 @@ export default defineComponent({
     a {
       @apply z-0 no-underline;
     }
+  }
+}
+.draggable {
+  -webkit-app-region: drag;
+}
+
+.prose {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply -mt-40 pt-40;
   }
 }
 </style>

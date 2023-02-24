@@ -4,7 +4,6 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import "../app.css";
 import RouteController from "../controllers/RouteController";
 import fs from "fs";
 import path from "path";

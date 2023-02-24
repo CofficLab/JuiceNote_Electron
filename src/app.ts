@@ -1,10 +1,10 @@
-import './app.css'
 import Alpine from 'alpinejs'
 import { createApp } from 'vue'
 import { ipcRenderer } from 'electron'
 import mavonEditor from 'mavon-editor'
 import App from './views/App.vue'
 import 'mavon-editor/dist/css/index.css'
+import "tailwindcss/tailwind.css"
 import 'highlight.js/styles/github-dark.css'
 import CodeRunner from './tools/CodeRunner'
 import FullScreenController from './controllers/FullScreenController'
