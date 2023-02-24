@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div ref="content" id="viewer" class=""></div>
+    <div id="viewer"></div>
 
     <div class="hidden" ref="script"></div>
   </div>
@@ -13,37 +13,33 @@ import { readFileSync } from "fs";
 import { join } from "path";
 import Config from "../entities/Config";
 import codeSyntaxHighlight from "@toast-ui/editor-plugin-code-syntax-highlight";
-import chart from "@toast-ui/editor-plugin-chart";
 import Prism from "prismjs";
 import Viewer from "@toast-ui/editor/dist/toastui-editor-viewer";
 
 export default defineComponent({
-  data() {
-    return {
-      html: "",
-    };
-  },
   computed: {
-    // html: function () {
-    //   console.log("get content of", RouteController.currentPage.id);
-    //   let dom = document.createElement("div");
-    //   let scriptDom = document.createElement("script");
-    //   dom.innerHTML = RouteController.getCurrentPage().html();
-    //   scriptDom.innerHTML = readFileSync(join(Config.markdownRootPath, "/footer.js")).toString();
-    //   this.$nextTick(() => {
-    //     this.$refs.content.append(scriptDom);
-    //   });
-    //   return dom.innerHTML;
-    // },
+    html: function () {
+      console.log("get content of", RouteController.currentPage.id);
+
+      return "";
+    },
+    markdownSourceCode: function () {
+      return RouteController.getCurrentPage().markdownSourceCode();
+    },
+  },
+  watch: {
+    markdownSourceCode: function () {
+      console.log("markdown source code changed");
+      this.loadViewer();
+    },
   },
   mounted: function () {
     this.loadViewer();
   },
   methods: {
     loadViewer: function () {
-      const viewer = new Viewer({
-        el: document.querySelector("#viewer"),
-        // customHTMLRenderer: {},
+      new Viewer({
+        el: document.querySelector("#viewer") ?? document.createElement("div"),
         initialValue: RouteController.getCurrentPage().markdownSourceCode(),
         plugins: [[codeSyntaxHighlight, { highlighter: Prism }]],
       });

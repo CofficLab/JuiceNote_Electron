@@ -112,40 +112,51 @@ export default defineComponent({
     code: () => CodeController.code,
     hideTitleBar: () => FullScreenController.full,
     isProd: (): boolean => RouteController.isProd,
-    current: RouteController.getCurrentPage,
+    current: function () {
+      return RouteController.getCurrentPage();
+    },
     editorMode: () => RouteController.isEditMode(),
   },
-  methods: {},
+  watch: {
+    current: function () {
+      console.log("current changed, init editor");
+      this.initEditor();
+    },
+  },
+  methods: {
+    initEditor: function () {
+      let editor = new Editor({
+        autofocus: true,
+        el: document.querySelector("#editor") ?? document.createElement("div"),
+        height: "800px",
+        initialEditType: "markdown",
+        previewStyle: "vertical",
+        language: "zh-cn",
+        initialValue: RouteController.getCurrentPage().markdownSourceCode(),
+        // plugins: [[codeSyntaxHighlight, { highlighter: Prism }]],
+        // toolbarItems: [],
+        events: {
+          load: function () {
+            console.log("editor load");
+          },
+          change: onChange,
+        },
+      });
+      function onChange() {
+        let content = document.getElementById("editor-content");
+        if (content != undefined) {
+          (content as HTMLInputElement).value = editor.getMarkdown();
+        }
+      }
+    },
+  },
   beforeCreate: function () {
     // console.log("before app created,current route path is", this.$route.path);
     // console.log("before app created,current location is", location.href);
   },
   mounted: function () {
     console.log("app mounted,init editor");
-    const editor = new Editor({
-      autofocus: true,
-      el: document.querySelector("#editor") ?? document.createElement("div"),
-      height: "800px",
-      initialEditType: "markdown",
-      previewStyle: "vertical",
-      language: "zh-cn",
-      initialValue: RouteController.getCurrentPage().markdownSourceCode(),
-      // plugins: [[codeSyntaxHighlight, { highlighter: Prism }]],
-      // toolbarItems: [],
-      events: {
-        load: function () {
-          console.log("editor load");
-        },
-        change: onChange,
-      },
-    });
-
-    function onChange() {
-      let content = document.getElementById("editor-content");
-      if (content != undefined) {
-        (content as HTMLInputElement).value = editor.getMarkdown();
-      }
-    }
+    this.initEditor();
   },
 });
 </script>
