@@ -1,73 +1,122 @@
 <template>
-  <div class="flex w-full flex-row justify-between">
-    <div id="viewer" class="flex w-full justify-center"></div>
+  <div class="flex w-full flex-row pb-4">
+    <!-- viewer的样式在最下面 -->
+    <div class="mx-auto mt-2 flex justify-center">
+      <div
+        v-show="!editMode"
+        id="viewer"
+        class="toastui-editor-defaultUI w-full justify-center bg-base-100 py-5 px-20"
+      ></div>
+    </div>
 
-    <!-- 文章的右侧栏TOC -->
-    <aside class="hidden min-h-screen w-56 justify-end xl:flex xl:flex-row">
-      <div class="fixed right-0 flex h-screen w-56 flex-row justify-end">
-        <TocContent :markdown="html"></TocContent>
-      </div>
-    </aside>
+    <div id="editor" v-show="editMode" class="container flex w-full justify-center"></div>
+
+    <!-- 点击保存按钮时会读取这里的内容 -->
+    <textarea class="hidden" id="editor-content" v-text="markdownSourceCode"></textarea>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import RouteController from "../controllers/RouteController";
-import codeSyntaxHighlight from "@toast-ui/editor-plugin-code-syntax-highlight";
 import Prism from "prismjs";
-import "prismjs/themes/prism.css";
-import "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css";
-import "@toast-ui/chart/dist/toastui-chart.css";
-import chart from "@toast-ui/editor-plugin-chart";
-import "@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css";
-import colorSyntax from "@toast-ui/editor-plugin-color-syntax";
-import Toc from "toc-maker";
+import { defineComponent } from "vue";
 import Editor from "@toast-ui/editor";
+import chart from "@toast-ui/editor-plugin-chart";
 import TocContent from "../components/TocContent.vue";
+import chartPlugin from "@toast-ui/editor-plugin-chart";
+import RouteController from "../controllers/RouteController";
+import colorPlugin from "@toast-ui/editor-plugin-color-syntax";
+import tableMergedCellPlugin from "@toast-ui/editor-plugin-table-merged-cell";
+import codeSyntaxHighlight from "@toast-ui/editor-plugin-code-syntax-highlight";
+import "prismjs/themes/prism.css";
+import "@toast-ui/chart/dist/toastui-chart.css";
+import "tui-color-picker/dist/tui-color-picker.css";
+import "@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css";
+import "@toast-ui/editor-plugin-table-merged-cell/dist/toastui-editor-plugin-table-merged-cell.css";
+import "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css";
+
+const chartOptions = {
+  minWidth: 100,
+  maxWidth: 600,
+  minHeight: 100,
+  maxHeight: 300,
+};
+const plugins = [
+  // colorSyntax,
+  [codeSyntaxHighlight, { highlighter: Prism }],
+  [chart, chartOptions],
+];
+const height = "h-full";
 
 export default defineComponent({
   data() {
-    return { html: "" };
+    return {
+      markdownSourceCode: RouteController.getCurrentPage().markdownSourceCode(),
+    };
   },
   computed: {
-    sourceCode: function () {
-      return RouteController.getCurrentPage().markdownSourceCode();
-    },
+    current: () => RouteController.currentPage,
+    editMode: () => RouteController.editMode,
   },
   watch: {
-    sourceCode: function () {
-      console.log("markdown source code changed");
+    current() {
       this.loadViewer();
+      this.initEditor();
     },
   },
   mounted: function () {
     this.loadViewer();
+    this.initEditor();
   },
   methods: {
+    initEditor: function () {
+      let editor = new Editor({
+        autofocus: true,
+        el: document.querySelector("#editor") ?? document.createElement("div"),
+        height: height,
+        // initialEditType: "markdown",
+        initialEditType: "wysiwyg",
+        previewStyle: "vertical",
+        // previewStyle: "tab",
+        language: "zh-cn",
+        initialValue: RouteController.getCurrentPage().markdownSourceCode(),
+        plugins: [
+          [codeSyntaxHighlight, { highlighter: Prism }],
+          colorPlugin,
+          tableMergedCellPlugin,
+          [chartPlugin, chartOptions],
+        ],
+        // toolbarItems: [],
+        events: {
+          load: function () {
+            console.log("editor load");
+          },
+          change: onChange,
+        },
+      });
+      function onChange() {
+        // 写入textarea供保存按钮调取
+        let content = document.getElementById("editor-content");
+        if (content != undefined) {
+          (content as HTMLInputElement).value = editor.getMarkdown();
+        }
+      }
+    },
     loadViewer: function () {
       Editor.factory({
         viewer: true,
+        height: height,
         el: document.querySelector("#viewer") ?? document.createElement("div"),
         initialValue: RouteController.getCurrentPage().markdownSourceCode(),
         plugins: [
           // colorSyntax,
           [codeSyntaxHighlight, { highlighter: Prism }],
-          [
-            chart,
-            {
-              minWidth: 100,
-              maxWidth: 600,
-              minHeight: 100,
-              maxHeight: 300,
-            },
-          ],
+          [chart, chartOptions],
         ],
       });
-      window.loadMyJS();
-      let p = new Toc(document.querySelector(".toastui-editor-contents"));
-      this.html = p.tocEl.outerHTML;
-      RouteController.getCurrentPage().saveRendered(document.querySelector(".toastui-editor-contents")?.innerHTML);
+      // window.loadMyJS();
+
+      RouteController.renderedHtml = document.querySelector(".toastui-editor-contents")?.innerHTML ?? "";
+      this.current.saveRendered(document.querySelector(".toastui-editor-contents")?.innerHTML);
     },
   },
   components: { TocContent },
@@ -76,6 +125,6 @@ export default defineComponent({
 
 <style lang="postcss">
 .toastui-editor-contents {
-  @apply prose bg-base-100 p-8 pb-12 dark:prose-invert xl:prose-lg  !important;
+  @apply prose w-full bg-base-100 dark:prose-invert xl:prose-lg  !important;
 }
 </style>

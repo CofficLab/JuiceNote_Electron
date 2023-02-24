@@ -1,25 +1,25 @@
 <template>
   <div class="flex h-full flex-col items-end gap-4 overflow-scroll">
-    <div class="table-of-contents w-56 overflow-scroll rounded-2xl bg-cyan-800/10" v-html="markdown"></div>
+    <div class="table-of-contents w-56 overflow-scroll rounded-2xl bg-cyan-800/10" v-html="html"></div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import Link from "./Link.vue";
-
-// const toc = require("markdown-toc");
-// const toc = require("toc-extract");
 import Toc from "toc-maker";
+import RouteController from "../controllers/RouteController";
 
 export default defineComponent({
-  props: ["markdown"],
   computed: {
     html() {
-      // console.log("get toc");
-      // console.log(document.querySelector("#viewer")?.innerHTML);
-      // console.log(new Toc(document.querySelector("#viewer")).tocEl);
-      // return toc(this.markdown, { selectors: "h1" });
+      let renderedHtml = RouteController.renderedHtml;
+      if (renderedHtml.length > 0) {
+        let renderedDom = document.createElement("div");
+        renderedDom.innerHTML = renderedHtml;
+        return new Toc(renderedDom).tocEl.innerHTML;
+      }
+
+      return "";
     },
   },
   mounted: function () {
@@ -57,7 +57,6 @@ export default defineComponent({
       }
     });
   },
-  components: { Link },
 });
 </script>
 

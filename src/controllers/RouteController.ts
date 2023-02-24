@@ -8,6 +8,7 @@ const RouteController = reactive({
     isProd: location.protocol === 'file:',
     isHomePage: (new URL(location.href)).searchParams.get('id') == '/',
     editMode: (new URL(location.href)).searchParams.get('edit_mode') != undefined,
+    renderedHtml: '',
 
     isEditMode() {
         return this.editMode

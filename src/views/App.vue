@@ -33,40 +33,26 @@
         </div>
       </div>
 
-      <!-- 内容区域与右侧导航 -->
-      <main class="mt-16 flex w-full justify-center px-4">
-        <!-- 文章内容 -->
-        <div
-          v-show="!editorMode"
-          class="ml-8 flex min-h-screen w-full flex-grow flex-col items-center gap-4 pt-12 pb-48"
-        >
+      <div class="mt-16 flex flex-row">
+        <!-- 内容区域与右侧导航 -->
+        <main class="flex w-full justify-center px-4">
+          <!-- 文章内容 -->
           <Content></Content>
-        </div>
+        </main>
 
-        <!-- 编辑器 -->
-        <Edit v-show="editorMode"></Edit>
-      </main>
+        <!-- 文章的右侧栏TOC -->
+        <aside class="hidden min-h-screen w-56 justify-end xl:flex xl:flex-row">
+          <div class="fixed right-0 flex h-screen w-56 flex-row justify-end">
+            <Toc></Toc>
+          </div>
+        </aside>
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import Toc from "../components/TocContent.vue";
-import Breadcrumbs from "../components/Breadcrumbs.vue";
-import Address from "../components/Address.vue";
-import Edit from "../components/Editor.vue";
-import Alert from "../components/Alert.vue";
-import Toast from "../components/Toast.vue";
-import Content from "../components/Content.vue";
-import SideMenu from "../components/SideMenu.vue";
-import Others from "../components/Others.vue";
-import ProjectTree from "../components/ProjectTree.vue";
-import CodeContainer from "../components/CodeContainer.vue";
-import CodeController from "../controllers/CodeController";
-import RouteController from "../controllers/RouteController";
-import FullScreenController from "../controllers/FullScreenController";
-import Languages from "../components/Languages.vue";
 import BtnTerminal from "../components/BtnTerminal.vue";
 import BtnMore from "../components/BtnMore.vue";
 import BtnSave from "../components/BtnSave.vue";
@@ -79,6 +65,20 @@ import BtnNext from "../components/BtnNext.vue";
 import BtnCopy from "../components/BtnCopy.vue";
 import BtnGitCommit from "../components/BtnGitCommit.vue";
 import BtnOfficialLink from "../components/BtnOfficialLink.vue";
+import Toc from "../components/TocContent.vue";
+import Breadcrumbs from "../components/Breadcrumbs.vue";
+import Address from "../components/Address.vue";
+import Alert from "../components/Alert.vue";
+import Toast from "../components/Toast.vue";
+import Content from "../components/Content.vue";
+import SideMenu from "../components/SideMenu.vue";
+import Others from "../components/Others.vue";
+import ProjectTree from "../components/ProjectTree.vue";
+import CodeContainer from "../components/CodeContainer.vue";
+import CodeController from "../controllers/CodeController";
+import RouteController from "../controllers/RouteController";
+import FullScreenController from "../controllers/FullScreenController";
+import Languages from "../components/Languages.vue";
 
 export default defineComponent({
   components: {
@@ -94,7 +94,6 @@ export default defineComponent({
     Add: BtnAdd,
     Home: BtnHome,
     Address,
-    Edit,
     GitCommit: BtnGitCommit,
     Alert,
     Toast,
