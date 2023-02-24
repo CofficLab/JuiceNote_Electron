@@ -1,6 +1,6 @@
 <template>
   <div class="flex h-full flex-col items-end gap-4 overflow-scroll">
-    <div class="table-of-contents w-56 overflow-scroll rounded-2xl bg-cyan-800/10" v-html="toc"></div>
+    <div class="table-of-contents w-56 overflow-scroll rounded-2xl bg-cyan-800/10" v-html="markdown"></div>
   </div>
 </template>
 
@@ -8,14 +8,18 @@
 import { defineComponent } from "vue";
 import Link from "./Link.vue";
 
-export default defineComponent({
-  props: ["markdownSourceCode"],
-  computed: {
-    toc(): string {
-      let markdownSourceCode = this.markdownSourceCode;
-      let toc = Markdown.renderToc(markdownSourceCode);
+// const toc = require("markdown-toc");
+// const toc = require("toc-extract");
+import Toc from "toc-maker";
 
-      return toc;
+export default defineComponent({
+  props: ["markdown"],
+  computed: {
+    html() {
+      // console.log("get toc");
+      // console.log(document.querySelector("#viewer")?.innerHTML);
+      // console.log(new Toc(document.querySelector("#viewer")).tocEl);
+      // return toc(this.markdown, { selectors: "h1" });
     },
   },
   mounted: function () {

@@ -6,6 +6,13 @@
 
     <textarea class="hidden" id="editor-content" v-text="markdownSourceCode"></textarea>
     <div class="hidden" ref="script"></div>
+
+    <!-- 文章的右侧栏 -->
+    <aside class="hidden min-h-screen w-56 justify-end xl:flex xl:flex-row">
+      <div class="fixed right-0 flex h-screen w-56 flex-row justify-end">
+        <!-- <Toc :markdown="html"></Toc> -->
+      </div>
+    </aside>
   </div>
 </template>
 
@@ -22,10 +29,12 @@ import "tui-color-picker/dist/tui-color-picker.css";
 import "@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css";
 import "@toast-ui/chart/dist/toastui-chart.css";
 import "@toast-ui/editor-plugin-table-merged-cell/dist/toastui-editor-plugin-table-merged-cell.css";
+import Toc from "./TocContent.vue";
 
 export default defineComponent({
   data() {
     return {
+      html: "",
       markdownSourceCode: RouteController.getCurrentPage().markdownSourceCode(),
     };
   },
@@ -84,7 +93,10 @@ export default defineComponent({
         }
       }
       // window.loadMyJS();
+      // console.log(editor.getHTML());
+      this.html = editor.getMarkdown();
     },
   },
+  components: { Toc },
 });
 </script>

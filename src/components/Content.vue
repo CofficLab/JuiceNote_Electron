@@ -1,7 +1,14 @@
 <template>
-  <div class="w-full">
+  <div class="flex w-full flex-row">
     <div id="viewer" class="w-full"></div>
     <div class="hidden" ref="script"></div>
+
+    <!-- 文章的右侧栏 -->
+    <aside class="hidden min-h-screen w-56 justify-end xl:flex xl:flex-row">
+      <div class="fixed right-0 flex h-screen w-56 flex-row justify-end">
+        <TocContent :markdown="html"></TocContent>
+      </div>
+    </aside>
   </div>
 </template>
 
@@ -20,8 +27,14 @@ import "@toast-ui/chart/dist/toastui-chart.css";
 import chart from "@toast-ui/editor-plugin-chart";
 import "@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css";
 import colorSyntax from "@toast-ui/editor-plugin-color-syntax";
+import Toc from "toc-maker";
+import Editor from "@toast-ui/editor";
+import TocContent from "../components/TocContent.vue";
 
 export default defineComponent({
+  data() {
+    return { html: "" };
+  },
   computed: {
     sourceCode: function () {
       return RouteController.getCurrentPage().markdownSourceCode();
@@ -38,7 +51,8 @@ export default defineComponent({
   },
   methods: {
     loadViewer: function () {
-      new Viewer({
+      let viewer = Editor.factory({
+        viewer: true,
         el: document.querySelector("#viewer") ?? document.createElement("div"),
         initialValue: RouteController.getCurrentPage().markdownSourceCode(),
         plugins: [
@@ -56,7 +70,10 @@ export default defineComponent({
         ],
       });
       window.loadMyJS();
+      let p = new Toc(document.querySelector(".toastui-editor-contents"));
+      this.html = p.tocEl.outerHTML;
     },
   },
+  components: { TocContent },
 });
 </script>

@@ -37,16 +37,12 @@
       <!-- 内容区域与右侧导航 -->
       <main class="mt-16 flex w-full justify-center px-4">
         <!-- 文章内容 -->
-        <div v-if="!editorMode" class="ml-8 flex min-h-screen w-full flex-grow flex-col items-center gap-4 pt-12 pb-48">
+        <div
+          v-show="!editorMode"
+          class="ml-8 flex min-h-screen w-full flex-grow flex-col items-center gap-4 pt-12 pb-48"
+        >
           <Content></Content>
         </div>
-
-        <!-- 文章的右侧栏 -->
-        <!-- <aside class="hidden min-h-screen w-56 justify-end xl:flex xl:flex-row">
-          <div class="fixed right-0 flex h-screen w-56 flex-row justify-end">
-            <Toc :markdownSourceCode="markdownSourceCode"></Toc>
-          </div>
-        </aside> -->
 
         <!-- 编辑器 -->
         <Edit v-show="editorMode"></Edit>
@@ -57,7 +53,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import Toc from "../components/Toc.vue";
+import Toc from "../components/TocContent.vue";
 import Breadcrumbs from "../components/Breadcrumbs.vue";
 import Address from "../components/Address.vue";
 import Edit from "../components/Editor.vue";
