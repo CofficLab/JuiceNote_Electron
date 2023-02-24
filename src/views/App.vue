@@ -36,7 +36,19 @@
 
       <!-- 内容区域与右侧导航 -->
       <main class="mt-16 flex w-full justify-center px-4">
-        <Show v-if="!editorMode"></Show>
+        <!-- 文章内容 -->
+        <div v-if="!editorMode" class="ml-8 flex min-h-screen w-full flex-grow flex-col items-center gap-4 pt-12 pb-48">
+          <Content></Content>
+        </div>
+
+        <!-- 文章的右侧栏 -->
+        <aside class="hidden min-h-screen w-56 justify-end xl:flex xl:flex-row">
+          <div class="fixed right-0 flex h-screen w-56 flex-row justify-end">
+            <Toc :markdownSourceCode="markdownSourceCode"></Toc>
+          </div>
+        </aside>
+
+        <!-- 编辑器 -->
         <Edit v-show="editorMode"></Edit>
       </main>
     </div>
@@ -45,17 +57,10 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import Copy from "../components/BtnCopy.vue";
 import Toc from "../components/Toc.vue";
 import Breadcrumbs from "../components/Breadcrumbs.vue";
-import Prev from "../components/BtnPrev.vue";
-import Next from "../components/BtnNext.vue";
-import Delete from "../components/BtnDelete.vue";
-import Add from "../components/BtnAdd.vue";
-import Home from "../components/BtnHome.vue";
 import Address from "../components/Address.vue";
-import Edit from "../views/Edit.vue";
-import GitCommit from "../components/BtnGitCommit.vue";
+import Edit from "../components/Editor.vue";
 import Alert from "../components/Alert.vue";
 import Toast from "../components/Toast.vue";
 import Content from "../components/Content.vue";
@@ -66,24 +71,19 @@ import CodeContainer from "../components/CodeContainer.vue";
 import CodeController from "../controllers/CodeController";
 import RouteController from "../controllers/RouteController";
 import FullScreenController from "../controllers/FullScreenController";
-import OfficialLink from "../components/BtnOfficialLink.vue";
 import Languages from "../components/Languages.vue";
 import BtnTerminal from "../components/BtnTerminal.vue";
 import BtnMore from "../components/BtnMore.vue";
 import BtnSave from "../components/BtnSave.vue";
 import BtnEdit from "../components/BtnEdit.vue";
-import Show from "./Show.vue";
-import Editor from "@toast-ui/editor";
-import codeSyntaxHighlight from "@toast-ui/editor-plugin-code-syntax-highlight";
-import Prism from "prismjs";
-import "tui-color-picker/dist/tui-color-picker.css";
-import "@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css";
-import colorSyntax from "@toast-ui/editor-plugin-color-syntax";
-import "@toast-ui/chart/dist/toastui-chart.css";
-import chart from "@toast-ui/editor-plugin-chart";
-import "@toast-ui/editor-plugin-table-merged-cell/dist/toastui-editor-plugin-table-merged-cell.css";
-
-import tableMergedCell from "@toast-ui/editor-plugin-table-merged-cell";
+import BtnAdd from "../components/BtnAdd.vue";
+import BtnHome from "../components/BtnHome.vue";
+import BtnDelete from "../components/BtnDelete.vue";
+import BtnPrev from "../components/BtnPrev.vue";
+import BtnNext from "../components/BtnNext.vue";
+import BtnCopy from "../components/BtnCopy.vue";
+import BtnGitCommit from "../components/BtnGitCommit.vue";
+import BtnOfficialLink from "../components/BtnOfficialLink.vue";
 
 export default defineComponent({
   components: {
@@ -92,15 +92,15 @@ export default defineComponent({
     BtnMore,
     BtnTerminal,
     BtnEdit,
-    Copy,
-    Prev,
-    Next,
-    Delete,
-    Add,
-    Home,
+    Copy: BtnCopy,
+    Prev: BtnPrev,
+    Next: BtnNext,
+    Delete: BtnDelete,
+    Add: BtnAdd,
+    Home: BtnHome,
     Address,
     Edit,
-    GitCommit,
+    GitCommit: BtnGitCommit,
     Alert,
     Toast,
     Content,
@@ -108,10 +108,9 @@ export default defineComponent({
     Others,
     ProjectTree,
     CodeContainer,
-    OfficialLink,
+    OfficialLink: BtnOfficialLink,
     Languages,
     BtnSave,
-    Show,
   },
   data() {
     return {
@@ -126,62 +125,6 @@ export default defineComponent({
       return RouteController.getCurrentPage();
     },
     editorMode: () => RouteController.isEditMode(),
-  },
-  watch: {
-    current: function () {
-      console.log("current changed, init editor");
-      this.initEditor();
-    },
-  },
-  methods: {
-    initEditor: function () {
-      let editor = new Editor({
-        autofocus: true,
-        el: document.querySelector("#editor"),
-        height: "h-full",
-        // initialEditType: "markdown",
-        initialEditType: "wysiwyg",
-        previewStyle: "vertical",
-        // previewStyle: "tab",
-        language: "zh-cn",
-        initialValue: RouteController.getCurrentPage().markdownSourceCode(),
-        plugins: [
-          [codeSyntaxHighlight, { highlighter: Prism }],
-          colorSyntax,
-          tableMergedCell,
-          [
-            chart,
-            {
-              minWidth: 100,
-              maxWidth: 600,
-              minHeight: 100,
-              maxHeight: 300,
-            },
-          ],
-        ],
-        // toolbarItems: [],
-        events: {
-          load: function () {
-            console.log("editor load");
-          },
-          change: onChange,
-        },
-      });
-      function onChange() {
-        let content = document.getElementById("editor-content");
-        if (content != undefined) {
-          (content as HTMLInputElement).value = editor.getMarkdown();
-        }
-      }
-    },
-  },
-  beforeCreate: function () {
-    // console.log("before app created,current route path is", this.$route.path);
-    // console.log("before app created,current location is", location.href);
-  },
-  mounted: function () {
-    console.log("app mounted,init editor");
-    this.initEditor();
   },
 });
 </script>

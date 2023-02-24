@@ -1,7 +1,6 @@
 <template>
-  <div>
-    <div id="viewer"></div>
-
+  <div class="w-full">
+    <div id="viewer" class="w-full"></div>
     <div class="hidden" ref="script"></div>
   </div>
 </template>
@@ -24,17 +23,12 @@ import colorSyntax from "@toast-ui/editor-plugin-color-syntax";
 
 export default defineComponent({
   computed: {
-    html: function () {
-      console.log("get content of", RouteController.currentPage.id);
-
-      return "";
-    },
-    markdownSourceCode: function () {
+    sourceCode: function () {
       return RouteController.getCurrentPage().markdownSourceCode();
     },
   },
   watch: {
-    markdownSourceCode: function () {
+    sourceCode: function () {
       console.log("markdown source code changed");
       this.loadViewer();
     },
@@ -61,13 +55,7 @@ export default defineComponent({
           ],
         ],
       });
-      // this.loadMyJS();
-    },
-    loadMyJS: function () {
-      let scriptDom = document.createElement("script");
-      scriptDom.innerHTML = readFileSync(join(Config.markdownRootPath, "/footer.js")).toString();
-
-      this.$refs.script.append(scriptDom);
+      window.loadMyJS();
     },
   },
 });
