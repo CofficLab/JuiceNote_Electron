@@ -5,6 +5,8 @@ import RouteController from "../controllers/RouteController";
 import FileTree from "../tools/FileTree";
 import Config from "./Config";
 import { writeFileSync } from "fs";
+import { writeFile } from "fs";
+import { mkdir } from "fs";
 
 class BookNode {
     public path: string = ''
@@ -234,6 +236,28 @@ class BookNode {
     // 保存文章内容
     public save(content: string) {
         return writeFileSync(this.path, content)
+    }
+
+    public saveRendered(content: string | undefined) {
+        if (content == undefined) return
+        let bookPath = path.join(Config.renderedHtmlPath, this.getBook().name)
+        let renderedPath = path.join(bookPath, this.id).replace('.md', '.html')
+
+        mkdir(bookPath, (err) => {
+            if (err) {
+                console.log('创建渲染目录中的图书目录发生错误', err)
+                return
+            }
+
+            writeFile(renderedPath, content, (err) => {
+                if (err) {
+                    console.log('将渲染好的页面存入文件系统发生错误', err)
+                } else {
+                    console.log(this.id + '  渲染结果已存入  ' + renderedPath)
+                }
+            })
+        })
+
     }
 }
 

@@ -15,12 +15,8 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import RouteController from "../controllers/RouteController";
-import { readFileSync } from "fs";
-import { join } from "path";
-import Config from "../entities/Config";
 import codeSyntaxHighlight from "@toast-ui/editor-plugin-code-syntax-highlight";
 import Prism from "prismjs";
-import Viewer from "@toast-ui/editor/dist/toastui-editor-viewer";
 import "prismjs/themes/prism.css";
 import "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css";
 import "@toast-ui/chart/dist/toastui-chart.css";
@@ -30,6 +26,9 @@ import colorSyntax from "@toast-ui/editor-plugin-color-syntax";
 import Toc from "toc-maker";
 import Editor from "@toast-ui/editor";
 import TocContent from "../components/TocContent.vue";
+import Config from "../entities/Config";
+import { writeFile } from "fs";
+import { join } from "path";
 
 export default defineComponent({
   data() {
@@ -72,6 +71,7 @@ export default defineComponent({
       window.loadMyJS();
       let p = new Toc(document.querySelector(".toastui-editor-contents"));
       this.html = p.tocEl.outerHTML;
+      RouteController.getCurrentPage().saveRendered(document.querySelector(".toastui-editor-contents")?.innerHTML);
     },
   },
   components: { TocContent },
