@@ -39,6 +39,7 @@
         <Show v-if="!editorMode"></Show>
         <!-- <TinyMCE v-show="editorMode"></TinyMCE> -->
         <Edit v-if="editorMode"></Edit>
+        <!-- <ToastUI v-if="editorMode"></ToastUI> -->
       </main>
     </div>
   </div>
@@ -75,6 +76,7 @@ import BtnSave from "../components/BtnSave.vue";
 import BtnEdit from "../components/BtnEdit.vue";
 import Show from "./Show.vue";
 import TinyMCE from "./TinyMCE.vue";
+import ToastUI from "./ToastUI.vue";
 
 export default defineComponent({
   components: {
@@ -104,6 +106,7 @@ export default defineComponent({
     BtnSave,
     Show,
     TinyMCE,
+    ToastUI,
   },
   data() {
     return {

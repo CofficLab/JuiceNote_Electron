@@ -245,7 +245,11 @@ if (window.runner != undefined) {
     btn.parentElement.classList.add("justify-end");
     btn.parentElement.classList.add("gap-4");
 
-    if (target.getElementsByClassName(runnerClass).length == 0) target.append(runner);
+    if (target == undefined) {
+      console.log("不能生成代码运行按钮");
+    } else if (target.getElementsByClassName(runnerClass).length == 0) {
+      target.append(runner);
+    }
   }
 } else {
   for (let i = 0; i < document.getElementsByClassName("run").length; i++) {

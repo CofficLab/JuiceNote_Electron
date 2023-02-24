@@ -5,8 +5,8 @@ import mavonEditor from 'mavon-editor'
 import App from './views/App.vue'
 import 'mavon-editor/dist/css/index.css'
 import "tailwindcss/tailwind.css"
+import "@toast-ui/editor/dist/toastui-editor.css"; // Editor's Style
 import 'highlight.js/styles/github-dark.css'
-import '../public/tiny/tinymce.min.js'
 import CodeRunner from './tools/CodeRunner'
 import FullScreenController from './controllers/FullScreenController'
 
@@ -21,11 +21,13 @@ ipcRenderer.on('main-process-message', (_event, ...args) => {
   }
 })
 
-const app = createApp(App)
-app.use(mavonEditor)
-app.mount('#app')
-
 Object.assign(window, {
   Alpine: Alpine,
   runner: CodeRunner
 })
+
+const app = createApp(App)
+app.use(mavonEditor)
+app.mount('#app')
+
+

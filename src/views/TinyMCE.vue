@@ -10,6 +10,7 @@
 import { defineComponent } from "vue";
 import Toc from "../components/Toc.vue";
 import Editor from "@tinymce/tinymce-vue";
+import tinymce from "_tinymce@6.3.2@tinymce";
 
 export default defineComponent({
   components: {
