@@ -145,7 +145,6 @@ export default defineComponent({
         // previewStyle: "tab",
         language: "zh-cn",
         initialValue: RouteController.getCurrentPage().markdownSourceCode(),
-        plugins: [[codeSyntaxHighlight, { highlighter: Prism }], colorSyntax],
         plugins: [
           [codeSyntaxHighlight, { highlighter: Prism }],
           colorSyntax,
