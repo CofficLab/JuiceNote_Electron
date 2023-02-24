@@ -3,7 +3,7 @@
     <div
       v-if="editMode"
       v-on:click="save"
-      class="btn-sm btn btn-ghost my-auto tooltip-bottom tooltip flex items-center"
+      class="btn-ghost tooltip tooltip-bottom btn-sm btn my-auto flex items-center"
       data-tip="保存页面"
     >
       <InboxArrowDown></InboxArrowDown>
@@ -26,7 +26,7 @@ export default defineComponent({
   methods: {
     save() {
       let current = RouteController.getCurrentPage();
-      let markdownSourceCode = document.getElementById("editor-content")?.value;
+      let markdownSourceCode = (document.getElementById("editor-content") as HTMLInputElement).value;
       if (markdownSourceCode != undefined) {
         console.log("要保存的内容\n", markdownSourceCode);
         if (markdownSourceCode == current.markdownSourceCode()) {

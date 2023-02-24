@@ -15,10 +15,6 @@ const md = require('markdown-it')({
     }
 });
 
-md.use(require("markdown-it-anchor").default)
-md.use(require("markdown-it-table-of-contents"), {
-    'includeLevel': [1, 2, 3, 4]
-})
 
 /**
  * 项目的定义

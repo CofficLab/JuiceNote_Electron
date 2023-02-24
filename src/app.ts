@@ -1,14 +1,13 @@
 import Alpine from 'alpinejs'
 import { createApp } from 'vue'
 import { ipcRenderer } from 'electron'
-import mavonEditor from 'mavon-editor'
 import App from './views/App.vue'
-import 'mavon-editor/dist/css/index.css'
-import "tailwindcss/tailwind.css"
-import "@toast-ui/editor/dist/toastui-editor.css"; // Editor's Style
-import 'highlight.js/styles/github-dark.css'
 import CodeRunner from './tools/CodeRunner'
 import FullScreenController from './controllers/FullScreenController'
+import "tailwindcss/tailwind.css"
+import "@toast-ui/editor/dist/toastui-editor.css";
+import "prismjs/themes/prism.css";
+import "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css";
 
 // 检测全屏状态
 ipcRenderer.on('main-process-message', (_event, ...args) => {
@@ -27,7 +26,8 @@ Object.assign(window, {
 })
 
 const app = createApp(App)
-app.use(mavonEditor)
 app.mount('#app')
+
+
 
 

@@ -16,7 +16,7 @@
           <Breadcrumbs></Breadcrumbs>
         </div>
         <div class="flex w-full flex-row items-center justify-end pr-4 lg:mr-56">
-          <!-- <BtnSave v-if="editorMode"></BtnSave> -->
+          <BtnSave v-if="editorMode"></BtnSave>
           <span class="ml-4" v-if="editorMode"></span>
           <Languages></Languages>
           <OfficialLink></OfficialLink>
@@ -37,9 +37,7 @@
       <!-- 内容区域与右侧导航 -->
       <main class="mt-16 flex w-full justify-center px-4">
         <Show v-if="!editorMode"></Show>
-        <!-- <TinyMCE v-show="editorMode"></TinyMCE> -->
-        <Edit v-if="editorMode"></Edit>
-        <!-- <ToastUI v-if="editorMode"></ToastUI> -->
+        <Edit v-show="editorMode"></Edit>
       </main>
     </div>
   </div>
@@ -75,8 +73,7 @@ import BtnMore from "../components/BtnMore.vue";
 import BtnSave from "../components/BtnSave.vue";
 import BtnEdit from "../components/BtnEdit.vue";
 import Show from "./Show.vue";
-import TinyMCE from "./TinyMCE.vue";
-import ToastUI from "./ToastUI.vue";
+import Editor from "@toast-ui/editor";
 
 export default defineComponent({
   components: {
@@ -105,8 +102,6 @@ export default defineComponent({
     Languages,
     BtnSave,
     Show,
-    TinyMCE,
-    ToastUI,
   },
   data() {
     return {
@@ -126,8 +121,31 @@ export default defineComponent({
     // console.log("before app created,current location is", location.href);
   },
   mounted: function () {
-    // console.log("app mounted,current route path is", this.$route.path);
-    // console.log("app mounted,protocol is", window.location.protocol);
+    console.log("app mounted,init editor");
+    const editor = new Editor({
+      autofocus: true,
+      el: document.querySelector("#editor") ?? document.createElement("div"),
+      height: "800px",
+      initialEditType: "markdown",
+      previewStyle: "vertical",
+      language: "zh-cn",
+      initialValue: RouteController.getCurrentPage().markdownSourceCode(),
+      // plugins: [[codeSyntaxHighlight, { highlighter: Prism }]],
+      // toolbarItems: [],
+      events: {
+        load: function () {
+          console.log("editor load");
+        },
+        change: onChange,
+      },
+    });
+
+    function onChange() {
+      let content = document.getElementById("editor-content");
+      if (content != undefined) {
+        (content as HTMLInputElement).value = editor.getMarkdown();
+      }
+    }
   },
 });
 </script>
@@ -156,5 +174,9 @@ export default defineComponent({
   h6 {
     @apply -mt-40 pt-40;
   }
+}
+
+.h1 {
+  @apply text-3xl;
 }
 </style>

@@ -5,17 +5,6 @@ class Markdown {
     public absoluteFilePath: string = ''
     private static md = require('markdown-it')({
         html: true,
-        highlight: function (str: any, lang: any) {
-            if (lang && hljs.getLanguage(lang)) {
-                try {
-                    return hljs.highlight(str, { language: lang }).value;
-                } catch (__) { }
-            }
-
-            return ''; // 使用额外的默认转义
-        }
-    }).use(require("markdown-it-anchor").default).use(require("markdown-it-table-of-contents"), {
-        'includeLevel': [1, 2, 3, 4]
     })
 
     static renderErrorPage(title: string, lines?: string[]): string {

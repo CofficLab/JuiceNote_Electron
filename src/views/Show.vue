@@ -1,14 +1,14 @@
 <template>
   <div class="flex flex-row">
     <!-- 文章内容 -->
-    <div class="flex flex-col ml-8 items-center flex-grow gap-4 pt-12 pb-48 min-h-screen">
-      <Content class="prose w-full 2xl:prose-xl 3xl:prose-xl"></Content>
+    <div class="ml-8 flex min-h-screen flex-grow flex-col items-center gap-4 pt-12 pb-48">
+      <Content></Content>
     </div>
 
     <!-- 文章的右侧栏 -->
-    <aside class="hidden xl:flex xl:flex-row justify-end w-56 min-h-screen">
-      <div class="flex flex-row justify-end w-56 fixed right-0 h-screen">
-        <Toc :markdownSourceCode="markdownSourceCode"></Toc>
+    <aside class="hidden min-h-screen w-56 justify-end xl:flex xl:flex-row">
+      <div class="fixed right-0 flex h-screen w-56 flex-row justify-end">
+        <!-- <Toc :markdownSourceCode="markdownSourceCode"></Toc> -->
       </div>
     </aside>
   </div>

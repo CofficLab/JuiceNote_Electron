@@ -1,9 +1,9 @@
 <template>
-  <div class="w-full flex flex-col">
+  <div class="flex w-full flex-col">
     <!-- 图书名 -->
-    <div class="fixed flex bg-base-200 flex-col w-56 z-50 border-b h-24 border-gray-300 shadow-sm">
+    <div class="fixed z-50 flex h-24 w-56 flex-col border-b border-gray-300 bg-base-200 shadow-sm">
       <h1
-        class="text-primary h-full items-center border-r-2 border-gray-300 flex justify-center text-lg md:text-2xl lg:text-3xl xl:text-3xl"
+        class="flex h-full items-center justify-center border-r-2 border-gray-300 text-lg text-primary md:text-2xl lg:text-3xl xl:text-3xl"
       >
         {{ book.name }}
       </h1>
@@ -17,8 +17,8 @@
     </div>
 
     <!-- 章节与页面 -->
-    <div class="overscroll-auto overflow-auto h-screen mt-0 mb-24 pb-48 pr-4 pt-24">
-      <ul class="menu menu-compact flex flex-col w-full p-0 px-1 overflow-scroll" v-for="(item, index) in chapters">
+    <div class="mt-0 mb-24 h-screen overflow-auto overscroll-auto pb-48 pr-4 pt-24">
+      <ul class="menu menu-compact flex w-full flex-col overflow-scroll p-0 px-1" v-for="(item, index) in chapters">
         <li v-if="index > 0"></li>
         <SideMenuItem :item="item" :id="item.id"></SideMenuItem>
       </ul>
@@ -52,7 +52,7 @@ export default defineComponent({
     },
     chapters(): BookNode[] {
       if (this.tabs.length > 0) {
-        console.log("当前图书需要展示tabs");
+        // console.log("当前图书需要展示tabs");
         return this.tabs.find((tab) => tab.shouldActive()).getChildren();
       }
 
