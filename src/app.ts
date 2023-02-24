@@ -6,6 +6,7 @@ import App from './views/App.vue'
 import 'mavon-editor/dist/css/index.css'
 import "tailwindcss/tailwind.css"
 import 'highlight.js/styles/github-dark.css'
+import '../public/tiny/tinymce.min.js'
 import CodeRunner from './tools/CodeRunner'
 import FullScreenController from './controllers/FullScreenController'
 

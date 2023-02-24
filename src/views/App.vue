@@ -37,6 +37,7 @@
       <!-- 内容区域与右侧导航 -->
       <main class="mt-16 flex w-full justify-center px-4">
         <Show v-if="!editorMode"></Show>
+        <!-- <TinyMCE v-show="editorMode"></TinyMCE> -->
         <Edit v-if="editorMode"></Edit>
       </main>
     </div>
