@@ -27,7 +27,7 @@ Object.assign(window, {
   Alpine: Alpine,
   runner: CodeRunner,
   loadMyJS: function () {
-    return
+    // return
     console.log("load my js");
     let scriptDom = document.createElement("script");
     scriptDom.innerHTML = readFileSync(join(Config.markdownRootPath, "/footer.js")).toString();

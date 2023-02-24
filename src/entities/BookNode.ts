@@ -6,7 +6,8 @@ import FileTree from "../tools/FileTree";
 import Config from "./Config";
 import { writeFileSync } from "fs";
 import { writeFile } from "fs";
-import { mkdir } from "fs";
+import { mkdirSync } from "fs";
+import { existsSync, stat } from "fs";
 
 class BookNode {
     public path: string = ''
@@ -243,21 +244,17 @@ class BookNode {
         let bookPath = path.join(Config.renderedHtmlPath, this.getBook().name)
         let renderedPath = path.join(bookPath, this.id).replace('.md', '.html')
 
-        mkdir(bookPath, (err) => {
+        if (!existsSync(bookPath)) {
+            mkdirSync(bookPath)
+        }
+
+        writeFile(renderedPath, content, (err) => {
             if (err) {
-                console.log('创建渲染目录中的图书目录发生错误', err)
-                return
+                console.log('将渲染好的页面存入文件系统发生错误', err)
+            } else {
+                // console.log(this.id + '  渲染结果已存入  ' + renderedPath)
             }
-
-            writeFile(renderedPath, content, (err) => {
-                if (err) {
-                    console.log('将渲染好的页面存入文件系统发生错误', err)
-                } else {
-                    console.log(this.id + '  渲染结果已存入  ' + renderedPath)
-                }
-            })
         })
-
     }
 }
 

@@ -8,11 +8,10 @@
       </div>
     </aside>
 
-    <div class="flex flex-grow flex-col bg-cyan-800/10">
+    <div class="flex flex-grow flex-col bg-base-200">
       <!-- 顶栏 -->
       <div class="draggable fixed z-50 flex h-12 w-full justify-between border-b border-gray-300 bg-base-200 shadow">
         <div class="ml-20 flex w-full items-center lg:ml-2">
-          <!-- <Address v-if="!isProd"></Address> -->
           <Breadcrumbs></Breadcrumbs>
         </div>
         <div class="flex w-full flex-row items-center justify-end pr-4 lg:mr-56">
@@ -153,9 +152,5 @@ export default defineComponent({
 
 .h1 {
   @apply text-3xl;
-}
-
-.toastui-editor-contents {
-  @apply prose-xl bg-white p-8 pb-12 shadow-lg !important;
 }
 </style>

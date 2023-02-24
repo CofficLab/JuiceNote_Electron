@@ -1,9 +1,8 @@
 <template>
-  <div class="flex w-full flex-row">
-    <div id="viewer" class="w-full"></div>
-    <div class="hidden" ref="script"></div>
+  <div class="flex w-full flex-row justify-between">
+    <div id="viewer" class="flex w-full justify-center"></div>
 
-    <!-- 文章的右侧栏 -->
+    <!-- 文章的右侧栏TOC -->
     <aside class="hidden min-h-screen w-56 justify-end xl:flex xl:flex-row">
       <div class="fixed right-0 flex h-screen w-56 flex-row justify-end">
         <TocContent :markdown="html"></TocContent>
@@ -26,9 +25,6 @@ import colorSyntax from "@toast-ui/editor-plugin-color-syntax";
 import Toc from "toc-maker";
 import Editor from "@toast-ui/editor";
 import TocContent from "../components/TocContent.vue";
-import Config from "../entities/Config";
-import { writeFile } from "fs";
-import { join } from "path";
 
 export default defineComponent({
   data() {
@@ -50,7 +46,7 @@ export default defineComponent({
   },
   methods: {
     loadViewer: function () {
-      let viewer = Editor.factory({
+      Editor.factory({
         viewer: true,
         el: document.querySelector("#viewer") ?? document.createElement("div"),
         initialValue: RouteController.getCurrentPage().markdownSourceCode(),
@@ -77,3 +73,9 @@ export default defineComponent({
   components: { TocContent },
 });
 </script>
+
+<style lang="postcss">
+.toastui-editor-contents {
+  @apply prose bg-base-100 p-8 pb-12 dark:prose-invert xl:prose-lg  !important;
+}
+</style>
