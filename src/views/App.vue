@@ -19,7 +19,7 @@
           <span class="ml-4" v-if="editorMode"></span>
           <Languages></Languages>
           <OfficialLink></OfficialLink>
-          <!-- <BtnTerminal></BtnTerminal> -->
+          <BtnTerminal></BtnTerminal>
           <Toast></Toast>
           <GitCommit v-if="!isProd" class="hidden lg:flex"></GitCommit>
           <Delete v-if="!isProd" class="hidden lg:flex"></Delete>

@@ -1,15 +1,15 @@
 <template>
-  <div class="dropdown dropdown-end w-0 bg-red-300 mt-12" v-bind:class="{ 'dropdown-open': open == true }">
+  <div class="dropdown-end dropdown mt-12 w-0 bg-red-300" v-bind:class="{ 'dropdown-open': open == true }">
     <label class="swap" v-bind:class="{ 'swap-active': open }">
-      <div class="swap-on -translate-x-96 mr-96">
-        <Terminal></Terminal>
+      <div class="swap-on mr-96 -translate-x-96">
+        <Terminal v-if="open"></Terminal>
       </div>
     </label>
   </div>
 
   <button
     tabindex="0"
-    class="btn m-1 btn-sm btn-ghost my-auto items-center tooltip tooltip-left flex"
+    class="btn-ghost tooltip tooltip-left btn-sm btn m-1 my-auto flex items-center"
     data-tip="打开终端"
     v-bind:onClick="click"
     v-bind:class="{ 'btn-active': open }"
