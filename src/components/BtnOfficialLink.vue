@@ -1,8 +1,8 @@
 <template>
   <a
-    href="/"
+    href="#"
     target="_blank"
-    class="official-link btn-sm btn btn-ghost tooltip tooltip-bottom my-auto items-center flex"
+    class="official-link btn-ghost tooltip tooltip-bottom btn-sm btn my-auto flex items-center"
     data-tip="在浏览器中打开官方文档"
     ><ArrowTopRightOnSquare></ArrowTopRightOnSquare
   ></a>

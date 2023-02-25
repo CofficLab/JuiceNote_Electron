@@ -2,11 +2,7 @@
   <div class="flex w-full flex-row pb-24">
     <!-- viewer的样式在最下面 -->
     <div class="mx-auto mt-2 flex justify-center">
-      <div
-        v-show="!editMode"
-        id="viewer"
-        class="toastui-editor-defaultUI w-full justify-center bg-base-100 py-5 px-20"
-      ></div>
+      <div v-show="!editMode" id="viewer" class="w-full justify-center py-5 px-20"></div>
     </div>
 
     <div id="editor" v-show="editMode" class="container flex w-full justify-center"></div>
@@ -126,6 +122,6 @@ export default defineComponent({
 
 <style lang="postcss">
 #viewer .toastui-editor-contents {
-  @apply prose w-full bg-base-100 dark:prose-invert xl:prose-lg  !important;
+  @apply prose w-full dark:prose-invert xl:prose-lg  !important;
 }
 </style>

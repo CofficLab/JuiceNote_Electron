@@ -8,7 +8,7 @@
       </div>
     </aside>
 
-    <div class="flex flex-grow flex-col bg-base-200">
+    <div class="flex flex-grow flex-col bg-base-200 bg-cyan-800/10">
       <!-- 顶栏 -->
       <div class="draggable fixed z-50 flex h-12 w-full justify-between border-b border-gray-300 bg-base-200 shadow">
         <div class="ml-20 flex w-full items-center lg:ml-2">

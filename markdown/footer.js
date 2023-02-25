@@ -299,6 +299,15 @@ function findOutTheLanguage(className) {
 
 // window.Alpine.start();
 
+// 隐藏官方链接，在渲染开始时使用
+function resetOfficialLink() {
+  if (document.getElementsByClassName("official-link").item(0) != undefined) {
+    let officialLinkPlaceholder = document.getElementsByClassName("official-link").item(0);
+    officialLinkPlaceholder.setAttribute("href", "#");
+    officialLinkPlaceholder.classList.add("hidden");
+  }
+}
+
 function renderOfficialLink(link) {
   console.log("渲染官方链接，链接是", link);
   // 生成官方文档的链接
@@ -334,41 +343,42 @@ window.customHTMLRenderer = {
   // document(node, context) {
   //   console.log("自定义渲染document", node);
   // },
-  htmlBlock(node) {
-    console.log("自定义渲染htmlBlock", node);
-    console.log(node.literal);
-    if (node.literal.includes('class="o"') || node.literal.includes("o:")) {
-      console.log("渲染官方链接");
-      let dom = document.createElement("div");
-      dom.innerHTML = node.literal;
-      let text = dom.innerText;
-      renderOfficialLink(text);
-      return { type: "html", content: "{官方链接}" };
+  // htmlBlock(node) {
+  //   console.log("自定义渲染htmlBlock", node);
+  //   if (node.literal.includes('class="o"') || node.literal.includes("o:")) {
+  //     console.log("渲染官方链接");
+  //     let dom = document.createElement("div");
+  //     dom.innerHTML = node.literal;
+  //     let text = dom.innerText;
+  //     renderOfficialLink(text);
+  //     return { type: "html", content: "{官方链接}" };
+  //   }
+
+  //   return { type: "html", content: node.literal };
+  // },
+  heading(node, context) {
+    if (node.level == 1 && context.entering) {
+      console.log("检测到entering H1，认为渲染开始，节点ID是", node.id, node.literal);
+      resetOfficialLink();
     }
 
-    return { type: "html", content: node.literal };
+    return {
+      type: context.entering ? "openTag" : "closeTag",
+      tagName: "h" + node.level,
+      classNames: [``],
+    };
   },
-  // heading(node, context) {
-  //   return {
-  //     type: context.entering ? "openTag" : "closeTag",
-  //     tagName: "div",
-  //     classNames: [`heading-${node.level}`],
-  //   };
-  // },
   text(node, context) {
-    console.log("自定义渲染text", node);
-    const strongContent = node.parent.type === "strong";
-
-    if (node.literal.includes('class="o"') || node.literal.includes("o:")) {
+    if (node.literal.includes("o:")) {
       console.log("渲染官方链接");
-      let dom = document.createElement("div");
-      dom.innerHTML = node.literal;
       let text = node.literal.replace("o:", "");
       renderOfficialLink(text);
-      return { type: "html", content: "{官方链接}" };
-    }
+      return { type: "html", content: "" };
+    } else {
+      // console.log("自定义渲染普通文字", node.literal);
 
-    return { type: "text", content: node.literal };
+      return { type: "text", content: node.literal };
+    }
   },
   // linebreak(node, context) {
   //   return {
