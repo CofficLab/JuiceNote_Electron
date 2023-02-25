@@ -74,8 +74,6 @@ import Content from "../components/Content.vue";
 import SideMenu from "../components/SideMenu.vue";
 import Others from "../components/Others.vue";
 import ProjectTree from "../components/ProjectTree.vue";
-import CodeContainer from "../components/CodeContainer.vue";
-import CodeController from "../controllers/CodeController";
 import RouteController from "../controllers/RouteController";
 import FullScreenController from "../controllers/FullScreenController";
 import Languages from "../components/Languages.vue";
@@ -101,7 +99,6 @@ export default defineComponent({
     SideMenu,
     Others,
     ProjectTree,
-    CodeContainer,
     OfficialLink: BtnOfficialLink,
     Languages,
     BtnSave,
@@ -112,7 +109,6 @@ export default defineComponent({
     };
   },
   computed: {
-    code: () => CodeController.code,
     hideTitleBar: () => FullScreenController.full,
     isProd: (): boolean => RouteController.isProd,
     current: function () {

@@ -221,12 +221,12 @@ window.customHTMLRenderer = {
     let code = origin[2].content;
 
     // 增加代码块的横幅
-    origin.splice(0, 0, {
-      type: "html",
-      content: `
-        <div class="h-8 translate-y-16 text-yellow-500 px-2 bg-gradient-to-r from-transparent via-transparent to-cyan-500/20 text-end">${language}</div>
-      `,
-    });
+    // origin.splice(0, 0, {
+    //   type: "html",
+    //   content: `
+    //     <div class="h-8 translate-y-16 text-yellow-500 px-2 bg-gradient-to-r from-transparent via-transparent to-cyan-500/20 text-end">${language}</div>
+    //   `,
+    // });
 
     // 不提供runner，增加提示文字
     if (window.runner == undefined) {

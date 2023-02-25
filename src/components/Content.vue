@@ -23,12 +23,6 @@ import RouteController from "../controllers/RouteController";
 import colorPlugin from "@toast-ui/editor-plugin-color-syntax";
 import tableMergedCellPlugin from "@toast-ui/editor-plugin-table-merged-cell";
 import codeSyntaxHighlight from "@toast-ui/editor-plugin-code-syntax-highlight";
-import "prismjs/themes/prism.css";
-import "@toast-ui/chart/dist/toastui-chart.css";
-import "tui-color-picker/dist/tui-color-picker.css";
-import "@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css";
-import "@toast-ui/editor-plugin-table-merged-cell/dist/toastui-editor-plugin-table-merged-cell.css";
-import "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css";
 
 const chartOptions = {
   minWidth: 100,
@@ -122,6 +116,6 @@ export default defineComponent({
 
 <style lang="postcss">
 #viewer .toastui-editor-contents {
-  @apply prose w-full dark:prose-invert xl:prose-lg  !important;
+  /* @apply prose w-full dark:prose-invert xl:prose-lg  !important; */
 }
 </style>
