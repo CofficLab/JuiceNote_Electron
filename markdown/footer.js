@@ -1,3 +1,35 @@
+// 运行代码
+function run(target) {
+  if (window.runner == undefined) {
+    alert("在 APP 版本中才可以运行");
+    return;
+  }
+
+  let resultCodeWrapper = target.previousElementSibling;
+  let result = resultCodeWrapper.getElementsByTagName("code").item(0);
+
+  if (target.innerHTML == "收起") {
+    target.innerHTML = "运行";
+    resultCodeWrapper.style.display = "none";
+  } else {
+    target.innerHTML = "运行中...";
+    result.innerHTML = window.runner(
+      target.attributes["data-code"].value,
+      target.attributes["data-language"].textContent
+    );
+    resultCodeWrapper.style.display = "block";
+    target.innerHTML = "收起";
+  }
+}
+// 隐藏官方链接，在渲染开始时使用
+function resetOfficialLink() {
+  if (document.getElementsByClassName("official-link").item(0) != undefined) {
+    let officialLinkPlaceholder = document.getElementsByClassName("official-link").item(0);
+    officialLinkPlaceholder.setAttribute("href", "#");
+    officialLinkPlaceholder.classList.add("hidden");
+  }
+}
+
 // 砖块状的样式
 for (let i = 0; i < document.getElementsByClassName("brick").length; i++) {
   let brick = document.getElementsByClassName("brick").item(i);
@@ -153,209 +185,9 @@ for (let i = 0; i < document.getElementsByClassName("link").length; i++) {
   target.innerHTML = div.innerHTML;
 }
 
-// 增加代码块的横幅
-for (let i = 0; i < document.getElementsByTagName("code").length; i++) {
-  let banner = document.createElement("div");
-  let bannerClass = "code-banner";
-  codeDom = document.getElementsByTagName("code").item(i);
-  target = codeDom.parentElement;
-  language = findOutTheLanguage(codeDom.className);
-
-  if (language != "" && target.getElementsByClassName(bannerClass).length == 0) {
-    codeDom.classList.add("pr-4");
-    target.classList.add("pt-0");
-    target.classList.add("lg:pt-0", "xl:pt-0", "2xl:pt-0");
-    target.classList.add("pr-0", "lg:pr-0", "xl:pr-0", "2xl:pr-0");
-    banner.innerHTML = language;
-    banner.classList.add(bannerClass);
-    banner.classList.add("bg-gradient-to-r", "from-transparent", "via-transparent", "to-cyan-500/20");
-    banner.classList.add("px-2", "rounded-none");
-    banner.classList.add("text-end");
-    banner.classList.add("text-gray-100/40");
-    target.prepend(banner);
-  }
-}
-
-// 生成代码运行相关的dom
-if (window.runner != undefined) {
-  for (let i = 0; i < document.getElementsByClassName("run").length; i++) {
-    let target = document.getElementsByClassName("run").item(i).nextElementSibling;
-    let runner = document.createElement("div");
-    let runnerClass = "code-runner";
-    // target.classList.add('w-full')
-    // target.classList.add('ring-1')
-    runner.classList.add(runnerClass);
-    runner.classList.add("flex");
-    runner.classList.add("flex-row");
-    runner.classList.add("justify-end");
-    runner.classList.add("gap-4");
-    runner.classList.add("mt-4");
-    runner.classList.add("mr-4");
-    runner.innerHTML = "<pre><code></code></pre><button onclick=run(this)>运行</button>";
-    let btn = runner.getElementsByTagName("button").item(0);
-    let pre = runner.getElementsByTagName("pre").item(0);
-    btn.classList.add("btn");
-    btn.classList.add("ring");
-    pre.classList.add("my-0");
-    pre.classList.add("flex-grow");
-    pre.classList.add("hidden");
-    pre.classList.add("bg-base-content");
-    pre.classList.add("dark:bg-base-100");
-    btn.parentElement.classList.add("flex");
-    btn.parentElement.classList.add("flex-row");
-    btn.parentElement.classList.add("justify-end");
-    btn.parentElement.classList.add("gap-4");
-
-    if (target == undefined) {
-      console.log("不能生成代码运行按钮");
-    } else if (target.getElementsByClassName(runnerClass).length == 0) {
-      target.append(runner);
-    }
-  }
-} else {
-  for (let i = 0; i < document.getElementsByClassName("run").length; i++) {
-    let target = document.getElementsByClassName("run").item(i).nextElementSibling;
-    let runner = document.createElement("div");
-    runner.classList.add("text-end");
-    runner.classList.add("py-1");
-    runner.classList.add("text-xs");
-    runner.classList.add("text-gray-100/40");
-    runner.classList.add("pr-2");
-    runner.innerHTML = "APP 版本支持运行代码";
-
-    target.append(runner);
-  }
-}
-
-// 返回课程的平台，可能是网页或者桌面APP
-function getPlatform() {
-  if (window.runner == undefined) {
-    return "WEB";
-  }
-
-  return "APP";
-}
-
-// 运行代码
-function run(target) {
-  if (window.runner == undefined) {
-    alert("在 APP 版本中才可以运行");
-    return;
-  }
-
-  if (target.innerHTML == "收起") {
-    target.innerHTML = "运行";
-    target.parentElement.getElementsByTagName("pre").item(0).style.display = "none";
-  } else {
-    target.innerHTML = "运行中...";
-    codeDom = target.parentElement.parentElement.getElementsByTagName("code").item(0);
-    language = findOutTheLanguage(codeDom.className);
-    result = window.runner(codeDom.innerText, language);
-    target.parentElement.getElementsByTagName("code").item(0).innerHTML = result;
-    target.parentElement.getElementsByTagName("pre").item(0).style.display = "block";
-    target.innerHTML = "收起";
-  }
-}
-
-function findOutTheLanguage(className) {
-  // console.log('find out the language,class name is',className)
-  language = "";
-
-  if (
-    className.includes("language-python3") ||
-    className.includes("language-Python3") ||
-    className.includes("language-python")
-  ) {
-    language = "Python";
-  }
-
-  if (className.includes("language-php")) {
-    language = "PHP";
-  }
-
-  if (className.includes("language-java")) {
-    language = "Java";
-  }
-
-  if (className.includes("language-sh")) {
-    language = "Shell";
-  }
-
-  if (className.includes("language-go") || className.includes("language-golang")) {
-    language = "Golang";
-  }
-
-  if (
-    className.includes("language-js") ||
-    className.includes("language-JavaScript") ||
-    className.includes("language-javaScript") ||
-    className.includes("language-javascript")
-  ) {
-    language = "JavaScript";
-  }
-
-  return language;
-}
-
 // window.Alpine.start();
 
-// 隐藏官方链接，在渲染开始时使用
-function resetOfficialLink() {
-  if (document.getElementsByClassName("official-link").item(0) != undefined) {
-    let officialLinkPlaceholder = document.getElementsByClassName("official-link").item(0);
-    officialLinkPlaceholder.setAttribute("href", "#");
-    officialLinkPlaceholder.classList.add("hidden");
-  }
-}
-
-function renderOfficialLink(link) {
-  console.log("渲染官方链接，链接是", link);
-  // 生成官方文档的链接
-  if (document.getElementsByClassName("official-link").item(0) != undefined) {
-    let officialLinkPlaceholder = document.getElementsByClassName("official-link").item(0);
-    officialLinkPlaceholder.href = link;
-    officialLinkPlaceholder.classList.remove("hidden");
-  } else {
-    // 没有预定义位置时，自动生成样式
-    for (let i = 0; i < document.getElementsByClassName("o").length; i++) {
-      let target = document.getElementsByClassName("o").item(i);
-      let link = document.createElement("a");
-      let href = target.innerText;
-
-      target.innerHTML = "";
-      target.classList.add("w-full", "flex", "mb-2", "text-center");
-
-      link.innerHTML = "官方文档";
-      link.target = "_blank";
-      link.href = href;
-      link.classList.add("no-underline", "text-base");
-      link.classList.add("px-4", "py-2", "w-full");
-      // link.classList.add('shadow-lg')
-      link.classList.add("ring-1", "border-t-8", "border-yellow-900/50", "rounded-sm");
-      link.classList.add("bg-cyan-500/50", "dark:bg-cyan-900/70");
-
-      target.append(link);
-    }
-  }
-}
-
 window.customHTMLRenderer = {
-  // document(node, context) {
-  //   console.log("自定义渲染document", node);
-  // },
-  // htmlBlock(node) {
-  //   console.log("自定义渲染htmlBlock", node);
-  //   if (node.literal.includes('class="o"') || node.literal.includes("o:")) {
-  //     console.log("渲染官方链接");
-  //     let dom = document.createElement("div");
-  //     dom.innerHTML = node.literal;
-  //     let text = dom.innerText;
-  //     renderOfficialLink(text);
-  //     return { type: "html", content: "{官方链接}" };
-  //   }
-
-  //   return { type: "html", content: node.literal };
-  // },
   heading(node, context) {
     if (node.level == 1 && context.entering) {
       console.log("检测到entering H1，认为渲染开始，节点ID是", node.id, node.literal);
@@ -369,21 +201,62 @@ window.customHTMLRenderer = {
     };
   },
   text(node, context) {
+    // 渲染官方链接
     if (node.literal.includes("o:")) {
-      console.log("渲染官方链接");
-      let text = node.literal.replace("o:", "");
-      renderOfficialLink(text);
-      return { type: "html", content: "" };
-    } else {
-      // console.log("自定义渲染普通文字", node.literal);
-
-      return { type: "text", content: node.literal };
+      let officialLinkPlaceholder = document.getElementsByClassName("official-link").item(0);
+      officialLinkPlaceholder.href = node.literal.replace("o:", "");
+      officialLinkPlaceholder.classList.remove("hidden");
     }
+
+    // 清空当前的特殊占位符
+    if (node.literal.includes("run:")) return { type: "text", content: "" };
+    if (node.literal.includes("o:")) return { type: "text", content: "" };
+
+    // 其他文字原样返回
+    return context.origin();
   },
-  // linebreak(node, context) {
-  //   return {
-  //     type: "html",
-  //     content: "\n<br />\n",
-  //   };
-  // },
+  codeBlock(node, context) {
+    let origin = context.origin();
+    let language = origin[1].attributes["data-language"];
+    let code = origin[2].content;
+
+    // 增加代码块的横幅
+    origin.splice(0, 0, {
+      type: "html",
+      content: `
+        <div class="h-8 translate-y-16 text-yellow-500 px-2 bg-gradient-to-r from-transparent via-transparent to-cyan-500/20 text-end">${language}</div>
+      `,
+    });
+
+    // 不提供runner，增加提示文字
+    if (window.runner == undefined) {
+      origin.splice(5, 0, {
+        type: "html",
+        content: `
+        <div class='flex text-end mt-0 text-sm'>APP版本支持运行代码</div>
+      `,
+      });
+    }
+
+    // 提供runner且上一个节点是运行标记：run:
+    if (node.prev.firstChild?.literal == "run:") {
+      origin.splice(6, 0, {
+        type: "html",
+        content: `
+        <div class='flex flex-row mt-0 justify-end gap-4 -translate-y-14'> 
+          <pre class='bg-base-content ring my-0 px-1 hidden flex-grow'><code></code></pre>
+          <div class='btn ring run mt-8' data-language='${language}' data-code='${code}'>运行</div>
+        </div>
+      `,
+      });
+    }
+
+    return origin;
+  },
 };
+
+document.addEventListener("click", function (event) {
+  if (event.target.classList.contains("run")) {
+    run(event.target);
+  }
+});

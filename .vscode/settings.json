@@ -20,6 +20,7 @@
     "fromkeys",
     "hightlight",
     "katex",
+    "linebreak",
     "mavon",
     "moxiaobei",
     "postcss",
