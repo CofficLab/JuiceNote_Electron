@@ -216,40 +216,54 @@ window.customHTMLRenderer = {
     return context.origin();
   },
   codeBlock(node, context) {
+    console.log(typeof node);
+    console.log(node);
     let origin = context.origin();
     let language = origin[1].attributes["data-language"];
     let code = origin[2].content;
 
+    console.log(origin);
+    let el = document.createElement("div");
+    el.innerHTML = origin[2].content;
+    el.innerHTML = window.hljs.highlightAuto(origin[2].content).value;
+
+    window.line(el);
+    console.log(el.innerHTML);
+    origin[2] = {
+      type: "html",
+      content: el.innerHTML,
+    };
+
     // 增加代码块的横幅
-    // origin.splice(0, 0, {
-    //   type: "html",
-    //   content: `
-    //     <div class="h-8 translate-y-16 text-yellow-500 px-2 bg-gradient-to-r from-transparent via-transparent to-cyan-500/20 text-end">${language}</div>
-    //   `,
-    // });
+    origin.splice(0, 0, {
+      type: "html",
+      content: `
+        <div class="h-8 translate-y-16 text-yellow-500 px-2 bg-gradient-to-r from-transparent via-transparent to-cyan-500/20 text-end">${language}</div>
+      `,
+    });
 
     // 不提供runner，增加提示文字
-    if (window.runner == undefined) {
-      origin.splice(5, 0, {
-        type: "html",
-        content: `
-        <div class='flex text-end mt-0 text-sm'>APP版本支持运行代码</div>
-      `,
-      });
-    }
+    // if (window.runner == undefined) {
+    //   origin.splice(5, 0, {
+    //     type: "html",
+    //     content: `
+    //     <div class='flex text-end mt-0 text-sm'>APP版本支持运行代码</div>
+    //   `,
+    //   });
+    // }
 
     // 提供runner且上一个节点是运行标记：run:
-    if (node.prev.firstChild?.literal == "run:") {
-      origin.splice(6, 0, {
-        type: "html",
-        content: `
-        <div class='flex flex-row mt-0 justify-end gap-4 -translate-y-14'> 
-          <pre class='bg-base-content ring my-0 px-1 hidden flex-grow'><code></code></pre>
-          <div class='btn ring run mt-8' data-language='${language}' data-code='${code}'>运行</div>
-        </div>
-      `,
-      });
-    }
+    // if (node.prev.firstChild?.literal == "run:") {
+    //   origin.splice(6, 0, {
+    //     type: "html",
+    //     content: `
+    //     <div class='flex flex-row mt-0 justify-end gap-4 -translate-y-14'>
+    //       <pre class='bg-base-content ring my-0 px-1 hidden flex-grow'><code></code></pre>
+    //       <div class='btn ring run mt-8' data-language='${language}' data-code='${code}'>运行</div>
+    //     </div>
+    //   `,
+    //   });
+    // }
 
     return origin;
   },

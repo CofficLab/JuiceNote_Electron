@@ -13,18 +13,9 @@
 </template>
 
 <script lang="ts">
-import "prismjs/themes/prism.css";
 import "tui-color-picker/dist/tui-color-picker.css";
 import "@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css";
 import "@toast-ui/editor-plugin-table-merged-cell/dist/toastui-editor-plugin-table-merged-cell.css";
-import "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css";
-import Prism from "prismjs";
-// 不导入这个，导入PHP会报错
-import "prismjs/components/prism-markup-templating.js";
-import "prismjs/components/prism-go.js";
-import "prismjs/components/prism-php.js";
-import "prismjs/components/prism-python.js";
-import "prismjs/components/prism-java.js";
 import { defineComponent } from "vue";
 import Editor from "@toast-ui/editor";
 import chart from "@toast-ui/editor-plugin-chart";
@@ -33,7 +24,7 @@ import chartPlugin from "@toast-ui/editor-plugin-chart";
 import RouteController from "../controllers/RouteController";
 import colorPlugin from "@toast-ui/editor-plugin-color-syntax";
 import tableMergedCellPlugin from "@toast-ui/editor-plugin-table-merged-cell";
-import codeSyntaxHighlight from "@toast-ui/editor-plugin-code-syntax-highlight";
+import Render from "../tools/Render";
 
 const chartOptions = {
   minWidth: 100,
@@ -41,11 +32,6 @@ const chartOptions = {
   minHeight: 100,
   maxHeight: 300,
 };
-const plugins = [
-  // colorSyntax,
-  [codeSyntaxHighlight, { highlighter: Prism }],
-  [chart, chartOptions],
-];
 const height = "h-full";
 
 export default defineComponent({
@@ -80,13 +66,10 @@ export default defineComponent({
         // previewStyle: "tab",
         language: "zh-cn",
         initialValue: RouteController.getCurrentPage().markdownSourceCode(),
-        plugins: [
-          [codeSyntaxHighlight, { highlighter: Prism }],
-          colorPlugin,
-          tableMergedCellPlugin,
-          [chartPlugin, chartOptions],
-        ],
-        customHTMLRenderer: window.customHTMLRenderer,
+        plugins: [colorPlugin, tableMergedCellPlugin, [chartPlugin, chartOptions]],
+        customHTMLRenderer: {
+          codeBlock: Render.codeBlock,
+        },
         // toolbarItems: [],
         events: {
           load: function () {
@@ -109,11 +92,10 @@ export default defineComponent({
         height: height,
         el: document.querySelector("#viewer") ?? document.createElement("div"),
         initialValue: RouteController.getCurrentPage().markdownSourceCode(),
-        plugins: [
-          [codeSyntaxHighlight, { highlighter: Prism }],
-          [chart, chartOptions],
-        ],
-        customHTMLRenderer: window.customHTMLRenderer,
+        plugins: [[chart, chartOptions]],
+        customHTMLRenderer: {
+          codeBlock: Render.codeBlock,
+        },
       });
 
       RouteController.renderedHtml = document.querySelector(".toastui-editor-contents")?.innerHTML ?? "";
