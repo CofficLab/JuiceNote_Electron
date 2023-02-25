@@ -1,24 +1,11 @@
 import hljs from 'highlight.js/lib/core';
-import { lineNumbersBlock } from '../assets/hljs-line-numbers.js'
-import { CustomHTMLRenderer } from "@toast-ui/editor/types";
-import 'highlight.js/styles/github.css'
-import javascript from 'highlight.js/lib/languages/javascript';
-
-hljs.registerLanguage('javascript', javascript);
-
-class TuiNode {
-    id: number = 1
-    level: number = 1
-    literal: string = ''
-}
-
-class TuiContext {
-    entering: boolean = false
-    origin(): string[] { return [''] }
-}
+import { CustomHTMLRenderer, HTMLMdNode, MdLikeNode } from "@toast-ui/editor/types";
+// import 'highlight.js/styles/github.css'
+import 'highlight.js/styles/github-dark.css'
+// import 'highlight.js/styles/github-dark-dimmed.css'
 
 let Render: CustomHTMLRenderer = {
-    heading(node: TuiNode, context: TuiContext): object {
+    heading(node, context): object {
         if (node.level == 1 && context.entering) {
             console.log("检测到entering H1，认为渲染开始，节点ID是", node.id, node.literal);
             // resetOfficialLink();
@@ -31,7 +18,7 @@ let Render: CustomHTMLRenderer = {
         };
     },
 
-    text(node: TuiNode, context: TuiContext) {
+    text(node, context) {
         // 渲染官方链接
         let officialLinkPlaceholder = document.getElementsByClassName("official-link").item(0);
         if (node.literal.includes("o:") && officialLinkPlaceholder != undefined) {

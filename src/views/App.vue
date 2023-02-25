@@ -15,7 +15,6 @@
           <Breadcrumbs></Breadcrumbs>
         </div>
         <div class="flex w-full flex-row items-center justify-end pr-4 lg:mr-56">
-          <BtnSave v-if="editorMode"></BtnSave>
           <span class="ml-4" v-if="editorMode"></span>
           <Languages></Languages>
           <OfficialLink></OfficialLink>
@@ -55,7 +54,6 @@
 import { defineComponent } from "vue";
 import BtnTerminal from "../components/BtnTerminal.vue";
 import BtnMore from "../components/BtnMore.vue";
-import BtnSave from "../components/BtnSave.vue";
 import BtnEdit from "../components/BtnEdit.vue";
 import BtnAdd from "../components/BtnAdd.vue";
 import BtnHome from "../components/BtnHome.vue";
@@ -101,7 +99,6 @@ export default defineComponent({
     ProjectTree,
     OfficialLink: BtnOfficialLink,
     Languages,
-    BtnSave,
   },
   data() {
     return {
