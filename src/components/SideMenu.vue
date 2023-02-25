@@ -48,7 +48,9 @@ export default defineComponent({
         return [];
       }
 
-      return this.book.getChildren();
+      return this.book.getChildren().filter((child) => {
+        return !child.isPage();
+      });
     },
     chapters(): BookNode[] {
       if (this.tabs.length > 0) {

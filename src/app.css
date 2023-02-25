@@ -1,0 +1,140 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.draggable {
+  -webkit-app-region: drag;
+}
+
+.prose {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply -mt-40 pt-40;
+  }
+}
+
+.table-of-contents {
+  @apply prose z-10 mx-auto rounded-none;
+  ul {
+    @apply fixed z-10 list-none pl-1;
+
+    a {
+      @apply z-0 no-underline;
+    }
+  }
+}
+.draggable {
+  -webkit-app-region: drag;
+}
+
+.prose {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply -mt-40 pt-40;
+  }
+}
+
+.h1 {
+  @apply text-3xl;
+}
+
+.brick {
+  @apply rounded
+  bg-sky-500
+  text-center
+  shadow-2xl
+  transition
+  duration-300
+  hover:scale-105
+  dark:bg-sky-800;
+}
+
+.brick-red {
+  @apply rounded
+  bg-red-500
+  text-center
+  shadow-2xl
+  transition
+  duration-300
+  hover:scale-105
+  dark:bg-red-800;
+}
+
+.brick-yellow {
+  @apply rounded
+  bg-yellow-500
+  text-center
+  shadow-2xl
+  transition
+  duration-300
+  hover:scale-105
+  dark:bg-yellow-800;
+}
+
+.brick-cyan {
+  @apply rounded
+  bg-cyan-500
+  text-center
+  shadow-2xl
+  transition
+  duration-500
+  hover:scale-110
+  dark:bg-cyan-800;
+}
+
+.bg-cyan {
+  @apply bg-cyan-500/40
+  shadow
+  dark:bg-cyan-800/20;
+}
+
+.bg-sky {
+  @apply bg-sky-500
+  dark:bg-sky-800;
+}
+
+.bg-yellow {
+  @apply bg-yellow-500
+  dark:bg-yellow-800;
+}
+
+.banner {
+  @apply mb-8 flex
+flex-row
+  justify-start
+  gap-4
+  rounded-xl
+  bg-gradient-to-r
+  from-cyan-800/30
+  py-3
+  px-2
+  ring-1;
+}
+
+.warn {
+  @apply mb-4
+  flex
+  flex-row
+  justify-start
+  rounded-xl
+  bg-gradient-to-r
+  from-yellow-800/30
+  py-3
+  px-2
+  ring-1;
+}
+
+.ask {
+  @apply mb-4
+  flex flex-col gap-0
+  rounded-sm bg-sky-800/20 py-2
+  px-2 ring-1;
+}

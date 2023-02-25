@@ -4,7 +4,7 @@ import { ipcRenderer } from 'electron'
 import App from './views/App.vue'
 import CodeRunner from './tools/CodeRunner'
 import FullScreenController from './controllers/FullScreenController'
-import "tailwindcss/tailwind.css"
+import "./app.css"
 import "@toast-ui/editor/dist/toastui-editor.css";
 import "tui-color-picker/dist/tui-color-picker.css";
 import "@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css";
@@ -28,8 +28,3 @@ Object.assign(window, {
 
 const app = createApp(App)
 app.mount('#app')
-
-
-
-
-

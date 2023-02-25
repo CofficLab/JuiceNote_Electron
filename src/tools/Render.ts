@@ -1,14 +1,28 @@
 import hljs from 'highlight.js/lib/core';
-import { CustomHTMLRenderer, HTMLMdNode, MdLikeNode } from "@toast-ui/editor/types";
+import { CustomHTMLRenderer, HTMLMdNode, MdLikeNode, HTMLMdNodeConvertor } from "@toast-ui/editor/types";
 // import 'highlight.js/styles/github.css'
 import 'highlight.js/styles/github-dark.css'
+import { Context, HeadingMdNode, HTMLConvertor, HTMLToken, MdNode } from '@toast-ui/editor/types/toastmark';
+import { NodeInfo, ToMdConvertor, ToMdConvertorContext, ToMdConvertorReturnValues } from '@toast-ui/editor/types/convertor';
+import { NodeViewPropMap } from '@toast-ui/editor/types/plugin';
+import { NodeRangeInfo } from '@toast-ui/editor/types/editor';
+import { MdContext } from '@toast-ui/editor/types/spec';
 // import 'highlight.js/styles/github-dark-dimmed.css'
 
+// 隐藏官方链接，在渲染开始时使用
+function resetOfficialLink() {
+    let officialLinkPlaceholder = document.getElementsByClassName("official-link").item(0);
+    if (officialLinkPlaceholder != undefined) {
+        officialLinkPlaceholder.setAttribute("href", "#");
+        officialLinkPlaceholder.classList.add("hidden");
+    }
+}
+
 let Render: CustomHTMLRenderer = {
-    heading(node, context): object {
+    heading(node: MdLikeNode, context): HTMLToken {
         if (node.level == 1 && context.entering) {
-            console.log("检测到entering H1，认为渲染开始，节点ID是", node.id, node.literal);
-            // resetOfficialLink();
+            console.log("检测到entering H1，认为渲染开始", node.literal);
+            resetOfficialLink();
         }
 
         return {
@@ -18,23 +32,28 @@ let Render: CustomHTMLRenderer = {
         };
     },
 
-    text(node, context) {
+    text(node: MdLikeNode, context: ToMdConvertorContext): ToMdConvertorReturnValues {
         // 渲染官方链接
         let officialLinkPlaceholder = document.getElementsByClassName("official-link").item(0);
-        if (node.literal.includes("o:") && officialLinkPlaceholder != undefined) {
+        if (node.literal?.includes("o:") && officialLinkPlaceholder != undefined) {
             officialLinkPlaceholder.setAttribute('href', node.literal.replace("o:", ""));
             officialLinkPlaceholder.classList.remove("hidden");
         }
 
         // 清空当前的特殊占位符
-        if (node.literal.includes("run:")) return { type: "text", content: "" };
-        if (node.literal.includes("o:")) return { type: "text", content: "" };
+        if (node.literal?.includes("run:")) return { type: "text", content: "" };
+        if (node.literal?.includes("o:")) return { type: "text", content: "" };
+
+        if (context == undefined || context == null) {
+            return {}
+        }
 
         // 其他文字原样返回
         return context.origin();
     },
 
-    codeBlock(node: TuiNode, context: TuiContext) {
+    codeBlock(node, context) {
+        console.log('渲染codeBlock')
         let origin = context.origin();
         let language = origin[1].attributes["data-language"];
         let code = origin[2].content;
@@ -53,8 +72,6 @@ let Render: CustomHTMLRenderer = {
             content: el.innerHTML,
         };
 
-        console.log(origin)
-
         // 增加代码块的横幅
         //     origin.splice(0, 0, {
         //         type: "html",
@@ -64,7 +81,7 @@ let Render: CustomHTMLRenderer = {
         //     });
 
         // 不提供runner，增加提示文字
-        if (window.runner == undefined) {
+        if (!Object.hasOwn(window, 'runner')) {
             origin.splice(5, 0, {
                 type: "html",
                 content: `

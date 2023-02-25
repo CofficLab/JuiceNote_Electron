@@ -235,8 +235,14 @@ class BookNode {
     }
 
     // 保存文章内容
-    public save(content: string) {
-        return writeFileSync(this.path, content)
+    public save(content: string): string {
+        if (this.markdownSourceCode() == content) {
+            return '没有变化，无须保存'
+        }
+
+        writeFileSync(this.path, content)
+
+        return '保存成功'
     }
 
     public saveRendered(content: string | undefined) {

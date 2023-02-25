@@ -6,12 +6,39 @@
   <link rel="icon" href="/favicon.ico" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <!-- <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" /> -->
-  <title>Learning All in One</title>
+  <title>快易查</title>
 </head>
 
 <body class="bg-base-100 text-base-content">
   <div id="app"></div>
   <script type="module" src="/src/app.ts"></script>
+
+  <script>
+    document.addEventListener("click", function (event) {
+      if (event?.target?.classList.contains("run")) {
+        let target = event.target
+        let resultCodeWrapper = target.previousElementSibling;
+        let resultElement = resultCodeWrapper?.getElementsByTagName("code").item(0);
+        if (resultCodeWrapper == null || resultElement == null) {
+          console.log('找不到结果展示区域，代码不能运行')
+          return
+        }
+
+        if (target.innerHTML == "收起") {
+          target.innerHTML = "运行";
+          resultCodeWrapper.style.display = "none";
+        } else {
+          target.innerHTML = "运行中...";
+          resultElement.innerHTML = window.runner(
+            target.attributes["data-code"].value,
+            target.attributes["data-language"].textContent
+          );
+          resultCodeWrapper.style.display = "block";
+          target.innerHTML = "收起";
+        }
+      }
+    });
+  </script>
 </body>
 
 </html>

@@ -36,7 +36,9 @@
         <!-- 内容区域与右侧导航 -->
         <main class="flex w-full justify-center px-4">
           <!-- 文章内容 -->
-          <Content></Content>
+          <Content v-if="!editorMode"></Content>
+          <!-- 编辑器 -->
+          <Editor v-if="editorMode"></Editor>
         </main>
 
         <!-- 文章的右侧栏TOC -->
@@ -75,6 +77,7 @@ import ProjectTree from "../components/ProjectTree.vue";
 import RouteController from "../controllers/RouteController";
 import FullScreenController from "../controllers/FullScreenController";
 import Languages from "../components/Languages.vue";
+import Editor from "../components/Editor.vue";
 
 export default defineComponent({
   components: {
@@ -99,6 +102,7 @@ export default defineComponent({
     ProjectTree,
     OfficialLink: BtnOfficialLink,
     Languages,
+    Editor,
   },
   data() {
     return {
@@ -115,34 +119,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style lang="postcss">
-.table-of-contents {
-  @apply prose z-10 mx-auto rounded-none;
-  ul {
-    @apply fixed z-10 list-none pl-1;
-
-    a {
-      @apply z-0 no-underline;
-    }
-  }
-}
-.draggable {
-  -webkit-app-region: drag;
-}
-
-.prose {
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    @apply -mt-40 pt-40;
-  }
-}
-
-.h1 {
-  @apply text-3xl;
-}
-</style>

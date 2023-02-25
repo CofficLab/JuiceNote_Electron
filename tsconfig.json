@@ -16,6 +16,8 @@
   },
   "include": [
     "src/**/*.ts",
+    "src/tools/FooterJS.js",
+    "src/tools/FooterJS.js",
   ],
   "references": [
     {
