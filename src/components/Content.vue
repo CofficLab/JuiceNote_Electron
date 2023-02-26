@@ -1,10 +1,8 @@
 <template>
-  <div class="flex w-full flex-row pb-24">
-    <div class="mx-auto mt-2 flex justify-center">
-      <div id="viewer" v-show="extensionName == '.md'" class="w-full justify-center py-5 px-20"></div>
+  <div class="mx-auto mt-2 flex justify-center">
+    <div id="viewer" v-show="extensionName == '.md'" class="w-full justify-center px-20 pt-5 pb-48"></div>
 
-      <CurrentVuePage v-if="extensionName == '.vue'"></CurrentVuePage>
-    </div>
+    <CurrentVuePage v-if="extensionName == '.vue'"></CurrentVuePage>
   </div>
 </template>
 
@@ -82,6 +80,9 @@ export default defineComponent({
 
 <style lang="postcss">
 #viewer .toastui-editor-contents {
-  @apply prose w-full dark:prose-invert xl:prose-lg  !important;
+  @apply prose w-full pb-48 dark:prose-invert xl:prose-lg  !important;
+  p {
+    @apply text-base-content !important;
+  }
 }
 </style>

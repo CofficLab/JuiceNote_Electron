@@ -1,20 +1,32 @@
 <template>
   <div class="fixed flex h-screen w-screen flex-row">
     <!-- 左侧栏 -->
-    <aside class="fixed left-0 hidden h-full w-56 border-r-2 border-gray-300 bg-base-200 shadow-xl lg:flex xl:flex-col">
-      <div v-bind:class="{ 'h-12': !hideTitleBar, 'h-0': hideTitleBar }" class="draggable w-56"></div>
-      <div class="fixed w-56" v-bind:class="{ 'top-12': !hideTitleBar, 'top-0': hideTitleBar }">
-        <SideMenu class="w-full"></SideMenu>
+    <aside
+      class="left-0 hidden h-screen w-56 border-r-2 border-gray-300 bg-base-200 shadow-xl dark:border-cyan-900/10 lg:flex lg:flex-col"
+    >
+      <div class="w-full">
+        <div class="draggable h-12" v-bind:class="{ 'h-12': !hideTitleBar, 'h-0': hideTitleBar }"></div>
       </div>
+      <SideMenu></SideMenu>
     </aside>
 
-    <div class="flex flex-grow flex-col overflow-hidden lg:ml-56">
+    <!-- 固定在左下角的图书logo -->
+    <div
+      v-if="current.getBook().hasLogo()"
+      class="fixed bottom-0 h-20 w-56 border-r-2 border-t border-gray-300 opacity-90 dark:border-cyan-900/10 dark:brightness-50"
+    >
+      <img :src="current.getBook().logoUrl()" alt="" />
+    </div>
+
+    <div class="flex flex-grow flex-col">
       <!-- 顶栏 -->
-      <div class="draggable z-50 flex h-12 w-full justify-between border-b border-gray-300 bg-base-200 shadow">
+      <div
+        class="draggable z-50 flex h-12 w-full justify-between border-b border-gray-300 bg-base-200 shadow dark:border-cyan-900/10"
+      >
         <div class="ml-20 flex w-full items-center lg:ml-2">
           <Breadcrumbs></Breadcrumbs>
         </div>
-        <div class="flex w-full flex-row items-center justify-end pr-4 lg:mr-56">
+        <div class="flex w-full flex-row items-center justify-end pr-4">
           <span class="ml-4" v-if="editorMode"></span>
           <Languages></Languages>
           <OfficialLink></OfficialLink>
@@ -33,8 +45,8 @@
       </div>
 
       <!-- 内容区域与右侧导航 -->
-      <div class="mt-12 flex flex-row overflow-hidden">
-        <main class="flex w-full justify-center overflow-scroll px-4">
+      <div class="mt-12 flex flex-row overflow-scroll pb-24">
+        <main class="flex w-full justify-center overflow-visible px-4">
           <!-- 文章内容 -->
           <Content v-if="!editorMode"></Content>
           <!-- 编辑器 -->
@@ -43,7 +55,7 @@
 
         <!-- 文章的右侧栏TOC -->
         <aside v-if="showToc" class="hidden min-h-screen w-72 justify-end xl:flex xl:flex-row">
-          <div class="fixed right-0 flex h-screen w-72 flex-row justify-end">
+          <div class="fixed bottom-16 top-16 right-0 flex h-screen flex-row justify-end">
             <Toc></Toc>
           </div>
         </aside>

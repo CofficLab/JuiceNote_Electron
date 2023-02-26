@@ -1,6 +1,6 @@
 <template>
-  <div class="flex h-full flex-col items-end gap-4 overflow-scroll">
-    <div class="table-of-contents w-56 overflow-scroll rounded-2xl bg-cyan-800/10" v-html="html"></div>
+  <div class="mr-2 flex h-full w-full flex-col items-end gap-4 overflow-scroll">
+    <div class="table-of-contents overflow-x-clip overflow-y-scroll" v-html="html"></div>
   </div>
 </template>
 
@@ -62,8 +62,6 @@ export default defineComponent({
 
 <style lang="postcss">
 .table-of-contents {
-  @apply rounded-2xl shadow !important;
-
   li {
     @apply list-none;
   }

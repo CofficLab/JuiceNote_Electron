@@ -8,6 +8,7 @@ import { writeFileSync } from "fs";
 import { writeFile } from "fs";
 import { mkdirSync } from "fs";
 import { existsSync, stat } from "fs";
+import { fstatSync } from "original-fs";
 
 class BookNode {
     public path: string = ''
@@ -74,6 +75,18 @@ class BookNode {
 
     public isRoot(): boolean {
         return this.id == '/'
+    }
+
+    public logo(): string {
+        return path.join(Config.imagesPath, this.name + '-logo.png')
+    }
+
+    public logoUrl(): string {
+        return this.logo().replace(Config.publicPath, '')
+    }
+
+    public hasLogo(): boolean {
+        return existsSync(this.logo())
     }
 
     public getChildren(): BookNode[] {

@@ -1,32 +1,30 @@
 <template>
-  <div class="flex w-full flex-col">
+  <div class="flex w-56 flex-col overflow-scroll">
     <!-- 图书名 -->
-    <div class="fixed z-50 flex h-24 w-56 flex-col border-b border-gray-300 bg-base-200 shadow-sm">
-      <h1
-        class="flex h-full items-center justify-center border-r-2 border-gray-300 text-lg text-primary md:text-2xl lg:text-3xl xl:text-3xl"
-      >
-        {{ book.name }}
-      </h1>
+    <h1
+      class="flex justify-center bg-gradient-to-r from-red-500 to-cyan-500 bg-clip-text pb-4 text-lg text-transparent md:text-2xl lg:text-3xl"
+    >
+      {{ book.name }}
+    </h1>
 
-      <!-- 教程与手册的TAB -->
-      <div class="tabs flex justify-center border-r-2 border-gray-300" v-if="tabs.length > 0">
-        <a class="tab tab-lifted" v-for="tab in tabs" v-bind:class="{ 'tab-active': tab.shouldActive() }"
-          ><Link :href="tab.id">{{ tab.name }}</Link></a
-        >
-      </div>
+    <!-- 教程与手册的TAB -->
+    <div class="tabs flex justify-center" v-if="tabs.length > 0">
+      <Link
+        v-for="tab in tabs"
+        v-bind:class="{ 'tab-active': tab.shouldActive() }"
+        :href="tab.id"
+        class="tab tab-lifted"
+        >{{ tab.name }}</Link
+      >
     </div>
 
     <!-- 章节与页面 -->
-    <div class="mt-0 mb-24 h-screen overflow-auto overscroll-auto pb-48 pr-4 pt-24">
-      <ul class="menu menu-compact flex w-full flex-col overflow-scroll p-0 px-1" v-for="(item, index) in chapters">
+    <div class="h-full overflow-scroll pb-24">
+      <ul class="menu menu-compact flex w-full flex-col p-0 px-1" v-for="(item, index) in chapters">
         <li v-if="index > 0"></li>
         <SideMenuItem :item="item" :id="item.id"></SideMenuItem>
       </ul>
       <div class="pointer-events-none sticky bottom-0 flex h-20"></div>
-    </div>
-
-    <div class="fixed bottom-0 h-20 w-56 border-r-2 border-t border-gray-300 opacity-90">
-      <img src="/images/go-logo.png" alt="" />
     </div>
   </div>
 </template>
