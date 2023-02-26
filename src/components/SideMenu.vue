@@ -24,6 +24,13 @@
       </ul>
       <div class="pointer-events-none sticky bottom-0 flex h-20"></div>
     </div>
+
+    <div
+      v-if="book.name == 'Golang'"
+      class="fixed bottom-0 z-50 flex w-56 flex-col border-t border-r-2 border-gray-300 bg-base-200 shadow-sm"
+    >
+      <div class="h-20 w-56 border-r-2 border-gray-300"><img src="/images/go-logo.png" alt="" /></div>
+    </div>
   </div>
 </template>
 

@@ -64,6 +64,14 @@ export default defineComponent({
 .table-of-contents {
   @apply rounded-2xl shadow !important;
 
+  li {
+    @apply list-none;
+  }
+
+  a[data-level="1"] {
+    @apply hidden;
+  }
+
   ul {
     @apply relative w-full hover:bg-transparent  !important;
 
