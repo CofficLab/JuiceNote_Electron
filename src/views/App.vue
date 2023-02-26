@@ -1,18 +1,16 @@
 <template>
-  <div class="flex flex-row">
+  <div class="fixed flex h-screen w-screen flex-row">
     <!-- 左侧栏 -->
-    <aside
-      class="fixed left-0 hidden h-screen w-56 border-r-2 border-gray-300 bg-base-200 shadow-xl lg:flex xl:flex-col"
-    >
+    <aside class="fixed left-0 hidden h-full w-56 border-r-2 border-gray-300 bg-base-200 shadow-xl lg:flex xl:flex-col">
       <div v-bind:class="{ 'h-12': !hideTitleBar, 'h-0': hideTitleBar }" class="draggable w-56"></div>
       <div class="fixed w-56" v-bind:class="{ 'top-12': !hideTitleBar, 'top-0': hideTitleBar }">
         <SideMenu class="w-full"></SideMenu>
       </div>
     </aside>
 
-    <div class="flex flex-grow flex-col lg:ml-56">
+    <div class="flex flex-grow flex-col overflow-hidden lg:ml-56">
       <!-- 顶栏 -->
-      <div class="draggable fixed z-50 flex h-12 w-full justify-between border-b border-gray-300 bg-base-200 shadow">
+      <div class="draggable z-50 flex h-12 w-full justify-between border-b border-gray-300 bg-base-200 shadow">
         <div class="ml-20 flex w-full items-center lg:ml-2">
           <Breadcrumbs></Breadcrumbs>
         </div>
@@ -34,9 +32,9 @@
         </div>
       </div>
 
-      <div class="mt-16 flex flex-row">
-        <!-- 内容区域与右侧导航 -->
-        <main class="flex w-full justify-center px-4">
+      <!-- 内容区域与右侧导航 -->
+      <div class="mt-12 flex flex-row overflow-hidden">
+        <main class="flex w-full justify-center overflow-scroll px-4">
           <!-- 文章内容 -->
           <Content v-if="!editorMode"></Content>
           <!-- 编辑器 -->
@@ -44,8 +42,8 @@
         </main>
 
         <!-- 文章的右侧栏TOC -->
-        <aside v-if="showToc" class="hidden min-h-screen w-56 justify-end xl:flex xl:flex-row">
-          <div class="fixed right-0 flex h-screen w-56 flex-row justify-end">
+        <aside v-if="showToc" class="hidden min-h-screen w-72 justify-end xl:flex xl:flex-row">
+          <div class="fixed right-0 flex h-screen w-72 flex-row justify-end">
             <Toc></Toc>
           </div>
         </aside>
