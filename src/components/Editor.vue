@@ -125,6 +125,8 @@ import RouteController from "../controllers/RouteController";
 import { writeFileSync } from "fs";
 import ToastController from "../controllers/ToastController";
 
+import x from "../tiptap_extensions/x.js";
+
 export default {
   components: {
     EditorContent,
@@ -152,6 +154,7 @@ export default {
     this.editor = new Editor({
       content: this.content,
       extensions: [
+        x,
         StarterKit,
         Document,
         Paragraph,
