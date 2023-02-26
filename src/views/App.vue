@@ -4,19 +4,8 @@
     <aside
       class="left-0 hidden h-screen w-56 border-r-2 border-gray-300 bg-base-200 shadow-xl dark:border-cyan-900/10 lg:flex lg:flex-col"
     >
-      <div class="w-full">
-        <div class="draggable h-12" v-bind:class="{ 'h-12': !hideTitleBar, 'h-0': hideTitleBar }"></div>
-      </div>
       <SideMenu></SideMenu>
     </aside>
-
-    <!-- 固定在左下角的图书logo -->
-    <div
-      v-if="current.getBook().hasLogo()"
-      class="fixed bottom-0 h-20 w-56 border-r-2 border-t border-gray-300 opacity-90 dark:border-cyan-900/10 dark:brightness-50"
-    >
-      <img :src="current.getBook().logoUrl()" alt="" />
-    </div>
 
     <div class="flex flex-grow flex-col">
       <!-- 顶栏 -->
