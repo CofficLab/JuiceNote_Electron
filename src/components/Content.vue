@@ -1,6 +1,6 @@
 <template>
   <div class="mx-auto mt-2 flex justify-center">
-    <div v-show="extensionName == '.md'" v-html="html" class="prose w-full justify-center px-20 pt-5 pb-48"></div>
+    <div v-show="extensionName != '.vue'" v-html="html" class="prose w-full justify-center px-20 pt-5 pb-48"></div>
 
     <CurrentVuePage v-if="extensionName == '.vue'"></CurrentVuePage>
   </div>

@@ -1,12 +1,11 @@
 # copy
 
-<div class="o">https://pkg.go.dev/builtin#copy</div>
+o:https://pkg.go.dev/builtin#copy
 
 ```go
 func copy(dst, src []Type) int
 ```
 
-<div class="run"></div>
 
 ```go
 package main
@@ -38,8 +37,6 @@ func main() {
 
 完整复制一份，新旧元素各占一块内存，内存地址也不一样，例如：
 
-<div class="run"></div>
-
 ```go
 package main
 import "fmt"
@@ -64,8 +61,6 @@ b := a
 ```
 
 内存中实际只占一份空间，两者内存地址一致，修改一个也会影响另一个。
-
-<div class="run"></div>
 
 ```go
 package main

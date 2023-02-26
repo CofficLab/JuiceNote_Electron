@@ -122,6 +122,8 @@ import Paragraph from "@tiptap/extension-paragraph";
 import Heading from "@tiptap/extension-heading";
 import Highlight from "@tiptap/extension-highlight";
 import RouteController from "../controllers/RouteController";
+import { writeFileSync } from "fs";
+import ToastController from "../controllers/ToastController";
 
 export default {
   components: {
@@ -192,12 +194,25 @@ export default {
   },
 
   computed: {
-    content: () => RouteController.getCurrentPage().markdownSourceCode(),
+    content: function () {
+      let current = RouteController.getCurrentPage();
+      let sourceCode = RouteController.getCurrentPage().markdownSourceCode();
+
+      if (current.path.includes(".md")) {
+        let rendered = require("markdown-it")({ html: true }).render(sourceCode);
+        console.log("渲染后的markdown", rendered);
+        return rendered;
+      }
+
+      return sourceCode;
+    },
   },
 
   methods: {
     save() {
-      RouteController.getCurrentPage().save(this.editor.getHTML());
+      let current = RouteController.getCurrentPage();
+      writeFileSync(current.path.replace(".md", ".html"), this.editor.getHTML());
+      ToastController.set("已保存");
     },
   },
 };

@@ -71,6 +71,7 @@
     "highlightjs": "^9.16.2",
     "highlightjs-line-numbers.js": "^2.8.0",
     "html-toc": "^2.0.0",
+    "markdown-it": "^13.0.1",
     "markdown-toc": "^1.2.0",
     "nconf": "^0.12.0",
     "node-pty": "^0.10.1",

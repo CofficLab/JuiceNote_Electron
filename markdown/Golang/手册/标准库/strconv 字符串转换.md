@@ -1,6 +1,6 @@
 # `strconv` 字符串转换
 
-<div class="o">https://pkg.go.dev/strconv@go1.19.4</div>
+o:https://pkg.go.dev/strconv@go1.19.4
 
 ## 简介
 
@@ -10,7 +10,6 @@
 
 ### ParseInt
 
-<div class="run"></div>
 
 ```go
 package main
@@ -43,8 +42,6 @@ func main() {
 
 `strconv.Atoi` 等价于 `strconv.ParseInt(s, 10, 0)` 。
 
-<div class="run"></div>
-
 ```go
 package main
 import "fmt"
@@ -74,7 +71,6 @@ func main() {
 
 ### FormatInt
 
-<div class="run"></div>
 
 ```go
 package main
@@ -99,7 +95,6 @@ func main() {
 
 ### FormatUint
 
-<div class="run"></div>
 
 ```go
 package main
@@ -128,8 +123,6 @@ func main() {
 
 `strconv.Itoa` 等同于 `strconv.FormatInt(int(i), 10)`。
 
-<div class="run"></div>
-
 ```go
 package main
 import "fmt"
@@ -155,7 +148,6 @@ func main() {
 
 ### ParseFloat
 
-<div class="run"></div>
 
 ```go
 package main
@@ -189,7 +181,6 @@ func main() {
 func FormatFloat(f float64, fmt byte, prec, bitSize int) string
 ```
 
-<div class="run"></div>
 
 ```go
 package main
@@ -219,7 +210,6 @@ func main() {
 
 ### ParseBool
 
-<div class="run"></div>
 
 ```go
 package main
@@ -249,7 +239,6 @@ func main() {
 
 ### FormatBool
 
-<div class="run"></div>
 
 ```go
 package main

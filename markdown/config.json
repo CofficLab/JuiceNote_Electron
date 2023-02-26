@@ -1621,7 +1621,8 @@
       "Golang@教程@函数@递归.md"
     ],
     "Golang@教程@初识": [
-      "Golang@教程@初识@认识计算机.md",
+      "Golang@教程@初识@认识进制.html",
+      "Golang@教程@初识@认识计算机.html",
       "Golang@教程@初识@认识 Golang.md",
       "Golang@教程@初识@编译与解释.md",
       "Golang@教程@初识@认识进制.md",
@@ -1635,9 +1636,9 @@
       "Golang@教程@变量与常量@指针.md"
     ],
     "Golang@教程@安装与配置": [
-      "Golang@教程@安装与配置@Windows.md",
-      "Golang@教程@安装与配置@macOS.md",
-      "Golang@教程@安装与配置@Linux.md"
+      "Golang@教程@安装与配置@Linux.html",
+      "Golang@教程@安装与配置@macOS.html",
+      "Golang@教程@安装与配置@Windows.html"
     ],
     "Golang@教程@常用语句": [
       "Golang@教程@常用语句@输出.md",

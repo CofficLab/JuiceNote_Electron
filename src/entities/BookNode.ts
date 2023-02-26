@@ -33,7 +33,7 @@ class BookNode {
             }
 
             this.path = absolutePath
-            this.name = fs.statSync(this.path).isDirectory() ? path.basename(this.path) : path.basename(this.path).replace(/.[^/.]+$/, "")
+            this.name = path.basename(this.path)
             this.id = Id.pathToId(this.path)
             this.level = this.id.split('@').length
         } else {
@@ -199,6 +199,11 @@ class BookNode {
     // 获取markdown源码
     public markdownSourceCode(): string {
         return this.hasError() ? '' : fs.readFileSync(this.path).toString()
+    }
+
+    public delete() {
+        fs.rmSync(this.path)
+        return '删除成功'
     }
 
     public firstPage(): BookNode {

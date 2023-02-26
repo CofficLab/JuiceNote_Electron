@@ -68,6 +68,13 @@ const RouteController = reactive({
 
         this.goto(this.currentPage.id)
     },
+
+    delete(): string {
+        let message = this.currentPage.delete()
+        this.goto(this.currentPage.getParent().id)
+
+        return message
+    }
 })
 
 export default RouteController

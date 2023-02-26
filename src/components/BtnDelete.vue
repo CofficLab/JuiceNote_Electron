@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button v-on:click="del" class="btn-sm btn btn-ghost my-auto tooltip tooltip-bottom" data-tip="删除章节或页面">
+    <button v-on:click="del" class="btn-ghost tooltip tooltip-bottom btn-sm btn my-auto" data-tip="删除章节或页面">
       <Trash></Trash>
     </button>
   </div>
@@ -8,13 +8,14 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import RouteController from "../controllers/RouteController";
+import ToastController from "../controllers/ToastController";
 import Trash from "../icons/trash.vue";
 
 export default defineComponent({
   methods: {
     del: function () {
-      let current = store.current;
-      store.delete(current);
+      ToastController.set(RouteController.delete());
     },
   },
   components: { Trash },
