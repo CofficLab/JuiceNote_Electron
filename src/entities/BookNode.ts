@@ -32,7 +32,7 @@ class BookNode {
             }
 
             this.path = absolutePath
-            this.name = path.basename(this.path, '.md')
+            this.name = fs.statSync(this.path).isDirectory() ? path.basename(this.path) : path.basename(this.path).replace(/.[^/.]+$/, "")
             this.id = Id.pathToId(this.path)
             this.level = this.id.split('@').length
         } else {

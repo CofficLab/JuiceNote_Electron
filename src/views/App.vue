@@ -1,14 +1,14 @@
 <template>
   <div class="flex flex-row">
     <!-- 左侧栏 -->
-    <aside class="hidden w-56 border-r-2 border-gray-300 bg-base-200 shadow-xl lg:flex xl:flex-col">
+    <aside class="hidden h-screen w-56 border-r-2 border-gray-300 bg-base-200 shadow-xl lg:flex xl:flex-col">
       <div v-bind:class="{ 'h-12': !hideTitleBar, 'h-0': hideTitleBar }" class="draggable w-56"></div>
       <div class="fixed w-56" v-bind:class="{ 'top-12': !hideTitleBar, 'top-0': hideTitleBar }">
         <SideMenu class="w-full"></SideMenu>
       </div>
     </aside>
 
-    <div class="flex flex-grow flex-col bg-base-200 bg-cyan-800/10 dark:bg-teal-900/10">
+    <div class="flex flex-grow flex-col">
       <!-- 顶栏 -->
       <div class="draggable fixed z-50 flex h-12 w-full justify-between border-b border-gray-300 bg-base-200 shadow">
         <div class="ml-20 flex w-full items-center lg:ml-2">
@@ -42,7 +42,7 @@
         </main>
 
         <!-- 文章的右侧栏TOC -->
-        <aside class="hidden min-h-screen w-56 justify-end xl:flex xl:flex-row">
+        <aside v-if="showToc" class="hidden min-h-screen w-56 justify-end xl:flex xl:flex-row">
           <div class="fixed right-0 flex h-screen w-56 flex-row justify-end">
             <Toc></Toc>
           </div>
@@ -78,6 +78,7 @@ import RouteController from "../controllers/RouteController";
 import FullScreenController from "../controllers/FullScreenController";
 import Languages from "../components/Languages.vue";
 import Editor from "../components/Editor.vue";
+import path from "path";
 
 export default defineComponent({
   components: {
@@ -116,6 +117,9 @@ export default defineComponent({
       return RouteController.getCurrentPage();
     },
     editorMode: () => RouteController.isEditMode(),
+    showToc() {
+      return path.extname(this.current.path) == ".md";
+    },
   },
 });
 </script>

@@ -1,7 +1,9 @@
 <template>
   <div class="flex w-full flex-row pb-24">
     <div class="mx-auto mt-2 flex justify-center">
-      <div id="viewer" class="w-full justify-center py-5 px-20"></div>
+      <div id="viewer" v-show="extensionName == '.md'" class="w-full justify-center py-5 px-20"></div>
+
+      <CurrentVuePage v-if="extensionName == '.vue'"></CurrentVuePage>
     </div>
   </div>
 </template>
@@ -12,6 +14,9 @@ import Editor from "@toast-ui/editor";
 import chart from "@toast-ui/editor-plugin-chart";
 import RouteController from "../controllers/RouteController";
 import Render from "../tools/Render";
+import { defineAsyncComponent } from "vue";
+import { writeFileSync } from "fs";
+import path from "path";
 
 const chartOptions = {
   minWidth: 100,
@@ -20,19 +25,40 @@ const chartOptions = {
   maxHeight: 300,
 };
 
+const currentVuePage = "./temp/Current.vue";
+
 export default defineComponent({
+  components: {
+    CurrentVuePage: defineAsyncComponent(() => import("../../" + currentVuePage)),
+  },
+  data() {
+    return {
+      extensionName: ".md",
+    };
+  },
   computed: {
     current: () => RouteController.currentPage,
   },
   watch: {
     current() {
-      this.loadViewer();
+      this.show();
     },
   },
   mounted: function () {
-    this.loadViewer();
+    this.show();
   },
   methods: {
+    show() {
+      console.log("current is", this.current.id);
+      this.extensionName = path.extname(this.current.path);
+      if (this.extensionName == ".vue") {
+        writeFileSync(currentVuePage, this.current.markdownSourceCode());
+      }
+
+      if (this.extensionName == ".md") {
+        this.loadViewer();
+      }
+    },
     loadViewer: function () {
       Editor.factory({
         viewer: true,
