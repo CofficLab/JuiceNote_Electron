@@ -1,14 +1,16 @@
 <template>
   <div class="flex flex-row">
     <!-- 左侧栏 -->
-    <aside class="hidden h-screen w-56 border-r-2 border-gray-300 bg-base-200 shadow-xl lg:flex xl:flex-col">
+    <aside
+      class="fixed left-0 hidden h-screen w-56 border-r-2 border-gray-300 bg-base-200 shadow-xl lg:flex xl:flex-col"
+    >
       <div v-bind:class="{ 'h-12': !hideTitleBar, 'h-0': hideTitleBar }" class="draggable w-56"></div>
       <div class="fixed w-56" v-bind:class="{ 'top-12': !hideTitleBar, 'top-0': hideTitleBar }">
         <SideMenu class="w-full"></SideMenu>
       </div>
     </aside>
 
-    <div class="flex flex-grow flex-col">
+    <div class="flex flex-grow flex-col lg:ml-56">
       <!-- 顶栏 -->
       <div class="draggable fixed z-50 flex h-12 w-full justify-between border-b border-gray-300 bg-base-200 shadow">
         <div class="ml-20 flex w-full items-center lg:ml-2">
