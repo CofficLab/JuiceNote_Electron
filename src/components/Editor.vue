@@ -27,6 +27,12 @@
       <button @click="editor.chain().focus().toggleBanner().run()" :class="{ 'is-active': editor.isActive('banner') }">
         提示框
       </button>
+      <button
+        @click="editor.chain().focus().toggleOfficialLink().run()"
+        :class="{ 'is-active': editor.isActive('official-link') }"
+      >
+        官网
+      </button>
       <button @click="editor.chain().focus().undo().run()" :disabled="!editor.can().chain().focus().undo().run()">
         取消
       </button>
@@ -54,8 +60,8 @@ import Highlight from "@tiptap/extension-highlight";
 import RouteController from "../controllers/RouteController";
 import { writeFileSync } from "fs";
 import ToastController from "../controllers/ToastController";
-
 import Banner from "../tiptap_extensions/Banner.js";
+import OfficialLink from "../tiptap_extensions/OfficialLink.js";
 
 export default {
   components: {
@@ -64,6 +70,7 @@ export default {
     Paragraph,
     Text,
     Banner,
+    OfficialLink,
   },
 
   data() {
@@ -84,7 +91,7 @@ export default {
   mounted() {
     this.editor = new Editor({
       content: this.content,
-      extensions: [Banner, StarterKit],
+      extensions: [Banner, StarterKit, OfficialLink],
       autofocus: true,
       editable: true,
       injectCSS: false,
@@ -138,6 +145,7 @@ export default {
       let current = RouteController.getCurrentPage();
       writeFileSync(current.path.replace(".md", ".html"), this.editor.getHTML());
       ToastController.set("已保存");
+      RouteController.toggleEditMode();
     },
   },
 };
