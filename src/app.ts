@@ -5,6 +5,7 @@ import App from './views/App.vue'
 import CodeRunner from './tools/CodeRunner'
 import FullScreenController from './controllers/FullScreenController'
 import "./app.css"
+import 'virtual:svg-icons-register'
 
 // 检测全屏状态
 ipcRenderer.on('main-process-message', (_event, ...args) => {

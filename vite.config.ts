@@ -4,6 +4,7 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import electron, { onstart } from 'vite-plugin-electron'
 import pkg from './package.json'
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 
 rmSync('dist', { recursive: true, force: true }) // v14.14.0
 
@@ -48,6 +49,24 @@ export default defineConfig({
           ],
         },
       },
+    }),
+    createSvgIconsPlugin({
+      // 指定需要缓存的图标文件夹
+      iconDirs: [path.resolve(process.cwd(), 'src/assets/icons')],
+      // 指定symbolId格式
+      symbolId: 'icon-[name]',
+
+      /**
+       * 自定义插入位置
+       * @default: body-last
+       */
+      inject: 'body-last',
+
+      /**
+       * custom dom id
+       * @default: __svg__icons__dom__
+       */
+      customDomId: '__svg__icons__dom__',
     }),
   ],
   server: process.env.VSCODE_DEBUG ? {
