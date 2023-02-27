@@ -1,6 +1,6 @@
 <template>
-  <div class="mx-auto mt-2 flex justify-center">
-    <div v-show="extensionName != '.vue'" v-html="html" class="prose w-full justify-center px-20 pt-5 pb-48"></div>
+  <div class="mx-auto flex w-full flex-col items-center justify-center pb-4" id="content">
+    <div v-show="extensionName != '.vue'" v-html="html" class="prose w-full justify-center overflow-scroll px-20"></div>
 
     <CurrentVuePage v-if="extensionName == '.vue'"></CurrentVuePage>
   </div>
@@ -12,6 +12,7 @@ import RouteController from "../controllers/RouteController";
 import { defineAsyncComponent } from "vue";
 import { writeFileSync } from "fs";
 import path from "path";
+import hljs from "highlight.js";
 
 const currentVuePage = "./temp/Current.vue";
 
@@ -43,7 +44,84 @@ export default defineComponent({
       if (this.extensionName == ".vue") {
         writeFileSync(currentVuePage, this.current.markdownSourceCode());
       }
+      hljs.highlightAll();
     },
   },
 });
 </script>
+
+<style lang="scss">
+/* Basic editor styles */
+#content {
+  > * + * {
+    margin-top: 0.75em;
+  }
+
+  pre {
+    background: #0d0d0d;
+    color: #fff;
+    font-family: "JetBrainsMono", monospace;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+
+    code {
+      color: inherit;
+      padding: 0;
+      background: none;
+      font-size: 0.8rem;
+    }
+
+    .hljs-comment,
+    .hljs-quote {
+      color: #616161;
+    }
+
+    .hljs-variable,
+    .hljs-template-variable,
+    .hljs-attribute,
+    .hljs-tag,
+    .hljs-name,
+    .hljs-regexp,
+    .hljs-link,
+    .hljs-name,
+    .hljs-selector-id,
+    .hljs-selector-class {
+      color: #f98181;
+    }
+
+    .hljs-number,
+    .hljs-meta,
+    .hljs-built_in,
+    .hljs-builtin-name,
+    .hljs-literal,
+    .hljs-type,
+    .hljs-params {
+      color: #fbbc88;
+    }
+
+    .hljs-string,
+    .hljs-symbol,
+    .hljs-bullet {
+      color: #b9f18d;
+    }
+
+    .hljs-title,
+    .hljs-section {
+      color: #faf594;
+    }
+
+    .hljs-keyword,
+    .hljs-selector-tag {
+      color: #70cff8;
+    }
+
+    .hljs-emphasis {
+      font-style: italic;
+    }
+
+    .hljs-strong {
+      font-weight: 700;
+    }
+  }
+}
+</style>

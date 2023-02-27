@@ -1,7 +1,7 @@
 <template>
   <node-view-wrapper>
     <div class="relative m-1 rounded-2xl border-2 border-black bg-yellow-400">
-      <span class="top-0 bg-sky-600/50 p-1 text-sm" contenteditable="false">官网</span>
+      <span class="ml-4 bg-sky-600/50 p-1 text-sm" contenteditable="false">官网</span>
       <node-view-content class="mx-4 mt-2 mb-4 border border-dashed p-1" />
     </div>
   </node-view-wrapper>
