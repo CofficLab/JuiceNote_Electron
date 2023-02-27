@@ -29,8 +29,11 @@ export default defineComponent({
     current: () => RouteController.currentPage,
     html: () => RouteController.currentPage.markdownSourceCode(),
   },
+  updated: function () {
+    this.show();
+  },
   watch: {
-    current() {
+    html() {
       this.show();
     },
   },

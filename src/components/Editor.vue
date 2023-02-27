@@ -73,10 +73,14 @@ import css from "highlight.js/lib/languages/css";
 import js from "highlight.js/lib/languages/javascript";
 import ts from "highlight.js/lib/languages/typescript";
 import html from "highlight.js/lib/languages/xml";
+import bash from "highlight.js/lib/languages/bash";
+import shell from "highlight.js/lib/languages/shell";
 lowlight.registerLanguage("html", html);
 lowlight.registerLanguage("css", css);
 lowlight.registerLanguage("js", js);
 lowlight.registerLanguage("ts", ts);
+lowlight.registerLanguage("shell", shell);
+lowlight.registerLanguage("bash", bash);
 
 export default {
   components: {
