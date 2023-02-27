@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button v-on:click="del" class="btn-ghost tooltip tooltip-bottom btn-sm btn my-auto" data-tip="删除章节或页面">
+    <button v-on:click="del" class="btn-ghost tooltip tooltip-left btn-sm btn my-auto" data-tip="删除章节或页面">
       <Trash></Trash>
     </button>
   </div>

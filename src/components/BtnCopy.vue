@@ -1,7 +1,13 @@
 <template>
-  <button class="btn-sm btn btn-ghost" v-bind:data-clipboard-text="markdownSourceCode">
-    <IconCopy></IconCopy>
-  </button>
+  <div>
+    <div
+      v-bind:data-clipboard-text="markdownSourceCode"
+      class="btn-ghost tooltip tooltip-left btn-sm btn flex items-center"
+      data-tip="复制源码"
+    >
+      <IconCopy></IconCopy>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">

@@ -21,15 +21,10 @@
           <OfficialLink></OfficialLink>
           <BtnTerminal></BtnTerminal>
           <Toast></Toast>
-          <GitCommit v-if="!isProd" class="hidden lg:flex"></GitCommit>
-          <Delete v-if="!isProd" class="hidden lg:flex"></Delete>
-          <BtnEdit v-if="!isProd" class="hidden lg:flex"></BtnEdit>
-          <Add v-if="!isProd" class="hidden lg:flex"></Add>
-          <Copy v-if="!isProd"></Copy>
           <Prev></Prev>
           <Home></Home>
           <Next></Next>
-          <BtnMore class="lg:hidden"></BtnMore>
+          <BtnMore></BtnMore>
         </div>
       </div>
 

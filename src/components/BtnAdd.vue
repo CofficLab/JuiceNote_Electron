@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button class="btn-sm btn btn-ghost tooltip tooltip-bottom" data-tip="添加章节或页面" @click="showForm">
+    <button class="btn-ghost tooltip tooltip-left btn-sm btn" data-tip="添加章节或页面" @click="showForm">
       <Plus></Plus>
     </button>
 
@@ -13,7 +13,7 @@
           v-model="title"
           autofocus
           placeholder="输入标题"
-          class="input input-bordered input-primary w-full max-w-xs"
+          class="input-bordered input-primary input w-full max-w-xs"
           @keyup.enter="submitPageForm"
         />
         <div class="modal-action">

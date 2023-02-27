@@ -1,10 +1,6 @@
 <template>
   <div>
-    <div
-      v-on:click="switcher"
-      class="btn-sm btn btn-ghost tooltip-bottom tooltip flex items-center"
-      data-tip="编辑页面"
-    >
+    <div v-on:click="switcher" class="btn-ghost tooltip tooltip-left btn-sm btn flex items-center" data-tip="编辑页面">
       <PencilSquare v-if="!editing"></PencilSquare>
       <ArrowUturnLeft v-if="editing"></ArrowUturnLeft>
     </div>
