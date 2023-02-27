@@ -1,5 +1,5 @@
 <template>
-  <div class="flex h-full w-full flex-col items-center overflow-scroll pt-1">
+  <div class="flex h-full w-full flex-col items-center overflow-scroll">
     <!-- 工具栏 -->
     <div
       v-if="editor"
@@ -52,7 +52,7 @@
     </div>
 
     <!-- 编辑框 -->
-    <div class="mt-1 flex w-full justify-center border-0 bg-base-100 p-4">
+    <div class="mt-1 flex w-full justify-center border-0 bg-base-100 p-4 pb-24">
       <editor-content :editor="editor" class="prose xl:prose-lg" />
     </div>
   </div>

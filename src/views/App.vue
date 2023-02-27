@@ -34,8 +34,8 @@
       </div>
 
       <!-- 内容区域与右侧导航 -->
-      <div class="mt-12 flex flex-row overflow-scroll pb-24">
-        <main class="flex w-full justify-center overflow-visible px-4">
+      <div class="flex flex-row overflow-scroll">
+        <main class="flex w-full justify-center">
           <!-- 文章内容 -->
           <Content v-if="!editorMode"></Content>
           <!-- 编辑器 -->

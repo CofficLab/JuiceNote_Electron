@@ -1,6 +1,6 @@
 <template>
-  <div class="mx-auto flex w-full flex-col items-center justify-center pb-4" id="content">
-    <div v-show="extensionName != '.vue'" v-html="html" class="prose w-full justify-center overflow-scroll px-20"></div>
+  <div class="flex h-full w-full flex-col items-center overflow-scroll pt-12 pb-24" id="content">
+    <div class="prose"><div v-show="extensionName != '.vue'" v-html="html" class=""></div></div>
 
     <CurrentVuePage v-if="extensionName == '.vue'"></CurrentVuePage>
   </div>
