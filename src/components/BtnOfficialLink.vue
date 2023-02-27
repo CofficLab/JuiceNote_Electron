@@ -1,11 +1,17 @@
 <template>
-  <a
-    href="#"
-    target="_blank"
-    class="official-link btn-ghost tooltip tooltip-bottom btn-sm btn my-auto flex items-center"
-    data-tip="在浏览器中打开官方文档"
-    ><ArrowTopRightOnSquare></ArrowTopRightOnSquare
-  ></a>
+  <div class="hidden" id="official-link-button">
+    <div class="dropdown-hover dropdown dropdown-end">
+      <label tabindex="0"
+        ><div class="btn-ghost btn-sm btn my-auto flex items-center">
+          <ArrowTopRightOnSquare></ArrowTopRightOnSquare></div
+      ></label>
+      <ul
+        tabindex="0"
+        id="official-link-box"
+        class="dropdown-content menu flex w-24 flex-col gap-4 bg-base-100 py-2 shadow"
+      ></ul>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">

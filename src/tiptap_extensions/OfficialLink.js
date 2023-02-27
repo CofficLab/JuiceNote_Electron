@@ -14,7 +14,7 @@ export default Node.create({
     ];
   },
   renderHTML({ HTMLAttributes }) {
-    return ["official-link", mergeAttributes(HTMLAttributes, { class: "official-link bg-cyan-800/20 p-4" }), 0];
+    return ["official-link", mergeAttributes(HTMLAttributes, { class: "bg-cyan-800/20 p-4" }), 0];
   },
   addNodeView() {
     return VueNodeViewRenderer(OfficialLink);

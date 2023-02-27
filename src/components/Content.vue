@@ -45,6 +45,30 @@ export default defineComponent({
         writeFileSync(currentVuePage, this.current.markdownSourceCode());
       }
       hljs.highlightAll();
+      this.getOfficialLinks();
+    },
+    getOfficialLinks() {
+      document.getElementById("official-link-button")?.classList.add("hidden");
+      let box = document.getElementById("official-link-box");
+
+      if (box == null) return;
+      box.innerHTML = "";
+
+      let dom = document.createElement("div");
+      dom.innerHTML = this.html;
+      let linkElements = dom.getElementsByTagName("official-link");
+      for (let i = 0; i < linkElements.length; i++) {
+        let linkElement = linkElements.item(i);
+        let linkDom = document.createElement("li");
+        linkDom.innerHTML = `
+        <a href=${linkElement?.innerHTML} target=_blank>官方链接</a>
+        `;
+        box.append(linkDom);
+      }
+
+      if (linkElements.length > 0) {
+        document.getElementById("official-link-button")?.classList.remove("hidden");
+      }
     },
   },
 });
