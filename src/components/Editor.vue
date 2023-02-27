@@ -43,6 +43,9 @@
       >
         h1
       </button>
+      <button @click="editor.chain().focus().toggleBanner().run()" :class="{ 'is-active': editor.isActive('banner') }">
+        banner
+      </button>
       <button
         @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
         :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }"
@@ -125,7 +128,7 @@ import RouteController from "../controllers/RouteController";
 import { writeFileSync } from "fs";
 import ToastController from "../controllers/ToastController";
 
-import x from "../tiptap_extensions/x.js";
+import Banner from "../tiptap_extensions/Banner.js";
 
 export default {
   components: {
@@ -133,6 +136,7 @@ export default {
     Document,
     Paragraph,
     Text,
+    Banner,
   },
 
   data() {
@@ -154,7 +158,7 @@ export default {
     this.editor = new Editor({
       content: this.content,
       extensions: [
-        x,
+        Banner,
         StarterKit,
         Document,
         Paragraph,
