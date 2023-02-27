@@ -1,117 +1,44 @@
 <template>
-  <div class="prose flex h-full flex-col gap-8 xl:prose-2xl">
-    <div v-if="editor">
-      <button
-        @click="editor.chain().focus().toggleBold().run()"
-        :disabled="!editor.can().chain().focus().toggleBold().run()"
-        :class="{ 'is-active': editor.isActive('bold') }"
-      >
-        bold
-      </button>
-      <button
-        @click="editor.chain().focus().toggleItalic().run()"
-        :disabled="!editor.can().chain().focus().toggleItalic().run()"
-        :class="{ 'is-active': editor.isActive('italic') }"
-      >
-        italic
-      </button>
-      <button
-        @click="editor.chain().focus().toggleStrike().run()"
-        :disabled="!editor.can().chain().focus().toggleStrike().run()"
-        :class="{ 'is-active': editor.isActive('strike') }"
-      >
-        strike
-      </button>
-      <button
-        @click="editor.chain().focus().toggleCode().run()"
-        :disabled="!editor.can().chain().focus().toggleCode().run()"
-        :class="{ 'is-active': editor.isActive('code') }"
-      >
-        code
-      </button>
-      <button @click="editor.chain().focus().unsetAllMarks().run()">clear marks</button>
-      <button @click="editor.chain().focus().clearNodes().run()">clear nodes</button>
-      <button
-        @click="editor.chain().focus().setParagraph().run()"
-        :class="{ 'is-active': editor.isActive('paragraph') }"
-      >
-        paragraph
-      </button>
-      <button
-        @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
-        :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }"
-      >
-        h1
-      </button>
+  <div class="flex h-full w-full flex-col">
+    <!-- 工具栏 -->
+    <div v-if="editor" class="flex flex-row items-center gap-2 bg-green-300/50 shadow-2xl">
+      <div class="dropdown-hover dropdown">
+        <label tabindex="0" class="btn-sm btn m-1">格式</label>
+        <ul tabindex="0" class="dropdown-content menu rounded-box flex w-52 justify-center bg-base-100 p-2 shadow">
+          <li>
+            <a
+              @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
+              :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }"
+            >
+              h1
+            </a>
+          </li>
+          <li>
+            <a
+              @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
+              :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }"
+            >
+              h2
+            </a>
+          </li>
+        </ul>
+      </div>
+
       <button @click="editor.chain().focus().toggleBanner().run()" :class="{ 'is-active': editor.isActive('banner') }">
-        banner
+        提示框
       </button>
-      <button
-        @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
-        :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }"
-      >
-        h2
-      </button>
-      <button
-        @click="editor.chain().focus().toggleHeading({ level: 3 }).run()"
-        :class="{ 'is-active': editor.isActive('heading', { level: 3 }) }"
-      >
-        h3
-      </button>
-      <button
-        @click="editor.chain().focus().toggleHeading({ level: 4 }).run()"
-        :class="{ 'is-active': editor.isActive('heading', { level: 4 }) }"
-      >
-        h4
-      </button>
-      <button
-        @click="editor.chain().focus().toggleHeading({ level: 5 }).run()"
-        :class="{ 'is-active': editor.isActive('heading', { level: 5 }) }"
-      >
-        h5
-      </button>
-      <button
-        @click="editor.chain().focus().toggleHeading({ level: 6 }).run()"
-        :class="{ 'is-active': editor.isActive('heading', { level: 6 }) }"
-      >
-        h6
-      </button>
-      <button
-        @click="editor.chain().focus().toggleBulletList().run()"
-        :class="{ 'is-active': editor.isActive('bulletList') }"
-      >
-        bullet list
-      </button>
-      <button
-        @click="editor.chain().focus().toggleOrderedList().run()"
-        :class="{ 'is-active': editor.isActive('orderedList') }"
-      >
-        ordered list
-      </button>
-      <button
-        @click="editor.chain().focus().toggleCodeBlock().run()"
-        :class="{ 'is-active': editor.isActive('codeBlock') }"
-      >
-        code block
-      </button>
-      <button
-        @click="editor.chain().focus().toggleBlockquote().run()"
-        :class="{ 'is-active': editor.isActive('blockquote') }"
-      >
-        blockquote
-      </button>
-      <button @click="editor.chain().focus().setHorizontalRule().run()">horizontal rule</button>
-      <button @click="editor.chain().focus().setHardBreak().run()">hard break</button>
       <button @click="editor.chain().focus().undo().run()" :disabled="!editor.can().chain().focus().undo().run()">
-        undo
+        取消
       </button>
       <button @click="editor.chain().focus().redo().run()" :disabled="!editor.can().chain().focus().redo().run()">
-        redo
+        恢复
       </button>
       <button @click="save">保存</button>
     </div>
-    <div>
-      <editor-content :editor="editor" class="overflow-scroll bg-base-300" />
+
+    <!-- 编辑框 -->
+    <div class="mt-1 w-full overflow-scroll border-0 bg-base-100 p-4 ring-2">
+      <editor-content :editor="editor" class="prose xl:prose-2xl" />
     </div>
   </div>
 </template>
@@ -157,16 +84,7 @@ export default {
   mounted() {
     this.editor = new Editor({
       content: this.content,
-      extensions: [
-        Banner,
-        StarterKit,
-        Document,
-        Paragraph,
-        Text,
-        Heading.configure({
-          levels: [1, 2, 3],
-        }),
-      ],
+      extensions: [Banner, StarterKit],
       autofocus: true,
       editable: true,
       injectCSS: false,
@@ -227,6 +145,6 @@ export default {
 
 <style scoped lang="postcss">
 button {
-  @apply btn rounded-none;
+  @apply btn-sm btn;
 }
 </style>
