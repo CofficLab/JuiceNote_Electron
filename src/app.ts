@@ -23,4 +23,5 @@ Object.assign(window, {
 })
 
 const app = createApp(App)
+app.config.unwrapInjectedRef = true
 app.mount('#app')

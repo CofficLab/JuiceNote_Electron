@@ -1,46 +1,41 @@
-import { mergeAttributes, Node } from "@tiptap/core";
-import { VueNodeViewRenderer } from "@tiptap/vue-3";
-import { readFileSync } from "fs";
-import { join } from "path";
-import Config from "../entities/Config";
+import Highlight from "@tiptap/extension-highlight";
 
-import Brick from "./Brick.vue";
-
-export default Node.create({
+const Brick = Highlight.extend({
   name: "brick",
-
-  group: "block",
-
-  content: "inline*",
-
-  parseHTML() {
-    return [
-      {
-        tag: "brick",
+  addAttributes() {
+    return {
+      color: {
+        default: null,
+        // Customize the HTML parsing (for example, to load the initial content)
+        parseHTML: (element) => element.getAttribute("class"),
+        // … and customize the HTML rendering.
+        renderHTML: (attributes) => {
+          return {
+            class: "brick",
+          };
+        },
       },
-    ];
+    };
   },
-
-  renderHTML({ HTMLAttributes }) {
-    return ["brick", { class: "brick" }, ["div", mergeAttributes(HTMLAttributes), 0]];
-  },
-
-  addNodeView() {
-    return VueNodeViewRenderer(Brick);
-  },
-
   addCommands() {
     return {
       setBrick:
         () =>
         ({ commands }) => {
-          return commands.setNode(this.name);
+          return commands.setMark(this.name);
         },
-      toggleBrick:
+      unsetBrick:
         () =>
         ({ commands }) => {
-          return commands.toggleNode(this.name, "paragraph");
+          return commands.unsetMark(this.name);
+        },
+      toggleBrick:
+        (attributes) =>
+        ({ commands }) => {
+          return commands.toggleMark(this.name, attributes);
         },
     };
   },
 });
+
+export default Brick;

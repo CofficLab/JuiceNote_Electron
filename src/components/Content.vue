@@ -27,7 +27,13 @@
           </li>
         </ul>
       </div>
-
+      <button
+        @click="editor.chain().focus().toggleBold().run()"
+        :disabled="!editor.can().chain().focus().toggleBold().run()"
+        :class="{ 'is-active': editor.isActive('bold') }"
+      >
+        加粗
+      </button>
       <button @click="editor.chain().focus().toggleBanner().run()" :class="{ 'is-active': editor.isActive('banner') }">
         提示框
       </button>
@@ -57,50 +63,8 @@
       <button @click="save">保存</button>
     </div>
 
-    <!-- 悬浮菜单 -->
-    <div v-if="editor">
-      <bubble-menu class="bubble-menu bg-cyan-900/80 shadow-2xl" :tippy-options="{ duration: 100 }" :editor="editor">
-        <button @click="editor.chain().focus().toggleBold().run()" :class="{ 'is-active': editor.isActive('bold') }">
-          Bold
-        </button>
-        <button
-          @click="editor.chain().focus().toggleItalic().run()"
-          :class="{ 'is-active': editor.isActive('italic') }"
-        >
-          Italic
-        </button>
-        <button
-          @click="editor.chain().focus().toggleStrike().run()"
-          :class="{ 'is-active': editor.isActive('strike') }"
-        >
-          Strike
-        </button>
-      </bubble-menu>
-
-      <!-- <floating-menu class="floating-menu" :tippy-options="{ duration: 100 }" :editor="editor">
-        <button
-          @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
-          :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }"
-        >
-          H1
-        </button>
-        <button
-          @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
-          :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }"
-        >
-          H2
-        </button>
-        <button
-          @click="editor.chain().focus().toggleBulletList().run()"
-          :class="{ 'is-active': editor.isActive('bulletList') }"
-        >
-          Bullet List
-        </button>
-      </floating-menu> -->
-    </div>
-
     <!-- 编辑框 -->
-    <div class="mt-1 flex w-full justify-center border-0 bg-base-100 p-4 pb-24">
+    <div class="mt-1 flex w-full justify-center border-0 p-4 pb-24">
       <editor-content :editor="editor" class="prose xl:prose-lg" />
     </div>
 
@@ -128,6 +92,7 @@ import Text from "@tiptap/extension-text";
 import Link from "@tiptap/extension-link";
 import History from "@tiptap/extension-history";
 import Paragraph from "@tiptap/extension-paragraph";
+import Bold from "@tiptap/extension-bold";
 import { lowlight } from "lowlight";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import Heading from "@tiptap/extension-heading";
@@ -150,8 +115,9 @@ const extensions = [
   History,
   Heading,
   Paragraph,
+  Bold,
   // FloatingMenu,
-  BubbleMenu,
+  // BubbleMenu,
   Brick,
   CodeBlockLowlight.configure({
     lowlight,

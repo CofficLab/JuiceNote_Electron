@@ -39,14 +39,15 @@ body {
 }
 
 .brick {
-  @apply w-12 rounded bg-sky-500
+  @apply mx-2  rounded
+  border border-dashed bg-sky-500
   p-2
   text-center
-  shadow-2xl
-  transition
+  shadow-2xl transition
   duration-100
   hover:scale-105
-  dark:bg-sky-800;
+  dark:border-gray-700
+  dark:bg-sky-400/60;
 }
 
 .brick-red {
