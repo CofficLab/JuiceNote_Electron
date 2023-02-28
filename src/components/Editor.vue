@@ -36,6 +36,8 @@
       >
         官网
       </button>
+      <button @click="inputLink" :class="{ 'is-active': editor.isActive('link') }">设置链接</button>
+      <button @click="editor.chain().focus().unsetLink().run()" :disabled="!editor.isActive('link')">取消链接</button>
       <button
         @click="editor.chain().focus().toggleCodeBlock().run()"
         :class="{ 'is-active': editor.isActive('codeBlock') }"
@@ -55,6 +57,17 @@
     <div class="mt-1 flex w-full justify-center border-0 bg-base-100 p-4 pb-24">
       <editor-content :editor="editor" class="prose xl:prose-lg" />
     </div>
+
+    <!-- 设置URL的模态框 -->
+    <div class="modal" ref="linkModal">
+      <div class="modal-box">
+        <h3 class="text-lg font-bold">设置链接</h3>
+        <input type="text" placeholder="输入URL" v-model="url" />
+        <div class="modal-action">
+          <label for="my-modal" class="btn" @click="setLink">确定</label>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -66,6 +79,8 @@ import { writeFileSync } from "fs";
 import ToastController from "../controllers/ToastController";
 import Banner from "../tiptap_extensions/Banner.js";
 import OfficialLink from "../tiptap_extensions/OfficialLink.js";
+
+import Link from "@tiptap/extension-link";
 // 代码高亮
 import { lowlight } from "lowlight";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
@@ -87,11 +102,14 @@ export default {
     EditorContent,
     Banner,
     OfficialLink,
+    Link,
   },
 
   data() {
     return {
       editor: null,
+      // 设置链接扩展用到的，记录用户输入的URL
+      url: "",
     };
   },
 
@@ -109,6 +127,15 @@ export default {
       content: this.content,
       extensions: [
         Banner,
+        Link.configure({
+          HTMLAttributes: {
+            // Change rel to different value
+            // Allow search engines to follow links(remove nofollow)
+            rel: "noopener noreferrer",
+            // Remove target entirely so links open in current tab
+            target: "_blank",
+          },
+        }),
         StarterKit,
         OfficialLink,
         CodeBlockLowlight.configure({
@@ -171,6 +198,29 @@ export default {
       writeFileSync(current.path.replace(".md", ".html"), this.editor.getHTML());
       ToastController.set("已保存");
       RouteController.toggleEditMode();
+    },
+    inputLink() {
+      this.$refs.linkModal.classList.add("modal-open");
+    },
+    setLink() {
+      this.$refs.linkModal.classList.remove("modal-open");
+      const previousUrl = this.editor.getAttributes("link").href;
+      const url = this.url ?? previousUrl;
+
+      // cancelled
+      if (url === null) {
+        return;
+      }
+
+      // empty
+      if (url === "") {
+        this.editor.chain().focus().extendMarkRange("link").unsetLink().run();
+
+        return;
+      }
+
+      // update link
+      this.editor.chain().focus().extendMarkRange("link").setLink({ href: url }).run();
     },
   },
 };
