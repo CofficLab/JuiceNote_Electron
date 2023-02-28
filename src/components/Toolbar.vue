@@ -1,14 +1,14 @@
 <template>
   <div>
     <div class="dropdown-hover dropdown">
-      <label tabindex="0" class="btn-sm btn m-1">格式</label>
-      <ul tabindex="0" class="dropdown-content menu rounded-box flex w-52 justify-center bg-base-100 p-2 shadow">
+      <label tabindex="0">标题</label>
+      <ul tabindex="0">
         <li>
           <a
             @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
             :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }"
           >
-            h1
+            H1
           </a>
         </li>
         <li>
@@ -16,11 +16,76 @@
             @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
             :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }"
           >
-            h2
+            H2
           </a>
         </li>
       </ul>
     </div>
+
+    <div class="dropdown-hover dropdown">
+      <label tabindex="0">列表</label>
+      <ul tabindex="0">
+        <li>
+          <a
+            @click="editor.chain().focus().toggleBulletList().run()"
+            :class="{ 'is-active': editor.isActive('bulletList') }"
+          >
+            toggleBulletList
+          </a>
+        </li>
+        <li>
+          <a
+            @click="editor.chain().focus().splitListItem('listItem').run()"
+            :disabled="!editor.can().splitListItem('listItem')"
+          >
+            splitListItem
+          </a>
+        </li>
+        <li>
+          <a
+            @click="editor.chain().focus().sinkListItem('listItem').run()"
+            :disabled="!editor.can().sinkListItem('listItem')"
+          >
+            sinkListItem
+          </a>
+        </li>
+        <li>
+          <a
+            @click="editor.chain().focus().liftListItem('listItem').run()"
+            :disabled="!editor.can().liftListItem('listItem')"
+          >
+            liftListItem
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="dropdown-hover dropdown dropdown-bottom">
+      <label tabindex="0">表格</label>
+      <ul tabindex="0">
+        <li>
+          <a @click="editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()"> 插入表格 </a>
+        </li>
+        <li><a @click="editor.chain().focus().addColumnBefore().run()">在前面插入一列</a></li>
+        <li><a @click="editor.chain().focus().addColumnAfter().run()">在后面插入一列</a></li>
+        <li><a @click="editor.chain().focus().deleteColumn().run()">删除这一列</a></li>
+        <li><a @click="editor.chain().focus().addRowBefore().run()">在前面插入一行</a></li>
+        <li><a @click="editor.chain().focus().addRowAfter().run()">在后面插入一行</a></li>
+        <li><a @click="editor.chain().focus().deleteRow().run()">删除一行</a></li>
+        <li><a @click="editor.chain().focus().deleteTable().run()">删除表格</a></li>
+        <li><a @click="editor.chain().focus().mergeCells().run()">合并单元格</a></li>
+        <li><a @click="editor.chain().focus().splitCell().run()">拆分单元格</a></li>
+        <li><a @click="editor.chain().focus().toggleHeaderColumn().run()"> toggleHeaderColumn </a></li>
+        <li><a @click="editor.chain().focus().toggleHeaderRow().run()"> toggleHeaderRow </a></li>
+        <li><a @click="editor.chain().focus().toggleHeaderCell().run()"> toggleHeaderCell </a></li>
+        <li><a @click="editor.chain().focus().mergeOrSplit().run()"> mergeOrSplit </a></li>
+        <li><a @click="editor.chain().focus().setCellAttribute('colspan', 2).run()"> setCellAttribute </a></li>
+        <li><a @click="editor.chain().focus().fixTables().run()"> fixTables </a></li>
+        <li><a @click="editor.chain().focus().goToNextCell().run()">跳到下一格</a></li>
+        <li><a @click="editor.chain().focus().goToPreviousCell().run()">跳到上一格</a></li>
+      </ul>
+    </div>
+
     <button
       @click="editor.chain().focus().toggleBold().run()"
       :disabled="!editor.can().chain().focus().toggleBold().run()"
@@ -48,30 +113,6 @@
     >
       代码块
     </button>
-    <button
-      @click="editor.chain().focus().toggleBulletList().run()"
-      :class="{ 'is-active': editor.isActive('bulletList') }"
-    >
-      toggleBulletList
-    </button>
-    <button
-      @click="editor.chain().focus().splitListItem('listItem').run()"
-      :disabled="!editor.can().splitListItem('listItem')"
-    >
-      splitListItem
-    </button>
-    <button
-      @click="editor.chain().focus().sinkListItem('listItem').run()"
-      :disabled="!editor.can().sinkListItem('listItem')"
-    >
-      sinkListItem
-    </button>
-    <button
-      @click="editor.chain().focus().liftListItem('listItem').run()"
-      :disabled="!editor.can().liftListItem('listItem')"
-    >
-      liftListItem
-    </button>
     <button @click="editor.chain().focus().undo().run()" :disabled="!editor.can().chain().focus().undo().run()">
       取消
     </button>
@@ -79,6 +120,18 @@
       恢复
     </button>
     <button @click="save">保存</button>
+
+    <!-- 设置URL的模态框 -->
+    <div class="modal" v-bind:class="{ 'modal-open': showLinkModal }">
+      <div class="modal-box">
+        <label for="my-modal-3" class="btn-sm btn-circle btn absolute right-2 top-2" @click="cancelSetLink">✕</label>
+        <h3 class="mb-4 text-lg font-bold">设置链接</h3>
+        <input type="text" placeholder="输入URL" class="input-bordered input w-full" v-model="url" />
+        <div class="modal-action">
+          <label for="my-modal" class="btn" @click="setLink">确定</label>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -137,11 +190,23 @@ export default defineComponent({
 
 <style scoped lang="postcss">
 button {
-  @apply btn-sm btn;
+  @apply btn-sm btn mx-1;
 }
 
 .bubble-menu button,
 .floating-menu button {
   @apply btn-sm btn mx-1 rounded-none;
+}
+
+label {
+  @apply btn-sm btn m-1;
+}
+
+ul {
+  @apply dropdown-content rounded-box flex max-h-96 w-52 flex-col gap-4 overflow-hidden overflow-y-scroll bg-base-100 p-2 py-4 shadow;
+
+  li {
+    @apply btn;
+  }
 }
 </style>

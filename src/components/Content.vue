@@ -12,18 +12,6 @@
     <div class="mt-1 flex w-full justify-center border-0 p-4 pb-24">
       <editor-content :editor="editor" class="prose xl:prose-lg" />
     </div>
-
-    <!-- 设置URL的模态框 -->
-    <div class="modal" v-bind:class="{ 'modal-open': showLinkModal }">
-      <div class="modal-box">
-        <label for="my-modal-3" class="btn-sm btn-circle btn absolute right-2 top-2" @click="cancelSetLink">✕</label>
-        <h3 class="mb-4 text-lg font-bold">设置链接</h3>
-        <input type="text" placeholder="输入URL" class="input-bordered input w-full" v-model="url" />
-        <div class="modal-action">
-          <label for="my-modal" class="btn" @click="setLink">确定</label>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 

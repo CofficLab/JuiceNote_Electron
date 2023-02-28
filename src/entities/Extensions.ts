@@ -9,6 +9,10 @@ import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import Heading from "@tiptap/extension-heading";
 import BulletList from "@tiptap/extension-bullet-list";
 import ListItem from "@tiptap/extension-list-item";
+import Table from "@tiptap/extension-table"
+import TableRow from "@tiptap/extension-table-row"
+import TableCell from "@tiptap/extension-table-cell"
+import TableHeader from "@tiptap/extension-table-header"
 import "highlight.js/styles/github-dark.css";
 // 自定义的编辑器扩展
 import Brick from "../tiptap_extensions/Brick.js";
@@ -17,39 +21,55 @@ import OfficialLink from "../tiptap_extensions/OfficialLink.js";
 
 let Extensions = [
     Banner,
+    Bold,
+    BulletList.configure({
+        HTMLAttributes: {
+            class: "m-0 p-0",
+        },
+    }),
+    // FloatingMenu,
+    // BubbleMenu,
+    Brick,
+    CodeBlockLowlight.configure({
+        lowlight,
+    }),
+    Document,
+    History,
+    Heading,
+    ListItem.configure({
+        HTMLAttributes: {
+            class: "m-0 p-0",
+        },
+    }),
     Link.configure({
         HTMLAttributes: {
             target: "_blank",
         },
     }),
     OfficialLink,
-    Document,
-    Text,
-    History,
-    Heading,
     Paragraph.configure({
         HTMLAttributes: {
             // class: "my-0 py-0",
             // style: "margin:1rem",
         },
     }),
-    Bold,
-    // FloatingMenu,
-    // BubbleMenu,
-    Brick,
-    ListItem.configure({
+    Text,
+    TableCell.configure({
         HTMLAttributes: {
-            class: "m-0 p-0",
-        },
+            class: 'border-2 border-sky-300'
+        }
     }),
-    BulletList.configure({
+    TableRow.configure({
         HTMLAttributes: {
-            class: "m-0 p-0",
+            class: 'border-2 border-red-300'
+        }
+    }),
+    TableHeader,
+    Table.configure({
+        HTMLAttributes: {
+            class: 'table bg-cyan-500/30 table-zebra',
         },
-    }),
-    CodeBlockLowlight.configure({
-        lowlight,
-    }),
+    })
 ];
 
 export default Extensions
