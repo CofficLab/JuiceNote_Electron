@@ -59,10 +59,11 @@
     </div>
 
     <!-- 设置URL的模态框 -->
-    <div class="modal" ref="linkModal">
+    <div class="modal" v-bind:class="{ 'modal-open': showLinkModal }">
       <div class="modal-box">
-        <h3 class="text-lg font-bold">设置链接</h3>
-        <input type="text" placeholder="输入URL" v-model="url" />
+        <label for="my-modal-3" class="btn-sm btn-circle btn absolute right-2 top-2" @click="cancelSetLink">✕</label>
+        <h3 class="mb-4 text-lg font-bold">设置链接</h3>
+        <input type="text" placeholder="输入URL" class="input-bordered input w-full" v-model="url" />
         <div class="modal-action">
           <label for="my-modal" class="btn" @click="setLink">确定</label>
         </div>
@@ -113,6 +114,7 @@ export default {
   data() {
     return {
       editor: null,
+      showLinkModal: false,
       url: "", // 设置链接扩展用到的，记录用户输入的URL
     };
   },
@@ -150,10 +152,13 @@ export default {
       RouteController.toggleEditMode();
     },
     inputLink() {
-      this.$refs.linkModal.classList.add("modal-open");
+      this.showLinkModal = true;
+    },
+    cancelSetLink() {
+      this.showLinkModal = false;
     },
     setLink() {
-      this.$refs.linkModal.classList.remove("modal-open");
+      this.showLinkModal = false;
       const previousUrl = this.editor.getAttributes("link").href;
       const url = this.url ?? previousUrl;
 
