@@ -32,9 +32,7 @@
       <div class="flex flex-row overflow-scroll">
         <main class="flex w-full justify-center">
           <!-- 文章内容 -->
-          <Content v-if="!editorMode"></Content>
-          <!-- 编辑器 -->
-          <Editor v-if="editorMode"></Editor>
+          <Content></Content>
         </main>
 
         <!-- 文章的右侧栏TOC -->
@@ -73,7 +71,6 @@ import ProjectTree from "../components/ProjectTree.vue";
 import RouteController from "../controllers/RouteController";
 import FullScreenController from "../controllers/FullScreenController";
 import Languages from "../components/Languages.vue";
-import Editor from "../components/Editor.vue";
 import path from "path";
 
 export default defineComponent({
@@ -99,7 +96,6 @@ export default defineComponent({
     ProjectTree,
     OfficialLink: BtnOfficialLink,
     Languages,
-    Editor,
   },
   data() {
     return {

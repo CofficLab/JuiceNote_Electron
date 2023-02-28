@@ -1,153 +1,186 @@
 <template>
-  <div class="flex h-full w-full flex-col items-center overflow-scroll pt-12 pb-24" id="content">
-    <div class="prose"><div v-if="extensionName != '.vue'" v-html="html" class=""></div></div>
+  <div class="flex h-full w-full flex-col items-center overflow-scroll">
+    <!-- 工具栏 -->
+    <div
+      v-if="editor && editable"
+      class="sticky top-0 z-40 flex w-full flex-row items-center justify-center gap-2 bg-green-300/50 shadow-2xl"
+    >
+      <div class="dropdown-hover dropdown">
+        <label tabindex="0" class="btn-sm btn m-1">格式</label>
+        <ul tabindex="0" class="dropdown-content menu rounded-box flex w-52 justify-center bg-base-100 p-2 shadow">
+          <li>
+            <a
+              @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
+              :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }"
+            >
+              h1
+            </a>
+          </li>
+          <li>
+            <a
+              @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
+              :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }"
+            >
+              h2
+            </a>
+          </li>
+        </ul>
+      </div>
 
-    <CurrentVuePage v-if="extensionName == '.vue'"></CurrentVuePage>
+      <button @click="editor.chain().focus().toggleBanner().run()" :class="{ 'is-active': editor.isActive('banner') }">
+        提示框
+      </button>
+      <button
+        @click="editor.chain().focus().toggleOfficialLink().run()"
+        :class="{ 'is-active': editor.isActive('official-link') }"
+      >
+        官网
+      </button>
+      <button @click="inputLink" :class="{ 'is-active': editor.isActive('link') }">设置链接</button>
+      <button @click="editor.chain().focus().unsetLink().run()" :disabled="!editor.isActive('link')">取消链接</button>
+      <button
+        @click="editor.chain().focus().toggleCodeBlock().run()"
+        :class="{ 'is-active': editor.isActive('codeBlock') }"
+      >
+        代码块
+      </button>
+      <button @click="editor.chain().focus().undo().run()" :disabled="!editor.can().chain().focus().undo().run()">
+        取消
+      </button>
+      <button @click="editor.chain().focus().redo().run()" :disabled="!editor.can().chain().focus().redo().run()">
+        恢复
+      </button>
+      <button @click="save">保存</button>
+    </div>
+
+    <!-- 编辑框 -->
+    <div class="mt-1 flex w-full justify-center border-0 bg-base-100 p-4 pb-24">
+      <editor-content :editor="editor" class="prose xl:prose-lg" />
+    </div>
+
+    <!-- 设置URL的模态框 -->
+    <div class="modal" ref="linkModal">
+      <div class="modal-box">
+        <h3 class="text-lg font-bold">设置链接</h3>
+        <input type="text" placeholder="输入URL" v-model="url" />
+        <div class="modal-action">
+          <label for="my-modal" class="btn" @click="setLink">确定</label>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script>
+import { Editor, EditorContent } from "@tiptap/vue-3";
 import RouteController from "../controllers/RouteController";
-import { defineAsyncComponent } from "vue";
 import { writeFileSync } from "fs";
-import path from "path";
-import hljs from "highlight.js";
+import ToastController from "../controllers/ToastController";
+import Banner from "../tiptap_extensions/Banner.js";
+import OfficialLink from "../tiptap_extensions/OfficialLink.js";
+import Document from "@tiptap/extension-document";
+import Text from "@tiptap/extension-text";
+import Link from "@tiptap/extension-link";
+import History from "@tiptap/extension-history";
+import Paragraph from "@tiptap/extension-paragraph";
+import { lowlight } from "lowlight";
+import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
+import Heading from "@tiptap/extension-heading";
+import "highlight.js/styles/github-dark.css";
 
-const currentVuePage = "./temp/Current.vue";
+const extensions = [
+  Banner,
+  Link.configure({
+    HTMLAttributes: {
+      target: "_blank",
+    },
+  }),
+  OfficialLink,
+  Document,
+  Text,
+  History,
+  Heading,
+  Paragraph,
+  CodeBlockLowlight.configure({
+    lowlight,
+  }),
+];
 
-export default defineComponent({
+export default {
   components: {
-    CurrentVuePage: defineAsyncComponent(() => import("../../" + currentVuePage)),
+    EditorContent,
   },
   data() {
     return {
-      extensionName: ".md",
+      editor: null,
+      url: "", // 设置链接扩展用到的，记录用户输入的URL
     };
   },
   computed: {
-    current: () => RouteController.currentPage,
-    html: () => RouteController.currentPage.markdownSourceCode(),
+    editable: () => RouteController.editMode,
+    content: () => RouteController.currentPage.markdownSourceCode(),
+  },
+  mounted() {
+    console.log("mounted, init the editor");
+    this.editor = new Editor({
+      content: this.content,
+      extensions: extensions,
+      autofocus: true,
+      editable: this.editable,
+    });
   },
   watch: {
-    html() {
-      this.$nextTick(() => {
-        this.show();
-      });
+    content(value) {
+      const isSame = this.editor.getHTML() === value;
+      if (isSame) return;
+
+      this.editor.commands.setContent(value, false);
     },
-  },
-  mounted: function () {
-    this.show();
+    editable() {
+      console.log("editable changed", this.editable);
+      this.editor.setEditable(this.editable);
+      this.editor.commands.setContent(RouteController.currentPage.markdownSourceCode(), false);
+    },
   },
   methods: {
-    show() {
-      console.log("current is", this.current.id);
-      this.extensionName = path.extname(this.current.path);
-      if (this.extensionName == ".vue") {
-        writeFileSync(currentVuePage, this.current.markdownSourceCode());
-      }
-      hljs.highlightAll();
-      this.getOfficialLinks();
+    save() {
+      let current = RouteController.getCurrentPage();
+      writeFileSync(current.path.replace(".md", ".html"), this.editor.getHTML());
+      ToastController.set("已保存");
+      RouteController.toggleEditMode();
     },
-    getOfficialLinks() {
-      document.getElementById("official-link-button")?.classList.add("hidden");
-      let box = document.getElementById("official-link-box");
+    inputLink() {
+      this.$refs.linkModal.classList.add("modal-open");
+    },
+    setLink() {
+      this.$refs.linkModal.classList.remove("modal-open");
+      const previousUrl = this.editor.getAttributes("link").href;
+      const url = this.url ?? previousUrl;
 
-      if (box == null) return;
-      box.innerHTML = "";
-
-      let dom = document.createElement("div");
-      dom.innerHTML = this.html;
-      let linkElements = dom.getElementsByTagName("official-link");
-      for (let i = 0; i < linkElements.length; i++) {
-        let linkElement = linkElements.item(i);
-        let linkDom = document.createElement("li");
-        linkDom.innerHTML = `
-        <a href=${linkElement?.innerHTML} target=_blank>官方链接</a>
-        `;
-        box.append(linkDom);
+      // cancelled
+      if (url === null) {
+        return;
       }
 
-      if (linkElements.length > 0) {
-        document.getElementById("official-link-button")?.classList.remove("hidden");
+      // empty
+      if (url === "") {
+        this.editor.chain().focus().extendMarkRange("link").unsetLink().run();
+
+        return;
       }
+
+      // update link
+      this.editor.chain().focus().extendMarkRange("link").setLink({ href: url }).run();
     },
   },
-});
+  beforeUnmount() {
+    this.editor.destroy();
+  },
+};
 </script>
 
-<style lang="scss">
-/* Basic editor styles */
-#content {
-  > * + * {
-    margin-top: 0.75em;
-  }
-
-  pre {
-    background: #0d0d0d;
-    color: #fff;
-    font-family: "JetBrainsMono", monospace;
-    padding: 0.75rem 1rem;
-    border-radius: 0.5rem;
-
-    code {
-      color: inherit;
-      padding: 0;
-      background: none;
-      font-size: 0.8rem;
-    }
-
-    .hljs-comment,
-    .hljs-quote {
-      color: #616161;
-    }
-
-    .hljs-variable,
-    .hljs-template-variable,
-    .hljs-attribute,
-    .hljs-tag,
-    .hljs-name,
-    .hljs-regexp,
-    .hljs-link,
-    .hljs-name,
-    .hljs-selector-id,
-    .hljs-selector-class {
-      color: #f98181;
-    }
-
-    .hljs-number,
-    .hljs-meta,
-    .hljs-built_in,
-    .hljs-builtin-name,
-    .hljs-literal,
-    .hljs-type,
-    .hljs-params {
-      color: #fbbc88;
-    }
-
-    .hljs-string,
-    .hljs-symbol,
-    .hljs-bullet {
-      color: #b9f18d;
-    }
-
-    .hljs-title,
-    .hljs-section {
-      color: #faf594;
-    }
-
-    .hljs-keyword,
-    .hljs-selector-tag {
-      color: #70cff8;
-    }
-
-    .hljs-emphasis {
-      font-style: italic;
-    }
-
-    .hljs-strong {
-      font-weight: 700;
-    }
-  }
+<style scoped lang="postcss">
+button {
+  @apply btn-sm btn;
 }
 </style>

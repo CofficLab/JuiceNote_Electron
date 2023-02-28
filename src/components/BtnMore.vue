@@ -5,7 +5,7 @@
         ><div class="btn-ghost btn-sm btn my-auto flex items-center">
           <ChevronDoubleDown></ChevronDoubleDown></div
       ></label>
-      <ul tabindex="0" class="dropdown-content flex w-12 flex-col gap-4 rounded-2xl bg-base-100 py-2 shadow">
+      <ul tabindex="0" class="dropdown-content z-50 flex w-12 flex-col gap-4 rounded-2xl bg-base-100 py-2 shadow">
         <li><BtnDelete></BtnDelete></li>
         <li><BtnAdd></BtnAdd></li>
         <li><BtnEdit></BtnEdit></li>
