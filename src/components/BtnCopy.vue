@@ -1,12 +1,10 @@
 <template>
-  <div>
-    <div
-      v-bind:data-clipboard-text="markdownSourceCode"
-      class="btn-ghost tooltip tooltip-left btn-sm btn flex items-center"
-      data-tip="复制源码"
-    >
-      <IconCopy></IconCopy>
-    </div>
+  <div
+    v-bind:data-clipboard-text="markdownSourceCode"
+    class="btn-ghost tooltip tooltip-left btn-sm btn flex items-center"
+    data-tip="复制源码"
+  >
+    <IconCopy></IconCopy>
   </div>
 </template>
 
@@ -14,7 +12,7 @@
 import { defineComponent } from "vue";
 import RouteController from "../controllers/RouteController";
 import ClipboardJS from "clipboard";
-import IconCopy from "../icons/clipboard-document.vue";
+import IconCopy from "../assets/icons/clipboard-document.svg";
 import ToastController from "../controllers/ToastController";
 
 var clipboard = new ClipboardJS(".btn");

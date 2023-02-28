@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import CloudArrowUp from "../icons/cloud-arrow-up.vue";
+import CloudArrowUp from "../assets/icons/cloud-arrow-up.svg";
 import ToastController from "../controllers/ToastController";
 
 export default defineComponent({

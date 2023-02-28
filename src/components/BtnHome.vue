@@ -3,14 +3,14 @@
     href="/"
     data-tip="首页"
     v-bind:class="disabled ? 'btn-disabled' : ''"
-    class="btn-sm btn btn-ghost my-auto items-center tooltip tooltip-bottom flex"
+    class="btn-ghost tooltip tooltip-bottom btn-sm btn my-auto flex items-center"
     ><Home></Home
   ></Link>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import Home from "../icons/home.vue";
+import Home from "../assets/icons/home.svg";
 import Link from "./Link.vue";
 import RouteController from "../controllers/RouteController";
 

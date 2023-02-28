@@ -2,16 +2,16 @@
   <a
     href="javascript:void(0)"
     v-if="!item.notLeaf()"
-    class="pl-10 w-full py-1 my-1 flex justify-between pr-4"
+    class="my-1 flex w-full justify-between py-1 pl-10 pr-4"
     :class="{ 'bg-primary': currentCodeId == item.id, 'hover:bg-slate-500/50': currentCodeId != item.id }"
   >
     <span @click="go">{{ item.title }}</span>
     <span @click="deleteFile(item.title)">-</span>
   </a>
 
-  <div class="flex flex-row hover:bg-slate-500/50 py-1" v-if="item.notLeaf()">
-    <chevron-down class="pl-0 ml-0 mr-1 w-4 my-auto" :class="{ '-rotate-90': !open }"></chevron-down>
-    <a href="javascript:void(0)" class="ml-0 w-full flex justify-between pr-4">
+  <div class="flex flex-row py-1 hover:bg-slate-500/50" v-if="item.notLeaf()">
+    <chevron-down class="my-auto ml-0 mr-1 w-4 pl-0" :class="{ '-rotate-90': !open }"></chevron-down>
+    <a href="javascript:void(0)" class="ml-0 flex w-full justify-between pr-4">
       <span @click="showChildren">{{ item.title }}</span>
       <span @click="toggleFileForm">+</span>
     </a>
@@ -22,7 +22,7 @@
         type="text"
         v-model="newFileName"
         placeholder="新建文件"
-        class="input input-ghost input-sm w-full max-w-xs text-center text-xs"
+        class="input-ghost input input-sm w-full max-w-xs text-center text-xs"
         @keyup.enter="makeFile"
         v-show="showFileForm"
       />
@@ -36,7 +36,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import Link from "./Link.vue";
-import ChevronDown from "../icons/chevron-down.vue";
+import ChevronDown from "../assets/icons/chevron-down.svg";
 import project from "../entities/Project";
 
 export default defineComponent({

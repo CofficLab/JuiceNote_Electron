@@ -11,13 +11,12 @@
 
 <script>
 import { NodeViewContent, nodeViewProps, NodeViewWrapper } from "@tiptap/vue-3";
-import Info from "../icons/info.vue";
+import Info from "../assets/icons/info.svg";
 
 export default {
   components: {
     NodeViewWrapper,
     NodeViewContent,
-    Info,
   },
 
   props: nodeViewProps,

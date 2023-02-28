@@ -1,17 +1,17 @@
 <template>
-  <div class="flex flex-col gap-0 justify-start h-full pb-8 w-56 text-gray-300">
-    <div class="bg-slate-900 px-6 py-2 flex justify-between">
+  <div class="flex h-full w-56 flex-col justify-start gap-0 pb-8 text-gray-300">
+    <div class="flex justify-between bg-slate-900 px-6 py-2">
       <span>{{ project.title }}</span>
       <a href="javascript:void(0)" @click="toggleFileForm">+</a>
     </div>
-    <div class="px-0 bg-slate-900/80 h-full overflow-scroll">
+    <div class="h-full overflow-scroll bg-slate-900/80 px-0">
       <ul class="overflow-scroll">
         <li class="mt-2 flex justify-center px-4">
           <input
             type="text"
             v-model="newFileName"
             placeholder="新建文件"
-            class="input input-ghost input-sm w-full max-w-xs text-center text-xs"
+            class="input-ghost input input-sm w-full max-w-xs text-center text-xs"
             v-show="showFileForm"
             autofocus
             @keyup.enter="makeFile"
@@ -26,7 +26,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import Link from "./Link.vue";
-import ChevronDown from "../icons/chevron-down.vue";
+import ChevronDown from "../assets/icons/chevron-down.svg";
 import ProjectController from "../controllers/ProjectController";
 import ProjectItem from "./ProjectItem.vue";
 import project from "../entities/Project";

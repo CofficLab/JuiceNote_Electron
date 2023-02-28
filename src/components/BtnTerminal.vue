@@ -20,7 +20,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import CommandLine from "../icons/command-line.vue";
+import CommandLine from "../assets/icons/command-line.svg";
 import Terminal from "../components/Terminal.vue";
 
 export default defineComponent({
