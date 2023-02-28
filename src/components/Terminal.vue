@@ -5,7 +5,7 @@
     :minh="100"
     :w="800"
     :h="300"
-    :x="0"
+    :x="-300"
     :y="0"
     :sticks="['br']"
     :stickSize="12"
@@ -15,8 +15,8 @@
     v-on:dragging="resize"
     contentClass="terminal"
   >
-    <div class="bg-black h-full w-full rounded-2xl p-4">
-      <div :id="'terminal' + id" class="h-full w-full flex justify-center"></div>
+    <div class="h-full w-full rounded-2xl bg-black p-4">
+      <div :id="'terminal' + id" class="flex h-full w-full justify-center"></div>
     </div>
   </VueDragResize>
 </template>
@@ -145,6 +145,6 @@ export default {
 
 <style scoped lang="postcss">
 .terminal {
-  @apply p-0 shadow-2xl shadow-black rounded-2xl ring bg-red-400;
+  @apply rounded-2xl bg-red-400 p-0 shadow-2xl shadow-black ring;
 }
 </style>
