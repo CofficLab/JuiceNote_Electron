@@ -2,6 +2,7 @@
   <div class="flex h-full w-full flex-col items-center overflow-scroll">
     <!-- 工具栏 -->
     <div
+      id="toolbar"
       v-if="editor && editable"
       class="sticky top-0 z-40 flex w-full flex-row items-center justify-center gap-2 bg-green-300/50 shadow-2xl"
     >
@@ -30,6 +31,9 @@
       <button @click="editor.chain().focus().toggleBanner().run()" :class="{ 'is-active': editor.isActive('banner') }">
         提示框
       </button>
+      <button @click="editor.chain().focus().toggleBrick().run()" :class="{ 'is-active': editor.isActive('brick') }">
+        砖块
+      </button>
       <button
         @click="editor.chain().focus().toggleOfficialLink().run()"
         :class="{ 'is-active': editor.isActive('official-link') }"
@@ -53,6 +57,48 @@
       <button @click="save">保存</button>
     </div>
 
+    <!-- 悬浮菜单 -->
+    <div v-if="editor">
+      <bubble-menu class="bubble-menu bg-cyan-900/80 shadow-2xl" :tippy-options="{ duration: 100 }" :editor="editor">
+        <button @click="editor.chain().focus().toggleBold().run()" :class="{ 'is-active': editor.isActive('bold') }">
+          Bold
+        </button>
+        <button
+          @click="editor.chain().focus().toggleItalic().run()"
+          :class="{ 'is-active': editor.isActive('italic') }"
+        >
+          Italic
+        </button>
+        <button
+          @click="editor.chain().focus().toggleStrike().run()"
+          :class="{ 'is-active': editor.isActive('strike') }"
+        >
+          Strike
+        </button>
+      </bubble-menu>
+
+      <!-- <floating-menu class="floating-menu" :tippy-options="{ duration: 100 }" :editor="editor">
+        <button
+          @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
+          :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }"
+        >
+          H1
+        </button>
+        <button
+          @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
+          :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }"
+        >
+          H2
+        </button>
+        <button
+          @click="editor.chain().focus().toggleBulletList().run()"
+          :class="{ 'is-active': editor.isActive('bulletList') }"
+        >
+          Bullet List
+        </button>
+      </floating-menu> -->
+    </div>
+
     <!-- 编辑框 -->
     <div class="mt-1 flex w-full justify-center border-0 bg-base-100 p-4 pb-24">
       <editor-content :editor="editor" class="prose xl:prose-lg" />
@@ -73,12 +119,10 @@
 </template>
 
 <script>
-import { Editor, EditorContent } from "@tiptap/vue-3";
+import { Editor, EditorContent, FloatingMenu, BubbleMenu } from "@tiptap/vue-3";
 import RouteController from "../controllers/RouteController";
 import { writeFileSync } from "fs";
 import ToastController from "../controllers/ToastController";
-import Banner from "../tiptap_extensions/Banner.js";
-import OfficialLink from "../tiptap_extensions/OfficialLink.js";
 import Document from "@tiptap/extension-document";
 import Text from "@tiptap/extension-text";
 import Link from "@tiptap/extension-link";
@@ -88,6 +132,10 @@ import { lowlight } from "lowlight";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import Heading from "@tiptap/extension-heading";
 import "highlight.js/styles/github-dark.css";
+// 自定义的编辑器扩展
+import Brick from "../tiptap_extensions/Brick.js";
+import Banner from "../tiptap_extensions/Banner.js";
+import OfficialLink from "../tiptap_extensions/OfficialLink.js";
 
 const extensions = [
   Banner,
@@ -102,6 +150,9 @@ const extensions = [
   History,
   Heading,
   Paragraph,
+  // FloatingMenu,
+  BubbleMenu,
+  Brick,
   CodeBlockLowlight.configure({
     lowlight,
   }),
@@ -110,6 +161,8 @@ const extensions = [
 export default {
   components: {
     EditorContent,
+    BubbleMenu,
+    FloatingMenu,
   },
   data() {
     return {
@@ -185,7 +238,12 @@ export default {
 </script>
 
 <style scoped lang="postcss">
-button {
+#toolbar button {
   @apply btn-sm btn;
+}
+
+.bubble-menu button,
+.floating-menu button {
+  @apply btn-sm btn mx-1 rounded-none;
 }
 </style>

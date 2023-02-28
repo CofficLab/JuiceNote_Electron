@@ -39,12 +39,12 @@ body {
 }
 
 .brick {
-  @apply rounded
-  bg-sky-500
+  @apply w-12 rounded bg-sky-500
+  p-2
   text-center
   shadow-2xl
   transition
-  duration-300
+  duration-100
   hover:scale-105
   dark:bg-sky-800;
 }

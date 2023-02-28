@@ -1,13 +1,13 @@
-<h1>认识 Golang</h1><p>Golang（简称 Go） 是一门非常年轻的编程语言。</p><h2>第一个 Go 程序</h2><pre><code class="language-go">package main
+<h1>认识 Golang</h1><p>Golang（简称 Go） 是一门非常年轻的编程语言。</p><brick class="brick"><div>啊</div></brick><h2>第一个 Go 程序</h2><pre><code class="language-go">package main
 import "fmt"
 
 func main() {
     fmt.Println("hello")
 }
 </code></pre><p>每个编程语言的设计理念都不一样。</p><p>我们通过分析这段程序，来理解 Go 的设计理念。</p><h2>包</h2><p>https://pkg.go.dev/std</p><pre><code class="language-go">package main
-</code></pre><p>每个 Go 源码文件的开头都必须有<code>package</code>声明，表示其中的代码所属的包。</p><p>Go 规定，我们写的程序必须有一个<code>main</code>包。</p><p>用户程序1</p><p>main</p><p>用户程序2</p><p>main</p><p>log</p><p>...</p><p>用户程序n</p><p>main</p><p>...</p><p>内置包</p><p>fmt</p><p>os</p><p>path</p><p>sort</p><p>time</p><p>zip</p><p>md5</p><p>png</p><p>...</p><p>内置包是 Go 本身就有的包，在程序的任何地方都能使用，比如：</p><ul><li><p>fmt：处理输入输出</p></li><li><p>zip：压缩文件</p></li><li><p>png：处理<code>png</code>图片</p></li></ul><p>内置包就像一个工具箱，里面放置着常用的工具。</p><p>这个内置包的集合的官方名称是：<strong>Standard Library</strong>，中文译为：<strong>标准库</strong>。</p><p>标准库里包含了哪些包？</p><p>这个答案在其官方文档里：https://pkg.go.dev/std</p><p>一定要学会查询官方文档</p><h2>导入包</h2><pre><code class="language-go">import "fmt"
-</code></pre><p>如果你要使用一个包，就必须在程序的开头导入要使用的包。</p><p><code>fmt</code> 是内置的非常常用的包，主要用于输出内容。</p><h2>main 函数</h2><pre><code class="language-go">func main() {
+</code></pre><p>每个 Go 源码文件的开头都必须有package声明，表示其中的代码所属的包。</p><p>Go 规定，我们写的程序必须有一个main包。</p><p>用户程序1</p><p>main</p><p>用户程序2</p><p>main</p><p>log</p><p>...</p><p>用户程序n</p><p>main</p><p>...</p><p>内置包</p><p>fmt</p><p>os</p><p>path</p><p>sort</p><p>time</p><p>zip</p><p>md5</p><p>png</p><p>...</p><p>内置包是 Go 本身就有的包，在程序的任何地方都能使用，比如：</p><p>fmt：处理输入输出</p><p>zip：压缩文件</p><p>png：处理png图片</p><p>内置包就像一个工具箱，里面放置着常用的工具。</p><p>这个内置包的集合的官方名称是：Standard Library，中文译为：标准库。</p><p>标准库里包含了哪些包？</p><p>这个答案在其官方文档里：https://pkg.go.dev/std</p><p>一定要学会查询官方文档</p><h2>导入包</h2><pre><code class="language-go">import "fmt"
+</code></pre><p>如果你要使用一个包，就必须在程序的开头导入要使用的包。</p><p>fmt 是内置的非常常用的包，主要用于输出内容。</p><h2>main 函数</h2><pre><code class="language-go">func main() {
     fmt.Println("hello")
 }
-</code></pre><p>程序的<code>main</code>包里必须有一个<code>main</code>函数作为程序执行的起点。</p><p>这个<code>main</code>函数做的事是：</p><p><strong><em>使用</em></strong><code>fmt</code>包的<code>Println</code>函数，输出<code>hello</code>这串字。</p><h2>查看本机 Go 程序信息</h2><pre><code class="language-shell">go version
+</code></pre><p>程序的main包里必须有一个main函数作为程序执行的起点。</p><p>这个main函数做的事是：</p><p>使用fmt包的Println函数，输出hello这串字。</p><h2>查看本机 Go 程序信息</h2><pre><code class="language-shell">go version
 </code></pre>
