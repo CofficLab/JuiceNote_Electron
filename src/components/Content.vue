@@ -35,7 +35,7 @@ export default {
   },
   computed: {
     editable: () => RouteController.editable,
-    content: () => RouteController.currentPage.markdownSourceCode(),
+    content: () => "<toc></toc>" + RouteController.currentPage.markdownSourceCode(),
   },
   mounted() {
     console.log("mounted, init the editor");

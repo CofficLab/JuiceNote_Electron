@@ -18,6 +18,7 @@ import "highlight.js/styles/github-dark.css";
 import Brick from "../tiptap_extensions/Brick.js";
 import Banner from "../tiptap_extensions/Banner.js";
 import OfficialLink from "../tiptap_extensions/OfficialLink.js";
+import Toc from "../tiptap_extensions/Toc.js"
 
 let Extensions = [
     Banner,
@@ -69,7 +70,8 @@ let Extensions = [
         HTMLAttributes: {
             class: 'table bg-cyan-500/30 table-zebra',
         },
-    })
+    }),
+    Toc
 ];
 
 export default Extensions
