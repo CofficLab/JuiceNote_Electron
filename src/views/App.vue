@@ -1,8 +1,8 @@
 <template>
-  <div class="fixed flex h-screen w-screen flex-row">
+  <div class="flex h-screen w-screen flex-row">
     <!-- 左侧栏 -->
     <aside
-      class="left-0 hidden h-screen w-56 border-r-2 border-gray-300 bg-base-200 shadow-xl dark:border-cyan-900/10 lg:flex lg:flex-col"
+      class="hidden h-screen w-56 border-r-2 border-gray-300 bg-base-200 shadow-xl dark:border-cyan-900/10 lg:flex lg:flex-col"
     >
       <SideMenu></SideMenu>
     </aside>

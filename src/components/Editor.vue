@@ -138,11 +138,11 @@ export default {
         }),
         StarterKit,
         OfficialLink,
-        CodeBlockLowlight.configure({
-          lowlight,
-          defaultLanguage: "plaintext",
-          languageClassPrefix: "language-",
-        }),
+        // CodeBlockLowlight.configure({
+        //   lowlight,
+        //   defaultLanguage: "plaintext",
+        //   languageClassPrefix: "language-",
+        // }),
       ],
       autofocus: true,
       editable: true,

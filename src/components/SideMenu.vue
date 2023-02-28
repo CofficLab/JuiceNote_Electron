@@ -1,33 +1,38 @@
 <template>
   <div class="flex w-56 flex-col overflow-scroll">
-    <div class="w-full">
-      <div class="draggable h-12" v-bind:class="{ 'h-12': !hideTitleBar, 'h-0': hideTitleBar }"></div>
-    </div>
-    <div
-      class="fixed z-50 flex w-56 flex-col border-r-2 border-gray-300 bg-base-300/90 pt-4 dark:border-cyan-900/10"
-      v-bind:class="{ 'top-12': !hideTitleBar, 'top-0': hideTitleBar }"
-    >
-      <!-- 图书名 -->
-      <h1
-        class="flex justify-center bg-gradient-to-r from-red-500 to-cyan-500 bg-clip-text pb-4 text-lg text-transparent md:text-2xl lg:text-3xl"
+    <!-- 固定在左上角的内容 -->
+    <div class="sticky top-0 z-50 border-r-2 border-gray-300">
+      <!-- 空白，用于拖动 -->
+      <div class="z-50 w-full bg-base-300">
+        <div class="draggable" v-bind:class="{ 'h-12': !hideTitleBar, 'h-0': hideTitleBar }"></div>
+      </div>
+      <!-- 图书信息 -->
+      <div
+        class="flex flex-col bg-base-300/90 dark:border-cyan-900/10"
+        v-bind:class="{ 'top-12': !hideTitleBar, 'top-0': hideTitleBar }"
       >
-        {{ book.name }}
-      </h1>
-
-      <!-- 教程与手册的TAB -->
-      <div class="tabs flex justify-center" v-if="tabs.length > 0">
-        <Link
-          v-for="tab in tabs"
-          v-bind:class="{ 'tab-active': tab.shouldActive() }"
-          :href="tab.id"
-          class="tab tab-lifted"
-          >{{ tab.name }}</Link
+        <!-- 图书名 -->
+        <h1
+          class="flex justify-center bg-gradient-to-r from-red-500 to-cyan-500 bg-clip-text pb-2 text-lg text-transparent md:text-2xl lg:text-3xl"
         >
+          {{ book.name }}
+        </h1>
+
+        <!-- 教程与手册的TAB -->
+        <div class="tabs flex justify-center" v-if="tabs.length > 0">
+          <Link
+            v-for="tab in tabs"
+            v-bind:class="{ 'tab-active': tab.shouldActive() }"
+            :href="tab.id"
+            class="tab tab-lifted"
+            >{{ tab.name }}</Link
+          >
+        </div>
       </div>
     </div>
 
     <!-- 章节与页面 -->
-    <div class="h-full overflow-scroll pb-24 pt-24">
+    <div class="h-full pb-24">
       <ul class="menu menu-compact flex w-full flex-col p-0 px-1" v-for="(item, index) in chapters">
         <li v-if="index > 0"></li>
         <SideMenuItem :item="item" :id="item.id"></SideMenuItem>
@@ -83,10 +88,9 @@ export default defineComponent({
   },
   mounted: function () {
     // 滚动到激活的菜单的章节
-    var current = RouteController.getCurrentPage();
-    var target = document.getElementById(current.getParent().id);
-
-    if (target) target.scrollIntoView();
+    // var current = RouteController.getCurrentPage();
+    // var target = document.getElementById(current.getParent().id);
+    // if (target) target.scrollIntoView();
   },
   components: { Link, SideMenuItem, Children },
 });

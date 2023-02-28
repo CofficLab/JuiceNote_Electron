@@ -1,6 +1,6 @@
 <template>
   <div class="flex h-full w-full flex-col items-center overflow-scroll pt-12 pb-24" id="content">
-    <div class="prose"><div v-show="extensionName != '.vue'" v-html="html" class=""></div></div>
+    <div class="prose"><div v-if="extensionName != '.vue'" v-html="html" class=""></div></div>
 
     <CurrentVuePage v-if="extensionName == '.vue'"></CurrentVuePage>
   </div>
@@ -29,12 +29,11 @@ export default defineComponent({
     current: () => RouteController.currentPage,
     html: () => RouteController.currentPage.markdownSourceCode(),
   },
-  updated: function () {
-    this.show();
-  },
   watch: {
     html() {
-      this.show();
+      this.$nextTick(() => {
+        this.show();
+      });
     },
   },
   mounted: function () {

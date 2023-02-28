@@ -35,7 +35,7 @@ async function createWindow() {
   win = new BrowserWindow({
     minWidth: 780,
     height: 880,
-    width: 1030,
+    width: 1300,
     title: 'Main window',
     icon: path.join(ROOT_PATH.public, 'favicon.ico'),
     frame: false, // false：不显示可拖动的那个顶栏，形成一个无边框窗口
