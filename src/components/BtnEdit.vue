@@ -4,8 +4,8 @@
     class="btn-ghost tooltip tooltip-left btn-sm btn my-auto flex items-center"
     data-tip="编辑页面"
   >
-    <PencilSquare v-if="!editing"></PencilSquare>
-    <ArrowUturnLeft v-if="editing"></ArrowUturnLeft>
+    <PencilSquare v-if="!editable"></PencilSquare>
+    <ArrowUturnLeft v-if="editable"></ArrowUturnLeft>
   </div>
 </template>
 
@@ -24,7 +24,7 @@ export default defineComponent({
     switcher: () => RouteController.toggleEditMode(),
   },
   computed: {
-    editing: () => RouteController.editMode,
+    editable: () => RouteController.editable,
   },
 });
 </script>

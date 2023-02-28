@@ -54,6 +54,30 @@
       >
         代码块
       </button>
+      <button
+        @click="editor.chain().focus().toggleBulletList().run()"
+        :class="{ 'is-active': editor.isActive('bulletList') }"
+      >
+        toggleBulletList
+      </button>
+      <button
+        @click="editor.chain().focus().splitListItem('listItem').run()"
+        :disabled="!editor.can().splitListItem('listItem')"
+      >
+        splitListItem
+      </button>
+      <button
+        @click="editor.chain().focus().sinkListItem('listItem').run()"
+        :disabled="!editor.can().sinkListItem('listItem')"
+      >
+        sinkListItem
+      </button>
+      <button
+        @click="editor.chain().focus().liftListItem('listItem').run()"
+        :disabled="!editor.can().liftListItem('listItem')"
+      >
+        liftListItem
+      </button>
       <button @click="editor.chain().focus().undo().run()" :disabled="!editor.can().chain().focus().undo().run()">
         取消
       </button>
@@ -87,42 +111,7 @@ import { Editor, EditorContent, FloatingMenu, BubbleMenu } from "@tiptap/vue-3";
 import RouteController from "../controllers/RouteController";
 import { writeFileSync } from "fs";
 import ToastController from "../controllers/ToastController";
-import Document from "@tiptap/extension-document";
-import Text from "@tiptap/extension-text";
-import Link from "@tiptap/extension-link";
-import History from "@tiptap/extension-history";
-import Paragraph from "@tiptap/extension-paragraph";
-import Bold from "@tiptap/extension-bold";
-import { lowlight } from "lowlight";
-import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
-import Heading from "@tiptap/extension-heading";
-import "highlight.js/styles/github-dark.css";
-// 自定义的编辑器扩展
-import Brick from "../tiptap_extensions/Brick.js";
-import Banner from "../tiptap_extensions/Banner.js";
-import OfficialLink from "../tiptap_extensions/OfficialLink.js";
-
-const extensions = [
-  Banner,
-  Link.configure({
-    HTMLAttributes: {
-      target: "_blank",
-    },
-  }),
-  OfficialLink,
-  Document,
-  Text,
-  History,
-  Heading,
-  Paragraph,
-  Bold,
-  // FloatingMenu,
-  // BubbleMenu,
-  Brick,
-  CodeBlockLowlight.configure({
-    lowlight,
-  }),
-];
+import Extensions from "../entities/Extensions";
 
 export default {
   components: {
@@ -138,14 +127,14 @@ export default {
     };
   },
   computed: {
-    editable: () => RouteController.editMode,
+    editable: () => RouteController.editable,
     content: () => RouteController.currentPage.markdownSourceCode(),
   },
   mounted() {
     console.log("mounted, init the editor");
     this.editor = new Editor({
       content: this.content,
-      extensions: extensions,
+      extensions: Extensions,
       autofocus: true,
       editable: this.editable,
     });

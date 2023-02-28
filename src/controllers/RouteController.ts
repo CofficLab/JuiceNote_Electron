@@ -7,11 +7,11 @@ const RouteController = reactive({
     currentPage: new BookNode,
     isProd: location.protocol === 'file:',
     isHomePage: (new URL(location.href)).searchParams.get('id') == '/',
-    editMode: (new URL(location.href)).searchParams.get('edit_mode') != undefined,
+    editable: (new URL(location.href)).searchParams.get('edit_mode') != undefined,
     renderedHtml: '',
 
     isEditMode() {
-        return this.editMode
+        return this.editable
     },
 
     toggleEditMode(): void {
@@ -21,7 +21,7 @@ const RouteController = reactive({
             history.pushState([], "", location.pathname + "?id=" + this.getCurrentPage().id + '&edit_mode=1');
         }
 
-        this.editMode = !this.editMode
+        this.editable = !this.editable
         this.refresh()
         this.checkHomePage()
     },
@@ -48,7 +48,7 @@ const RouteController = reactive({
         let path = Id.idToPath(id ? id : '/')
         this.search = decodeURI(location.search)
         this.currentPage = (new BookNode(path)).firstPage()
-        this.editMode = (new URL(location.href)).searchParams.get('edit_mode') != undefined
+        this.editable = (new URL(location.href)).searchParams.get('edit_mode') != undefined
     },
     getBreadcrumbs(): BookNode[] {
         return this.getCurrentPage().getParents().concat([this.getCurrentPage()])

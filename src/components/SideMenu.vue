@@ -1,7 +1,7 @@
 <template>
-  <div class="flex w-56 flex-col overflow-scroll">
+  <div class="flex flex-col overflow-scroll">
     <!-- 固定在左上角的内容 -->
-    <div class="sticky top-0 z-50 border-r-2 border-gray-300">
+    <div class="sticky top-0 z-50">
       <!-- 空白，用于拖动 -->
       <div class="z-50 w-full bg-base-300">
         <div class="draggable" v-bind:class="{ 'h-12': !hideTitleBar, 'h-0': hideTitleBar }"></div>
@@ -24,7 +24,7 @@
             v-for="tab in tabs"
             v-bind:class="{ 'tab-active': tab.shouldActive() }"
             :href="tab.id"
-            class="tab tab-lifted"
+            class="tab-lifted tab"
             >{{ tab.name }}</Link
           >
         </div>
@@ -38,14 +38,11 @@
         <SideMenuItem :item="item" :id="item.id"></SideMenuItem>
       </ul>
       <div class="pointer-events-none sticky bottom-0 flex h-20"></div>
-    </div>
 
-    <!-- 固定在左下角的图书logo -->
-    <div
-      v-if="book.hasLogo()"
-      class="fixed bottom-0 h-20 w-56 border-r-2 border-t border-gray-300 opacity-90 dark:border-cyan-900/10 dark:brightness-50"
-    >
-      <img :src="book.logoUrl()" alt="" />
+      <!-- 底部的图书logo -->
+      <div v-if="book.hasLogo()" class="h-20 opacity-90 dark:brightness-50">
+        <img :src="book.logoUrl()" alt="" />
+      </div>
     </div>
   </div>
 </template>

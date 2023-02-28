@@ -1621,6 +1621,7 @@
       "Golang@教程@函数@递归.md"
     ],
     "Golang@教程@初识": [
+      "Golang@教程@初识@字符编码.html",
       "Golang@教程@初识@认识 Golang.html",
       "Golang@教程@初识@参考资料.html",
       "Golang@教程@初识@编译与解释.html",
@@ -1628,8 +1629,6 @@
       "Golang@教程@初识@认识进制.html",
       "Golang@教程@初识@认识计算机.html",
       "Golang@教程@初识@认识 Golang.md",
-      "Golang@教程@初识@认识进制.md",
-      "Golang@教程@初识@字符编码.md",
       "Golang@教程@初识@参考资料.md"
     ],
     "Golang@教程@变量与常量": [
