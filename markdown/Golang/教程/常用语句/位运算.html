@@ -1,0 +1,38 @@
+<h1>位运算</h1><h2>与</h2><pre><code class="language-go">package main
+import "fmt"
+
+func main() {
+    fmt.Println(1 &amp; 1)
+    fmt.Println(1 &amp; 0)
+    fmt.Println(0 &amp; 0)
+}
+</code></pre><h2>或</h2><pre><code class="language-go">package main
+import "fmt"
+
+func main() {
+    fmt.Println(1 | 1)
+    fmt.Println(1 | 0)
+    fmt.Println(0 | 0)
+}
+</code></pre><h2>异或</h2><p>对应位置上的值按照以下规则计算：</p><pre><code>1 ^ 1 = 0
+1 ^ 0 = 1
+0 ^ 1 = 1
+0 ^ 0 = 0
+</code></pre><p>相同则为 0，否则为 1。</p><h2>位左移</h2><pre><code class="language-go">package main
+import "fmt"
+
+func main() {
+    fmt.Println(1 &lt;&lt; 10)
+    fmt.Println(1 &lt;&lt; 1)
+    fmt.Println(0 &lt;&lt; 2)
+    fmt.Println(3 &lt;&lt; 2)
+}
+</code></pre><ul class="m-0 p-0"><li class="m-0 p-0"><p>左移 1 位相当于乘以 2</p></li><li class="m-0 p-0"><p>左移 2 位相当于乘以 2*2</p></li><li class="m-0 p-0"><p>左移 3 位相当于乘以 3*2</p></li><li class="m-0 p-0"><p>左移 n 位相当于乘以 n*2</p></li></ul><h2>位右移</h2><pre><code class="language-go">package main
+import "fmt"
+
+func main() {
+    fmt.Println(1 &gt;&gt; 10)
+    fmt.Println(1 &gt;&gt; 1)
+    fmt.Println(0 &gt;&gt; 2)
+}
+</code></pre>

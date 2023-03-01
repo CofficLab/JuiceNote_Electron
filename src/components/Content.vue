@@ -35,7 +35,7 @@ export default {
   },
   computed: {
     editable: () => RouteController.editable,
-    content: () => RouteController.currentPage.markdownSourceCode(),
+    content: () => RouteController.currentPage.getSourceCode(),
   },
   mounted() {
     console.log("mounted, init the editor");
@@ -66,7 +66,7 @@ export default {
     editable() {
       console.log("editable changed", this.editable);
       this.editor.setEditable(this.editable);
-      this.editor.commands.setContent(RouteController.currentPage.markdownSourceCode(), false);
+      this.editor.commands.setContent(RouteController.currentPage.getSourceCode(), false);
     },
   },
   beforeUnmount() {

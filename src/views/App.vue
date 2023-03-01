@@ -99,7 +99,7 @@ export default defineComponent({
   },
   data() {
     return {
-      markdownSourceCode: RouteController.getCurrentPage().markdownSourceCode(),
+      markdownSourceCode: RouteController.getCurrentPage().getSourceCode(),
     };
   },
   computed: {

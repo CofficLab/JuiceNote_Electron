@@ -195,9 +195,15 @@ class BookNode {
         return Config.get('nodeExcepts').includes(path.basename(absolutePath))
     }
 
-    // 获取markdown源码
-    public markdownSourceCode(): string {
-        return this.hasError() ? '' : fs.readFileSync(this.path).toString()
+    // 获取源码
+    public getSourceCode(): string {
+        let content = fs.readFileSync(this.path).toString()
+        let MarkdownIt = require('markdown-it')
+        if (this.path.includes('.md')) {
+            content = (new MarkdownIt).render(content)
+        }
+
+        return this.hasError() ? '' : content
     }
 
     public delete() {
@@ -253,7 +259,7 @@ class BookNode {
 
     // 保存文章内容
     public save(content: string): string {
-        if (this.markdownSourceCode() == content) {
+        if (this.getSourceCode() == content) {
             return '没有变化，无须保存'
         }
 

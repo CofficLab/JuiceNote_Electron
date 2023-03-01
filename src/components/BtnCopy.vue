@@ -23,7 +23,7 @@ clipboard.on("success", function () {
 export default defineComponent({
   computed: {
     markdownSourceCode(): string {
-      return RouteController.getCurrentPage().markdownSourceCode();
+      return RouteController.getCurrentPage().getSourceCode();
     },
   },
   components: { IconCopy },

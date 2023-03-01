@@ -1622,13 +1622,13 @@
       "Golang@教程@函数@递归.md"
     ],
     "Golang@教程@初识": [
-      "Golang@教程@初识@字符编码.html",
+      "Golang@教程@初识@认识计算机.html",
       "Golang@教程@初识@认识 Golang.html",
-      "Golang@教程@初识@参考资料.html",
+      "Golang@教程@初识@认识进制.html",
+      "Golang@教程@初识@字符编码.html",
       "Golang@教程@初识@编译与解释.html",
       "Golang@教程@初识@官网与文档.html",
-      "Golang@教程@初识@认识进制.html",
-      "Golang@教程@初识@认识计算机.html"
+      "Golang@教程@初识@参考资料.html"
     ],
     "Golang@教程@变量与常量": [
       "Golang@教程@变量与常量@变量.md",
@@ -1641,16 +1641,15 @@
       "Golang@教程@安装与配置@Windows.html"
     ],
     "Golang@教程@常用语句": [
+      "Golang@教程@常用语句@迭代.html",
+      "Golang@教程@常用语句@返回值.html",
+      "Golang@教程@常用语句@位运算.html",
+      "Golang@教程@常用语句@缩进与换行.html",
+      "Golang@教程@常用语句@循环.html",
+      "Golang@教程@常用语句@条件判断.html",
+      "Golang@教程@常用语句@运算与比较.html",
       "Golang@教程@常用语句@注释.html",
-      "Golang@教程@常用语句@输出.html",
-      "Golang@教程@常用语句@注释.md",
-      "Golang@教程@常用语句@运算与比较.md",
-      "Golang@教程@常用语句@条件判断.md",
-      "Golang@教程@常用语句@循环.md",
-      "Golang@教程@常用语句@缩进与换行.md",
-      "Golang@教程@常用语句@位运算.md",
-      "Golang@教程@常用语句@返回值.md",
-      "Golang@教程@常用语句@迭代.md"
+      "Golang@教程@常用语句@输出.html"
     ],
     "Golang@教程@并发": [
       "Golang@教程@并发@协程.md",
