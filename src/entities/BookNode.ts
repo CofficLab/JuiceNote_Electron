@@ -7,8 +7,7 @@ import Config from "./Config";
 import { writeFileSync } from "fs";
 import { writeFile } from "fs";
 import { mkdirSync } from "fs";
-import { existsSync, stat } from "fs";
-import { fstatSync } from "original-fs";
+import { existsSync } from "fs";
 
 class BookNode {
     public path: string = ''
@@ -33,7 +32,7 @@ class BookNode {
             }
 
             this.path = absolutePath
-            this.name = path.basename(this.path)
+            this.name = path.basename(this.path).replace('.html', '')
             this.id = Id.pathToId(this.path)
             this.level = this.id.split('@').length
         } else {
@@ -258,7 +257,7 @@ class BookNode {
             return '没有变化，无须保存'
         }
 
-        writeFileSync(this.path, content)
+        writeFileSync(this.path.replace('.md', '.html'), content)
 
         return '保存成功'
     }

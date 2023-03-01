@@ -15,10 +15,11 @@ import TableCell from "@tiptap/extension-table-cell"
 import TableHeader from "@tiptap/extension-table-header"
 import "highlight.js/styles/github-dark.css";
 // 自定义的编辑器扩展
-import Brick from "../tiptap_extensions/Brick.js";
-import Banner from "../tiptap_extensions/Banner.js";
-import OfficialLink from "../tiptap_extensions/OfficialLink.js";
-import Toc from "../tiptap_extensions/Toc.js"
+import Brick from "../extensions/Brick.js";
+import Banner from "../extensions/Banner.js";
+import OfficialLink from "../extensions/OfficialLink.js";
+import Toc from "../extensions/Toc.js"
+import Tab from "../extensions/Tab.js"
 
 let Extensions = [
     Banner,
@@ -54,6 +55,7 @@ let Extensions = [
             // style: "margin:1rem",
         },
     }),
+    Tab,
     Text,
     TableCell.configure({
         HTMLAttributes: {

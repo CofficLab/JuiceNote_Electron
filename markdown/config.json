@@ -13,6 +13,7 @@
   ],
   "children_settings": {
     "/": [
+      "CSS",
       "Golang",
       "开始",
       "Python",
@@ -1627,9 +1628,7 @@
       "Golang@教程@初识@编译与解释.html",
       "Golang@教程@初识@官网与文档.html",
       "Golang@教程@初识@认识进制.html",
-      "Golang@教程@初识@认识计算机.html",
-      "Golang@教程@初识@认识 Golang.md",
-      "Golang@教程@初识@参考资料.md"
+      "Golang@教程@初识@认识计算机.html"
     ],
     "Golang@教程@变量与常量": [
       "Golang@教程@变量与常量@变量.md",
@@ -1808,6 +1807,12 @@
     "Golang@手册@表达式和运算符": [
       "Golang@手册@表达式和运算符@....md",
       "Golang@手册@表达式和运算符@空白标识符.md"
+    ],
+    "CSS": [
+      "CSS@manuals"
+    ],
+    "CSS@manuals": [
+      "CSS@manuals@选择器.html"
     ]
   }
 }

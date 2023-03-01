@@ -35,7 +35,7 @@ export default {
   },
   computed: {
     editable: () => RouteController.editable,
-    content: () => "<toc></toc>" + RouteController.currentPage.markdownSourceCode(),
+    content: () => RouteController.currentPage.markdownSourceCode(),
   },
   mounted() {
     console.log("mounted, init the editor");
@@ -44,14 +44,24 @@ export default {
       extensions: Extensions,
       autofocus: true,
       editable: this.editable,
+      onUpdate: () => {
+        console.log("editor updated");
+      },
+      onRenderTriggered: () => {
+        console.log("render triggered");
+      },
+      onSelectionUpdate: () => {
+        console.log("selection update");
+      },
+      onRenderTracked: () => {
+        console.log("render tracked");
+      },
     });
   },
   watch: {
     content(value) {
-      const isSame = this.editor.getHTML() === value;
-      if (isSame) return;
-
-      this.editor.commands.setContent(value, false);
+      console.log("content changed");
+      this.editor.commands.setContent(value, true);
     },
     editable() {
       console.log("editable changed", this.editable);

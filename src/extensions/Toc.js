@@ -5,9 +5,7 @@ import Toc from "./Toc.vue";
 
 export default Node.create({
   name: "tableOfContents",
-
   group: "block",
-
   atom: true,
 
   parseHTML() {
@@ -17,15 +15,12 @@ export default Node.create({
       },
     ];
   },
-
   renderHTML({ HTMLAttributes }) {
     return ["toc", mergeAttributes(HTMLAttributes)];
   },
-
   addNodeView() {
     return VueNodeViewRenderer(Toc);
   },
-
   addGlobalAttributes() {
     return [
       {

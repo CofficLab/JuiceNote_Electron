@@ -1,11 +1,19 @@
 <template>
-  <node-view-wrapper class="toc">
-    <ul class="toc__list fixed right-0 w-56 bg-cyan-800/30">
-      <li class="toc__item" :class="`toc__item--${heading.level}`" v-for="(heading, index) in headings" :key="index">
-        <a :href="`#${heading.id}`">
-          {{ heading.text }}
-        </a>
-      </li>
+  <node-view-wrapper class="tab">
+    <ul class="menu fixed right-4 top-12 w-56 overflow-scroll rounded-2xl bg-cyan-900/10 py-4" style="padding-left: 0">
+      <div v-for="(heading, index) in headings">
+        <li
+          :class="`toc__item--${heading.level}`"
+          class="list-none rounded-none"
+          style="margin: 0"
+          :key="index"
+          v-if="heading.level > 1"
+        >
+          <a :href="`#${heading.id}`" class="no-underline">
+            {{ heading.text }}
+          </a>
+        </li>
+      </div>
     </ul>
   </node-view-wrapper>
 </template>
@@ -17,9 +25,7 @@ export default {
   components: {
     NodeViewWrapper,
   },
-
   props: nodeViewProps,
-
   data() {
     return {
       headings: [],
@@ -28,6 +34,7 @@ export default {
 
   methods: {
     handleUpdate() {
+      console.log("toc handle update");
       const headings = [];
       const transaction = this.editor.state.tr;
 
@@ -65,57 +72,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss">
-/* Basic editor styles */
-.ProseMirror {
-  > * + * {
-    margin-top: 0.75em;
-  }
-}
-</style>
-
-<style lang="scss">
-.toc {
-  opacity: 0.75;
-  border-radius: 0.5rem;
-  padding: 0.75rem;
-
-  &__list {
-    list-style: none;
-    padding: 0;
-
-    &::before {
-      display: block;
-      content: "Table of Contents";
-      font-weight: 700;
-      letter-spacing: 0.025rem;
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      opacity: 0.5;
-    }
-  }
-
-  &__item {
-    a:hover {
-      opacity: 0.5;
-    }
-
-    &--3 {
-      padding-left: 1rem;
-    }
-
-    &--4 {
-      padding-left: 2rem;
-    }
-
-    &--5 {
-      padding-left: 3rem;
-    }
-
-    &--6 {
-      padding-left: 4rem;
-    }
-  }
-}
-</style>
