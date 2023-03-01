@@ -13,7 +13,6 @@
   ],
   "children_settings": {
     "/": [
-      "CSS",
       "Golang",
       "开始",
       "Python",
@@ -26,6 +25,7 @@
       "Redis",
       "Docker",
       "Shell",
+      "CSS",
       "Flutter",
       "Vue",
       "面向对象",
