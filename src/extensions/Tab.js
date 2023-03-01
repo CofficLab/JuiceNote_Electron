@@ -1,8 +1,5 @@
 import { mergeAttributes, Node } from "@tiptap/core";
 import { VueNodeViewRenderer } from "@tiptap/vue-3";
-import { readFileSync } from "fs";
-import { join } from "path";
-import Config from "../entities/Config";
 
 import Tab from "./Tab.vue";
 
@@ -10,6 +7,7 @@ export default Node.create({
   name: "tab",
   group: "block",
   content: "inline*",
+  // 将什么样的HTML转化成tab
   parseHTML() {
     return [
       {
@@ -18,27 +16,19 @@ export default Node.create({
     ];
   },
   renderHTML({ HTMLAttributes }) {
-    let infoDom = document.createElement("div");
-    infoDom.innerHTML = readFileSync(join(Config.rootPath, "src", "assets", "icons", "info.svg")).toString();
-
-    return [
-      "tab",
-      { class: "tab" },
-      ["div", { class: "flex justify-center items-center" }, infoDom],
-      ["div", mergeAttributes(HTMLAttributes), 0],
-    ];
+    return ["tab", mergeAttributes(HTMLAttributes)];
   },
 
   addNodeView() {
-    return VueNodeViewRenderer(Banner);
+    return VueNodeViewRenderer(Tab);
   },
 
   addCommands() {
     return {
-      addTab:
-        () =>
+      setTab:
+        (attributes) =>
         ({ commands }) => {
-          return commands.setNode(this.name);
+          return commands.setNode(this.name, attributes);
         },
     };
   },

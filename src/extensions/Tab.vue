@@ -1,74 +1,63 @@
 <template>
-  <node-view-wrapper class="tab">
-    <ul class="menu fixed right-4 top-12 w-56 overflow-scroll rounded-2xl bg-cyan-900/10 py-4" style="padding-left: 0">
-      <div v-for="(heading, index) in headings">
-        <li
-          :class="`toc__item--${heading.level}`"
-          class="list-none rounded-none"
-          style="margin: 0"
-          :key="index"
-          v-if="heading.level > 1"
-        >
-          <a :href="`#${heading.id}`" class="no-underline">
-            {{ heading.text }}
-          </a>
-        </li>
+  <node-view-wrapper>
+    <div class="flex flex-col bg-cyan-900/40 shadow-sm">
+      <div class="tabs tabs-boxed rounded-none bg-base-300">
+        <a class="tab no-underline" v-bind:class="{ 'tab-active': current == 1 }" @click="activate(1)">Tab 1</a>
+        <a class="tab no-underline" v-bind:class="{ 'tab-active': current == 2 }" @click="activate(2)">Tab 2</a>
+        <a class="tab no-underline" v-bind:class="{ 'tab-active': current == 3 }" @click="activate(3)">Tab 3</a>
       </div>
-    </ul>
+
+      <div v-bind:class="{ hidden: current != 1 }">
+        <label contenteditable="false" class="ml-4">Tab1的内容</label>
+        <node-view-content
+          class="border border-dashed px-4 dark:border-cyan-800"
+          v-bind:class="{ 'border-none': !editable }"
+          v-model="tab1Content"
+        />
+      </div>
+
+      <div v-bind:class="{ hidden: current != 2 }">
+        <label contenteditable="false" class="ml-4">Tab2的内容</label>
+        <node-view-content
+          class="border border-dashed p-4 dark:border-cyan-800"
+          v-bind:class="{ 'border-none': !editable }"
+        />
+      </div>
+
+      <div v-bind:class="{ hidden: current != 3 }">
+        <label contenteditable="false" class="ml-4">Tab3的内容</label>
+        <node-view-content
+          class="border border-dashed px-4 dark:border-cyan-800"
+          v-bind:class="{ 'border-none': !editable }"
+        />
+      </div>
+    </div>
   </node-view-wrapper>
 </template>
 
 <script>
-import { nodeViewProps, NodeViewWrapper } from "@tiptap/vue-3";
+import { nodeViewProps, NodeViewWrapper, NodeViewContent } from "@tiptap/vue-3";
+import RouteController from "../controllers/RouteController";
 
 export default {
   components: {
     NodeViewWrapper,
+    NodeViewContent,
   },
   props: nodeViewProps,
   data() {
     return {
-      headings: [],
+      current: 1,
+      tab1Content: "",
     };
   },
-
-  methods: {
-    handleUpdate() {
-      console.log("toc handle update");
-      const headings = [];
-      const transaction = this.editor.state.tr;
-
-      this.editor.state.doc.descendants((node, pos) => {
-        if (node.type.name === "heading") {
-          const id = `heading-${headings.length + 1}`;
-
-          if (node.attrs.id !== id) {
-            transaction.setNodeMarkup(pos, undefined, {
-              ...node.attrs,
-              id,
-            });
-          }
-
-          headings.push({
-            level: node.attrs.level,
-            text: node.textContent,
-            id,
-          });
-        }
-      });
-
-      transaction.setMeta("addToHistory", false);
-      transaction.setMeta("preventUpdate", true);
-
-      this.editor.view.dispatch(transaction);
-
-      this.headings = headings;
-    },
+  computed: {
+    editable: () => RouteController.editable,
   },
-
-  mounted() {
-    this.editor.on("update", this.handleUpdate);
-    this.$nextTick(this.handleUpdate);
+  methods: {
+    activate: function (id) {
+      this.current = id;
+    },
   },
 };
 </script>
