@@ -14,7 +14,7 @@
 
       <!-- 内容部分 -->
       <div v-for="(tab, index) in tabs" v-bind:class="{ hidden: index != current }">
-        <div>{{ tab }}</div>
+        <div contenteditable="true">{{ tab }}</div>
         <node-view-content
           class="border border-dashed px-4 dark:border-cyan-800"
           v-bind:class="{ 'border-none': !editable }"
@@ -37,14 +37,11 @@ export default {
   data() {
     return {
       current: 0,
+      tabs: ["0", "1"],
     };
   },
   computed: {
     editable: () => RouteController.editable,
-    tabs() {
-      let tabs = JSON.parse(this.node.attrs.tabs);
-      return tabs;
-    },
   },
   watch: {
     tab1Content: () => {
@@ -62,11 +59,11 @@ export default {
       });
     },
     handleUpdate() {
-      console.log("tab handle update,tab1content is", this.$refs.tab1content);
+      console.log("tab handle update,tabs is", this.tabs);
     },
   },
   mounted() {
-    console.log("mounted props is", this);
+    this.tabs = JSON.parse(this.node.attrs.tabs);
     this.editor.on("update", this.handleUpdate);
     this.$nextTick(this.handleUpdate);
   },
