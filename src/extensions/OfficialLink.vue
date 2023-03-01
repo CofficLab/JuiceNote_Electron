@@ -32,7 +32,7 @@ export default {
   },
 
   computed: {
-    editable: () => RouteController.editMode,
+    editable: () => RouteController.editable,
   },
 
   props: nodeViewProps,
