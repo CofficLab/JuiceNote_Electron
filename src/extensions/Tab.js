@@ -6,6 +6,7 @@ import Tab from "./Tab.vue";
 export default Node.create({
   name: "tab",
   group: "block",
+  draggable: true,
   // content: "block*",
 
   // 将什么样的HTML转化成tab
