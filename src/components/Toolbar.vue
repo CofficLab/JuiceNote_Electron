@@ -108,7 +108,7 @@
     <button @click="inputLink" :class="{ 'is-active': editor.isActive('link') }">设置链接</button>
     <button @click="editor.chain().focus().unsetLink().run()" :disabled="!editor.isActive('link')">取消链接</button>
     <button @click="insertToc">TOC</button>
-    <button @click="editor.chain().focus().setTab().run()">TAB</button>
+    <button @click="editor.chain().focus().addTab().run()">TAB</button>
     <button
       @click="editor.chain().focus().toggleCodeBlock().run()"
       :class="{ 'is-active': editor.isActive('codeBlock') }"
