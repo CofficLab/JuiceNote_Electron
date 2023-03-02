@@ -1,6 +1,6 @@
 <template>
-  <node-view-wrapper>
-    <node-view-content ref="contents" v-show="this.current == this.node.attrs.index"></node-view-content>
+  <node-view-wrapper ref="content">
+    <node-view-content v-show="this.current == this.node.attrs.index"></node-view-content>
   </node-view-wrapper>
 </template>
 
@@ -13,19 +13,21 @@ export default {
     NodeViewContent,
   },
   props: nodeViewProps,
-  computed: {
-    current: function () {
-      console.log("in tab content,check current", this.editor.storage.tab.current);
-      return this.editor.storage.tab.current;
+  data() {
+    return {
+      current: 0,
+    };
+  },
+  methods: {
+    setCurrent: function () {
+      this.$nextTick(function () {
+        this.current = this.$refs.content.$el.parentElement.getAttribute("data-current");
+      });
     },
   },
-  watch: {
-    current: function () {
-      console.log("tab content said current changede");
-    },
-  },
-  mounted() {
-    console.log("tab content加载,tab.storage.current=", this.current);
+  mounted: function () {
+    this.setCurrent();
+    this.editor.on("update", this.setCurrent);
   },
 };
 </script>

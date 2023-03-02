@@ -2,6 +2,11 @@ import { VueNodeViewRenderer, Node } from "@tiptap/vue-3";
 
 import Tab from "./Tab.vue";
 
+// 配合 TabContent 使用，Tab 是这样的结构
+// <tab>
+//  <tab-content>
+//  <tab-content>
+// </tab>
 export default Node.create({
   name: "tab",
   group: "block",
@@ -20,11 +25,14 @@ export default Node.create({
   },
 
   // 定义属性
-  // 存储到HTML中是这样的：<tab tabs="1,2,3"></tab>
+  // 存储到HTML中是这样的：<tab titles="1,2,3" current="0"></tab>
   addAttributes() {
     return {
-      tabs: {
+      titles: {
         default: "",
+      },
+      current: {
+        default: 0,
       },
     };
   },
@@ -52,7 +60,7 @@ export default Node.create({
       addTab:
         (attributes) =>
         ({ commands }) => {
-          return commands.insertContent("<tab tabs=1,2,3]></tab>");
+          return commands.insertContent("<tab titles=1,2,3 current=0]></tab>");
         },
     };
   },

@@ -30,23 +30,6 @@ export default Node.create({
     return VueNodeViewRenderer(TabContent);
   },
 
-  onFocus() {
-    console.log("tab content 检测到update事件,this.editor.storage.tab.current=", this.editor.storage.tab.current);
-  },
-
-  onTransaction() {
-    console.log("tab content 检测到transaction事件,this.editor.storage.tab.current=", this.editor.storage.tab.current);
-  },
-  onSelectionUpdate({ editor }) {
-    console.log(
-      "tab content 检测到onSelectionUpdate事件,this.editor.storage.tab.current=",
-      this.editor.storage.tab.current
-    );
-  },
-  onBlur({ editor }) {
-    console.log("tab content 检测到onSelectionUpdate事件,this.editor.storage.tab.current=", editor.storage.tab.current);
-  },
-
   // 将数据转换成HTML
   renderHTML({ HTMLAttributes, node }) {
     // 第一个参数是HTML标签的名字

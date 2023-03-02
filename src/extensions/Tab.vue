@@ -13,7 +13,7 @@
       <div class="flex flex-col shadow-sm">
         <!-- 标题按钮 -->
         <div class="tabs tabs-boxed rounded-none bg-base-300" contenteditable="false">
-          <div v-for="(tab, index) in tabs">
+          <div v-for="(title, index) in titles">
             <a
               class="tab no-underline"
               contenteditable="true"
@@ -21,12 +21,12 @@
               v-bind:class="{ 'tab-active': current == index }"
               @click="activate(index)"
               @keyup="(event) => save(event)"
-              >{{ tab }}</a
+              >{{ title }}</a
             >
           </div>
         </div>
 
-        <node-view-content ref="contents"></node-view-content>
+        <node-view-content ref="contents" v-bind:data-current="current"></node-view-content>
       </div>
     </div>
   </node-view-wrapper>
@@ -44,36 +44,35 @@ export default {
   props: nodeViewProps,
   data() {
     return {
-      current: 0,
-      tabs: ["0", "1"],
+      current: this.node.attrs.current,
+      titles: this.node.attrs.titles.split(","),
     };
   },
   computed: {
     editable: () => RouteController.editable,
   },
   methods: {
-    activate: function (id) {
-      console.log("set current", id);
-      this.current = id;
-      this.editor.storage.tab.current = id;
-      console.log(this.editor.storage.tab.current);
+    activate: function (index) {
+      this.editor.storage.tab.current = index;
+      this.current = index;
+      this.updateAttributes({
+        current: this.current,
+      });
     },
     save(event) {
       let target = event.target;
-      console.log("保存tab名称", target);
+      console.log("保存title名称", target);
 
-      let tabsArray = this.node.attrs.tabs.split(",");
-      tabsArray[this.current] = target.innerHTML;
+      let titles = this.node.attrs.titles.split(",");
+      titles[this.current] = target.innerHTML;
       this.updateAttributes({
-        tabs: tabsArray.join(","),
+        titles: titles.join(","),
       });
-
-      console.log(this.node.attrs.tabs);
     },
   },
   mounted() {
-    console.log("tab加载");
-    this.tabs = this.node.attrs.tabs.split(",");
+    // console.log("tab加载");
+    this.activate(this.current);
   },
 };
 </script>
