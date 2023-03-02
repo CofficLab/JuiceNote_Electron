@@ -1,6 +1,7 @@
 import { Node } from "@tiptap/core";
 import { VueNodeViewRenderer } from "@tiptap/vue-3";
 import TabContent from "./TabContent.vue";
+import { Plugin, PluginKey } from "@tiptap/pm/state";
 
 export default Node.create({
   name: "tabContent",
@@ -30,6 +31,38 @@ export default Node.create({
     return VueNodeViewRenderer(TabContent);
   },
 
+  addProseMirrorPlugins() {
+    return [
+      new Plugin({
+        filterTransaction(transaction, state) {
+          console.log("filter transaction");
+          let result = true; // true for keep, false for stop transaction
+          const replaceSteps = [];
+          transaction.steps.forEach((step, index) => {
+            console.log("step is ", step.jsonID);
+            if (step.jsonID === "replaceAround") {
+              replaceSteps.push(index);
+            }
+          });
+
+          replaceSteps.forEach((index) => {
+            const map = transaction.mapping.maps[index];
+            const oldStart = map.ranges[0];
+            const oldEnd = map.ranges[0] + map.ranges[1];
+            state.doc.nodesBetween(oldStart, oldEnd, (node) => {
+              console.log("filter node", node);
+              if (node.type.name === "tabContent") {
+                result = false;
+              }
+            });
+          });
+
+          console.log(result);
+          return result;
+        },
+      }),
+    ];
+  },
   // 将数据转换成HTML
   renderHTML({ HTMLAttributes, node }) {
     // 第一个参数是HTML标签的名字
