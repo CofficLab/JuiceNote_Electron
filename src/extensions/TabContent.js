@@ -1,4 +1,6 @@
 import { Node } from "@tiptap/core";
+import { VueNodeViewRenderer } from "@tiptap/vue-3";
+import TabContent from "./TabContent.vue";
 
 export default Node.create({
   name: "tabContent",
@@ -11,6 +13,38 @@ export default Node.create({
   // 这样的：<tab-content></tab-content>
   parseHTML() {
     return [{ tag: "tab-content" }];
+  },
+
+  addAttributes() {
+    return {
+      class: {
+        default: "bg-green-300",
+      },
+      index: {
+        default: 0,
+      },
+    };
+  },
+
+  addNodeView() {
+    return VueNodeViewRenderer(TabContent);
+  },
+
+  onFocus() {
+    console.log("tab content 检测到update事件,this.editor.storage.tab.current=", this.editor.storage.tab.current);
+  },
+
+  onTransaction() {
+    console.log("tab content 检测到transaction事件,this.editor.storage.tab.current=", this.editor.storage.tab.current);
+  },
+  onSelectionUpdate({ editor }) {
+    console.log(
+      "tab content 检测到onSelectionUpdate事件,this.editor.storage.tab.current=",
+      this.editor.storage.tab.current
+    );
+  },
+  onBlur({ editor }) {
+    console.log("tab content 检测到onSelectionUpdate事件,this.editor.storage.tab.current=", editor.storage.tab.current);
   },
 
   // 将数据转换成HTML

@@ -29,6 +29,12 @@ export default Node.create({
     };
   },
 
+  addStorage() {
+    return {
+      current: 0,
+    };
+  },
+
   // 将数据转换成HTML
   renderHTML({ HTMLAttributes, node }) {
     // 第一个参数是HTML标签的名字

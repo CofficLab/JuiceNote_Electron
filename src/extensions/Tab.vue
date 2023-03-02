@@ -9,7 +9,8 @@
         draggable="true"
         data-drag-handle
       ></div>
-      <div class="flex flex-col bg-cyan-900/40 shadow-sm">
+
+      <div class="flex flex-col shadow-sm">
         <!-- 标题按钮 -->
         <div class="tabs tabs-boxed rounded-none bg-base-300" contenteditable="false">
           <div v-for="(tab, index) in tabs">
@@ -25,10 +26,7 @@
           </div>
         </div>
 
-        <!-- 内容部分 -->
-        <!-- <div contenteditable="true" ref="content" class="p-4" v-on:keyup="save">{{ content }}</div> -->
-
-        <node-view-content class="bg-yellow-300" ref="contents"></node-view-content>
+        <node-view-content ref="contents"></node-view-content>
       </div>
     </div>
   </node-view-wrapper>
@@ -55,7 +53,10 @@ export default {
   },
   methods: {
     activate: function (id) {
+      console.log("set current", id);
       this.current = id;
+      this.editor.storage.tab.current = id;
+      console.log(this.editor.storage.tab.current);
     },
     save(event) {
       let target = event.target;
@@ -68,39 +69,6 @@ export default {
       });
 
       console.log(this.node.attrs.tabs);
-    },
-    showContent() {
-      console.log("检查要显示的tab content，当前current", this.current);
-      let children = this.$refs.contents.$el.children;
-      for (let i = 0; i < children.length; i++) {
-        let child = children.item(i);
-        console.log("检查", child);
-        if (i == this.current) {
-          console.log("第", i, "个移除hidden");
-          if (child.classList.contains("hidden")) child.classList.remove("hidden");
-        } else {
-          console.log("第", i, "个增加hidden");
-          if (!child.classList.contains("hidden")) child.classList.add("hidden");
-        }
-      }
-    },
-  },
-  watch: {
-    current: {
-      immediate: true,
-      handler: function () {
-        this.$nextTick(function () {
-          this.showContent();
-        });
-      },
-    },
-    editable: {
-      immediate: true,
-      handler: function () {
-        this.$nextTick(function () {
-          this.showContent();
-        });
-      },
     },
   },
   mounted() {
