@@ -1,6 +1,6 @@
 <template>
   <node-view-wrapper>
-    <div class="flex flex-row ring">
+    <div class="flex flex-row pb-4 ring">
       <!-- 拖动的把手 -->
       <div
         class="drag-handle bg-primary-600/40 mr-1 h-10 w-4"

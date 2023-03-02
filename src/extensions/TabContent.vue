@@ -1,6 +1,11 @@
 <template>
-  <node-view-wrapper ref="content">
-    <node-view-content v-show="this.current == this.node.attrs.index"></node-view-content>
+  <node-view-wrapper
+    contenteditable="false"
+    ref="content"
+    class="border border-red-900 p-4 outline-none"
+    v-show="this.current == this.node.attrs.index"
+  >
+    <node-view-content contenteditable="true"></node-view-content>
   </node-view-wrapper>
 </template>
 

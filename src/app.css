@@ -15,15 +15,8 @@ body {
   @apply h-screen w-screen bg-cyan-800/10 text-base-content dark:bg-teal-900/10;
 }
 
-[contenteditable] {
-  outline: 1px solid transparent;
-  border: 1px solid #fff;
-  @apply border-none;
-}
 [contenteditable]:focus {
-  border: 1px solid #00c0ef;
-  border-radius: 3px;
-  @apply border-none;
+  @apply border-none outline-none;
 }
 
 .prose {
