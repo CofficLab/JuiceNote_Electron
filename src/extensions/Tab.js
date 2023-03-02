@@ -60,7 +60,13 @@ export default Node.create({
       addTab:
         (attributes) =>
         ({ commands }) => {
-          return commands.insertContent("<tab titles=1,2,3 current=0]></tab>");
+          return commands.insertContent(
+            '<tab titles ="1,2,3" current="0">' +
+              "<tab-content index=0> 第1个tab的内容</tab-content>" +
+              "<tab-content index=1> 第2个tab的内容</tab-content>" +
+              "<tab-content index=2>第3个tab的内容</tab-content>" +
+              "</tab>"
+          );
         },
     };
   },

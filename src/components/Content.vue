@@ -10,7 +10,7 @@
 
     <!-- 编辑框 -->
     <div class="mt-1 flex w-full justify-center border-0 p-4 pb-24">
-      <editor-content :editor="editor" class="prose xl:prose-lg" />
+      <editor-content :editor="editor" class="prose w-full xl:prose-lg" />
     </div>
   </div>
 </template>
