@@ -2,7 +2,7 @@
   <node-view-wrapper>
     <div class="flex flex-row ring">
       <div
-        class="drag-handle mr-1 h-10 w-4 bg-green-600/40"
+        class="drag-handle bg-primary-600/40 mr-1 h-10 w-4"
         v-bind:class="{ hidden: !editable }"
         contenteditable="false"
         draggable="true"

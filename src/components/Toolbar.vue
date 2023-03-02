@@ -3,21 +3,17 @@
     <div class="dropdown-hover dropdown">
       <label tabindex="0">标题</label>
       <ul tabindex="0">
-        <li>
-          <a
-            @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
-            :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }"
-          >
-            H1
-          </a>
+        <li
+          @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
+          :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }"
+        >
+          H1
         </li>
-        <li>
-          <a
-            @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
-            :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }"
-          >
-            H2
-          </a>
+        <li
+          @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
+          :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }"
+        >
+          H2
         </li>
       </ul>
     </div>
@@ -25,37 +21,29 @@
     <div class="dropdown-hover dropdown">
       <label tabindex="0">列表</label>
       <ul tabindex="0">
-        <li>
-          <a
-            @click="editor.chain().focus().toggleBulletList().run()"
-            :class="{ 'is-active': editor.isActive('bulletList') }"
-          >
-            toggleBulletList
-          </a>
+        <li
+          @click="editor.chain().focus().toggleBulletList().run()"
+          :class="{ 'is-active': editor.isActive('bulletList') }"
+        >
+          toggleBulletList
         </li>
-        <li>
-          <a
-            @click="editor.chain().focus().splitListItem('listItem').run()"
-            :disabled="!editor.can().splitListItem('listItem')"
-          >
-            splitListItem
-          </a>
+        <li
+          @click="editor.chain().focus().splitListItem('listItem').run()"
+          :disabled="!editor.can().splitListItem('listItem')"
+        >
+          splitListItem
         </li>
-        <li>
-          <a
-            @click="editor.chain().focus().sinkListItem('listItem').run()"
-            :disabled="!editor.can().sinkListItem('listItem')"
-          >
-            sinkListItem
-          </a>
+        <li
+          @click="editor.chain().focus().sinkListItem('listItem').run()"
+          :disabled="!editor.can().sinkListItem('listItem')"
+        >
+          sinkListItem
         </li>
-        <li>
-          <a
-            @click="editor.chain().focus().liftListItem('listItem').run()"
-            :disabled="!editor.can().liftListItem('listItem')"
-          >
-            liftListItem
-          </a>
+        <li
+          @click="editor.chain().focus().liftListItem('listItem').run()"
+          :disabled="!editor.can().liftListItem('listItem')"
+        >
+          liftListItem
         </li>
       </ul>
     </div>
@@ -66,23 +54,23 @@
         <li>
           <a @click="editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()"> 插入表格 </a>
         </li>
-        <li><a @click="editor.chain().focus().addColumnBefore().run()">在前面插入一列</a></li>
-        <li><a @click="editor.chain().focus().addColumnAfter().run()">在后面插入一列</a></li>
-        <li><a @click="editor.chain().focus().deleteColumn().run()">删除这一列</a></li>
-        <li><a @click="editor.chain().focus().addRowBefore().run()">在前面插入一行</a></li>
-        <li><a @click="editor.chain().focus().addRowAfter().run()">在后面插入一行</a></li>
-        <li><a @click="editor.chain().focus().deleteRow().run()">删除一行</a></li>
-        <li><a @click="editor.chain().focus().deleteTable().run()">删除表格</a></li>
-        <li><a @click="editor.chain().focus().mergeCells().run()">合并单元格</a></li>
-        <li><a @click="editor.chain().focus().splitCell().run()">拆分单元格</a></li>
-        <li><a @click="editor.chain().focus().toggleHeaderColumn().run()"> toggleHeaderColumn </a></li>
-        <li><a @click="editor.chain().focus().toggleHeaderRow().run()"> toggleHeaderRow </a></li>
-        <li><a @click="editor.chain().focus().toggleHeaderCell().run()"> toggleHeaderCell </a></li>
-        <li><a @click="editor.chain().focus().mergeOrSplit().run()"> mergeOrSplit </a></li>
-        <li><a @click="editor.chain().focus().setCellAttribute('colspan', 2).run()"> setCellAttribute </a></li>
-        <li><a @click="editor.chain().focus().fixTables().run()"> fixTables </a></li>
-        <li><a @click="editor.chain().focus().goToNextCell().run()">跳到下一格</a></li>
-        <li><a @click="editor.chain().focus().goToPreviousCell().run()">跳到上一格</a></li>
+        <li @click="editor.chain().focus().addColumnBefore().run()">在前面插入一列</li>
+        <li @click="editor.chain().focus().addColumnAfter().run()">在后面插入一列</li>
+        <li @click="editor.chain().focus().deleteColumn().run()">删除这一列</li>
+        <li @click="editor.chain().focus().addRowBefore().run()">在前面插入一行</li>
+        <li @click="editor.chain().focus().addRowAfter().run()">在后面插入一行</li>
+        <li @click="editor.chain().focus().deleteRow().run()">删除一行</li>
+        <li @click="editor.chain().focus().deleteTable().run()">删除表格</li>
+        <li @click="editor.chain().focus().mergeCells().run()">合并单元格</li>
+        <li @click="editor.chain().focus().splitCell().run()">拆分单元格</li>
+        <li @click="editor.chain().focus().toggleHeaderColumn().run()">toggleHeaderColumn</li>
+        <li @click="editor.chain().focus().toggleHeaderRow().run()">toggleHeaderRow</li>
+        <li @click="editor.chain().focus().toggleHeaderCell().run()">toggleHeaderCell</li>
+        <li @click="editor.chain().focus().mergeOrSplit().run()">mergeOrSplit</li>
+        <li @click="editor.chain().focus().setCellAttribute('colspan', 2).run()">setCellAttribute</li>
+        <li @click="editor.chain().focus().fixTables().run()">fixTables</li>
+        <li @click="editor.chain().focus().goToNextCell().run()">跳到下一格</li>
+        <li @click="editor.chain().focus().goToPreviousCell().run()">跳到上一格</li>
       </ul>
     </div>
 
