@@ -8,6 +8,7 @@ import { writeFileSync } from "fs";
 import { writeFile } from "fs";
 import { mkdirSync } from "fs";
 import { existsSync } from "fs";
+import { fstatSync } from "original-fs";
 
 class BookNode {
     public path: string = ''
@@ -38,6 +39,31 @@ class BookNode {
         } else {
             this.errorTitle = '当前节点为空节点'
         }
+    }
+
+    public createChild(name: string): BookNode | string {
+        let childPath = path.join(this.path, name + '.html')
+
+        if (existsSync(childPath)) {
+            return '同名节点已经存在，不能创建'
+        }
+
+        writeFileSync(childPath, name)
+        return new BookNode(childPath)
+    }
+
+    public createFolderChild(name: string): BookNode | string {
+        let childPath = path.join(this.path, name)
+
+        if (existsSync(childPath)) {
+            return '同名节点已经存在，不能创建'
+        }
+
+        mkdirSync(childPath)
+        let child = new BookNode(childPath)
+        child.createChild('__空__.html')
+
+        return child
     }
 
     public getManuals(): BookNode[] {
@@ -207,7 +233,16 @@ class BookNode {
     }
 
     public delete() {
-        fs.rmSync(this.path)
+        if (this.isPage()) {
+            fs.rmSync(this.path)
+        } else {
+            fs.rmdirSync(this.path)
+        }
+
+        if (this.siblings().length == 0) {
+            this.getParent().delete()
+        }
+
         return '删除成功'
     }
 

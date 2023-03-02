@@ -18,12 +18,12 @@
         <div class="flex w-full flex-row items-center justify-end pr-4">
           <span class="ml-4" v-if="editorMode"></span>
           <Languages></Languages>
-          <OfficialLink></OfficialLink>
+          <BtnOfficialLink></BtnOfficialLink>
           <BtnTerminal></BtnTerminal>
           <Toast></Toast>
-          <Prev></Prev>
-          <Home></Home>
-          <Next></Next>
+          <BtnPrev></BtnPrev>
+          <BtnHome></BtnHome>
+          <BtnNext></BtnNext>
           <BtnMore></BtnMore>
         </div>
       </div>
@@ -41,6 +41,9 @@
             <Toc></Toc>
           </div>
         </aside>
+
+        <!-- 新建图书节点的弹层 -->
+        <Add></Add>
       </div>
     </div>
   </div>
@@ -63,6 +66,7 @@ import Toc from "../components/TocContent.vue";
 import Breadcrumbs from "../components/Breadcrumbs.vue";
 import Address from "../components/Address.vue";
 import Alert from "../components/Alert.vue";
+import Add from "../components/Add.vue";
 import Toast from "../components/Toast.vue";
 import Content from "../components/Content.vue";
 import SideMenu from "../components/SideMenu.vue";
@@ -80,21 +84,22 @@ export default defineComponent({
     BtnMore,
     BtnTerminal,
     BtnEdit,
-    Copy: BtnCopy,
-    Prev: BtnPrev,
-    Next: BtnNext,
-    Delete: BtnDelete,
-    Add: BtnAdd,
-    Home: BtnHome,
+    BtnAdd,
+    BtnCopy,
+    BtnPrev,
+    BtnNext,
+    BtnDelete,
+    Add,
+    BtnHome,
     Address,
-    GitCommit: BtnGitCommit,
+    BtnGitCommit,
     Alert,
     Toast,
     Content,
     SideMenu,
     Others,
     ProjectTree,
-    OfficialLink: BtnOfficialLink,
+    BtnOfficialLink,
     Languages,
   },
   data() {

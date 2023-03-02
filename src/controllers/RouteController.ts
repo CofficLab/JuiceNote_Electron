@@ -1,6 +1,8 @@
 import { reactive } from 'vue'
 import Id from '../entities/Id'
 import BookNode from '../entities/BookNode'
+import { existsSync } from 'fs'
+import path from "path"
 
 const RouteController = reactive({
     search: decodeURI(location.search),
@@ -9,6 +11,7 @@ const RouteController = reactive({
     isHomePage: (new URL(location.href)).searchParams.get('id') == '/',
     editable: (new URL(location.href)).searchParams.get('edit_mode') != undefined,
     renderedHtml: '',
+    adding: false, // 用于判断是否显示添加的表单
 
     isEditMode() {
         return this.editable
@@ -70,8 +73,14 @@ const RouteController = reactive({
     },
 
     delete(): string {
+        let currentPath = this.currentPage.path
         let message = this.currentPage.delete()
-        this.goto(this.currentPage.getParent().id)
+
+        while (!existsSync(currentPath)) {
+            currentPath = path.dirname(currentPath)
+        }
+
+        this.goto((new BookNode(currentPath)).id)
 
         return message
     }
