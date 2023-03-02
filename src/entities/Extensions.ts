@@ -20,6 +20,7 @@ import Banner from "../extensions/Banner.js";
 import OfficialLink from "../extensions/OfficialLink.js";
 import Toc from "../extensions/Toc.js"
 import Tab from "../extensions/Tab.js"
+import TabContent from "../extensions/TabContent.js"
 import CodeBlockCustomized from "../extensions/CodeBlockCustomized.js"
 
 let Extensions = [
@@ -58,6 +59,7 @@ let Extensions = [
         },
     }),
     Tab,
+    TabContent,
     Text,
     TableCell.configure({
         HTMLAttributes: {

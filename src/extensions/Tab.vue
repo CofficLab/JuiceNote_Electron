@@ -1,27 +1,34 @@
 <template>
   <node-view-wrapper>
     <div class="flex flex-row ring">
+      <!-- 拖动的把手 -->
       <div
         class="drag-handle bg-primary-600/40 mr-1 h-10 w-4"
         v-bind:class="{ hidden: !editable }"
         contenteditable="false"
         draggable="true"
         data-drag-handle
-      />
+      ></div>
       <div class="flex flex-col bg-cyan-900/40 shadow-sm">
         <!-- 标题按钮 -->
         <div class="tabs tabs-boxed rounded-none bg-base-300" contenteditable="false">
-          <a
-            class="tab no-underline"
-            v-for="(_, index) in tabs"
-            v-bind:class="{ 'tab-active': current == index }"
-            @click="activate(index)"
-            >TAB {{ index }}</a
-          >
+          <div v-for="(tab, index) in tabs">
+            <a
+              class="tab no-underline"
+              contenteditable="true"
+              v-bind:data-index="index"
+              v-bind:class="{ 'tab-active': current == index }"
+              @click="activate(index)"
+              @keyup="(event) => save(event)"
+              >{{ tab }}</a
+            >
+          </div>
         </div>
 
         <!-- 内容部分 -->
-        <div contenteditable="true" ref="content" class="p-4" v-on:keyup="save">{{ content }}</div>
+        <!-- <div contenteditable="true" ref="content" class="p-4" v-on:keyup="save">{{ content }}</div> -->
+
+        <node-view-content class="bg-yellow-300" ref="contents"></node-view-content>
       </div>
     </div>
   </node-view-wrapper>
@@ -40,7 +47,6 @@ export default {
   data() {
     return {
       current: 0,
-      content: "",
       tabs: ["0", "1"],
     };
   },
@@ -50,19 +56,56 @@ export default {
   methods: {
     activate: function (id) {
       this.current = id;
-      this.content = JSON.parse(this.node.attrs.tabs)[this.current];
     },
-    save() {
-      let tabsArray = JSON.parse(this.node.attrs.tabs);
-      tabsArray[this.current] = this.$refs.content.innerHTML;
+    save(event) {
+      let target = event.target;
+      console.log("保存tab名称", target);
+
+      let tabsArray = this.node.attrs.tabs.split(",");
+      tabsArray[this.current] = target.innerHTML;
       this.updateAttributes({
-        tabs: JSON.stringify(tabsArray),
+        tabs: tabsArray.join(","),
       });
+
+      console.log(this.node.attrs.tabs);
+    },
+    showContent() {
+      console.log("检查要显示的tab content，当前current", this.current);
+      let children = this.$refs.contents.$el.children;
+      for (let i = 0; i < children.length; i++) {
+        let child = children.item(i);
+        console.log("检查", child);
+        if (i == this.current) {
+          console.log("第", i, "个移除hidden");
+          if (child.classList.contains("hidden")) child.classList.remove("hidden");
+        } else {
+          console.log("第", i, "个增加hidden");
+          if (!child.classList.contains("hidden")) child.classList.add("hidden");
+        }
+      }
+    },
+  },
+  watch: {
+    current: {
+      immediate: true,
+      handler: function () {
+        this.$nextTick(function () {
+          this.showContent();
+        });
+      },
+    },
+    editable: {
+      immediate: true,
+      handler: function () {
+        this.$nextTick(function () {
+          this.showContent();
+        });
+      },
     },
   },
   mounted() {
-    this.tabs = JSON.parse(this.node.attrs.tabs);
-    this.content = this.tabs[this.current];
+    console.log("tab加载");
+    this.tabs = this.node.attrs.tabs.split(",");
   },
 };
 </script>
