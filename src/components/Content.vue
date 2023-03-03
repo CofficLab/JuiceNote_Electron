@@ -8,8 +8,13 @@
       <Toolbar :editor="editor"></Toolbar>
     </div>
 
+    <!-- TAB -->
+    <div class="tabs mt-4 flex w-full justify-center bg-yellow-400/10">
+      <Link v-for="sibling in siblings" :href="sibling.id" class="tab tab-lifted">{{ sibling.name }}</Link>
+    </div>
+
     <!-- 编辑框 -->
-    <div class="mt-1 flex w-full justify-center border-0 p-4 pb-24">
+    <div class="mt-1 flex w-full justify-center overflow-auto border-0 p-4 pb-24">
       <editor-content :editor="editor" class="prose w-full xl:prose-lg" />
     </div>
   </div>
@@ -19,6 +24,7 @@
 import { Editor, EditorContent, FloatingMenu, BubbleMenu } from "@tiptap/vue-3";
 import RouteController from "../controllers/RouteController";
 import Extensions from "../entities/Extensions";
+import Link from "./Link.vue";
 import Toolbar from "./Toolbar.vue";
 
 export default {
@@ -27,15 +33,29 @@ export default {
     BubbleMenu,
     FloatingMenu,
     Toolbar,
+    Link,
   },
   data() {
     return {
       editor: null,
+      currentTab: 0,
     };
   },
   computed: {
+    current: () => RouteController.currentPage,
     editable: () => RouteController.editable,
-    content: () => RouteController.currentPage.getSourceCode(),
+    siblings() {
+      return RouteController.currentPage.siblingsWithCurrent();
+    },
+    content() {
+      return RouteController.currentPage.getSourceCode();
+    },
+  },
+  methods: {
+    switchTab(index) {
+      console.log("switch tab to", index);
+      this.currentTab = index;
+    },
   },
   mounted() {
     console.log("mounted, init the editor");

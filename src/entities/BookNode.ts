@@ -84,6 +84,10 @@ class BookNode {
         return this.isEmpty() || fs.statSync(this.path).isFile()
     }
 
+    public isTab(): boolean {
+        return true
+    }
+
     public isChapter(): boolean {
         return !this.isPage() && !this.isBook()
     }
@@ -163,6 +167,10 @@ class BookNode {
         return this.getParent().getChildren().filter(child => {
             return child.id != this.id
         })
+    }
+
+    public siblingsWithCurrent(): BookNode[] {
+        return this.getParent().getChildren()
     }
 
     public getParent(): BookNode {

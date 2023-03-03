@@ -2,10 +2,14 @@
   <node-view-wrapper
     contenteditable="false"
     ref="content"
-    class="border border-red-900 p-4 outline-none"
+    class="border border-red-900 outline-none"
     v-show="this.current == this.node.attrs.index"
   >
-    <node-view-content contenteditable="true"></node-view-content>
+    <node-view-content
+      contenteditable="true"
+      data-type="tab-content-content"
+      class="overflow-hidden border-yellow-900 bg-green-300/40"
+    ></node-view-content>
   </node-view-wrapper>
 </template>
 

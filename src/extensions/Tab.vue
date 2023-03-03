@@ -1,6 +1,6 @@
 <template>
   <node-view-wrapper>
-    <div class="flex flex-row pb-4 ring">
+    <div class="flex flex-row overflow-auto pb-4 ring">
       <!-- 拖动的把手 -->
       <div
         class="drag-handle bg-primary-600/40 mr-1 h-10 w-4"
@@ -10,9 +10,9 @@
         data-drag-handle
       ></div>
 
-      <div class="flex flex-col shadow-sm">
+      <div class="flex w-full flex-col overflow-clip shadow-sm">
         <!-- 标题按钮 -->
-        <div class="tabs tabs-boxed rounded-none bg-base-300" contenteditable="false">
+        <div class="tabs tabs-boxed rounded-none bg-yellow-500/50" contenteditable="false">
           <div v-for="(title, index) in titles">
             <a
               class="tab no-underline"
@@ -26,7 +26,7 @@
           </div>
         </div>
 
-        <node-view-content ref="contents" v-bind:data-current="current"></node-view-content>
+        <node-view-content ref="contents" v-bind:data-current="current" class="bg-sky-400/40 p-4"></node-view-content>
       </div>
     </div>
   </node-view-wrapper>

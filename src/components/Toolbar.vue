@@ -103,6 +103,7 @@
     >
       代码块
     </button>
+    <button @click="editor.chain().focus().setHardBreak().run()">setHardBreak</button>
     <button @click="editor.chain().focus().undo().run()" :disabled="!editor.can().chain().focus().undo().run()">
       取消
     </button>

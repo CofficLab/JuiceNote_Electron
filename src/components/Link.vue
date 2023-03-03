@@ -1,5 +1,7 @@
 <template>
-  <div v-bind:href="href" v-on:click="go" v-bind:class="shouldActive(href) ? 'active' : ''"><slot></slot></div>
+  <div v-bind:href="href" v-on:click="go" v-bind:class="shouldActive(href) ? 'active tab-active' : ''">
+    <slot></slot>
+  </div>
 </template>
 
 <script lang="ts">

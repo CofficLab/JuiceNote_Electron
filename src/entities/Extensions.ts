@@ -6,6 +6,7 @@ import Paragraph from "@tiptap/extension-paragraph";
 import Bold from "@tiptap/extension-bold";
 import { lowlight } from "lowlight";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
+import Gapcursor from '@tiptap/extension-gapcursor'
 import Heading from "@tiptap/extension-heading";
 import BulletList from "@tiptap/extension-bullet-list";
 import ListItem from "@tiptap/extension-list-item";
@@ -13,6 +14,7 @@ import Table from "@tiptap/extension-table"
 import TableRow from "@tiptap/extension-table-row"
 import TableCell from "@tiptap/extension-table-cell"
 import TableHeader from "@tiptap/extension-table-header"
+import HardBreak from '@tiptap/extension-hard-break'
 import "highlight.js/styles/github-dark.css";
 // 自定义的编辑器扩展
 import Brick from "../extensions/Brick.js";
@@ -39,6 +41,8 @@ let Extensions = [
         lowlight,
     }),
     Document,
+    Gapcursor,
+    HardBreak,
     History,
     Heading,
     ListItem.configure({
@@ -58,8 +62,8 @@ let Extensions = [
             // style: "margin:1rem",
         },
     }),
-    Tab,
-    TabContent,
+    // Tab,
+    // TabContent,
     Text,
     TableCell.configure({
         HTMLAttributes: {
