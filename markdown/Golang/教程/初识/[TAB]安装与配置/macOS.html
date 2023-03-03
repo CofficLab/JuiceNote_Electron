@@ -1,4 +1,4 @@
-<h1 id="heading-1"></h1><toc></toc><h2 id="heading-2">下载</h2><p>1. 打开 Go 官网下载地址 <a target="_blank" rel="noopener noreferrer nofollow" href="https://go.dev/dl/">https://go.dev/dl</a></p><p>2. 根据硬件架构选择 Apple macOS (ARM64) 或 Apple macOS (x86-64)</p><p>3. 点击对应的版本开始下载，比如 go1.19.1.darwin-arm64.pkg</p><h2 id="heading-3">安装</h2><p>双击下载好的 .pkg 文件，后续过程和安装其他 Mac App 一样</p><h2 id="heading-4">测试</h2><p>打开命令行，输入 go version，回车，正常情况下，会输出类似下面的内容</p><pre><code class="language-bash">go version go1.19.1 darwin/arm64</code></pre><p>输入 go，回车，正常情况下，会输出类似下面的内容</p><pre><code class="language-shell">Go is a tool for managing Go source code.
+<h1 id="heading-1"></h1><toc></toc><h2 id="heading-2">下载</h2><p>1. 打开 Go 官网下载地址 <a target="_blank" rel="noopener noreferrer nofollow" href="https://go.dev/dl/">https://go.dev/dl</a></p><p>2. 根据硬件架构选择 Apple macOS (ARM64) 或 Apple macOS (x86-64)</p><p>3. 点击对应的版本开始下载，比如 go1.19.1.darwin-arm64.pkg</p><h2 id="heading-3">安装</h2><p>双击下载好的 .pkg 文件，后续过程和安装其他 Mac App 一样</p><h2 id="heading-4">测试</h2><p>打开命令行，输入 go version，回车，正常情况下，会输出类似下面的内容</p><pre style="padding-top:0"><code class="language-bash">go version go1.19.1 darwin/arm64</code></pre><p>输入 go，回车，正常情况下，会输出类似下面的内容</p><pre style="padding-top:0"><code class="language-shell">Go is a tool for managing Go source code.
 
 Usage:
 
@@ -12,10 +12,9 @@ The commands are:
 
 ...
 
-Use "go help &lt;topic&gt;" for more information about that topic.</code></pre><h2 id="heading-5">Hello World</h2><p>和学习其他编程语言一样，写一个经典例子。</p><p>1. 打开一个目录，比如 /Users/codes/Go-Examples</p><p>2. 新建一个文件 main.go，输入如下代码</p><pre><code class="language-go">package main
+Use "go help &lt;topic&gt;" for more information about that topic.</code></pre><h2 id="heading-5">Hello World</h2><p>和学习其他编程语言一样，写一个经典例子。</p><p>1. 打开一个目录，比如 /Users/codes/Go-Examples</p><p>2. 新建一个文件 main.go，输入如下代码</p><pre style="padding-top:0"><code class="language-go">package main
+import "fmt"
 
 func main() {
-
- println("hello world")
-
-}</code></pre><p>3. 保存文件</p><p>4. 在命令行输入</p><pre><code class="language-shell">go run /Users/codes/Go-Examples/main.go</code></pre><pre><code class="language-shell">hello world</code></pre><p>5. 回车， (当然，也可以切换到 /Users/codes/Go-Examples, 然后输入 go run main.go)</p><p>正常情况下，会输出如下内容</p><p></p><p>恭喜你，完成了 Go 的第一个程序。</p>
+    fmt.Println("hello world")
+}</code></pre><p>3. 保存文件</p><p>4. 在命令行输入</p><pre style="padding-top:0"><code class="language-shell">go run /Users/codes/Go-Examples/main.go</code></pre><pre style="padding-top:0"><code class="language-shell">hello world</code></pre><p>5. 回车， (当然，也可以切换到 /Users/codes/Go-Examples, 然后输入 go run main.go)</p><p>正常情况下，会输出如下内容</p><p></p><p>恭喜你，完成了 Go 的第一个程序。</p>
