@@ -17,7 +17,7 @@ import Trash from "../assets/icons/trash.svg";
 export default defineComponent({
   methods: {
     del: function () {
-      ToastController.set(RouteController.delete());
+      ToastController.set(RouteController.delete(RouteController.currentPage.id));
     },
   },
   components: { Trash },

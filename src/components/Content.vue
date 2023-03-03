@@ -26,11 +26,11 @@
 
     <!-- 右键菜单 -->
     <ul
-      class="menu z-50 w-56 bg-base-100"
+      class="menu z-50 w-56 rounded-md bg-base-100 shadow-sm"
       v-if="showRightMenu"
       v-bind:style="{ left: rightMenuX + 'px', top: rightMenuY + 'px', position: 'fixed' }"
     >
-      <li><a>Item 1</a></li>
+      <li><a @click="refresh && (showRightMenu = false)">刷新</a></li>
       <li><a>Item 2</a></li>
       <li><a>Item 3</a></li>
     </ul>
@@ -75,6 +75,9 @@ export default {
     switchTab(index) {
       console.log("switch tab to", index);
       this.currentTab = index;
+    },
+    refresh() {
+      RouteController.refresh();
     },
     onContextmenu(event) {
       console.log("右键单击", event);

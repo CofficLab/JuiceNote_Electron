@@ -300,6 +300,13 @@ class BookNode {
         return result
     }
 
+    public rename(name: string): BookNode {
+        let newPath = path.join(path.dirname(this.path), name + '.html')
+        fs.renameSync(this.path, newPath)
+
+        return new BookNode(newPath)
+    }
+
     // 保存文章内容
     public save(content: string): string {
         if (this.getSourceCode() == content) {

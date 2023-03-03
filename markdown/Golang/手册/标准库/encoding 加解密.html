@@ -1,11 +1,4 @@
-# `encoding` 加密解密
-
-## base64
-
-<div class="run"></div>
-
-```go
-package main
+<h1>encoding 加密解密</h1><h2>base64</h2><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-go">package main
 
 import (
     "encoding/base64"
@@ -20,14 +13,7 @@ func main() {
     sDecode, _ := base64.StdEncoding.DecodeString(sEncode)
     fmt.Printf("decode(`%s`) = %s\n", sEncode, sDecode)
 }
-```
-
-## sha256
-
-<div class="run"></div>
-
-```go
-package main
+</code></pre><h2>sha256</h2><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-go">package main
 
 import (
     "crypto/sha256"
@@ -41,4 +27,4 @@ func main() {
     res := h.Sum(nil)
     fmt.Printf("sha245(`hello world`) = %x\n", res)
 }
-```
+</code></pre>

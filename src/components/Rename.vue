@@ -10,12 +10,11 @@
           v-model="title"
           placeholder="输入标题"
           class="input-bordered input-primary input w-full max-w-xs"
-          @keyup.enter="submitPageForm"
+          @keyup.enter="submit"
         />
         <div class="modal-action">
           <label for="my-modal" class="btn" v-on:click="hide">取消</label>
-          <label for="my-modal" class="btn" v-on:click="submitChapterForm">创建章节</label>
-          <label for="my-modal" class="btn" v-on:click="submitPageForm">创建页面</label>
+          <label for="my-modal" class="btn" v-on:click="submit">确定</label>
         </div>
       </div>
     </Transition>
@@ -28,6 +27,7 @@ import { threadId } from "worker_threads";
 import RouteController from "../controllers/RouteController";
 import ToastController from "../controllers/ToastController";
 export default defineComponent({
+  props: ["bookNode"],
   data() {
     return {
       title: "",
@@ -49,35 +49,9 @@ export default defineComponent({
     hide() {
       RouteController.adding = false;
     },
-    submitPageForm() {
-      let current = RouteController.getCurrentPage();
-      let parent = current.getParent();
-
-      if (parent.isEmpty()) return console.error("父节点不存在，无法创建");
-
-      let result = parent.createChild(this.title);
-      if (typeof result == "string") {
-        ToastController.set(result);
-      } else {
-        RouteController.goto(result.id);
-        this.hide();
-        this.title = "";
-      }
-    },
-    submitChapterForm() {
-      let current = RouteController.getCurrentPage();
-      let parent = current.getParent();
-
-      if (parent.isEmpty()) return console.error("父节点不存在，无法创建");
-
-      let result = parent.createFolderChild(this.title);
-      if (typeof result == "string") {
-        ToastController.set(result);
-      } else {
-        RouteController.goto(result.id);
-        this.hide();
-        this.title = "";
-      }
+    submit() {
+      let newNode = this.bookNode.rename(this.title);
+      RouteController.goto(newNode.id);
     },
   },
 });

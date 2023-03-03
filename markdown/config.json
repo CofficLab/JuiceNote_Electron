@@ -1039,8 +1039,8 @@
       "Vue@初识"
     ],
     "Vue@初识": [
+      "Vue@初识@认识 Vue.html",
       "Vue@初识@官网与文档.md",
-      "Vue@初识@认识 Vue.md",
       "Vue@初识@认识计算机.md"
     ],
     "Golang@manuals": [
@@ -1621,9 +1621,9 @@
       "Golang@教程@函数@递归.md"
     ],
     "Golang@教程@初识": [
-      "Golang@教程@初识@[TAB]安装与配置",
-      "Golang@教程@初识@认识计算机.html",
       "Golang@教程@初识@认识 Golang.html",
+      "Golang@教程@初识@认识计算机.html",
+      "Golang@教程@初识@[TAB]安装与配置",
       "Golang@教程@初识@认识进制.html",
       "Golang@教程@初识@字符编码.html",
       "Golang@教程@初识@编译与解释.html",
@@ -1787,10 +1787,10 @@
       "Golang@手册@命令@go mod.md"
     ],
     "Golang@手册@标准库": [
-      "Golang@手册@标准库@encoding 加解密.md",
-      "Golang@手册@标准库@encoding.json.md",
-      "Golang@手册@标准库@fmt 打印与输出.md",
-      "Golang@手册@标准库@log 日志.md",
+      "Golang@手册@标准库@log 日志.html",
+      "Golang@手册@标准库@encoding 加解密.html",
+      "Golang@手册@标准库@encoding.json.html",
+      "Golang@手册@标准库@fmt 打印与输出.html",
       "Golang@手册@标准库@math.big.md",
       "Golang@手册@标准库@math.md",
       "Golang@手册@标准库@math.rand 随机数.md",
