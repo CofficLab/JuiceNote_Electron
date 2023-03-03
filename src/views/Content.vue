@@ -22,6 +22,8 @@
       <editor-content :editor="editor" class="prose w-full xl:prose-lg" />
     </div>
 
+    <div id="container" ref="container" style="width: 800px; height: 600px; border: 1px solid grey"></div>
+
     <!-- 右键菜单 -->
     <RightMenu v-if="shouldShowRightMenu" :event="rightClickEvent">
       <li><Refresh></Refresh></li>
@@ -46,6 +48,7 @@ import Copy from "../operators/Copy.vue";
 import Edit from "../operators/Edit.vue";
 import Rename from "../operators/Rename.vue";
 import RightMenuController from "../controllers/RightMenuController";
+import * as monaco from "monaco-editor";
 
 export default {
   components: {
@@ -114,6 +117,16 @@ export default {
     document.addEventListener("click", () => {
       // console.log("检测到click事件，隐藏我的右键菜单");
       this.rightClickEvent = null;
+    });
+
+    console.log("init monaco editor");
+    this.$nextTick(function () {
+      this.monacoEditor = monaco.editor.create(this.$refs.container, {
+        value: "",
+        readOnly: false,
+        language: "go",
+        theme: "vs-dark",
+      });
     });
   },
   watch: {
