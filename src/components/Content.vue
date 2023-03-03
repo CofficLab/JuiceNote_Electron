@@ -30,8 +30,8 @@
       v-if="showRightMenu"
       v-bind:style="{ left: rightMenuX + 'px', top: rightMenuY + 'px', position: 'fixed' }"
     >
-      <li><a @click="refresh && (showRightMenu = false)">刷新</a></li>
-      <li><a>Item 2</a></li>
+      <li><a @click="refresh">刷新</a></li>
+      <li><a @click="edit">编辑</a></li>
       <li><a>Item 3</a></li>
     </ul>
   </div>
@@ -78,6 +78,11 @@ export default {
     },
     refresh() {
       RouteController.refresh();
+      this.showRightMenu = false;
+    },
+    edit() {
+      RouteController.editable = true;
+      this.showRightMenu = false;
     },
     onContextmenu(event) {
       console.log("右键单击", event);

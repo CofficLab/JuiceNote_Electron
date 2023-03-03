@@ -75,7 +75,7 @@ const RouteController = reactive({
     delete(id: string): string {
         console.log('删除', id)
         let targetPath = Id.idToPath(id)
-        let message = this.currentPage.delete()
+        let message = (new BookNode(targetPath)).delete()
 
         while (!existsSync(targetPath)) {
             targetPath = path.dirname(targetPath)

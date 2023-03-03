@@ -1,0 +1,28 @@
+<h1>简介</h1><p>&lt;div class="flex justify-start gap-1"&gt; &lt;div class="brick w-8 h-8"&gt;H&lt;/div&gt; &lt;div class="brick w-8 h-8"&gt;E&lt;/div&gt; &lt;div class="brick w-8 h-8"&gt;L&lt;/div&gt; &lt;div class="brick w-8 h-8"&gt;L&lt;/div&gt; &lt;div class="brick w-8 h-8"&gt;O&lt;/div&gt; &lt;/div&gt;</p><p>上面 5 个字符组成了一个字符串。</p><p>Go 将字符串作为一种原生的基本数据类型。</p><h2>创建</h2><p>用双引号包围起来，单引号则用于包围单个字符。</p><h3>显式声明</h3><pre><code class="language-go">var a string = "hello"
+</code></pre><h3>类型推导</h3><pre><code class="language-go">var a = "abc"
+</code></pre><h3>短变量声明</h3><pre><code class="language-go">a := "hello"
+</code></pre><h2>长度</h2><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-go">package main
+import "fmt"
+
+func main() {
+    a := "hello"
+    b := "你好"
+
+    fmt.Println(len(a))
+    fmt.Println(len(b))
+}
+</code></pre><p>内置函数 len 计算的是字符串占用的字节(byte)的个数，一个中文占 3 个字节，所以：</p><pre><code class="language-go">len("你好")
+</code></pre><p>会输出：6。</p><h2>索引</h2><p>字符串是常量，可以通过类似数组的索引访问其字节单元，但是不能修改某个字节的值。</p><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-go">package main
+import "fmt"
+import "reflect"
+
+func main() {
+    a := "hello"
+    b := a[2]
+    c := string(b)
+
+    fmt.Println(reflect.TypeOf(a), a)
+    fmt.Println(reflect.TypeOf(b), b)
+    fmt.Println(reflect.TypeOf(c), c)
+}
+</code></pre><p>a[2] 取得的是l这个字符的unicode编码。</p>

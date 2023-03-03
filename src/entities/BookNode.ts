@@ -8,7 +8,6 @@ import { writeFileSync } from "fs";
 import { writeFile } from "fs";
 import { mkdirSync } from "fs";
 import { existsSync } from "fs";
-import { fstatSync } from "original-fs";
 
 class BookNode {
     public path: string = ''
@@ -124,8 +123,15 @@ class BookNode {
         });
     }
 
-    public first(): BookNode {
-        return new BookNode(Id.idToPath(this.getChildrenIds().at(0)))
+    public firstChild(): BookNode {
+        let childrenIds = this.getChildrenIds()
+        let firstChildId = childrenIds.at(0)
+
+        if (firstChildId == undefined) {
+            return new BookNode
+        }
+
+        return new BookNode(Id.idToPath(firstChildId))
     }
 
     public getChildrenIds(): string[] {
@@ -300,6 +306,7 @@ class BookNode {
         return result
     }
 
+    // 重命名并返回重命名后的节点
     public rename(name: string): BookNode {
         let newPath = path.join(path.dirname(this.path), name + '.html')
         fs.renameSync(this.path, newPath)
@@ -316,24 +323,6 @@ class BookNode {
         writeFileSync(this.path.replace('.md', '.html'), content)
 
         return '保存成功'
-    }
-
-    public saveRendered(content: string | undefined) {
-        if (content == undefined) return
-        let bookPath = path.join(Config.renderedHtmlPath, this.getBook().name)
-        let renderedPath = path.join(bookPath, this.id).replace('.md', '.html')
-
-        if (!existsSync(bookPath)) {
-            mkdirSync(bookPath)
-        }
-
-        writeFile(renderedPath, content, (err) => {
-            if (err) {
-                console.log('将渲染好的页面存入文件系统发生错误', err)
-            } else {
-                // console.log(this.id + '  渲染结果已存入  ' + renderedPath)
-            }
-        })
     }
 }
 
