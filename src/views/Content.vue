@@ -41,7 +41,7 @@
 import { Editor, EditorContent, FloatingMenu, BubbleMenu } from "@tiptap/vue-3";
 import RouteController from "../controllers/RouteController";
 import Extensions from "../entities/Extensions";
-import Link from "./Link.vue";
+import Link from "../components/Link.vue";
 import Toolbar from "./Toolbar.vue";
 
 export default {
