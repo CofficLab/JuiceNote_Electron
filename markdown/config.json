@@ -1590,7 +1590,6 @@
       "Golang@手册@面向对象@魔术方法.md"
     ],
     "Golang@教程": [
-      "Golang@教程@安装与配置",
       "Golang@教程@初识",
       "Golang@教程@常用语句",
       "Golang@教程@数据类型",
@@ -1622,6 +1621,7 @@
       "Golang@教程@函数@递归.md"
     ],
     "Golang@教程@初识": [
+      "Golang@教程@初识@[TAB]安装与配置",
       "Golang@教程@初识@认识计算机.html",
       "Golang@教程@初识@认识 Golang.html",
       "Golang@教程@初识@认识进制.html",
@@ -1824,6 +1824,16 @@
       "Golang@教程@安装与配置@5555@__空__.html.html"
     ],
     "Golang@教程@安装与配置@eeeee": [],
-    "Golang@教程@安装与配置@r": []
+    "Golang@教程@安装与配置@r": [],
+    "Golang@教程@[TAB]安装与配置": [
+      "Golang@教程@[TAB]安装与配置@Linux.html",
+      "Golang@教程@[TAB]安装与配置@Windows.html",
+      "Golang@教程@[TAB]安装与配置@macOS.html"
+    ],
+    "Golang@教程@初识@[TAB]安装与配置": [
+      "Golang@教程@初识@[TAB]安装与配置@Linux.html",
+      "Golang@教程@初识@[TAB]安装与配置@Windows.html",
+      "Golang@教程@初识@[TAB]安装与配置@macOS.html"
+    ]
   }
 }

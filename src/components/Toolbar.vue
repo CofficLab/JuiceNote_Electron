@@ -111,6 +111,7 @@
       恢复
     </button>
     <button @click="save">保存</button>
+    <button @click="saveAndShow">保存并退出</button>
 
     <!-- 设置URL的模态框 -->
     <div class="modal" v-bind:class="{ 'modal-open': showLinkModal }">
@@ -144,6 +145,9 @@ export default defineComponent({
 
   methods: {
     save() {
+      ToastController.set(RouteController.currentPage.save(this.editor.getHTML()));
+    },
+    saveAndShow() {
       ToastController.set(RouteController.currentPage.save(this.editor.getHTML()));
       RouteController.toggleEditMode();
     },

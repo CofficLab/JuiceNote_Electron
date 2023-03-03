@@ -1,6 +1,6 @@
 <template>
   <node-view-wrapper class="toc">
-    <ul class="menu fixed right-4 top-12 w-56 overflow-scroll rounded-2xl bg-cyan-900/10 py-4" style="padding-left: 0">
+    <ul class="menu fixed right-4 top-20 w-56 overflow-scroll rounded-2xl bg-cyan-900/10 py-4" style="padding-left: 0">
       <div v-for="(heading, index) in headings">
         <li
           :class="`toc__item--${heading.level}`"

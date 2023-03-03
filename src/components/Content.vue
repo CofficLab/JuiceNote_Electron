@@ -9,7 +9,7 @@
     </div>
 
     <!-- TAB -->
-    <div class="tabs mt-4 flex w-full justify-center bg-yellow-400/10">
+    <div class="tabs mt-4 flex w-full justify-center bg-yellow-400/10" v-if="current.getParent().isTab()">
       <Link v-for="sibling in siblings" :href="sibling.id" class="tab tab-lifted">{{ sibling.name }}</Link>
     </div>
 

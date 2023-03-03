@@ -12,6 +12,13 @@ export default defineComponent({
   props: ["href"],
   methods: {
     shouldActive: function (id: string) {
+      let current = RouteController.getCurrentPage();
+      let parent = current.getParent();
+
+      if (parent.isTab() && id == parent.id) {
+        return true;
+      }
+
       return RouteController.getCurrentPage().id == id;
     },
     go: function () {

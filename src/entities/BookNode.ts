@@ -33,7 +33,7 @@ class BookNode {
             }
 
             this.path = absolutePath
-            this.name = path.basename(this.path).replace('.html', '')
+            this.name = path.basename(this.path).replace('.html', '').replace('[TAB]', '')
             this.id = Id.pathToId(this.path)
             this.level = this.id.split('@').length
         } else {
@@ -85,7 +85,7 @@ class BookNode {
     }
 
     public isTab(): boolean {
-        return true
+        return path.basename(this.path).startsWith('[TAB]')
     }
 
     public isChapter(): boolean {

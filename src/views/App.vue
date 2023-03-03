@@ -35,13 +35,6 @@
           <Content></Content>
         </main>
 
-        <!-- 文章的右侧栏TOC -->
-        <aside v-if="showToc" class="hidden min-h-screen w-72 justify-end xl:flex xl:flex-row">
-          <div class="fixed bottom-16 top-16 right-0 flex h-screen flex-row justify-end">
-            <Toc></Toc>
-          </div>
-        </aside>
-
         <!-- 新建图书节点的弹层 -->
         <Add></Add>
       </div>

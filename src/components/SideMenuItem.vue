@@ -8,9 +8,9 @@
       </Link>
     </li>
 
-    <!-- 是一个章节 -->
+    <!-- 是一个章节，且不是TAB -->
     <li
-      v-if="item.isChapter()"
+      v-if="item.isChapter() && !item.isTab()"
       :class="{
         'text-indigo-400/90': item.isLesson(),
         'text-cyan-900/90': item.isManual(),
@@ -22,7 +22,15 @@
         {{ item.name }}
       </span>
     </li>
-    <SideMenuItem v-for="sub in item.getChildren()" v-if="item.isChapter()" :item="sub"></SideMenuItem>
+    <SideMenuItem v-for="sub in item.getChildren()" v-if="item.isChapter() && !item.isTab()" :item="sub"></SideMenuItem>
+
+    <!-- 是一个章节，且是TAB -->
+    <li v-if="item.isChapter() && item.isTab()" v-bind:id="item.id">
+      <Link class="flex gap-4 xl:text-lg" v-bind:href="item.id">
+        <DynamicPadding :count="item.level - 3"></DynamicPadding>
+        {{ item.name }}
+      </Link>
+    </li>
 
     <!-- 是一个章节，且无子节点 -->
     <li
