@@ -1,0 +1,43 @@
+<h1>常量</h1><h2>简介</h2><p>常量就是在程序运行期间不会变的量，如果强制改变它的值，将会报错。</p><h2>定义</h2><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-go">package main
+import "fmt"
+import "reflect"
+
+func main() {
+    // 隐式类型定义：省略类型，让 Go 自动推断
+    const PI = 3.14
+    // 显式类型定义：指定类型
+    const TEN int = 10
+    // 同时定义多个
+    const (
+        ONE = 1
+        TWO = 2
+        THREE = 3
+    )
+
+    fmt.Println(reflect.TypeOf(PI), PI)
+    fmt.Println(reflect.TypeOf(TEN), TEN)
+    fmt.Println(reflect.TypeOf(ONE), ONE)
+    fmt.Println(reflect.TypeOf(TWO), TWO)
+    fmt.Println(reflect.TypeOf(THREE), THREE)
+}
+</code></pre><h2>类型限制</h2><p>常量的值只能是：布尔型、字符串型、数值型。</p><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-go">package main
+import "fmt"
+import "reflect"
+
+func main() {
+    const (
+        ONE bool = true
+        TWO string = "早上好，掌柜的"
+        THREE int64 = 12
+        FOUR float64 = 100.23
+    )
+
+    fmt.Println(reflect.TypeOf(ONE), ONE)
+    fmt.Println(reflect.TypeOf(TWO), TWO)
+    fmt.Println(reflect.TypeOf(THREE), THREE)
+    fmt.Println(reflect.TypeOf(FOUR), FOUR)
+}
+</code></pre><h2>预定义常量</h2><p>Go 语言中预定义了这些常量：</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>true</p></li><li class="m-0 p-0"><p>false</p></li><li class="m-0 p-0"><p>iota：约塔，是希腊字母中的第 9 个，是全名，不是缩写</p></li></ul><p>iota 是数学符号，它所表示的含义如下：</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>作为求和算法的迭代器</p></li><li class="m-0 p-0"><p>作为[下标索引]</p></li><li class="m-0 p-0"><p>对于[复数的虚部]</p></li></ul><pre><code class="language-go">const a = iota
+const b = iota
+const c = iota
+</code></pre><p>这样，a、b、c的值分别是：0、1、2。</p>

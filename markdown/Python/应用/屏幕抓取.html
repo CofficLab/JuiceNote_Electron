@@ -1,0 +1,3 @@
+<h1 id="heading-1">屏幕抓取</h1><p>屏幕抓取是通过程序下载网页并从中提取信息的过程。</p><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-python">from urllib.request import urlopen
+text = urlopen('https://baidu.com').read().decode()
+</code></pre><p>这段程序获取了 https://baidu.com 这个网址的 HTML 代码。</p>

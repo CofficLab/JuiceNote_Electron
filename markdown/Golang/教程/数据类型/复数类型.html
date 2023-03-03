@@ -1,1 +1,9 @@
-<tab titles="1如人人人,如柔软s f2,383" current="0"><tab-content class="bg-green-300" index="0"><h2>arrrrr顺丰速度发生的</h2></tab-content><tab-content class="bg-green-300" index="1"><p>fb 似懂非懂顺丰大嫂</p></tab-content><tab-content class="bg-green-300" index="2"><p>cccc如 水电费水电费</p></tab-content></tab>
+<h1>复数类型</h1><p>复数类型在实践中比较少见。</p><p>Go 内置的复数类型有两种：</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>complex64</p></li><li class="m-0 p-0"><p>complex128</p></li></ul><p>复数在计算机里使用两个浮点数表示，一个表示实部，一个表示虚部。</p><p>complex64 是由两个 float32 构成的；<br>complex128 是由两个 float64 构成的。</p><p>复数的字面量表示和数学表示法一样。</p><pre><code class="language-go">var a complex64 = 3.1 + 5i
+b := 3.1 + 6i
+</code></pre><p>Go 有三个内置函数处理复数：</p><pre><code class="language-go"># 构造一个复数
+var v = complex(2.1, 3)
+# 返回复数实部
+a := real(v)
+# 返回复数虚部
+b := image(v)
+</code></pre>

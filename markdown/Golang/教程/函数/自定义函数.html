@@ -1,0 +1,98 @@
+<h1>自定义函数</h1><p>函数执行特定的操作并返回一个值。</p><h2>定义</h2><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-go">package main
+import "fmt"
+
+func hello(name string) (string) {
+    return fmt.Sprintf("早上好，%s", name)
+}
+
+func main() {
+    fmt.Printf(hello("老白"))
+    fmt.Printf("\n")
+    fmt.Printf(hello("老邢"))
+}
+</code></pre><h2>返回值</h2><h3>没有</h3><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-go">package main
+
+import "fmt"
+
+func hi(name string) {
+    fmt.Printf("你好，%s", name)
+}
+
+func main() {
+    hi("掌柜的")
+}
+</code></pre><h3>单个</h3><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-go">package main
+
+import "fmt"
+
+func max(x, y int) int {
+    if x &gt; y {
+        return x
+    } else {
+        return y
+    }
+}
+
+func main() {
+    fmt.Printf("max = %d\n", max(1, 2))
+}
+</code></pre><h3>多个</h3><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-go">package main
+
+import "fmt"
+
+func getNumbers() (int, int, int) {
+    return 1, 2, 3
+}
+
+func main() {
+    x, y, z := getNumbers()
+    fmt.Printf("x = %d, y = %d, z = %d\n", x, y, z)
+}
+</code></pre><h3>指定名称</h3><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-go">package main
+
+import "fmt"
+
+func getNumbers() (x int, y float64, z string) {
+    x = 1024
+    y = 3.14
+    z = "hello world"
+    return
+}
+
+func main() {
+    x, y, z := getNumbers()
+    fmt.Printf("x = %d, y = %.2f, z = %s\n", x, y, z)
+}
+</code></pre><h3>同类型简化</h3><pre><code class="language-go">func getMaxAndMin(x, y, z int) (max, min int)
+</code></pre><h2>使用返回值</h2><h3>接收全部</h3><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-go">package main
+import "fmt"
+
+func x() (int,int) {
+    return 1,2
+}
+
+func main() {
+    first,second := x()
+
+    fmt.Println(first, second)
+}
+</code></pre><h3>忽略部分</h3><p>若仅关注其中一个返回值，可将其他返回值赋值给空白符_：</p><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-go">package main
+import "fmt"
+
+func x() (int,int,int) {
+    return 1,2,3
+}
+
+func main() {
+    first,_,_ := x()
+
+    fmt.Println(first)
+}
+</code></pre><p>空白标识符是个特殊变量，特殊在于实际上返回值并没有赋值。</p><h2>判断是否可调用</h2><p>在 Python 中，要判断某个对象是否可以调用，可使用内置函数 callable</p><pre><code class="language-python">import math
+
+x = 1
+y = math.sqrt
+
+print(callable(x))
+print(callable(y))
+</code></pre><p>Go 没有这样的函数。</p>

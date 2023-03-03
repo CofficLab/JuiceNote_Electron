@@ -1,0 +1,83 @@
+<h1>应用场景</h1><h2>判断是否为空</h2><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-go">package main
+import "fmt"
+
+func main() {
+    a := [3]int{1,2,3}
+    b := [3]int{1}
+    c := [0]int{}
+
+    fmt.Println(len(a) == 0)
+    fmt.Println(len(b) == 0)
+    fmt.Println(len(c) == 0)
+}
+</code></pre><h2>元素个数</h2><ul class="m-0 p-0"><li class="m-0 p-0"><p>len</p></li></ul><p>内置函数 len 返回数组的元素的个数：</p><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-go">package main
+import "fmt"
+
+func main() {
+    // 创建一个由7个字符串组成的数组
+    var notes [7]string
+
+    fmt.Println(len(notes))
+}
+</code></pre><ul class="m-0 p-0"><li class="m-0 p-0"><p>cap</p></li></ul><p>内置函数 cap 返回数组的元素的个数：</p><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-go">package main
+import "fmt"
+
+func main() {
+    // 创建一个由7个字符串组成的数组
+    var notes [7]string
+
+    fmt.Println(cap(notes))
+}
+</code></pre><h2>遍历</h2><p>内置函数 range 可用于遍历迭代：</p><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-go">package main
+import "fmt"
+
+func main() {
+    notes := [7]string {"do", "re", "mi", "fa", "so", "la", "ti"}
+
+    for index, note := range notes {
+        fmt.Println(index, note)
+    }
+
+    // 如果用不到返回值中的 index
+    for _, note := range notes {
+        fmt.Print(note + " ")
+    }
+}
+</code></pre><h2>修改</h2><pre><code class="language-go">notes := [7]string {"do", "re", "mi", "fa", "so", "la", "ti"}
+</code></pre><p>&lt;div class="ask"&gt;如何修改第一个元素为：“1”&lt;/div&gt;</p><h2>包含</h2><pre><code class="language-go">notes := [7]string {"do", "re", "mi", "fa", "so", "la", "ti"}
+</code></pre><p>如何判断notes这个数组中是否包含abc这个字符串呢？</p><p>在 PHP 中，可用内置函数in_array，Go 中没有这样的函数，需要自己实现。</p><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-go">package main
+import "fmt"
+
+func In_array(needle interface{}, hystack interface{}) bool {
+	switch key := needle.(type) {
+	case string:
+		for _, item := range hystack.([]string) {
+			if key == item {
+				return true
+			}
+		}
+	case int:
+		for _, item := range hystack.([]int) {
+			if key == item {
+				return true
+			}
+		}
+	case int64:
+		for _, item := range hystack.([]int64) {
+			if key == item {
+				return true
+			}
+		}
+	default:
+		return false
+	}
+	return false
+}
+
+func main() {
+    notes := [7]string {"do", "re", "mi", "fa", "so", "la", "ti"}
+    newNotes := notes[:]
+    fmt.Println(In_array("abc", newNotes))
+    fmt.Println(In_array("so", newNotes))
+}
+</code></pre>

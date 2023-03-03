@@ -1,0 +1,54 @@
+<h1>常见问题</h1><h2>切片可以存储不同类型吗</h2><p>数组不可以，切片也不可以。</p><h2>切片就是结构体</h2><p>&lt;div class="ask"&gt;对一个切片的操作有可能影响到另一个切片吗？&lt;/div&gt;</p><p>有可能，切片结构体中存储了数组的指针，有可能别的切片也存储了这个数组的指针。</p><pre><code class="language-go">// runtime/slice.go
+type slice struct {
+	array unsafe.Pointer // 元素指针
+	len   int // 长度
+	cap   int // 容量
+}
+</code></pre><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-go">package main
+import "fmt"
+
+func main() {
+    a := []int{1,2,3}
+    b := a
+
+    b[2] = 300
+
+    fmt.Println(a)
+    fmt.Println(b)
+}
+</code></pre><p>切片是一种引用数据类型，b := a 并没有为b单独再开辟一块内存来存储{1,2,3}，是与a共用的。</p><h2>切片的内部数组</h2><p>&lt;div class="ask"&gt;既然切片内部的数组大小不能变，切片是怎么增加元素的？&lt;/div&gt;</p><pre><code class="language-go">// runtime/slice.go
+type slice struct {
+	array unsafe.Pointer // 元素指针
+	len   int // 长度
+	cap   int // 容量
+}
+</code></pre><p>向切片增加 n 个元素前：</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>如果slice.cap &lt; slice.len + n，新开辟一块内存空间存储slice.array</p></li><li class="m-0 p-0"><p>如果slice.cap &gt;= slice.len + n，直接在原slice.array中增加元素</p></li></ul><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-go">package main
+import "fmt"
+
+func main() {
+    a := []int{1,2,3,4}
+
+    fmt.Println(len(a))
+    fmt.Println(cap(a))
+
+    // 这时候会重新分配内存来存储切片的内部数组
+    a = append(a, 5)
+
+    fmt.Println(len(a))
+    fmt.Println(cap(a))
+}
+</code></pre><h2>切片作为参数传递</h2><p>s[i]=1 这样的操作会改变切片的内部数组：</p><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-go">package main
+import "fmt"
+
+func main() {
+	s := []int{1, 1, 1}
+	f(s)
+	fmt.Println(s)
+}
+
+func f(s []int) {
+	for i := range s {
+		s[i] += 1
+	}
+}
+</code></pre>

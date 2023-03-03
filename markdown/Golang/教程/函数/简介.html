@@ -1,0 +1,26 @@
+<h1>简介</h1><p>对于任何编程语言来说，函数都是非常重要的组成部分。</p><h2>什么是函数</h2><p>函数通过将一部分代码“包裹”起来，以实现复用。</p><p>函数是一个通用的概念，并不是某个编程语言独有的。</p><h2>数学中的函数</h2><pre><code>已知： f(x, y) = x + y。
+
+求: f(2, 3)。
+</code></pre><p>f 就是一个函数，它的作用是计算 x + y。</p><h2>Go 中的函数</h2><p>Go 中也有函数的概念，而且内置很多函数，可以在代码的任何地方使用。</p><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-go">package main
+import "fmt"
+
+func main() {
+  // len 是内置函数，会输出提供的数据的长度
+  fmt.Println(len("abcdef"))
+}
+</code></pre><h2>调用函数</h2><p>调用（call）也称为请求（invoke）。</p><p>调用时有两个要点：</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>函数名</p></li><li class="m-0 p-0"><p>参数</p></li></ul><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-go">package main
+import "fmt"
+
+func main() {
+  // len 是内置函数，会输出提供的数据的长度
+  fmt.Println(len("abcdef"))
+}
+</code></pre><h2>异常处理</h2><p>如果参数个数大于函数需要的个数会怎么样？</p><pre><code class="language-go">fmt.Println(len("abcdef", "abc"))
+</code></pre><p>如果让你来设计这门语言，会怎么做？</p><p>大概可以想到这些方案：</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>报错，必须提供函数要求的个数</p></li><li class="m-0 p-0"><p>忽略多余的参数</p></li></ul><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-go">package main
+import "fmt"
+
+func main() {
+  fmt.Println(len("abcdef", "abc"))
+}
+</code></pre><p>输出的关键内容：</p><pre><code>too many arguments for len("abcdef", "abc") (expected 1, found 2)
+</code></pre><p>Go 选择了更严谨的方案：报错。</p><p>常见的选择忽略多余的参数的编程语言：</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>JavaScript</p></li><li class="m-0 p-0"><p>PHP</p></li></ul><p>常见的选择报错的编程语言：</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>Java</p></li><li class="m-0 p-0"><p>Python</p></li><li class="m-0 p-0"><p>Golang</p></li></ul><p>&lt;div class="banner"&gt;这两种选择并没有优劣之分&lt;/div&gt;</p><h2>参考资料</h2><p>&lt;div class="link"&gt;https://mp.weixin.qq.com/s/sO1PO7IEahtBYoQSRmQs6Q&lt;/div&gt;</p>

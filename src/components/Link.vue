@@ -60,6 +60,7 @@ export default defineComponent({
       return RouteController.getCurrentPage().id == id;
     },
     go: function () {
+      if (this.shouldShowRightMenu) return false;
       this.active = true;
       RouteController.goto(this.href);
     },
