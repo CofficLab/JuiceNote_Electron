@@ -19,6 +19,7 @@
     "elif",
     "extname",
     "fromkeys",
+    "gapcursor",
     "highlightjs",
     "hightlight",
     "katex",
@@ -37,6 +38,7 @@
     "uintptr",
     "Uturn",
     "vuedraggable",
-    "vuex"
+    "vuex",
+    "webfont"
   ]
 }

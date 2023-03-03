@@ -1,12 +1,9 @@
-import Alpine from 'alpinejs'
 import { createApp } from 'vue'
 import { ipcRenderer } from 'electron'
 import App from './views/App.vue'
 import CodeRunner from './tools/CodeRunner'
 import FullScreenController from './controllers/FullScreenController'
 import "./app.css"
-import '@imengyu/vue3-context-menu/lib/vue3-context-menu.css'
-import ContextMenu from '@imengyu/vue3-context-menu'
 
 // 检测全屏状态
 ipcRenderer.on('main-process-message', (_event, ...args) => {
@@ -20,19 +17,9 @@ ipcRenderer.on('main-process-message', (_event, ...args) => {
 })
 
 Object.assign(window, {
-  Alpine: Alpine,
   runner: CodeRunner,
 })
 
 const app = createApp(App)
 app.config.unwrapInjectedRef = true
-app.use(ContextMenu)
 app.mount('#app')
-
-
-// document.addEventListener("contextmenu", (event) => {
-//   let target = event.target;
-//   if (target.getAttribute("id") != this.href) {
-//     this.rightMenu = false;
-//   }
-// });

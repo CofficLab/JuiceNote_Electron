@@ -36,7 +36,7 @@ let Extensions = [
     // FloatingMenu,
     // BubbleMenu,
     Brick,
-    CodeBlockCustomized,
+    // CodeBlockCustomized,
     CodeBlockLowlight.configure({
         lowlight,
     }),

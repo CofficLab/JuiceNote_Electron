@@ -6,19 +6,11 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import Toc from "toc-maker";
 import RouteController from "../controllers/RouteController";
 
 export default defineComponent({
   computed: {
     html() {
-      let renderedHtml = RouteController.renderedHtml;
-      if (renderedHtml.length > 0) {
-        let renderedDom = document.createElement("div");
-        renderedDom.innerHTML = renderedHtml;
-        return new Toc(renderedDom).tocEl.innerHTML;
-      }
-
       return "";
     },
   },
