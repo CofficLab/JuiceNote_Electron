@@ -9,7 +9,7 @@
       </div>
 
       <!-- 代码框 -->
-      <node-view-content class="border-cyan-900 bg-black px-2" v-bind:class="{ 'border-dashed border': editable }" />
+      <node-view-content class="border-cyan-900 bg-black p-4" v-bind:class="{ 'border-dashed border': editable }" />
 
       <!-- 底部的运行按钮 -->
       <div class="mt-2 flex flex-row items-start justify-end gap-4 px-1">
