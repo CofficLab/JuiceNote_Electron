@@ -28,3 +28,11 @@ const app = createApp(App)
 app.config.unwrapInjectedRef = true
 app.use(ContextMenu)
 app.mount('#app')
+
+
+// document.addEventListener("contextmenu", (event) => {
+//   let target = event.target;
+//   if (target.getAttribute("id") != this.href) {
+//     this.rightMenu = false;
+//   }
+// });

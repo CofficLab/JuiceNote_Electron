@@ -15,25 +15,21 @@
 
     <!-- 编辑框 -->
     <div
-      id="editorx"
-      ref="editorx"
       class="mt-1 flex w-full justify-center overflow-auto border-0 p-4 pb-24"
-      @contextmenu.prevent="onContextmenu"
-      @click="showRightMenu = false"
+      @click="destroyRightMenu"
+      @contextmenu.prevent="showRightMenu"
     >
       <editor-content :editor="editor" class="prose w-full xl:prose-lg" />
     </div>
 
     <!-- 右键菜单 -->
-    <ul
-      class="menu z-50 w-56 rounded-md bg-base-100 shadow-sm"
-      v-if="showRightMenu"
-      v-bind:style="{ left: rightMenuX + 'px', top: rightMenuY + 'px', position: 'fixed' }"
-    >
-      <li><a @click="refresh">刷新</a></li>
-      <li><a @click="edit">编辑</a></li>
-      <li><a>Item 3</a></li>
-    </ul>
+    <RightMenu v-if="shouldShowRightMenu" :event="rightClickEvent">
+      <li><Refresh></Refresh></li>
+      <li><Edit :bookNode="current"></Edit></li>
+      <li><Rename :bookNode="current"></Rename></li>
+      <li><Add :bookNode="current"></Add></li>
+      <li><Copy :bookNode="current"></Copy></li>
+    </RightMenu>
   </div>
 </template>
 
@@ -42,33 +38,43 @@ import { Editor, EditorContent, FloatingMenu, BubbleMenu } from "@tiptap/vue-3";
 import RouteController from "../controllers/RouteController";
 import Extensions from "../entities/Extensions";
 import Link from "../components/Link.vue";
+import RightMenu from "../components/RightMenu.vue";
 import Toolbar from "./Toolbar.vue";
+import Refresh from "../operators/Refresh.vue";
+import Add from "../operators/Add.vue";
+import Copy from "../operators/Copy.vue";
+import Edit from "../operators/Edit.vue";
+import Rename from "../operators/Rename.vue";
+import RightMenuController from "../controllers/RightMenuController";
 
 export default {
   components: {
+    Add,
+    Copy,
     EditorContent,
+    Edit,
     BubbleMenu,
     FloatingMenu,
     Toolbar,
     Link,
+    Refresh,
+    Rename,
+    RightMenu,
   },
   data() {
     return {
       editor: null,
       currentTab: 0,
-      showRightMenu: false,
-      rightMenuX: 1000,
-      rightMenuY: 1000,
+      rightClickEvent: null,
     };
   },
   computed: {
     current: () => RouteController.currentPage,
     editable: () => RouteController.editable,
-    siblings() {
-      return RouteController.currentPage.siblingsWithCurrent();
-    },
-    content() {
-      return RouteController.currentPage.getSourceCode();
+    siblings: () => RouteController.currentPage.siblingsWithCurrent(),
+    content: () => RouteController.currentPage.getSourceCode(),
+    shouldShowRightMenu: function () {
+      return RightMenuController.shouldShow && this.rightClickEvent;
     },
   },
   methods: {
@@ -76,20 +82,13 @@ export default {
       console.log("switch tab to", index);
       this.currentTab = index;
     },
-    refresh() {
-      RouteController.refresh();
-      this.showRightMenu = false;
+    showRightMenu(event) {
+      this.rightClickEvent = event;
+      RightMenuController.show();
     },
-    edit() {
-      RouteController.editable = true;
-      this.showRightMenu = false;
-    },
-    onContextmenu(event) {
-      console.log("右键单击", event);
-      this.rightMenuX = event.clientX + 20;
-      this.rightMenuY = event.clientY + 20;
-      this.showRightMenu = !this.showRightMenu;
-    },
+    // destroyRightMenu() {
+    //   RightMenuController.hide();
+    // },
   },
   mounted() {
     console.log("mounted, init the editor");
@@ -110,6 +109,11 @@ export default {
       onRenderTracked: () => {
         console.log("render tracked");
       },
+    });
+
+    document.addEventListener("click", () => {
+      console.log("检测到click事件，隐藏我的右键菜单");
+      this.rightClickEvent = null;
     });
   },
   watch: {

@@ -1,6 +1,5 @@
 <template>
-  <!-- 弹层 -->
-
+  <!-- 新建图书节点的弹层 -->
   <div class="modal-open modal" v-show="adding">
     <Transition name="bounce">
       <div class="modal-box" v-if="adding">

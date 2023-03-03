@@ -37,6 +37,8 @@
 
         <!-- 新建图书节点的弹层 -->
         <Add></Add>
+        <!-- 重命名的弹层 -->
+        <Rename></Rename>
       </div>
     </div>
   </div>
@@ -59,7 +61,7 @@ import Toc from "../components/TocContent.vue";
 import Breadcrumbs from "../components/Breadcrumbs.vue";
 import Address from "../components/Address.vue";
 import Alert from "../components/Alert.vue";
-import Add from "../components/Add.vue";
+import Add from "../modals/Add.vue";
 import Toast from "../components/Toast.vue";
 import Content from "./Content.vue";
 import SideMenu from "./SideMenu.vue";
@@ -69,6 +71,7 @@ import RouteController from "../controllers/RouteController";
 import FullScreenController from "../controllers/FullScreenController";
 import Languages from "../components/Languages.vue";
 import path from "path";
+import Rename from "../modals/Rename.vue";
 
 export default defineComponent({
   components: {
@@ -94,6 +97,7 @@ export default defineComponent({
     ProjectTree,
     BtnOfficialLink,
     Languages,
+    Rename,
   },
   data() {
     return {

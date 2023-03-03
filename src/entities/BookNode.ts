@@ -308,6 +308,8 @@ class BookNode {
 
     // 重命名并返回重命名后的节点
     public rename(name: string): BookNode {
+        if (name == this.name) return this
+
         let newPath = path.join(path.dirname(this.path), name + '.html')
         fs.renameSync(this.path, newPath)
 

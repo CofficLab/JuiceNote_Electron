@@ -12,6 +12,7 @@ const RouteController = reactive({
     editable: (new URL(location.href)).searchParams.get('edit_mode') != undefined,
     renderedHtml: '',
     adding: false, // 用于判断是否显示添加的表单
+    renamingBookNode: new BookNode, // 正在重命名的图书节点
 
     isEditMode() {
         return this.editable
