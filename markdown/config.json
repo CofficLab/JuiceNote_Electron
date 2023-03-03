@@ -1775,7 +1775,7 @@
       "Golang@手册@关键字@简介.md"
     ],
     "Golang@手册@内置函数": [
-      "Golang@手册@内置函数@copy.md",
+      "Golang@手册@内置函数@copy.html",
       "Golang@手册@内置函数@len.md",
       "Golang@手册@内置函数@make.md",
       "Golang@手册@内置函数@new.md"

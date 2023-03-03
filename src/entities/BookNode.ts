@@ -319,7 +319,7 @@ class BookNode {
     // 保存文章内容
     public save(content: string): string {
         if (this.getSourceCode() == content) {
-            return '没有变化，无须保存'
+            return '没有变化，无需保存'
         }
 
         writeFileSync(this.path.replace('.md', '.html'), content)

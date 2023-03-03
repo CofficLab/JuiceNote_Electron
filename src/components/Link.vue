@@ -37,7 +37,7 @@ export default defineComponent({
   },
   mounted: function () {
     document.addEventListener("click", () => {
-      console.log("检测到click事件，隐藏我的右键菜单");
+      // console.log("检测到click事件，隐藏我的右键菜单");
       this.rightClickEvent = null;
     });
   },

@@ -4,7 +4,7 @@
   "main": "dist/electron/main/index.js",
   "private": true,
   "scripts": {
-    "tailwind": "tailwind-config-viewer -o",
+    "t": "tailwind-config-viewer -o",
     "rebuild": "electron-rebuild",
     "dev": "vite",
     "build": "vite build && electron-builder",

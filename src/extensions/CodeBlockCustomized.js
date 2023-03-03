@@ -1,7 +1,11 @@
-import CodeBlock from "@tiptap/extension-code-block";
+import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
+import { VueNodeViewRenderer } from "@tiptap/vue-3";
+import CodeBlockCustomized from "./CodeBlockCustomized.vue";
 
-const CodeBlockCustomized = CodeBlock.extend({
+export default CodeBlockLowlight.extend({
   name: "codeBlockCustomized",
-});
 
-export default CodeBlockCustomized;
+  addNodeView() {
+    return VueNodeViewRenderer(CodeBlockCustomized);
+  },
+});

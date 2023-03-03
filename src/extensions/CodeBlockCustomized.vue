@@ -1,0 +1,53 @@
+<template>
+  <node-view-wrapper>
+    <div class="flex flex-col rounded bg-base-300 pb-2">
+      <!-- 顶部横幅 -->
+      <div
+        class="flex h-6 items-center justify-end rounded-tr bg-gradient-to-r from-transparent via-transparent to-cyan-500/20 pr-2 text-sm text-slate-400"
+      >
+        <div v-html="node.attrs.language"></div>
+      </div>
+
+      <!-- 代码框 -->
+      <node-view-content class="border-cyan-900 bg-black px-2" v-bind:class="{ 'border-dashed border': editable }" />
+
+      <!-- 底部的运行按钮 -->
+      <div class="mt-2 flex flex-row items-start justify-end gap-4 px-1">
+        <!-- 展示运行结果 -->
+        <pre class="hidden flex-grow rounded bg-black shadow-sm ring-1" style="margin: 0"><code></code></pre>
+        <button class="run btn bg-slate-900 shadow-sm" :data-code="code" :data-language="language">运行</button>
+      </div>
+    </div>
+  </node-view-wrapper>
+</template>
+
+<script>
+import { NodeViewContent, nodeViewProps, NodeViewWrapper } from "@tiptap/vue-3";
+import Info from "../assets/icons/info.svg";
+import RouteController from "../controllers/RouteController";
+
+export default {
+  components: {
+    NodeViewWrapper,
+    NodeViewContent,
+    Info,
+  },
+
+  computed: {
+    editable: () => RouteController.editable,
+    language() {
+      return this.node.attrs.language ?? "shell";
+    },
+    code() {
+      let codeContents = this.node.content.content;
+      if (codeContents.length == 0) {
+        return "";
+      }
+
+      return this.node.content.content[0].text;
+    },
+  },
+
+  props: nodeViewProps,
+};
+</script>

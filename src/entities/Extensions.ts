@@ -5,7 +5,6 @@ import History from "@tiptap/extension-history";
 import Paragraph from "@tiptap/extension-paragraph";
 import Bold from "@tiptap/extension-bold";
 import { lowlight } from "lowlight";
-import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import Gapcursor from '@tiptap/extension-gapcursor'
 import Heading from "@tiptap/extension-heading";
 import BulletList from "@tiptap/extension-bullet-list";
@@ -16,7 +15,6 @@ import TableCell from "@tiptap/extension-table-cell"
 import TableHeader from "@tiptap/extension-table-header"
 import HardBreak from '@tiptap/extension-hard-break'
 import "highlight.js/styles/github-dark.css";
-// 自定义的编辑器扩展
 import Brick from "../extensions/Brick.js";
 import Banner from "../extensions/Banner.js";
 import OfficialLink from "../extensions/OfficialLink.js";
@@ -36,9 +34,10 @@ let Extensions = [
     // FloatingMenu,
     // BubbleMenu,
     Brick,
-    // CodeBlockCustomized,
-    CodeBlockLowlight.configure({
-        lowlight,
+    CodeBlockCustomized.configure({
+        lowlight, HTMLAttributes: {
+            style: "padding-top:0"
+        }
     }),
     Document,
     Gapcursor,

@@ -1,6 +1,6 @@
 <template>
   <node-view-wrapper>
-    <div class="m-1 flex flex-col rounded-2xl border-2 border-black bg-yellow-400 dark:bg-yellow-600/50">
+    <div class="mt-1 mb-2 flex flex-col rounded border-2 border-black bg-yellow-400 dark:bg-yellow-600/50">
       <div class="flex justify-between pl-4">
         <div>
           <div class="alert alert-info rounded-none py-0">
