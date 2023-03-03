@@ -14,9 +14,26 @@
     </div>
 
     <!-- 编辑框 -->
-    <div class="mt-1 flex w-full justify-center overflow-auto border-0 p-4 pb-24">
+    <div
+      id="editorx"
+      ref="editorx"
+      class="mt-1 flex w-full justify-center overflow-auto border-0 p-4 pb-24"
+      @contextmenu.prevent="onContextmenu"
+      @click="showRightMenu = false"
+    >
       <editor-content :editor="editor" class="prose w-full xl:prose-lg" />
     </div>
+
+    <!-- 右键菜单 -->
+    <ul
+      class="menu z-50 w-56 bg-base-100"
+      v-if="showRightMenu"
+      v-bind:style="{ left: rightMenuX + 'px', top: rightMenuY + 'px', position: 'fixed' }"
+    >
+      <li><a>Item 1</a></li>
+      <li><a>Item 2</a></li>
+      <li><a>Item 3</a></li>
+    </ul>
   </div>
 </template>
 
@@ -39,6 +56,9 @@ export default {
     return {
       editor: null,
       currentTab: 0,
+      showRightMenu: false,
+      rightMenuX: 1000,
+      rightMenuY: 1000,
     };
   },
   computed: {
@@ -55,6 +75,12 @@ export default {
     switchTab(index) {
       console.log("switch tab to", index);
       this.currentTab = index;
+    },
+    onContextmenu(event) {
+      console.log("右键单击", event);
+      this.rightMenuX = event.clientX + 20;
+      this.rightMenuY = event.clientY + 20;
+      this.showRightMenu = !this.showRightMenu;
     },
   },
   mounted() {

@@ -5,6 +5,8 @@ import App from './views/App.vue'
 import CodeRunner from './tools/CodeRunner'
 import FullScreenController from './controllers/FullScreenController'
 import "./app.css"
+import '@imengyu/vue3-context-menu/lib/vue3-context-menu.css'
+import ContextMenu from '@imengyu/vue3-context-menu'
 
 // 检测全屏状态
 ipcRenderer.on('main-process-message', (_event, ...args) => {
@@ -24,4 +26,5 @@ Object.assign(window, {
 
 const app = createApp(App)
 app.config.unwrapInjectedRef = true
+app.use(ContextMenu)
 app.mount('#app')
