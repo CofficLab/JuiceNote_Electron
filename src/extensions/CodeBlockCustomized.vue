@@ -1,6 +1,6 @@
 <template>
   <node-view-wrapper>
-    <div class="rounded bg-slate-900 pb-2">
+    <div class="mb-4 rounded bg-slate-900 pb-2">
       <!-- 操作栏 -->
       <div class="mb-4 flex justify-between bg-green-100 shadow-xl" v-if="editable">
         <div class="flex gap-4">
