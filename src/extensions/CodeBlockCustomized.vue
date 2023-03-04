@@ -1,14 +1,14 @@
 <template>
   <node-view-wrapper>
-    <div class="flex flex-col rounded bg-slate-900 pb-2">
+    <div class="rounded bg-slate-900 pb-2">
       <!-- 顶部横幅 -->
       <div
-        class="flex h-6 items-center justify-end rounded-tr bg-gradient-to-r from-transparent via-transparent to-cyan-500/20 pr-2 text-sm text-slate-400"
+        class="flex h-full items-center justify-end rounded-tr bg-gradient-to-r from-transparent via-transparent to-cyan-500/20 pr-2 text-sm text-slate-400"
       >
         <div v-html="node.attrs.language"></div>
       </div>
 
-      <Monaco ref="monaco" :code="code" :language="language" :keyUpCallback="keyup" class="h-96"></Monaco>
+      <Monaco ref="monaco" :code="code" :language="language" :keyUpCallback="keyup" class="h-56"></Monaco>
 
       <!-- 代码框 -->
       <node-view-content class="hidden" />
@@ -40,6 +40,7 @@ export default {
   computed: {
     editable: () => RouteController.editable,
     language() {
+      console.log("get language", this.node.attrs);
       return this.node.attrs.language ?? "shell";
     },
     code() {
@@ -66,6 +67,12 @@ export default {
 
       console.log(this.node.attrs.code);
     },
+  },
+
+  mounted() {
+    this.updateAttributes({
+      code: this.code,
+    });
   },
 
   props: nodeViewProps,

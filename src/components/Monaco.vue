@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <div ref="monaco" class="h-full w-full"></div>
-  </div>
+  <div ref="monaco"></div>
 </template>
 
 <script>
@@ -34,17 +32,20 @@ export default defineComponent({
         return new editorWorker();
       },
     };
+
+    console.log("初始化Monaco，language=", this.language);
     let editor = monaco.editor.create(this.$refs.monaco, {
       value: this.code,
       language: this.language,
       readOnly: false,
       theme: "vs-dark",
-      fontSize: 20,
+      fontSize: 18,
+      lineNumbers: "off",
+      automaticLayout: true,
       minimap: { enabled: false },
     });
     editor.onKeyUp(() => {
       this.keyUpCallback(editor.getValue());
-      //   console.log("keyup", editor.getValue());
     });
   },
 });

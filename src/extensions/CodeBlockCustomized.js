@@ -1,7 +1,6 @@
 import CodeBlock from "@tiptap/extension-code-block";
 import { VueNodeViewRenderer } from "@tiptap/vue-3";
 import CodeBlockCustomized from "./CodeBlockCustomized.vue";
-import { mergeAttributes } from "@tiptap/core";
 
 export default CodeBlock.extend({
   name: "codeBlockCustomized",
@@ -10,9 +9,15 @@ export default CodeBlock.extend({
     return {
       code: {
         default: "",
+        rendered: false,
       },
       language: {
-        default: "",
+        default: null,
+        parseHTML: (element) => {
+          const language = element.firstElementChild?.getAttribute("language");
+          return language;
+        },
+        rendered: false,
       },
     };
   },
@@ -21,17 +26,8 @@ export default CodeBlock.extend({
     return VueNodeViewRenderer(CodeBlockCustomized);
   },
 
-  renderHTML({ node, HTMLAttributes }) {
-    return [
-      "pre",
-      mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
-      [
-        "code",
-        {
-          class: node.attrs.language ? this.options.languageClassPrefix + node.attrs.language : null,
-        },
-        0,
-      ],
-    ];
+  renderHTML({ node }) {
+    console.log("转换成HTML", node.attrs);
+    return ["pre", ["code", { language: node.attrs.language }, node.attrs.code]];
   },
 });
