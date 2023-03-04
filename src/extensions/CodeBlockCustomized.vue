@@ -1,6 +1,6 @@
 <template>
   <node-view-wrapper>
-    <div class="flex flex-col rounded bg-base-300 pb-2">
+    <div class="flex flex-col rounded bg-slate-900 pb-2">
       <!-- 顶部横幅 -->
       <div
         class="flex h-6 items-center justify-end rounded-tr bg-gradient-to-r from-transparent via-transparent to-cyan-500/20 pr-2 text-sm text-slate-400"
@@ -8,7 +8,7 @@
         <div v-html="node.attrs.language"></div>
       </div>
 
-      <Monaco ref="monaco" :code="code" :keyUpCallback="keyup" class="h-96"></Monaco>
+      <Monaco ref="monaco" :code="code" :language="language" :keyUpCallback="keyup" class="h-96"></Monaco>
 
       <!-- 代码框 -->
       <node-view-content class="hidden" />
