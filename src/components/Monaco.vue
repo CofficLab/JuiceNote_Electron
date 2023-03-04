@@ -12,7 +12,7 @@ import tsWorker from "monaco-editor/esm/vs/language/typescript/ts.worker?worker"
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  props: ["code", "keyUpCallback", "language"],
+  props: ["code", "keyUpCallback", "language", "readOnly"],
   mounted: function () {
     console.log("init monaco editor");
     self.MonacoEnvironment = {
@@ -33,11 +33,11 @@ export default defineComponent({
       },
     };
 
-    // console.log("初始化Monaco，language=", this.language);
+    console.log("初始化Monaco，language=", this.language);
     let editor = monaco.editor.create(this.$refs.monaco, {
       value: this.code,
       language: this.language,
-      readOnly: false,
+      readOnly: this.readOnly,
       theme: "vs-dark",
       fontSize: 18,
       lineNumbers: "off",

@@ -10,12 +10,12 @@
 
     <!-- TAB -->
     <div class="tabs mt-4 flex justify-center rounded-t-xl bg-yellow-400/10" v-if="current.getParent().isTab()">
-      <Link v-for="sibling in siblings" :href="sibling.id" class="tab tab-lifted">{{ sibling.name }}</Link>
+      <Link v-for="sibling in siblings" :href="sibling.id" class="tab-lifted tab">{{ sibling.name }}</Link>
     </div>
 
     <!-- 编辑框 -->
     <div
-      class="mt-1 flex w-full justify-center overflow-auto border-0 p-4 pb-24"
+      class="mt-1 flex w-full justify-center overflow-auto border-0 p-4"
       @click="destroyRightMenu"
       @contextmenu.prevent="showRightMenu"
     >
@@ -132,3 +132,9 @@ export default {
   },
 };
 </script>
+
+<style lang="postcss">
+.ProseMirror {
+  @apply pb-56;
+}
+</style>
