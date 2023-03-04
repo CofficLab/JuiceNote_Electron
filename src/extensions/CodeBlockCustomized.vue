@@ -8,10 +8,17 @@
         <div v-html="node.attrs.language"></div>
       </div>
 
-      <Monaco ref="monaco" :code="code" :language="language" :keyUpCallback="keyup" class="h-56"></Monaco>
+      <!-- Monaco编辑器的代码框 -->
+      <Monaco
+        ref="monaco"
+        :code="code"
+        :language="language"
+        :keyUpCallback="keyup"
+        v-bind:style="{ height: monacoEditorHeight }"
+      ></Monaco>
 
-      <!-- 代码框 -->
-      <node-view-content class="hidden" />
+      <!-- 代码框，存储从文件系统读出的代码，然后放到Monaco编辑器中 -->
+      <node-view-content ref="nodeViewContent" v-bind:class="{ hidden: nodeViewContentHidden }" />
 
       <!-- 底部的运行按钮 -->
       <div class="mt-2 flex flex-row items-start justify-end gap-4 px-1">
@@ -37,10 +44,17 @@ export default {
     Monaco,
   },
 
+  data() {
+    return {
+      nodeViewContentHidden: false,
+      monacoEditorHeight: 0,
+    };
+  },
+
   computed: {
     editable: () => RouteController.editable,
     language() {
-      console.log("get language", this.node.attrs);
+      // console.log("get language", this.node.attrs);
       return this.node.attrs.language ?? "shell";
     },
     code() {
@@ -56,6 +70,12 @@ export default {
 
       return this.node.content.content[0].text;
     },
+    monacoEditorDisplay() {
+      return this.node.attrs.editor == true;
+    },
+    nodeViewContentDisplay() {
+      return !this.nodeViewContentHidden && this.node.attrs.editor != true;
+    },
   },
 
   methods: {
@@ -64,8 +84,6 @@ export default {
       this.updateAttributes({
         code: value,
       });
-
-      console.log(this.node.attrs.code);
     },
   },
 
@@ -73,6 +91,13 @@ export default {
     this.updateAttributes({
       code: this.code,
     });
+
+    // 先展示出来，获取高度，然后隐藏掉
+    let viewNodeContent = this.$refs.nodeViewContent.$el;
+    this.nodeViewContentHidden = true;
+
+    // Monaco Editor 初始化必须提供一个固定的高度
+    this.monacoEditorHeight = Math.min(500, viewNodeContent.scrollHeight) + "px";
   },
 
   props: nodeViewProps,

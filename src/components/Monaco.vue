@@ -33,7 +33,7 @@ export default defineComponent({
       },
     };
 
-    console.log("初始化Monaco，language=", this.language);
+    // console.log("初始化Monaco，language=", this.language);
     let editor = monaco.editor.create(this.$refs.monaco, {
       value: this.code,
       language: this.language,
