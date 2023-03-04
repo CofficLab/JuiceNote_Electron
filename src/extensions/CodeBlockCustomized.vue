@@ -2,7 +2,7 @@
   <node-view-wrapper>
     <div class="mb-4 rounded bg-slate-900 pb-2">
       <!-- 操作栏 -->
-      <div class="mb-4 flex justify-between bg-green-100 shadow-xl" v-if="editable">
+      <div class="mb-4 flex justify-between bg-green-100 shadow-xl dark:bg-green-900/50" v-if="editable">
         <div class="flex gap-4">
           <button class="btn-sm btn rounded-none" @click="setRun" :disabled="runButtonDisplay">可运行</button>
           <button class="btn-sm btn rounded-none" @click="setNotRun" :disabled="!runButtonDisplay">不可运行</button>
@@ -10,10 +10,11 @@
 
         <select
           name="language"
-          class="select select-sm max-w-xs rounded-none rounded-tr bg-green-500/60 outline-none"
+          class="select select-sm max-w-xs rounded-none rounded-tr bg-green-500/60 outline-none dark:bg-green-800/60"
           @change="setLanguage"
         >
           <option disabled selected>未选择编程语言</option>
+          <option value="text" v-bind:selected="language == 'text'">纯文本</option>
           <option value="go" v-bind:selected="language == 'go'">Golang</option>
           <option value="php" v-bind:selected="language == 'php'">PHP</option>
           <option value="javascript" v-bind:selected="language == 'javascript'">JavaScript</option>
@@ -31,8 +32,9 @@
         <div v-html="node.attrs.language"></div>
       </div>
 
-      <!-- Monaco编辑器的代码框 -->
+      <!-- Monaco编辑器的代码框，指定了编程语言的时候显示 -->
       <Monaco
+        v-if="language != 'text'"
         ref="monaco"
         :code="code"
         :language="language"
@@ -40,6 +42,9 @@
         :readOnly="!editable"
         v-bind:style="{ height: monacoEditorHeight }"
       ></Monaco>
+
+      <!-- 普通代码框，是纯文本的时候显示 -->
+      <pre v-if="language == 'text'" style="margin-top: 0"><code v-html="code"></code></pre>
 
       <!-- 代码框，存储从文件系统读出的代码，然后放到Monaco编辑器中 -->
       <node-view-content ref="nodeViewContent" v-bind:class="{ hidden: nodeViewContentHidden }" />
