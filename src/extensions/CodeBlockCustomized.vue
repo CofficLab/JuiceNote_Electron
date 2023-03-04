@@ -8,8 +8,10 @@
         <div v-html="node.attrs.language"></div>
       </div>
 
+      <Monaco ref="monaco" :code="code" :keyUpCallback="keyup" class="h-96"></Monaco>
+
       <!-- 代码框 -->
-      <node-view-content class="border-cyan-900 bg-black p-4" v-bind:class="{ 'border-dashed border': editable }" />
+      <node-view-content class="hidden" />
 
       <!-- 底部的运行按钮 -->
       <div class="mt-2 flex flex-row items-start justify-end gap-4 px-1">
@@ -24,6 +26,7 @@
 <script>
 import { NodeViewContent, nodeViewProps, NodeViewWrapper } from "@tiptap/vue-3";
 import Info from "../assets/icons/info.svg";
+import Monaco from "../components/Monaco.vue";
 import RouteController from "../controllers/RouteController";
 
 export default {
@@ -31,6 +34,7 @@ export default {
     NodeViewWrapper,
     NodeViewContent,
     Info,
+    Monaco,
   },
 
   computed: {
@@ -39,12 +43,28 @@ export default {
       return this.node.attrs.language ?? "shell";
     },
     code() {
+      let code = this.node.attrs.code;
+      if (code.length > 0) {
+        return code;
+      }
+
       let codeContents = this.node.content.content;
       if (codeContents.length == 0) {
         return "";
       }
 
       return this.node.content.content[0].text;
+    },
+  },
+
+  methods: {
+    keyup(value) {
+      // console.log("code block key up,value is", value);
+      this.updateAttributes({
+        code: value,
+      });
+
+      console.log(this.node.attrs.code);
     },
   },
 
