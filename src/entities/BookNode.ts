@@ -17,6 +17,7 @@ class BookNode {
     public level: number = 0
     public errorTitle: string = ''
     public errorLines: string[] = []
+    public db: BookNodeModel = new BookNodeModel
 
     public constructor(absolutePath?: string) {
         if (absolutePath != undefined) {
