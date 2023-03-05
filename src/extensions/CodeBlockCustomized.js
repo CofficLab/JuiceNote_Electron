@@ -10,21 +10,16 @@ export default CodeBlock.extend({
       code: {
         default: "",
         rendered: false,
+        parseHTML: (element) => element.firstElementChild?.innerHTML,
       },
       language: {
         default: "",
-        parseHTML: (element) => {
-          const language = element.firstElementChild?.getAttribute("language");
-          return language;
-        },
+        parseHTML: (element) => element.firstElementChild?.getAttribute("language"),
         rendered: true,
       },
       run: {
         default: false,
-        parseHTML: (element) => {
-          const run = element.firstElementChild?.getAttribute("run");
-          return run;
-        },
+        parseHTML: (element) => element.firstElementChild?.getAttribute("run"),
         rendered: true,
       },
     };

@@ -14,13 +14,13 @@
           @change="setLanguage"
         >
           <option disabled selected>未选择编程语言</option>
-          <option value="text" v-bind:selected="language == 'text'">纯文本</option>
-          <option value="go" v-bind:selected="language == 'go'">Golang</option>
-          <option value="php" v-bind:selected="language == 'php'">PHP</option>
-          <option value="javascript" v-bind:selected="language == 'javascript'">JavaScript</option>
-          <option value="java" v-bind:selected="language == 'java'">Java</option>
-          <option value="python" v-bind:selected="language == 'python'">Python</option>
-          <option value="shell" v-bind:selected="language == 'shell'">Shell</option>
+          <option value="text" v-bind:selected="node.attrs.language == 'text'">纯文本</option>
+          <option value="go" v-bind:selected="node.attrs.language == 'go'">Golang</option>
+          <option value="php" v-bind:selected="node.attrs.language == 'php'">PHP</option>
+          <option value="javascript" v-bind:selected="node.attrs.language == 'javascript'">JavaScript</option>
+          <option value="java" v-bind:selected="node.attrs.language == 'java'">Java</option>
+          <option value="python" v-bind:selected="node.attrs.language == 'python'">Python</option>
+          <option value="shell" v-bind:selected="node.attrs.language == 'shell'">Shell</option>
         </select>
       </div>
 
@@ -34,17 +34,17 @@
 
       <!-- Monaco编辑器的代码框，指定了编程语言的时候显示 -->
       <Monaco
-        v-if="language != 'text'"
+        v-if="node.attrs.language != 'text'"
         ref="monaco"
-        :code="code"
-        :language="language"
+        :code="node.attrs.code"
+        :language="node.attrs.language"
         :keyUpCallback="keyup"
         :readOnly="!editable"
         v-bind:style="{ height: monacoEditorHeight }"
       ></Monaco>
 
       <!-- 普通代码框，是纯文本的时候显示 -->
-      <pre v-if="language == 'text'" style="margin-top: 0"><code v-html="code"></code></pre>
+      <pre v-if="node.attrs.language == 'text'" style="margin-top: 0"><code v-html="node.attrs.code"></code></pre>
 
       <!-- 代码框，存储从文件系统读出的代码，然后放到Monaco编辑器中 -->
       <node-view-content ref="nodeViewContent" v-bind:class="{ hidden: nodeViewContentHidden }" />
@@ -53,7 +53,13 @@
       <div class="mt-2 flex flex-row items-start justify-end gap-4 px-1" v-if="runButtonDisplay">
         <!-- 展示运行结果 -->
         <pre class="hidden flex-grow rounded bg-black shadow-sm ring-1" style="margin: 0"><code></code></pre>
-        <button class="run btn bg-slate-900 shadow-sm" :data-code="code" :data-language="language">运行</button>
+        <button
+          class="run btn bg-slate-900 shadow-sm"
+          :data-code="node.attrs.code"
+          :data-language="node.attrs.language"
+        >
+          运行
+        </button>
       </div>
     </div>
   </node-view-wrapper>
@@ -61,7 +67,6 @@
 
 <script>
 import { NodeViewContent, nodeViewProps, NodeViewWrapper } from "@tiptap/vue-3";
-import Info from "../assets/icons/info.svg";
 import Monaco from "../components/Monaco.vue";
 import RouteController from "../controllers/RouteController";
 
@@ -69,7 +74,6 @@ export default {
   components: {
     NodeViewWrapper,
     NodeViewContent,
-    Info,
     Monaco,
   },
 
@@ -82,23 +86,6 @@ export default {
 
   computed: {
     editable: () => RouteController.editable,
-    language() {
-      // console.log("get language", this.node.attrs);
-      return this.node.attrs.language ?? "shell";
-    },
-    code() {
-      let code = this.node.attrs.code;
-      if (code.length > 0) {
-        return code;
-      }
-
-      let codeContents = this.node.content.content;
-      if (codeContents.length == 0) {
-        return "";
-      }
-
-      return this.node.content.content[0].text;
-    },
     monacoEditorDisplay() {
       return this.node.attrs.editor == true;
     },
@@ -133,14 +120,12 @@ export default {
       this.updateAttributes({
         language: event.target.value,
       });
+
+      console.log("当前attrs", this.node.attrs);
     },
   },
 
   mounted() {
-    this.updateAttributes({
-      code: this.code,
-    });
-
     // 先展示出来，获取高度，然后隐藏掉
     let viewNodeContent = this.$refs.nodeViewContent.$el;
     this.nodeViewContentHidden = true;
