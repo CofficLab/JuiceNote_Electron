@@ -9,14 +9,14 @@ class Node {
     public isPage: boolean = false
     public priority: number = 0
 
-    public constructor(id: number, title: string, content, isBook, isChapter, isPage, priority) {
-        this.id = id
-        this.title = title
-        this.content = content
-        this.isBook = isBook
-        this.isChapter = isChapter
-        this.isPage = isPage
-        this.priority = priority
+    public constructor(dbResult: object) {
+        this.id = Object.getOwnPropertyDescriptor(dbResult, 'id')?.value
+        this.title = Object.getOwnPropertyDescriptor(dbResult, 'title')?.value
+        this.content = Object.getOwnPropertyDescriptor(dbResult, 'content')?.value
+        this.isBook = Object.getOwnPropertyDescriptor(dbResult, 'idBook')?.value
+        this.isChapter = Object.getOwnPropertyDescriptor(dbResult, 'isChapter')?.value
+        this.isPage = Object.getOwnPropertyDescriptor(dbResult, 'isPage')?.value
+        this.priority = Object.getOwnPropertyDescriptor(dbResult, 'priority')?.value
     }
 }
 
