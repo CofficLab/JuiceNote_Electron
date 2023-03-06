@@ -12,9 +12,7 @@
         v-bind:class="{ 'top-12': !hideTitleBar, 'top-0': hideTitleBar }"
       >
         <!-- 图书名 -->
-        <h1
-          class="flex justify-center bg-gradient-to-r from-red-500 to-cyan-500 bg-clip-text pb-2 text-lg text-transparent md:text-2xl lg:text-3xl"
-        >
+        <h1 id="book-name">
           {{ book.name }}
         </h1>
 
@@ -52,8 +50,8 @@ import { defineComponent } from "vue";
 import FullScreenController from "../../controllers/FullScreenController";
 import RouteController from "../../controllers/RouteController";
 import BookNode from "../../entities/BookNode";
-import Children from "./../components/Children.vue";
-import Link from "./Link.vue";
+import Children from "../components/Children.vue";
+import Link from "../components/Link.vue";
 import SideMenuItem from "./SideMenuItem.vue";
 
 export default defineComponent({
@@ -92,3 +90,9 @@ export default defineComponent({
   components: { Link, SideMenuItem, Children },
 });
 </script>
+
+<style scoped lang="postcss">
+#book-name {
+  @apply flex justify-center bg-gradient-to-r from-red-500 to-cyan-500 bg-clip-text pb-2 text-lg text-transparent md:text-2xl lg:text-3xl
+}
+</style>

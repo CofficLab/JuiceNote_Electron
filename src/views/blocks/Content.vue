@@ -1,24 +1,17 @@
 <template>
   <div class="flex h-full w-full flex-col items-center overflow-scroll">
     <!-- 工具栏 -->
-    <div
-      v-if="editor && editable"
-      class="sticky top-0 z-40 flex w-full flex-row items-center justify-center gap-2 bg-green-300/50 shadow-2xl"
-    >
+    <div id="toolbar-container" v-if="editor && editable">
       <Toolbar :editor="editor"></Toolbar>
     </div>
 
     <!-- TAB -->
-    <div class="tabs mt-4 flex justify-center rounded-t-xl bg-yellow-400/10" v-if="current.getParent().isTab()">
+    <div id="tabs-container" v-if="current.getParent().isTab()">
       <Link v-for="sibling in siblings" :href="sibling.id" class="tab-lifted tab">{{ sibling.name }}</Link>
     </div>
 
     <!-- 编辑框 -->
-    <div
-      class="mt-1 flex w-full justify-center overflow-auto border-0 p-4"
-      @click="destroyRightMenu"
-      @contextmenu.prevent="showRightMenu"
-    >
+    <div id="editor-content-container" @click="destroyRightMenu" @contextmenu.prevent="showRightMenu">
       <editor-content :editor="editor" class="prose w-full xl:prose-lg" />
     </div>
 
@@ -37,8 +30,8 @@
 import { Editor, EditorContent, FloatingMenu, BubbleMenu } from "@tiptap/vue-3";
 import RouteController from "../../controllers/RouteController";
 import Extensions from "../../entities/Extensions";
-import Link from "./Link.vue";
-import RightMenu from "./RightMenu.vue";
+import Link from "../components/Link.vue";
+import RightMenu from "../components/RightMenu.vue";
 import Toolbar from "./Toolbar.vue";
 import Refresh from "../operators/Refresh.vue";
 import Add from "../operators/Add.vue";
@@ -133,7 +126,18 @@ export default {
 };
 </script>
 
-<style lang="postcss">
+<style lang="postcss" scoped>
+#toolbar-container {
+  @apply sticky top-0 z-40 flex w-full flex-row items-center justify-center gap-2 bg-green-300/50 shadow-2xl;
+}
+
+#tabs-container {
+  @apply tabs mt-4 flex justify-center rounded-t-xl bg-yellow-400/10;
+}
+
+#editor-content-container {
+  @apply mt-1 flex w-full justify-center overflow-auto border-0 p-4;
+}
 .ProseMirror {
   @apply pb-56;
 }

@@ -51,8 +51,8 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import BookNode from "../../entities/BookNode";
-import DynamicPadding from "./DynamicPadding.vue";
-import Link from "./Link.vue";
+import DynamicPadding from "../components/DynamicPadding.vue";
+import Link from "../components/Link.vue";
 
 export default defineComponent({
   components: { Link, DynamicPadding },

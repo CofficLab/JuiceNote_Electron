@@ -18,6 +18,30 @@ class Node {
         this.isPage = Object.getOwnPropertyDescriptor(dbResult, 'isPage')?.value
         this.priority = Object.getOwnPropertyDescriptor(dbResult, 'priority')?.value
     }
+
+    getFirstChild(): Node {
+        let result = db.prepare('select * from nodes where parent_id=? order by priority asc').get(this.id)
+
+        return new Node(result)
+    }
+
+    getFirstPage(): Node {
+        if (this.isPage) return this
+
+        return this.getFirstChild().getFirstPage()
+    }
+
+    static find(id: number): Node {
+        let result = db.prepare('select * from nodes where id=?').get(id)
+
+        return new Node(result)
+    }
+
+    static getFirstBook(): Node {
+        let result = db.prepare('select * from nodes where is_book=1 order by priority asc limit 1').get()
+
+        return new Node(result)
+    }
 }
 
 export default Node;

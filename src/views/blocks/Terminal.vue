@@ -27,7 +27,7 @@ const ipc = require("electron").ipcRenderer;
 import { Terminal } from "xterm";
 import { FitAddon } from "xterm-addon-fit";
 import xtermTheme from "xterm-theme";
-import DraggableWindow from "./DraggableWindow.vue";
+import DraggableWindow from "../components/DraggableWindow.vue";
 import VueDragResize from "vue-drag-resize/src";
 
 export default {

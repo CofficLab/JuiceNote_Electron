@@ -9,11 +9,7 @@
           class="dropdown-bottom dropdown-hover dropdown flex justify-center"
           v-if="breadcrumb.siblings().length > 0"
         >
-          <label
-            tabindex="0"
-            class="self-center rounded p-1 ring-primary ring-opacity-30 transition duration-200 hover:scale-105 hover:ring-2"
-            >{{ breadcrumb.name }}</label
-          >
+          <label tabindex="0" id="breadcrumb-name">{{ breadcrumb.name }}</label>
           <div class="dropdown-content mt-0 pt-4">
             <ul tabindex="0" class="rounded-box ml-32 h-96 w-52 gap-2 overflow-y-scroll bg-cyan-900/80 p-2 shadow">
               <Children :list="breadcrumb.getParent().getChildren()"></Children>
@@ -32,7 +28,7 @@
 import { defineComponent } from "vue";
 import RouteController from "../../controllers/RouteController";
 import BookNode from "../../entities/BookNode";
-import Children from "./Children.vue";
+import Children from "../components/Children.vue";
 
 export default defineComponent({
   data() {
@@ -51,3 +47,9 @@ export default defineComponent({
   components: { Children },
 });
 </script>
+
+<style scoped lang="postcss">
+#breadcrumb-name {
+  @apply self-center rounded p-1 ring-primary ring-opacity-30 transition duration-200 hover:scale-105 hover:ring-2;
+}
+</style>
