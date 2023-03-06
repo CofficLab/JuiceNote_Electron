@@ -4,7 +4,7 @@ import Id from "./Id";
 import RouteController from "../controllers/RouteController";
 import FileTree from "../tools/FileTree";
 import Config from "./Config";
-import BookNodeModel from "../models/BookNode"
+import BookNodeModel from "../models/Page"
 import { writeFileSync } from "fs";
 import { writeFile } from "fs";
 import { mkdirSync } from "fs";
@@ -37,8 +37,6 @@ class BookNode {
             this.name = path.basename(this.path).replace('.html', '').replace('[TAB]', '')
             this.id = Id.pathToId(this.path)
             this.level = this.id.split('@').length
-
-            BookNodeModel.sync(this)
         } else {
             this.errorTitle = '当前节点为空节点'
         }
