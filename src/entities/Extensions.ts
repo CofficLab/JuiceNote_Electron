@@ -15,13 +15,13 @@ import TableCell from "@tiptap/extension-table-cell"
 import TableHeader from "@tiptap/extension-table-header"
 import HardBreak from '@tiptap/extension-hard-break'
 import "highlight.js/styles/github-dark.css";
-import Brick from "../extensions/Brick.js";
-import Banner from "../extensions/Banner.js";
-import OfficialLink from "../extensions/OfficialLink.js";
-import Toc from "../extensions/Toc.js"
-import Tab from "../extensions/Tab.js"
-import TabContent from "../extensions/TabContent.js"
-import CodeBlockCustomized from "../extensions/CodeBlockCustomized.js"
+import Brick from "../views/extensions/Brick.js";
+import Banner from "../views/extensions/Banner.js";
+import OfficialLink from "../views/extensions/OfficialLink.js";
+import Toc from "../views/extensions/Toc.js"
+import Tab from "../views/extensions/Tab.js"
+import TabContent from "../views/extensions/TabContent.js"
+import CodeBlockCustomized from "../views/extensions/CodeBlockCustomized.js"
 
 let Extensions = [
     Banner,

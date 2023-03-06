@@ -24,7 +24,7 @@
             v-for="tab in tabs"
             v-bind:class="{ 'tab-active': tab.shouldActive() }"
             :href="tab.id"
-            class="tab tab-lifted"
+            class="tab-lifted tab"
             >{{ tab.name }}</Link
           >
         </div>
@@ -52,9 +52,9 @@ import { defineComponent } from "vue";
 import FullScreenController from "../controllers/FullScreenController";
 import RouteController from "../controllers/RouteController";
 import BookNode from "../entities/BookNode";
-import Children from "../components/Children.vue";
-import Link from "../components/Link.vue";
-import SideMenuItem from "../components/SideMenuItem.vue";
+import Children from "./components/Children.vue";
+import Link from "./components/Link.vue";
+import SideMenuItem from "./components/SideMenuItem.vue";
 
 export default defineComponent({
   data() {

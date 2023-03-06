@@ -46,32 +46,32 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import BtnTerminal from "../components/BtnTerminal.vue";
-import BtnMore from "../components/BtnMore.vue";
-import BtnEdit from "../components/BtnEdit.vue";
-import BtnAdd from "../components/BtnAdd.vue";
-import BtnHome from "../components/BtnHome.vue";
-import BtnDelete from "../components/BtnDelete.vue";
-import BtnPrev from "../components/BtnPrev.vue";
-import BtnNext from "../components/BtnNext.vue";
-import BtnCopy from "../components/BtnCopy.vue";
-import BtnGitCommit from "../components/BtnGitCommit.vue";
-import BtnOfficialLink from "../components/BtnOfficialLink.vue";
-import Toc from "../components/TocContent.vue";
-import Breadcrumbs from "../components/Breadcrumbs.vue";
-import Address from "../components/Address.vue";
-import Alert from "../components/Alert.vue";
-import Add from "../modals/Add.vue";
-import Toast from "../components/Toast.vue";
+import BtnTerminal from "./components/BtnTerminal.vue";
+import BtnMore from "./components/BtnMore.vue";
+import BtnEdit from "./components/BtnEdit.vue";
+import BtnAdd from "./components/BtnAdd.vue";
+import BtnHome from "./components/BtnHome.vue";
+import BtnDelete from "./components/BtnDelete.vue";
+import BtnPrev from "./components/BtnPrev.vue";
+import BtnNext from "./components/BtnNext.vue";
+import BtnCopy from "./components/BtnCopy.vue";
+import BtnGitCommit from "./components/BtnGitCommit.vue";
+import BtnOfficialLink from "./components/BtnOfficialLink.vue";
+import Toc from "./components/TocContent.vue";
+import Breadcrumbs from "./components/Breadcrumbs.vue";
+import Address from "./components/Address.vue";
+import Alert from "./components/Alert.vue";
+import Add from "./modals/Add.vue";
+import Toast from "./components/Toast.vue";
 import Content from "./Content.vue";
 import SideMenu from "./SideMenu.vue";
-import Others from "../components/Others.vue";
-import ProjectTree from "../components/ProjectTree.vue";
+import Others from "./components/Others.vue";
+import ProjectTree from "./components/ProjectTree.vue";
 import RouteController from "../controllers/RouteController";
 import FullScreenController from "../controllers/FullScreenController";
-import Languages from "../components/Languages.vue";
+import Languages from "./components/Languages.vue";
 import path from "path";
-import Rename from "../modals/Rename.vue";
+import Rename from "./modals/Rename.vue";
 
 export default defineComponent({
   components: {

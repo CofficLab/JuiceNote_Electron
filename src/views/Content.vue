@@ -37,14 +37,14 @@
 import { Editor, EditorContent, FloatingMenu, BubbleMenu } from "@tiptap/vue-3";
 import RouteController from "../controllers/RouteController";
 import Extensions from "../entities/Extensions";
-import Link from "../components/Link.vue";
-import RightMenu from "../components/RightMenu.vue";
+import Link from "./components/Link.vue";
+import RightMenu from "./components/RightMenu.vue";
 import Toolbar from "./Toolbar.vue";
-import Refresh from "../operators/Refresh.vue";
-import Add from "../operators/Add.vue";
-import Copy from "../operators/Copy.vue";
-import Edit from "../operators/Edit.vue";
-import Rename from "../operators/Rename.vue";
+import Refresh from "./operators/Refresh.vue";
+import Add from "./operators/Add.vue";
+import Copy from "./operators/Copy.vue";
+import Edit from "./operators/Edit.vue";
+import Rename from "./operators/Rename.vue";
 import RightMenuController from "../controllers/RightMenuController";
 
 export default {

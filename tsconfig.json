@@ -18,8 +18,8 @@
     "src/**/*.ts",
     "src/tools/FooterJS.js",
     "src/tools/FooterJS.js",
-    "src/extensions/Brick.js",
-    "src/extensions/Brick.js",
+    "src/views/extensions/Brick.js",
+    "src/views/extensions/Brick.js",
   ],
   "references": [
     {
