@@ -1,6 +1,7 @@
 import { reactive } from 'vue'
 import Config from '../entities/Config'
 import BookNode from '../entities/BookNode'
+import Book from '../models/Book'
 
 const BookController = reactive({
     rootBookNode: new BookNode,
@@ -11,6 +12,10 @@ const BookController = reactive({
 
     search(name: string): BookNode[] {
         return this.getRoot().search(name)
+    },
+
+    getCurrentBook(): Book {
+        return Book.first()
     }
 })
 
