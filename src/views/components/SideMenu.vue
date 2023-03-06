@@ -49,12 +49,12 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import FullScreenController from "../controllers/FullScreenController";
-import RouteController from "../controllers/RouteController";
-import BookNode from "../entities/BookNode";
-import Children from "./components/Children.vue";
-import Link from "./components/Link.vue";
-import SideMenuItem from "./components/SideMenuItem.vue";
+import FullScreenController from "../../controllers/FullScreenController";
+import RouteController from "../../controllers/RouteController";
+import BookNode from "../../entities/BookNode";
+import Children from "./../components/Children.vue";
+import Link from "./Link.vue";
+import SideMenuItem from "./SideMenuItem.vue";
 
 export default defineComponent({
   data() {

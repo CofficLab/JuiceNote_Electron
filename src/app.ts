@@ -25,20 +25,3 @@ Object.assign(window, {
 const app = createApp(App)
 app.config.unwrapInjectedRef = true
 app.mount('#app')
-
-// const slug = require('slug')
-// const db = require('better-sqlite3')('database.db');
-// let root = new BookNode(Config.markdownRootPath)
-// root.getChildren().forEach((child, index) => {
-//   save(0, child, index)
-// });
-
-// function save(parentId: number, bookNode: BookNode, index: number) {
-//   let node = db.prepare('insert into nodes (slug,parent_id,title,content,is_book,is_chapter,is_page,priority) values (?,?,?,?,?,?,?,?)').run(
-//     slug(bookNode.name),
-//     parentId, bookNode.name, bookNode.isPage() ? bookNode.getSourceCode() : '', bookNode.isBook() ? 1 : 0, bookNode.isChapter() ? 1 : 0, bookNode.isPage() ? 1 : 0, index)
-
-//   bookNode.getChildren().forEach((child, index) => {
-//     save(node.lastInsertRowid, child, index)
-//   })
-// }

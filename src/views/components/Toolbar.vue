@@ -48,7 +48,7 @@
       </ul>
     </div>
 
-    <div class="dropdown-hover dropdown dropdown-bottom">
+    <div class="dropdown-hover dropdown-bottom dropdown">
       <label tabindex="0">表格</label>
       <ul tabindex="0">
         <li>
@@ -130,8 +130,8 @@
 <script lang="ts">
 import { writeFileSync } from "fs";
 import { defineComponent } from "vue";
-import RouteController from "../controllers/RouteController";
-import ToastController from "../controllers/ToastController";
+import RouteController from "../../controllers/RouteController";
+import ToastController from "../../controllers/ToastController";
 
 export default defineComponent({
   props: ["editor"],
