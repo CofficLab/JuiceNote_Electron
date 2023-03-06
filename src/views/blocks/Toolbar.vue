@@ -128,7 +128,6 @@
 </template>
 
 <script lang="ts">
-import { writeFileSync } from "fs";
 import { defineComponent } from "vue";
 import RouteController from "../../controllers/RouteController";
 import ToastController from "../../controllers/ToastController";
