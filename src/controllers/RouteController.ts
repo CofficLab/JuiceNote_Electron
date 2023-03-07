@@ -48,10 +48,10 @@ const RouteController = reactive({
     },
     refresh() {
         console.log('refresh current page')
-        let id = (new URL(location.href)).searchParams.get('id') || ''
-        let path = Id.idToPath(id ? id : '/')
-        this.search = decodeURI(location.search)
-        this.currentPage = (new BookNode(path)).firstPage()
+        let id = (new URL(location.href)).searchParams.get('id') || '0'
+        // let path = Id.idToPath(id ? id : '/')
+        // this.search = decodeURI(location.search)
+        // this.currentPage = (new BookNode(path)).firstPage()
         this.editable = (new URL(location.href)).searchParams.get('edit_mode') != undefined
     },
     getBreadcrumbs(): BookNode[] {

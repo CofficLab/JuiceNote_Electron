@@ -2,7 +2,7 @@
   <div>
     <div class="dropdown-hover dropdown dropdown-end">
       <label tabindex="0"
-        ><div class="btn-ghost btn-sm btn my-auto flex items-center">
+        ><div class="btn-ghost btn-sm btn my-auto flex w-12 items-center">
           <ChevronDoubleDown></ChevronDoubleDown></div
       ></label>
       <ul tabindex="0" class="dropdown-content z-50 flex w-12 flex-col gap-4 rounded-2xl bg-base-100 py-2 shadow">

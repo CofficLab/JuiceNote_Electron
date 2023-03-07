@@ -2,7 +2,7 @@
   <div class="hidden" id="official-link-button">
     <div class="dropdown-hover dropdown dropdown-end">
       <label tabindex="0"
-        ><div class="btn-ghost btn-sm btn my-auto flex items-center">
+        ><div class="btn-ghost btn-sm btn my-auto flex w-12 items-center">
           <ArrowTopRightOnSquare></ArrowTopRightOnSquare></div
       ></label>
       <ul

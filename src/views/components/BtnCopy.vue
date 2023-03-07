@@ -1,7 +1,7 @@
 <template>
   <div
-    v-bind:data-clipboard-text="markdownSourceCode"
-    class="btn-ghost tooltip tooltip-left btn-sm btn flex items-center"
+    v-bind:data-clipboard-text="content"
+    class="btn-ghost tooltip tooltip-left btn-sm btn flex items-center w-12"
     data-tip="复制源码"
   >
     <IconCopy></IconCopy>
@@ -10,10 +10,10 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import RouteController from "../../controllers/RouteController";
 import ClipboardJS from "clipboard";
 import IconCopy from "../../assets/icons/clipboard-document.svg";
 import ToastController from "../../controllers/ToastController";
+import NodeController from "../../controllers/NodeController";
 
 var clipboard = new ClipboardJS(".btn");
 clipboard.on("success", function () {
@@ -22,9 +22,7 @@ clipboard.on("success", function () {
 
 export default defineComponent({
   computed: {
-    markdownSourceCode(): string {
-      return RouteController.getCurrentPage().getSourceCode();
-    },
+    content: () => NodeController.getCurrentPage().content,
   },
   components: { IconCopy },
 });

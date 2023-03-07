@@ -13,11 +13,11 @@
       >
         <!-- 图书名 -->
         <h1 id="book-name">
-          {{ book.name }}
+          {{ book.title }}
         </h1>
 
         <!-- 教程与手册的TAB -->
-        <div class="tabs flex justify-center" v-if="tabs.length > 0">
+        <!-- <div class="tabs flex justify-center" v-if="tabs.length > 0">
           <Link
             v-for="tab in tabs"
             v-bind:class="{ 'tab-active': tab.shouldActive() }"
@@ -25,22 +25,22 @@
             class="tab-lifted tab"
             >{{ tab.name }}</Link
           >
-        </div>
+        </div> -->
       </div>
     </div>
 
     <!-- 章节与页面 -->
     <div class="h-full pb-24">
-      <ul class="menu menu-compact flex w-full flex-col p-0 px-1" v-for="(item, index) in chapters">
+      <ul class="menu menu-compact flex w-full flex-col p-0 px-1" v-for="(item, index) in book.getChildren()">
         <li v-if="index > 0"></li>
         <SideMenuItem :item="item" :id="item.id"></SideMenuItem>
       </ul>
       <div class="pointer-events-none sticky bottom-0 flex h-20"></div>
 
       <!-- 底部的图书logo -->
-      <div v-if="book.hasLogo()" class="h-20 opacity-90 dark:brightness-50">
+      <!-- <div v-if="book.hasLogo()" class="h-20 opacity-90 dark:brightness-50">
         <img :src="book.logoUrl()" alt="" />
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -48,11 +48,11 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import FullScreenController from "../../controllers/FullScreenController";
-import RouteController from "../../controllers/RouteController";
 import BookNode from "../../entities/BookNode";
 import Children from "../components/Children.vue";
 import Link from "../components/Link.vue";
 import SideMenuItem from "./SideMenuItem.vue";
+import NodeController from "../../controllers/NodeController";
 
 export default defineComponent({
   data() {
@@ -62,16 +62,19 @@ export default defineComponent({
   },
   computed: {
     hideTitleBar: () => FullScreenController.full,
-    book: () => RouteController.getCurrentPage().getBook(),
-    tabs: function (): BookNode[] {
-      if (this.book.getChildrenIds().length > 2) {
-        return [];
-      }
-
-      return this.book.getChildren().filter((child) => {
-        return !child.isPage();
-      });
+    book() {
+      console.log("获取当前book");
+      return NodeController.getCurrentPage().getBook();
     },
+    // tabs: function (): BookNode[] {
+    //   if (this.book.getChildrenIds().length > 2) {
+    //     return [];
+    //   }
+
+    //   return this.book.getChildren().filter((child) => {
+    //     return !child.isPage();
+    //   });
+    // },
     chapters(): BookNode[] {
       if (this.tabs.length > 0) {
         // console.log("当前图书需要展示tabs");
@@ -93,6 +96,6 @@ export default defineComponent({
 
 <style scoped lang="postcss">
 #book-name {
-  @apply flex justify-center bg-gradient-to-r from-red-500 to-cyan-500 bg-clip-text pb-2 text-lg text-transparent md:text-2xl lg:text-3xl
+  @apply flex justify-center bg-gradient-to-r from-red-500 to-cyan-500 bg-clip-text pb-2 text-lg text-transparent md:text-2xl lg:text-3xl;
 }
 </style>

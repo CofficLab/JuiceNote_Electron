@@ -1,7 +1,7 @@
 <template>
   <button
     v-on:click="del"
-    class="btn-ghost tooltip tooltip-left btn-sm btn my-auto flex justify-center"
+    class="btn-ghost tooltip tooltip-left btn-sm btn my-auto flex w-12 justify-center"
     data-tip="删除章节或页面"
   >
     <Trash></Trash>

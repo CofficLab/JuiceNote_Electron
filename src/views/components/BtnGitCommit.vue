@@ -1,6 +1,10 @@
 <template>
   <div>
-    <button v-on:click="commit" class="btn-ghost tooltip tooltip-left btn-sm btn my-auto" data-tip="提交变动到代码仓库">
+    <button
+      v-on:click="commit"
+      class="btn-ghost tooltip tooltip-left btn-sm btn my-auto w-12"
+      data-tip="提交变动到代码仓库"
+    >
       <CloudArrowUp></CloudArrowUp>
     </button>
   </div>

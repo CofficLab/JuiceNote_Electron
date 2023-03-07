@@ -1,7 +1,7 @@
 <template>
   <div
     v-on:click="switcher"
-    class="btn-ghost tooltip tooltip-left btn-sm btn my-auto flex items-center"
+    class="btn-ghost tooltip tooltip-left btn-sm btn my-auto flex w-12 items-center"
     data-tip="编辑页面"
   >
     <PencilSquare v-if="!editable"></PencilSquare>

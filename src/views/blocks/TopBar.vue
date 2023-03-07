@@ -4,7 +4,7 @@
     <div class="ml-20 flex w-full items-center lg:ml-2">
       <Breadcrumbs></Breadcrumbs>
     </div>
-    <div class="flex w-full flex-row items-center justify-end pr-4">
+    <div class="flex h-12 w-full flex-row items-center justify-end pr-4">
       <Languages></Languages>
       <BtnOfficialLink></BtnOfficialLink>
       <BtnTerminal></BtnTerminal>

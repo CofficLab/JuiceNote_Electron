@@ -1,10 +1,9 @@
 <template>
   <div
-    v-bind:id="href"
-    v-bind:href="href"
+    v-bind:id="id"
     v-on:contextmenu="showRightMenu"
     v-on:click="go"
-    v-bind:class="{ ring: shouldShowRightMenu, 'active tab-active': shouldActive(href) }"
+    v-bind:class="{ ring: shouldShowRightMenu, 'active tab-active': shouldActive(id) }"
   >
     <slot></slot>
 
@@ -27,9 +26,10 @@ import Edit from "../operators/Edit.vue";
 import Delete from "../operators/Delete.vue";
 import RightMenu from "./RightMenu.vue";
 import RightMenuController from "../../controllers/RightMenuController";
+import NodeController from "../../controllers/NodeController";
 
 export default defineComponent({
-  props: ["href"],
+  props: ["id"],
   data() {
     return {
       rightClickEvent: null,
@@ -62,7 +62,7 @@ export default defineComponent({
     go: function () {
       if (this.shouldShowRightMenu) return false;
       this.active = true;
-      RouteController.goto(this.href);
+      NodeController.goto(this.id);
     },
     showRightMenu(event) {
       this.rightClickEvent = event;

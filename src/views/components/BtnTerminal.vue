@@ -9,7 +9,7 @@
 
   <button
     tabindex="0"
-    class="btn-ghost tooltip tooltip-left btn-sm btn m-1 my-auto flex items-center"
+    class="btn-ghost tooltip tooltip-left btn-sm btn m-1 my-auto flex w-12 items-center"
     data-tip="打开终端"
     v-bind:onClick="click"
     v-bind:class="{ 'btn-active': open }"

@@ -1,9 +1,9 @@
 <template>
   <Link
-    href="/"
+    id="0"
     data-tip="首页"
     v-bind:class="disabled ? 'btn-disabled' : ''"
-    class="btn-ghost tooltip tooltip-bottom btn-sm btn my-auto flex items-center"
+    class="btn-ghost tooltip tooltip-bottom btn-sm btn flex w-12 items-center"
     ><Home></Home
   ></Link>
 </template>
@@ -15,10 +15,7 @@ import Link from "./Link.vue";
 import RouteController from "../../controllers/RouteController";
 
 export default defineComponent({
-  components: {
-    Home,
-    Link,
-  },
+  components: { Home, Link },
   computed: {
     disabled: () => RouteController.isHomePage,
   },

@@ -39,6 +39,7 @@ import Copy from "../operators/Copy.vue";
 import Edit from "../operators/Edit.vue";
 import Rename from "../operators/Rename.vue";
 import RightMenuController from "../../controllers/RightMenuController";
+import NodeController from "../../controllers/NodeController";
 
 export default {
   components: {
@@ -65,7 +66,7 @@ export default {
     current: () => RouteController.currentPage,
     editable: () => RouteController.editable,
     siblings: () => RouteController.currentPage.siblingsWithCurrent(),
-    content: () => RouteController.currentPage.getSourceCode(),
+    content: () => NodeController.getCurrentPage().content,
     shouldShowRightMenu: function () {
       return RightMenuController.shouldShow && this.rightClickEvent;
     },
@@ -84,7 +85,7 @@ export default {
     // },
   },
   mounted() {
-    console.log("mounted, init the editor");
+    console.log("content block mounted, init the editor");
     this.editor = new Editor({
       content: this.content,
       extensions: Extensions,

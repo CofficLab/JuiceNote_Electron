@@ -1,7 +1,7 @@
 <template>
   <div>
     <button
-      class="btn-ghost tooltip tooltip-left btn-sm btn flex items-center"
+      class="btn-ghost tooltip tooltip-left btn-sm btn flex w-12 items-center"
       data-tip="添加章节或页面"
       @click="showForm"
     >
