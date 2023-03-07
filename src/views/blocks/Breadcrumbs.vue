@@ -4,7 +4,7 @@
     v-bind:class="{ 'text-yellow-500': inEditMode }"
   >
     <ul class="flex flex-row justify-center">
-      <li v-for="breadcrumb in breadcrumbs" class="flex justify-center">
+      <li v-for="breadcrumb in current?.getParents()" class="flex justify-center">
         <div
           class="dropdown-bottom dropdown-hover dropdown flex justify-center"
           v-if="breadcrumb.getSiblings().length > 0"
@@ -12,7 +12,7 @@
           <label tabindex="0" id="breadcrumb-name">{{ breadcrumb.title }}</label>
           <div class="dropdown-content mt-0 pt-4">
             <ul tabindex="0" class="rounded-box ml-32 h-96 w-52 gap-2 overflow-y-scroll bg-cyan-900/80 p-2 shadow">
-              <Children :list="breadcrumb.getParent().getChildren()"></Children>
+              <Children :list="breadcrumb.getParent().getChildren()" :current="current"></Children>
             </ul>
           </div>
         </div>
@@ -26,12 +26,13 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import NodeController from "../../controllers/NodeController";
 import RouteController from "../../controllers/RouteController";
 import BookNode from "../../entities/BookNode";
+import Node from "../../models/Node";
 import Children from "../components/Children.vue";
 
 export default defineComponent({
+  props: { current: { type: Node } },
   data() {
     let emptyNode = new BookNode();
     return {
@@ -42,7 +43,6 @@ export default defineComponent({
     };
   },
   computed: {
-    breadcrumbs: () => NodeController.getCurrentPage().getParents(),
     inEditMode: () => RouteController.isEditMode(),
   },
   components: { Children },

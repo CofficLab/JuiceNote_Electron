@@ -1,7 +1,7 @@
 <template>
   <div
-    v-bind:data-clipboard-text="content"
-    class="btn-ghost tooltip tooltip-left btn-sm btn flex items-center w-12"
+    v-bind:data-clipboard-text="current?.content"
+    class="btn-ghost tooltip tooltip-left btn-sm btn flex w-12 items-center"
     data-tip="复制源码"
   >
     <IconCopy></IconCopy>
@@ -13,7 +13,7 @@ import { defineComponent } from "vue";
 import ClipboardJS from "clipboard";
 import IconCopy from "../../assets/icons/clipboard-document.svg";
 import ToastController from "../../controllers/ToastController";
-import NodeController from "../../controllers/NodeController";
+import Node from "../../models/Node";
 
 var clipboard = new ClipboardJS(".btn");
 clipboard.on("success", function () {
@@ -21,9 +21,7 @@ clipboard.on("success", function () {
 });
 
 export default defineComponent({
-  computed: {
-    content: () => NodeController.getCurrentPage().content,
-  },
+  props: { current: { type: Node, requited: true } },
   components: { IconCopy },
 });
 </script>

@@ -14,7 +14,7 @@ import { defineComponent } from "vue";
 export default defineComponent({
   props: ["code", "keyUpCallback", "language", "readOnly"],
   mounted: function () {
-    console.log("init monaco editor");
+    // console.log("init monaco editor");
     self.MonacoEnvironment = {
       getWorker(_, label) {
         if (label === "json") {
@@ -33,7 +33,7 @@ export default defineComponent({
       },
     };
 
-    console.log("初始化Monaco，language=", this.language);
+    // console.log("初始化Monaco，language=", this.language);
     let editor = monaco.editor.create(this.$refs.monaco, {
       value: this.code,
       language: this.language,

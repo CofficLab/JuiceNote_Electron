@@ -2,9 +2,9 @@
   <div>
     <!-- 是一个页面 -->
     <li v-if="item.isPage">
-      <Link class="flex gap-4 xl:text-lg" v-bind:id="item.id">
+      <Link class="flex gap-4 xl:text-lg" :id="item.id" :current="current">
         <DynamicPadding :count="item.level - 3"></DynamicPadding>
-        {{ item.title }}
+        {{ item.parentId }} {{ item.priority }} {{ item.title }}
       </Link>
     </li>
 
@@ -15,20 +15,24 @@
         'text-indigo-400/90': item.isLesson,
         'text-cyan-900/90': item.isManual,
       }"
-      v-bind:id="item.id"
     >
       <span v-bind:class="{ 'text-xl': item.level < 3, 'text-lg': item.level >= 3 }">
         <DynamicPadding :count="item.level - 3"></DynamicPadding>
-        {{ item.title }}
+        {{ item.id }} {{ item.title }}
       </span>
     </li>
-    <SideMenuItem v-for="sub in item.getChildren()" v-if="item.isChapter && !item.isTab" :item="sub"></SideMenuItem>
+    <SideMenuItem
+      v-for="sub in item.getChildren()"
+      v-if="item.isChapter && !item.isTab"
+      :item="sub"
+      :current="current"
+    ></SideMenuItem>
 
     <!-- 是一个章节，且是TAB -->
-    <li v-if="item.isChapter && item.isTab" v-bind:id="item.id">
-      <Link class="flex gap-4 xl:text-lg" v-bind:href="item.id">
+    <li v-if="item.isChapter && item.isTab">
+      <Link class="flex gap-4 xl:text-lg" :id="item.id" :current="current">
         <DynamicPadding :count="item.level - 3"></DynamicPadding>
-        {{ item.title }}
+        {{ item.id }} {{ item.title }}
       </Link>
     </li>
 
@@ -43,14 +47,13 @@
       <span> <span class="ml-1" v-if="item.level > 3" v-for="i in item.level - 3"></span>{{ item.title }}</span>
     </li>
     <li v-if="item.isChapter && item.getChildren().length == 0">
-      <Link class="flex gap-4" v-bind:href="item.id"> _空_ </Link>
+      <Link class="flex gap-4" v-bind:id="item.id" :current="current"> _空_ </Link>
     </li>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import BookNode from "../../entities/BookNode";
 import Node from "../../models/Node";
 import DynamicPadding from "../components/DynamicPadding.vue";
 import Link from "../components/Link.vue";
@@ -59,6 +62,10 @@ export default defineComponent({
   components: { Link, DynamicPadding },
   props: {
     item: {
+      type: Node,
+      required: true,
+    },
+    current: {
       type: Node,
       required: true,
     },

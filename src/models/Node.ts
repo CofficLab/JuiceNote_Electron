@@ -15,29 +15,37 @@ class Node {
     public level: number = 0
     public isEmpty: boolean = false
 
-    public constructor(dbResult: object) {
-        let id = Object.getOwnPropertyDescriptor(dbResult, 'id')?.value
-        let title = Object.getOwnPropertyDescriptor(dbResult, 'title')?.value
-        let content = Object.getOwnPropertyDescriptor(dbResult, 'content')?.value
-        let isBook = Object.getOwnPropertyDescriptor(dbResult, 'is_book')?.value
-        let isChapter = Object.getOwnPropertyDescriptor(dbResult, 'is_chapter')?.value
-        let isTab = Object.getOwnPropertyDescriptor(dbResult, 'is_tab')?.value
-        let isPage = Object.getOwnPropertyDescriptor(dbResult, 'is_page')?.value
-        let priority = Object.getOwnPropertyDescriptor(dbResult, 'priority')?.value
-        let level = Object.getOwnPropertyDescriptor(dbResult, 'level')?.value
+    public constructor(dbResult: object | null) {
+        if (dbResult == null) {
+            this.isEmpty = true
+        } else {
+            let id = Object.getOwnPropertyDescriptor(dbResult, 'id')?.value
+            let title = Object.getOwnPropertyDescriptor(dbResult, 'title')?.value
+            let content = Object.getOwnPropertyDescriptor(dbResult, 'content')?.value
+            let isBook = Object.getOwnPropertyDescriptor(dbResult, 'is_book')?.value
+            let isChapter = Object.getOwnPropertyDescriptor(dbResult, 'is_chapter')?.value
+            let isTab = Object.getOwnPropertyDescriptor(dbResult, 'is_tab')?.value
+            let isPage = Object.getOwnPropertyDescriptor(dbResult, 'is_page')?.value
+            let priority = Object.getOwnPropertyDescriptor(dbResult, 'priority')?.value
+            let level = Object.getOwnPropertyDescriptor(dbResult, 'level')?.value
 
-        this.id = id ?? 0
-        this.title = title ?? '无效节点'
-        this.content = content ?? '无效节点'
-        this.isBook = isBook
-        this.isChapter = isChapter
-        this.isTab = isTab
-        this.isPage = isPage
-        this.priority = priority
-        this.level = level
-        this.parentId = Object.getOwnPropertyDescriptor(dbResult, 'parent_id')?.value
+            this.id = id ?? 0
+            this.title = title ?? '无效节点'
+            this.content = content ?? '无效节点'
+            this.isBook = isBook
+            this.isChapter = isChapter
+            this.isTab = isTab
+            this.isPage = isPage
+            this.priority = priority
+            this.level = level
+            this.parentId = Object.getOwnPropertyDescriptor(dbResult, 'parent_id')?.value
 
-        if (this.id == 0) this.isEmpty = true
+            if (this.id == 0) this.isEmpty = true
+        }
+    }
+
+    checkIsHomePage(): boolean {
+        return this.id == Node.getFirstBook().getFirstPage().id
     }
 
     getBook(): Node {
@@ -48,7 +56,11 @@ class Node {
     }
 
     getParent(): Node {
-        console.log('get parent,parent id is', this.parentId)
+        if (this.parentId == 0) {
+            return new Node({})
+        }
+
+        console.log('get parent from db,id is', this.id)
         let result = db.prepare('select * from nodes where id=? limit 1').get(this.parentId)
 
         return new Node(result ?? {})
@@ -77,7 +89,7 @@ class Node {
     }
 
     getSiblings(): Node[] {
-        let siblings = db.prepare('select * from nodes where parent_id=?').all(this.parentId)
+        let siblings = db.prepare('select * from nodes where parent_id=? order by priority asc').all(this.parentId)
         return siblings.map((sibling: object) => {
             return new Node(sibling)
         })
@@ -95,6 +107,43 @@ class Node {
         if (this.isPage || this.isEmpty) return this
 
         return this.getFirstChild().getFirstPage()
+    }
+
+    getPrevious(): Node {
+        let next = db.prepare(`
+            select * from nodes 
+            where parent_id=? and id!=? and priority<=?
+            order by priority desc limit 1
+        `).get(this.parentId, this.id, this.priority)
+
+        return new Node(next)
+    }
+
+    getPreviousPage(): Node {
+        return this.getPrevious().getFirstPage()
+    }
+
+    getNext(): Node {
+        let next = db.prepare(`
+            select * from nodes 
+            where parent_id=? and id!=? and priority>=?
+            order by priority asc limit 1
+        `).get(this.parentId, this.id, this.priority)
+
+        return new Node(next)
+    }
+
+    getNextPage(): Node {
+        return this.getNext().getFirstPage()
+    }
+
+    updateContent(content: string): string {
+        let result = db.prepare('update nodes set content=? where id=?').run(content, this.id)
+        if (result != null) {
+            return '「' + this.title + '」的内容更新成功'
+        } else {
+            return '「' + this.title + '」的内容更新失败'
+        }
     }
 
     static find(id: number): Node {

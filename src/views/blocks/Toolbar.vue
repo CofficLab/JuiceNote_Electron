@@ -131,9 +131,13 @@
 import { defineComponent } from "vue";
 import RouteController from "../../controllers/RouteController";
 import ToastController from "../../controllers/ToastController";
+import Node from "../../models/Node";
 
 export default defineComponent({
-  props: ["editor"],
+  props: {
+    editor: {},
+    current: { type: Node },
+  },
 
   data() {
     return {
@@ -144,10 +148,10 @@ export default defineComponent({
 
   methods: {
     save() {
-      ToastController.set(RouteController.currentPage.save(this.editor.getHTML()));
+      ToastController.set(this.current.updateContent(this.editor.getHTML()));
     },
     saveAndShow() {
-      ToastController.set(RouteController.currentPage.save(this.editor.getHTML()));
+      this.save();
       RouteController.toggleEditMode();
     },
     inputLink() {

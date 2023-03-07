@@ -18,18 +18,16 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import RouteController from "../../controllers/RouteController";
-import BookNode from "../../entities/BookNode";
-import Id from "../../entities/Id";
 import Rename from "../operators/Rename.vue";
 import Edit from "../operators/Edit.vue";
 import Delete from "../operators/Delete.vue";
 import RightMenu from "./RightMenu.vue";
 import RightMenuController from "../../controllers/RightMenuController";
+import Node from "../../models/Node";
 import NodeController from "../../controllers/NodeController";
 
 export default defineComponent({
-  props: ["id"],
+  props: { id: { type: Number, required: true }, current: { type: Node, required: true } },
   data() {
     return {
       rightClickEvent: null,
@@ -42,22 +40,18 @@ export default defineComponent({
     });
   },
   computed: {
-    current() {
-      let path = Id.idToPath(this.href);
-      return new BookNode(path);
-    },
     shouldShowRightMenu() {
       return this.rightClickEvent && RightMenuController.shouldShow;
     },
   },
   methods: {
-    shouldActive: function (id: string) {
-      let current = RouteController.getCurrentPage();
+    shouldActive: function (id: number) {
+      let current = this.current;
       let parent = current.getParent();
-      if (parent.isTab() && id == parent.id) {
+      if (parent.isTab && id == parent.id) {
         return true;
       }
-      return RouteController.getCurrentPage().id == id;
+      return this.current.id == id;
     },
     go: function () {
       if (this.shouldShowRightMenu) return false;

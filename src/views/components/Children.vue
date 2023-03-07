@@ -7,7 +7,7 @@
     ghost-class="btn-ghost"
     @end="dragEnd"
     ><template #item="{ element }">
-      <Link class="btn flex gap-4" v-bind:id="element.id">{{ element.title }}</Link>
+      <Link class="btn flex gap-4" v-bind:id="element.id" :current="current">{{ element.title }}</Link>
     </template>
   </draggable>
 </template>
@@ -16,10 +16,15 @@
 import { defineComponent } from "vue";
 import draggable from "vuedraggable/src/vuedraggable";
 import RouteController from "../../controllers/RouteController";
+import Node from "../../models/Node";
 import Link from "./Link.vue";
 
 export default defineComponent({
-  props: ["list", "drag_disabled"],
+  props: {
+    current: { type: Node, required: true },
+    list: {},
+    drag_disabled: {},
+  },
   order: 0,
   components: {
     draggable,

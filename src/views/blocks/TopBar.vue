@@ -2,16 +2,16 @@
   <!-- 顶栏 -->
   <div id="top-bar" class="draggable">
     <div class="ml-20 flex w-full items-center lg:ml-2">
-      <Breadcrumbs></Breadcrumbs>
+      <Breadcrumbs :current="current"></Breadcrumbs>
     </div>
     <div class="flex h-12 w-full flex-row items-center justify-end pr-4">
       <Languages></Languages>
       <BtnOfficialLink></BtnOfficialLink>
       <BtnTerminal></BtnTerminal>
       <Toast></Toast>
-      <BtnPrev></BtnPrev>
-      <BtnHome></BtnHome>
-      <BtnNext></BtnNext>
+      <BtnPrev :current="current"></BtnPrev>
+      <BtnHome :current="current"></BtnHome>
+      <BtnNext :current="current"></BtnNext>
       <BtnMore></BtnMore>
     </div>
   </div>
@@ -19,6 +19,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import Node from "../../models/Node";
 import BtnHome from "../components/BtnHome.vue";
 import BtnMore from "../components/BtnMore.vue";
 import BtnNext from "../components/BtnNext.vue";
@@ -31,6 +32,7 @@ import Toast from "./Toast.vue";
 
 export default defineComponent({
   components: { Breadcrumbs, Languages, BtnOfficialLink, BtnTerminal, Toast, BtnPrev, BtnHome, BtnNext, BtnMore },
+  props: { current: { type: Node, required: true } },
 });
 </script>
 

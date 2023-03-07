@@ -13,7 +13,7 @@
       >
         <!-- 图书名 -->
         <h1 id="book-name">
-          {{ book.title }}
+          {{ current?.getBook().title }}
         </h1>
 
         <!-- 教程与手册的TAB -->
@@ -31,9 +31,12 @@
 
     <!-- 章节与页面 -->
     <div class="h-full pb-24">
-      <ul class="menu menu-compact flex w-full flex-col p-0 px-1" v-for="(item, index) in book.getChildren()">
+      <ul
+        class="menu menu-compact flex w-full flex-col p-0 px-1"
+        v-for="(item, index) in current?.getBook().getChildren()"
+      >
         <li v-if="index > 0"></li>
-        <SideMenuItem :item="item" :id="item.id"></SideMenuItem>
+        <SideMenuItem :item="item" :id="item.id" :current="current"></SideMenuItem>
       </ul>
       <div class="pointer-events-none sticky bottom-0 flex h-20"></div>
 
@@ -52,9 +55,15 @@ import BookNode from "../../entities/BookNode";
 import Children from "../components/Children.vue";
 import Link from "../components/Link.vue";
 import SideMenuItem from "./SideMenuItem.vue";
-import NodeController from "../../controllers/NodeController";
+import Node from "../../models/Node";
 
 export default defineComponent({
+  props: {
+    current: {
+      type: Node,
+      required: true,
+    },
+  },
   data() {
     return {
       activeSubBookId: "",
@@ -62,10 +71,6 @@ export default defineComponent({
   },
   computed: {
     hideTitleBar: () => FullScreenController.full,
-    book() {
-      console.log("获取当前book");
-      return NodeController.getCurrentPage().getBook();
-    },
     // tabs: function (): BookNode[] {
     //   if (this.book.getChildrenIds().length > 2) {
     //     return [];

@@ -4,6 +4,7 @@
     v-bind:class="!next ? 'btn-disabled' : ''"
     class="btn-ghost tooltip tooltip-bottom btn-sm btn flex w-12 items-center"
     data-tip="下一页"
+    :current="current"
   >
     <ArrowRightCircle></ArrowRightCircle>
   </Link>
@@ -13,15 +14,18 @@
 import { defineComponent } from "vue";
 import ArrowRightCircle from "../../assets/icons/arrow-right-circle.svg";
 import Link from "./Link.vue";
-import RouteController from "../../controllers/RouteController";
+import Node from "../../models/Node";
 
 export default defineComponent({
+  props: { current: { type: Node, required: true } },
   components: {
     ArrowRightCircle,
     Link,
   },
   computed: {
-    next: () => RouteController.getCurrentPage().next(),
+    next() {
+      return this.current.getNextPage();
+    },
   },
 });
 </script>

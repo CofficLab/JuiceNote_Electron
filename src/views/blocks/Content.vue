@@ -6,8 +6,10 @@
     </div>
 
     <!-- TAB -->
-    <div id="tabs-container" v-if="current.getParent().isTab()">
-      <Link v-for="sibling in siblings" :href="sibling.id" class="tab-lifted tab">{{ sibling.name }}</Link>
+    <div id="tabs-container" v-if="current.getParent().isTab">
+      <Link v-for="sibling in current.getSiblings()" :id="sibling.id" class="tab-lifted tab" :current="current">{{
+        sibling.title
+      }}</Link>
     </div>
 
     <!-- 编辑框 -->
@@ -39,9 +41,14 @@ import Copy from "../operators/Copy.vue";
 import Edit from "../operators/Edit.vue";
 import Rename from "../operators/Rename.vue";
 import RightMenuController from "../../controllers/RightMenuController";
-import NodeController from "../../controllers/NodeController";
+import Node from "../../models/Node";
 
 export default {
+  props: {
+    current: {
+      type: Node,
+    },
+  },
   components: {
     Add,
     Copy,
@@ -63,10 +70,7 @@ export default {
     };
   },
   computed: {
-    current: () => RouteController.currentPage,
     editable: () => RouteController.editable,
-    siblings: () => RouteController.currentPage.siblingsWithCurrent(),
-    content: () => NodeController.getCurrentPage().content,
     shouldShowRightMenu: function () {
       return RightMenuController.shouldShow && this.rightClickEvent;
     },
@@ -80,14 +84,11 @@ export default {
       this.rightClickEvent = event;
       RightMenuController.show();
     },
-    // destroyRightMenu() {
-    //   RightMenuController.hide();
-    // },
   },
   mounted() {
-    console.log("content block mounted, init the editor");
+    // console.log("content block mounted, init the editor");
     this.editor = new Editor({
-      content: this.content,
+      content: this.current.content,
       extensions: Extensions,
       autofocus: true,
       editable: this.editable,
@@ -111,14 +112,14 @@ export default {
     });
   },
   watch: {
-    content(value) {
-      console.log("content changed");
-      this.editor.commands.setContent(value, true);
+    current() {
+      // console.log("content changed");
+      this.editor.commands.setContent(this.current.content, true);
     },
     editable() {
       console.log("editable changed", this.editable);
       this.editor.setEditable(this.editable);
-      this.editor.commands.setContent(RouteController.currentPage.getSourceCode(), false);
+      this.editor.commands.setContent(this.current.content, false);
     },
   },
   beforeUnmount() {
