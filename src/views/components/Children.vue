@@ -7,7 +7,7 @@
     ghost-class="btn-ghost"
     @end="dragEnd"
     ><template #item="{ element }">
-      <Link class="btn flex gap-4" v-bind:href="element.id">{{ element.name }}</Link>
+      <Link class="btn flex gap-4" v-bind:id="element.id">{{ element.title }}</Link>
     </template>
   </draggable>
 </template>

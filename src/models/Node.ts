@@ -54,12 +54,33 @@ class Node {
         return new Node(result ?? {})
     }
 
+    getParents(): Node[] {
+        if (this.isEmpty) return []
+
+        let parents: Node[] = [this]
+        let parent = this.getParent()
+
+        while (!parent.isEmpty) {
+            parents.push(parent)
+            parent = parent.getParent()
+        }
+
+        return parents.reverse()
+    }
+
     getChildren(): Node[] {
         let children = db.prepare('select * from nodes where parent_id=?').all(this.id)
 
         return children.map((child: object) => {
             return new Node(child)
         });
+    }
+
+    getSiblings(): Node[] {
+        let siblings = db.prepare('select * from nodes where parent_id=?').all(this.parentId)
+        return siblings.map((sibling: object) => {
+            return new Node(sibling)
+        })
     }
 
     getFirstChild(): Node {

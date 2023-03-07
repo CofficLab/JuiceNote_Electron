@@ -47,7 +47,7 @@ const RouteController = reactive({
         return this.currentPage
     },
     refresh() {
-        console.log('refresh current page')
+        // console.log('refresh current page')
         let id = (new URL(location.href)).searchParams.get('id') || '0'
         // let path = Id.idToPath(id ? id : '/')
         // this.search = decodeURI(location.search)

@@ -1,6 +1,6 @@
 <template>
   <div
-    v-bind:id="id"
+    v-bind:data-id="id"
     v-on:contextmenu="showRightMenu"
     v-on:click="go"
     v-bind:class="{ ring: shouldShowRightMenu, 'active tab-active': shouldActive(id) }"

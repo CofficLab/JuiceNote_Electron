@@ -25,7 +25,7 @@ const NodeController = reactive({
         console.log('set current page')
         let id = parseInt((new URL(location.href)).searchParams.get('id') || '0')
         let result = new Node({})
-        result = id > 0 ? Node.find(id) : Node.getFirstBook().getFirstPage()
+        result = id > 0 ? Node.find(id).getFirstPage() : Node.getFirstBook().getFirstPage()
 
         console.log('current page is', result)
 
