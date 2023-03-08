@@ -3,7 +3,7 @@
     <aside
       class="hidden h-screen w-56 border-r-2 border-gray-300 bg-base-200 shadow-xl dark:border-cyan-900/10 lg:flex lg:flex-col"
     >
-      <SideMenu :current="current"></SideMenu>
+      <SideMenu></SideMenu>
     </aside>
 
     <div class="flex flex-grow flex-col">

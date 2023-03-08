@@ -47,9 +47,11 @@ export default defineComponent({
   },
   methods: {
     shouldActive: function (id: number) {
-      return this.current.getParents().some((parent) => {
-        return parent.id == id;
-      });
+      return (
+        this.current.getParents().some((parent) => {
+          return parent.id == id;
+        }) || this.current.id == id
+      );
     },
     go: function () {
       if (this.shouldShowRightMenu) return false;

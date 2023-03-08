@@ -80,7 +80,7 @@ class Node {
     getParents(): Node[] {
         if (this.isEmpty) return []
 
-        let parents: Node[] = [this]
+        let parents: Node[] = []
         let parent = this.getParent()
 
         while (!parent.isEmpty) {
