@@ -2,7 +2,7 @@
   <div class="flex h-full w-full flex-col items-center overflow-scroll">
     <!-- 工具栏 -->
     <div id="toolbar-container" v-if="editor && editable">
-      <Toolbar :editor="editor"></Toolbar>
+      <Toolbar :editor="editor" :current="current"></Toolbar>
     </div>
 
     <!-- TAB -->
@@ -19,9 +19,8 @@
 
     <!-- 右键菜单 -->
     <RightMenu v-if="shouldShowRightMenu" :event="rightClickEvent">
-      <li><Refresh></Refresh></li>
       <li><Edit :bookNode="current"></Edit></li>
-      <li><Rename :bookNode="current"></Rename></li>
+      <li><Rename :node="current"></Rename></li>
       <li><Add :bookNode="current"></Add></li>
       <li><Copy :bookNode="current"></Copy></li>
     </RightMenu>
@@ -30,12 +29,10 @@
 
 <script>
 import { Editor, EditorContent, FloatingMenu, BubbleMenu } from "@tiptap/vue-3";
-import RouteController from "../../controllers/RouteController";
 import Extensions from "../../entities/Extensions";
 import Link from "../components/Link.vue";
 import RightMenu from "../components/RightMenu.vue";
 import Toolbar from "./Toolbar.vue";
-import Refresh from "../operators/Refresh.vue";
 import Add from "../operators/Add.vue";
 import Copy from "../operators/Copy.vue";
 import Edit from "../operators/Edit.vue";
@@ -59,7 +56,6 @@ export default {
     FloatingMenu,
     Toolbar,
     Link,
-    Refresh,
     Rename,
     RightMenu,
   },

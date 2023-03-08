@@ -4,13 +4,13 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import RouteController from "../../controllers/RouteController";
+import NodeController from "../../controllers/NodeController";
 export default defineComponent({
-  props: ["bookNode"],
+  props: ["node"],
   methods: {
     rename() {
       console.log("显示重命名的弹层");
-      RouteController.renamingBookNode = this.bookNode;
+      NodeController.setRenamingNode(this.node);
     },
   },
 });

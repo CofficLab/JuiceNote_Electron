@@ -3,19 +3,19 @@
 </template>
 
 <script>
-import RouteController from "../../controllers/RouteController";
 import RightMenuController from "../../controllers/RightMenuController";
 import ToastController from "../../controllers/ToastController";
+import NodeController from "../../controllers/NodeController";
 
 export default {
   props: ["bookNode"],
-  computed: { editable: () => RouteController.editable },
+  computed: { editable: () => NodeController.editable },
   methods: {
     edit() {
-      RouteController.toggleEditMode();
-      RouteController.goto(this.bookNode.id);
+      NodeController.toggleEditable();
+      NodeController.setCurrentPage(this.bookNode.id);
       RightMenuController.hide();
-      ToastController.set(this.editable ? "已开启编辑模式" : "已关闭编辑模式");
+      ToastController.set(NodeController.getEditable() ? "已开启编辑模式" : "已关闭编辑模式");
     },
   },
 };

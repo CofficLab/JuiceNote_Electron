@@ -23,8 +23,8 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import NodeController from "../../controllers/NodeController";
-import RouteController from "../../controllers/RouteController";
 import ToastController from "../../controllers/ToastController";
+import { emptyNode } from "../../models/Node";
 export default defineComponent({
   data() {
     return {
@@ -32,8 +32,8 @@ export default defineComponent({
     };
   },
   computed: {
-    bookNode: () => RouteController.renamingBookNode,
-    display: () => !RouteController.renamingBookNode.isEmpty,
+    bookNode: () => NodeController.getRenamingNode(),
+    display: () => !NodeController.getRenamingNode().isEmpty,
   },
   mounted: function () {
     this.title = this.bookNode.name;
@@ -45,13 +45,11 @@ export default defineComponent({
   },
   methods: {
     hide() {
-      NodeController.renamingBookNode = new Node({});
+      NodeController.setRenamingNode(emptyNode);
     },
     submit() {
-      let newNode = this.bookNode.rename(this.title);
-      NodeController.setCurrentPage(newNode.id);
-      ToastController.set("已重命名");
-      RouteController.renamingBookNode = new BookNode();
+      ToastController.set(NodeController.updateTitle(this.bookNode, this.title));
+      this.hide();
     },
   },
 });

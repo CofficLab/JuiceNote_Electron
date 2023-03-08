@@ -9,7 +9,7 @@ const NodeController = reactive({
     editable: (new URL(location.href)).searchParams.get('edit_mode') != undefined,
     renderedHtml: '',
     adding: false, // 用于判断是否显示添加的表单
-    renamingBookNode: new Node({}), // 正在重命名的图书节点
+    renamingNode: emptyNode, // 正在重命名的图书节点
     sideMenus: [new Node({})],
 
     getCurrentPage(): Node {
@@ -36,6 +36,10 @@ const NodeController = reactive({
         return this.sideMenus
     },
 
+    getRenamingNode(): Node {
+        return this.renamingNode
+    },
+
     setSideMenus() {
         this.sideMenus = this.getCurrentPage().getBook().getChildren()
     },
@@ -47,6 +51,10 @@ const NodeController = reactive({
         // 把ID记录到URL中，刷新后页面不会变化
         history.pushState([], "", location.pathname + "?id=" + id);
         this.currentPage = Node.find(id).getFirstPage()
+    },
+
+    setRenamingNode(node: Node) {
+        this.renamingNode = node
     },
 
     toggleEditable() {
@@ -64,6 +72,13 @@ const NodeController = reactive({
 
         this.setSideMenus()
         this.setCurrentPage(this.currentPage.id)
+    },
+
+    updateTitle(node: Node, title: string): string {
+        let result = node.updateTitle(title)
+        this.setCurrentPage(this.getCurrentPage().id)
+
+        return result
     },
 
     delete(target: Node): string {

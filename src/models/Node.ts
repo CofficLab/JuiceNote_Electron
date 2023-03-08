@@ -158,6 +158,15 @@ class Node {
         }
     }
 
+    updateTitle(title: string): string {
+        let result = db.prepare('update nodes set title=? where id=?').run(title, this.id)
+        if (result != null) {
+            return '「' + this.title + '」的标题更新成功'
+        } else {
+            return '「' + this.title + '」的标题更新失败'
+        }
+    }
+
     delete(): string {
         let result = db.prepare('delete from nodes where id=?').run(this.id)
         return "已删除「" + this.title + "」"
