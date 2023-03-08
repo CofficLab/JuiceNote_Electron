@@ -19,10 +19,14 @@
 
     <!-- 右键菜单 -->
     <RightMenu v-if="shouldShowRightMenu" :event="rightClickEvent">
-      <li><Edit :bookNode="current"></Edit></li>
+      <li><Edit :node="current"></Edit></li>
       <li><Rename :node="current"></Rename></li>
       <li><Add :bookNode="current"></Add></li>
       <li><Copy :bookNode="current"></Copy></li>
+      <li><Prev :current="current"></Prev></li>
+      <li><Next :current="current"></Next></li>
+      <li><ToManual :current="current"></ToManual></li>
+      <li><Terminal></Terminal></li>
     </RightMenu>
   </div>
 </template>
@@ -37,9 +41,13 @@ import Add from "../operators/Add.vue";
 import Copy from "../operators/Copy.vue";
 import Edit from "../operators/Edit.vue";
 import Rename from "../operators/Rename.vue";
+import Prev from "../operators/Prev.vue";
+import Next from "../operators/Next.vue";
 import RightMenuController from "../../controllers/RightMenuController";
 import { Node } from "../../models/Node";
 import NodeController from "../../controllers/NodeController";
+import Terminal from "../operators/Terminal.vue";
+import ToManual from "../operators/ToManual.vue";
 
 export default {
   props: {
@@ -58,6 +66,10 @@ export default {
     Link,
     Rename,
     RightMenu,
+    Next,
+    Prev,
+    Terminal,
+    ToManual,
   },
   data() {
     return {

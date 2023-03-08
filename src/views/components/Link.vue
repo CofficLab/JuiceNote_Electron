@@ -1,5 +1,6 @@
 <template>
   <div
+    :id="'node-' + id"
     v-bind:data-id="id"
     v-on:contextmenu="showRightMenu"
     v-on:click="go"
@@ -46,12 +47,9 @@ export default defineComponent({
   },
   methods: {
     shouldActive: function (id: number) {
-      let current = this.current;
-      let parent = current.getParent();
-      if (parent.isTab && id == parent.id) {
-        return true;
-      }
-      return this.current.id == id;
+      return this.current.getParents().some((parent) => {
+        return parent.id == id;
+      });
     },
     go: function () {
       if (this.shouldShowRightMenu) return false;

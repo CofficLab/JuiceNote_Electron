@@ -10,7 +10,7 @@
       <BtnTerminal></BtnTerminal>
       <Toast></Toast>
       <BtnPrev :current="current"></BtnPrev>
-      <BtnHome :current="current"></BtnHome>
+      <Home :current="current"></Home>
       <BtnNext :current="current"></BtnNext>
       <BtnMore></BtnMore>
     </div>
@@ -20,7 +20,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { Node } from "../../models/Node";
-import BtnHome from "../components/BtnHome.vue";
+import Home from "../operators/Home.vue";
 import BtnMore from "../components/BtnMore.vue";
 import BtnNext from "../components/BtnNext.vue";
 import BtnOfficialLink from "../components/BtnOfficialLink.vue";
@@ -31,7 +31,7 @@ import Breadcrumbs from "./Breadcrumbs.vue";
 import Toast from "./Toast.vue";
 
 export default defineComponent({
-  components: { Breadcrumbs, Languages, BtnOfficialLink, BtnTerminal, Toast, BtnPrev, BtnHome, BtnNext, BtnMore },
+  components: { Breadcrumbs, Languages, BtnOfficialLink, BtnTerminal, Toast, BtnPrev, Home, BtnNext, BtnMore },
   props: { current: { type: Node, required: true } },
 });
 </script>

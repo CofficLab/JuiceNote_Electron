@@ -1,3 +1,7 @@
+import { existsSync } from "fs";
+import { join } from "path";
+import Config from "../entities/Config";
+
 const db = require('better-sqlite3')('database.db');
 
 class Node {
@@ -53,6 +57,13 @@ class Node {
         if (this.isBook || this.isEmpty) return this
 
         return this.getParent().getBook()
+    }
+
+    getTabs(): Node[] {
+        let tabs = db.prepare('select * from nodes where parent_id=? and is_tab=1').all(this.id)
+        return tabs.map((tab: object) => {
+            return new Node(tab)
+        })
     }
 
     getParent(): Node {
@@ -137,6 +148,12 @@ class Node {
         return this.getNext().getFirstPage()
     }
 
+    getLogoUrl(): string {
+        let relativePath = 'images/logo-' + this.title + '.png'
+        let absolutePath = join(Config.publicPath, relativePath)
+        return existsSync(absolutePath) ? relativePath : ''
+    }
+
     setChildrenPriority(children: Node[]) {
         // console.log('设置子元素的排序', children)
         children.forEach((child, index) => {
@@ -170,6 +187,11 @@ class Node {
     delete(): string {
         let result = db.prepare('delete from nodes where id=?').run(this.id)
         return "已删除「" + this.title + "」"
+    }
+
+    transformToManual(): string {
+        db.prepare('update nodes set is_manual=1 where id=?').run(this.id)
+        return '已转换成手册'
     }
 
     static find(id: number): Node {

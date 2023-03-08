@@ -14,16 +14,10 @@
         <!-- 图书名 -->
         <h1 id="book-name">{{ book.title }}</h1>
 
-        <!-- 教程与手册的TAB -->
-        <!-- <div class="tabs flex justify-center" v-if="tabs.length > 0">
-          <Link
-            v-for="tab in tabs"
-            v-bind:class="{ 'tab-active': tab.shouldActive() }"
-            :href="tab.id"
-            class="tab-lifted tab"
-            >{{ tab.name }}</Link
-          >
-        </div> -->
+        <!-- 图书的TAB，比如：教程、手册 -->
+        <div class="tabs flex justify-center" v-if="bookTabs.length > 0">
+          <Link class="tab-lifted tab" v-for="tab in bookTabs" :id="tab.id" :current="current">{{ tab.title }}</Link>
+        </div>
       </div>
     </div>
 
@@ -36,9 +30,9 @@
       <div class="pointer-events-none sticky bottom-0 flex h-20"></div>
 
       <!-- 底部的图书logo -->
-      <!-- <div v-if="book.hasLogo()" class="h-20 opacity-90 dark:brightness-50">
-        <img :src="book.logoUrl()" alt="" />
-      </div> -->
+      <div v-if="book.getLogoUrl().length > 0" class="h-20 opacity-90 dark:brightness-50">
+        <img :src="book.getLogoUrl()" alt="" />
+      </div>
     </div>
   </div>
 </template>
@@ -49,8 +43,7 @@ import FullScreenController from "../../controllers/FullScreenController";
 import Children from "../components/Children.vue";
 import Link from "../components/Link.vue";
 import SideMenuItem from "./SideMenuItem.vue";
-import { Node } from "../../models/Node";
-import NodeController from "../../controllers/NodeController";
+import { emptyNode, Node } from "../../models/Node";
 
 export default defineComponent({
   props: {
@@ -61,7 +54,7 @@ export default defineComponent({
   },
   data() {
     return {
-      activeSubBookId: "",
+      activatedBookTab: this.book,
     };
   },
   computed: {
@@ -69,13 +62,25 @@ export default defineComponent({
     book(): Node {
       return this.current.getBook();
     },
-    menus: () => NodeController.getSideMenus(),
+    bookTabs() {
+      return this.book.getTabs();
+    },
+    menusRoot() {
+      return this.current.getParents().find((parent) => parent.getParent().isBook);
+    },
+    menus() {
+      console.log("获取左侧栏菜单");
+      return this.menusRoot.getChildren();
+    },
   },
   mounted: function () {
     // 滚动到激活的菜单的章节
-    // var current = RouteController.getCurrentPage();
-    // var target = document.getElementById(current.getParent().id);
-    // if (target) target.scrollIntoView();
+    var target = document.getElementById("node-" + this.current.getParent().id);
+    if (target) target.scrollIntoView();
+
+    if (this.bookTabs.length > 0) {
+      this.activatedBookTab = this.bookTabs[0];
+    }
   },
   components: { Link, SideMenuItem, Children },
 });

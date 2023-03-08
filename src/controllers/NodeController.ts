@@ -8,12 +8,12 @@ const NodeController = reactive({
     isHomePage: (new URL(location.href)).searchParams.get('id') == '/',
     editable: (new URL(location.href)).searchParams.get('edit_mode') != undefined,
     renderedHtml: '',
-    adding: false, // 用于判断是否显示添加的表单
+    adding: false,           // 用于判断是否显示添加的表单
     renamingNode: emptyNode, // 正在重命名的图书节点
-    sideMenus: [new Node({})],
+    sideMenus: [emptyNode],
 
     getCurrentPage(): Node {
-        console.log('get current page')
+        // console.log('get current page')
         if (!this.currentPage.isEmpty) return this.currentPage
 
         this.setCurrentPage()
@@ -51,15 +51,18 @@ const NodeController = reactive({
         // 把ID记录到URL中，刷新后页面不会变化
         history.pushState([], "", location.pathname + "?id=" + id);
         this.currentPage = Node.find(id).getFirstPage()
+        this.setSideMenus()
     },
 
     setRenamingNode(node: Node) {
         this.renamingNode = node
     },
 
-    toggleEditable() {
+    toggleEditable(): string {
         this.editable = !this.editable
         history.pushState([], "", location.pathname + "?id=" + this.getCurrentPage().id + '&editable=' + this.editable);
+
+        return this.editable ? '已开启编辑模式' : '已关闭编辑模式'
     },
 
     updateChildrenPriority(children: Node[]) {

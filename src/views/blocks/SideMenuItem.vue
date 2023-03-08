@@ -10,6 +10,7 @@
 
     <!-- 是一个章节，且不是TAB -->
     <li
+      :id="'node-' + item.id"
       v-if="item.isChapter && !item.isTab"
       :class="{
         'text-indigo-400/90': item.isLesson,

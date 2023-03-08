@@ -32,15 +32,16 @@ export default defineComponent({
     };
   },
   computed: {
-    bookNode: () => NodeController.getRenamingNode(),
+    node: () => NodeController.getRenamingNode(),
     display: () => !NodeController.getRenamingNode().isEmpty,
   },
   mounted: function () {
-    this.title = this.bookNode.name;
+    this.title = this.node.title;
   },
   watch: {
-    bookNode() {
-      this.title = this.bookNode.name;
+    node() {
+      console.log("正在重命名的节点发生了变化，现在是", this.node.id, this.node.title);
+      this.title = this.node.title;
     },
   },
   methods: {
@@ -48,7 +49,7 @@ export default defineComponent({
       NodeController.setRenamingNode(emptyNode);
     },
     submit() {
-      ToastController.set(NodeController.updateTitle(this.bookNode, this.title));
+      ToastController.set(NodeController.updateTitle(this.node, this.title));
       this.hide();
     },
   },
