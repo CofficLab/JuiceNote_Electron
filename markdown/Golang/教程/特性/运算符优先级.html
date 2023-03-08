@@ -1,6 +1,0 @@
-<h1 id="heading-1">运算符优先级</h1><p>从低到高</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>||</p></li><li class="m-0 p-0"><p>&amp;&amp;</p></li><li class="m-0 p-0"><p>&lt;-</p></li><li class="m-0 p-0"><p>== != &lt; &lt;= &gt; &gt;=</p></li><li class="m-0 p-0"><p>+ - | ^</p></li><li class="m-0 p-0"><p>* / % &lt;&lt; &gt;&gt; &amp; &amp;^</p></li><li class="m-0 p-0"><p>^ !</p></li></ul><h2 id="heading-2">最佳实践</h2><p>通过使用括号来提升某个表达式的运算优先级，提高代码可读性。</p><h2 id="heading-3">例子</h2><pre><code class="language-go">package main
-
-func main() {
-    println(((1+2)*3+3)/4 + 5)
-}
-</code></pre>

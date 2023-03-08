@@ -1,8 +1,0 @@
-<h1>运算与比较</h1><p>https://go.dev/ref/spec#Arithmetic_operators</p><h2>四则运算</h2><p>大多数编程语言的工作方式都一样： - `+` 表示加法 - `-` 表示减法 - `*` 表示乘法 - `/` 表示除法</p><pre><code class="language-go">package main 
-import "fmt" 
-func main() { 
-    fmt.Println(1 + 2) 
-    fmt.Println(5.5 - 1.1) 
-    fmt.Println(5 * 8) 
-    fmt.Println(7.5 / 5) 
-} </code></pre><h2>比较 </h2><p>大多数编程语言的工作方式都一样： - `&gt;` 表示大于 - `&lt;` 表示小于 - `&gt;=` 表示大于等于 - `&lt;=` 表示小于等于 - `==` 表示等于 比较的结果是一个布尔值。</p><p>```go package main import "fmt" func main() { fmt.Println(1 &lt; 2) fmt.Println(1 &gt; 2) fmt.Println(1 &gt;= 2) fmt.Println(1 + 9 &lt;= 2) fmt.Println(1 + 2 == 3) fmt.Println(1 + 2 != 3) } ```</p>
