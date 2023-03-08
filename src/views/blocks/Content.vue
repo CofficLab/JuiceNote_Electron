@@ -41,7 +41,8 @@ import Copy from "../operators/Copy.vue";
 import Edit from "../operators/Edit.vue";
 import Rename from "../operators/Rename.vue";
 import RightMenuController from "../../controllers/RightMenuController";
-import Node from "../../models/Node";
+import { Node } from "../../models/Node";
+import NodeController from "../../controllers/NodeController";
 
 export default {
   props: {
@@ -70,7 +71,7 @@ export default {
     };
   },
   computed: {
-    editable: () => RouteController.editable,
+    editable: () => NodeController.getEditable(),
     shouldShowRightMenu: function () {
       return RightMenuController.shouldShow && this.rightClickEvent;
     },
@@ -92,18 +93,6 @@ export default {
       extensions: Extensions,
       autofocus: true,
       editable: this.editable,
-      onUpdate: () => {
-        console.log("editor updated");
-      },
-      onRenderTriggered: () => {
-        console.log("render triggered");
-      },
-      onSelectionUpdate: () => {
-        console.log("selection update");
-      },
-      onRenderTracked: () => {
-        console.log("render tracked");
-      },
     });
 
     document.addEventListener("click", () => {

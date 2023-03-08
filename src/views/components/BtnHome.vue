@@ -12,7 +12,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import Home from "../../assets/icons/home.svg";
-import Node from "../../models/Node";
+import { Node } from "../../models/Node";
 import Link from "./Link.vue";
 
 export default defineComponent({

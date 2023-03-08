@@ -13,7 +13,7 @@ import { defineComponent } from "vue";
 import ClipboardJS from "clipboard";
 import IconCopy from "../../assets/icons/clipboard-document.svg";
 import ToastController from "../../controllers/ToastController";
-import Node from "../../models/Node";
+import { Node } from "../../models/Node";
 
 var clipboard = new ClipboardJS(".btn");
 clipboard.on("success", function () {

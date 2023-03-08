@@ -12,9 +12,7 @@
         v-bind:class="{ 'top-12': !hideTitleBar, 'top-0': hideTitleBar }"
       >
         <!-- 图书名 -->
-        <h1 id="book-name">
-          {{ current?.getBook().title }}
-        </h1>
+        <h1 id="book-name">{{ book.title }}</h1>
 
         <!-- 教程与手册的TAB -->
         <!-- <div class="tabs flex justify-center" v-if="tabs.length > 0">
@@ -31,10 +29,7 @@
 
     <!-- 章节与页面 -->
     <div class="h-full pb-24">
-      <ul
-        class="menu menu-compact flex w-full flex-col p-0 px-1"
-        v-for="(item, index) in current?.getBook().getChildren()"
-      >
+      <ul class="menu menu-compact flex w-full flex-col p-0 px-1" v-for="(item, index) in menus">
         <li v-if="index > 0"></li>
         <SideMenuItem :item="item" :id="item.id" :current="current"></SideMenuItem>
       </ul>
@@ -51,11 +46,11 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import FullScreenController from "../../controllers/FullScreenController";
-import BookNode from "../../entities/BookNode";
 import Children from "../components/Children.vue";
 import Link from "../components/Link.vue";
 import SideMenuItem from "./SideMenuItem.vue";
-import Node from "../../models/Node";
+import { Node } from "../../models/Node";
+import NodeController from "../../controllers/NodeController";
 
 export default defineComponent({
   props: {
@@ -71,23 +66,10 @@ export default defineComponent({
   },
   computed: {
     hideTitleBar: () => FullScreenController.full,
-    // tabs: function (): BookNode[] {
-    //   if (this.book.getChildrenIds().length > 2) {
-    //     return [];
-    //   }
-
-    //   return this.book.getChildren().filter((child) => {
-    //     return !child.isPage();
-    //   });
-    // },
-    chapters(): BookNode[] {
-      if (this.tabs.length > 0) {
-        // console.log("当前图书需要展示tabs");
-        return this.tabs.find((tab) => tab.shouldActive()).getChildren();
-      }
-
-      return this.book.getChildren();
+    book(): Node {
+      return this.current.getBook();
     },
+    menus: () => NodeController.getSideMenus(),
   },
   mounted: function () {
     // 滚动到激活的菜单的章节

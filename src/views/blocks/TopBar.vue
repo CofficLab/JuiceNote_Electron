@@ -5,7 +5,7 @@
       <Breadcrumbs :current="current"></Breadcrumbs>
     </div>
     <div class="flex h-12 w-full flex-row items-center justify-end pr-4">
-      <Languages></Languages>
+      <!-- <Languages></Languages> -->
       <BtnOfficialLink></BtnOfficialLink>
       <BtnTerminal></BtnTerminal>
       <Toast></Toast>
@@ -19,7 +19,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import Node from "../../models/Node";
+import { Node } from "../../models/Node";
 import BtnHome from "../components/BtnHome.vue";
 import BtnMore from "../components/BtnMore.vue";
 import BtnNext from "../components/BtnNext.vue";

@@ -49,7 +49,7 @@ class Node {
     }
 
     getBook(): Node {
-        console.log('get book,current is', this)
+        // console.log('get book,current is', this)
         if (this.isBook || this.isEmpty) return this
 
         return this.getParent().getBook()
@@ -60,7 +60,7 @@ class Node {
             return new Node({})
         }
 
-        console.log('get parent from db,id is', this.id)
+        // console.log('get parent from db,id is', this.id)
         let result = db.prepare('select * from nodes where id=? limit 1').get(this.parentId)
 
         return new Node(result ?? {})
@@ -81,7 +81,7 @@ class Node {
     }
 
     getChildren(): Node[] {
-        let children = db.prepare('select * from nodes where parent_id=?').all(this.id)
+        let children = db.prepare('select * from nodes where parent_id=? order by priority asc').all(this.id)
 
         return children.map((child: object) => {
             return new Node(child)
@@ -98,12 +98,12 @@ class Node {
     getFirstChild(): Node {
         let result = db.prepare('select * from nodes where parent_id=? order by priority asc').get(this.id)
 
-        console.log('get first child', result)
+        // console.log('get first child', result)
         return new Node(result ?? {})
     }
 
     getFirstPage(): Node {
-        console.log('get first page,current is', this)
+        // console.log('get first page,current is', this)
         if (this.isPage || this.isEmpty) return this
 
         return this.getFirstChild().getFirstPage()
@@ -137,6 +137,18 @@ class Node {
         return this.getNext().getFirstPage()
     }
 
+    setChildrenPriority(children: Node[]) {
+        // console.log('设置子元素的排序', children)
+        children.forEach((child, index) => {
+            child.updatePriority(index)
+        })
+    }
+
+    updatePriority(priority: number) {
+        // console.log(this.title, '更新priority为', priority)
+        db.prepare('update nodes set priority=? where id=?').run(priority, this.id)
+    }
+
     updateContent(content: string): string {
         let result = db.prepare('update nodes set content=? where id=?').run(content, this.id)
         if (result != null) {
@@ -146,7 +158,13 @@ class Node {
         }
     }
 
+    delete(): string {
+        let result = db.prepare('delete from nodes where id=?').run(this.id)
+        return "已删除「" + this.title + "」"
+    }
+
     static find(id: number): Node {
+        if (id == 0) return Node.getFirstBook()
         let result = db.prepare('select * from nodes where id=?').get(id)
 
         return new Node(result)
@@ -155,9 +173,14 @@ class Node {
     static getFirstBook(): Node {
         let result = db.prepare('select * from nodes where is_book=1 order by priority asc limit 1').get()
 
-        console.log('get first book', result)
+        // console.log('get first book', result)
         return new Node(result)
     }
 }
 
-export default Node;
+const emptyNode = new Node({})
+
+export {
+    Node,
+    emptyNode
+};

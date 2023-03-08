@@ -25,7 +25,6 @@
 import { defineComponent } from "vue";
 import RouteController from "../../controllers/RouteController";
 import Children from "./Children.vue";
-import BookController from "../../controllers/BookController";
 
 export default defineComponent({
   computed: {

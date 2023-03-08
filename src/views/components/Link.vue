@@ -23,7 +23,7 @@ import Edit from "../operators/Edit.vue";
 import Delete from "../operators/Delete.vue";
 import RightMenu from "./RightMenu.vue";
 import RightMenuController from "../../controllers/RightMenuController";
-import Node from "../../models/Node";
+import { Node } from "../../models/Node";
 import NodeController from "../../controllers/NodeController";
 
 export default defineComponent({
@@ -56,7 +56,7 @@ export default defineComponent({
     go: function () {
       if (this.shouldShowRightMenu) return false;
       this.active = true;
-      NodeController.goto(this.id);
+      NodeController.setCurrentPage(this.id);
     },
     showRightMenu(event) {
       this.rightClickEvent = event;

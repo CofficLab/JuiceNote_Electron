@@ -4,7 +4,7 @@
     <li v-if="item.isPage">
       <Link class="flex gap-4 xl:text-lg" :id="item.id" :current="current">
         <DynamicPadding :count="item.level - 3"></DynamicPadding>
-        {{ item.parentId }} {{ item.priority }} {{ item.title }}
+        {{ item.title }}
       </Link>
     </li>
 
@@ -18,7 +18,7 @@
     >
       <span v-bind:class="{ 'text-xl': item.level < 3, 'text-lg': item.level >= 3 }">
         <DynamicPadding :count="item.level - 3"></DynamicPadding>
-        {{ item.id }} {{ item.title }}
+        {{ item.title }}
       </span>
     </li>
     <SideMenuItem
@@ -32,7 +32,7 @@
     <li v-if="item.isChapter && item.isTab">
       <Link class="flex gap-4 xl:text-lg" :id="item.id" :current="current">
         <DynamicPadding :count="item.level - 3"></DynamicPadding>
-        {{ item.id }} {{ item.title }}
+        {{ item.title }}
       </Link>
     </li>
 
@@ -54,7 +54,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import Node from "../../models/Node";
+import { Node } from "../../models/Node";
 import DynamicPadding from "../components/DynamicPadding.vue";
 import Link from "../components/Link.vue";
 

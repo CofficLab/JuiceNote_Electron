@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="dropdown-hover dropdown">
+    <div class="dropdown dropdown-hover">
       <label tabindex="0">标题</label>
       <ul tabindex="0">
         <li
@@ -18,7 +18,7 @@
       </ul>
     </div>
 
-    <div class="dropdown-hover dropdown">
+    <div class="dropdown dropdown-hover">
       <label tabindex="0">列表</label>
       <ul tabindex="0">
         <li
@@ -48,7 +48,7 @@
       </ul>
     </div>
 
-    <div class="dropdown-hover dropdown-bottom dropdown">
+    <div class="dropdown dropdown-bottom dropdown-hover">
       <label tabindex="0">表格</label>
       <ul tabindex="0">
         <li>
@@ -128,14 +128,15 @@
 </template>
 
 <script lang="ts">
+import { Editor } from "@tiptap/vue-3";
 import { defineComponent } from "vue";
-import RouteController from "../../controllers/RouteController";
+import NodeController from "../../controllers/NodeController";
 import ToastController from "../../controllers/ToastController";
-import Node from "../../models/Node";
+import { Node } from "../../models/Node";
 
 export default defineComponent({
   props: {
-    editor: {},
+    editor: { type: Editor, required: true },
     current: { type: Node },
   },
 
@@ -152,7 +153,7 @@ export default defineComponent({
     },
     saveAndShow() {
       this.save();
-      RouteController.toggleEditMode();
+      NodeController.toggleEditable();
     },
     inputLink() {
       this.showLinkModal = true;

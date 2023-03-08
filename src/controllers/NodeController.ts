@@ -1,7 +1,5 @@
-import Node from '../models/Node'
+import { Node, emptyNode } from '../models/Node'
 import { reactive } from 'vue'
-import BookNode from '../entities/BookNode'
-import ErrorController from './ErrorController'
 
 const NodeController = reactive({
     search: decodeURI(location.search),
@@ -11,7 +9,8 @@ const NodeController = reactive({
     editable: (new URL(location.href)).searchParams.get('edit_mode') != undefined,
     renderedHtml: '',
     adding: false, // 用于判断是否显示添加的表单
-    renamingBookNode: new BookNode, // 正在重命名的图书节点
+    renamingBookNode: new Node({}), // 正在重命名的图书节点
+    sideMenus: [new Node({})],
 
     getCurrentPage(): Node {
         console.log('get current page')
@@ -21,34 +20,56 @@ const NodeController = reactive({
         return this.currentPage
     },
 
-    setCurrentPage() {
-        console.log('set current page')
-        let id = parseInt((new URL(location.href)).searchParams.get('id') || '0')
-        let result = new Node({})
-        result = id > 0 ? Node.find(id).getFirstPage() : Node.getFirstBook().getFirstPage()
-
-        console.log('current page is', result)
-
-        if (result.isEmpty) {
-            ErrorController.set("获取到的当前页面是空节点<br/> id=" + id + "<br/> location.href=" + location.href)
-        } else {
-            ErrorController.clear()
-        }
-
-        this.currentPage = result
+    getEditable(): boolean {
+        return this.editable
     },
 
-    goto(id: number) {
-        console.log('go to id', id)
-        // if (this.isEditMode()) {
-        //     history.pushState([], "", location.pathname + "?id=" + id + '&edit_mode=1');
-        // } else {
-        history.pushState([], "", location.pathname + "?id=" + id);
-        // }
+    getBreadcrumbs(): Node[] {
+        return this.getCurrentPage().getParents().concat([this.getCurrentPage()])
+    },
 
-        // this.refresh()
-        // this.checkHomePage()
-        this.setCurrentPage()
+    getSideMenus(): Node[] {
+        if (this.sideMenus.filter(menu => { return !menu.isEmpty }).length == 0) {
+            this.setSideMenus()
+        }
+
+        return this.sideMenus
+    },
+
+    setSideMenus() {
+        this.sideMenus = this.getCurrentPage().getBook().getChildren()
+    },
+
+    setCurrentPage(id?: number) {
+        id = id ?? parseInt((new URL(location.href)).searchParams.get('id') || '0')
+        console.log('set current page to', id)
+
+        // 把ID记录到URL中，刷新后页面不会变化
+        history.pushState([], "", location.pathname + "?id=" + id);
+        this.currentPage = Node.find(id).getFirstPage()
+    },
+
+    toggleEditable() {
+        this.editable = !this.editable
+        history.pushState([], "", location.pathname + "?id=" + this.getCurrentPage().id + '&editable=' + this.editable);
+    },
+
+    updateChildrenPriority(children: Node[]) {
+        let parent = children.at(0)?.getParent()
+        if (parent == undefined) {
+            throw '更新children发生错误，找不到parent'
+        }
+
+        parent.setChildrenPriority(children)
+
+        this.setSideMenus()
+        this.setCurrentPage(this.currentPage.id)
+    },
+
+    delete(target: Node): string {
+        this.setCurrentPage(target.getParent().id)
+
+        return target.delete()
     },
 })
 
