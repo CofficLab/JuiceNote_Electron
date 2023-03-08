@@ -19,14 +19,12 @@
 
     <!-- 右键菜单 -->
     <RightMenu v-if="shouldShowRightMenu" :event="rightClickEvent">
-      <li><Edit :node="current"></Edit></li>
-      <li><Rename :node="current"></Rename></li>
-      <li><Add :bookNode="current"></Add></li>
-      <li><Copy :bookNode="current"></Copy></li>
-      <li><Prev :current="current"></Prev></li>
-      <li><Next :current="current"></Next></li>
-      <li><ToManual :current="current"></ToManual></li>
-      <li><Terminal></Terminal></li>
+      <li><Edit class="h-12" :node="current"></Edit></li>
+      <li><Rename class="h-12" :node="current"></Rename></li>
+      <li><Add class="h-12" :bookNode="current"></Add></li>
+      <li><Copy class="h-12" :bookNode="current"></Copy></li>
+      <li><Prev class="h-12" :current="current"></Prev></li>
+      <li><Next class="h-12" :current="current"></Next></li>
     </RightMenu>
   </div>
 </template>

@@ -1,10 +1,14 @@
 <template>
-  <div @click="rename">重命名</div>
+  <div @click="rename">
+    <ArrowLeftCircle></ArrowLeftCircle>
+    重命名
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import NodeController from "../../controllers/NodeController";
+import ArrowLeftCircle from "../../assets/icons/arrow-left-circle.svg";
 export default defineComponent({
   props: ["node"],
   methods: {
@@ -13,5 +17,6 @@ export default defineComponent({
       NodeController.setRenamingNode(this.node);
     },
   },
+  components: { ArrowLeftCircle },
 });
 </script>

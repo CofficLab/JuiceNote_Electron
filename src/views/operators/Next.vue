@@ -1,30 +1,36 @@
 <template>
-  <Link
-    v-bind:id="next?.id"
-    v-bind:class="!next ? 'btn-disabled' : ''"
-    class="btn-ghost tooltip tooltip-bottom btn-sm btn flex w-12 items-center"
-    data-tip="下一页"
-    :current="current"
-  >
-    <ArrowRightCircle></ArrowRightCircle>
-  </Link>
+  <div @click="next">
+    <ArrowRightCircle v-if="showIcon"></ArrowRightCircle>
+    <span v-if="showText">下一页</span>
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import ArrowRightCircle from "../../assets/icons/arrow-right-circle.svg";
+import NodeController from "../../controllers/NodeController";
 import Link from "../components/Link.vue";
-import { Node } from "../../models/Node";
 
 export default defineComponent({
-  props: { current: { type: Node, required: true } },
+  props: {
+    showText: {
+      type: Boolean,
+      default: true,
+      required: false,
+    },
+    showIcon: {
+      type: Boolean,
+      default: true,
+      required: false,
+    },
+  },
   components: {
     ArrowRightCircle,
     Link,
   },
-  computed: {
+  methods: {
     next() {
-      return this.current.getNextPage();
+      NodeController.setCurrentPage(NodeController.getCurrentPage().getNextPage().id);
     },
   },
 });

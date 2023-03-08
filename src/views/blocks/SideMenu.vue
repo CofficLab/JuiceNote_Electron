@@ -21,7 +21,7 @@
       <!-- 章节与页面 -->
       <ul class="menu menu-compact flex w-full flex-col p-0 px-1" v-for="(item, index) in menus">
         <li v-if="index > 0"></li>
-        <SideMenuItem :item="item" :id="item.id" :current="current"></SideMenuItem>
+        <SideMenuItem :item="item" :current="current"></SideMenuItem>
       </ul>
       <div class="pointer-events-none sticky bottom-0 flex h-20"></div>
 
@@ -66,9 +66,20 @@ export default defineComponent({
     },
   },
   mounted: function () {
-    // 滚动到激活的菜单的章节
-    var target = document.getElementById("node-" + this.current.getParent().id);
-    if (target) target.scrollIntoView();
+    this.$nextTick(() => {
+      setTimeout(() => {
+        // 滚动到激活的菜单的章节
+        var target = document.getElementById("node-" + this.current.id);
+        console.log(target);
+        console.log("需要滚动");
+        if (target != null) {
+          target.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+          });
+        }
+      }, 400);
+    });
 
     if (this.bookTabs.length > 0) {
       this.activatedBookTab = this.bookTabs[0];

@@ -1,12 +1,7 @@
 <template>
-  <div>
-    <button
-      v-on:click="commit"
-      class="btn-ghost tooltip tooltip-left btn-sm btn my-auto w-12"
-      data-tip="提交变动到代码仓库"
-    >
-      <CloudArrowUp></CloudArrowUp>
-    </button>
+  <div :click="commit">
+    <CloudArrowUp v-if="showIcon"></CloudArrowUp>
+    <span v-if="showText">提交变动到代码仓库</span>
   </div>
 </template>
 
@@ -16,9 +11,19 @@ import CloudArrowUp from "../../assets/icons/cloud-arrow-up.svg";
 import ToastController from "../../controllers/ToastController";
 
 export default defineComponent({
-  components: {
-    CloudArrowUp,
+  props: {
+    showText: {
+      type: Boolean,
+      default: true,
+      required: false,
+    },
+    showIcon: {
+      type: Boolean,
+      default: true,
+      required: false,
+    },
   },
+  components: { CloudArrowUp },
   methods: {
     commit: function () {
       let exec = require("child_process").exec;

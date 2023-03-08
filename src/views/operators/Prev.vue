@@ -1,12 +1,7 @@
 <template>
-  <Link
-    v-bind:class="!prev ? 'btn-disabled' : ''"
-    class="btn-ghost tooltip tooltip-bottom btn-sm btn flex w-12 items-center"
-    data-tip="上一页"
-    :current="current"
-    :id="prev?.id"
-    ><ArrowLeftCircle></ArrowLeftCircle
-  ></Link>
+  <Link v-bind:class="!prev ? 'btn-disabled' : ''" data-tip="上一页" :current="current" :id="prev?.id"
+    ><ArrowLeftCircle></ArrowLeftCircle>上一页</Link
+  >
 </template>
 
 <script lang="ts">

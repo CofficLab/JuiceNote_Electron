@@ -11,7 +11,11 @@
       <Toast></Toast>
       <BtnPrev :current="current"></BtnPrev>
       <Home :current="current"></Home>
-      <BtnNext :current="current"></BtnNext>
+      <Next
+        class="btn-ghost tooltip tooltip-bottom btn-sm btn flex w-12 items-center"
+        :current="current"
+        :showText="false"
+      ></Next>
       <BtnMore></BtnMore>
     </div>
   </div>
@@ -22,7 +26,7 @@ import { defineComponent } from "vue";
 import { Node } from "../../models/Node";
 import Home from "../operators/Home.vue";
 import BtnMore from "../components/BtnMore.vue";
-import BtnNext from "../components/BtnNext.vue";
+import Next from "../operators/Next.vue";
 import BtnOfficialLink from "../components/BtnOfficialLink.vue";
 import BtnPrev from "../components/BtnPrev.vue";
 import BtnTerminal from "../components/BtnTerminal.vue";
@@ -31,7 +35,7 @@ import Breadcrumbs from "./Breadcrumbs.vue";
 import Toast from "./Toast.vue";
 
 export default defineComponent({
-  components: { Breadcrumbs, Languages, BtnOfficialLink, BtnTerminal, Toast, BtnPrev, Home, BtnNext, BtnMore },
+  components: { Breadcrumbs, Languages, BtnOfficialLink, BtnTerminal, Toast, BtnPrev, Home, Next, BtnMore },
   props: { current: { type: Node, required: true } },
 });
 </script>

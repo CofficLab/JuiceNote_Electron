@@ -1,7 +1,7 @@
 <template>
   <ul
     ref="menus"
-    class="menu z-50 w-56 rounded-md bg-green-500/60 py-2 shadow-2xl ring-1 ring-gray-400"
+    class="menu z-50 w-56 rounded-md bg-base-300 py-2 shadow-2xl ring-1 ring-gray-300/30"
     v-bind:style="{ left: x + 'px', top: y + 'px', position: 'fixed' }"
   >
     <slot></slot>
