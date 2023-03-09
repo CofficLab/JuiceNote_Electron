@@ -39,7 +39,7 @@ export default defineComponent({
       language: this.language,
       readOnly: this.readOnly,
       theme: "vs-dark",
-      fontSize: 18,
+      fontSize: 14,
       lineNumbers: "off",
       automaticLayout: true,
       minimap: { enabled: false },
