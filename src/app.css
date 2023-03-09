@@ -31,10 +31,10 @@ body {
 }
 
 .brick {
-  @apply mx-2  rounded
-  border border-dashed bg-sky-500
-  p-2
-  text-center
+  @apply my-2
+ h-24  rounded border border-dashed
+  bg-sky-500 px-2 py-1 text-center
+  text-orange-800/90
   shadow-2xl transition
   duration-100
   hover:scale-105

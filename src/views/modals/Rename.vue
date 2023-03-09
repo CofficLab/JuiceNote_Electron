@@ -44,6 +44,12 @@ export default defineComponent({
       console.log("正在重命名的节点发生了变化，现在是", this.node.id, this.node.title);
       this.title = this.node.title;
     },
+    display() {
+      console.log("正在重命名的节点的display发生了变化");
+      this.$nextTick(function () {
+        if (this.$refs.title != null) this.$refs.title.focus();
+      });
+    },
   },
   methods: {
     hide() {

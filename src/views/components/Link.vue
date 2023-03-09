@@ -10,7 +10,7 @@
 
     <!-- 右键菜单 -->
     <RightMenu v-if="shouldShowRightMenu" v-bind:event="rightClickEvent">
-      <li><Rename :bookNode="current"></Rename></li>
+      <li><Rename :node="target"></Rename></li>
       <li><Edit :bookNode="current"></Edit></li>
       <li><Delete :bookNode="current"></Delete></li>
     </RightMenu>
@@ -43,6 +43,9 @@ export default defineComponent({
   computed: {
     shouldShowRightMenu() {
       return this.rightClickEvent && RightMenuController.shouldShow;
+    },
+    target() {
+      return NodeController.getNodeById(this.id);
     },
   },
   methods: {

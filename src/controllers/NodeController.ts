@@ -40,6 +40,10 @@ const NodeController = reactive({
         return this.renamingNode
     },
 
+    getNodeById(id: number): Node {
+        return Node.find(id)
+    },
+
     setSideMenus() {
         this.sideMenus = this.getCurrentPage().getBook().getChildren()
     },
