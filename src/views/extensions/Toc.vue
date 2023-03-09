@@ -13,6 +13,7 @@
           v-if="heading.level > 1"
         >
           <a :href="`#${heading.id}`" class="no-underline">
+            <DynamicPadding :count="heading.level - 1"></DynamicPadding>
             {{ heading.text }}
           </a>
         </li>
@@ -23,10 +24,12 @@
 
 <script>
 import { nodeViewProps, NodeViewWrapper } from "@tiptap/vue-3";
+import DynamicPadding from "../components/DynamicPadding.vue";
 
 export default {
   components: {
     NodeViewWrapper,
+    DynamicPadding,
   },
   props: nodeViewProps,
   data() {

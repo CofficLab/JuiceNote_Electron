@@ -6,7 +6,7 @@ const NodeController = reactive({
     currentPage: new Node({}),
     isProd: location.protocol === 'file:',
     isHomePage: (new URL(location.href)).searchParams.get('id') == '/',
-    editable: (new URL(location.href)).searchParams.get('edit_mode') != undefined,
+    editable: (new URL(location.href)).searchParams.get('editable') == 'true',
     renderedHtml: '',
     adding: false,           // 用于判断是否显示添加的表单
     renamingNode: emptyNode, // 正在重命名的图书节点
