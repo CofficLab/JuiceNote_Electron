@@ -13,6 +13,9 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   props: ["code", "keyUpCallback", "language", "readOnly"],
+  data() {
+    return { editor: null };
+  },
   mounted: function () {
     // console.log("init monaco editor");
     self.MonacoEnvironment = {
@@ -34,7 +37,7 @@ export default defineComponent({
     };
 
     // console.log("初始化Monaco，language=", this.language);
-    let editor = monaco.editor.create(this.$refs.monaco, {
+    this.editor = monaco.editor.create(this.$refs.monaco, {
       value: this.code,
       language: this.language,
       readOnly: this.readOnly,
@@ -44,9 +47,16 @@ export default defineComponent({
       automaticLayout: true,
       minimap: { enabled: false },
     });
-    editor.onKeyUp(() => {
+
+    // 键盘输入后，执行的回调
+    this.editor.onKeyUp(() => {
       this.keyUpCallback(editor.getValue());
     });
+  },
+  watch: {
+    language() {
+      monaco.editor.setModelLanguage(this.editor.getModel(), this.language);
+    },
   },
 });
 </script>
