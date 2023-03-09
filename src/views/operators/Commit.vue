@@ -1,5 +1,5 @@
 <template>
-  <div :click="commit">
+  <div @click="commit">
     <CloudArrowUp v-if="showIcon"></CloudArrowUp>
     <span v-if="showText">提交变动到代码仓库</span>
   </div>

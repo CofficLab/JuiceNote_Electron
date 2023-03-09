@@ -78,7 +78,7 @@ export default defineComponent({
             block: "center",
           });
         }
-      }, 400);
+      }, 600);
     });
 
     if (this.bookTabs.length > 0) {

@@ -1,11 +1,7 @@
 <template>
-  <ul
-    ref="menus"
-    class="menu z-50 w-56 rounded-md bg-base-300 py-2 shadow-2xl ring-1 ring-gray-300/30"
-    v-bind:style="{ left: x + 'px', top: y + 'px', position: 'fixed' }"
-  >
+  <div ref="menus" class="right-menus" v-bind:style="{ left: x + 'px', top: y + 'px' }">
     <slot></slot>
-  </ul>
+  </div>
 </template>
 
 <script lang="ts">
@@ -21,3 +17,16 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="postcss">
+.right-menus {
+  @apply fixed z-50 w-56 rounded-md bg-base-300 shadow-2xl ring-1 ring-gray-300/30 !important;
+
+  svg {
+    @apply mr-4 inline-block h-6 !important;
+  }
+  div {
+    @apply flex h-10 items-center justify-start justify-items-center p-4 text-yellow-900 hover:cursor-pointer hover:bg-base-200 !important;
+  }
+}
+</style>

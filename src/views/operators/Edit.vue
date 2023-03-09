@@ -26,7 +26,7 @@ export default {
       default: true,
     },
   },
-  computed: { editable: () => NodeController.editable },
+  computed: { editable: () => NodeController.getEditable() },
   methods: {
     edit() {
       RightMenuController.hide();

@@ -68,7 +68,7 @@
 <script>
 import { NodeViewContent, nodeViewProps, NodeViewWrapper } from "@tiptap/vue-3";
 import Monaco from "../components/Monaco.vue";
-import RouteController from "../../controllers/RouteController";
+import NodeController from "../../controllers/NodeController";
 
 export default {
   components: {
@@ -85,7 +85,10 @@ export default {
   },
 
   computed: {
-    editable: () => RouteController.editable,
+    editable() {
+      console.log("检查Monaco Editor是否可编辑", NodeController.getEditable());
+      return NodeController.getEditable();
+    },
     monacoEditorDisplay() {
       return this.node.attrs.editor == true;
     },

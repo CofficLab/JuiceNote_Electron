@@ -19,18 +19,18 @@
 
     <!-- 右键菜单 -->
     <RightMenu v-if="shouldShowRightMenu" :event="rightClickEvent">
-      <li><Edit class="h-12" :node="current"></Edit></li>
-      <li><Rename class="h-12" :node="current"></Rename></li>
-      <li><Add class="h-12" :bookNode="current"></Add></li>
-      <li><Copy class="h-12" :bookNode="current"></Copy></li>
-      <li><Prev class="h-12" :current="current"></Prev></li>
-      <li><Next class="h-12" :current="current"></Next></li>
+      <Edit :node="current"></Edit>
+      <Rename :node="current"></Rename>
+      <Add :bookNode="current"></Add>
+      <Copy :bookNode="current"></Copy>
+      <Prev :current="current"></Prev>
+      <Next :current="current"></Next>
     </RightMenu>
   </div>
 </template>
 
 <script>
-import { Editor, EditorContent, FloatingMenu, BubbleMenu } from "@tiptap/vue-3";
+import { Editor, EditorContent } from "@tiptap/vue-3";
 import Extensions from "../../entities/Extensions";
 import Link from "../components/Link.vue";
 import RightMenu from "../components/RightMenu.vue";
@@ -44,8 +44,6 @@ import Next from "../operators/Next.vue";
 import RightMenuController from "../../controllers/RightMenuController";
 import { Node } from "../../models/Node";
 import NodeController from "../../controllers/NodeController";
-import Terminal from "../operators/Terminal.vue";
-import ToManual from "../operators/ToManual.vue";
 
 export default {
   props: {
@@ -53,22 +51,7 @@ export default {
       type: Node,
     },
   },
-  components: {
-    Add,
-    Copy,
-    EditorContent,
-    Edit,
-    BubbleMenu,
-    FloatingMenu,
-    Toolbar,
-    Link,
-    Rename,
-    RightMenu,
-    Next,
-    Prev,
-    Terminal,
-    ToManual,
-  },
+  components: { Add, Copy, EditorContent, Edit, Toolbar, Rename, Link, RightMenu, Next, Prev },
   data() {
     return {
       editor: null,
@@ -93,7 +76,7 @@ export default {
     },
   },
   mounted() {
-    // console.log("content block mounted, init the editor");
+    console.log("content block mounted, init the editor,editable=", this.editable);
     this.editor = new Editor({
       content: this.current.content,
       extensions: Extensions,

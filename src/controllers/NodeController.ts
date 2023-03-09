@@ -48,8 +48,7 @@ const NodeController = reactive({
         id = id ?? parseInt((new URL(location.href)).searchParams.get('id') || '0')
         console.log('set current page to', id)
 
-        // 把ID记录到URL中，刷新后页面不会变化
-        history.pushState([], "", location.pathname + "?id=" + id);
+        this.updateUrl()
         this.currentPage = Node.find(id).getFirstPage()
         this.setSideMenus()
     },
@@ -60,8 +59,8 @@ const NodeController = reactive({
 
     toggleEditable(): string {
         this.editable = !this.editable
-        history.pushState([], "", location.pathname + "?id=" + this.getCurrentPage().id + '&editable=' + this.editable);
-
+        this.updateUrl()
+        this.setCurrentPage()
         return this.editable ? '已开启编辑模式' : '已关闭编辑模式'
     },
 
@@ -82,6 +81,10 @@ const NodeController = reactive({
         this.setCurrentPage(this.getCurrentPage().id)
 
         return result
+    },
+
+    updateUrl() {
+        history.pushState([], "", location.pathname + "?id=" + this.currentPage.id + '&editable=' + this.editable);
     },
 
     delete(target: Node): string {
