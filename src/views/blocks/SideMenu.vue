@@ -58,7 +58,11 @@ export default defineComponent({
       return this.book.getTabs();
     },
     menusRoot() {
-      return this.current.getParents().find((parent) => parent.getParent().isBook);
+      if (this.bookTabs.length > 0) {
+        return this.current.getParents().find((parent) => parent.getParent().isBook);
+      }
+
+      return this.book;
     },
     menus() {
       console.log("获取左侧栏菜单");
