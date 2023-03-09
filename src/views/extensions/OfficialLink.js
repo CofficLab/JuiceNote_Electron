@@ -13,12 +13,26 @@ export default Node.create({
       },
     ];
   },
+
+  // 从HTML中把属性提取出来
+  addAttributes() {
+    return {
+      link: {
+        default: "",
+        rendered: false,
+        parseHTML: (element) => element.innerHTML,
+      },
+    };
+  },
+
   renderHTML({ HTMLAttributes }) {
     return ["official-link", mergeAttributes(HTMLAttributes, { class: "bg-cyan-800/20 p-4" }), 0];
   },
+
   addNodeView() {
     return VueNodeViewRenderer(OfficialLink);
   },
+
   addCommands() {
     return {
       setOfficialLink:
