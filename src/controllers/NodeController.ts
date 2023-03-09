@@ -48,9 +48,9 @@ const NodeController = reactive({
         id = id ?? parseInt((new URL(location.href)).searchParams.get('id') || '0')
         console.log('set current page to', id)
 
-        this.updateUrl()
         this.currentPage = Node.find(id).getFirstPage()
         this.setSideMenus()
+        this.updateUrl()
     },
 
     setRenamingNode(node: Node) {

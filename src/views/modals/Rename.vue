@@ -8,6 +8,7 @@
           type="text"
           v-model="title"
           placeholder="输入新的标题"
+          autofocus
           class="input-bordered input-primary input w-full max-w-xs bg-yellow-300/10"
           @keyup.enter="submit"
         />
