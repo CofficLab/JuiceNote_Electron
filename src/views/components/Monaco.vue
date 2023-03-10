@@ -66,19 +66,17 @@ export default defineComponent({
     },
     readOnly() {
       console.log("change readOnly option to", this.readOnly);
-      // console.log(this.editor.updateOptions({ readOnly: false }));
-      // console.log(this.editors[0].updateOptions({ readOnly: false }));
-      // this.editor = null;
-      // this.editor = monaco.editor.create(this.$refs.monaco, {
-      //   value: this.code,
-      //   language: this.language,
-      //   readOnly: false,
-      //   theme: "vs-dark",
-      //   fontSize: 14,
-      //   lineNumbers: "off",
-      //   automaticLayout: true,
-      //   minimap: { enabled: false },
-      // });
+      monaco.editor.getModels()[0].dispose();
+      monaco.editor.create(this.$refs.monaco, {
+        value: this.code,
+        language: this.language,
+        readOnly: this.readOnly,
+        theme: "vs-dark",
+        fontSize: 14,
+        lineNumbers: "off",
+        automaticLayout: true,
+        minimap: { enabled: false },
+      });
     },
   },
 });
