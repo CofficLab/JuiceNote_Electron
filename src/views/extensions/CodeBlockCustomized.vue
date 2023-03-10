@@ -1,6 +1,6 @@
 <template>
   <node-view-wrapper>
-    <div class="mb-4 rounded bg-slate-900 pb-2">
+    <div class="mb-4 rounded bg-slate-900">
       <!-- 操作栏 -->
       <div class="code-block-operators" v-if="editable">
         <div class="flex gap-4">
@@ -27,27 +27,25 @@
 
       <!-- Monaco编辑器，可修改 -->
       <Monaco
-        v-if="loadMonaco && this.editable"
+        v-if="this.editable && loadMonaco"
         :code="code"
         :language="node.attrs.language"
         :keyUpCallback="keyup"
-        :style="{ height: monacoEditorHeight }"
       ></Monaco>
 
       <!-- Monaco编辑器，只读模式。应该实例化一个Monaco，然后动态改变readonly属性，但是有BUG：动态改变整个界面会卡住 -->
       <Monaco
-        v-if="loadMonaco && !this.editable"
+        v-if="!this.editable && loadMonaco"
         :code="code"
         :language="node.attrs.language"
         :readOnly="true"
-        :style="{ height: monacoEditorHeight }"
       ></Monaco>
 
       <!-- 代码框，存储从文件系统读出的代码，然后放到Monaco编辑器中 -->
-      <node-view-content ref="nodeViewContent" v-bind:class="{ hidden: nodeViewContentHidden }" />
+      <node-view-content ref="nodeViewContent" class="hidden" />
 
       <!-- 底部的运行按钮 -->
-      <div class="mt-2 flex flex-row items-start justify-end gap-4 px-1" v-if="runButtonDisplay">
+      <div class="mt-2 flex flex-row items-start justify-end gap-4 px-1 pb-2" v-if="runButtonDisplay">
         <!-- 展示运行结果 -->
         <pre class="hidden flex-grow rounded bg-black shadow-sm ring-1" style="margin: 0"><code></code></pre>
         <button class="run btn bg-slate-900 shadow-sm" :data-code="code" :data-language="node.attrs.language">
@@ -72,10 +70,8 @@ export default {
 
   data() {
     return {
-      nodeViewContentHidden: false,
-      monacoEditorHeight: 0,
-      loadMonaco: false,
       code: "",
+      loadMonaco: false, // 获取code后再加载Monaco
     };
   },
 
@@ -124,13 +120,7 @@ export default {
   },
 
   mounted() {
-    // 先展示出来，获取高度，然后隐藏掉
-    let viewNodeContent = this.$refs.nodeViewContent.$el;
-    this.nodeViewContentHidden = true;
-
-    // Monaco Editor 初始化必须提供一个固定的高度
-    this.monacoEditorHeight = Math.min(500, viewNodeContent.scrollHeight) + "px";
-    this.code = viewNodeContent.innerText;
+    this.code = this.$refs.nodeViewContent.$el.innerText;
     this.loadMonaco = true;
   },
 

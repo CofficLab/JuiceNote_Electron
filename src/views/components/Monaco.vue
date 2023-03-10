@@ -16,6 +16,8 @@ export default defineComponent({
   data() {
     return {
       editor: null,
+      paddingTop: 10,
+      paddingBottom: 10,
     };
   },
   mounted: function () {
@@ -45,6 +47,22 @@ export default defineComponent({
       fontSize: 14,
       lineNumbers: "off",
       automaticLayout: true,
+      scrollBeyondLastLine: false,
+      contextmenu: false,
+      tabSize: 4,
+      roundedSelection: false,
+      renderLineHighlight: "none",
+      scrollbar: { vertical: "hidden", horizontal: "hidden" },
+      overviewRulerBorder: false,
+      overviewRulerLanes: 0,
+      domReadOnly: true,
+      stickyScroll: {
+        enabled: false,
+      },
+      padding: {
+        top: this.paddingTop,
+        bottom: this.paddingBottom,
+      },
       minimap: { enabled: false },
     });
 
@@ -52,7 +70,18 @@ export default defineComponent({
       // 使用 this.editor.getValue() 会导致整个界面卡住
       // https://github.com/microsoft/monaco-editor/issues/2439
       console.log("changed", monaco.editor.getModels()[monaco.editor.getModels().length - 1].getValue());
+
+      this.resetHeight();
     });
+
+    this.resetHeight();
+  },
+  methods: {
+    resetHeight() {
+      let lineCount = this.editor.getModel().getLineCount();
+      let lineHeight = this.editor.getOption(monaco.editor.EditorOption.lineHeight);
+      this.$refs.monaco.style.height = lineCount * lineHeight + this.paddingTop + this.paddingBottom + "px";
+    },
   },
   watch: {
     language() {

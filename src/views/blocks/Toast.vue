@@ -1,5 +1,5 @@
 <template>
-  <div class="toast-start toast toast-top mt-12 ml-72" v-show="message.length > 0">
+  <div class="toast-start toast toast-top mt-24 ml-72" v-show="message.length > 0">
     <div class="alert alert-success">
       <div>
         <span v-html="message"></span>
