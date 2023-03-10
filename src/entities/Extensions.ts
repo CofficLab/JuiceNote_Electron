@@ -4,7 +4,6 @@ import Link from "@tiptap/extension-link";
 import History from "@tiptap/extension-history";
 import Paragraph from "@tiptap/extension-paragraph";
 import Bold from "@tiptap/extension-bold";
-import { lowlight } from "lowlight";
 import Gapcursor from '@tiptap/extension-gapcursor'
 import Heading from "@tiptap/extension-heading";
 import BulletList from "@tiptap/extension-bullet-list";
@@ -14,7 +13,6 @@ import TableRow from "@tiptap/extension-table-row"
 import TableCell from "@tiptap/extension-table-cell"
 import TableHeader from "@tiptap/extension-table-header"
 import HardBreak from '@tiptap/extension-hard-break'
-import "highlight.js/styles/github-dark.css";
 import Brick from "../views/extensions/Brick.js";
 import Banner from "../views/extensions/Banner.js";
 import OfficialLink from "../views/extensions/OfficialLink.js";
@@ -34,11 +32,7 @@ let Extensions = [
     // FloatingMenu,
     // BubbleMenu,
     Brick,
-    CodeBlockCustomized.configure({
-        lowlight, HTMLAttributes: {
-            style: "padding-top:0"
-        }
-    }),
+    CodeBlockCustomized,
     Document,
     Gapcursor,
     HardBreak,

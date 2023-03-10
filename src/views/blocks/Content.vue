@@ -29,7 +29,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { Editor, EditorContent } from "@tiptap/vue-3";
 import Extensions from "../../entities/Extensions";
 import Link from "../components/Link.vue";

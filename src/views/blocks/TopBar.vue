@@ -1,21 +1,21 @@
 <template>
   <!-- 顶栏 -->
-  <div id="top-bar" class="draggable">
-    <div class="ml-20 flex w-full items-center lg:ml-2">
+  <div id="top-bar">
+    <div class="ml-20 flex items-center lg:ml-2">
       <Breadcrumbs :current="current"></Breadcrumbs>
     </div>
-    <div class="flex h-12 w-full flex-row items-center justify-end pr-4">
+    <div class="draggable flex-grow"></div>
+    <div class="flex h-12 flex-row items-center justify-end pr-4">
       <!-- <Languages></Languages> -->
       <BtnOfficialLink></BtnOfficialLink>
       <BtnTerminal></BtnTerminal>
       <Toast></Toast>
       <BtnPrev :current="current"></BtnPrev>
       <Home :current="current"></Home>
-      <Next
-        class="btn-ghost tooltip tooltip-bottom btn-sm btn flex w-12 items-center"
-        :current="current"
-        :showText="false"
-      ></Next>
+      <div class="btn-ghost btn-sm btn">
+        <Next :current="current" :showText="false"></Next>
+      </div>
+
       <BtnMore></BtnMore>
     </div>
   </div>

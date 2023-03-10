@@ -25,19 +25,16 @@
         <div v-html="node.attrs.language"></div>
       </div>
 
-      <!-- Monaco编辑器的代码框，指定了编程语言的时候显示 -->
+      <!-- Monaco编辑器 -->
       <Monaco
-        v-if="node.attrs.language != 'text'"
+        v-if="loadMonaco"
         ref="monaco"
-        :code="node.attrs.code"
+        :code="code"
         :language="node.attrs.language"
         :keyUpCallback="keyup"
         :readOnly="!editable"
         :style="{ height: monacoEditorHeight }"
       ></Monaco>
-
-      <!-- 普通代码框，是纯文本的时候显示 -->
-      <pre v-if="node.attrs.language == 'text'" style="margin-top: 0"><code v-html="node.attrs.code"></code></pre>
 
       <!-- 代码框，存储从文件系统读出的代码，然后放到Monaco编辑器中 -->
       <node-view-content ref="nodeViewContent" v-bind:class="{ hidden: nodeViewContentHidden }" />
@@ -46,11 +43,7 @@
       <div class="mt-2 flex flex-row items-start justify-end gap-4 px-1" v-if="runButtonDisplay">
         <!-- 展示运行结果 -->
         <pre class="hidden flex-grow rounded bg-black shadow-sm ring-1" style="margin: 0"><code></code></pre>
-        <button
-          class="run btn bg-slate-900 shadow-sm"
-          :data-code="node.attrs.code"
-          :data-language="node.attrs.language"
-        >
+        <button class="run btn bg-slate-900 shadow-sm" :data-code="code" :data-language="node.attrs.language">
           运行
         </button>
       </div>
@@ -74,6 +67,8 @@ export default {
     return {
       nodeViewContentHidden: false,
       monacoEditorHeight: 0,
+      loadMonaco: false,
+      code: "",
     };
   },
 
@@ -128,6 +123,8 @@ export default {
 
     // Monaco Editor 初始化必须提供一个固定的高度
     this.monacoEditorHeight = Math.min(500, viewNodeContent.scrollHeight) + "px";
+    this.code = viewNodeContent.innerText;
+    this.loadMonaco = true;
   },
 
   props: nodeViewProps,

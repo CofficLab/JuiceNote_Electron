@@ -14,10 +14,13 @@ import { defineComponent } from "vue";
 export default defineComponent({
   props: ["code", "keyUpCallback", "language", "readOnly"],
   data() {
-    return { editor: null };
+    return {
+      editor: null,
+      editorOrder: 0,
+      editors: [],
+    };
   },
   mounted: function () {
-    // console.log("init monaco editor");
     self.MonacoEnvironment = {
       getWorker(_, label) {
         if (label === "json") {
@@ -36,7 +39,6 @@ export default defineComponent({
       },
     };
 
-    // console.log("初始化Monaco，language=", this.language);
     this.editor = monaco.editor.create(this.$refs.monaco, {
       value: this.code,
       language: this.language,
@@ -48,14 +50,35 @@ export default defineComponent({
       minimap: { enabled: false },
     });
 
-    // 键盘输入后，执行的回调
-    this.editor.onKeyUp(() => {
-      this.keyUpCallback(editor.getValue());
+    this.editors.push(this.editor);
+
+    this.editorOrder = monaco.editor.getModels().length - 1;
+    let model = monaco.editor.getModels()[this.editorOrder];
+    this.editor.getModel().onDidChangeContent((e) => {
+      // 使用 this.editor.getValue() 会导致整个界面卡住
+      // https://github.com/microsoft/monaco-editor/issues/2439
+      console.log("changed", model.getValue());
     });
   },
   watch: {
     language() {
       monaco.editor.setModelLanguage(this.editor.getModel(), this.language);
+    },
+    readOnly() {
+      console.log("change readOnly option to", this.readOnly);
+      // console.log(this.editor.updateOptions({ readOnly: false }));
+      // console.log(this.editors[0].updateOptions({ readOnly: false }));
+      // this.editor = null;
+      // this.editor = monaco.editor.create(this.$refs.monaco, {
+      //   value: this.code,
+      //   language: this.language,
+      //   readOnly: false,
+      //   theme: "vs-dark",
+      //   fontSize: 14,
+      //   lineNumbers: "off",
+      //   automaticLayout: true,
+      //   minimap: { enabled: false },
+      // });
     },
   },
 });
