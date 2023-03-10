@@ -30,7 +30,7 @@ export default CodeBlock.extend({
   },
 
   renderHTML({ node }) {
-    console.log("转换成HTML", node.attrs);
+    // console.log("转换成HTML", node.attrs);
     return ["pre", ["code", { language: node.attrs.language, run: node.attrs.run }, 0]];
   },
 });

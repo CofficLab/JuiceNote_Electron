@@ -25,14 +25,21 @@
         <div v-html="node.attrs.language"></div>
       </div>
 
-      <!-- Monaco编辑器 -->
+      <!-- Monaco编辑器，可修改 -->
       <Monaco
-        v-if="loadMonaco"
-        ref="monaco"
+        v-if="loadMonaco && this.editable"
         :code="code"
         :language="node.attrs.language"
         :keyUpCallback="keyup"
-        :readOnly="!editable"
+        :style="{ height: monacoEditorHeight }"
+      ></Monaco>
+
+      <!-- Monaco编辑器，只读模式。应该实例化一个Monaco，然后动态改变readonly属性，但是有BUG：动态改变整个界面会卡住 -->
+      <Monaco
+        v-if="loadMonaco && !this.editable"
+        :code="code"
+        :language="node.attrs.language"
+        :readOnly="true"
         :style="{ height: monacoEditorHeight }"
       ></Monaco>
 
@@ -74,7 +81,7 @@ export default {
 
   computed: {
     editable() {
-      console.log("检查Monaco Editor是否可编辑", NodeController.getEditable());
+      // console.log("检查Monaco Editor是否可编辑", NodeController.getEditable());
       return NodeController.getEditable();
     },
     monacoEditorDisplay() {

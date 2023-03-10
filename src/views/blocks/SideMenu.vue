@@ -74,8 +74,8 @@ export default defineComponent({
       setTimeout(() => {
         // 滚动到激活的菜单的章节
         var target = document.getElementById("node-" + this.current.id);
-        console.log(target);
-        console.log("需要滚动");
+        // console.log(target);
+        // console.log("需要滚动");
         if (target != null) {
           target.scrollIntoView({
             behavior: "smooth",

@@ -16,8 +16,6 @@ export default defineComponent({
   data() {
     return {
       editor: null,
-      editorOrder: 0,
-      editors: [],
     };
   },
   mounted: function () {
@@ -50,33 +48,15 @@ export default defineComponent({
       minimap: { enabled: false },
     });
 
-    this.editors.push(this.editor);
-
-    this.editorOrder = monaco.editor.getModels().length - 1;
-    let model = monaco.editor.getModels()[this.editorOrder];
-    this.editor.getModel().onDidChangeContent((e) => {
+    this.editor.getModel().onDidChangeContent(() => {
       // 使用 this.editor.getValue() 会导致整个界面卡住
       // https://github.com/microsoft/monaco-editor/issues/2439
-      console.log("changed", model.getValue());
+      console.log("changed", monaco.editor.getModels()[monaco.editor.getModels().length - 1].getValue());
     });
   },
   watch: {
     language() {
       monaco.editor.setModelLanguage(this.editor.getModel(), this.language);
-    },
-    readOnly() {
-      console.log("change readOnly option to", this.readOnly);
-      monaco.editor.getModels()[0].dispose();
-      monaco.editor.create(this.$refs.monaco, {
-        value: this.code,
-        language: this.language,
-        readOnly: this.readOnly,
-        theme: "vs-dark",
-        fontSize: 14,
-        lineNumbers: "off",
-        automaticLayout: true,
-        minimap: { enabled: false },
-      });
     },
   },
 });
