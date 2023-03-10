@@ -52,7 +52,11 @@ export default defineComponent({
       tabSize: 4,
       roundedSelection: false,
       renderLineHighlight: "none",
-      scrollbar: { vertical: "hidden", horizontal: "hidden" },
+      scrollbar: {
+        vertical: "hidden",
+        horizontal: "hidden",
+        alwaysConsumeMouseWheel: false,
+      },
       overviewRulerBorder: false,
       overviewRulerLanes: 0,
       domReadOnly: true,
