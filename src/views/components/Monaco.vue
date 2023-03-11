@@ -36,7 +36,7 @@ export default defineComponent({
       this.$refs.monaco.style.height = (this.readOnly ? height : height + 20) + "px";
     },
     setLanguage() {
-      console.log("设置Monaco Editor的Language为", this.language);
+      // console.log("设置Monaco Editor的Language为", this.language);
       monaco.editor.setModelLanguage(this.editor.getModel(), this.language);
     },
     setWorker() {

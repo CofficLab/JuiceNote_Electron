@@ -34,7 +34,7 @@ export default {
 
   methods: {
     handleUpdate() {
-      console.log("toc handle update");
+      // console.log("toc handle update");
       const headings = [];
       const transaction = this.editor.state.tr;
 

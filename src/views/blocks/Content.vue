@@ -97,8 +97,9 @@ export default {
   },
   watch: {
     changed() {
+      console.log("something changed, update editor");
       this.editor.setEditable(this.editable);
-      this.editor.commands.setContent(this.current.content, false);
+      this.editor.commands.setContent(this.current.content, true);
     },
   },
   beforeUnmount() {
