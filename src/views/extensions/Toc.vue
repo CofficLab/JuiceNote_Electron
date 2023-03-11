@@ -71,43 +71,39 @@ export default {
     this.$nextTick(this.handleUpdate);
 
     // 监听滚动的距离以高亮toc菜单
-    window.addEventListener(
-      "scroll",
-      function (e) {
-        if (!e.target) return;
+    document.getElementById("editor-content-container").addEventListener("scroll", function (e) {
+      if (!e.target) return;
 
-        // 已经滚动了多少距离
-        var scrollTop = e.target.scrollTop;
-        // 正文DOM
-        var proseDom = document.getElementsByClassName("prose").item(0);
-        // 正文里的标题
-        var titleDoms = proseDom?.querySelectorAll("h2,h3,h4");
+      // 已经滚动了多少距离
+      var scrollTop = e.target.scrollTop;
+      // 正文DOM
+      var proseDom = document.getElementsByClassName("prose").item(0);
+      // 正文里的标题
+      var titleDoms = proseDom?.querySelectorAll("h2,h3,h4");
 
-        if (!titleDoms) return;
+      if (!titleDoms) return;
 
-        for (var i = 0; i < titleDoms.length; i++) {
-          var title = titleDoms.item(i);
-          if (!title) return;
+      for (var i = 0; i < titleDoms.length; i++) {
+        var title = titleDoms.item(i);
+        if (!title) return;
 
-          // 当前标题离顶部的距离
-          var offsetTop = title.offsetTop;
-          if (scrollTop - offsetTop > 0 && scrollTop - offsetTop < 20) {
-            var aDoms = document.getElementsByClassName("toc").item(0)?.getElementsByTagName("a");
-            if (!aDoms) return;
+        // 当前标题离顶部的距离
+        var offsetTop = title.offsetTop;
+        if (scrollTop - offsetTop > 0 && scrollTop - offsetTop < 20) {
+          var aDoms = document.getElementsByClassName("toc").item(0)?.getElementsByTagName("a");
+          if (!aDoms) return;
 
-            for (var j = 0; j < aDoms.length; j++) {
-              var a = aDoms.item(j);
-              if (a != null && a.attributes["href"].nodeValue == "#" + title?.id) {
-                a.classList.add("bg-sky-300/30");
-              } else {
-                a?.classList.remove("bg-sky-300/30");
-              }
+          for (var j = 0; j < aDoms.length; j++) {
+            var a = aDoms.item(j);
+            if (a != null && a.attributes["href"].nodeValue == "#" + title?.id) {
+              a.classList.add("bg-sky-300/30");
+            } else {
+              a?.classList.remove("bg-sky-300/30");
             }
           }
         }
-      },
-      true
-    );
+      }
+    });
   },
 };
 </script>
