@@ -21,65 +21,10 @@ export default defineComponent({
     };
   },
   mounted: function () {
-    self.MonacoEnvironment = {
-      getWorker(_, label) {
-        if (label === "json") {
-          return new jsonWorker();
-        }
-        if (label === "css" || label === "scss" || label === "less") {
-          return new cssWorker();
-        }
-        if (label === "html" || label === "handlebars" || label === "razor") {
-          return new htmlWorker();
-        }
-        if (label === "typescript" || label === "javascript") {
-          return new tsWorker();
-        }
-        return new editorWorker();
-      },
-    };
-
-    this.editor = monaco.editor.create(this.$refs.monaco, {
-      value: this.code,
-      language: this.language,
-      readOnly: this.readOnly,
-      theme: "vs-dark",
-      fontSize: 14,
-      lineNumbers: "off",
-      automaticLayout: true,
-      scrollBeyondLastLine: false,
-      contextmenu: false,
-      tabSize: 4,
-      roundedSelection: false,
-      renderLineHighlight: "none",
-      formatOnPaste: true,
-      scrollbar: {
-        vertical: "hidden",
-        horizontal: "hidden",
-        alwaysConsumeMouseWheel: false,
-      },
-      overviewRulerBorder: false,
-      overviewRulerLanes: 0,
-      domReadOnly: true,
-      stickyScroll: {
-        enabled: false,
-      },
-      padding: {
-        top: this.paddingTop,
-        bottom: this.paddingBottom,
-      },
-      minimap: { enabled: false },
-    });
-
-    this.editor.getModel().onDidChangeContent(() => {
-      // 使用 this.editor.getValue() 会导致整个界面卡住
-      // https://github.com/microsoft/monaco-editor/issues/2439
-      console.log("changed", monaco.editor.getModels()[monaco.editor.getModels().length - 1].getValue());
-      this.keyUpCallback(monaco.editor.getModels()[monaco.editor.getModels().length - 1].getValue());
-      this.resetHeight();
-    });
-
+    this.setWorker();
+    this.setEditor();
     this.resetHeight();
+    this.setLanguage();
   },
   methods: {
     resetHeight() {
@@ -88,10 +33,74 @@ export default defineComponent({
       let height = lineCount * lineHeight + this.paddingTop + this.paddingBottom;
       this.$refs.monaco.style.height = (this.readOnly ? height : height + 20) + "px";
     },
+    setLanguage() {
+      console.log("设置Monaco Editor的Language为", this.language);
+      monaco.editor.setModelLanguage(this.editor.getModel(), this.language);
+    },
+    setWorker() {
+      self.MonacoEnvironment = {
+        getWorker(_, label) {
+          if (label === "json") {
+            return new jsonWorker();
+          }
+          if (label === "css" || label === "scss" || label === "less") {
+            return new cssWorker();
+          }
+          if (label === "html" || label === "handlebars" || label === "razor") {
+            return new htmlWorker();
+          }
+          if (label === "typescript" || label === "javascript") {
+            return new tsWorker();
+          }
+          return new editorWorker();
+        },
+      };
+    },
+    setEditor() {
+      this.editor = monaco.editor.create(this.$refs.monaco, {
+        value: this.code,
+        language: this.language,
+        readOnly: this.readOnly,
+        theme: "vs-dark",
+        fontSize: 14,
+        lineNumbers: "off",
+        automaticLayout: true,
+        scrollBeyondLastLine: false,
+        contextmenu: false,
+        tabSize: 4,
+        roundedSelection: false,
+        renderLineHighlight: "none",
+        formatOnPaste: true,
+        scrollbar: {
+          vertical: "hidden",
+          horizontal: "hidden",
+          alwaysConsumeMouseWheel: false,
+        },
+        overviewRulerBorder: false,
+        overviewRulerLanes: 0,
+        domReadOnly: true,
+        stickyScroll: {
+          enabled: false,
+        },
+        padding: {
+          top: this.paddingTop,
+          bottom: this.paddingBottom,
+        },
+        minimap: { enabled: false },
+      });
+
+      this.editor.getModel().onDidChangeContent(() => {
+        // 使用 this.editor.getValue() 会导致整个界面卡住
+        // https://github.com/microsoft/monaco-editor/issues/2439
+        console.log("changed", monaco.editor.getModels()[monaco.editor.getModels().length - 1].getValue());
+        this.keyUpCallback(monaco.editor.getModels()[monaco.editor.getModels().length - 1].getValue());
+        this.resetHeight();
+      });
+    },
   },
   watch: {
     language() {
-      monaco.editor.setModelLanguage(this.editor.getModel(), this.language);
+      this.setLanguage();
     },
   },
 });

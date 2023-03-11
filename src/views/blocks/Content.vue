@@ -13,7 +13,7 @@
     </div>
 
     <!-- 编辑框 -->
-    <div id="editor-content-container" @click="destroyRightMenu" @contextmenu.prevent="showRightMenu">
+    <div id="editor-content-container" @contextmenu.prevent="showRightMenu">
       <editor-content :editor="editor" class="prose w-full xl:prose-lg" />
     </div>
 
@@ -57,7 +57,7 @@ export default {
   components: { CreateChild, Copy, EditorContent, Edit, Toolbar, Rename, Link, RightMenu, Next, Prev, Delete },
   data() {
     return {
-      editor: null,
+      editor: undefined,
       currentTab: 0,
       rightClickEvent: null,
     };
