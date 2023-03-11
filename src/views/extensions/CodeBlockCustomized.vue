@@ -94,7 +94,7 @@ export default {
 
   methods: {
     keyup(value) {
-      // console.log("code block key up,value is", value);
+      console.log("更新代码块的内容为", value);
       this.updateAttributes({
         code: value,
       });
@@ -120,7 +120,7 @@ export default {
   },
 
   mounted() {
-    this.code = this.$refs.nodeViewContent.$el.innerText;
+    this.code = this.node.attrs.code;
     this.loadMonaco = true;
   },
 

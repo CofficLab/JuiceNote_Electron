@@ -52,6 +52,7 @@ export default defineComponent({
       tabSize: 4,
       roundedSelection: false,
       renderLineHighlight: "none",
+      formatOnPaste: true,
       scrollbar: {
         vertical: "hidden",
         horizontal: "hidden",
@@ -74,7 +75,7 @@ export default defineComponent({
       // 使用 this.editor.getValue() 会导致整个界面卡住
       // https://github.com/microsoft/monaco-editor/issues/2439
       console.log("changed", monaco.editor.getModels()[monaco.editor.getModels().length - 1].getValue());
-
+      this.keyUpCallback(monaco.editor.getModels()[monaco.editor.getModels().length - 1].getValue());
       this.resetHeight();
     });
 
@@ -84,7 +85,8 @@ export default defineComponent({
     resetHeight() {
       let lineCount = this.editor.getModel().getLineCount();
       let lineHeight = this.editor.getOption(monaco.editor.EditorOption.lineHeight);
-      this.$refs.monaco.style.height = lineCount * lineHeight + this.paddingTop + this.paddingBottom + "px";
+      let height = lineCount * lineHeight + this.paddingTop + this.paddingBottom;
+      this.$refs.monaco.style.height = (this.readOnly ? height : height + 20) + "px";
     },
   },
   watch: {
