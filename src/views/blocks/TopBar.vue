@@ -10,12 +10,9 @@
       <BtnOfficialLink></BtnOfficialLink>
       <BtnTerminal></BtnTerminal>
       <Toast></Toast>
-      <BtnPrev :current="current"></BtnPrev>
-      <Home :current="current"></Home>
-      <div class="btn-ghost btn-sm btn">
-        <Next :current="current" :showText="false"></Next>
-      </div>
-
+      <Prev class="btn-ghost btn-sm btn" :showText="false"></Prev>
+      <Home class="btn-ghost btn-sm btn"></Home>
+      <Next class="btn-ghost btn-sm btn" :showText="false"></Next>
       <BtnMore></BtnMore>
     </div>
   </div>
@@ -28,14 +25,14 @@ import Home from "../operators/Home.vue";
 import BtnMore from "../components/BtnMore.vue";
 import Next from "../operators/Next.vue";
 import BtnOfficialLink from "../components/BtnOfficialLink.vue";
-import BtnPrev from "../components/BtnPrev.vue";
+import Prev from "../operators/Prev.vue";
 import BtnTerminal from "../components/BtnTerminal.vue";
 import Languages from "../components/Languages.vue";
 import Breadcrumbs from "./Breadcrumbs.vue";
 import Toast from "./Toast.vue";
 
 export default defineComponent({
-  components: { Breadcrumbs, Languages, BtnOfficialLink, BtnTerminal, Toast, BtnPrev, Home, Next, BtnMore },
+  components: { Breadcrumbs, Languages, BtnOfficialLink, BtnTerminal, Toast, Prev, Home, Next, BtnMore },
   props: { current: { type: Node, required: true } },
 });
 </script>

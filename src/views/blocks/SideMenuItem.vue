@@ -2,7 +2,7 @@
   <div>
     <!-- 是一个页面 -->
     <li v-if="item.isPage">
-      <Link class="flex gap-4 xl:text-lg" :id="item.id" :current="current">
+      <Link class="flex gap-4 xl:text-lg" :id="item.id" :node="item">
         <DynamicPadding :count="item.level - 3"></DynamicPadding>
         {{ item.title }}
       </Link>
@@ -31,7 +31,7 @@
 
     <!-- 是一个章节，且是TAB -->
     <li v-if="item.isChapter && item.isTab">
-      <Link class="flex gap-4 xl:text-lg" :id="item.id" :current="current">
+      <Link class="flex gap-4 xl:text-lg" :id="item.id" :node="item">
         <DynamicPadding :count="item.level - 3"></DynamicPadding>
         {{ item.title }}
       </Link>
@@ -48,7 +48,7 @@
       <span> <span class="ml-1" v-if="item.level > 3" v-for="i in item.level - 3"></span>{{ item.title }}</span>
     </li>
     <li v-if="item.isChapter && item.getChildren().length == 0">
-      <Link class="flex gap-4" v-bind:id="item.id" :current="current"> _空_ </Link>
+      <Link class="flex gap-4" v-bind:id="item.id" :node="item"> _空_ </Link>
     </li>
   </div>
 </template>

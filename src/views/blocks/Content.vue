@@ -7,7 +7,7 @@
 
     <!-- TAB -->
     <div id="tabs-container" v-if="current.getParent().isTab">
-      <Link v-for="sibling in current.getSiblings()" :id="sibling.id" class="tab-lifted tab" :current="current">{{
+      <Link v-for="sibling in current.getSiblings()" :id="sibling.id" class="tab-lifted tab" :node="current">{{
         sibling.title
       }}</Link>
     </div>
@@ -21,10 +21,11 @@
     <RightMenu v-if="shouldShowRightMenu" :event="rightClickEvent">
       <Edit :node="current"></Edit>
       <Rename :node="current"></Rename>
-      <Add :bookNode="current"></Add>
+      <CreateChild :node="current"></CreateChild>
       <Copy :bookNode="current"></Copy>
-      <Prev :current="current"></Prev>
-      <Next :current="current"></Next>
+      <Prev :node="current" :current="current"></Prev>
+      <Next :node="current"></Next>
+      <Delete></Delete>
     </RightMenu>
   </div>
 </template>
@@ -35,7 +36,7 @@ import Extensions from "../../entities/Extensions";
 import Link from "../components/Link.vue";
 import RightMenu from "../components/RightMenu.vue";
 import Toolbar from "./Toolbar.vue";
-import Add from "../operators/Add.vue";
+import CreateChild from "../operators/CreateChild.vue";
 import Copy from "../operators/Copy.vue";
 import Edit from "../operators/Edit.vue";
 import Rename from "../operators/Rename.vue";
@@ -44,14 +45,16 @@ import Next from "../operators/Next.vue";
 import RightMenuController from "../../controllers/RightMenuController";
 import { Node } from "../../models/Node";
 import NodeController from "../../controllers/NodeController";
+import Delete from "../operators/Delete.vue";
 
 export default {
   props: {
     current: {
       type: Node,
+      required: true,
     },
   },
-  components: { Add, Copy, EditorContent, Edit, Toolbar, Rename, Link, RightMenu, Next, Prev },
+  components: { CreateChild, Copy, EditorContent, Edit, Toolbar, Rename, Link, RightMenu, Next, Prev, Delete },
   data() {
     return {
       editor: null,

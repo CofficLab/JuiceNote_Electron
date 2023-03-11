@@ -3,6 +3,9 @@
   <div class="modal-open modal" v-show="adding">
     <Transition name="bounce">
       <div class="modal-box" v-if="adding">
+        <p class="mb-6">
+          为<span class="text-lg font-bold">「{{ parent.title }}」</span>添加子节点
+        </p>
         <input
           ref="title"
           type="text"
@@ -23,7 +26,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import RouteController from "../../controllers/RouteController";
+import NodeController from "../../controllers/NodeController";
 import ToastController from "../../controllers/ToastController";
 export default defineComponent({
   data() {
@@ -32,7 +35,8 @@ export default defineComponent({
     };
   },
   computed: {
-    adding: () => RouteController.adding,
+    adding: () => NodeController.adding,
+    parent: () => NodeController.createChildOf,
   },
   watch: {
     adding: function () {
@@ -45,34 +49,24 @@ export default defineComponent({
   },
   methods: {
     hide() {
-      RouteController.adding = false;
+      NodeController.adding = false;
     },
     submitPageForm() {
-      let current = RouteController.getCurrentPage();
-      let parent = current.getParent();
-
-      if (parent.isEmpty()) return console.error("父节点不存在，无法创建");
-
-      let result = parent.createChild(this.title);
-      if (typeof result == "string") {
-        ToastController.set(result);
+      let id = this.parent.createChildPage(this.title);
+      if (typeof id == "string") {
+        ToastController.set(id);
       } else {
-        RouteController.goto(result.id);
+        NodeController.setCurrentPage(id);
         this.hide();
         this.title = "";
       }
     },
     submitChapterForm() {
-      let current = RouteController.getCurrentPage();
-      let parent = current.getParent();
-
-      if (parent.isEmpty()) return console.error("父节点不存在，无法创建");
-
-      let result = parent.createFolderChild(this.title);
-      if (typeof result == "string") {
-        ToastController.set(result);
+      let id = this.parent.createChildChapter(this.title);
+      if (typeof id == "string") {
+        ToastController.set(id);
       } else {
-        RouteController.goto(result.id);
+        NodeController.setCurrentPage(id);
         this.hide();
         this.title = "";
       }

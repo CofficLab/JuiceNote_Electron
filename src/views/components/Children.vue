@@ -7,7 +7,7 @@
     ghost-class="btn-ghost"
     @end="dragEnd"
     ><template #item="{ element }">
-      <Link class="btn flex gap-4" :id="element.id" :current="current">{{ element.title }}</Link>
+      <Link class="btn flex gap-4" :id="element.id" :node="current">{{ element.title }}</Link>
     </template>
   </draggable>
 </template>

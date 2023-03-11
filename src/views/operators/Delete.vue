@@ -7,9 +7,10 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import RouteController from "../../controllers/RouteController";
 import ToastController from "../../controllers/ToastController";
 import Trash from "../../assets/icons/trash.svg";
+import { Node } from "../../models/Node";
+import NodeController from "../../controllers/NodeController";
 export default defineComponent({
   props: {
     showText: {
@@ -22,10 +23,19 @@ export default defineComponent({
       default: true,
       required: false,
     },
+    node: {
+      type: Node,
+      required: false,
+    },
+  },
+  computed: {
+    target() {
+      return this.node ?? NodeController.getCurrentPage();
+    },
   },
   methods: {
     deleteBookNode() {
-      ToastController.set(RouteController.delete(this.bookNode.id));
+      ToastController.set(NodeController.delete(this.target));
     },
   },
   components: { Trash },

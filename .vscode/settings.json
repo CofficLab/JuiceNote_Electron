@@ -30,6 +30,7 @@
     "postcss",
     "prismjs",
     "querystring",
+    "Rowid",
     "stackoverflow",
     "tinymce",
     "Tiptap",

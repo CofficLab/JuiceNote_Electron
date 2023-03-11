@@ -1,24 +1,24 @@
 <template>
-  <Link v-bind:class="!prev ? 'btn-disabled' : ''" data-tip="上一页" :current="current" :id="prev?.id"
-    ><ArrowLeftCircle></ArrowLeftCircle>上一页</Link
-  >
+  <div @click="goPrev">
+    <ArrowLeftCircle v-if="showIcon"></ArrowLeftCircle>
+    <span v-if="showText">上一页</span>
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import ArrowLeftCircle from "../../assets/icons/arrow-left-circle.svg";
-import Link from "../components/Link.vue";
-import { Node } from "../../models/Node";
+import NodeController from "../../controllers/NodeController";
 
 export default defineComponent({
-  props: { current: { type: Node, required: true } },
-  components: {
-    ArrowLeftCircle,
-    Link,
+  components: { ArrowLeftCircle },
+  props: {
+    showIcon: { type: Boolean, default: true },
+    showText: { type: Boolean, default: true },
   },
-  computed: {
-    prev() {
-      return this.current.getPreviousPage();
+  methods: {
+    goPrev() {
+      NodeController.setCurrentPage(NodeController.getCurrentPage().getPreviousPage().id);
     },
   },
 });

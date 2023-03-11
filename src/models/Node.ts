@@ -35,7 +35,7 @@ class Node {
 
             this.id = id ?? 0
             this.title = title ?? '无效节点'
-            this.content = content ?? '无效节点'
+            this.content = content ?? '[空]'
             this.isBook = isBook
             this.isChapter = isChapter
             this.isTab = isTab
@@ -50,6 +50,17 @@ class Node {
 
     checkIsHomePage(): boolean {
         return this.id == Node.getFirstBook().getFirstPage().id
+    }
+
+    createChildPage(title: string, content: string): Number {
+        let result = db.prepare('insert into nodes (parent_id,title,content,is_page) values (?,?,?,1)').run(this.id, title, content)
+
+        return result.lastInsertRowid
+    }
+
+    createChildChapter(title: string): Number {
+        let result = db.prepare('insert into nodes (parent_id,title,is_page,is_chapter) values (?,?,0,1)').run(this.id, title)
+        return result.lastInsertRowid
     }
 
     getBook(): Node {
@@ -113,6 +124,13 @@ class Node {
         return new Node(result ?? {})
     }
 
+    getLastChild(): Node {
+        let result = db.prepare('select * from nodes where parent_id=? order by priority desc').get(this.id)
+
+        // console.log('get last child', result)
+        return result ? new Node(result) : emptyNode
+    }
+
     getFirstPage(): Node {
         // console.log('get first page,current is', this)
         if (this.isPage || this.isEmpty) return this
@@ -120,7 +138,19 @@ class Node {
         return this.getFirstChild().getFirstPage()
     }
 
+    getLastPage(): Node {
+        // console.log('get last page,current is', this)
+        if (this.isPage || this.isEmpty) return this
+
+        return this.getLastChild().getLastPage()
+    }
+
     getPrevious(): Node {
+        // 如果当前节点是父节点的第一个节点，返回父节点的上一个节点
+        if (this.id == this.getParent().getFirstChild().id) {
+            return this.getParent().getPrevious()
+        }
+
         let next = db.prepare(`
             select * from nodes 
             where parent_id=? and id!=? and priority<=?
@@ -131,10 +161,15 @@ class Node {
     }
 
     getPreviousPage(): Node {
-        return this.getPrevious().getFirstPage()
+        return this.getPrevious().getLastPage()
     }
 
     getNext(): Node {
+        // 如果当前节点是父节点的最后一个节点，返回父节点的下一个节点
+        if (this.id == this.getParent().getLastChild().id) {
+            return this.getParent().getNext()
+        }
+
         let next = db.prepare(`
             select * from nodes 
             where parent_id=? and id!=? and priority>=?
@@ -189,15 +224,17 @@ class Node {
         return "已删除「" + this.title + "」"
     }
 
-    transformToManual(): string {
-        db.prepare('update nodes set is_manual=1 where id=?').run(this.id)
-        return '已转换成手册'
+    transformToTab(): string {
+        this.createChild(this.title + '子标签', this.content)
+        db.prepare('update nodes set is_chapter=1,is_tab=1,is_page=0 where id=?').run(this.id)
+        return '已转换成标签'
     }
 
     static find(id: number): Node {
         if (id == 0) return Node.getFirstBook()
         let result = db.prepare('select * from nodes where id=?').get(id)
 
+        // console.log('查找节点', id, '结果', result)
         return new Node(result)
     }
 

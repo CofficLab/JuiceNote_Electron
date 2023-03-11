@@ -8,9 +8,18 @@ const NodeController = reactive({
     isHomePage: (new URL(location.href)).searchParams.get('id') == '/',
     editable: (new URL(location.href)).searchParams.get('editable') == 'true',
     renderedHtml: '',
-    adding: false,           // 用于判断是否显示添加的表单
-    renamingNode: emptyNode, // 正在重命名的图书节点
+    adding: false,            // 用于判断是否显示添加的表单
+    renamingNode: emptyNode,  // 正在重命名的图书节点
+    createChildOf: emptyNode, // 正在添加子节点的节点
     sideMenus: [emptyNode],
+
+    createChildPage(): Number {
+        return this.getCurrentPage().createChildPage('子页面', '')
+    },
+
+    createChildChapter(): Number {
+        return this.getCurrentPage().createChildChapter('子章节')
+    },
 
     getCurrentPage(): Node {
         // console.log('get current page')
@@ -59,6 +68,10 @@ const NodeController = reactive({
 
     setRenamingNode(node: Node) {
         this.renamingNode = node
+    },
+
+    setCreateChildOf(node: Node) {
+        this.createChildOf = node
     },
 
     toggleEditable(): string {

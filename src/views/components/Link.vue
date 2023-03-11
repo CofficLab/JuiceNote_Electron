@@ -11,8 +11,10 @@
     <!-- 右键菜单 -->
     <RightMenu v-if="shouldShowRightMenu" v-bind:event="rightClickEvent">
       <li><Rename :node="target"></Rename></li>
-      <li><Edit :bookNode="current"></Edit></li>
-      <li><Delete :bookNode="current"></Delete></li>
+      <li><Edit :bookNode="node"></Edit></li>
+      <li><ToTab :node="node"></ToTab></li>
+      <li><Delete :bookNode="node"></Delete></li>
+      <li><CreateChild :node="node"></CreateChild></li>
     </RightMenu>
   </div>
 </template>
@@ -22,13 +24,15 @@ import { defineComponent } from "vue";
 import Rename from "../operators/Rename.vue";
 import Edit from "../operators/Edit.vue";
 import Delete from "../operators/Delete.vue";
+import ToTab from "../operators/ToTab.vue";
 import RightMenu from "./RightMenu.vue";
 import RightMenuController from "../../controllers/RightMenuController";
 import { Node } from "../../models/Node";
 import NodeController from "../../controllers/NodeController";
+import CreateChild from "../operators/CreateChild.vue";
 
 export default defineComponent({
-  props: { id: { type: Number, required: true }, current: { type: Node, required: true } },
+  props: { id: { type: Number, required: true }, node: { type: Node, required: true } },
   data() {
     return {
       rightClickEvent: null,
@@ -47,6 +51,7 @@ export default defineComponent({
     target() {
       return NodeController.getNodeById(this.id);
     },
+    current: () => NodeController.getCurrentPage(),
   },
   methods: {
     shouldActive: function (id: number) {
@@ -66,6 +71,6 @@ export default defineComponent({
       RightMenuController.shouldShow = true;
     },
   },
-  components: { Rename, RightMenu, Edit, Delete },
+  components: { Rename, RightMenu, Edit, Delete, ToTab, CreateChild },
 });
 </script>

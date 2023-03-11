@@ -3,7 +3,7 @@
     v-bind:class="!prev ? 'btn-disabled' : ''"
     class="btn-ghost tooltip tooltip-bottom btn-sm btn flex w-12 items-center"
     data-tip="上一页"
-    :current="current"
+    :node="current"
     :id="prev?.id"
     ><ArrowLeftCircle></ArrowLeftCircle
   ></Link>

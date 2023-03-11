@@ -12,7 +12,7 @@
 
         <!-- 图书的TAB，比如：教程、手册 -->
         <div class="tabs flex justify-center" v-if="bookTabs.length > 0">
-          <Link class="tab-lifted tab" v-for="tab in bookTabs" :id="tab.id" :current="current">{{ tab.title }}</Link>
+          <Link class="tab-lifted tab" v-for="tab in bookTabs" :id="tab.id" :node="current">{{ tab.title }}</Link>
         </div>
       </div>
     </div>
@@ -69,25 +69,40 @@ export default defineComponent({
       return this.menusRoot.getChildren();
     },
   },
+  methods: {
+    // 滚动到激活的菜单的章节
+    scrollToCurrent() {
+      var target = document.getElementById("node-" + this.current.id);
+      // console.log(target);
+      // console.log("需要滚动");
+      if (target != null) {
+        target.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+      }
+    },
+  },
   mounted: function () {
     this.$nextTick(() => {
       setTimeout(() => {
-        // 滚动到激活的菜单的章节
-        var target = document.getElementById("node-" + this.current.id);
-        // console.log(target);
-        // console.log("需要滚动");
-        if (target != null) {
-          target.scrollIntoView({
-            behavior: "smooth",
-            block: "center",
-          });
-        }
+        this.scrollToCurrent();
       }, 600);
     });
 
     if (this.bookTabs.length > 0) {
       this.activatedBookTab = this.bookTabs[0];
     }
+  },
+  watch: {
+    current() {
+      console.log("current发生变化，滚动到current");
+      this.$nextTick(() => {
+        setTimeout(() => {
+          this.scrollToCurrent();
+        }, 600);
+      });
+    },
   },
   components: { Link, SideMenuItem, Children },
 });
