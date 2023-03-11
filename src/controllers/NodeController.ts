@@ -100,6 +100,13 @@ const NodeController = reactive({
         return result
     },
 
+    updateContent(node: Node, content: string): string {
+        let result = node.updateContent(content)
+        this.setCurrentPage(this.getCurrentPage().id)
+
+        return result
+    },
+
     updateUrl() {
         history.pushState([], "", location.pathname + "?id=" + this.currentPage.id + '&editable=' + this.editable);
     },

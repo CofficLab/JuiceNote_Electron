@@ -16,6 +16,7 @@ export default defineComponent({
   data() {
     return {
       editor: null,
+      index: 0, // 当前editor是整个页面的第几个editor，从0开始
       paddingTop: 10,
       paddingBottom: 10,
     };
@@ -25,6 +26,7 @@ export default defineComponent({
     this.setEditor();
     this.resetHeight();
     this.setLanguage();
+    this.index = monaco.editor.getModels().length - 1;
   },
   methods: {
     resetHeight() {
@@ -92,8 +94,8 @@ export default defineComponent({
       this.editor.getModel().onDidChangeContent(() => {
         // 使用 this.editor.getValue() 会导致整个界面卡住
         // https://github.com/microsoft/monaco-editor/issues/2439
-        console.log("changed", monaco.editor.getModels()[monaco.editor.getModels().length - 1].getValue());
-        this.keyUpCallback(monaco.editor.getModels()[monaco.editor.getModels().length - 1].getValue());
+        console.log("changed", monaco.editor.getModels()[this.index].getValue());
+        this.keyUpCallback(monaco.editor.getModels()[this.index].getValue());
         this.resetHeight();
       });
     },

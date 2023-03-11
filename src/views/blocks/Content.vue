@@ -94,7 +94,7 @@ export default {
   },
   watch: {
     current() {
-      // console.log("content changed");
+      console.log("current changed，更新页面内容");
       this.editor.commands.setContent(this.current.content, true);
     },
     editable() {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="dropdown dropdown-hover">
+    <div class="dropdown-hover dropdown">
       <label tabindex="0">标题</label>
       <ul tabindex="0">
         <li
@@ -18,7 +18,7 @@
       </ul>
     </div>
 
-    <div class="dropdown dropdown-hover">
+    <div class="dropdown-hover dropdown">
       <label tabindex="0">列表</label>
       <ul tabindex="0">
         <li
@@ -48,7 +48,7 @@
       </ul>
     </div>
 
-    <div class="dropdown dropdown-bottom dropdown-hover">
+    <div class="dropdown-hover dropdown dropdown-bottom">
       <label tabindex="0">表格</label>
       <ul tabindex="0">
         <li>
@@ -149,7 +149,7 @@ export default defineComponent({
 
   methods: {
     save() {
-      ToastController.set(this.current.updateContent(this.editor.getHTML()));
+      ToastController.set(NodeController.updateContent(this.current, this.editor.getHTML()));
     },
     saveAndShow() {
       this.save();
