@@ -27,6 +27,8 @@
       <Next :node="current"></Next>
       <Delete></Delete>
     </RightMenu>
+
+    <Toc :editor="editor"></Toc>
   </div>
 </template>
 
@@ -46,6 +48,7 @@ import RightMenuController from "../../controllers/RightMenuController";
 import { Node } from "../../models/Node";
 import NodeController from "../../controllers/NodeController";
 import Delete from "../operators/Delete.vue";
+import Toc from "./Toc.vue";
 
 export default {
   props: {
@@ -54,7 +57,7 @@ export default {
       required: true,
     },
   },
-  components: { CreateChild, Copy, EditorContent, Edit, Toolbar, Rename, Link, RightMenu, Next, Prev, Delete },
+  components: { CreateChild, Copy, EditorContent, Edit, Toolbar, Rename, Link, RightMenu, Next, Prev, Delete, Toc },
   data() {
     return {
       editor: undefined,
