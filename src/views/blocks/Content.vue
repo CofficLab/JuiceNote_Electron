@@ -27,8 +27,6 @@
       <Next :node="current"></Next>
       <Delete></Delete>
     </RightMenu>
-
-    <Toc :editor="editor"></Toc>
   </div>
 </template>
 
@@ -48,7 +46,6 @@ import RightMenuController from "../../controllers/RightMenuController";
 import { Node } from "../../models/Node";
 import NodeController from "../../controllers/NodeController";
 import Delete from "../operators/Delete.vue";
-import Toc from "./Toc.vue";
 
 export default {
   props: {
@@ -57,18 +54,23 @@ export default {
       required: true,
     },
   },
-  components: { CreateChild, Copy, EditorContent, Edit, Toolbar, Rename, Link, RightMenu, Next, Prev, Delete, Toc },
+  components: { CreateChild, Copy, EditorContent, Edit, Toolbar, Rename, Link, RightMenu, Next, Prev, Delete },
   data() {
     return {
       editor: undefined,
       currentTab: 0,
       rightClickEvent: null,
+      showToc: false,
+      headings: [],
     };
   },
   computed: {
     editable: () => NodeController.getEditable(),
     shouldShowRightMenu: function () {
       return RightMenuController.shouldShow && this.rightClickEvent;
+    },
+    changed() {
+      return { current: this.current, editable: this.editable };
     },
   },
   methods: {
@@ -82,7 +84,6 @@ export default {
     },
   },
   mounted() {
-    console.log("content block mounted, init the editor,editable=", this.editable);
     this.editor = new Editor({
       content: this.current.content,
       extensions: Extensions,
@@ -91,17 +92,11 @@ export default {
     });
 
     document.addEventListener("click", () => {
-      // console.log("检测到click事件，隐藏我的右键菜单");
       this.rightClickEvent = null;
     });
   },
   watch: {
-    current() {
-      console.log("current changed，更新页面内容");
-      this.editor.commands.setContent(this.current.content, true);
-    },
-    editable() {
-      console.log("editable changed", this.editable);
+    changed() {
       this.editor.setEditable(this.editable);
       this.editor.commands.setContent(this.current.content, false);
     },
