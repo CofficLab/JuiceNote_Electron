@@ -95,7 +95,7 @@
     </button>
     <button @click="inputLink" :class="{ 'is-active': editor.isActive('link') }">设置链接</button>
     <button @click="editor.chain().focus().unsetLink().run()" :disabled="!editor.isActive('link')">取消链接</button>
-    <button @click="insertToc">TOC</button>
+    <button @click="editor.chain().toggleToc().run()">TOC</button>
     <button @click="editor.chain().focus().addTab().run()">TAB</button>
     <button
       @click="editor.chain().focus().toggleCodeBlock().run()"
@@ -180,14 +180,6 @@ export default defineComponent({
 
       // update link
       this.editor.chain().focus().extendMarkRange("link").setLink({ href: url }).run();
-    },
-    insertToc() {
-      this.editor.commands.insertContentAt(1, "<toc></toc>", {
-        updateSelection: true,
-        parseOptions: {
-          preserveWhitespace: "full",
-        },
-      });
     },
   },
 });

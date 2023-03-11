@@ -5,13 +5,7 @@
       style="padding-left: 0"
     >
       <div v-for="(heading, index) in headings">
-        <li
-          :class="`toc__item--${heading.level}`"
-          class="list-none rounded-none"
-          style="margin: 0"
-          :key="index"
-          v-if="heading.level > 1"
-        >
+        <li class="list-none rounded-none" style="margin: 0" :key="index">
           <a :href="`#${heading.id}`" class="no-underline">
             <DynamicPadding :count="heading.level - 1"></DynamicPadding>
             {{ heading.text }}
@@ -40,7 +34,7 @@ export default {
 
   methods: {
     handleUpdate() {
-      // console.log("toc handle update");
+      console.log("toc handle update");
       const headings = [];
       const transaction = this.editor.state.tr;
 
