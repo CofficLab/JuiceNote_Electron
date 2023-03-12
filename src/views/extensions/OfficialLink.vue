@@ -25,11 +25,25 @@ import InfoIcon from "../../assets/icons/info.svg";
 export default {
   components: { NodeViewWrapper, NodeViewContent, LinkIcon, InfoIcon },
 
+  data() {
+    return {
+      link: "",
+    };
+  },
+
   computed: {
     editable: () => NodeController.getEditable(),
-    link() {
-      return this.node.attrs.link;
+  },
+
+  methods: {
+    updateLink() {
+      this.link = this.node.content.content[0].text;
     },
+  },
+
+  mounted() {
+    this.editor.on("update", this.updateLink);
+    this.updateLink();
   },
 
   props: nodeViewProps,
