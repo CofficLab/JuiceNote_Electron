@@ -3,15 +3,14 @@
     <ul class="flex flex-row justify-center">
       <li v-for="breadcrumb in breadcrumbs" class="flex justify-center">
         <div class="breadcrumb-item" v-if="breadcrumb.getSiblings().length > 0">
-          <label tabindex="0" id="breadcrumb-name">{{ breadcrumb.title }}</label>
+          <label tabindex="0" id="breadcrumb-name"
+            >{{ breadcrumb.title }} {{ breadcrumb.isPage ? "[" + breadcrumb.id + "]" : "" }}</label
+          >
           <div class="dropdown-content mt-0 pt-4">
             <ul tabindex="0" class="rounded-box ml-32 h-96 w-52 gap-2 overflow-y-scroll bg-cyan-900/80 p-2 shadow">
               <Children :list="breadcrumb.getParent().getChildren()" :current="current"></Children>
             </ul>
           </div>
-        </div>
-        <div class="dropdown dropdown-top flex justify-center" v-else>
-          <label tabindex="0" class="self-center rounded-none">{{ breadcrumb.title }}</label>
         </div>
       </li>
     </ul>
@@ -38,7 +37,7 @@ export default defineComponent({
 #breadcrumbs {
   @apply breadcrumbs flex h-full flex-grow justify-start overflow-visible;
   .breadcrumb-item {
-    @apply dropdown dropdown-bottom dropdown-hover flex justify-center;
+    @apply dropdown-hover dropdown dropdown-bottom flex justify-center;
   }
 }
 #breadcrumb-name {

@@ -14,7 +14,7 @@
 
     <!-- 编辑框 -->
     <div id="editor-content-container" @contextmenu.prevent="showRightMenu">
-      <editor-content :editor="editor" class="prose w-full xl:prose-lg" />
+      <editor-content :editor="editor" class="prose h-screen w-full overflow-visible xl:prose-lg" />
     </div>
 
     <!-- 右键菜单 -->
@@ -89,6 +89,12 @@ export default {
       extensions: Extensions,
       autofocus: true,
       editable: this.editable,
+      injectCSS: true,
+      enableInputRules: true,
+      enablePasteRules: false,
+      parseOptions: {
+        preserveWhitespace: "full",
+      },
     });
 
     document.addEventListener("click", () => {

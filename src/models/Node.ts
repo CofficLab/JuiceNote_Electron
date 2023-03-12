@@ -1,4 +1,4 @@
-import { existsSync } from "fs";
+import { existsSync, writeFile } from "fs";
 import { join } from "path";
 import Config from "../entities/Config";
 
@@ -45,6 +45,10 @@ class Node {
             this.parentId = Object.getOwnPropertyDescriptor(dbResult, 'parent_id')?.value
 
             if (this.id == 0) this.isEmpty = true
+        }
+
+        if (this.isPage) {
+            writeFile(join(Config.renderedHtmlPath, String(this.id) + '.html'), this.content, () => { })
         }
     }
 
@@ -225,7 +229,7 @@ class Node {
     }
 
     transformToTab(): string {
-        this.createChild(this.title + '子标签', this.content)
+        this.createChildPage(this.title + '子标签', this.content)
         db.prepare('update nodes set is_chapter=1,is_tab=1,is_page=0 where id=?').run(this.id)
         return '已转换成标签'
     }
