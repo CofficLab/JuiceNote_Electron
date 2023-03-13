@@ -9,18 +9,11 @@
     </li>
 
     <!-- 是一个章节，且不是TAB -->
-    <li
-      :id="'node-' + item.id"
-      v-if="item.isChapter && !item.isTab"
-      :class="{
-        'text-indigo-400/90': item.isLesson,
-        'text-cyan-900/90': item.isManual,
-      }"
-    >
-      <span v-bind:class="{ 'text-xl': item.level < 3, 'text-lg': item.level >= 3 }">
+    <li :id="'node-' + item.id" v-if="item.isChapter && !item.isTab" class="text-indigo-400/70">
+      <Link v-bind:class="{ 'text-xl': item.level < 3, 'text-lg': item.level >= 3 }" :node="item" :id="item.id">
         <DynamicPadding :count="item.level - 3"></DynamicPadding>
         {{ item.title }}
-      </span>
+      </Link>
     </li>
     <SideMenuItem
       v-for="sub in item.getChildren()"

@@ -127,6 +127,10 @@ export default {
   @apply mt-1 flex w-full justify-center overflow-auto border-0 p-4;
 }
 .ProseMirror {
-  @apply pb-56;
+  @apply mb-24 px-2 pb-56 pt-1;
+}
+
+div.ProseMirror[contenteditable="true"] {
+  @apply ring-2;
 }
 </style>

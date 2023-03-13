@@ -111,6 +111,13 @@ const NodeController = reactive({
         history.pushState([], "", location.pathname + "?id=" + this.currentPage.id + '&editable=' + this.editable);
     },
 
+    transformToTab(node: Node): string {
+        let result = node.transformToTab()
+        this.setCurrentPage(this.getCurrentPage().id)
+
+        return result
+    },
+
     delete(target: Node): string {
         this.setCurrentPage(target.getParent().id)
 

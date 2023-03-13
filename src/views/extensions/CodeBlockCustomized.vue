@@ -48,7 +48,11 @@
       <div class="mt-2 flex flex-row items-start justify-end gap-4 px-1 pb-2" v-if="runButtonDisplay">
         <!-- 展示运行结果 -->
         <pre class="hidden flex-grow rounded bg-black shadow-sm ring-1" style="margin: 0"><code></code></pre>
-        <button class="run btn bg-slate-900 shadow-sm" :data-code="code" :data-language="node.attrs.language">
+        <button
+          class="run btn bg-slate-900 shadow-sm"
+          :data-code="node.attrs.code"
+          :data-language="node.attrs.language"
+        >
           运行
         </button>
       </div>

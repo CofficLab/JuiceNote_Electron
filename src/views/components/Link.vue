@@ -55,6 +55,8 @@ export default defineComponent({
   },
   methods: {
     shouldActive: function (id: number) {
+      if (this.node.isChapter && !this.node.isTab) return false;
+
       return (
         this.current.getParents().some((parent) => {
           return parent.id == id;

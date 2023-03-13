@@ -10,6 +10,7 @@ import { defineComponent } from "vue";
 import ArrowLeftCircle from "../../assets/icons/arrow-left-circle.svg";
 import { Node } from "../../models/Node";
 import ToastController from "../../controllers/ToastController";
+import NodeController from "../../controllers/NodeController";
 
 export default defineComponent({
   props: {
@@ -20,7 +21,7 @@ export default defineComponent({
   components: { ArrowLeftCircle },
   methods: {
     transform() {
-      return ToastController.set(this.node.transformToTab());
+      return ToastController.set(NodeController.transformToTab(this.node));
     },
   },
 });

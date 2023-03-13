@@ -15,6 +15,12 @@
         >
           H2
         </li>
+        <li
+          @click="editor.chain().focus().toggleHeading({ level: 3 }).run()"
+          :class="{ 'is-active': editor.isActive('heading', { level: 3 }) }"
+        >
+          H3
+        </li>
       </ul>
     </div>
 
@@ -48,7 +54,7 @@
       </ul>
     </div>
 
-    <div class="dropdown-hover dropdown dropdown-bottom">
+    <div class="dropdown-hover dropdown-bottom dropdown">
       <label tabindex="0">表格</label>
       <ul tabindex="0">
         <li>
