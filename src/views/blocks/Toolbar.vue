@@ -3,26 +3,44 @@
     <div class="dropdown-hover dropdown">
       <label tabindex="0">标题</label>
       <ul tabindex="0">
-        <li
-          @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
-          :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }"
-        >
-          H1
-        </li>
-        <li
-          @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
-          :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }"
-        >
-          H2
-        </li>
-        <li
-          @click="editor.chain().focus().toggleHeading({ level: 3 }).run()"
-          :class="{ 'is-active': editor.isActive('heading', { level: 3 }) }"
-        >
-          H3
-        </li>
+        <li @click="toggleHeading(1)" :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }">H1</li>
+        <li @click="toggleHeading(2)" :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }">H2</li>
+        <li @click="toggleHeading(3)" :class="{ 'is-active': editor.isActive('heading', { level: 3 }) }">H3</li>
+        <li @click="toggleHeading(4)" :class="{ 'is-active': editor.isActive('heading', { level: 4 }) }">H4</li>
+        <li @click="setParagraph()" :class="{ 'is-active': editor.isActive('paragraph') }">正文</li>
       </ul>
     </div>
+
+    <button @click="toggleBold" :disabled="!canToggleBold" :class="{ 'is-active': isBoldActive }">bold</button>
+
+    <button @click="toggleItalic" :disabled="!canToggleItalic" :class="{ 'is-active': editor.isActive('italic') }">
+      italic
+    </button>
+
+    <button @click="toggleStrike" :disabled="!canToggleStrike" :class="{ 'is-active': editor.isActive('strike') }">
+      strike
+    </button>
+
+    <button
+      @click="toggleCode"
+      :disabled="!editor.can().chain().focus().toggleCode().run()"
+      :class="{ 'is-active': editor.isActive('code') }"
+    >
+      code
+    </button>
+
+    <button
+      @click="editor.chain().focus().toggleBlockquote().run()"
+      :class="{ 'is-active': editor.isActive('blockquote') }"
+    >
+      引用
+    </button>
+
+    <button @click="editor.chain().focus().setHorizontalRule().run()">horizontal rule</button>
+    <button @click="editor.chain().focus().setHardBreak().run()">hard break</button>
+
+    <button @click="editor.chain().focus().unsetAllMarks().run()">clear marks</button>
+    <button @click="editor.chain().focus().clearNodes().run()">clear nodes</button>
 
     <div class="dropdown-hover dropdown">
       <label tabindex="0">列表</label>
@@ -51,6 +69,12 @@
         >
           liftListItem
         </li>
+        <button
+          @click="editor.chain().focus().toggleOrderedList().run()"
+          :class="{ 'is-active': editor.isActive('orderedList') }"
+        >
+          有序列表
+        </button>
       </ul>
     </div>
 
@@ -111,7 +135,7 @@
     </button>
     <button @click="editor.chain().focus().setHardBreak().run()">setHardBreak</button>
     <button @click="editor.chain().focus().undo().run()" :disabled="!editor.can().chain().focus().undo().run()">
-      取消
+      撤销
     </button>
     <button @click="editor.chain().focus().redo().run()" :disabled="!editor.can().chain().focus().redo().run()">
       恢复
@@ -153,6 +177,21 @@ export default defineComponent({
     };
   },
 
+  computed: {
+    canToggleBold() {
+      return this.editor.can().chain().focus().toggleBold().run();
+    },
+    canToggleItalic() {
+      return this.editor.can().chain().focus().toggleItalic().run();
+    },
+    canToggleStrike() {
+      return this.editor.can().chain().focus().toggleStrike().run();
+    },
+    isBoldActive() {
+      return this.editor.isActive("bold");
+    },
+  },
+
   methods: {
     save() {
       ToastController.set(NodeController.updateContent(this.current, this.editor.getHTML()));
@@ -160,6 +199,24 @@ export default defineComponent({
     saveAndShow() {
       this.save();
       NodeController.toggleEditable();
+    },
+    setParagraph() {
+      this.editor.chain().focus().setParagraph().run();
+    },
+    toggleBold() {
+      this.editor.chain().focus().toggleBold().run();
+    },
+    toggleHeading(level: number) {
+      this.editor.chain().focus().toggleHeading({ level: level }).run();
+    },
+    toggleItalic() {
+      this.editor.chain().focus().toggleItalic().run();
+    },
+    toggleStrike() {
+      this.editor.chain().focus().toggleStrike().run();
+    },
+    toggleCode() {
+      this.editor.chain().focus().toggleCode().run();
     },
     inputLink() {
       this.showLinkModal = true;
