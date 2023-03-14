@@ -10,7 +10,7 @@
       <TopBar :current="current"></TopBar>
       <div class="flex flex-row overflow-scroll">
         <main class="flex w-full justify-center">
-          <Content :current="current"></Content>
+          <Content></Content>
         </main>
       </div>
     </div>

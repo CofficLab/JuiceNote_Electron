@@ -43,17 +43,10 @@ import Rename from "../operators/Rename.vue";
 import Prev from "../operators/Prev.vue";
 import Next from "../operators/Next.vue";
 import RightMenuController from "../../controllers/RightMenuController";
-import { Node } from "../../models/Node";
 import NodeController from "../../controllers/NodeController";
 import Delete from "../operators/Delete.vue";
 
 export default {
-  props: {
-    current: {
-      type: Node,
-      required: true,
-    },
-  },
   components: { CreateChild, Copy, EditorContent, Edit, Toolbar, Rename, Link, RightMenu, Next, Prev, Delete },
   data() {
     return {
@@ -72,6 +65,7 @@ export default {
     changed() {
       return { current: this.current, editable: this.editable };
     },
+    current: () => NodeController.getCurrentPage(),
   },
   methods: {
     switchTab(index) {
@@ -116,7 +110,7 @@ export default {
 
 <style lang="postcss">
 #toolbar-container {
-  @apply sticky top-0 z-40 flex w-full flex-row items-center justify-center gap-2 bg-green-300/50 shadow-2xl;
+  @apply sticky top-0 z-40 flex w-full flex-row items-center justify-center gap-2 bg-green-300/10 shadow-2xl;
 }
 
 #tabs-container {

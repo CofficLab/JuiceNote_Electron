@@ -1,40 +1,40 @@
 <template>
-  <div>
+  <div id="toolbar">
     <div class="dropdown-hover dropdown">
-      <label tabindex="0">标题</label>
-      <ul tabindex="0">
+      <label tabindex="0">格式</label>
+      <ul tabindex="0" class="dropdown-content">
         <li @click="toggleHeading(1)" :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }">H1</li>
         <li @click="toggleHeading(2)" :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }">H2</li>
         <li @click="toggleHeading(3)" :class="{ 'is-active': editor.isActive('heading', { level: 3 }) }">H3</li>
         <li @click="toggleHeading(4)" :class="{ 'is-active': editor.isActive('heading', { level: 4 }) }">H4</li>
-        <li @click="setParagraph()" :class="{ 'is-active': editor.isActive('paragraph') }">正文</li>
+        <li @click="toggleBold" :disabled="!canToggleBold" :class="{ 'is-active': isBoldActive }">加粗</li>
+        <li @click="toggleItalic" :disabled="!canToggleItalic" :class="{ 'is-active': editor.isActive('italic') }">
+          斜体
+        </li>
+        <li @click="toggleStrike" :disabled="!canToggleStrike" :class="{ 'is-active': editor.isActive('strike') }">
+          划线
+        </li>
+        <li @click="toggleBlockquote" :class="{ 'is-active': isBlockQuoteActive }">引用</li>
+        <li @click="setParagraph()" :class="{ 'is-active': isParagraphActive }">正文</li>
       </ul>
     </div>
 
-    <button @click="toggleBold" :disabled="!canToggleBold" :class="{ 'is-active': isBoldActive }">bold</button>
+    <div class="dropdown-hover dropdown">
+      <label tabindex="0">装饰</label>
+      <ul tabindex="0">
+        <li @click="toggleBanner" :class="{ 'is-active': editor.isActive('banner') }">提示框</li>
+        <li @click="toggleBrick" :class="{ 'is-active': editor.isActive('brick') }">砖块</li>
+        <li @click="toggleOfficialLink" :class="{ 'is-active': editor.isActive('official-link') }">官网</li>
 
-    <button @click="toggleItalic" :disabled="!canToggleItalic" :class="{ 'is-active': editor.isActive('italic') }">
-      italic
-    </button>
-
-    <button @click="toggleStrike" :disabled="!canToggleStrike" :class="{ 'is-active': editor.isActive('strike') }">
-      strike
-    </button>
-
-    <button
-      @click="toggleCode"
-      :disabled="!editor.can().chain().focus().toggleCode().run()"
-      :class="{ 'is-active': editor.isActive('code') }"
-    >
-      code
-    </button>
-
-    <button
-      @click="editor.chain().focus().toggleBlockquote().run()"
-      :class="{ 'is-active': editor.isActive('blockquote') }"
-    >
-      引用
-    </button>
+        <li
+          @click="toggleCode"
+          :disabled="!editor.can().chain().focus().toggleCode().run()"
+          :class="{ 'is-active': isCodeActive }"
+        >
+          行内代码
+        </li>
+      </ul>
+    </div>
 
     <button @click="editor.chain().focus().setHorizontalRule().run()">horizontal rule</button>
     <button @click="editor.chain().focus().setHardBreak().run()">hard break</button>
@@ -49,7 +49,7 @@
           @click="editor.chain().focus().toggleBulletList().run()"
           :class="{ 'is-active': editor.isActive('bulletList') }"
         >
-          toggleBulletList
+          <IconListBullet></IconListBullet>
         </li>
         <li
           @click="editor.chain().focus().splitListItem('listItem').run()"
@@ -104,25 +104,6 @@
       </ul>
     </div>
 
-    <button
-      @click="editor.chain().focus().toggleBold().run()"
-      :disabled="!editor.can().chain().focus().toggleBold().run()"
-      :class="{ 'is-active': editor.isActive('bold') }"
-    >
-      加粗
-    </button>
-    <button @click="editor.chain().focus().toggleBanner().run()" :class="{ 'is-active': editor.isActive('banner') }">
-      提示框
-    </button>
-    <button @click="editor.chain().focus().toggleBrick().run()" :class="{ 'is-active': editor.isActive('brick') }">
-      砖块
-    </button>
-    <button
-      @click="editor.chain().focus().toggleOfficialLink().run()"
-      :class="{ 'is-active': editor.isActive('official-link') }"
-    >
-      官网
-    </button>
     <button @click="inputLink" :class="{ 'is-active': editor.isActive('link') }">设置链接</button>
     <button @click="editor.chain().focus().unsetLink().run()" :disabled="!editor.isActive('link')">取消链接</button>
     <button @click="editor.chain().toggleToc().run()">TOC</button>
@@ -131,7 +112,7 @@
       @click="editor.chain().focus().toggleCodeBlock().run()"
       :class="{ 'is-active': editor.isActive('codeBlock') }"
     >
-      代码块
+      <IconCode></IconCode>
     </button>
     <button @click="editor.chain().focus().setHardBreak().run()">setHardBreak</button>
     <button @click="editor.chain().focus().undo().run()" :disabled="!editor.can().chain().focus().undo().run()">
@@ -140,7 +121,7 @@
     <button @click="editor.chain().focus().redo().run()" :disabled="!editor.can().chain().focus().redo().run()">
       恢复
     </button>
-    <button @click="save">保存</button>
+    <button @click="save"><SaveIcon></SaveIcon></button>
     <button @click="saveAndShow">保存并退出</button>
 
     <!-- 设置URL的模态框 -->
@@ -163,8 +144,12 @@ import { defineComponent } from "vue";
 import NodeController from "../../controllers/NodeController";
 import ToastController from "../../controllers/ToastController";
 import { Node } from "../../models/Node";
+import SaveIcon from "../../assets/icons/inbox-arrow-down.svg";
+import IconCode from "../../assets/icons/code-bracket.svg";
+import IconListBullet from "../../assets/icons/list-bullet.svg";
 
 export default defineComponent({
+  components: { SaveIcon, IconCode, IconListBullet },
   props: {
     editor: { type: Editor, required: true },
     current: { type: Node },
@@ -190,6 +175,15 @@ export default defineComponent({
     isBoldActive() {
       return this.editor.isActive("bold");
     },
+    isBlockQuoteActive() {
+      return this.editor.isActive("blockquote");
+    },
+    isParagraphActive() {
+      return this.editor.isActive("paragraph");
+    },
+    isCodeActive() {
+      return this.editor.isActive("code");
+    },
   },
 
   methods: {
@@ -202,6 +196,12 @@ export default defineComponent({
     },
     setParagraph() {
       this.editor.chain().focus().setParagraph().run();
+    },
+    toggleBanner() {
+      this.editor.chain().focus().toggleBanner().run();
+    },
+    toggleBrick() {
+      this.editor.chain().focus().toggleBrick().run();
     },
     toggleBold() {
       this.editor.chain().focus().toggleBold().run();
@@ -217,6 +217,12 @@ export default defineComponent({
     },
     toggleCode() {
       this.editor.chain().focus().toggleCode().run();
+    },
+    toggleOfficialLink() {
+      this.editor.chain().focus().toggleOfficialLink().run();
+    },
+    toggleBlockquote() {
+      this.editor.chain().focus().toggleBlockquote().run();
     },
     inputLink() {
       this.showLinkModal = true;
@@ -249,17 +255,25 @@ export default defineComponent({
 </script>
 
 <style scoped lang="postcss">
+#toolbar {
+  @apply flex flex-row items-center;
+}
+
+label {
+  @apply btn-ghost btn-sm btn m-1;
+}
+
 button {
-  @apply btn-sm btn mx-1;
+  @apply btn-ghost btn-sm btn mx-1;
+
+  svg {
+    @apply my-auto;
+  }
 }
 
 .bubble-menu button,
 .floating-menu button {
   @apply btn-sm btn mx-1 rounded-none;
-}
-
-label {
-  @apply btn-sm btn m-1;
 }
 
 ul {
