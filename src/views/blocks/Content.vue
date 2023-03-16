@@ -89,6 +89,10 @@ export default {
       parseOptions: {
         preserveWhitespace: "full",
       },
+      onUpdate: (event) => {
+        console.log("editor updated,save");
+        this.current.updateContent(event.editor.getHTML());
+      },
     });
 
     document.addEventListener("click", () => {
