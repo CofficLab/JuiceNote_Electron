@@ -1,7 +1,7 @@
 <template>
   <div id="toolbar">
     <div class="dropdown-hover dropdown">
-      <label tabindex="0">格式</label>
+      <label tabindex="0"><IconBars2></IconBars2></label>
       <ul tabindex="0" class="dropdown-content">
         <li @click="toggleHeading(1)" :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }">H1</li>
         <li @click="toggleHeading(2)" :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }">H2</li>
@@ -20,7 +20,7 @@
     </div>
 
     <div class="dropdown-hover dropdown">
-      <label tabindex="0">装饰</label>
+      <label tabindex="0"><IconPuzzle></IconPuzzle></label>
       <ul tabindex="0">
         <li @click="toggleBanner" :class="{ 'is-active': editor.isActive('banner') }">提示框</li>
         <li @click="toggleBrick" :class="{ 'is-active': editor.isActive('brick') }">砖块</li>
@@ -36,14 +36,18 @@
       </ul>
     </div>
 
-    <button @click="editor.chain().focus().setHorizontalRule().run()">horizontal rule</button>
-    <button @click="editor.chain().focus().setHardBreak().run()">hard break</button>
+    <button @click="editor.chain().focus().setHorizontalRule().run()"><IconMinus></IconMinus></button>
+    <button @click="editor.chain().focus().setHardBreak().run()"><IconBarsArrowDown></IconBarsArrowDown></button>
 
-    <button @click="editor.chain().focus().unsetAllMarks().run()">clear marks</button>
-    <button @click="editor.chain().focus().clearNodes().run()">clear nodes</button>
+    <button @click="editor.chain().focus().unsetAllMarks().run()" class="tooltip tooltip-bottom" data-tip="清除格式">
+      <IconX></IconX>
+    </button>
+    <button @click="editor.chain().focus().clearNodes().run()" class="tooltip tooltip-bottom" data-tip="清除节点">
+      <IconClear></IconClear>
+    </button>
 
     <div class="dropdown-hover dropdown">
-      <label tabindex="0">列表</label>
+      <label tabindex="0"><IconListBullet></IconListBullet></label>
       <ul tabindex="0">
         <li
           @click="editor.chain().focus().toggleBulletList().run()"
@@ -79,7 +83,7 @@
     </div>
 
     <div class="dropdown-hover dropdown-bottom dropdown">
-      <label tabindex="0">表格</label>
+      <label tabindex="0"><IconTable></IconTable></label>
       <ul tabindex="0">
         <li>
           <a @click="editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()"> 插入表格 </a>
@@ -104,25 +108,24 @@
       </ul>
     </div>
 
-    <button @click="inputLink" :class="{ 'is-active': editor.isActive('link') }">设置链接</button>
-    <button @click="editor.chain().focus().unsetLink().run()" :disabled="!editor.isActive('link')">取消链接</button>
-    <button @click="editor.chain().toggleToc().run()">TOC</button>
-    <button @click="editor.chain().focus().addTab().run()">TAB</button>
+    <button @click="inputLink" :class="{ 'is-active': editor.isActive('link') }"><IconLink></IconLink></button>
+    <!-- <button @click="editor.chain().focus().unsetLink().run()" :disabled="!editor.isActive('link')">取消链接</button> -->
+    <button @click="editor.chain().toggleToc().run()"><IconQueueList></IconQueueList></button>
+    <!-- <button @click="editor.chain().focus().addTab().run()">TAB</button> -->
     <button
       @click="editor.chain().focus().toggleCodeBlock().run()"
       :class="{ 'is-active': editor.isActive('codeBlock') }"
     >
       <IconCode></IconCode>
     </button>
-    <button @click="editor.chain().focus().setHardBreak().run()">setHardBreak</button>
     <button @click="editor.chain().focus().undo().run()" :disabled="!editor.can().chain().focus().undo().run()">
-      撤销
+      <IconBack></IconBack>
     </button>
     <button @click="editor.chain().focus().redo().run()" :disabled="!editor.can().chain().focus().redo().run()">
-      恢复
+      <IconRedo></IconRedo>
     </button>
     <button @click="save"><SaveIcon></SaveIcon></button>
-    <button @click="saveAndShow">保存并退出</button>
+    <button @click="saveAndShow"><IconSaveBack></IconSaveBack></button>
 
     <!-- 设置URL的模态框 -->
     <div class="modal" v-bind:class="{ 'modal-open': showLinkModal }">
@@ -147,9 +150,37 @@ import { Node } from "../../models/Node";
 import SaveIcon from "../../assets/icons/inbox-arrow-down.svg";
 import IconCode from "../../assets/icons/code-bracket.svg";
 import IconListBullet from "../../assets/icons/list-bullet.svg";
+import IconBack from "../../assets/icons/arrow-uturn-left.svg";
+import IconRedo from "../../assets/icons/arrow-uturn-right.svg";
+import IconLink from "../../assets/icons/link.svg";
+import IconTable from "../../assets/icons/table-cells.svg";
+import IconMinus from "../../assets/icons/minus.svg";
+import IconX from "../../assets/icons/x-mark.svg";
+import IconBarsArrowDown from "../../assets/icons/bars-arrow-down.svg";
+import IconClear from "../../assets/icons/no-symbol.svg";
+import IconPuzzle from "../../assets/icons/puzzle-pieces.svg";
+import IconBars2 from "../../assets/icons/bars-2.svg";
+import IconSaveBack from "../../assets/icons/arrow-up-tray.svg";
+import IconQueueList from "../../assets/icons/queue-list.svg";
 
 export default defineComponent({
-  components: { SaveIcon, IconCode, IconListBullet },
+  components: {
+    SaveIcon,
+    IconCode,
+    IconListBullet,
+    IconBack,
+    IconRedo,
+    IconLink,
+    IconTable,
+    IconMinus,
+    IconX,
+    IconBarsArrowDown,
+    IconClear,
+    IconPuzzle,
+    IconBars2,
+    IconSaveBack,
+    IconQueueList,
+  },
   props: {
     editor: { type: Editor, required: true },
     current: { type: Node },

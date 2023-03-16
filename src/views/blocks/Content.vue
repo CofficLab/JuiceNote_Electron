@@ -90,7 +90,7 @@ export default {
         preserveWhitespace: "full",
       },
       onUpdate: (event) => {
-        console.log("editor updated,save");
+        console.log("editor updated");
         this.current.updateContent(event.editor.getHTML());
       },
     });
