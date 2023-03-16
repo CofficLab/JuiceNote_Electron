@@ -1,8 +1,8 @@
 <template>
   <node-view-wrapper ref="content" v-show="this.current == this.node.attrs.index">
-    <div class="rounded bg-slate-900">
+    <div class="rounded-b bg-slate-900">
       <!-- 顶部横幅 -->
-      <div v-if="!editable" class="monaco-banner">
+      <div class="monaco-banner">
         <div v-html="node.attrs.language"></div>
       </div>
 
@@ -47,6 +47,7 @@
 
         <select name="language" @change="setLanguage">
           <option value="text" v-bind:selected="node.attrs.language == 'text'">纯文本</option>
+          <option value="html" v-bind:selected="node.attrs.language == 'html'">HTML</option>
           <option value="go" v-bind:selected="node.attrs.language == 'go'">Golang</option>
           <option value="php" v-bind:selected="node.attrs.language == 'php'">PHP</option>
           <option value="javascript" v-bind:selected="node.attrs.language == 'javascript'">JavaScript</option>
@@ -123,7 +124,10 @@ export default {
     },
     setCurrent: function () {
       this.$nextTick(function () {
-        this.current = this.$refs.content.$el.parentElement.getAttribute("data-current");
+        let parentElement = this.$refs.content;
+        if (!parentElement) return;
+
+        this.current = parentElement.$el.parentElement.getAttribute("data-current") ?? 1;
         console.log("current 更新为", this.current, "我的index是", this.node.attrs.index);
       });
     },
@@ -153,6 +157,6 @@ export default {
   }
 }
 .monaco-banner {
-  @apply flex h-full items-center justify-end rounded-tr bg-gradient-to-r from-transparent via-transparent to-cyan-500/20 pr-2 text-slate-400;
+  @apply flex items-center justify-end rounded-tr bg-gradient-to-r from-transparent via-transparent to-cyan-500/20 pr-2 text-slate-400;
 }
 </style>

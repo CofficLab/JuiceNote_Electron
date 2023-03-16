@@ -1,6 +1,6 @@
 <template>
   <div id="toolbar">
-    <div class="dropdown-hover dropdown">
+    <div class="dropdown dropdown-hover">
       <label tabindex="0"><IconBars2></IconBars2></label>
       <ul tabindex="0" class="dropdown-content">
         <li @click="toggleHeading(1)" :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }">H1</li>
@@ -19,7 +19,7 @@
       </ul>
     </div>
 
-    <div class="dropdown-hover dropdown">
+    <div class="dropdown dropdown-hover">
       <label tabindex="0"><IconPuzzle></IconPuzzle></label>
       <ul tabindex="0">
         <li @click="toggleBanner" :class="{ 'is-active': editor.isActive('banner') }">提示框</li>
@@ -40,7 +40,7 @@
       <IconClear></IconClear>
     </button>
 
-    <div class="dropdown-hover dropdown">
+    <div class="dropdown dropdown-hover">
       <label tabindex="0"><IconListBullet></IconListBullet></label>
       <ul tabindex="0">
         <li
@@ -76,7 +76,7 @@
       </ul>
     </div>
 
-    <div class="dropdown-hover dropdown-bottom dropdown">
+    <div class="dropdown-bottom dropdown dropdown-hover">
       <label tabindex="0"><IconTable></IconTable></label>
       <ul tabindex="0">
         <li>
@@ -112,7 +112,7 @@
     >
       <IconCode></IconCode>
     </button>
-    <button @click="editor.chain().focus().addCodeBlockTab().run()">CodeBlockTab</button>
+    <button @click="editor.chain().focus().addCodeTab().run()">CodeBlockTab</button>
     <button @click="editor.chain().focus().undo().run()" :disabled="!editor.can().chain().focus().undo().run()">
       <IconBack></IconBack>
     </button>

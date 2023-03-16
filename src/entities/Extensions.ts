@@ -25,8 +25,8 @@ import OfficialLink from "../views/extensions/OfficialLink.js";
 import Toc from "../views/extensions/Toc.js"
 import Tab from "../views/extensions/Tab.js"
 import TabContent from "../views/extensions/TabContent.js"
-import CodeBlockCustomized from "../views/extensions/CodeBlockCustomized.js"
-import CodeBlockTab from "../views/extensions/CodeBlockTab.js"
+import CodeEditor from "../views/extensions/CodeEditor.js"
+import CodeBlockTab from "../views/extensions/CodeTab.js"
 
 let Extensions = [
     Banner,
@@ -41,7 +41,7 @@ let Extensions = [
     // BubbleMenu,
     Brick,
     Code,
-    CodeBlockCustomized,
+    CodeEditor,
     CodeBlockTab,
     Document,
     Gapcursor,

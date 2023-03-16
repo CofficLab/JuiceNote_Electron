@@ -1,9 +1,9 @@
 import CodeBlock from "@tiptap/extension-code-block";
 import { VueNodeViewRenderer } from "@tiptap/vue-3";
-import CodeBlockCustomized from "./CodeBlockCustomized.vue";
+import CodeEditor from "./CodeEditor.vue";
 
 export default CodeBlock.extend({
-  name: "codeBlockCustomized",
+  name: "codeEditor",
 
   addAttributes() {
     return {
@@ -23,13 +23,13 @@ export default CodeBlock.extend({
         rendered: true,
       },
       index: {
-        default: 0,
+        default: 1,
       },
     };
   },
 
   addNodeView() {
-    return VueNodeViewRenderer(CodeBlockCustomized);
+    return VueNodeViewRenderer(CodeEditor);
   },
 
   renderHTML({ node }) {
