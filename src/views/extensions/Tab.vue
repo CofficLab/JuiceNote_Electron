@@ -1,6 +1,6 @@
 <template>
   <node-view-wrapper>
-    <div class="flex flex-row overflow-auto pb-4 ring">
+    <div class="flex flex-row overflow-auto pb-4" :class="{ ring: editable }">
       <!-- 拖动的把手 -->
       <div
         class="drag-handle bg-primary-600/40 mr-1 h-10 w-4"
@@ -34,7 +34,7 @@
 
 <script>
 import { nodeViewProps, NodeViewWrapper, NodeViewContent } from "@tiptap/vue-3";
-import RouteController from "../controllers/RouteController";
+import NodeController from "../../controllers/NodeController";
 
 export default {
   components: {
@@ -49,7 +49,7 @@ export default {
     };
   },
   computed: {
-    editable: () => RouteController.editable,
+    editable: () => NodeController.getEditable(),
   },
   methods: {
     activate: function (index) {
@@ -77,7 +77,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style>
 .drag-handle {
   flex: 0 0 auto;
   position: relative;

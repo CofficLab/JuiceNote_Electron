@@ -7,7 +7,7 @@
 
     <!-- TAB -->
     <div id="tabs-container" v-if="current.getParent().isTab">
-      <Link v-for="sibling in current.getSiblings()" :id="sibling.id" class="tab-lifted tab" :node="current">{{
+      <Link v-for="sibling in current.getSiblings()" :id="sibling.id" class="tab tab-lifted" :node="current">{{
         sibling.title
       }}</Link>
     </div>
@@ -110,7 +110,7 @@ export default {
   },
   watch: {
     changed() {
-      console.log("something changed, update editor");
+      // console.log("something changed, update editor");
       this.editor.setEditable(this.editable);
       this.editor.commands.setContent(this.current.content, true);
       this.checkToc();

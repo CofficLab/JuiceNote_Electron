@@ -105,7 +105,7 @@
     <button @click="inputLink" :class="{ 'is-active': editor.isActive('link') }"><IconLink></IconLink></button>
     <!-- <button @click="editor.chain().focus().unsetLink().run()" :disabled="!editor.isActive('link')">取消链接</button> -->
     <button @click="editor.chain().toggleToc().run()"><IconQueueList></IconQueueList></button>
-    <!-- <button @click="editor.chain().focus().addTab().run()">TAB</button> -->
+    <button @click="editor.chain().focus().addTab().run()">TAB</button>
     <button
       @click="editor.chain().focus().toggleCodeBlock().run()"
       :class="{ 'is-active': editor.isActive('codeBlock') }"

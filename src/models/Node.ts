@@ -206,6 +206,8 @@ class Node {
     }
 
     updateContent(content: string): string {
+        if (content == this.content) return '「' + this.title + '」的内容没有发生改变'
+
         let result = db.prepare('update nodes set content=? where id=?').run(content, this.id)
         if (result != null) {
             return '「' + this.title + '」的内容更新成功'
