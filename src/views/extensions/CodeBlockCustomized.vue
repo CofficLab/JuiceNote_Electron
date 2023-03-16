@@ -1,25 +1,6 @@
 <template>
-  <node-view-wrapper>
-    <div class="mb-4 rounded bg-slate-900">
-      <!-- 操作栏 -->
-      <div class="code-block-operators" v-if="editable">
-        <div class="flex gap-4">
-          <button @click="setRun" :disabled="runButtonDisplay">可运行</button>
-          <button @click="setNotRun" :disabled="!runButtonDisplay">不可运行</button>
-        </div>
-
-        <select name="language" @change="setLanguage">
-          <option disabled selected>未选择编程语言</option>
-          <option value="text" v-bind:selected="node.attrs.language == 'text'">纯文本</option>
-          <option value="go" v-bind:selected="node.attrs.language == 'go'">Golang</option>
-          <option value="php" v-bind:selected="node.attrs.language == 'php'">PHP</option>
-          <option value="javascript" v-bind:selected="node.attrs.language == 'javascript'">JavaScript</option>
-          <option value="java" v-bind:selected="node.attrs.language == 'java'">Java</option>
-          <option value="python" v-bind:selected="node.attrs.language == 'python'">Python</option>
-          <option value="shell" v-bind:selected="node.attrs.language == 'shell'">Shell</option>
-        </select>
-      </div>
-
+  <node-view-wrapper ref="content" v-show="this.current == this.node.attrs.index">
+    <div class="rounded bg-slate-900">
       <!-- 顶部横幅 -->
       <div v-if="!editable" class="monaco-banner">
         <div v-html="node.attrs.language"></div>
@@ -56,6 +37,24 @@
           运行
         </button>
       </div>
+
+      <!-- 操作栏 -->
+      <div class="code-block-operators" v-if="editable">
+        <div class="flex gap-4">
+          <button @click="setNotRun" v-if="runButtonDisplay">可运行</button>
+          <button @click="setRun" v-if="!runButtonDisplay">不可运行</button>
+        </div>
+
+        <select name="language" @change="setLanguage">
+          <option value="text" v-bind:selected="node.attrs.language == 'text'">纯文本</option>
+          <option value="go" v-bind:selected="node.attrs.language == 'go'">Golang</option>
+          <option value="php" v-bind:selected="node.attrs.language == 'php'">PHP</option>
+          <option value="javascript" v-bind:selected="node.attrs.language == 'javascript'">JavaScript</option>
+          <option value="java" v-bind:selected="node.attrs.language == 'java'">Java</option>
+          <option value="python" v-bind:selected="node.attrs.language == 'python'">Python</option>
+          <option value="shell" v-bind:selected="node.attrs.language == 'shell'">Shell</option>
+        </select>
+      </div>
     </div>
   </node-view-wrapper>
 </template>
@@ -75,6 +74,7 @@ export default {
   data() {
     return {
       code: "",
+      current: 0,
       loadMonaco: false, // 获取code后再加载Monaco
     };
   },
@@ -121,11 +121,19 @@ export default {
 
       console.log("当前attrs", this.node.attrs);
     },
+    setCurrent: function () {
+      this.$nextTick(function () {
+        this.current = this.$refs.content.$el.parentElement.getAttribute("data-current");
+        console.log("current 更新为", this.current, "我的index是", this.node.attrs.index);
+      });
+    },
   },
 
   mounted() {
     this.code = this.node.attrs.code;
     this.loadMonaco = true;
+    this.setCurrent();
+    this.editor.on("update", this.setCurrent);
   },
 
   props: nodeViewProps,
@@ -134,7 +142,7 @@ export default {
 
 <style lang="postcss">
 .code-block-operators {
-  @apply mb-4 flex justify-between bg-green-100 shadow-xl dark:bg-green-900/50;
+  @apply flex justify-end bg-blue-900/80 shadow-xl dark:bg-green-900/50;
 
   button {
     @apply btn-sm btn rounded-none;

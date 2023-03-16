@@ -22,6 +22,9 @@ export default CodeBlock.extend({
         parseHTML: (element) => element.firstElementChild?.getAttribute("run"),
         rendered: true,
       },
+      index: {
+        default: 0,
+      },
     };
   },
 
@@ -31,6 +34,10 @@ export default CodeBlock.extend({
 
   renderHTML({ node }) {
     // console.log("转换成HTML", node.attrs);
-    return ["pre", ["code", { language: node.attrs.language, run: node.attrs.run }, node.attrs.code]];
+    return [
+      "pre",
+      { index: node.attrs.index },
+      ["code", { language: node.attrs.language, run: node.attrs.run }, node.attrs.code],
+    ];
   },
 });

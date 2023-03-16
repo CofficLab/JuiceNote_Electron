@@ -26,6 +26,7 @@ import Toc from "../views/extensions/Toc.js"
 import Tab from "../views/extensions/Tab.js"
 import TabContent from "../views/extensions/TabContent.js"
 import CodeBlockCustomized from "../views/extensions/CodeBlockCustomized.js"
+import CodeBlockTab from "../views/extensions/CodeBlockTab.js"
 
 let Extensions = [
     Banner,
@@ -41,6 +42,7 @@ let Extensions = [
     Brick,
     Code,
     CodeBlockCustomized,
+    CodeBlockTab,
     Document,
     Gapcursor,
     HardBreak,

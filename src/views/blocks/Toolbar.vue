@@ -112,6 +112,7 @@
     >
       <IconCode></IconCode>
     </button>
+    <button @click="editor.chain().focus().addCodeBlockTab().run()">CodeBlockTab</button>
     <button @click="editor.chain().focus().undo().run()" :disabled="!editor.can().chain().focus().undo().run()">
       <IconBack></IconBack>
     </button>
