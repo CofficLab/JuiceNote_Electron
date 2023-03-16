@@ -2,44 +2,24 @@ import { VueNodeViewRenderer, Node } from "@tiptap/vue-3";
 
 import CodeTab from "./CodeTab.vue";
 
-// 配合 TabContent 使用，Tab 是这样的结构
-// <tab>
-//  <tab-content>
-//  <tab-content>
-// </tab>
 export default Node.create({
   name: "codeTab",
   group: "block",
-  // 子元素都是block
   content: "block*",
 
-  // 将什么样的HTML转化成tab
-  // 这样的：<tab></tab>
   parseHTML() {
-    return [
-      {
-        tag: "code-tab",
-      },
-    ];
+    return [{ tag: "code-tab" }];
   },
 
-  // 定义属性
-  // 存储到HTML中是这样的：<tab titles="1,2,3" current="0"></tab>
   addAttributes() {
     return {
-      titles: {
-        default: "",
-      },
-      current: {
-        default: 1,
-      },
+      titles: { default: "" },
+      current: { default: 1 },
     };
   },
 
   addStorage() {
-    return {
-      current: 0,
-    };
+    return { current: 0 };
   },
 
   // 将数据转换成HTML

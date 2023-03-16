@@ -17,7 +17,7 @@
     document.addEventListener("click", function (event) {
       if (event?.target?.classList.contains("run")) {
         let target = event.target
-        let resultCodeWrapper = target.previousElementSibling;
+        let resultCodeWrapper = target.parentNode.parentNode.nextSibling;
         let resultElement = resultCodeWrapper?.getElementsByTagName("code").item(0);
         if (resultCodeWrapper == null || resultElement == null) {
           console.log('找不到结果展示区域，代码不能运行')
