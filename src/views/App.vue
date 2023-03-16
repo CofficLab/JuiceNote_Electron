@@ -1,7 +1,7 @@
 <template>
   <div class="flex h-screen w-screen flex-row" v-if="error.length == 0">
     <aside
-      class="hidden h-screen w-56 border-r-2 border-gray-300 bg-base-200 shadow-xl dark:border-cyan-900/10 lg:flex lg:flex-col"
+      class="hidden h-screen w-40 border-r-2 border-gray-300 bg-base-200 shadow-xl dark:border-cyan-900/10 lg:flex lg:flex-col"
     >
       <SideMenu></SideMenu>
     </aside>

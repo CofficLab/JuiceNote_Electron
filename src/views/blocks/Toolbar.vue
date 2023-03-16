@@ -40,8 +40,6 @@
       <IconClear></IconClear>
     </button>
 
-    <button class="tooltip tooltip-bottom" data-tip="键盘">插入键盘按键的样子</button>
-
     <div class="dropdown-hover dropdown">
       <label tabindex="0"><IconListBullet></IconListBullet></label>
       <ul tabindex="0">

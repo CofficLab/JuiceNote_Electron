@@ -57,7 +57,7 @@ export default {
       editor: undefined,
       currentTab: 0,
       rightClickEvent: null,
-      showToc: false,
+      hasToc: false,
       headings: [],
     };
   },
@@ -70,9 +70,6 @@ export default {
       return { current: this.current, editable: this.editable };
     },
     current: () => NodeController.getCurrentPage(),
-    hasToc() {
-      return this.current.content.startsWith("<toc></toc>");
-    },
   },
   methods: {
     switchTab(index) {
@@ -82,6 +79,9 @@ export default {
     showRightMenu(event) {
       this.rightClickEvent = event;
       RightMenuController.show();
+    },
+    checkToc() {
+      this.hasToc = this.editor.getHTML().startsWith("<toc></toc>");
     },
   },
   mounted() {
@@ -99,18 +99,21 @@ export default {
       onUpdate: (event) => {
         console.log("editor updated");
         this.current.updateContent(event.editor.getHTML());
+        this.checkToc();
       },
     });
 
     document.addEventListener("click", () => {
       this.rightClickEvent = null;
     });
+    this.checkToc();
   },
   watch: {
     changed() {
       console.log("something changed, update editor");
       this.editor.setEditable(this.editable);
       this.editor.commands.setContent(this.current.content, true);
+      this.checkToc();
     },
   },
   beforeUnmount() {
