@@ -71,7 +71,7 @@ export default {
       console.log("保存title名称", target);
 
       let titles = this.node.attrs.titles.split(",");
-      titles[this.current] = target.innerHTML;
+      titles[this.current - 1] = target.innerHTML;
       this.updateAttributes({
         titles: titles.join(","),
       });
