@@ -1,5 +1,5 @@
 <template>
-  <node-view-wrapper class="toc hidden 2xl:flex">
+  <node-view-wrapper class="toc hidden lg:flex">
     <ul
       class="menu fixed right-4 top-20 w-56 overflow-scroll rounded-2xl bg-cyan-900/10 py-4 dark:bg-base-300"
       style="padding-left: 0"

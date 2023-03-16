@@ -26,13 +26,7 @@
         <li @click="toggleBrick" :class="{ 'is-active': editor.isActive('brick') }">砖块</li>
         <li @click="toggleOfficialLink" :class="{ 'is-active': editor.isActive('official-link') }">官网</li>
 
-        <li
-          @click="toggleCode"
-          :disabled="!editor.can().chain().focus().toggleCode().run()"
-          :class="{ 'is-active': isCodeActive }"
-        >
-          行内代码
-        </li>
+        <li @click="toggleCode">行内代码</li>
       </ul>
     </div>
 
@@ -45,6 +39,8 @@
     <button @click="editor.chain().focus().clearNodes().run()" class="tooltip tooltip-bottom" data-tip="清除节点">
       <IconClear></IconClear>
     </button>
+
+    <button class="tooltip tooltip-bottom" data-tip="键盘">插入键盘按键的样子</button>
 
     <div class="dropdown-hover dropdown">
       <label tabindex="0"><IconListBullet></IconListBullet></label>
@@ -124,7 +120,7 @@
     <button @click="editor.chain().focus().redo().run()" :disabled="!editor.can().chain().focus().redo().run()">
       <IconRedo></IconRedo>
     </button>
-    <button @click="save"><SaveIcon></SaveIcon></button>
+    <!-- <button @click="save"><SaveIcon></SaveIcon></button> -->
     <button @click="saveAndShow"><IconSaveBack></IconSaveBack></button>
 
     <!-- 设置URL的模态框 -->

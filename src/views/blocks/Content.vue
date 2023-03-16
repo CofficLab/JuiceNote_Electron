@@ -14,7 +14,11 @@
 
     <!-- 编辑框 -->
     <div id="editor-content-container" @contextmenu.prevent="showRightMenu">
-      <editor-content :editor="editor" class="prose h-screen w-full overflow-visible xl:prose-lg" />
+      <editor-content
+        :editor="editor"
+        class="prose h-screen w-full overflow-visible xl:prose-lg"
+        :class="{ 'lg:mr-56': hasToc }"
+      />
     </div>
 
     <!-- 右键菜单 -->
@@ -66,6 +70,9 @@ export default {
       return { current: this.current, editable: this.editable };
     },
     current: () => NodeController.getCurrentPage(),
+    hasToc() {
+      return this.current.content.startsWith("<toc></toc>");
+    },
   },
   methods: {
     switchTab(index) {
@@ -129,6 +136,6 @@ export default {
 }
 
 div.ProseMirror[contenteditable="true"] {
-  @apply ring-2;
+  /* @apply ring-2; */
 }
 </style>
