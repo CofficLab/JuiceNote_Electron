@@ -120,6 +120,7 @@
     </button>
     <!-- <button @click="save"><SaveIcon></SaveIcon></button> -->
     <button @click="saveAndShow"><IconSaveBack></IconSaveBack></button>
+    <button @click="empty">清空</button>
 
     <!-- 设置URL的模态框 -->
     <div class="modal" v-bind:class="{ 'modal-open': showLinkModal }">
@@ -212,6 +213,9 @@ export default defineComponent({
   },
 
   methods: {
+    empty() {
+      ToastController.set(NodeController.updateContent(this.current, ""));
+    },
     save() {
       ToastController.set(NodeController.updateContent(this.current, this.editor.getHTML()));
     },
