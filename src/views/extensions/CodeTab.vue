@@ -86,6 +86,6 @@ export default {
 
 <style lang="postcss" scoped>
 .code-title {
-  @apply tab rounded-none text-gray-500 no-underline outline-none focus-visible:outline-none;
+  @apply tab rounded-none text-gray-500 no-underline outline-none focus-visible:outline-none dark:text-gray-200;
 }
 </style>

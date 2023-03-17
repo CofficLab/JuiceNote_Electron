@@ -3,6 +3,7 @@
     <div class="relative">
       <span v-html="language" class="absolute top-0 right-2 z-20 text-sm text-info"></span>
       <button
+        contenteditable="false"
         class="btn-sm btn absolute bottom-2 right-2 z-20 bg-slate-900 shadow-sm"
         @click="run"
         v-if="showRunButton"

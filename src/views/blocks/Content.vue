@@ -7,7 +7,7 @@
 
     <!-- TAB -->
     <div id="tabs-container" v-if="current.getParent().isTab">
-      <Link v-for="sibling in current.getSiblings()" class="tab tab-lifted" :node="sibling">{{ sibling.title }}</Link>
+      <Link v-for="sibling in current.getSiblings()" class="tab-lifted tab" :node="sibling">{{ sibling.title }}</Link>
     </div>
 
     <!-- 编辑框 -->
@@ -15,7 +15,7 @@
       <editor-content
         v-if="!sourceCodeDisplay"
         :editor="editor"
-        class="flex w-full justify-center"
+        class="prose h-screen w-full overflow-visible xl:prose-lg"
         :class="{ 'lg:mr-56': hasToc }"
       />
     </div>
@@ -158,6 +158,6 @@ export default {
   @apply mt-1 flex w-full justify-center overflow-auto border-0 p-4;
 }
 .ProseMirror {
-  @apply prose mb-24 h-screen w-full overflow-visible px-2 pb-56 pt-1 xl:prose-lg;
+  @apply mb-24 px-2 pb-56 pt-1;
 }
 </style>
