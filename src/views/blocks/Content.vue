@@ -12,7 +12,12 @@
 
     <!-- 编辑框 -->
     <div id="editor-container" @contextmenu.prevent="showRightMenu">
-      <editor-content v-if="!sourceCodeDisplay" :editor="editor" :class="{ 'lg:mr-56': hasToc }" />
+      <editor-content
+        v-if="!sourceCodeDisplay"
+        :editor="editor"
+        class="flex w-full justify-center"
+        :class="{ 'lg:mr-56': hasToc }"
+      />
     </div>
 
     <!-- 源码 -->
