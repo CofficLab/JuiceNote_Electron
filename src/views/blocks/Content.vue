@@ -66,6 +66,7 @@ export default {
       hasToc: false,
       sourceCodeDisplay: false,
       headings: [],
+      node: null,
     };
   },
   computed: {
@@ -90,10 +91,13 @@ export default {
     toggleSourceCode() {
       this.sourceCodeDisplay = !this.sourceCodeDisplay;
     },
+    save() {
+      console.log("保存节点", this.node.id, "的内容");
+      this.node.updateContent(this.editor.getHTML());
+    },
   },
   mounted() {
     this.editor = new Editor({
-      content: this.current.content,
       extensions: Extensions,
       autofocus: true,
       editable: this.editable,
@@ -103,9 +107,14 @@ export default {
       parseOptions: {
         preserveWhitespace: "full",
       },
+      onCreate: () => {
+        this.checkToc();
+        this.node = this.current;
+        this.editor.commands.setContent(this.node.content, false);
+      },
       onUpdate: (event) => {
-        console.log("editor updated，自动保存内容到节点", this.current.id);
-        this.current.updateContent(event.editor.getHTML());
+        // console.log("editor updated,save content and check toc");
+        this.save();
         this.checkToc();
       },
     });
@@ -113,15 +122,16 @@ export default {
     document.addEventListener("click", () => {
       this.rightClickEvent = null;
     });
-    this.checkToc();
   },
   watch: {
     current() {
-      console.log("current changed, update editor");
-      this.editor.commands.setContent(this.current.content, true);
+      // console.log("current changed, update editor content");
+      this.save();
+      this.node = this.current;
+      this.editor.commands.setContent(this.node.content, true);
     },
     editable() {
-      this.editable.setEditable(this.editable);
+      this.editor.setEditable(this.editable, false);
     },
   },
   beforeUnmount() {

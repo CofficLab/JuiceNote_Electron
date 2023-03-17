@@ -65,7 +65,7 @@ export default defineComponent({
       return this.book;
     },
     menus() {
-      console.log("获取左侧栏菜单");
+      // console.log("获取左侧栏菜单");
       return this.menusRoot.getChildren();
     },
   },
@@ -96,7 +96,7 @@ export default defineComponent({
   },
   watch: {
     current() {
-      console.log("current发生变化，滚动到current");
+      // console.log("current发生变化，滚动到current");
       this.$nextTick(() => {
         setTimeout(() => {
           this.scrollToCurrent();
