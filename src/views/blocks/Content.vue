@@ -113,9 +113,9 @@ export default {
         preserveWhitespace: "full",
       },
       onCreate: () => {
-        this.checkToc();
         this.node = this.current;
         this.editor.commands.setContent(this.node.content, false);
+        this.checkToc();
       },
       onUpdate: (event) => {
         // console.log("editor updated,save content and check toc");
