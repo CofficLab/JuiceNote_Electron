@@ -8,8 +8,7 @@ func main() {
     } else {
         fmt.Println("密码错误")
     }
-}
-</code></pre><p>这其中的 password == '123' 返回的其实是一个布尔值，在这个例子中是：true。</p><p>布尔值的最主要的作用就是配合 if 做条件判断。</p><h3 id="heading-4">if</h3><p>仅有 if 也是符合语法要求的，但 else 不能单独使用，这也符合人类的语言习惯。</p><pre index="1"><code language="go" run="NaN">package main
+}</code></pre><p>这其中的 password == '123' 返回的其实是一个布尔值，在这个例子中是：true。</p><p>布尔值的最主要的作用就是配合 if 做条件判断。</p><h3 id="heading-4">if</h3><p>仅有 if 也是符合语法要求的，但 else 不能单独使用，这也符合人类的语言习惯。</p><pre index="1"><code language="go" run="NaN">package main
 import "fmt"
 
 func main() {
@@ -17,11 +16,9 @@ func main() {
     if (password == "123") {
         fmt.Println("密码正确")
     }
+}</code></pre><p>常见的写法：</p><pre index="1"><code language="go" run="NaN">if err := c.ShouldBindQuery(); err != nil {
 }
-</code></pre><pre index="1"><code language="go" run="NaN">if err := c.ShouldBindQuery(); err != nil {
-
-	}
-</code></pre><h2 id="heading-5">if...else if</h2><p>条件分枝较多时，可使用 else if：</p><pre index="1"><code language="go" run="NaN">package main
+</code></pre><h3 id="heading-5">if...else if</h3><p>条件分枝较多时，可使用 else if：</p><pre index="1"><code language="go" run="NaN">package main
 import "fmt"
 
 func main() {
@@ -75,4 +72,4 @@ func main()  {
         fmt.Println("x等于3")
     }
 }
-</code></pre><h2 id="heading-9">比较运算符</h2><p>除了常用的 == 用于判断是否相等外，还有很多比较运算符，举例如下：</p><table class="table bg-cyan-500/30 table-zebra"><tbody><tr class="border-2 border-red-300"><th colspan="1" rowspan="1"><p>表达式</p></th><th colspan="1" rowspan="1"><p>描述</p></th></tr><tr class="border-2 border-red-300"><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>x &lt; y</p></td><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>x 小于 y 则为 true</p></td></tr><tr class="border-2 border-red-300"><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>x &gt; y</p></td><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>x 大于 y 则为 true</p></td></tr><tr class="border-2 border-red-300"><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>x &lt;= y</p></td><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>x 小于等于 y 则为 true</p></td></tr><tr class="border-2 border-red-300"><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>x &gt;= y</p></td><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>x 大于等于 y 则为 true</p></td></tr><tr class="border-2 border-red-300"><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>x != y</p></td><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>x 不等于 y 则为 true</p></td></tr></tbody></table>
+</code></pre><h2 id="heading-9">比较运算符</h2><p>除了常用的 == 用于判断是否相等外，还有很多比较运算符，举例如下：</p><table><tbody><tr><th colspan="1" rowspan="1"><p>表达式</p></th><th colspan="1" rowspan="1"><p>描述</p></th></tr><tr><td colspan="1" rowspan="1"><p>x &lt; y</p></td><td colspan="1" rowspan="1"><p>x 小于 y 则为 true</p></td></tr><tr><td colspan="1" rowspan="1"><p>x &gt; y</p></td><td colspan="1" rowspan="1"><p>x 大于 y 则为 true</p></td></tr><tr><td colspan="1" rowspan="1"><p>x &lt;= y</p></td><td colspan="1" rowspan="1"><p>x 小于等于 y 则为 true</p></td></tr><tr><td colspan="1" rowspan="1"><p>x &gt;= y</p></td><td colspan="1" rowspan="1"><p>x 大于等于 y 则为 true</p></td></tr><tr><td colspan="1" rowspan="1"><p>x != y</p></td><td colspan="1" rowspan="1"><p>x 不等于 y 则为 true</p></td></tr></tbody></table>

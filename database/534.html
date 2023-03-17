@@ -1,4 +1,4 @@
-<toc></toc><p>在可行的情况下，一个类型的值可以被转换成另一种类型的值。</p><p>Go 中不存在隐式类型转换，所有的转换必须显式说明。</p><h2 id="heading-1">类型断言</h2><p>类型断言（Type Assertion）：</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>使用在接口值上</p></li><li class="m-0 p-0"><p>用于检查接口类型变量所持有的值是否实现了期望的接口或者具体的类型</p></li></ul><h3 id="heading-2">显式转换</h3><p>将一个接口变量转化为显式的类型：</p><pre index="1"><code language="go" run="NaN">package main
+<toc></toc><p>在可行的情况下，一个类型的值可以被转换成另一种类型的值。</p><p>Go 中不存在隐式类型转换，所有的转换必须显式说明。</p><h2 id="heading-1">类型断言</h2><p>类型断言（Type Assertion）：</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>使用在接口值上</p></li><li class="m-0 p-0"><p>用于检查接口类型变量所持有的值是否实现了期望的接口或者具体的类型</p></li></ul><h3 id="heading-2">显式转换</h3><p>将一个接口变量转化为显式的类型：</p><pre index="1"><code language="go" run="1">package main
 import "fmt"
 import "reflect"
 
@@ -10,16 +10,14 @@ func main() {
 
     fmt.Println(reflect.TypeOf(b), b)
     fmt.Println(reflect.TypeOf(c), c)
-}
-</code></pre><h3 id="heading-3">判断类型</h3><pre index="1"><code language="go" run="NaN">switch a.(type) {
+}</code></pre><h3 id="heading-3">判断类型</h3><pre index="1"><code language="go" run="1">switch a.(type) {
   case int:
     fmt.Printf("a is now an int and equals %d\n", a)
   case bool, string:
     // ...
   default:
     // ...
-}
-</code></pre><h2 id="heading-4">强制类型转换</h2><p>将类型像函数的语法一样使用，如：</p><pre index="1"><code language="go" run="NaN">float32(a)</code></pre><ul class="m-0 p-0"><li class="m-0 p-0"><p>有些转换是无损的</p></li></ul><pre index="1"><code language="go" run="NaN">package main
+}</code></pre><h2 id="heading-4">强制类型转换</h2><p>将类型像函数的语法一样使用，如：</p><pre index="1"><code language="go" run="NaN">float32(a)</code></pre><ul class="m-0 p-0"><li class="m-0 p-0"><p>有些转换是无损的</p></li></ul><pre index="1"><code language="go" run="1">package main
 import "fmt"
 import "reflect"
 
@@ -29,8 +27,7 @@ func main() {
 
     fmt.Println(reflect.TypeOf(a), a)
     fmt.Println(reflect.TypeOf(b), b)
-}
-</code></pre><ul class="m-0 p-0"><li class="m-0 p-0"><p>有些转换是有损的</p></li></ul><pre index="1"><code language="go" run="NaN">package main
+}</code></pre><ul class="m-0 p-0"><li class="m-0 p-0"><p>有些转换是有损的</p></li></ul><pre index="1"><code language="go" run="1">package main
 import "fmt"
 import "reflect"
 
@@ -40,11 +37,11 @@ func main() {
 
     fmt.Println(reflect.TypeOf(a), a)
     fmt.Println(reflect.TypeOf(b), b)
-}</code></pre><h2 id="heading-5">指针类型转换</h2><pre index="1"><code language="go" run="NaN">var a int = 100
+}</code></pre><h2 id="heading-5">指针类型转换</h2><pre index="1"><code language="go" run="1">var a int = 100
 var p *int = &amp;a
 var c *int64
 
-c = (*int64)(p)</code></pre><p>这样编译器会报错，正确做法：</p><pre index="1"><code language="go" run="NaN">package main
+c = (*int64)(p)</code></pre><p>这样编译器会报错，正确做法：</p><pre index="1"><code language="go" run="1">package main
 import "fmt"
 import "unsafe"
 

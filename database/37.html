@@ -1,4 +1,4 @@
-<toc></toc><h1 id="heading-1">简介</h1><p><mark class="brick">H</mark> <mark class="brick">E</mark> <mark class="brick">L</mark> <mark class="brick">L</mark> <mark class="brick">O</mark></p><p>上面 5 个字符组成了一个字符串。</p><p>Go 将字符串作为一种原生的基本数据类型。</p><h2 id="heading-2">创建</h2><p>用双引号包围起来，单引号则用于包围单个字符。</p><h3 id="heading-3">显式声明</h3><pre index="1"><code language="go" run="NaN">var a string = "hello"</code></pre><h3 id="heading-4">类型推导</h3><pre index="1"><code language="go" run="NaN">var a = "abc"</code></pre><h3 id="heading-5">短变量声明</h3><pre index="1"><code language="go" run="NaN">a := "hello"</code></pre><h2 id="heading-6">长度</h2><pre index="1"><code language="go" run="NaN">package main
+<toc></toc><h1 id="heading-1">简介</h1><p><mark class="brick">H</mark> <mark class="brick">E</mark> <mark class="brick">L</mark> <mark class="brick">L</mark> <mark class="brick">O</mark></p><p>上面 5 个字符组成了一个字符串。</p><p>Go 将字符串作为一种原生的基本数据类型。</p><h2 id="heading-2">创建</h2><p>用双引号包围起来，单引号则用于包围单个字符。</p><h3 id="heading-3">显式声明</h3><pre index="1"><code language="go" run="NaN">var a string = "hello"</code></pre><h3 id="heading-4">类型推导</h3><pre index="1"><code language="go" run="NaN">var a = "abc"</code></pre><h3 id="heading-5">短变量声明</h3><pre index="1"><code language="go" run="NaN">a := "hello"</code></pre><h2 id="heading-6">长度</h2><pre index="1"><code language="go" run="1">package main
 import "fmt"
 
 func main() {
@@ -7,7 +7,7 @@ func main() {
 
     fmt.Println(len(a))
     fmt.Println(len(b))
-}</code></pre><p>内置函数 len 计算的是字符串占用的字节(byte)的个数，一个中文占 3 个字节，所以：</p><pre index="1"><code language="" run="NaN">len("你好")</code></pre><p>会输出：6。</p><h2 id="heading-7">索引</h2><p>字符串是常量，可以通过类似数组的索引访问其字节单元，但是不能修改某个字节的值。</p><pre index="1"><code language="go" run="NaN">package main
+}</code></pre><p>内置函数 len 计算的是字符串占用的字节(byte)的个数，一个中文占 3 个字节，所以：</p><pre index="1"><code language="go" run="NaN">len("你好")</code></pre><p>会输出：6。</p><h2 id="heading-7">索引</h2><p>字符串是常量，可以通过类似数组的索引访问其字节单元，但是不能修改某个字节的值。</p><pre index="1"><code language="go" run="1">package main
 import "fmt"
 import "reflect"
 
@@ -19,4 +19,4 @@ func main() {
     fmt.Println(reflect.TypeOf(a), a)
     fmt.Println(reflect.TypeOf(b), b)
     fmt.Println(reflect.TypeOf(c), c)
-}</code></pre><p>a[2] 取得的是l这个字符的unicode编码。</p><h2 id="heading-8">两种形式</h2><h3 id="heading-9">解释字符串</h3><table class="table bg-cyan-500/30 table-zebra"><tbody><tr class="border-2 border-red-300"><th colspan="1" rowspan="1"><p>字符串</p></th><th colspan="1" rowspan="1"><p>含义</p></th></tr><tr class="border-2 border-red-300"><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>\n</p></td><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>换行</p></td></tr><tr class="border-2 border-red-300"><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>\r</p></td><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>回车</p></td></tr></tbody></table><h3 id="heading-10">非解释字符串</h3><h2 id="heading-11">零值</h2><p>string 类型的零值为长度为零的字符串，即空字符串 “”。</p>
+}</code></pre><p>a[2] 取得的是l这个字符的unicode编码。</p><h2 id="heading-8">两种形式</h2><h3 id="heading-9">解释字符串</h3><table><tbody><tr><th colspan="1" rowspan="1"><p>字符串</p></th><th colspan="1" rowspan="1"><p>含义</p></th></tr><tr><td colspan="1" rowspan="1"><p>\n</p></td><td colspan="1" rowspan="1"><p>换行</p></td></tr><tr><td colspan="1" rowspan="1"><p>\r</p></td><td colspan="1" rowspan="1"><p>回车</p></td></tr></tbody></table><h3 id="heading-10">非解释字符串</h3><h2 id="heading-11">零值</h2><p>string 类型的零值为长度为零的字符串，即空字符串 “”。</p>

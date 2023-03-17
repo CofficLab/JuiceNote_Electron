@@ -26,6 +26,7 @@
 
       <!-- 底部操作栏 -->
       <div class="code-block-operators" v-if="editable" contenteditable="false">
+        <button @click="deleteSelf">删除</button>
         <button @click="toggleRun" v-html="this.node.attrs.run == 1 ? '关运行' : '开运行'"></button>
         <select name="language" @change="setLanguage">
           <option value="text" v-bind:selected="node.attrs.language == 'text'">纯文本</option>

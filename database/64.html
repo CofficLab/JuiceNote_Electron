@@ -1,8 +1,21 @@
-<h1 id="heading-1">认识文件</h1><h2 id="heading-2">什么是文件</h2><p>文件是记录在存储介质上的数据的集合，当前的存储介质主要是硬盘。</p><h2 id="heading-3">文件类型</h2><p>不同的文件名后缀（扩展名）代表了不同的文件类型。</p><p>常见的文件类型：</p><table class="table bg-cyan-500/30 table-zebra"><tbody><tr class="border-2 border-red-300"><th colspan="1" rowspan="1"><p>扩展名</p></th><th colspan="1" rowspan="1"><p>类型</p></th></tr><tr class="border-2 border-red-300"><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>.txt</p></td><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>最简单的文档文件</p></td></tr><tr class="border-2 border-red-300"><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>.doc</p></td><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>可用 Microsoft Office Word 打开的文档文件</p></td></tr><tr class="border-2 border-red-300"><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>.pdf</p></td><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>在不同的操作系统下都能保持固定格式的文档文件</p></td></tr><tr class="border-2 border-red-300"><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>.zip</p></td><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>压缩文件</p></td></tr><tr class="border-2 border-red-300"><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>.png</p></td><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>图形文件</p></td></tr><tr class="border-2 border-red-300"><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>.exe</p></td><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>Windows 操作系统下的可执行文件</p></td></tr></tbody></table><h2 id="heading-4">路径</h2><p>路径表示文件在计算机上的位置。</p><p>在 Windows 操作系统中，文件路径像这样：</p><pre index="1"><code language="" run="NaN">C:\Users\Administrator\Desktop\cup.png
-</code></pre><p>在 Linux、macOS操作系统中，文件路径像这样：</p><pre index="1"><code language="" run="NaN">/Users/Administrator/Desktop/cup.png
-</code></pre><h2 id="heading-5">检查路径是否有效</h2><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre index="1"><code language="" run="NaN">package main
+<toc></toc><h1 id="heading-1">认识文件</h1><h2 id="heading-2">什么是文件</h2><p>文件是记录在存储介质上的数据的集合，当前的存储介质主要是硬盘。</p><h2 id="heading-3">文件类型</h2><p>不同的文件名后缀（扩展名）代表了不同的文件类型。</p><p>常见的文件类型：</p><table><tbody><tr><th colspan="1" rowspan="1"><p>扩展名</p></th><th colspan="1" rowspan="1"><p>类型</p></th></tr><tr><td colspan="1" rowspan="1"><p>.txt</p></td><td colspan="1" rowspan="1"><p>最简单的文档文件</p></td></tr><tr><td colspan="1" rowspan="1"><p>.doc</p></td><td colspan="1" rowspan="1"><p>可用 Microsoft Office Word 打开的文档文件</p></td></tr><tr><td colspan="1" rowspan="1"><p>.pdf</p></td><td colspan="1" rowspan="1"><p>在不同的操作系统下都能保持固定格式的文档文件</p></td></tr><tr><td colspan="1" rowspan="1"><p>.zip</p></td><td colspan="1" rowspan="1"><p>压缩文件</p></td></tr><tr><td colspan="1" rowspan="1"><p>.png</p></td><td colspan="1" rowspan="1"><p>图形文件</p></td></tr><tr><td colspan="1" rowspan="1"><p>.exe</p></td><td colspan="1" rowspan="1"><p>Windows 操作系统下的可执行文件</p></td></tr></tbody></table><h2 id="heading-4">路径</h2><p>路径表示文件在计算机上的位置。</p><p>在 Windows 操作系统中，文件路径像这样：</p><pre index="1"><code language="shell" run="NaN">C:\Users\Administrator\Desktop\cup.png</code></pre><p>在 Linux、macOS操作系统中，文件路径像这样：</p><pre index="1"><code language="" run="NaN">/Users/Administrator/Desktop/cup.png</code></pre><h2 id="heading-5">检查路径是否有效</h2><code-tab titles="例1,例2" current="1"><pre index="2"><code language="go" run="1">package main
 import "os"
 import "fmt"
+
+func main() {
+  _,err2 := os.Stat("/Users")
+  if err2 == nil {
+    fmt.Println("存在")
+  } else {
+    if os.IsNotExist(err2) {
+      fmt.Println("不存在")
+    } else {
+      fmt.Println("出现错误")
+    }
+  }
+}</code></pre></code-tab><pre index="1"><code language="go" run="1">package main
+import "fmt"
+import "os"
 
 func main() {
   // 第一个例子
@@ -16,20 +29,7 @@ func main() {
       fmt.Println("出现错误")
     }
   }
-
-  // 第二个例子
-  _,err2 := os.Stat("/Users")
-  if err2 == nil {
-    fmt.Println("存在")
-  } else {
-    if os.IsNotExist(err2) {
-      fmt.Println("不存在")
-    } else {
-      fmt.Println("出现错误")
-    }
-  }
-}
-</code></pre><p>这里的代码看起来非常繁琐和难理解，你可以看看 Python 是怎么处理的。</p><p>这个功能由内置的os包来提供，待项目经验丰富后，你会对os包会更加熟悉。</p><h2 id="heading-6">当前工作目录</h2><p>每个程序都有一个当前工作目录。</p><p>获取当前工作目录：</p><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre index="1"><code language="" run="NaN">package main
+}</code></pre><p>这里的代码看起来非常繁琐和难理解，你可以看看 Python 是怎么处理的。</p><p>这个功能由内置的os包来提供，待项目经验丰富后，你会对os包会更加熟悉。</p><h2 id="heading-6">当前工作目录</h2><p>每个程序都有一个当前工作目录。</p><p>获取当前工作目录：</p><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre index="1"><code language="" run="NaN">package main
 import "os"
 import "fmt"
 
