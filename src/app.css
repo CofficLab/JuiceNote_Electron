@@ -19,16 +19,16 @@ body {
   @apply border-none outline-none;
 }
 
-/* .prose {
+.prose {
   h1,
   h2,
   h3,
   h4,
   h5,
   h6 {
-    @apply -mt-40 pt-40;
+    @apply my-0 py-4 !important;
   }
-} */
+}
 
 .brick {
   @apply my-2

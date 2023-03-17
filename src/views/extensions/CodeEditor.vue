@@ -9,6 +9,7 @@
         :language="node.attrs.language"
         :showRunButton="node.attrs.run == 1"
         :keyUpCallback="keyup"
+        :showLineNumbers="true"
       ></Monaco>
 
       <!-- Monaco编辑器，只读模式。应该实例化一个Monaco，然后动态改变readonly属性，但是有BUG：动态改变整个界面会卡住 -->

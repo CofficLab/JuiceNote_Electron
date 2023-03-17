@@ -149,15 +149,23 @@ export default {
 #toolbar-container {
   @apply sticky top-0 z-40 flex w-full flex-row items-center justify-center gap-2 bg-green-300/10 shadow-2xl;
 }
-
 #tabs-container {
   @apply tabs mt-4 flex justify-center rounded-t-xl bg-yellow-400/10;
 }
-
 #editor-container {
   @apply mt-1 flex w-full justify-center overflow-auto border-0 p-4;
 }
 .ProseMirror {
   @apply mb-24 px-2 pb-56 pt-1;
+}
+table {
+  @apply rounded-none;
+  td,
+  th {
+    @apply border border-gray-700 p-2 !important;
+  }
+  p {
+    @apply my-0 !important;
+  }
 }
 </style>

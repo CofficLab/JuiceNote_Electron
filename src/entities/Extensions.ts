@@ -72,22 +72,10 @@ let Extensions = [
     // Tab,
     // TabContent,
     Text,
-    TableCell.configure({
-        HTMLAttributes: {
-            class: 'border-2 border-sky-300'
-        }
-    }),
-    TableRow.configure({
-        HTMLAttributes: {
-            class: 'border-2 border-red-300'
-        }
-    }),
+    TableCell,
+    TableRow,
     TableHeader,
-    Table.configure({
-        HTMLAttributes: {
-            class: 'table bg-cyan-500/30 table-zebra',
-        },
-    }),
+    Table,
     Toc
 ];
 

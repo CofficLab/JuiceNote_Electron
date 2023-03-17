@@ -1,6 +1,6 @@
 <template>
   <node-view-wrapper>
-    <div class="banner">
+    <div class="banner mt-4">
       <div class="flex items-center justify-between">
         <Info></Info>
       </div>
