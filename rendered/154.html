@@ -1,0 +1,92 @@
+<h1><code>os</code> 命令行</h1>
+<p>&lt;div class=&quot;o&quot;&gt;https://pkg.go.dev/os@go1.19.4&lt;/div&gt;</p>
+<h2>简介</h2>
+<p>调用 os 包即可。</p>
+<h2>获取参数个数，遍历参数</h2>
+<pre><code class="language-go">
+package main
+
+import (
+    &quot;fmt&quot;
+    &quot;os&quot;
+)
+
+func main() {
+    fmt.Printf(&quot;Number of args is %d\n\n&quot;, len(os.Args))
+
+    for _, arg := range os.Args {
+        fmt.Println(arg)
+    }
+
+}
+
+// $ go build main.go
+// $ ./main -a -b --c -d
+// 输出如下
+/**
+Number of args is 5
+
+./main
+-a
+-b
+--c
+-d
+*/
+</code></pre>
+<h2>设置参数</h2>
+<p>&lt;div class=&quot;run&quot;&gt;&lt;/div&gt;</p>
+<pre><code class="language-go">
+package main
+
+import (
+    &quot;flag&quot;
+    &quot;fmt&quot;
+)
+
+var (
+    name = flag.String(&quot;name&quot;, &quot;Tom&quot;, &quot;Please input your name:&quot;) // 默认值 Tom
+    age = flag.Int(&quot;age&quot;, 6, &quot;Please input your age:&quot;) // 默认值 6
+    hasMoney = flag.Bool(&quot;hasMoney&quot;, true, &quot;Do you have any money?&quot;) // 默认值 true
+)
+
+func main() {
+flag.PrintDefaults() // 打印参数提示信息
+flag.Parse()
+
+    fmt.Printf(&quot;name is %s\n&quot;, *name)
+    fmt.Printf(&quot;name is %d\n&quot;, *age)
+    fmt.Printf(&quot;name is %t\n&quot;, *hasMoney)
+
+}
+
+// 默认参数
+// $ go run main.go
+// 输出如下
+/*
+-age int
+Please input your age: (default 6)
+-hasMoney
+Do you have any money? (default true)
+-name string
+Please input your name: (default &quot;Tom&quot;)
+name is Tom
+name is 6
+name is true
+*/
+
+// 设置参数
+// $ go run main.go -name=Jerry -age=8 -hasMoney=false
+// 输出如下
+/*
+-age int
+Please input your age: (default 6)
+-hasMoney
+Do you have any money? (default true)
+-name string
+Please input your name: (default &quot;Tom&quot;)
+name is Jerry
+name is 8
+name is false
+*/
+
+</code></pre>

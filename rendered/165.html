@@ -1,0 +1,36 @@
+<h1>panic</h1>
+<h2>简介</h2>
+<p>panic 会终止程序并退出，因此只有在发生严重的错误时才会使用 panic。</p>
+<h2>主动触发</h2>
+<p>&lt;div class=&quot;run&quot;&gt;&lt;/div&gt;</p>
+<pre><code class="language-go">package main
+
+func main() {
+    panic(&quot;some error...&quot;)
+}
+</code></pre>
+<h2>除数为 0</h2>
+<p>&lt;div class=&quot;run&quot;&gt;&lt;/div&gt;</p>
+<pre><code class="language-go">package main
+
+import &quot;fmt&quot;
+
+func main() {
+    fmt.Println(&quot;除数不能为 0&quot;)
+
+    n := 0
+    fmt.Printf(&quot;5 / 0 = %d&quot;, 5/n)
+}
+
+// $ go run main.go
+// 输出如下
+/**
+  除数不能为 0
+  panic: runtime error: integer divide by zero
+
+  goroutine 1 [running]:
+  main.main()
+          /home/codes/Go-examples-for-beginners/main.go:15 +0x57
+  exit status 2
+*/
+</code></pre>

@@ -1,0 +1,42 @@
+<h1>简介</h1>
+<h2>什么是短地址</h2>
+<p>例如：</p>
+<table>
+<thead>
+<tr>
+<th>转换前</th>
+<th>转换后</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>https://xxx.com/news/how-to-be-a-teacher</td>
+<td>https://t.cn/aexs</td>
+</tr>
+<tr>
+<td>https://xxx.com/news/news-of-abc</td>
+<td>https://t.cn/wexe</td>
+</tr>
+<tr>
+<td>https://xxx.com/news/how-to-be-rich</td>
+<td>https://t.cn/sfet</td>
+</tr>
+<tr>
+<td>https://xxx.com/news/how-to-make-a-cup</td>
+<td>https://t.cn/3fuo</td>
+</tr>
+<tr>
+<td>https://xxx.com/news/after-abc-a-teacher</td>
+<td>https://t.cn/ee45</td>
+</tr>
+</tbody>
+</table>
+<p>将长短不一的地址转换成较短的，长度固定的短地址，更方便排版，视觉效果更好。</p>
+<h2>项目源码</h2>
+<p>项目源码会一直在右侧展示，点击某个文件即可查看源码。</p>
+<h2>API 接口</h2>
+<ul>
+<li>POST <code>/api/shorten</code></li>
+<li>GET <code>/api/info?shortLink=shortLink</code></li>
+<li>GET <code>/:shortLink</code> return <code>302 code</code></li>
+</ul>

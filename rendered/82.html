@@ -1,0 +1,51 @@
+<h1>协程</h1><p>在 Go 中，并发任务称为：goroutine。</p><p>其他编程语言有类似的概念，比如：线程，goroutine 可认为是轻量线程。</p><p>但是 goroutine 更轻量，需要更少的内存，启动和停止的时间更少。</p><h2>顺序执行</h2><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-go">package main
+import "fmt"
+
+func a() {
+    fmt.Print("a")
+}
+
+func b() {
+    fmt.Print("b")
+}
+
+func main() {
+    a()
+    b()
+    fmt.Println("\nThe End")
+}
+</code></pre><p>在main函数中，先执行a函数，再执行b函数，很自然的，我们认为它们是按从上到下的顺序执行的。</p><p>但是a函数和b函数做的事情并没有什么联系，如果像一场比赛一样，让它们同时执行，看看谁的速度更快一些，该怎么办呢？</p><h2>同时执行</h2><p>在函数前加 go 关键字表示同时执行：</p><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-go">package main
+import "fmt"
+
+func a() {
+    fmt.Print("a")
+}
+
+func b() {
+    fmt.Print("b")
+}
+
+func main() {
+    go a()
+    go b()
+    fmt.Println("The End")
+}
+</code></pre><p>这样会创建 3 个协程：</p><p>&lt;div class="bg-cyan flex flex-col gap-4 p-2"&gt; &lt;div class="brick w-72"&gt;a&lt;/div&gt; &lt;div class="brick w-72"&gt;b&lt;/div&gt; &lt;div class="brick w-24"&gt;main&lt;/div&gt; &lt;/div&gt;</p><p>main函数的协程做的事情非常轻量：</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>让 a 函数做事，不等待结果</p></li><li class="m-0 p-0"><p>让 b 函数做事，不等待结果</p></li><li class="m-0 p-0"><p>输出：The End</p></li></ul><p>所以 a、b 的结果还没来得及告诉 main，main 已经结束并退出了。</p><h2>等待</h2><p>我们可以让 main 慢一点，等一等 a、b 的执行结果：</p><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-go">package main
+import "fmt"
+import "time"
+
+func a() {
+    fmt.Print("a")
+}
+
+func b() {
+    fmt.Print("b")
+}
+
+func main() {
+    go a()
+    go b()
+    time.Sleep(time.Second * 1)
+    fmt.Println("\nThe End")
+}
+</code></pre><p>&lt;div class="bg-cyan flex flex-col gap-4 p-2"&gt; &lt;div class="brick w-36"&gt;a&lt;/div&gt; &lt;div class="brick w-36"&gt;b&lt;/div&gt; &lt;div class="brick w-72"&gt;main&lt;/div&gt; &lt;/div&gt;</p><p>但是这样是没有什么实际的意义的，main 并不知道要等待多久，多了浪费时间，少了等不到。</p><p>实际上，Go 有一套协程间的通信机制。</p>

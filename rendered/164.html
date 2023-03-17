@@ -1,0 +1,74 @@
+<h1>for</h1>
+<h2>概述</h2>
+<p>Go 仅提供了关键字 for 来表示循环，并没有提供 while 和 do-while 语句，这一点和主流编程语言不同。</p>
+<h2>语法规则</h2>
+<pre><code>for 初始表达式; 条件表达式; 迭代表达式 {
+// do something
+}
+</code></pre>
+<p>注意：迭代表达式中，不支持 ++i, --i 这种形式，详情见 自增 / 自减。</p>
+<h2>例子</h2>
+<h3>单个计数器</h3>
+<p>&lt;div class=&quot;run&quot;&gt;&lt;/div&gt;</p>
+<pre><code class="language-go">package main
+
+func main() {
+for i := 0; i &lt; 5; i++ {
+println(i)
+}
+}
+</code></pre>
+<h3>多个计数器</h3>
+<p>&lt;div class=&quot;run&quot;&gt;&lt;/div&gt;</p>
+<pre><code class="language-go">package main
+
+func main() {
+for i, j := 1, 5; i &lt;= 5; i, j = i+1, j-1 {
+println(&quot;i = &quot;, i, &quot; j = &quot;, j)
+}
+}
+</code></pre>
+<h3>模仿 while</h3>
+<p>&lt;div class=&quot;run&quot;&gt;&lt;/div&gt;</p>
+<pre><code class="language-go">package main
+
+func main() {
+i := 0
+for i &lt; 5 {
+println(i)
+i++
+}
+}
+</code></pre>
+<h3>模仿 do-while</h3>
+<p>&lt;div class=&quot;run&quot;&gt;&lt;/div&gt;</p>
+<pre><code class="language-go">package main
+
+func main() {
+i := 0
+for {
+println(i)
+i++
+if i &gt;= 5 {
+break
+}
+}
+}
+</code></pre>
+<h3>无限循环</h3>
+<p>&lt;div class=&quot;run&quot;&gt;&lt;/div&gt;</p>
+<pre><code class="language-go">package main
+
+func main() {
+i := 0
+for {
+println(i)
+i++
+if i &gt;= 5 {
+break // 删除这行代码，将会进入无限循环
+}
+}
+}
+
+// 如果删除 `break` 语句，程序进入无限循环后可以使用 `Ctrl + C` 退出。
+</code></pre>

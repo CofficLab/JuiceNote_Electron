@@ -1,0 +1,49 @@
+<h1 id="heading-1">字典</h1><p>&lt;div class="flex flex-row bg-base-300 gap-2 justify-between"&gt; &lt;div class="flex flex-col bg-cyan p-4"&gt; &lt;h6 class="text-center"&gt;列表&lt;br/&gt;（序列）&lt;/h6&gt; &lt;table&gt; &lt;tr&gt; &lt;td&gt;键&lt;/td&gt; &lt;td&gt;值&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;0&lt;/td&gt; &lt;td&gt;白展堂&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;1&lt;/td&gt; &lt;td&gt;佟湘玉&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;2&lt;/td&gt; &lt;td&gt;吕轻侯&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;3&lt;/td&gt; &lt;td&gt;李秀莲&lt;/td&gt; &lt;/tr&gt; &lt;/table&gt; &lt;/div&gt; &lt;div class="flex flex-col bg-sky p-4"&gt; &lt;h6 class="text-center"&gt;字典&lt;br/&gt;（映射）&lt;/h6&gt; &lt;table&gt; &lt;tr&gt; &lt;td&gt;键&lt;/td&gt; &lt;td&gt;值&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;跑堂&lt;/td&gt; &lt;td&gt;白展堂&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;掌柜&lt;/td&gt; &lt;td&gt;佟湘玉&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;账房&lt;/td&gt; &lt;td&gt;吕轻侯&lt;/td&gt; &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;厨师&lt;/td&gt; &lt;td&gt;李秀莲&lt;/td&gt; &lt;/tr&gt; &lt;/table&gt; &lt;/div&gt; &lt;/div&gt;</p><p>序列：通过编号访问各个值；<br>映射：通过名称来访问各个值。</p><p>字典是 Python 中唯一的内置映射类型。</p><h2 id="heading-2">创建</h2><pre><code class="language-python">stuff = {'跑堂': '白展堂', '掌柜': '佟湘玉', '账房': '吕轻侯'}
+</code></pre><p>字典由键及其相应的值组成，这种键值对称为<strong>项</strong>。</p><p>没有任何项的字典叫做空字典：</p><pre><code class="language-python">stuff = {}
+</code></pre><p>键必须唯一，值可以重复：</p><pre><code class="language-python">stuff = {'跑堂': '白展堂', '保安':'白展堂', '掌柜': '佟湘玉', '账房': '吕轻侯'}
+</code></pre><h2 id="heading-3">函数 dict</h2><p>使用函数 dict 从其他映射或序列创建字典：</p><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-python">items = [('name', '白展堂'), ('age', 24)]
+d = dict(items)
+print(d)
+print(d['name'])
+</code></pre><p>也可以这样：</p><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-python">d = dict(name='白展堂', age=24)
+print(d)
+</code></pre><h2 id="heading-4">基本操作</h2><table class="table bg-cyan-500/30 table-zebra"><tbody><tr class="border-2 border-red-300"><th colspan="1" rowspan="1"><p>操作</p></th><th colspan="1" rowspan="1"><p>结果</p></th></tr><tr class="border-2 border-red-300"><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>len(d)</p></td><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>返回 d 包含的项数</p></td></tr><tr class="border-2 border-red-300"><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>d[k]</p></td><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>返回与键 k 相关联的值</p></td></tr><tr class="border-2 border-red-300"><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>d[k] = v</p></td><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>将 v 关联到键 k</p></td></tr><tr class="border-2 border-red-300"><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>del d[k]</p></td><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>删除键为 k 的项</p></td></tr><tr class="border-2 border-red-300"><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>k in d</p></td><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>检查字典是否包含键为 k 的项</p></td></tr></tbody></table><p>字典与列表的不同之处：</p><table class="table bg-cyan-500/30 table-zebra"><tbody><tr class="border-2 border-red-300"><th colspan="1" rowspan="1"><p></p></th><th colspan="1" rowspan="1"><p>字典</p></th><th colspan="1" rowspan="1"><p>列表</p></th></tr><tr class="border-2 border-red-300"><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>键的类型</p></td><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>不可变的类型，如：浮点数、字符串、元组</p></td><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>整数</p></td></tr><tr class="border-2 border-red-300"><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>自动添加</p></td><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>可以给没有的键赋值</p></td><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>必须用 append 或类似方法赋值</p></td></tr><tr class="border-2 border-red-300"><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>成员资格</p></td><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>k in d 查找的是键</p></td><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>v in l 查找的是值</p></td></tr></tbody></table><p>相比于检查列表是否包含指定的值，检查字典是否包含指定的键效率更高。</p><p>给不存在的键赋值，相当于增加这个键：</p><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-python">x = {}
+x[42] = 'Foobar'
+print(x)
+</code></pre><h2 id="heading-5">clear</h2><p>删除所有的字典项，就地执行。</p><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-python">d = {}
+d['name'] = '白展堂'
+d['age'] = 24
+print(d)
+
+returned_value = d.clear()
+
+print(d)
+print(returned_value)
+</code></pre><h2 id="heading-6">copy</h2><p>返回一个新字典（浅复制）。</p><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-python">x = {'name': '白展堂', 'roles': ['跑堂', '保安']}
+y = x.copy()
+y['name'] = '吕轻侯'
+y['roles'].remove('保安')
+
+print(x)
+print(y)
+</code></pre><p>替换副本中的值，原件不受影响； 但是就地修改副本的值，原件也将发生变化。</p><p>为了避免这种问题，一种办法是执行<strong>深复制</strong>，即同时复制值及其包含的所有值。</p><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-python">from copy import deepcopy
+a = {}
+a['names'] = ['白展堂', '吕轻侯']
+
+b = a.copy()
+c = deepcopy(a)
+
+a['names'].append('佟湘玉')
+
+print(b)
+print(c)
+</code></pre><h2 id="heading-7">fromkeys</h2><p>创建一个新字典，其中包含指定的键，且每个键对应的值都是 None。</p><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-python">x = {}.fromkeys(['name', 'age'])
+
+print(x)
+</code></pre><p>这个示例首先创建了一个空字典，再调用方法 fromkeys 来创建另一个字典。</p><p>也可以这样：</p><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-python">x = dict.fromkeys(['name', 'age'])
+
+print(x)
+</code></pre><p>也可以提供特定的值：</p><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-python">x = dict.fromkeys(['name','age'], '(unknown)')
+
+print(x)
+</code></pre>

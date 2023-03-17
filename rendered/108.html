@@ -1,0 +1,54 @@
+<h1 id="heading-1">指针</h1><h2 id="heading-2">获取变量的地址</h2><p>使用&amp;可以获取变量的地址，&amp;是 Go 的地址运算符。</p><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-go">package main
+import "fmt"
+import "reflect"
+
+func main() {
+    amount := 6
+    fmt.Println(amount)
+    fmt.Println(&amp;amount)
+    fmt.Println(reflect.TypeOf(&amp;amount))
+}
+</code></pre><p>任何变量都有地址：</p><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-go">package main
+import "fmt"
+
+func main() {
+    myInt := 1
+    myFloat := 1.0
+    myBool := false
+
+    fmt.Println(&amp;myInt)
+    fmt.Println(&amp;myFloat)
+    fmt.Println(&amp;myBool)
+}
+</code></pre><h2 id="heading-3">什么是地址</h2><p>&lt;div class="bg-cyan flex flex-row p-4 gap-4"&gt; &lt;div class="flex flex-col"&gt; &lt;div class="brick px-4 rounded-none"&gt;true&lt;/div&gt; &lt;div class="brick-yellow text-sm"&gt;0xa0c1&lt;/div&gt; &lt;/div&gt; &lt;div class="flex flex-col"&gt; &lt;div class="brick px-4"&gt;6&lt;/div&gt; &lt;div class="brick-yellow text-sm"&gt;0xa0c2&lt;/div&gt; &lt;/div&gt; &lt;div class="flex flex-col"&gt; &lt;div class="brick px-4"&gt;3.14&lt;/div&gt; &lt;div class="brick-yellow text-sm"&gt;0x1a0c3&lt;/div&gt; &lt;/div&gt; &lt;div class="flex flex-col"&gt; &lt;div class="brick px-4"&gt;"老白"&lt;/div&gt; &lt;div class="brick-yellow text-sm"&gt;0xa0c4&lt;/div&gt; &lt;/div&gt; &lt;div class="flex flex-col"&gt; &lt;div class="brick px-4"&gt;'A'&lt;/div&gt; &lt;div class="brick-yellow text-sm"&gt;0xa0c5&lt;/div&gt; &lt;/div&gt; &lt;div class="flex flex-col"&gt; &lt;div class="brick px-4"&gt;...&lt;/div&gt; &lt;div class="brick-yellow text-sm"&gt;...&lt;/div&gt; &lt;/div&gt; &lt;/div&gt;</p><p>内存中存放了很多变量，有布尔、整数、小数、字符串等，通过地址可以找到这些变量。</p><p>表示变量地址的值称为指针，因为它可以找到变量的位置。</p><h2 id="heading-4">指针类型</h2><p>指针的类型可以写为一个 * 号，后面跟着指针指向的变量的类型。</p><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-go">package main
+import "fmt"
+import "reflect"
+
+func main() {
+    a := 1
+    b := "老白"
+    c := 1.9
+
+    fmt.Println(reflect.TypeOf(&amp;a))
+    fmt.Println(reflect.TypeOf(&amp;b))
+    fmt.Println(reflect.TypeOf(&amp;c))
+}
+</code></pre><h2 id="heading-5">函数指针</h2><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-go">package main
+import "fmt"
+import "reflect"
+
+func getPi() *float64 {
+    pi := 3.14
+
+    return &amp;pi
+}
+
+func main() {
+    var myPi *float64 = getPi()
+
+    fmt.Println(reflect.TypeOf(myPi))
+
+    // 打印指针指向的值
+    fmt.Println(*myPi)
+}
+</code></pre>

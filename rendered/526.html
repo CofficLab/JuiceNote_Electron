@@ -1,0 +1,60 @@
+<toc></toc><h2 id="heading-1">变量未使用</h2><h3 id="heading-2">简单的未使用</h3><pre><code language="shell" run="false">{变量名} declared but not used
+</code></pre><pre><code language="go" run="true">package main
+import "fmt"
+
+func main() {
+  name, power := "小六", 1000
+  fmt.Println(power)
+}
+</code></pre><p>Go 不允许程序中有未使用的变量。</p><h3 id="heading-3">赋值不算使用</h3><p>以下程序中的 name 变量算不算定义了未使用？</p><pre><code language="go" run="false">package main 
+
+func main() {
+    id := 0
+    name := ""
+    if id == 0 {
+        name = "佟湘玉"
+    }
+}</code></pre><p>算。仔细看看，确实没有使用。</p><h3 id="heading-4">作用域问题</h3><p>这段程序会报错吗？</p><pre><code language="go" run="true">package main 
+import "fmt"
+
+func main() {
+    a := true
+    if a == true {
+		b := 1
+	} else {
+		b := 2
+	}
+
+	fmt.Println(b)
+}</code></pre><p>会。b 在 if 中定义，那么只能在 if 中使用。应该改成这样：</p><pre><code language="go" run="true">package main 
+import "fmt"
+
+func main() {
+    a := true
+    var b int
+    if a == true {
+		b = 1
+	} else {
+		b = 2
+	}
+
+	fmt.Println(b)
+}</code></pre><h2 id="heading-5">类型不匹配</h2><pre><code language="shell" run="false">cannot use "xyz" (untyped string constant) as int value in assignment
+</code></pre><pre><code language="go" run="true">package main
+import "fmt"
+
+func main() {
+  var a int
+  a = "xyz"
+  fmt.Println(a)
+}
+</code></pre><h2 id="heading-6">多次声明</h2><pre><code language="shell" run="false">{变量名} redeclared in this block
+</code></pre><pre><code language="go" run="true">package main
+import "fmt"
+
+func main() {
+  var a int
+  var a string
+  fmt.Println(a)
+}
+</code></pre><p>只能声明一次，多次声明编译器会报错。</p>

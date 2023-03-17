@@ -1,0 +1,17 @@
+<h1>自定义</h1><p>&lt;div class="o"&gt;https://go.dev/ref/spec#Struct_types&lt;/div&gt;</p><h2>结构体</h2><p>创建一个 Date Struct 来保存年月日的值。</p><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-go">package main
+import "fmt"
+import "reflect"
+
+type Date struct {
+    Year int
+    Month int
+    Day int
+}
+
+func main() {
+    date := Date{Year: 2020, Month: 5, Day: 2}
+
+    fmt.Println(reflect.TypeOf(date))
+    fmt.Print(date)
+}
+</code></pre><p>在 Go 中，这种自定义的数据结构叫做：结构体。</p><h2>匿名结构体</h2>

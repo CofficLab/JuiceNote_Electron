@@ -1,0 +1,55 @@
+<toc></toc><h2 id="heading-1">常见场景</h2><h3 id="heading-2">截取</h3><pre><code language="javascript" run="true">var s = 'abcdef'
+
+// 输出前 2 个字符
+console.log(s.substring(0, 2))</code></pre><h3 id="heading-3">拼接</h3><pre><code language="javascript" run="true">var s = "abc";
+var p = "123";
+console.log(s.concat(p));
+</code></pre><p>官方文档推荐使用“+”来拼接：</p><pre><code language="javascript" run="true">var a = "老白";
+var b = "吃了吗？";
+
+console.log(a + b);
+</code></pre><p>通过 typeof 来获知数据类型：</p><pre><code language="javascript" run="true">var s = "龙门飞甲";
+
+console.log(typeof s);
+</code></pre><h3 id="heading-4">分割</h3><pre><code language="javascript" run="true">const str = 'a b c d';
+
+console.log(str.split(' '));
+</code></pre><h3 id="heading-5">填充</h3><pre><code language="javascript" run="true">const str = "1382345";
+
+console.log(str.padEnd(11, "*"));
+</code></pre><h3 id="heading-6">转换</h3><h2 id="heading-7">转换为数值</h2><pre><code language="javascript" run="true">x = "3";
+console.log(typeof x);
+
+y = parseInt(x);
+console.log(y);
+console.log(typeof y);
+</code></pre><p>以某字符串开头：</p><pre><code language="javascript" run="true">var a = 'abcdef'
+console.log(a.startsWith('ab'))
+console.log(a.startsWith(' '))
+console.log(a.startsWith(''))
+</code></pre><h2 id="heading-8">遍历</h2><p>for </p><pre><code language="" run="false">var a = 'abcdef'
+for (let i = 0; i &lt; a.length; i++) {
+console.log(a[i])
+}
+</code></pre><p>for...in:</p><pre><code language="" run="false">var a = 'abcdef'
+for (let i in a) {
+console.log(a[i])
+}
+</code></pre><p>for...of:</p><ul class="m-0 p-0"><li class="m-0 p-0"><p></p><pre><code language="" run="false">var a = 'abcdef'
+for (let element of a) {
+console.log(element)
+}
+</code></pre><p></p></li><li class="m-0 p-0"><p></p></li></ul><p></p><h3 id="heading-9">ASCII 码</h3><p>获取某个字符的 ASCII 码 &lt;br&gt; run:</p><pre><code language="" run="false">var a = 'abcdef'
+console.log(a.charCodeAt(0))
+console.log(a.charCodeAt(3))
+</code></pre><p>获取 ASCII 码对应的字符:</p><pre><code language="" run="false">console.log(String.fromCharCode(97))
+console.log(String.fromCharCode(100))
+</code></pre><h2 id="heading-10">截取</h2><ul class="m-0 p-0"><li class="m-0 p-0"><p>substring :</p><pre><code language="" run="false">var s = 'abcdef'
+
+// 输出前 2 个字符
+console.log(s.substring(0, 2))
+</code></pre><p></p></li><li class="m-0 p-0"><p>slice:</p><pre><code language="javascript" run="true">var s = 'abcdef'
+
+// 输出前 2 个字符
+console.log(s.slice(0, 2))
+</code></pre><p></p></li></ul><p></p>

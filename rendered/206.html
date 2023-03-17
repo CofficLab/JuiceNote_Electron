@@ -1,0 +1,40 @@
+<h1 id="heading-1">自定义函数</h1><p>函数执行特定的操作并返回一个值。</p><p>要判断某个对象是否可以调用，可使用内置函数 callable</p><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-python">import math
+
+x = 1
+y = math.sqrt
+
+print(callable(x))
+print(callable(y))
+</code></pre><h2 id="heading-2">定义函数</h2><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-python">def hello(name):
+    return 'Hello, ' + name + '!'
+
+print(hello('老白'))
+print(hello('老邢'))
+</code></pre><p>&lt;div class="banner"&gt;实践中，需要自定义大量函数&lt;/div&gt;</p><h2 id="heading-3">函数的文档</h2><p>要给函数编写文档，以确保其他人能够理解，可添加注释(以#打头的内容)。</p><p>还有另一种编写注释的方式，就是添加独立的字符串。</p><p>放在函数开头的字符串称为 文档字符串(docstring)，将作为函数的一部分存储起来。</p><p>下面的代码演示了如何给函数添加文档字符串:</p><pre><code class="language-python">def square(x):
+    'Calculates the square of the number x.'
+    return x * x
+</code></pre><p>可以像下面这样访问文档字符串:</p><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-python">def square(x):
+    'Calculates the square of the number x.'
+    return x * x
+
+print(square.__doc__)
+</code></pre><p>可用内置函数 help 获取有关函数的信息，其中就包含了函数的文档字符串。</p><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-python">def square(x):
+    'Calculates the square of the number x.'
+    return x * x
+
+help(square)
+</code></pre><h2 id="heading-4">指定参数默认值</h2><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-python">def hello(name,words="近来是否安好？"):
+    print(name + '，'+ words)
+
+hello(name='小六')
+</code></pre><h2 id="heading-5">指定参数名称</h2><p>参数很多时，排列顺序可能很难记，可以指定参数的名称：</p><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-python">def hello(name,words):
+    print(name + '，'+ words)
+
+hello(words='吃了吗？',name='小六')
+hello(name='小六',words='吃了吗？')
+</code></pre><h2 id="heading-6">任意个数的参数</h2><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-python">def hello(words,*names):
+    for name in names:
+        print(name + '，'+words)
+
+hello('吃了吗？','老邢','小六','小郭')
+</code></pre><p>还有更多灵活、复杂的传参方式，我们无需一一学习，在有必要使用的时候，查询文档即可。</p>

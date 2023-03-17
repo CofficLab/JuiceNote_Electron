@@ -1,0 +1,20 @@
+<h1 id="heading-1">重载</h1><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-go">package main
+import "fmt"
+
+type Animal struct {
+    Legs int
+}
+
+type Dog struct {
+    Animal
+    Name string
+}
+
+func main() {
+    dog := Dog{}
+    dog.Legs = 4
+    dog.Name = "John"
+
+    fmt.Println(dog)
+}
+</code></pre>

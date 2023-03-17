@@ -1,0 +1,49 @@
+<h1 id="heading-1">错误</h1><h2 id="heading-2">创建</h2><h3 id="heading-3">结构体</h3><p>实现 error 接口的契约即可：</p><pre><code language="go" run="false">type error interface {
+  Error() string
+}
+</code></pre><h3 id="heading-4">errors.New()</h3><pre><code language="go" run="false">package main
+
+import (
+    "errors"
+    "fmt"
+)
+
+// 自定义除法函数
+func myDivide(dividend, divisor float64) (float64, error) {
+    if divisor == 0 { // 除数不能为 0
+        return 0, errors.New("divide by zero") // 返回一个错误
+    }
+    return dividend / divisor, nil
+}
+
+func main() {
+    divide, err := myDivide(100, 0)
+    if err != nil {
+        fmt.Printf("Error: %s", err) // 输出错误信息
+    } else {
+        fmt.Printf("100 / 0 = %.2f", divide) // 代码执行不到这里
+    }
+}
+</code></pre><h3 id="heading-5">fmt.Errorf() 创建</h3><pre><code language="go" run="false">package main
+
+import (
+    "fmt"
+)
+
+// 自定义除法函数
+func myDivide(dividend, divisor float64) (float64, error) {
+    if divisor == 0 { // 除数不能为 0
+        return 0, fmt.Errorf("%.2f divide by zero", dividend) // 返回一个错误
+    }
+    return dividend / divisor, nil
+}
+
+func main() {
+    divide, err := myDivide(100, 0)
+    if err != nil {
+        fmt.Printf("Error: %s\n", err) // 输出错误信息
+    } else {
+        fmt.Printf("100 / 0 = %.2f\n", divide) // 代码执行不到这里
+    }
+}
+</code></pre>

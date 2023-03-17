@@ -1,0 +1,54 @@
+<h1>net/http HTTP</h1><official-link class="bg-cyan-800/20 p-4">https://pkg.go.dev/net/http@go1.19.4</official-link><h2>简介</h2><p>标准库中的 net/http 包，可用于处理 HTTP。</p><pre><code language="go" run="true">package main
+
+import (
+    "errors"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+func main() {
+    resp, err := http.Get("https://www.baidu.com")
+    if err != nil {
+        panic(err)
+    }
+    defer func() {
+        err = resp.Body.Close()
+        if err != nil {
+            fmt.Printf("resp.Body.Close() %s", err)
+        }
+    }()
+
+    fmt.Printf("Response status code = %d\n", resp.StatusCode)
+    fmt.Printf("Response content type = %s\n", resp.Header.Get("Content-Type"))
+    fmt.Printf("Response content length = %d\n", resp.ContentLength)
+
+    body := make([]byte, resp.ContentLength)
+    n, err := resp.Body.Read(body)
+    if err != nil &amp;amp;&amp;amp; !errors.Is(err, io.EOF) {
+        panic(err)
+    }
+
+    fmt.Printf("Response body read = %d\n", n)
+    fmt.Printf("Response body = %s\n", body)
+}
+
+// $ go run main.go
+// 输出如下
+/**
+  Response status code = 200
+  Response content type = text/html
+  Response content length = 227
+  Response body read = 227
+  Response body = &amp;lt;html&amp;gt;
+  &amp;lt;head&amp;gt;
+          &amp;lt;script&amp;gt;
+                  location.replace(location.href.replace("https://","http://"));
+          &amp;lt;/script&amp;gt;
+  &amp;lt;/head&amp;gt;
+  &amp;lt;body&amp;gt;
+          &amp;lt;noscript&amp;gt;&amp;lt;meta http-equiv="refresh" content="0;url=http://www.baidu.com/"&amp;gt;&amp;lt;/noscript&amp;gt;
+  &amp;lt;/body&amp;gt;
+  &amp;lt;/html&amp;gt;
+*/
+</code></pre>

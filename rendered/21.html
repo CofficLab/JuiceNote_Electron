@@ -1,0 +1,18 @@
+<h1>运算与比较</h1><official-link class="bg-cyan-800/20 p-4">https://go.dev/ref/spec#Arithmetic_operators</official-link><h2>四则运算</h2><p>大多数编程语言的工作方式都一样： </p><ul class="m-0 p-0"><li class="m-0 p-0"><p><mark class="brick">+</mark>表示加法 </p></li><li class="m-0 p-0"><p><mark class="brick">-</mark> 表示减法 </p></li><li class="m-0 p-0"><p><mark class="brick">*</mark> 表示乘法 </p></li><li class="m-0 p-0"><p><mark class="brick">/</mark> 表示除法</p></li></ul><pre><code language="go" run="true">package main 
+import "fmt" 
+func main() { 
+    fmt.Println(1 + 2) 
+    fmt.Println(5.5 - 1.1) 
+    fmt.Println(5 * 8) 
+    fmt.Println(7.5 / 5) 
+} </code></pre><h2>比较</h2><p>大多数编程语言的工作方式都一样： </p><ul class="m-0 p-0"><li class="m-0 p-0"><p><mark class="brick">&gt;</mark> 表示大于 </p></li><li class="m-0 p-0"><p><mark class="brick">&lt;</mark> 表示小于 </p></li><li class="m-0 p-0"><p><mark class="brick">&gt;=</mark> 表示大于等于 </p></li><li class="m-0 p-0"><p><mark class="brick">&lt;=</mark> 表示小于等于 </p></li><li class="m-0 p-0"><p><mark class="brick">==</mark> 表示等于 </p></li></ul><p>比较的结果是一个布尔值。</p><pre><code language="go" run="true">package main 
+import "fmt" 
+
+func main() { 
+    fmt.Println(1 &lt; 2) 
+    fmt.Println(1 &gt; 2) 
+    fmt.Println(1 &gt;= 2) 
+    fmt.Println(1 + 9 &lt;= 2) 
+    fmt.Println(1 + 2 == 3) 
+    fmt.Println(1 + 2 != 3) 
+}</code></pre>

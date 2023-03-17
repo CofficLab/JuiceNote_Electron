@@ -1,0 +1,95 @@
+<h1>认识文件</h1>
+<h2>什么是文件</h2>
+<p>文件是记录在存储介质上的数据的集合，当前的存储介质主要是硬盘。</p>
+<h2>文件类型</h2>
+<p>不同的文件名后缀（扩展名）代表了不同的文件类型。</p>
+<p>常见的文件类型：</p>
+<table>
+<thead>
+<tr>
+<th>扩展名</th>
+<th>类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>.txt</td>
+<td>最简单的文档文件</td>
+</tr>
+<tr>
+<td>.doc</td>
+<td>可用 Microsoft Office Word 打开的文档文件</td>
+</tr>
+<tr>
+<td>.pdf</td>
+<td>在不同的操作系统下都能保持固定格式的文档文件</td>
+</tr>
+<tr>
+<td>.zip</td>
+<td>压缩文件</td>
+</tr>
+<tr>
+<td>.png</td>
+<td>图形文件</td>
+</tr>
+<tr>
+<td>.exe</td>
+<td>Windows 操作系统下的可执行文件</td>
+</tr>
+</tbody>
+</table>
+<h2>路径</h2>
+<p>路径表示文件在计算机上的位置。</p>
+<p>在 <code>Windows</code> 操作系统中，文件路径像这样：</p>
+<pre><code>C:\Users\Administrator\Desktop\cup.png
+</code></pre>
+<p>在 <code>Linux</code>、<code>macOS</code>操作系统中，文件路径像这样：</p>
+<pre><code>/Users/Administrator/Desktop/cup.png
+</code></pre>
+<h2>检查路径是否有效</h2>
+<p>&lt;div class=&quot;run&quot;&gt;&lt;/div&gt;</p>
+<pre><code class="language-JavaScript">const fs = require(&quot;fs&quot;);
+
+console.log(fs.existsSync(&quot;C:\\Windows&quot;));
+console.log(fs.existsSync(&quot;/Users&quot;));
+</code></pre>
+<h2>当前工作目录</h2>
+<p>每个程序都有一个当前工作目录。</p>
+<p>获取当前工作目录：</p>
+<p>&lt;div class=&quot;run&quot;&gt;&lt;/div&gt;</p>
+<pre><code class="language-JavaScript">console.log(process.cwd());
+</code></pre>
+<h2>路径分隔符</h2>
+<ul>
+<li>在<code>Windows</code>中，使用<code>\</code>作为路径的分隔符</li>
+<li>在<code>Linux</code>、<code>macOS</code>中，使用<code>/</code>作为路径的分隔符</li>
+</ul>
+<p>不过，编程语言都是跨平台的，会自动帮我们处理这种差异：</p>
+<p>&lt;div class=&quot;run&quot;&gt;&lt;/div&gt;</p>
+<pre><code class="language-php">// 输出当前操作系统的路径分隔符
+echo DIRECTORY_SEPARATOR;
+</code></pre>
+<h2>存储方式</h2>
+<p>不管什么文件，对于计算机来说，都是二进制。</p>
+<p>&lt;div class=&quot;flex flex-col gap-0&quot;&gt;
+&lt;div class=&quot;flex flex-row gap-2 overflow-x-scroll w-full bg-gray-500/60 p-4 overflow-y-hidden justify-between&quot;&gt;
+&lt;div class=&quot;brick w-24 py-2 text-center text-base&quot;&gt;.txt&lt;/div&gt;
+&lt;div class=&quot;brick w-24 py-2 text-center text-base&quot;&gt;.doc&lt;/div&gt;
+&lt;div class=&quot;brick w-24 py-2 text-center text-base&quot;&gt;.pdf&lt;/div&gt;
+&lt;div class=&quot;brick w-24 py-2 text-center text-base&quot;&gt;.zip&lt;/div&gt;
+&lt;div class=&quot;brick w-24 py-2 text-center text-base&quot;&gt;.png&lt;/div&gt;
+&lt;div class=&quot;brick w-24 py-2 text-center text-base&quot;&gt;......&lt;/div&gt;
+&lt;/div&gt;</p>
+<p>&lt;div class=&quot;bg-yellow flex flex-col items-center p-2 mt-0 gap-2&quot;&gt;
+&lt;div&gt;计算机底层&lt;/div&gt;
+&lt;div class=&quot;flex justify-start gap-1&quot;&gt;
+&lt;div class=&quot;brick w-8 h-8&quot;&gt;...&lt;/div&gt;
+&lt;div class=&quot;brick w-8 h-8&quot;&gt;0&lt;/div&gt;
+&lt;div class=&quot;brick w-8 h-8&quot;&gt;1&lt;/div&gt;
+&lt;div class=&quot;brick w-8 h-8&quot;&gt;1&lt;/div&gt;
+&lt;div class=&quot;brick w-8 h-8&quot;&gt;0&lt;/div&gt;
+&lt;div class=&quot;brick w-8 h-8&quot;&gt;1&lt;/div&gt;
+&lt;div class=&quot;brick w-8 h-8&quot;&gt;...&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;</p>

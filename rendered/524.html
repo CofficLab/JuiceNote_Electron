@@ -1,0 +1,60 @@
+<toc></toc><h2 id="heading-1">输出结构体</h2><h3 id="heading-2">Go语言格式键值</h3><p>官方文档原文是：a Go-syntax representation of the value。</p><p>也就是说，输出的是一串 Go 语言代码。</p><pre><code language="go" run="true">package main
+import "fmt"
+
+type Dog struct {
+    name string 
+    age int
+}
+
+func main() {
+    dog := Dog{"cici",1}
+    
+    fmt.Printf("%#v", dog)
+}</code></pre><h3 id="heading-3">Go语言格式类型</h3><p>官方文档原文是：a Go-syntax representation of the type of the value</p><pre><code language="go" run="true">package main
+import "fmt"
+
+type Dog struct {
+    name string 
+    age int
+}
+
+func main() {
+    dog := Dog{"cici",1}
+    fmt.Printf("%T", dog)
+}</code></pre><h3 id="heading-4">仅输出值</h3><pre><code language="go" run="true">package main
+import "fmt"
+
+type Dog struct {
+    name string 
+    age int
+}
+
+func main() {
+    dog := Dog{"cici",3}
+    
+    fmt.Printf("%v", dog)
+}</code></pre><h3 id="heading-5">键值都输出</h3><pre><code language="go" run="true">package main
+import "fmt"
+
+type Dog struct {
+    name string 
+    age int
+}
+
+func main() {
+    dog := Dog{"cici",3}
+    
+    fmt.Printf("%+v", dog)
+}</code></pre><h2 id="heading-6">输出错误</h2><p>fmt.errorf 等价于 errors.New(fmt.Sprintf())</p><h2 id="heading-7">前补齐</h2><pre><code language="go" run="true">package main
+import "fmt"
+
+func main() {
+    fmt.Printf("-&gt;%20s&lt;-", "***")
+}
+</code></pre><h2 id="heading-8">后补齐</h2><pre><code language="go" run="true">package main
+import "fmt"
+
+func main() {
+    fmt.Printf("-&gt;%-20s&lt;-", "***")
+}
+</code></pre>

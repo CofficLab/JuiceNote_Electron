@@ -1,0 +1,22 @@
+<toc></toc><h2 id="heading-1">交换值</h2><pre><code language="go" run="true">package main
+import "fmt"
+
+func main() {
+  a := 1
+  b := 2
+
+  a,b = b,a
+
+  fmt.Printf("a=%d  b=%d",a,b)
+
+  fmt.Println()
+
+  x := 100
+  y := 200
+  z := 300
+
+  x,y,z = z,y,x
+
+  fmt.Printf("x=%d  y=%d  z=%d",x,y,z)
+}
+</code></pre><h2 id="heading-2"></h2>

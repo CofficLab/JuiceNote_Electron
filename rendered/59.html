@@ -1,0 +1,137 @@
+<h1>简介</h1><p>map 在 Go 中一般称为：映射。</p><p>维基百科里对 map 的定义：</p><p>In computer science, an associative array, map, symbol table, or dictionary is an abstract data type composed of a collection of (key, value) pairs, such that each possible key appears at most once in the collection.</p><p>翻译成中文：</p><p>在计算机科学里，map 被称为相关数组、map、符号表或者字典，是由一组 &lt;key, value&gt; 对组成的抽象数据结构，，并且同一个 key 只会出现一次。</p><p>有两个关键点：</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>map 是由 key-value 对组成的；</p></li><li class="m-0 p-0"><p>key 只会出现一次。</p></li></ul><p>在不同的编程语言中有不同的名字：</p><table class="table bg-cyan-500/30 table-zebra"><tbody><tr class="border-2 border-red-300"><th colspan="1" rowspan="1"><p>编程语言</p></th><th colspan="1" rowspan="1"><p>英文</p></th><th colspan="1" rowspan="1"><p>中文</p></th></tr><tr class="border-2 border-red-300"><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>Go</p></td><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>Map</p></td><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>Map、映射</p></td></tr><tr class="border-2 border-red-300"><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>Python</p></td><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>Dict</p></td><td class="border-2 border-sky-300" colspan="1" rowspan="1"><p>字典</p></td></tr></tbody></table><h2>操作</h2><p>和 map 相关的操作主要是：</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>增加一个 k-v 对 —— Add or insert</p></li><li class="m-0 p-0"><p>删除一个 k-v 对 —— Remove or delete</p></li><li class="m-0 p-0"><p>修改某个 k 对应的 v —— Reassign</p></li><li class="m-0 p-0"><p>查询某个 k 对应的 v —— Lookup</p></li></ul><p>简单说就是最基本的 增删查改。</p><h2>声明</h2><h3>使用内置函数 make</h3><p>使用内置函数make来创建映射：</p><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-go">package main
+import "fmt"
+import "reflect"
+
+func main() {
+    stuff := make(map[string]string)
+
+    stuff["掌柜"] = "佟湘玉"
+    stuff["厨师"] = "李大嘴"
+    stuff["账房"] = "吕轻侯"
+    stuff["跑堂"] = "白展堂"
+
+    fmt.Println(reflect.TypeOf(stuff))
+    fmt.Println("掌柜是",stuff["掌柜"])
+}
+</code></pre><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-go">package main
+import "fmt"
+import "reflect"
+
+func main() {
+    ages := make(map[string]int)
+
+    ages["佟湘玉"] = 28
+    ages["李大嘴"] = 22
+    ages["吕轻侯"] = 23
+    ages["白展堂"] = 27
+
+    fmt.Println(reflect.TypeOf(ages))
+    fmt.Println("白展堂的年龄是", ages["白展堂"])
+}
+</code></pre><h3>使用字面量</h3><pre><code class="language-go">ages := map[string]int{
+  "白展堂": 24,
+  "佟湘玉": 26,
+}
+</code></pre><h2>获取或改变值</h2><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-go">package main
+import "fmt"
+
+func main() {
+    var m = make(map[string]int)
+
+    fmt.Printf("Map 长度 = %d\n", len(m))
+
+    m["zero"] = 0
+    m["one"] = 1
+    m["two"] = 2
+
+    fmt.Printf("Map 长度 = %d\n", len(m))
+    fmt.Println(m["zero"],m["one"],m["two"])
+}
+</code></pre><h2>删除元素</h2><p>使用内置函数delete来删除元素：</p><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-go">package main
+import "fmt"
+
+func main() {
+    var m = make(map[string]int)
+
+    fmt.Printf("Map 长度 = %d\n", len(m))
+
+    m["zero"] = 0
+    m["one"] = 1
+    m["two"] = 2
+
+    fmt.Printf("Map 长度 = %d\n", len(m))
+
+    delete(m, "one")
+    delete(m, "two")
+
+    fmt.Printf("Map 长度 = %d\n", len(m))
+}
+</code></pre><h2>判断元素是否存在</h2><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-go">package main
+import "fmt"
+
+func main() {
+    var m = make(map[string]int)
+
+    m["zero"] = 0
+    m["one"] = 1
+    m["two"] = 2
+
+    if _, ok := m["zero"]; ok {
+        fmt.Println(`m["zero"] 元素存在`)
+    }
+
+    delete(m, "zero")
+
+    if _, ok := m["zero"]; !ok {
+        fmt.Println(`m["zero"] 元素不存在`)
+    }
+}
+</code></pre><h2>元素个数</h2><p>内置函数len可输出元素的个数：</p><h3>映射(map)</h3><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-go">package main
+import "fmt"
+import "reflect"
+
+func main() {
+    a := map[string]string{"跑堂":"白展堂", "掌柜":"佟湘玉"}
+
+    fmt.Println(reflect.TypeOf(a), len(a))
+}
+</code></pre><h2>遍历</h2><p>注意: Map 遍历是无序的。</p><p>若需要遍历时永远保持相同的顺序，需要将键做排序处理，这样的映射叫做：有序 Map。</p><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-go">package main
+import "fmt"
+
+func main() {
+    var m = make(map[string]int)
+
+    m["zero"] = 0
+    m["one"] = 1
+    m["two"] = 2
+
+    for k, v := range m {
+        fmt.Printf("key = %s, val = %d\n", k, v)
+    }
+}
+</code></pre><h2>有序 Map</h2><p>Map 的遍历是无序的，这意味着不能依赖遍历的键值顺序。如果想实现 Map 遍历时顺序永远一致， 一个折中的方案时预先给 Map 的键排序，然后根据排序后的键序列遍历 Map, 这样可以保证每次遍历顺序都是一样的。</p><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-go">package main
+
+import "fmt"
+import "sort"
+
+func main() {
+    var m = make(map[int]string)
+
+    m[0] = "zero"
+    m[1] = "one"
+    m[2] = "two"
+
+    keys := make([]int, len(m)) // 将所有的键放入一个切片中
+    index := 0
+    for k, _ := range m {
+        keys[index] = k
+        index++
+    }
+
+    sort.Ints(keys) // 将所有的键进行排序
+
+    for _, key := range keys { // 根据排序后的键遍历 Map
+        fmt.Printf("key = %d, val = %s\n", key, m[key])
+    }
+}
+</code></pre><h2>并发不安全</h2><p>最后要说明的很重要的一点是: Map 不是并发安全的，也就是说，如果在多个线程中，同时对一个 Map 进行读写，会报错。 互斥锁 提供了一个简单的解决方案。</p>

@@ -1,0 +1,75 @@
+<h1>映射</h1>
+<p>映射是将值与值进行关联的数据结构，可以直接通过键获取某个值。</p>
+<p>JavaScript 中，映射（Map）是一个标准内置对象。</p>
+<p>&lt;div class=&quot;o&quot;&gt;https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Map&lt;/div&gt;</p>
+<h2>声明</h2>
+<p>通过<code>set</code>方法：</p>
+<p>&lt;div class=&quot;run&quot;&gt;&lt;/div&gt;</p>
+<pre><code class="language-javaScript">const map1 = new Map();
+
+map1.set('a', 1);
+map1.set('b', 2);
+map1.set('c', 3);
+
+console.log(typeof map1, map1);
+</code></pre>
+<p>通过一个元素是键值对的数组或其它可迭代对象来初始化：</p>
+<p>&lt;div class=&quot;run&quot;&gt;&lt;/div&gt;</p>
+<pre><code class="language-javaScript">const map2 = new Map([
+  [1, 'one'],
+  [2, 'two'],
+  [3, 'three'],
+]);
+
+console.log(typeof map2, map2)
+</code></pre>
+<h2>属性</h2>
+<h3>大小</h3>
+<p>&lt;div class=&quot;run&quot;&gt;&lt;/div&gt;</p>
+<pre><code class="language-javascript">const map1 = new Map();
+
+map1.set(&quot;a&quot;, &quot;alpha&quot;);
+map1.set(&quot;b&quot;, &quot;beta&quot;);
+map1.set(&quot;g&quot;, &quot;gamma&quot;);
+
+console.log(map1.size);
+// expected output: 3
+</code></pre>
+<h2>方法</h2>
+<h3>取值</h3>
+<p>&lt;div class=&quot;run&quot;&gt;&lt;/div&gt;</p>
+<pre><code class="language-javaScript">const map1 = new Map();
+map1.set('bar', 'foo');
+
+console.log(map1.get('bar'));
+// expected output: &quot;foo&quot;
+
+console.log(map1.get('baz'));
+// expected output: undefined
+</code></pre>
+<h3>遍历</h3>
+<p>&lt;div class=&quot;run&quot;&gt;&lt;/div&gt;</p>
+<pre><code class="language-javaScript">function logMapElements(value, key, map) {
+  console.log(`m[${key}] = ${value}`);
+}
+
+new Map([['foo', 3], ['bar', {}], ['baz', undefined]])
+  .forEach(logMapElements);
+
+// expected output: &quot;m[foo] = 3&quot;
+// expected output: &quot;m[bar] = [object Object]&quot;
+// expected output: &quot;m[baz] = undefined&quot;
+</code></pre>
+<h3>键是否存在</h3>
+<p>&lt;div class=&quot;run&quot;&gt;&lt;/div&gt;</p>
+<pre><code class="language-javaScript">const map1 = new Map();
+map1.set('bar', 'foo');
+
+console.log(map1.has('bar'));
+console.log(map1.has('baz'));
+</code></pre>
+<h2>了解其他编程语言</h2>
+<ul>
+<li>Python 中的映射叫做：字典</li>
+<li>Go 中的映射叫做：映射</li>
+</ul>

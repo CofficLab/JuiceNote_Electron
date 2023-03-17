@@ -1,0 +1,23 @@
+<h1>匿名函数</h1>
+<p>函数可以没有名字：</p>
+<pre><code class="language-JavaScript">var f = function (a) {
+  return a + 1;
+};
+</code></pre>
+<p>通过这种方式定义的函数称为匿名函数。</p>
+<h2>回调函数</h2>
+<p>&lt;div class=&quot;run&quot;&gt;&lt;/div&gt;</p>
+<pre><code class="language-JavaScript">function one() {
+  return 1;
+}
+
+function two() {
+  return 2;
+}
+
+function x(a, b) {
+  return a() + b();
+}
+
+console.log(x(one, two));
+</code></pre>

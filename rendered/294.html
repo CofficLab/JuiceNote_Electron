@@ -1,0 +1,71 @@
+<h1>简介</h1>
+<p>对于任何编程语言来说，函数都是非常重要的组成部分。</p>
+<h2>什么是函数</h2>
+<p>函数通过将一部分代码“包裹”起来，以实现复用。</p>
+<p>&lt;div class=&quot;run&quot;&gt;&lt;/div&gt;</p>
+<pre><code class="language-JavaScript">function sum(a, b) {
+  var c = a + b;
+
+  return c;
+}
+
+console.log(sum(1, 2));
+console.log(sum(2, 3));
+</code></pre>
+<h2>数学中的函数</h2>
+<pre><code>已知： f(x, y) = x + y。
+
+求: f(2, 3)。
+</code></pre>
+<p><code>f</code> 就是一个函数，它的作用是计算 <code>x + y</code>。</p>
+<h2>调用函数</h2>
+<p>调用（call）也称为请求（invoke）。</p>
+<p>调用时有两个要点：</p>
+<ul>
+<li>函数名</li>
+<li>参数</li>
+</ul>
+<p>&lt;div class=&quot;run&quot;&gt;&lt;/div&gt;</p>
+<pre><code class="language-JavaScript">function sum(a, b) {
+  var c = a + b;
+
+  return c;
+}
+
+console.log(sum(1, 2));
+console.log(sum(2, 3));
+</code></pre>
+<h2>异常处理</h2>
+<p>如果参数个数大于函数需要的个数会怎么样？</p>
+<pre><code class="language-JavaScript">sum(1, 2, 3);
+</code></pre>
+<blockquote>
+<p>如果让你来设计这门语言，会怎么做？</p>
+</blockquote>
+<p>大概可以想到这些方案：</p>
+<ul>
+<li>报错，必须提供函数要求的个数</li>
+<li>忽略多余的参数</li>
+</ul>
+<p>&lt;div class=&quot;run&quot;&gt;&lt;/div&gt;</p>
+<pre><code class="language-JavaScript">function sum(a, b) {
+  var c = a + b;
+
+  return c;
+}
+
+console.log(sum(1, 2, 3));
+</code></pre>
+<p>JavaScript 忽略了多余的参数。</p>
+<p>常见的选择忽略多余的参数的编程语言：</p>
+<ul>
+<li>JavaScript</li>
+<li>PHP</li>
+</ul>
+<p>常见的选择报错的编程语言：</p>
+<ul>
+<li>Java</li>
+<li>Python</li>
+<li>Golang</li>
+</ul>
+<p>&lt;div class=&quot;banner&quot;&gt;这两种选择并没有优劣之分&lt;/div&gt;</p>

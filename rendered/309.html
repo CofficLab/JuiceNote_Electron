@@ -1,0 +1,33 @@
+<h1>对象</h1>
+<h2>创建对象</h2>
+<p>&lt;div class=&quot;run&quot;&gt;&lt;/div&gt;</p>
+<pre><code class="language-javaScript">// 第一种方式
+var audi = {
+    model: &quot;A7&quot;,
+    year: &quot;2022&quot;,
+    color: &quot;gray&quot;
+}
+
+console.log(typeof audi, audi)
+
+console.log('---')
+
+// 第二种方式
+var audi = new Object({
+    model: &quot;A7&quot;,
+    year: &quot;2022&quot;,
+    color: &quot;gray&quot;
+})
+
+console.log(typeof audi, audi)
+</code></pre>
+<p>既然第一种方式更简单，为什么还要存在第二种方式呢？</p>
+<p>在 JavaScript 内部：</p>
+<pre><code class="language-JavaScript">let audi = {...};
+</code></pre>
+<p>会自动转换成：</p>
+<pre><code class="language-JavaScript">let audi = new Object({...});
+</code></pre>
+<p>第二种方式揭示了 JavaScript 的内部原理，第一种方式更像一种方便人类的快捷方式。</p>
+<h2>删除对象</h2>
+<p>不必人工去删除（销毁）对象，JavaScript 会自动处理。</p>

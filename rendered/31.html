@@ -1,0 +1,59 @@
+<h1>整型</h1><h2>简介</h2><p>整型、整数型、整数的意思相同或接近。Go 内置了 12 种整数类型。</p><h2>范围</h2><p>整数：</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>int8（-128 -&gt; 127）</p></li><li class="m-0 p-0"><p>int16（-32768 -&gt; 32767）</p></li><li class="m-0 p-0"><p>int32（较大范围）</p></li><li class="m-0 p-0"><p>int64（超大范围）</p></li></ul><p>无符号整数：</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>uint8（0 -&gt; 255）</p></li><li class="m-0 p-0"><p>uint16（0 -&gt; 65,535）</p></li><li class="m-0 p-0"><p>uint32（较大范围）</p></li><li class="m-0 p-0"><p>uint64（超大范围）</p></li></ul><p>对初学者来说，我们可以简单的认为：</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>int8、uint8 表示 8 个小格子的存储空间</p></li><li class="m-0 p-0"><p>int16、uint16 表示 16 个小格子的存储空间</p></li><li class="m-0 p-0"><p>......</p></li></ul><p>&lt;div class="flex flex-row gap-1"&gt; &lt;div class="brick-cyan w-8"&gt;1&lt;/div&gt; &lt;div class="brick w-8"&gt;1&lt;/div&gt; &lt;div class="brick w-8"&gt;1&lt;/div&gt; &lt;div class="brick w-8"&gt;1&lt;/div&gt; &lt;div class="brick w-8"&gt;1&lt;/div&gt; &lt;div class="brick w-8"&gt;1&lt;/div&gt; &lt;div class="brick w-8"&gt;1&lt;/div&gt; &lt;div class="brick w-8"&gt;1&lt;/div&gt; &lt;div class="brick w-8"&gt;...&lt;/div&gt; &lt;/div&gt;</p><p>以此来大致感受其存储范围。</p><p>如果需要准确的最大值，可以借助标准库中的math包：</p><pre><code language="go" run="true">package main
+import "math"
+import "fmt"
+
+func main() {
+	fmt.Printf("int32 类型的最大值是 %d \n", math.MaxInt32)
+	fmt.Printf("uint32 类型的最大值是 %d \n", math.MaxUint32)
+	fmt.Printf("int64 类型的最大值是 %d", math.MaxInt64)
+}
+</code></pre><p>关于int这个类型，官方文档解释到：</p><p>int is a signed integer type that is at least 32 bits in size. It is a distinct type, however, and not an alias for, say, int32.</p><p>int 在 32 位操作系统的大小就是 4 字节，64 位操作系统则是 8 个字节。</p><h2>字节数</h2><pre><code language="go" run="true">package main
+import "fmt"
+import "reflect"
+import "unsafe"
+
+func main() {
+	var a int = 1
+	var b int8 = 1
+	var c int16 = 1
+	var d int32 = 1
+	var e int64 = 1
+
+	fmt.Println(reflect.TypeOf(a),"字节数",unsafe.Sizeof(a))
+	fmt.Println(reflect.TypeOf(b),"字节数",unsafe.Sizeof(b))
+	fmt.Println(reflect.TypeOf(c),"字节数",unsafe.Sizeof(c))
+	fmt.Println(reflect.TypeOf(d),"字节数",unsafe.Sizeof(d))
+	fmt.Println(reflect.TypeOf(e),"字节数",unsafe.Sizeof(e))
+}
+</code></pre><h2>声明</h2><pre><code language="go" run="true">package main
+import "fmt"
+import "reflect"
+
+func main() {
+	var a int = 9
+	var (
+		b int8 = 10
+		c int32 = 11
+	)
+
+	fmt.Println(reflect.TypeOf(a))
+	fmt.Println(reflect.TypeOf(b))
+	fmt.Println(reflect.TypeOf(c))
+}
+</code></pre><h2>四则运算</h2><pre><code language="go" run="true">package main
+import "fmt"
+
+func main() {
+	var a int = 1
+	var b int = 2
+	var c = a + b
+
+	fmt.Print(c)
+}
+</code></pre><h2>场景</h2><h3>获取两个整数中的较大者</h3><pre><code language="go" run="true">package main
+import "fmt"
+
+func main() {
+	fmt.Println(max(1,2))
+}
+</code></pre>

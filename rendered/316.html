@@ -1,0 +1,13 @@
+<h1>isFinite</h1>
+<p>&lt;div class=&quot;o&quot;&gt;https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/isFinite&lt;/div&gt;</p>
+<pre><code class="language-JavaScript">isFinite(testValue)
+</code></pre>
+<p>用于确定某个值是否是一个既非 <code>Infinity</code> 也非 <code>NaN</code> 的数字。</p>
+<p>&lt;div class=&quot;run&quot;&gt;&lt;/div&gt;</p>
+<pre><code class="language-JavaScript">console.log(isFinite(Infinity));
+console.log(isFinite(-Infinity));
+console.log(isFinite(12));
+console.log(isFinite(1e30));
+console.log(isFinite(1e309));
+</code></pre>
+<p><code>1e309</code> 超过了 JavaScript 中的最大数字，视作无穷。</p>

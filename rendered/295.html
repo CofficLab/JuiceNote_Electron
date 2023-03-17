@@ -1,0 +1,14 @@
+<h1>作用域</h1>
+<p>&lt;div class=&quot;run&quot;&gt;&lt;/div&gt;</p>
+<pre><code class="language-JavaScript">var global = 1;
+
+function x() {
+  var local = 1;
+  global = global + 1;
+
+  return global;
+}
+
+console.log(x());
+console.log(x());
+</code></pre>

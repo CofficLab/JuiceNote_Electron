@@ -1,0 +1,143 @@
+<h1>简介</h1>
+<p>&lt;div class=&quot;o&quot;&gt;https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Grammar_and_Types#数据结构和类型&lt;/div&gt;</p>
+<h2>不同编程语言的对比</h2>
+<p>&lt;div class=&quot;flex flex-col gap-0&quot;&gt;
+&lt;div class=&quot;flex flex-row gap-2 overflow-x-scroll w-full bg-gray-500/60 p-4 h-72 overflow-y-hidden justify-between&quot;&gt;
+&lt;div class=&quot;flex flex-col gap-1 mb-0 pb-1 pt-0 bg-cyan-400/50 w-36 items-center border-b-8 border-cyan-900&quot;&gt;
+&lt;div class=&quot;bg-cyan w-full mb-2 text-center text-base&quot;&gt;Golang &lt;br /&gt;&lt;span class=&quot;text-xs&quot;&gt;向下滚动查看更多&lt;/span&gt;&lt;/div&gt;
+&lt;div class=&quot;w-full overflow-y-scroll flex flex-col gap-2 items-center mx-1 text-sm&quot;&gt;
+&lt;div class=&quot;bg-stone-600/50 w-28 flex flex-col gap-1 p-1&quot;&gt;
+&lt;div class=&quot;brick&quot;&gt;布尔型&lt;/div&gt;
+&lt;div class=&quot;brick-yellow&quot;&gt;boolean&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;bg-stone-600/50 w-28 flex flex-col gap-1 p-1&quot;&gt;
+&lt;div class=&quot;brick&quot;&gt;整型&lt;/div&gt;
+&lt;div class=&quot;brick-yellow&quot;&gt;byte&lt;/div&gt;
+&lt;div class=&quot;brick-yellow&quot;&gt;int&lt;/div&gt;
+&lt;div class=&quot;brick-yellow&quot;&gt;int8&lt;/div&gt;
+&lt;div class=&quot;brick-yellow&quot;&gt;int16&lt;/div&gt;
+&lt;div class=&quot;brick-yellow&quot;&gt;int32&lt;/div&gt;
+&lt;div class=&quot;brick-yellow&quot;&gt;int64&lt;/div&gt;
+&lt;div class=&quot;brick-yellow&quot;&gt;uint&lt;/div&gt;
+&lt;div class=&quot;brick-yellow&quot;&gt;uint8&lt;/div&gt;
+&lt;div class=&quot;brick-yellow&quot;&gt;uint16&lt;/div&gt;
+&lt;div class=&quot;brick-yellow&quot;&gt;uint32&lt;/div&gt;
+&lt;div class=&quot;brick-yellow&quot;&gt;uint64&lt;/div&gt;
+&lt;div class=&quot;brick-yellow&quot;&gt;uintptr&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;bg-stone-600/50 w-28 flex flex-col p-1 gap-1&quot;&gt;
+&lt;div class=&quot;brick&quot;&gt;浮点型&lt;/div&gt;
+&lt;div class=&quot;brick-yellow&quot;&gt;float32&lt;/div&gt;
+&lt;div class=&quot;brick-yellow&quot;&gt;float64&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;bg-stone-600/50 w-28 flex flex-col gap-1 p-1&quot;&gt;
+&lt;div class=&quot;brick&quot;&gt;复数型&lt;/div&gt;
+&lt;div class=&quot;brick-yellow&quot;&gt;complex32&lt;/div&gt;
+&lt;div class=&quot;brick-yellow&quot;&gt;complex64&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;bg-stone-600/50 w-28 flex flex-col gap-1 p-1&quot;&gt;
+&lt;div class=&quot;brick&quot;&gt;字符型&lt;/div&gt;
+&lt;div class=&quot;brick-yellow&quot;&gt;rune&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;bg-stone-600/50 w-28 flex flex-col gap-1 p-1&quot;&gt;
+&lt;div class=&quot;brick&quot;&gt;字符串型&lt;/div&gt;
+&lt;div class=&quot;brick-yellow&quot;&gt;string&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;bg-stone-600/50 w-28 flex flex-col gap-1 p-1&quot;&gt;
+&lt;div class=&quot;brick&quot;&gt;错误型&lt;/div&gt;
+&lt;div class=&quot;brick-yellow&quot;&gt;error&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;flex flex-col gap-1 mb-0 pb-1 pt-0 bg-cyan-400/50 items-center border-b-8 border-cyan-900 text-sm&quot;&gt;
+&lt;div class=&quot;bg-cyan w-full mb-2 text-center text-base&quot;&gt;Python&lt;/div&gt;
+&lt;div class=&quot;brick w-28 mx-2&quot;&gt;整型&lt;/div&gt;
+&lt;div class=&quot;brick w-28&quot;&gt;浮点型&lt;/div&gt;
+&lt;div class=&quot;brick w-28&quot;&gt;字符串型&lt;/div&gt;
+&lt;div class=&quot;brick w-28&quot;&gt;布尔型&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;flex flex-col gap-1 mb-0 pb-1 pt-0 bg-cyan-400/50 items-center w-36 border-b-8 border-cyan-900 text-sm&quot;&gt;
+&lt;div class=&quot;bg-cyan w-full mb-2 text-center text-base&quot;&gt;PHP&lt;/div&gt;
+&lt;div class=&quot;brick w-28 mx-2&quot;&gt;整型&lt;/div&gt;
+&lt;div class=&quot;brick w-28&quot;&gt;浮点型&lt;/div&gt;
+&lt;div class=&quot;brick w-28&quot;&gt;字符串型&lt;/div&gt;
+&lt;div class=&quot;brick w-28&quot;&gt;布尔型&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;flex flex-col gap-1 mb-0 pb-1 pt-0 bg-cyan-400/50 items-center w-36 border-b-8 border-cyan-900 text-sm&quot;&gt;
+&lt;div class=&quot;bg-cyan w-full mb-2 text-center text-base&quot;&gt;JavaScript&lt;/div&gt;
+&lt;div class=&quot;brick w-28 mx-2&quot;&gt;数值型&lt;/div&gt;
+&lt;div class=&quot;brick w-28&quot;&gt;字符串型&lt;/div&gt;
+&lt;div class=&quot;brick w-28&quot;&gt;null 型&lt;/div&gt;
+&lt;div class=&quot;brick w-28&quot;&gt;布尔型&lt;/div&gt;
+&lt;div class=&quot;brick w-28&quot;&gt;undefined 型&lt;/div&gt;
+&lt;/div&gt;
+&lt;div
+class=&quot;flex flex-col gap-1 mb-0 pb-1 pt-0 bg-cyan-400/50 items-center w-36 border-b-8 border-cyan-900  text-sm&quot;&gt;
+&lt;div class=&quot;bg-cyan w-full mb-2 text-center text-base&quot;&gt;Java&lt;/div&gt;
+&lt;div class=&quot;brick w-28 mx-4&quot;&gt;布尔型&lt;/div&gt;
+&lt;div class=&quot;brick w-28&quot;&gt;字节型&lt;/div&gt;
+&lt;div class=&quot;brick w-28&quot;&gt;短整型&lt;/div&gt;
+&lt;div class=&quot;brick w-28&quot;&gt;整型&lt;/div&gt;
+&lt;div class=&quot;brick w-28&quot;&gt;长整型&lt;/div&gt;
+&lt;div class=&quot;brick w-28&quot;&gt;字符型&lt;/div&gt;
+&lt;div class=&quot;brick w-32&quot;&gt;单精度浮点型&lt;/div&gt;
+&lt;div class=&quot;brick w-32&quot;&gt;双精度浮点型&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;bg-yellow flex flex-col items-center p-2 mt-0 gap-2&quot;&gt;
+&lt;div&gt;计算机底层&lt;/div&gt;
+&lt;div class=&quot;flex justify-start gap-1&quot;&gt;
+&lt;div class=&quot;brick w-8 h-8&quot;&gt;...&lt;/div&gt;
+&lt;div class=&quot;brick w-8 h-8&quot;&gt;0&lt;/div&gt;
+&lt;div class=&quot;brick w-8 h-8&quot;&gt;1&lt;/div&gt;
+&lt;div class=&quot;brick w-8 h-8&quot;&gt;1&lt;/div&gt;
+&lt;div class=&quot;brick w-8 h-8&quot;&gt;0&lt;/div&gt;
+&lt;div class=&quot;brick w-8 h-8&quot;&gt;1&lt;/div&gt;
+&lt;div class=&quot;brick w-8 h-8&quot;&gt;...&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;</p>
+<p>从这份对比中可以看出，Python 是最接近人类的直觉的，也是最简单的。</p>
+<p>还可以看出，Golang 似乎有些疯狂了，不过这并不影响它的流行。</p>
+<h2>底层存储方式</h2>
+<p>计算机是二进制的，数据的最小存储单元是位，每个位的值只能是 0 或 1。</p>
+<p>&lt;div class=&quot;flex justify-start gap-1&quot;&gt;
+&lt;div class=&quot;brick w-8 h-8&quot;&gt;...&lt;/div&gt;
+&lt;div class=&quot;brick w-8 h-8&quot;&gt;0&lt;/div&gt;
+&lt;div class=&quot;brick w-8 h-8&quot;&gt;1&lt;/div&gt;
+&lt;div class=&quot;brick w-8 h-8&quot;&gt;1&lt;/div&gt;
+&lt;div class=&quot;brick w-8 h-8&quot;&gt;0&lt;/div&gt;
+&lt;div class=&quot;brick w-8 h-8&quot;&gt;1&lt;/div&gt;
+&lt;div class=&quot;brick w-8 h-8&quot;&gt;...&lt;/div&gt;
+&lt;/div&gt;</p>
+<p>对人类来说，这种存储方式，可读性非常差。</p>
+<h2>为什么要区分类型</h2>
+<p>因为不同的数据类型，处理逻辑是不一样的。</p>
+<p>例如：</p>
+<p>正整数 1 的下一个数字是 2；<br>
+小数 1.1 的下一个数字是什么？</p>
+<ul>
+<li>1.2</li>
+<li>1.11</li>
+</ul>
+<p>这是没有固定的逻辑的。</p>
+<p>将数据分类，可以让程序对数据进行统一的处理。</p>
+<h2>判断类型</h2>
+<p>&lt;div class=&quot;run&quot;&gt;&lt;/div&gt;</p>
+<pre><code class="language-JavaScript">a = &quot;3&quot;;
+console.log(typeof a);
+
+b = 3;
+console.log(typeof b);
+
+c = 3.1;
+console.log(typeof c);
+
+d = true;
+console.log(typeof d);
+
+e = null;
+console.log(typeof e);
+
+console.log(typeof f);
+</code></pre>

@@ -1,0 +1,32 @@
+<h1>方法</h1>
+<h2>添加</h2>
+<p>&lt;div class=&quot;run&quot;&gt;&lt;/div&gt;</p>
+<pre><code class="language-javaScript">var audi = {
+    model: &quot;A7&quot;,
+    year: &quot;2022&quot;,
+    color: &quot;gray&quot;,
+    drive: function() {
+        console.log('轰隆隆轰隆隆')
+    }
+}
+
+console.log(typeof audi, audi)
+audi.drive()
+</code></pre>
+<p>或者</p>
+<p>&lt;div class=&quot;run&quot;&gt;&lt;/div&gt;</p>
+<pre><code class="language-javaScript">var audi = {
+    model: &quot;A7&quot;,
+    year: &quot;2022&quot;,
+    color: &quot;gray&quot;
+}
+
+audi.drive = function() {
+    console.log('轰隆隆轰隆隆')
+}
+
+console.log(typeof audi, audi)
+audi.drive()
+</code></pre>
+<p>&lt;div class=&quot;ask&quot;&gt;方法和函数是什么关系？&lt;/div&gt;</p>
+<p>函数放在对象中就是方法。</p>

@@ -1,0 +1,8 @@
+<h1 id="heading-1">模块</h1><p>使用 import 将函数从外部模块导入到程序中：</p><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre><code class="language-python">import math
+print(math.sin(0))
+</code></pre><h2 id="heading-2">模块就是程序</h2><p>任何 Python 程序都可作为模块导入。写一个 hello.py 文件，内容是：</p><pre><code class="language-python">print("Hello, world!")
+</code></pre><p>假设这个文件存储在目录 C:\python (Windows)或~/python(UNIX/macOS)中。</p><p>要告诉解释器去哪里查找这个模块，可执行如下命令:</p><pre><code class="language-python">import sys
+sys.path.append('C:/python')
+</code></pre><p>这告诉解释器，除了通常查找的位置外，还应到目录 C:\python 中去查找这个模块。</p><pre><code class="language-python">import hello
+</code></pre><p>会输出：</p><pre><code>Hello, world!
+</code></pre><p>导入这个模块时，执行了其中的代码。但如果再次导入它，什么事情都不会发生。</p><p>导入模块多次和导入一次的效果相同。</p>

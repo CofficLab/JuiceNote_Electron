@@ -1,0 +1,14 @@
+<h1>简介</h1><p>在 Go 中，常用的程序逻辑有两种提供形式：</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>内置函数</p></li><li class="m-0 p-0"><p>内置包</p></li></ul><h2>标准库</h2><p>包含了常用功能的包的集合称为标准库，官方网址是：</p><official-link class="bg-cyan-800/20 p-4">https://pkg.go.dev/std</official-link><h2>导入包</h2><p>使用import关键字导入包。</p><pre><code language="go" run="true">package main
+
+import "fmt"
+
+func main() {
+  fmt.Println("老白，早上好")
+}
+</code></pre><p>导入多个时，可以这样：</p><pre><code language="go" run="false">import "fmt"
+import "reflect"
+</code></pre><p>也可以这样：</p><pre><code language="go" run="false">import (
+  "fmt"
+  "reflect"
+)
+</code></pre>
