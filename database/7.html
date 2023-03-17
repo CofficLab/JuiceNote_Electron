@@ -1,0 +1,11 @@
+<toc></toc><h1 id="heading-1">认识 Golang</h1><p>Golang（简称 Go） 是一门非常年轻的编程语言。</p><h2 id="heading-2">第一个 Go 程序</h2><pre index="1"><code language="go" run="NaN">package main
+import "fmt"
+
+func main() {
+    fmt.Println("hello")
+    fmt.Println("world")
+}</code></pre><p>每个编程语言的设计理念都不一样。</p><p>我们通过分析这段程序，来理解 Go 的设计理念。</p><h2 id="heading-3">包</h2><official-link class="bg-cyan-800/20 p-4"><a target="_blank" rel="noopener noreferrer nofollow" href="https://pkg.go.dev/std">https://pkg.go.dev/std</a></official-link><pre index="1"><code language="go" run="NaN">package main</code></pre><p>每个 Go 源码文件的开头都必须有package声明，表示其中的代码所属的包。</p><p>Go 规定，我们写的程序必须有一个main包。</p><p>内置包是 Go 本身就有的包，在程序的任何地方都能使用，比如：</p><p>fmt：处理<strong>输入输出</strong></p><p>zip：压缩文<strong>件</strong></p><p>png：处理png图片</p><p>内置包就像一个工具箱，里面放置着常用的工具。</p><p>这个内置包的集合的官方名称是：Standard Library，中文译为：标准库。</p><p>标准库里包含了哪些包？</p><p>这个答案在其官方文档里：<a target="_blank" rel="noopener noreferrer nofollow" href="https://pkg.go.dev/std">https://pkg.go.dev/std</a></p><banner class="banner"><div class="flex justify-center items-center"><div><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"></path>
+</svg></div></div><div>一定要学会查询官方文档</div></banner><h2 id="heading-4">导入包</h2><pre index="1"><code language="go" run="NaN">import "fmt"</code></pre><p>如果你要使用一个包，就必须在程序的开头导入要使用的包。</p><p>fmt 是内置的非常常用的包，主要用于输出内容。</p><h2 id="heading-5">main 函数</h2><pre index="1"><code language="go" run="NaN">func main() {
+    fmt.Println("hello")
+}</code></pre><p>程序的main包里必须有一个main函数作为程序执行的起点。</p><p>这个main函数做的事是：</p><p>使用fmt包的Println函数，输出hello这串字。</p><h2 id="heading-6">程序的组成</h2><p>程序一般由关键字、常量、变量、运算符、类型和函数组成。</p><h2 id="heading-7">查看本机 Go 程序信息</h2><pre index="1"><code language="shell" run="NaN">go version</code></pre>

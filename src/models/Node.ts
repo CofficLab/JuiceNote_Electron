@@ -2,7 +2,7 @@ import { existsSync, writeFile } from "fs";
 import { join } from "path";
 import Config from "../entities/Config";
 
-const db = require('better-sqlite3')('database.db');
+const db = require('better-sqlite3')(join(Config.databasePath, 'database.db'));
 
 class Node {
     public id: number = 0
@@ -202,9 +202,13 @@ class Node {
     }
 
     updateContent(content: string): string {
-        if (content == this.content) return '「' + this.title + '」的内容没有发生改变'
+        // if (content == this.content) return '「' + this.title + '」的内容没有发生改变'
 
         let result = db.prepare('update nodes set content=? where id=?').run(content, this.id)
+        writeFile(join(Config.databasePath, this.id + '.html'), content, (err) => {
+            // console.log('已同步到磁盘', err)
+        })
+
         if (result != null) {
             return '「' + this.title + '」的内容更新成功'
         } else {

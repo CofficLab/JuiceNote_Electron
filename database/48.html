@@ -1,0 +1,44 @@
+<h1 id="heading-1">简介</h1><p>&lt;div class="o"&gt;https://go.dev/ref/spec#Slice_types&lt;/div&gt;</p><p>数组非常高效但是很死板，切片是一个更灵活的数据结构。</p><p>切片（slice）是一个 Go 的数据结构，允许增加更多的值。</p><p>数组就是一片连续的内存，切片实际上是一个结构体，包含三个字段：长度、容量、底层数组。</p><pre index="1"><code language="" run="NaN">// runtime/slice.go
+type slice struct {
+	array unsafe.Pointer // 元素指针
+	len   int // 长度
+	cap   int // 容量
+}
+</code></pre><p></p><h2 id="heading-2">声明</h2><h3 id="heading-3">使用字面量</h3><pre index="1"><code language="" run="NaN">scores := []int{1,4,293,4,9}
+</code></pre><h3 id="heading-4">使用关键字 var</h3><pre index="1"><code language="" run="NaN">var a []int
+</code></pre><h3 id="heading-5">使用函数 make</h3><p>初始化一个长度是 10 ，容量是 10 的切片：</p><pre index="1"><code language="" run="NaN">scores := make([]int, 10)
+</code></pre><p>分别的指定切片的长度和容量：</p><pre index="1"><code language="" run="NaN">scores := make([]int, 0, 10)
+</code></pre><p>上面的代码创建了一个长度是 0 ，容量是 10 的切片。</p><h3 id="heading-6">从数组截取</h3><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre index="1"><code language="" run="NaN">package main
+import "fmt"
+import "reflect"
+
+func main() {
+    a := [10]int{0,1,2,3,4,5,6,7,8,9}
+    b := a[:5]
+    c := a[0:2]
+    d := a[1:2]
+    e := a[6:]
+    f := a[:]
+
+    fmt.Println(reflect.TypeOf(b), b)
+    fmt.Println(reflect.TypeOf(c), c)
+    fmt.Println(reflect.TypeOf(d), d)
+    fmt.Println(reflect.TypeOf(e), e)
+    fmt.Println(reflect.TypeOf(f),f)
+}
+</code></pre><h2 id="heading-7">长度与容量</h2><p>&lt;div class="bg-cyan flex flex-row gap-4 justify-between"&gt; &lt;div class="brick w-12"&gt;1&lt;/div&gt; &lt;div class="brick w-12"&gt;4&lt;/div&gt; &lt;div class="brick w-12"&gt;293&lt;/div&gt; &lt;div class="brick w-12"&gt;4&lt;/div&gt; &lt;div class="brick w-12"&gt;9&lt;/div&gt; &lt;div class="brick-yellow w-12"&gt; &lt;/div&gt; &lt;div class="brick-yellow w-12"&gt; &lt;/div&gt; &lt;div class="brick-yellow w-12"&gt; &lt;/div&gt; &lt;div class="brick-yellow w-12"&gt; &lt;/div&gt; &lt;div class="brick-yellow w-12"&gt; &lt;/div&gt; &lt;/div&gt;</p><p>长度：已存储的元素的个数，即蓝色方块的个数；<br>容量：能存储的元素的个数，即蓝色方块的个数 + 黄色方块的个数。</p><h2 id="heading-8">追加数据</h2><p>使用内置函数append追加数据。</p><pre index="1"><code language="" run="NaN">func append(slice []Type, elems ...Type) []Type
+</code></pre><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre index="1"><code language="" run="NaN">package main
+import "fmt"
+
+func main() {
+    m := []string{"a", "b"}
+
+    fmt.Println(m, fmt.Sprintf("长度%d容量%d", len(m), cap(m)))
+
+    m = append(m, "c")
+    fmt.Println(m, fmt.Sprintf("长度%d容量%d", len(m), cap(m)))
+
+    m = append(m, "d", "e")
+    fmt.Println(m, fmt.Sprintf("长度%d容量%d", len(m), cap(m)))
+}
+</code></pre><h2 id="heading-9">参考资料</h2><p>&lt;div class="link"&gt;https://golang.design/go-questions/slice/vs-array/&lt;/div&gt; &lt;div class="link"&gt;https://go.dev/blog/slices-intro&lt;/div&gt; &lt;div class="link"&gt;https://mp.weixin.qq.com/s/p11kR_eq_Mhzk-XvRsusyA&lt;/div&gt;</p>

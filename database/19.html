@@ -1,0 +1,51 @@
+<toc></toc><h1 id="heading-1">循环</h1><p>Go 语言中只有一种循环：for 循环。</p><h2 id="heading-2">for 循环</h2><pre index="1"><code language="go" run="NaN">package main
+import "fmt"
+
+func main() {
+    for i := 1; i &lt;= 10; i++ {
+        fmt.Println(i)
+    }
+}
+</code></pre><p>i++等价于i = i + 1，很多编程语言都是这样。</p><h2 id="heading-3">其他循环</h2><p>你可能在其他编程语言中见过其他类型的循环：</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>while</p></li><li class="m-0 p-0"><p>do...while</p></li></ul><p>Go 中没有这些循环。</p><p>想了解多种循环方式的话，你可以看一看 PHP 的相关章节。</p><h2 id="heading-4">循环嵌套</h2><pre index="1"><code language="go" run="NaN">package main
+import "fmt"
+
+func main() {
+    for i := 1; i &lt;=10; i++ {
+        for j := 1; j &lt;=10; j++ {
+            fmt.Printf("%d * %d = %d \n", i, j, i*j)
+        }
+    }
+}
+</code></pre><h2 id="heading-5">跳出循环</h2><h3 id="heading-6">break</h3><pre index="1"><code language="go" run="NaN">package main
+import "fmt"
+
+func main() {
+    for i := 1; i &lt;= 10; i++ {
+        fmt.Println(i)
+        if (i == 8) {
+            break
+        }
+    }
+}
+</code></pre><h3 id="heading-7">continue</h3><p>continue 表示跳过本轮，直接进行下一个：</p><pre index="1"><code language="go" run="NaN">package main
+import "fmt"
+
+func main() {
+    for i:= 1; i &lt;= 10; i++ {
+        if (i == 8) {
+            continue
+        }
+        fmt.Println(i)
+    }
+}
+</code></pre><h2 id="heading-8">无限循环</h2><pre index="1"><code language="go" run="NaN">package main
+import "fmt"
+
+func main() {
+    for i:= 1; true; i++ {
+        fmt.Println(i)
+    }
+}
+</code></pre><banner class="banner"><div class="flex justify-center items-center"><div><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"></path>
+</svg></div></div><div>我们应该避免写出无限循环</div></banner>
