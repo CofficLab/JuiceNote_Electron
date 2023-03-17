@@ -15,10 +15,21 @@
     <!-- 编辑框 -->
     <div id="editor-content-container" @contextmenu.prevent="showRightMenu">
       <editor-content
+        v-if="!sourceCodeDisplay"
         :editor="editor"
         class="prose h-screen w-full overflow-visible xl:prose-lg"
         :class="{ 'lg:mr-56': hasToc }"
       />
+    </div>
+    <!-- 源码 -->
+    <div class="container">
+      <Monaco
+        v-if="sourceCodeDisplay"
+        :code="current.content"
+        language="html"
+        :readOnly="true"
+        :showLineNumbers="true"
+      ></Monaco>
     </div>
 
     <!-- 右键菜单 -->
@@ -49,15 +60,17 @@ import Next from "../operators/Next.vue";
 import RightMenuController from "../../controllers/RightMenuController";
 import NodeController from "../../controllers/NodeController";
 import Delete from "../operators/Delete.vue";
+import Monaco from "../components/Monaco.vue";
 
 export default {
-  components: { CreateChild, Copy, EditorContent, Edit, Toolbar, Rename, Link, RightMenu, Next, Prev, Delete },
+  components: { CreateChild, Copy, EditorContent, Edit, Toolbar, Rename, Link, RightMenu, Next, Prev, Delete, Monaco },
   data() {
     return {
       editor: undefined,
       currentTab: 0,
       rightClickEvent: null,
       hasToc: false,
+      sourceCodeDisplay: false,
       headings: [],
     };
   },
@@ -83,6 +96,9 @@ export default {
     checkToc() {
       this.hasToc = this.editor.getHTML().startsWith("<toc></toc>");
     },
+    toggleSourceCode() {
+      this.sourceCodeDisplay = !this.sourceCodeDisplay;
+    },
   },
   mounted() {
     this.editor = new Editor({
@@ -97,7 +113,7 @@ export default {
         preserveWhitespace: "full",
       },
       onUpdate: (event) => {
-        console.log("editor updated");
+        console.log("editor updated，自动保存内容");
         this.current.updateContent(event.editor.getHTML());
         this.checkToc();
       },
@@ -110,9 +126,9 @@ export default {
   },
   watch: {
     changed() {
-      // console.log("something changed, update editor");
+      console.log("something changed, update editor");
       this.editor.setEditable(this.editable);
-      this.editor.commands.setContent(this.current.content, true);
+      this.editor.commands.setContent(this.current.content, false);
       this.checkToc();
     },
   },

@@ -3,12 +3,12 @@
     <div class="flex w-full flex-col overflow-clip shadow-sm">
       <!-- 标题标签 -->
       <div class="tabs rounded-none bg-yellow-500/50 p-0" contenteditable="false">
-        <div v-for="(title, index) in titles" class="p-0">
+        <div v-for="(title, index) in titles" class="p-0 outline-none">
           <a
-            class="tab rounded-none text-white no-underline"
+            class="code-title"
             contenteditable="true"
-            v-bind:data-index="index"
-            v-bind:class="{ 'bg-gray-800': current == index + 1 }"
+            :data-index="index"
+            :class="{ 'bg-gray-800': current == index + 1 }"
             @click="activate(index + 1)"
             @keyup="(event) => save(event)"
             >{{ title }}</a
@@ -83,3 +83,9 @@ export default {
   },
 };
 </script>
+
+<style lang="postcss" scoped>
+.code-title {
+  @apply tab rounded-none text-gray-500 no-underline outline-none focus-visible:outline-none;
+}
+</style>

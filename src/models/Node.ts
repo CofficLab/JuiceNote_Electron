@@ -46,10 +46,6 @@ class Node {
 
             if (this.id == 0) this.isEmpty = true
         }
-
-        if (this.isPage) {
-            writeFile(join(Config.renderedHtmlPath, String(this.id) + '.html'), this.content, () => { })
-        }
     }
 
     checkIsHomePage(): boolean {

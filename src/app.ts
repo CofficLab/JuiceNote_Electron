@@ -1,7 +1,6 @@
 import { createApp } from 'vue'
 import { ipcRenderer } from 'electron'
 import App from './views/App.vue'
-import CodeRunner from './tools/CodeRunner'
 import FullScreenController from './controllers/FullScreenController'
 import "./app.css"
 import BookNode from './entities/BookNode'
@@ -16,10 +15,6 @@ ipcRenderer.on('main-process-message', (_event, ...args) => {
   if (args[0] === 'leave-full-screen') {
     FullScreenController.leave()
   }
-})
-
-Object.assign(window, {
-  runner: CodeRunner,
 })
 
 const app = createApp(App)

@@ -1,5 +1,24 @@
 <template>
-  <div ref="monaco"></div>
+  <div>
+    <div class="relative">
+      <span v-html="language" class="absolute top-0 right-2 z-20 text-sm text-info"></span>
+      <button
+        class="btn-sm btn absolute bottom-2 right-2 z-20 bg-slate-900 shadow-sm"
+        @click="run"
+        v-if="showRunButton == 'true'"
+        v-html="result == '' ? '运行' : '收起'"
+      ></button>
+
+      <div ref="monaco" class="z-10"></div>
+    </div>
+
+    <!-- 展示运行结果 -->
+    <pre
+      v-show="result.length > 0"
+      class="max-h-72 overflow-scroll"
+      style="margin: 0; border-radius: 0"
+    ><code v-html="result"></code></pre>
+  </div>
 </template>
 
 <script>
@@ -9,16 +28,25 @@ import jsonWorker from "monaco-editor/esm/vs/language/json/json.worker?worker";
 import cssWorker from "monaco-editor/esm/vs/language/css/css.worker?worker";
 import htmlWorker from "monaco-editor/esm/vs/language/html/html.worker?worker";
 import tsWorker from "monaco-editor/esm/vs/language/typescript/ts.worker?worker";
+import CodeRunner from "../../tools/CodeRunner";
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  props: ["code", "keyUpCallback", "language", "readOnly"],
+  props: {
+    code: { type: String, default: "" },
+    language: { type: String, default: "" },
+    readOnly: { type: Boolean, default: false },
+    showRunButton: { type: Boolean, default: false },
+    keyUpCallback: { type: Function, default: null },
+    showLineNumbers: { type: Boolean, default: false },
+  },
   data() {
     return {
       editor: null,
       index: 0, // 当前editor是整个页面的第几个editor，从0开始
       paddingTop: 10,
       paddingBottom: 10,
+      result: "", //代码运行结果
     };
   },
   mounted: function () {
@@ -29,6 +57,13 @@ export default defineComponent({
     this.index = monaco.editor.getModels().length - 1;
   },
   methods: {
+    run() {
+      if (this.result.length > 0) {
+        this.result = "";
+      } else {
+        this.result = CodeRunner(monaco.editor.getModels()[this.index].getValue(), this.language);
+      }
+    },
     resetHeight() {
       let lineCount = this.editor.getModel().getLineCount();
       let lineHeight = this.editor.getOption(monaco.editor.EditorOption.lineHeight);
@@ -65,7 +100,7 @@ export default defineComponent({
         readOnly: this.readOnly,
         theme: "vs-dark",
         fontSize: 14,
-        lineNumbers: "off",
+        lineNumbers: this.showLineNumbers,
         automaticLayout: true,
         scrollBeyondLastLine: false,
         contextmenu: false,

@@ -1,16 +1,13 @@
 <template>
+  <!-- 支持在多个标签之间切换，当前节点的index=current时才显示 -->
   <node-view-wrapper ref="content" v-show="this.current == this.node.attrs.index">
     <div class="rounded-b bg-slate-900">
-      <!-- 顶部横幅 -->
-      <!-- <div class="monaco-banner">
-        <div v-html="node.attrs.language"></div>
-      </div> -->
-
       <!-- Monaco编辑器，可修改 -->
       <Monaco
         v-if="this.editable && loadMonaco"
         :code="code"
         :language="node.attrs.language"
+        :showRunButton="node.attrs.run == 'true'"
         :keyUpCallback="keyup"
       ></Monaco>
 
@@ -19,47 +16,31 @@
         v-if="!this.editable && loadMonaco"
         :code="code"
         :language="node.attrs.language"
+        :showRunButton="node.attrs.run == 'true'"
         :readOnly="true"
       ></Monaco>
 
       <!-- 代码框，存储从文件系统读出的代码，然后放到Monaco编辑器中 -->
       <node-view-content ref="nodeViewContent" class="hidden" />
 
-      <!-- 操作栏 -->
+      <!-- 底部操作栏 -->
       <div class="code-block-operators">
-        <div>
-          <div class="flex gap-4" v-if="editable">
-            <button @click="setRun" v-if="!runButtonDisplay">开运行</button>
-            <button @click="setNotRun" v-if="runButtonDisplay">关运行</button>
-          </div>
+        <div class="flex gap-4" v-if="editable">
+          <button @click="setRun" v-if="!runButtonDisplay">开运行</button>
+          <button @click="setNotRun" v-if="runButtonDisplay">关运行</button>
         </div>
 
-        <div class="flex flex-row justify-end">
-          <button
-            class="run btn bg-slate-900 shadow-sm"
-            :data-code="node.attrs.code"
-            :data-language="node.attrs.language"
-            v-if="runButtonDisplay"
-          >
-            运行
-          </button>
-
-          <div class="selected" v-html="node.attrs.language" v-if="!editable"></div>
-
-          <select name="language" @change="setLanguage" v-if="editable">
-            <option value="text" v-bind:selected="node.attrs.language == 'text'">纯文本</option>
-            <option value="html" v-bind:selected="node.attrs.language == 'html'">HTML</option>
-            <option value="go" v-bind:selected="node.attrs.language == 'go'">Golang</option>
-            <option value="php" v-bind:selected="node.attrs.language == 'php'">PHP</option>
-            <option value="javascript" v-bind:selected="node.attrs.language == 'javascript'">JavaScript</option>
-            <option value="java" v-bind:selected="node.attrs.language == 'java'">Java</option>
-            <option value="python" v-bind:selected="node.attrs.language == 'python'">Python</option>
-            <option value="shell" v-bind:selected="node.attrs.language == 'shell'">Shell</option>
-          </select>
-        </div>
+        <select name="language" @change="setLanguage" v-if="editable">
+          <option value="text" v-bind:selected="node.attrs.language == 'text'">纯文本</option>
+          <option value="html" v-bind:selected="node.attrs.language == 'html'">HTML</option>
+          <option value="go" v-bind:selected="node.attrs.language == 'go'">Golang</option>
+          <option value="php" v-bind:selected="node.attrs.language == 'php'">PHP</option>
+          <option value="javascript" v-bind:selected="node.attrs.language == 'javascript'">JavaScript</option>
+          <option value="java" v-bind:selected="node.attrs.language == 'java'">Java</option>
+          <option value="python" v-bind:selected="node.attrs.language == 'python'">Python</option>
+          <option value="shell" v-bind:selected="node.attrs.language == 'shell'">Shell</option>
+        </select>
       </div>
-
-      <pre class="hidden flex-grow rounded-none" style="margin: 0"><code></code></pre>
     </div>
   </node-view-wrapper>
 </template>
@@ -70,11 +51,7 @@ import Monaco from "../components/Monaco.vue";
 import NodeController from "../../controllers/NodeController";
 
 export default {
-  components: {
-    NodeViewWrapper,
-    NodeViewContent,
-    Monaco,
-  },
+  components: { NodeViewWrapper, NodeViewContent, Monaco },
 
   data() {
     return {
@@ -85,10 +62,7 @@ export default {
   },
 
   computed: {
-    editable() {
-      // console.log("检查Monaco Editor是否可编辑", NodeController.getEditable());
-      return NodeController.getEditable();
-    },
+    editable: () => NodeController.getEditable(),
     monacoEditorDisplay() {
       return this.node.attrs.editor == true;
     },
@@ -96,14 +70,13 @@ export default {
       return !this.nodeViewContentHidden && this.node.attrs.editor != true;
     },
     runButtonDisplay() {
-      console.log("是否要显示运行按钮", this.node.attrs.run);
       return this.node.attrs.run == "true";
     },
   },
 
   methods: {
     keyup(value) {
-      console.log("更新代码块的内容为", value);
+      // console.log("更新代码块的内容为", value);
       this.updateAttributes({
         code: value,
       });
@@ -132,7 +105,6 @@ export default {
         if (!parentElement) return;
 
         this.current = parentElement.$el.parentElement.getAttribute("data-current") ?? 1;
-        // console.log("current 更新为", this.current, "我的index是", this.node.attrs.index);
       });
     },
   },
@@ -150,7 +122,7 @@ export default {
 
 <style lang="postcss">
 .code-block-operators {
-  @apply flex justify-between bg-blue-900/80 shadow-xl dark:bg-green-900/50;
+  @apply flex justify-end bg-sky-600 shadow-xl dark:bg-green-900/50;
 
   button {
     @apply btn-sm btn rounded-none;
