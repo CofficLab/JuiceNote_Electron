@@ -18,8 +18,8 @@ export default CodeBlock.extend({
         rendered: true,
       },
       run: {
-        default: false,
-        parseHTML: (element) => element.firstElementChild?.getAttribute("run"),
+        default: 1,
+        parseHTML: (element) => parseInt(element.firstElementChild?.getAttribute("run")),
         rendered: true,
       },
       index: {

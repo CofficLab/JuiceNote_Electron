@@ -7,7 +7,7 @@
         v-if="this.editable && loadMonaco"
         :code="code"
         :language="node.attrs.language"
-        :showRunButton="node.attrs.run == 'true'"
+        :showRunButton="node.attrs.run == 1"
         :keyUpCallback="keyup"
       ></Monaco>
 
@@ -16,7 +16,7 @@
         v-if="!this.editable && loadMonaco"
         :code="code"
         :language="node.attrs.language"
-        :showRunButton="node.attrs.run == 'true'"
+        :showRunButton="node.attrs.run == 1"
         :readOnly="true"
       ></Monaco>
 
@@ -24,13 +24,9 @@
       <node-view-content ref="nodeViewContent" class="hidden" />
 
       <!-- 底部操作栏 -->
-      <div class="code-block-operators">
-        <div class="flex gap-4" v-if="editable">
-          <button @click="setRun" v-if="!runButtonDisplay">开运行</button>
-          <button @click="setNotRun" v-if="runButtonDisplay">关运行</button>
-        </div>
-
-        <select name="language" @change="setLanguage" v-if="editable">
+      <div class="code-block-operators" v-if="editable">
+        <button @click="toggleRun" v-html="this.node.attrs.run == 1 ? '关运行' : '开运行'"></button>
+        <select name="language" @change="setLanguage">
           <option value="text" v-bind:selected="node.attrs.language == 'text'">纯文本</option>
           <option value="html" v-bind:selected="node.attrs.language == 'html'">HTML</option>
           <option value="go" v-bind:selected="node.attrs.language == 'go'">Golang</option>
@@ -70,7 +66,7 @@ export default {
       return !this.nodeViewContentHidden && this.node.attrs.editor != true;
     },
     runButtonDisplay() {
-      return this.node.attrs.run == "true";
+      return this.node.attrs.run == 1;
     },
   },
 
@@ -81,14 +77,11 @@ export default {
         code: value,
       });
     },
-    setRun() {
+    toggleRun() {
+      let run = parseInt(this.node.attrs.run);
+      run = isNaN(run) ? 0 : run;
       this.updateAttributes({
-        run: "true",
-      });
-    },
-    setNotRun() {
-      this.updateAttributes({
-        run: "false",
+        run: Math.abs(run - 1),
       });
     },
     setLanguage(event) {
@@ -110,6 +103,7 @@ export default {
   },
 
   mounted() {
+    console.log(this.node.attrs);
     this.code = this.node.attrs.code;
     this.loadMonaco = true;
     this.setCurrent();

@@ -5,7 +5,7 @@
       <button
         class="btn-sm btn absolute bottom-2 right-2 z-20 bg-slate-900 shadow-sm"
         @click="run"
-        v-if="showRunButton == 'true'"
+        v-if="showRunButton"
         v-html="result == '' ? '运行' : '收起'"
       ></button>
 
