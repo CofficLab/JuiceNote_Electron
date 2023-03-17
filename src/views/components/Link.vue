@@ -1,16 +1,16 @@
 <template>
   <div
-    :id="'node-' + id"
-    v-bind:data-id="id"
+    :id="'node-' + node.id"
+    v-bind:data-id="node.id"
     v-on:contextmenu="showRightMenu"
     v-on:click="go"
-    v-bind:class="{ ring: shouldShowRightMenu, 'active tab-active': shouldActive(id) }"
+    v-bind:class="{ ring: shouldShowRightMenu, 'active tab-active': shouldActive(node.id) }"
   >
     <slot></slot>
 
     <!-- 右键菜单 -->
     <RightMenu v-if="shouldShowRightMenu" v-bind:event="rightClickEvent">
-      <li><Rename :node="target"></Rename></li>
+      <li><Rename :node="node"></Rename></li>
       <li><Edit :bookNode="node"></Edit></li>
       <li><ToTab :node="node"></ToTab></li>
       <li><Delete :bookNode="node"></Delete></li>
@@ -32,7 +32,7 @@ import NodeController from "../../controllers/NodeController";
 import CreateChild from "../operators/CreateChild.vue";
 
 export default defineComponent({
-  props: { id: { type: Number, required: true }, node: { type: Node, required: true } },
+  props: { node: { type: Node, required: true } },
   data() {
     return {
       rightClickEvent: null,
@@ -47,9 +47,6 @@ export default defineComponent({
   computed: {
     shouldShowRightMenu() {
       return this.rightClickEvent && RightMenuController.shouldShow;
-    },
-    target() {
-      return NodeController.getNodeById(this.id);
     },
     current: () => NodeController.getCurrentPage(),
   },
@@ -66,7 +63,7 @@ export default defineComponent({
     go: function () {
       if (this.shouldShowRightMenu) return false;
       this.active = true;
-      NodeController.setCurrentPage(this.id);
+      NodeController.setCurrentPage(this.node.id);
     },
     showRightMenu(event) {
       this.rightClickEvent = event;

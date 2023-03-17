@@ -7,20 +7,14 @@
 
     <!-- TAB -->
     <div id="tabs-container" v-if="current.getParent().isTab">
-      <Link v-for="sibling in current.getSiblings()" :id="sibling.id" class="tab tab-lifted" :node="current">{{
-        sibling.title
-      }}</Link>
+      <Link v-for="sibling in current.getSiblings()" class="tab tab-lifted" :node="sibling">{{ sibling.title }}</Link>
     </div>
 
     <!-- 编辑框 -->
-    <div id="editor-content-container" @contextmenu.prevent="showRightMenu">
-      <editor-content
-        v-if="!sourceCodeDisplay"
-        :editor="editor"
-        class="prose h-screen w-full overflow-visible xl:prose-lg"
-        :class="{ 'lg:mr-56': hasToc }"
-      />
+    <div id="editor-container" @contextmenu.prevent="showRightMenu">
+      <editor-content v-if="!sourceCodeDisplay" :editor="editor" :class="{ 'lg:mr-56': hasToc }" />
     </div>
+
     <!-- 源码 -->
     <div class="container">
       <Monaco
@@ -79,9 +73,6 @@ export default {
     shouldShowRightMenu: function () {
       return RightMenuController.shouldShow && this.rightClickEvent;
     },
-    changed() {
-      return { current: this.current, editable: this.editable };
-    },
     current: () => NodeController.getCurrentPage(),
   },
   methods: {
@@ -113,7 +104,7 @@ export default {
         preserveWhitespace: "full",
       },
       onUpdate: (event) => {
-        console.log("editor updated，自动保存内容");
+        console.log("editor updated，自动保存内容到节点", this.current.id);
         this.current.updateContent(event.editor.getHTML());
         this.checkToc();
       },
@@ -125,11 +116,12 @@ export default {
     this.checkToc();
   },
   watch: {
-    changed() {
-      console.log("something changed, update editor");
-      this.editor.setEditable(this.editable);
-      this.editor.commands.setContent(this.current.content, false);
-      this.checkToc();
+    current() {
+      console.log("current changed, update editor");
+      this.editor.commands.setContent(this.current.content, true);
+    },
+    editable() {
+      this.editable.setEditable(this.editable);
     },
   },
   beforeUnmount() {
@@ -147,14 +139,10 @@ export default {
   @apply tabs mt-4 flex justify-center rounded-t-xl bg-yellow-400/10;
 }
 
-#editor-content-container {
+#editor-container {
   @apply mt-1 flex w-full justify-center overflow-auto border-0 p-4;
 }
 .ProseMirror {
-  @apply mb-24 px-2 pb-56 pt-1;
-}
-
-div.ProseMirror[contenteditable="true"] {
-  /* @apply ring-2; */
+  @apply prose mb-24 h-screen w-full overflow-visible px-2 pb-56 pt-1 xl:prose-lg;
 }
 </style>

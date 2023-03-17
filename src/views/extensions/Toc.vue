@@ -71,7 +71,7 @@ export default {
     this.$nextTick(this.handleUpdate);
 
     // 监听滚动的距离以高亮toc菜单
-    document.getElementById("editor-content-container").addEventListener("scroll", function (e) {
+    document.getElementById("editor-container").addEventListener("scroll", function (e) {
       if (!e.target) return;
 
       // 已经滚动了多少距离

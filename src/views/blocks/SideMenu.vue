@@ -12,7 +12,7 @@
 
         <!-- 图书的TAB，比如：教程、手册 -->
         <div class="tabs flex justify-center" v-if="bookTabs.length > 0">
-          <Link class="tab-lifted tab" v-for="tab in bookTabs" :id="tab.id" :node="current">{{ tab.title }}</Link>
+          <Link class="tab tab-lifted" v-for="tab in bookTabs" :node="tab">{{ tab.title }}</Link>
         </div>
       </div>
     </div>

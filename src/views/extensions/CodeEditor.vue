@@ -89,8 +89,6 @@ export default {
       this.updateAttributes({
         language: event.target.value,
       });
-
-      console.log("当前attrs", this.node.attrs);
     },
     setCurrent: function () {
       this.$nextTick(function () {
@@ -103,7 +101,6 @@ export default {
   },
 
   mounted() {
-    console.log(this.node.attrs);
     this.code = this.node.attrs.code;
     this.loadMonaco = true;
     this.setCurrent();
