@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import electron from 'electron'
+import Config from '../entities/Config'
 
 let CodeRunner = function (code = '', language = 'PHP') {
     let suffix = 'unknown'
@@ -107,7 +108,10 @@ let CodeRunner = function (code = '', language = 'PHP') {
             output = '缺少' + suffix + '的解析器'
     }
 
-    return output.toString()
+    return output.toString().
+        replaceAll(Config.rootPath + '/temp/', '').
+        replace('PATH=/opt/homebrew/bin/:/usr/local/bin:$PATH && ', '').
+        replace('Command failed: ', '')
 }
 
 export default CodeRunner

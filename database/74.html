@@ -22,7 +22,7 @@ func main() {
 longCalculation()
 end := time.Now()
 delta := end.Sub(start)
-fmt.Printf("longCalculation took this amount of time: %s\n", delta)</code></pre><h2 id="heading-13">函数的顺序</h2><p>如果这样写代码：</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>调用函数</p></li><li class="m-0 p-0"><p>定义函数</p></li></ul><p>是不是应该报错呢？因为应该先定义再调用才对。</p><p>看看不同编程语言的例子：</p><code-tab titles="Golang,PHP,JavaScript,Python" current="4"><pre index="1"><code language="go" run="1">package main 
+fmt.Printf("longCalculation took this amount of time: %s\n", delta)</code></pre><h2 id="heading-13">函数的顺序</h2><p>如果这样写代码：</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>调用函数</p></li><li class="m-0 p-0"><p>定义函数</p></li></ul><p>是不是应该报错呢？因为应该先定义再调用才对。</p><p>看看不同编程语言的例子：</p><code-tab titles="Golang,PHP,JavaScript,Python" current="3"><pre index="1"><code language="go" run="1">package main 
 import "fmt"
 
 func main() {
