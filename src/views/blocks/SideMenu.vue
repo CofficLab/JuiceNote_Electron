@@ -12,7 +12,7 @@
 
         <!-- 图书的TAB，比如：教程、手册 -->
         <div class="tabs flex justify-center" v-if="bookTabs.length > 0">
-          <Link class="tab tab-lifted" v-for="tab in bookTabs" :node="tab">{{ tab.title }}</Link>
+          <Link class="tab-lifted tab" v-for="tab in bookTabs" :node="tab">{{ tab.title }}</Link>
         </div>
       </div>
     </div>
@@ -96,11 +96,11 @@ export default defineComponent({
   },
   watch: {
     current() {
-      // console.log("current发生变化，滚动到current");
+      console.log("current发生变化，滚动到current");
       this.$nextTick(() => {
         setTimeout(() => {
           this.scrollToCurrent();
-        }, 600);
+        }, 800);
       });
     },
   },

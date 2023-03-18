@@ -19,8 +19,7 @@ func main() {
       fmt.Println("新建文件成功了，路径是：", target)
     }
   }
-}
-</code></pre><h2 id="heading-3">查看属性</h2><h3 id="heading-4">查看文件大小</h3><pre index="1"><code language="go" run="NaN">package main
+}</code></pre><h2 id="heading-3">查看属性</h2><h3 id="heading-4">查看文件大小</h3><pre index="1"><code language="go" run="NaN">package main
 import "fmt"
 import "os"
 
@@ -35,8 +34,7 @@ func main() {
 
     fmt.Println(os.Stat(pwd))
   }
-}
-</code></pre><h3 id="heading-5">查看文件列表</h3><pre index="1"><code language="go" run="NaN">package main
+}</code></pre><h3 id="heading-5">查看文件列表</h3><pre index="1"><code language="go" run="NaN">package main
 import "os"
 import "fmt"
 
@@ -57,12 +55,7 @@ func main() {
       fmt.Print(files)
     }
   }
-}
-</code></pre><h2 id="heading-6">删除</h2><h3 id="heading-7">删除一个文件</h3><pre index="1"><code language="go" run="NaN">os.Remove(path)
-</code></pre><h3 id="heading-8">删除空文件夹</h3><pre index="1"><code language="go" run="NaN">os.Remove(path)
-</code></pre><h3 id="heading-9">删除文件夹</h3><p>删除文件夹以及其内容，不管是否为空：</p><pre index="1"><code language="go" run="NaN">os.RemoveAll(path)
-</code></pre><p>文件夹会被彻底删除，不会到回收站，这是一个非常危险的操作。</p><h2 id="heading-10">读取</h2><p>读取的前提是文件已经打开，可以指定读取多少个字符，也可以全部读取:</p><pre index="1"><code language="go" run="NaN">os.ReadFile(path)
-</code></pre><h2 id="heading-11">写入</h2><pre index="1"><code language="go" run="NaN">package main
+}</code></pre><h2 id="heading-6">删除</h2><h3 id="heading-7">删除一个文件</h3><pre index="1"><code language="go" run="NaN">os.Remove(path)</code></pre><h3 id="heading-8">删除空文件夹</h3><pre index="1"><code language="go" run="NaN">os.Remove(path)</code></pre><h3 id="heading-9">删除文件夹</h3><p>删除文件夹以及其内容，不管是否为空：</p><pre index="1"><code language="go" run="NaN">os.RemoveAll(path)</code></pre><p>文件夹会被彻底删除，不会到回收站，这是一个非常危险的操作。</p><h2 id="heading-10">读取</h2><p>读取的前提是文件已经打开，可以指定读取多少个字符，也可以全部读取:</p><pre index="1"><code language="go" run="NaN">os.ReadFile(path)</code></pre><h2 id="heading-11">写入</h2><pre index="1"><code language="go" run="NaN">package main
 import "fmt"
 import "os"
 
@@ -83,5 +76,4 @@ func main() {
       fmt.Println("新建文件成功了，路径是：", target)
     }
   }
-}
-</code></pre>
+}</code></pre>

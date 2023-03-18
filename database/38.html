@@ -1,0 +1,19 @@
+<toc></toc><h2 id="heading-1">字符串的本质</h2><p>字符串可以修改吗？</p><p>Go 源码中是这样定义字符串的：</p><pre index="1"><code language="go" run="NaN">// runtime/string.go
+type stringStruct struct {
+    str unsafe.Pointer // 指向一个byte类型的切片指针
+    len int // 字符串的长度
+}</code></pre><p>正是因为底层是一个[]byte 类型的切片，当我们使用下标的方式去修改值，这时候将一个字符内容赋值给 byte 类型，肯定是不允许的。但是我们可以通过下标的方式去访问对应的 byte 值。</p><pre index="1"><code language="go" run="NaN">package main
+
+import (
+    "fmt"
+)
+
+func main() {
+    // 声明一个字符串，并给与初始值
+    s := "Hello World!"
+    fmt.Println(s)
+
+    // 对变量 s 进行重新赋值
+    s = "Hello Go!"
+    fmt.Println(s)
+}</code></pre><p>那为什么这种场景下又可以给字符串重新赋值呢？ 这是因为，在 Go 的底层其实是新创建了一个[]byte{}类型的切片，将变量 s 中的指针指向了新的内存空间地址(也就是这里的 Hello Go!)。原有的 Hello World!内存空间会随着垃圾回收机制被回收掉。</p><p>为什么设计的这么复杂？</p><p>当遇到一个非常长的字符时，这样做使得 string 变得非常轻量，可以很方便的进行传递而不用担心内存拷贝。虽然在 Go 中，不管是引用类型还是值类型参数传递都是值传递。但指针明显比值传递更节省内存。</p>
