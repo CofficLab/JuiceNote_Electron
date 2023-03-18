@@ -22,13 +22,7 @@
 
     <!-- 源码 -->
     <div class="container">
-      <Monaco
-        v-if="sourceCodeDisplay"
-        :code="current.content"
-        language="html"
-        :readOnly="true"
-        :showLineNumbers="true"
-      ></Monaco>
+      <Monaco v-if="sourceCodeDisplay" :code="code" language="html" :readOnly="true" :showLineNumbers="true"></Monaco>
     </div>
 
     <!-- 右键菜单 -->
@@ -72,6 +66,7 @@ export default {
       sourceCodeDisplay: false,
       headings: [],
       node: null,
+      code: "",
     };
   },
   computed: {
@@ -116,11 +111,13 @@ export default {
         this.node = this.current;
         this.editor.commands.setContent(this.node.content, false);
         this.checkToc();
+        this.code = this.editor.getHTML();
       },
       onUpdate: (event) => {
         // console.log("editor updated,save content and check toc");
         this.save();
         this.checkToc();
+        this.code = this.editor.getHTML();
       },
     });
 
