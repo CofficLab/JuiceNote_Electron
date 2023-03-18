@@ -1,4 +1,4 @@
-<toc></toc><h1 id="heading-1"><strong>常见场景</strong></h1><h2><strong>重复</strong></h2><pre index="1"><code language="go" run="NaN">package main
+<toc></toc><h1 id="heading-1"><strong>常见场景</strong></h1><h2 id="heading-2"><strong>重复</strong></h2><pre index="1"><code language="go" run="NaN">package main
 import "fmt"
 import "strings"
 
@@ -6,7 +6,7 @@ func main() {
     a:= "xx"
 
     fmt.Println(strings.Repeat(a, 3))
-}</code></pre><h2 id="heading-2">拼接</h2><p>Go 使用+来拼接字符串：</p><pre index="1"><code language="go" run="NaN">package main
+}</code></pre><h2 id="heading-3">拼接</h2><p>Go 使用+来拼接字符串：</p><pre index="1"><code language="go" run="NaN">package main
 import "fmt"
 
 func main() {
@@ -14,7 +14,7 @@ func main() {
     b := "老白"
 
     fmt.Print(a + " " + b)
-}</code></pre><h2 id="heading-3">遍历</h2><p>Go 中有两种字符类型，所以有两种方式遍历字符串。</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>以字节（byte）数组的方式</p></li></ul><pre index="1"><code language="go" run="NaN">package main
+}</code></pre><h2 id="heading-4">遍历</h2><p>Go 中有两种字符类型，所以有两种方式遍历字符串。</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>以字节（byte）数组的方式</p></li></ul><pre index="1"><code language="go" run="NaN">package main
 import "fmt"
 import "reflect"
 
@@ -35,7 +35,7 @@ func main() {
     for i, ch := range str {
         fmt.Println(i, reflect.TypeOf(ch), ch, string(ch))
     }
-}</code></pre><h2 id="heading-4">转数组（切片）</h2><p>字符串和数组是紧密相关的，我们可以轻松地在他们之间转换。<br>这些转换实际上创建了字符串的副本，因为字符串是不可变的。</p><h3 id="heading-5">符文数组</h3><pre index="1"><code language="go" run="NaN">package main
+}</code></pre><h2 id="heading-5">转数组（切片）</h2><p>字符串和数组是紧密相关的，我们可以轻松地在他们之间转换。<br>这些转换实际上创建了字符串的副本，因为字符串是不可变的。</p><h3 id="heading-6">符文数组</h3><pre index="1"><code language="go" run="NaN">package main
 import "fmt"
 import "reflect"
 
@@ -44,7 +44,7 @@ func main() {
     b := []rune(a)
 
     fmt.Println(reflect.TypeOf(b), b, len(b))
-}</code></pre><h3 id="heading-6">字节数组</h3><pre index="1"><code language="go" run="NaN">package main
+}</code></pre><h3 id="heading-7">字节数组</h3><pre index="1"><code language="go" run="NaN">package main
 import "fmt"
 import "reflect"
 
