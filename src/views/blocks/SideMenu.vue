@@ -87,7 +87,7 @@ export default defineComponent({
     this.$nextTick(() => {
       setTimeout(() => {
         this.scrollToCurrent();
-      }, 600);
+      }, 500);
     });
 
     if (this.bookTabs.length > 0) {
@@ -100,7 +100,7 @@ export default defineComponent({
       this.$nextTick(() => {
         setTimeout(() => {
           this.scrollToCurrent();
-        }, 800);
+        }, 500);
       });
     },
   },
