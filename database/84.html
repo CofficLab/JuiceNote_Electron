@@ -1,0 +1,74 @@
+<toc></toc><h1 id="heading-1">错误</h1><h2 id="heading-2">Error接口</h2><pre index="1"><code language="go" run="1">type error interface {
+    Error() string
+}</code></pre><h2 id="heading-3">创建</h2><h3 id="heading-4">结构体</h3><p>实现 error 接口的契约即可：</p><pre index="1"><code language="go" run="NaN">package main
+
+func main() {
+    a := 1/0
+}</code></pre><h3 id="heading-5"><a target="_blank" rel="noopener noreferrer nofollow" href="http://errors.New">errors.New</a>()</h3><code-tab titles="1,2" current="1"><pre index="1"><code language="go" run="1">package main
+import (
+    "errors"
+    "fmt"
+)
+
+// 自定义除法函数
+
+func myDivide(dividend, divisor float64) (float64, error) {
+    if divisor == 0 { // 除数不能为 0
+        return 0, errors.New("divide by zero") // 返回一个错误
+    }
+
+    return dividend / divisor, nil
+}
+
+func main() {
+    divide, err := myDivide(100, 0)
+    if err != nil {
+        fmt.Printf("Error: %s", err) // 输出错误信息
+    } else {
+        fmt.Printf("100 / 0 = %.2f", divide) // 代码执行不到这里
+    }
+}</code></pre><pre index="2"><code language="go" run="1">package main
+import (
+    "errors"
+    "fmt"
+)
+
+var errDivideByZero error = errors.New("除数不能为0")
+
+func myDivide(dividend, divisor float64) (float64, error) {
+    if divisor == 0 { 
+        return 0, errDivideByZero
+    }
+
+    return dividend / divisor, nil
+}
+
+func main() {
+    divide, err := myDivide(100, 0)
+    if err != nil {
+        fmt.Printf("Error: %s", err)
+    } else {
+        fmt.Printf("100 / 0 = %.2f", divide) 
+    }
+}</code></pre></code-tab><h3 id="heading-6">fmt.Errorf() 创建</h3><pre index="1"><code language="go" run="1">package main
+
+import (
+    "fmt"
+)
+
+// 自定义除法函数
+func myDivide(dividend, divisor float64) (float64, error) {
+    if divisor == 0 { // 除数不能为 0
+        return 0, fmt.Errorf("%.2f divide by zero", dividend) // 返回一个错误
+    }
+    return dividend / divisor, nil
+}
+
+func main() {
+    divide, err := myDivide(100, 0)
+    if err != nil {
+        fmt.Printf("Error: %s\n", err) // 输出错误信息
+    } else {
+        fmt.Printf("100 / 0 = %.2f\n", divide) // 代码执行不到这里
+    }
+}</code></pre><p></p>

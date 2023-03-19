@@ -14,7 +14,12 @@ export default CodeBlock.extend({
       },
       language: {
         default: "",
-        parseHTML: (element) => element.firstElementChild?.getAttribute("language"),
+        parseHTML: function (element) {
+          let language = element.firstElementChild?.getAttribute("language");
+          if (language == "Golang") return "go";
+          if (language == "golang") return "go";
+          return language;
+        },
         rendered: true,
       },
       run: {

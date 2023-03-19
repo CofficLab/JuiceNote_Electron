@@ -2,7 +2,7 @@
   <node-view-wrapper class="flex flex-row overflow-auto rounded">
     <div class="flex w-full flex-col overflow-clip shadow-sm">
       <!-- 标题标签 -->
-      <div class="tabs rounded-none bg-yellow-500/50 p-0" contenteditable="false">
+      <div class="tabs rounded-none bg-yellow-500/50 p-0" contenteditable="false" v-if="titles.length > 1 || editable">
         <div v-for="(title, index) in titles" class="p-0 outline-none">
           <a
             class="code-title"
@@ -14,6 +14,7 @@
             >{{ title }}</a
           >
         </div>
+
         <!-- 添加更多标签的按钮 -->
         <button v-if="editable" class="btn-ghost btn-sm btn rounded-none" @click="add">
           <Plus class="w-4 self-center"></Plus>
@@ -45,6 +46,10 @@ export default {
     titles() {
       return this.node.attrs.titles.split(",");
     },
+    currentLanguage() {
+      let book = NodeController.getCurrentPage().getBook();
+      return book.title.toLowerCase();
+    },
   },
   methods: {
     activate: function (index) {
@@ -60,7 +65,7 @@ export default {
       });
       let dom = document.createElement("pre");
       dom.setAttribute("index", index);
-      dom.innerHTML = "<code>第" + index + "个标签的内容</code>";
+      dom.innerHTML = "<code language=" + this.currentLanguage + ">第" + index + "个标签的内容</code>";
       this.$refs.contents.$el.append(dom);
       this.updateAttributes({
         current: index,
@@ -76,10 +81,21 @@ export default {
         titles: titles.join(","),
       });
     },
+    checkTitles() {
+      console.log("标题数量", this.titles.length, "代码块数量", this.node.attrs.count);
+      if (this.titles.length > this.node.attrs.count) {
+        let titles = this.titles.slice(0, this.node.attrs.count);
+        console.log(this.titles);
+        this.updateAttributes({
+          titles: titles.join(","),
+        });
+      }
+    },
   },
   mounted() {
     // console.log("tab加载");
     this.activate(this.current);
+    this.checkTitles();
   },
 };
 </script>

@@ -13,8 +13,17 @@ export default Node.create({
 
   addAttributes() {
     return {
-      titles: { default: "" },
+      titles: {
+        default: "",
+        parseHTML: (element) => element.getAttribute("titles"),
+        rendered: true,
+      },
       current: { default: 1 },
+      count: {
+        default: 0,
+        parseHTML: (element) => element.childNodes.length,
+        rendered: false,
+      },
     };
   },
 
