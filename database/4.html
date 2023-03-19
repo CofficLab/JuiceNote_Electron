@@ -1,36 +1,12 @@
-<toc></toc><h1 id="heading-1">认识计算机</h1><p>计算机有三个重要的组成部分：</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>CPU：做计算</p></li><li class="m-0 p-0"><p>内存：读写速度极快，存储数据，提供给 CPU</p></li><li class="m-0 p-0"><p>硬盘：读写速度慢，长期存储数据</p></li></ul><h2 id="heading-2">认识程序</h2><p>现在，我们需要往numbers.txt文件中写入数字 1 到 10，用程序来做：</p><pre index="1"><code language="text" run="0">x = 1
-如果 x &lt;= 10,循环执行
-    x的值写入 numbers.txt
-    x = x + 1
-结束</code></pre><p>上面这段一般称为：伪代码</p><p>计算机的三个重要组成部分分工是怎么样的呢？</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>CPU：做计算，在这里主要是：x = x + 1</p></li><li class="m-0 p-0"><p>内存：存储临时数据，在这里主要是存储 x 的值</p></li><li class="m-0 p-0"><p>硬盘：长期存储数据，numbers.txt 就存储在硬盘中</p></li></ul><h2 id="heading-3">认识编程语言</h2><p>上面的那段程序，计算机是看不懂的，所以我们需要编程语言的帮助。</p><p>编程语言是一个中间语言，连接了人类语言和计算机语言。</p><p>用各种编程语言翻译一下上面的程序（为了方便演示，写入硬盘改为输出）：</p><code-tab titles="Python,JavaScript,PHP,Java,Golang" current="1"><pre index="1"><code language="python" run="1">x = 1
-while x &lt;=10:
-    print(x)
-    x = x + 1</code></pre><pre index="2"><code language="javascript" run="1">x = 1;
-while (x &lt;= 10) {
-  console.log(x);
-  x = x + 1;
-}</code></pre><pre index="3"><code language="php" run="1">$x = 1;
-while ($x &lt;= 10) {
-    echo $x.PHP_EOL;
-    $x = $x + 1;
-}</code></pre><pre index="4"><code language="java" run="NaN">public class Test  {
-    public static void main(String args[]) {
-        for (int x = 1; x &lt;= 10; x = x + 1) {
-            System.out.println(x);
-        }
-    }
-}</code></pre><pre index="5"><code language="go" run="NaN">package main
+<toc></toc><h1 id="heading-1"><strong>认识 Golang</strong></h1><p>Golang（简称 Go） 是一门非常年轻的编程语言。</p><h2 id="heading-2"><strong>第一个 Go 程序</strong></h2><pre index="1"><code language="go" run="1">package main
 import "fmt"
 
 func main() {
-    for x := 1; x &lt;= 10; x = x + 1 {
-        fmt.Println(x)
-    }
-}</code></pre></code-tab><p></p><h2 id="heading-4">编程语言的区别</h2><p>主流编程语言的语法都有某种程度的相似，因为它们都在用简洁的语法来阐述人的思想。</p><p>那么为什么要有这么多编程语言呢？因为有不同的应用领域：</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>有些适合做网站开发，如：PHP；</p></li><li class="m-0 p-0"><p>有些适合做数据处理，如：Python；</p></li><li class="m-0 p-0"><p>有些适合做大型软件，如：Java、Golang；</p></li><li class="m-0 p-0"><p>有些适合做用户交互，如：JavaScript。</p></li></ul><p>通过对比，可以看出 Golang 的语法稍显复杂。 对于无任何编程经验的初学者，我建议首先学习 Python。</p><p>掌握了一门编程语言之后，再学另一门会有如鱼得水的感觉，因此请多学几门。</p><h2 id="heading-5">编程的本质</h2><p>编程的本质就是指挥计算机操作 CPU、内存、硬盘。</p><p>作为本次课程的指挥家，在接下来的学习中，我们不仅要学习编程的语法，更要了解如何充分的使用 CPU、内存、硬盘。</p><h2 id="heading-6">程序的好与坏</h2><p>完成同一个目标，有人写的程序能在 0.1 内运行完毕，有的人的却需要 10 秒。</p><p>造成这种差异的原因，大多是因为算法的差异。</p><p>有个最著名的例子：</p><p>请计算出 1 + 2 + 3 ... + n 的值。</p><p>可以这样做：</p><pre index="1"><code language="text" run="NaN">sum = 0
-current = 1
-循环执行直到current=n
-    sum = sum + current
-
-输出sum</code></pre><p>显然，这段程序最主要的、最耗时的操作是：sum = sum + current，由 CPU 负责计算。</p><p>假设每次计算，CPU 需要的时间是 1 秒，要计算 n 次，那么这种做法需要的时间约等于：n 秒。</p><p>还可以这样做：</p><pre index="1"><code language="text" run="NaN">sum = (1 + n) * (n / 2)
-
-输出sum</code></pre><p>注意，编程语言一般用/来表示除号</p><p>CPU 只做了一件事：(1 + n) \* (n / 2)，看起来要比 sum = sum + current复杂一点点，假设需要 1.5 秒，那么整个程序需要的大概时间是：1.5 秒。</p><p>可以看出，不管 n 有多大，这段程序需要的时间是固定的。</p><p>而第一种做法，随着 n 的增加，时间也随之线性增加，当 n 大到一定程度时，其耗时是不能被人类接受的。</p><h2 id="heading-7">算法</h2><p>一件问题的解决办法，称为算法。有些算法特别慢，有些算法特别快。</p><p>找出问题的最佳算法，充分利用计算机资源，才是编程的最高境界。</p><h2 id="heading-8">学习建议</h2><p>我是第一次学习编程语言，应该先学哪一个呢？</p><p>我的建议是：Python，因为足够简单。</p>
+    fmt.Println("hello")
+}</code></pre><p>每个编程语言的设计理念都不一样。</p><p>我们通过分析这段程序，来理解 Go 的设计理念。</p><h2 id="heading-3"><strong>包</strong></h2><official-link class="bg-cyan-800/20 p-4">https://pkg.go.dev/std</official-link><pre index="1"><code language="go" run="0">package main</code></pre><p><br>每个 Go 源码文件的开头都必须有`package`声明，表示其中的代码所属的包。</p><p>Go 规定，我们写的程序必须有一个`main`包。</p><p>&lt;div class="bg-cyan flex flex-col gap-2"&gt;</p><p>&lt;div class="flex flex-row gap-2 px-4 justify-center pt-4"&gt;</p><p>&lt;div class="flex flex-col bg-yellow"&gt;</p><p>&lt;div class="text-center bg-cyan mt-0 pt-0"&gt;用户程序1&lt;/div&gt;</p><p>&lt;div class="bg-red grid grid-cols-1 p-4 gap-4"&gt;</p><p>&lt;div class="brick px-2"&gt;main&lt;/div&gt;</p><p>&lt;/div&gt;</p><p>&lt;/div&gt;</p><p>&lt;div class="flex flex-col bg-yellow"&gt;</p><p>&lt;div class="text-center bg-cyan mt-0 pt-0"&gt;用户程序2&lt;/div&gt;</p><p>&lt;div class="bg-red grid grid-cols-3 p-4 gap-4"&gt;</p><p>&lt;div class="brick px-2"&gt;main&lt;/div&gt;</p><p>&lt;div class="brick px-2"&gt;log&lt;/div&gt;</p><p>&lt;div class="brick px-2"&gt;...&lt;/div&gt;</p><p>&lt;/div&gt;</p><p>&lt;/div&gt;</p><p>&lt;div class="flex flex-col bg-yellow"&gt;</p><p>&lt;div class="text-center bg-cyan mt-0 pt-0 px-2"&gt;用户程序n&lt;/div&gt;</p><p>&lt;div class="bg-red grid grid-cols-2 p-4 gap-4"&gt;</p><p>&lt;div class="brick px-2"&gt;main&lt;/div&gt;</p><p>&lt;div class="brick px-2"&gt;...&lt;/div&gt;</p><p>&lt;/div&gt;</p><p>&lt;/div&gt;</p><p>&lt;/div&gt;</p><p>&lt;div class="flex flex-col bg-cyan"&gt;</p><p>&lt;div class="text-center bg-cyan mt-0 pt-0"&gt;内置包&lt;/div&gt;</p><p>&lt;div class="bg-red grid grid-cols-6 p-4 gap-4"&gt;</p><p>&lt;div class="brick"&gt;fmt&lt;/div&gt;</p><p>&lt;div class="brick"&gt;os&lt;/div&gt;</p><p>&lt;div class="brick"&gt;path&lt;/div&gt;</p><p>&lt;div class="brick"&gt;sort&lt;/div&gt;</p><p>&lt;div class="brick"&gt;time&lt;/div&gt;</p><p>&lt;div class="brick"&gt;zip&lt;/div&gt;</p><p>&lt;div class="brick"&gt;md5&lt;/div&gt;</p><p>&lt;div class="brick"&gt;png&lt;/div&gt;</p><p>&lt;div class="brick"&gt;...&lt;/div&gt;</p><p>&lt;/div&gt;</p><p>&lt;/div&gt;</p><p>&lt;/div&gt;</p><p>内置包是 Go 本身就有的包，在程序的任何地方都能使用，比如：</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>fmt：处理输入输出</p></li><li class="m-0 p-0"><p>zip：压缩文件</p></li><li class="m-0 p-0"><p>png：处理`png`图片</p></li></ul><p>内置包就像一个工具箱，里面放置着常用的工具。</p><p>这个内置包的集合的官方名称是：Standard Library，中文译为：标准库。</p><banner class="banner"><div class="flex justify-center items-center"><div><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"></path>
+</svg></div></div><div>标准库里包含了哪些包？</div></banner><p>这个答案在其官方文档里：</p><official-link class="bg-cyan-800/20 p-4">https://pkg.go.dev/std</official-link><banner class="banner"><div class="flex justify-center items-center"><div><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"></path>
+</svg></div></div><div>一定要学会查询官方文档</div></banner><h2 id="heading-4"><strong>导入包</strong></h2><pre index="1"><code language="go" run="0">import "fmt"</code></pre><p>如果你要使用一个包，就必须在程序的开头导入要使用的包。</p><p>`fmt` 是内置的非常常用的包，主要用于输出内容。</p><h2 id="heading-5"><strong>main 函数</strong></h2><pre index="1"><code language="go" run="0">func main() {
+    fmt.Println("hello")
+}</code></pre><p>程序的`main`包里必须有一个`main`函数作为程序执行的起点。</p><p>这个`main`函数做的事是：</p><p>**_使用`fmt`包的`Println`函数，输出`hello`这串字。_**</p><h2 id="heading-6"><strong>查看本机 Go 程序信息</strong></h2><pre index="1"><code language="shell" run="1">go version</code></pre>
