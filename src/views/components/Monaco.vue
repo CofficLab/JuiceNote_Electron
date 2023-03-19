@@ -23,7 +23,7 @@
     </div>
 
     <!-- 展示运行结果 -->
-    <div ref="result" v-show="resultEditorDisplay" class="border-2 border-t-sky-900"></div>
+    <div ref="result" v-show="resultEditorDisplay" class="border-2 border-transparent border-t-sky-900"></div>
   </div>
 </template>
 
