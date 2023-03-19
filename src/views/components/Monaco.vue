@@ -7,18 +7,14 @@
         class="btn-sm btn absolute bottom-2 right-2 z-20 bg-slate-900 shadow-sm"
         @click="run"
         v-if="showRunButton"
-        v-html="result == '' ? '运行' : '收起'"
+        v-html="resultEditorDisplay ? '收起' : '运行'"
       ></button>
 
       <div ref="monaco" class="z-10"></div>
     </div>
 
     <!-- 展示运行结果 -->
-    <pre
-      v-show="result.length > 0"
-      class="max-h-72 overflow-scroll"
-      style="margin: 0; border-radius: 0"
-    ><code v-html="result"></code></pre>
+    <div ref="result" v-show="resultEditorDisplay" class="border-2 border-t-sky-900"></div>
   </div>
 </template>
 
@@ -47,7 +43,9 @@ export default defineComponent({
       index: 0, // 当前editor是整个页面的第几个editor，从0开始
       paddingTop: 10,
       paddingBottom: 10,
-      result: "", //代码运行结果
+      resultEditor: null,
+      resultEditorIndex: 0,
+      resultEditorDisplay: false,
     };
   },
   mounted: function () {
@@ -56,20 +54,27 @@ export default defineComponent({
     this.resetHeight();
     this.setLanguage();
     this.index = monaco.editor.getModels().length - 1;
+    this.setResultEditor();
+    this.resultEditorIndex = monaco.editor.getModels().length - 1;
   },
   methods: {
     run() {
-      if (this.result.length > 0) {
-        this.result = "";
-      } else {
-        this.result = CodeRunner(monaco.editor.getModels()[this.index].getValue(), this.language);
-      }
+      this.resultEditorDisplay = !this.resultEditorDisplay;
+      if (!this.resultEditorDisplay) return;
+
+      monaco.editor
+        .getModels()
+        [this.resultEditorIndex].setValue(CodeRunner(monaco.editor.getModels()[this.index].getValue(), this.language));
+      this.$refs.result.style.height = this.getEditorHeight(this.resultEditor) + 10 + "px";
     },
     resetHeight() {
-      let lineCount = this.editor.getModel().getLineCount();
-      let lineHeight = this.editor.getOption(monaco.editor.EditorOption.lineHeight);
-      let height = lineCount * lineHeight + this.paddingTop + this.paddingBottom;
+      let height = this.getEditorHeight(this.editor);
       this.$refs.monaco.style.height = (this.readOnly ? height : height + 20) + "px";
+    },
+    getEditorHeight(editor) {
+      let lineCount = editor.getModel().getLineCount();
+      let lineHeight = editor.getOption(monaco.editor.EditorOption.lineHeight);
+      return lineCount * lineHeight + this.paddingTop + this.paddingBottom;
     },
     setLanguage() {
       // console.log("设置Monaco Editor的Language为", this.language);
@@ -133,6 +138,26 @@ export default defineComponent({
         console.log("changed", monaco.editor.getModels()[this.index].getValue());
         this.keyUpCallback(monaco.editor.getModels()[this.index].getValue());
         this.resetHeight();
+      });
+    },
+    // 用来展示运行结果的 Monaco Editor
+    setResultEditor() {
+      this.resultEditor = monaco.editor.create(this.$refs.result, {
+        language: "shell",
+        readOnly: true,
+        fontSize: 14,
+        lineNumbers: true,
+        automaticLayout: true,
+        scrollBeyondLastLine: false,
+        contextmenu: false,
+        roundedSelection: false,
+        renderLineHighlight: "none",
+        scrollbar: { alwaysConsumeMouseWheel: false },
+        overviewRulerBorder: false,
+        overviewRulerLanes: 0,
+        domReadOnly: true,
+        padding: { top: this.paddingTop, bottom: this.paddingBottom },
+        minimap: { enabled: false },
       });
     },
   },
