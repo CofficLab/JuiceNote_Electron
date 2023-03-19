@@ -1,20 +1,16 @@
 <toc></toc><h1 id="heading-1">错误</h1><h2 id="heading-2">Error接口</h2><pre index="1"><code language="go" run="1">type error interface {
     Error() string
-}</code></pre><h2 id="heading-3">创建</h2><h3 id="heading-4">结构体</h3><p>实现 error 接口的契约即可：</p><pre index="1"><code language="go" run="NaN">package main
+}</code></pre><h2 id="heading-3">创建错误对象</h2><h3 id="heading-4">结构体</h3><p>实现 error 接口的契约即可：</p><pre index="1"><code language="go" run="1">package main
 
 func main() {
     a := 1/0
-}</code></pre><h3 id="heading-5"><a target="_blank" rel="noopener noreferrer nofollow" href="http://errors.New">errors.New</a>()</h3><code-tab titles="1,2" current="1"><pre index="1"><code language="go" run="1">package main
-import (
-    "errors"
-    "fmt"
-)
-
-// 自定义除法函数
+}</code></pre><h3 id="heading-5"><a target="_blank" rel="noopener noreferrer nofollow" href="http://errors.New">errors.New</a>()</h3><code-tab titles="方式1,方式2,丢掉错误会怎样" current="3"><pre index="1"><code language="go" run="1">package main
+import "errors"
+import "fmt"
 
 func myDivide(dividend, divisor float64) (float64, error) {
-    if divisor == 0 { // 除数不能为 0
-        return 0, errors.New("divide by zero") // 返回一个错误
+    if divisor == 0 {
+        return 0, errors.New("除数不能为0")
     }
 
     return dividend / divisor, nil
@@ -23,9 +19,9 @@ func myDivide(dividend, divisor float64) (float64, error) {
 func main() {
     divide, err := myDivide(100, 0)
     if err != nil {
-        fmt.Printf("Error: %s", err) // 输出错误信息
+        fmt.Printf("Error: %s", err)
     } else {
-        fmt.Printf("100 / 0 = %.2f", divide) // 代码执行不到这里
+        fmt.Printf("100 / 0 = %.2f", divide)
     }
 }</code></pre><pre index="2"><code language="go" run="1">package main
 import (
@@ -50,25 +46,24 @@ func main() {
     } else {
         fmt.Printf("100 / 0 = %.2f", divide) 
     }
-}</code></pre></code-tab><h3 id="heading-6">fmt.Errorf() 创建</h3><pre index="1"><code language="go" run="1">package main
+}</code></pre><pre index="3"><code language="go" run="1">package main
+import "fmt"
+import "errors"
 
-import (
-    "fmt"
-)
-
-// 自定义除法函数
 func myDivide(dividend, divisor float64) (float64, error) {
-    if divisor == 0 { // 除数不能为 0
-        return 0, fmt.Errorf("%.2f divide by zero", dividend) // 返回一个错误
+    if divisor == 0 {
+        return 0, errors.New("divide by zero")
     }
+
     return dividend / divisor, nil
 }
 
 func main() {
-    divide, err := myDivide(100, 0)
-    if err != nil {
-        fmt.Printf("Error: %s\n", err) // 输出错误信息
-    } else {
-        fmt.Printf("100 / 0 = %.2f\n", divide) // 代码执行不到这里
+    divide, _ := myDivide(100, 0)
+    fmt.Printf("100 / 0 = %.2f", divide) 
+}</code></pre></code-tab><h3 id="heading-6">fmt.Errorf() 创建</h3><pre index="1"><code language="go" run="0">func myDivide(dividend, divisor float64) (float64, error) {
+    if divisor == 0 { 
+        return 0, fmt.Errorf("%.2f divide by zero", dividend)
     }
+    return dividend / divisor, nil
 }</code></pre><p></p>

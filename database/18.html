@@ -1,4 +1,4 @@
-<toc></toc><h1 id="heading-1">缩进与换行</h1><h3 id="heading-2">多行语句</h3><pre index="1"><code language="go" run="NaN">package main
+<toc></toc><h1 id="heading-1">缩进与换行</h1><h3 id="heading-2">多行语句</h3><pre index="1"><code language="go" run="0">package main
 import "fmt"
 
 func main() {
@@ -15,7 +15,7 @@ result := db.Where("user_id = ?", userId).
 			Order("created_at desc,id desc").
 			Limit(pageSize).
 			Offset(offset).
-			Find(&amp;orders)</code></pre><p>这类换行主要用于语句特别长的时候，可以提高可读性。</p><h3 id="heading-3">单行多语句</h3><pre index="1"><code language="go" run="NaN">package main
+			Find(&amp;orders)</code></pre><p>这类换行主要用于语句特别长的时候，可以提高可读性。</p><h3 id="heading-3">单行多语句</h3><pre index="1"><code language="go" run="1">package main
 import "fmt"
 
 func main() {

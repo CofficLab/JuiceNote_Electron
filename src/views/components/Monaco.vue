@@ -4,11 +4,20 @@
       <span v-html="language" class="absolute top-0 right-2 z-20 text-sm text-info"></span>
       <button
         contenteditable="false"
+        class="btn-sm btn absolute bottom-16 right-2 z-20 bg-slate-900 shadow-sm"
+        @click="run(true)"
+        v-if="showRunButton && resultEditorDisplay"
+      >
+        收起
+      </button>
+      <button
+        contenteditable="false"
         class="btn-sm btn absolute bottom-2 right-2 z-20 bg-slate-900 shadow-sm"
         @click="run"
         v-if="showRunButton"
-        v-html="resultEditorDisplay ? '收起' : '运行'"
-      ></button>
+      >
+        运行
+      </button>
 
       <div ref="monaco" class="z-10"></div>
     </div>
@@ -58,10 +67,13 @@ export default defineComponent({
     this.resultEditorIndex = monaco.editor.getModels().length - 1;
   },
   methods: {
-    run() {
-      this.resultEditorDisplay = !this.resultEditorDisplay;
-      if (!this.resultEditorDisplay) return;
+    run(close) {
+      if (close == true) {
+        this.resultEditorDisplay = false;
+        return;
+      }
 
+      this.resultEditorDisplay = true;
       monaco.editor
         .getModels()
         [this.resultEditorIndex].setValue(CodeRunner(monaco.editor.getModels()[this.index].getValue(), this.language));

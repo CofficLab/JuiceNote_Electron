@@ -1,0 +1,89 @@
+<toc></toc><h1 id="heading-1">通信</h1><h2 id="heading-2">场景</h2><p>同福客栈来了一个客人，需要用餐，佟掌柜负责接待，流程如下：</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>让小郭擦桌子，小郭擦桌子需要 2 秒</p></li><li class="m-0 p-0"><p><strong>同时</strong>让老白搬椅子，老白搬椅子需要 1 秒</p></li><li class="m-0 p-0"><p>前两步都完成后，亲自请客人入座，需要非常短的时间，假设为 0 秒</p></li></ul><p>很容易看出，整个流程用时 2 秒。</p><h2 id="heading-3">顺序执行</h2><p>将上述场景转化成程序：</p><pre index="1"><code language="go" run="1">package main
+import "fmt"
+import "time"
+
+// 擦桌子，小郭负责
+func wipe() {
+    time.Sleep(time.Second * 2)
+    fmt.Println("擦桌子完成")
+}
+
+// 搬椅子，老白负责
+func move() {
+    time.Sleep(time.Second * 1)
+    fmt.Println("搬椅子完成")
+}
+
+// 总指挥，佟掌柜负责
+func main() {
+    start := time.Now()
+    wipe()
+    move()
+
+    fmt.Println("客官请入座")
+    fmt.Println("消耗的秒数", time.Now().Sub(start))
+}</code></pre><p>看起来没什么问题，但是实际上程序用时 3 秒，而不是我们期望的 2 秒。</p><p>因为在默认的、常见的、自然而然想到的情况下，程序都是按顺序逐行执行的，这非常符合人的思维。</p><banner class="banner"><div class="flex justify-center items-center"><div><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"></path>
+</svg></div></div><div>看代码、写代码，人类都是从上到下一行一行进行</div></banner><ol><li class="m-0 p-0"><p>擦桌子，耗时 2 秒</p></li><li class="m-0 p-0"><p>搬椅子，耗时 1 秒</p></li></ol><p>大多数编程语言，大多数场景，都是这样顺序执行的，易读也易理解。</p><p>因为我们假定计算机一次只能做一件事，早期的计算机确实是这样的。</p><h2 id="heading-4">并发执行</h2><p>当代的计算机 CPU 大多有多个核心，就像同福客栈有多个员工一样。</p><p>&lt;div class="bg-cyan flex flex-row p-4 gap-4"&gt; &lt;div class="flex flex-col bg-yellow p-0 pb-4 gap-2"&gt; &lt;div class="bg-cyan text-center mt-0 px-8 w-full rounded-none"&gt;同福客栈&lt;/div&gt; &lt;div class="brick mx-4 px-2"&gt;佟湘玉&lt;/div&gt; &lt;div class="brick mx-4 px-2"&gt;白展堂&lt;/div&gt; &lt;div class="brick mx-4 px-2"&gt;郭芙蓉&lt;/div&gt; &lt;/div&gt; &lt;div class="flex flex-col bg-yellow p-0 pb-4 gap-2"&gt; &lt;div class="bg-cyan text-center px-8 mt-0 w-full rounded-none"&gt;计算机的CPU&lt;/div&gt; &lt;div class="brick mx-4 px-2"&gt;核心1&lt;/div&gt; &lt;div class="brick mx-4 px-2"&gt;核心2&lt;/div&gt; &lt;div class="brick mx-4 px-2"&gt;核心3&lt;/div&gt; &lt;/div&gt; &lt;/div&gt;</p><p>同福客栈的多个员工可以同时工作：</p><p>&lt;div class="bg-cyan flex flex-row p-4 gap-4 justify-center"&gt; &lt;div class="flex flex-col bg-yellow p-0 pb-4 gap-2"&gt; &lt;div class="bg-cyan text-center mt-0 px-8 w-full rounded-none"&gt;同福客栈&lt;/div&gt; &lt;div class="flex flex-row gap-1"&gt; &lt;div class="brick mx-4 px-2"&gt;白展堂在搬桌子&lt;/div&gt; &lt;div class="brick mx-4 px-2"&gt;郭芙蓉在扫地&lt;/div&gt; &lt;div class="brick mx-4 px-2"&gt;佟湘玉在数钱&lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt;</p><p>计算机 CPU 的多个核心也可以同时工作：</p><p>&lt;div class="bg-cyan flex flex-row p-4 gap-4 justify-center"&gt; &lt;div class="flex flex-col bg-yellow p-0 pb-4 gap-2"&gt; &lt;div class="bg-cyan text-center px-8 mt-0 w-full rounded-none"&gt;计算机的CPU&lt;/div&gt; &lt;div class="flex flex-row gap-1"&gt; &lt;div class="brick mx-4 px-2"&gt;核心1在计算 1+1 等于几&lt;/div&gt; &lt;div class="brick mx-4 px-2"&gt;核心2在读取文件&lt;/div&gt; &lt;div class="brick mx-4 px-2"&gt;核心3在休息&lt;/div&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt;</p><p>这种情况下，我们就要使用并发思维，让所有的 CPU 核心都工作起来。</p><p>Go 语言原生支持并发。</p><banner class="banner"><div class="flex justify-center items-center"><div><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"></path>
+</svg></div></div><div>为什么说原生支持？</div></banner><p>有些古老的编程语言不支持并发，或者要通过复杂的扩展才能实现。</p><p>Go 很年轻。</p><h2 id="heading-5">并发编程</h2><p>在 Go 中实现并发很简单，函数前加 go 关键字就行。</p><pre index="1"><code language="go" run="1">package main
+import "fmt"
+import "time"
+
+func wipe() {
+    time.Sleep(time.Second * 2)
+    fmt.Println("擦桌子完成")
+}
+
+func move() {
+    time.Sleep(time.Second * 1)
+    fmt.Println("搬椅子完成")
+}
+
+func main() {
+    start := time.Now()
+    // 让小郭去擦桌子
+    go wipe()
+    // 让老白去搬椅子
+    go move()
+
+    fmt.Println("客官请入座")
+    fmt.Println("消耗的秒数", time.Now().Sub(start))
+}</code></pre><p>但是这段程序的耗时并不是我们期待的 2 秒，因为 Go 是这样理解的：</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>擦桌子</p></li><li class="m-0 p-0"><p>搬椅子</p></li></ul><p>main 函数做的事情都是轻量级的：</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>发起擦桌子指令，并且不会等待擦桌子的执行结果</p></li><li class="m-0 p-0"><p>发起搬椅子指令，并且不会等待搬椅子的执行结果</p></li><li class="m-0 p-0"><p>说话：客官请入座</p></li></ul><p>这些操作都非常快，擦桌子、搬椅子的结果还没来得及反馈，main 程序已经执行完毕退出了。</p><h2 id="heading-6">管道通信</h2><p>显然，擦桌子的小郭、搬椅子的老白需要一种渠道，将结果告诉佟掌柜，佟掌柜再请客人入座。</p><p>现实中，小郭、老白对佟掌柜说句话就能解决这个问题。</p><p>在 Go 中，小郭、老白则是通过 channel 和佟掌柜通信。</p><pre index="1"><code language="go" run="1">package main
+import "fmt"
+import "time"
+
+// 擦桌子前接收一个能放字符串的 channel，擦完桌子通过 channel 说：桌子擦完啦
+func wipe(channel chan string) {
+    time.Sleep(time.Second * 2)
+    // &lt;- 表示往 channel 写消息
+    channel &lt;- "擦桌子完成"
+}
+
+// 搬椅子前接收一个能放字符串的 channel，搬完椅子通过 channel 说：椅子搬完啦
+func move(channel chan string) {
+    time.Sleep(time.Second * 1)
+    // &lt;- 表示往 channel 写消息
+    channel &lt;- "搬椅子完成"
+}
+
+func main() {
+    start := time.Now()
+
+    // 准备两个通道
+    channel1 := make(chan string)
+    channel2 := make(chan string)
+
+    // 让小郭去擦桌子，擦完通过 channel1 通知我
+    // 让老白去搬椅子，搬完通过 channel2 通知我
+    // 加了 go 关键字，这两件事是同时执行的
+    go wipe(channel1)
+    go move(channel2)
+
+    // 这部分是顺序执行的
+    // &lt;- 表示拿出 channel 的消息，给 Println 函数
+    fmt.Println(&lt;-channel1)
+    fmt.Println(&lt;-channel2)
+    fmt.Println("客官请入座")
+    fmt.Println("消耗的秒数", time.Now().Sub(start))
+}</code></pre><p>上述代码，Go 是这样理解的：</p><p>&lt;div class="bg-cyan flex flex-col gap-4 p-2"&gt; &lt;div class="brick mr-40"&gt;擦桌子&lt;/div&gt; &lt;div class="w-1/2"&gt; &lt;div class="brick mr-20"&gt;搬椅子&lt;/div&gt; &lt;/div&gt; &lt;div class="flex flex-row w-full"&gt; &lt;div class="brick w-24 rounded-r-none"&gt;发出命令&lt;/div&gt; &lt;div class="bg-sky-500/10 text-center border border-yellow-50/40 justify-center flex flex-grow"&gt;佟掌柜休息&lt;/div&gt; &lt;div class="brick w-40 text-center rounded rounded-l-none"&gt;请客人入座&lt;/div&gt; &lt;/div&gt;<br>&lt;/div&gt;</p>
