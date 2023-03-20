@@ -38,10 +38,10 @@ export default Node.create({
       toggleToc:
         () =>
         ({ editor, commands }) => {
-          let dom = document.createElement("div");
-          dom.innerHTML = editor.getHTML();
-          if (dom.firstElementChild.tagName == "TOC") {
-            return commands.deleteRange({ from: 0, to: 1 });
+          let html = editor.getHTML();
+          if (html.includes("<toc></toc>")) {
+            commands.setContent(html.replaceAll("<toc></toc>", ""), true);
+            return;
           }
 
           return commands.insertContentAt(0, "<toc></toc>", {
