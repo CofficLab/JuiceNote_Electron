@@ -78,7 +78,7 @@ func main() {
     go func() { messages &lt;- "ping" }()
 
     fmt.Print("The End")
-}</code></pre></code-tab><p>缓冲</p><chat position="start"><p>小明是一家酒店的清洁工，小红是前台，每打扫完一个房间，小明就通过对讲机告诉小红，小红操作电脑将房间状态标记为“已清理”</p></chat><code-tab titles="正常情况,主进程忙的情况" current="1"><pre index="1"><code language="go" run="1">package main 
+}</code></pre></code-tab><time-line-title class="time-line-title">缓冲</time-line-title><chat position="start"><p>小明是一家酒店的清洁工，小红是前台，每打扫完一个房间，小明就通过对讲机告诉小红，小红操作电脑将房间状态标记为“已清理”</p></chat><code-tab titles="正常情况,主进程忙的情况" current="1"><pre index="1"><code language="go" run="1">package main 
 import "fmt"
 
 func main() {
