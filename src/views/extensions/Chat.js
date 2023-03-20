@@ -1,15 +1,12 @@
 import { mergeAttributes, Node } from "@tiptap/core";
 import { VueNodeViewRenderer } from "@tiptap/vue-3";
-import { readFileSync } from "fs";
-import { join } from "path";
-import Config from "../../entities/Config";
 
 import Chat from "./Chat.vue";
 
 export default Node.create({
   name: "chat",
   group: "block",
-  content: "block*",
+  content: "paragraph*",
 
   parseHTML() {
     return [{ tag: "chat" }];
