@@ -27,6 +27,7 @@ import Tab from "../views/extensions/Tab.js"
 import TabContent from "../views/extensions/TabContent.js"
 import CodeEditor from "../views/extensions/CodeEditor.js"
 import CodeBlockTab from "../views/extensions/CodeTab.js"
+import Chat from "../views/extensions/Chat.js"
 
 let Extensions = [
     Banner,
@@ -43,6 +44,7 @@ let Extensions = [
     Code,
     CodeEditor,
     CodeBlockTab,
+    Chat,
     Document,
     Gapcursor,
     HardBreak,

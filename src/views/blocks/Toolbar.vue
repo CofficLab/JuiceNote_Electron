@@ -32,7 +32,9 @@
 
     <button @click="editor.chain().focus().setHorizontalRule().run()"><IconMinus></IconMinus></button>
     <button @click="editor.chain().focus().setHardBreak().run()"><IconBarsArrowDown></IconBarsArrowDown></button>
-
+    <button @click="editor.chain().focus().addChat().run()" class="tooltip tooltip-bottom" data-tip="对话框">
+      <IconChat></IconChat>
+    </button>
     <button @click="editor.chain().focus().unsetAllMarks().run()" class="tooltip tooltip-bottom" data-tip="清除格式">
       <IconX></IconX>
     </button>
@@ -159,6 +161,7 @@ import IconPuzzle from "../../assets/icons/puzzle-pieces.svg";
 import IconBars2 from "../../assets/icons/bars-2.svg";
 import IconSaveBack from "../../assets/icons/arrow-up-tray.svg";
 import IconQueueList from "../../assets/icons/queue-list.svg";
+import IconChat from "../../assets/icons/chat-bubble-left-ellipsis.svg";
 
 export default defineComponent({
   components: {
@@ -177,6 +180,7 @@ export default defineComponent({
     IconBars2,
     IconSaveBack,
     IconQueueList,
+    IconChat,
   },
   props: {
     editor: { type: Editor, required: true },
