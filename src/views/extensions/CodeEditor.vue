@@ -2,6 +2,24 @@
   <!-- 支持在多个标签之间切换，当前节点的index=current时才显示 -->
   <node-view-wrapper ref="content" v-show="this.current == this.node.attrs.index" contenteditable="false">
     <div class="rounded-b bg-slate-900">
+      <!-- 操作栏 -->
+      <div class="code-block-operators" v-if="editable && loadMonaco" contenteditable="false">
+        <button @click="deleteSelf">删除</button>
+        <div>
+          <button @click="toggleRun" v-html="this.node.attrs.run == 1 ? '关运行' : '开运行'"></button>
+          <select name="language" @change="setLanguage">
+            <option value="text" v-bind:selected="node.attrs.language == 'text'">纯文本</option>
+            <option value="html" v-bind:selected="node.attrs.language == 'html'">HTML</option>
+            <option value="go" v-bind:selected="node.attrs.language == 'go'">Golang</option>
+            <option value="php" v-bind:selected="node.attrs.language == 'php'">PHP</option>
+            <option value="javascript" v-bind:selected="node.attrs.language == 'javascript'">JavaScript</option>
+            <option value="java" v-bind:selected="node.attrs.language == 'java'">Java</option>
+            <option value="python" v-bind:selected="node.attrs.language == 'python'">Python</option>
+            <option value="shell" v-bind:selected="node.attrs.language == 'shell'">Shell</option>
+          </select>
+        </div>
+      </div>
+
       <!-- Monaco编辑器，可修改 -->
       <Monaco
         v-if="this.editable && loadMonaco"
@@ -23,24 +41,6 @@
 
       <!-- 代码框，存储从文件系统读出的代码，然后放到Monaco编辑器中 -->
       <node-view-content ref="nodeViewContent" class="hidden" />
-
-      <!-- 底部操作栏 -->
-      <div class="code-block-operators" v-if="editable && loadMonaco" contenteditable="false">
-        <button @click="deleteSelf">删除</button>
-        <div>
-          <button @click="toggleRun" v-html="this.node.attrs.run == 1 ? '关运行' : '开运行'"></button>
-          <select name="language" @change="setLanguage">
-            <option value="text" v-bind:selected="node.attrs.language == 'text'">纯文本</option>
-            <option value="html" v-bind:selected="node.attrs.language == 'html'">HTML</option>
-            <option value="go" v-bind:selected="node.attrs.language == 'go'">Golang</option>
-            <option value="php" v-bind:selected="node.attrs.language == 'php'">PHP</option>
-            <option value="javascript" v-bind:selected="node.attrs.language == 'javascript'">JavaScript</option>
-            <option value="java" v-bind:selected="node.attrs.language == 'java'">Java</option>
-            <option value="python" v-bind:selected="node.attrs.language == 'python'">Python</option>
-            <option value="shell" v-bind:selected="node.attrs.language == 'shell'">Shell</option>
-          </select>
-        </div>
-      </div>
     </div>
   </node-view-wrapper>
 </template>

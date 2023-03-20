@@ -7,7 +7,7 @@
 
     <!-- TAB -->
     <div id="tabs-container" v-if="current.getParent().isTab">
-      <Link v-for="sibling in current.getSiblings()" class="tab-lifted tab" :node="sibling">{{ sibling.title }}</Link>
+      <Link v-for="sibling in current.getSiblings()" class="tab tab-lifted" :node="sibling">{{ sibling.title }}</Link>
     </div>
 
     <!-- 编辑框 -->

@@ -1,7 +1,17 @@
 import Highlight from "@tiptap/extension-highlight";
+import { mergeAttributes } from "@tiptap/core";
 
 const Brick = Highlight.extend({
   name: "brick",
+
+  parseHTML() {
+    return [
+      {
+        tag: "brick",
+      },
+    ];
+  },
+
   addAttributes() {
     return {
       color: {
@@ -17,6 +27,11 @@ const Brick = Highlight.extend({
       },
     };
   },
+
+  renderHTML({ HTMLAttributes }) {
+    return ["brick", mergeAttributes(this.options.HTMLAttributes, HTMLAttributes), 0];
+  },
+
   addCommands() {
     return {
       setBrick:
@@ -32,7 +47,7 @@ const Brick = Highlight.extend({
       toggleBrick:
         (attributes) =>
         ({ commands }) => {
-          return commands.toggleMark(this.name, attributes);
+          return commands.toggleMark(this.name, { class: "brick" });
         },
     };
   },

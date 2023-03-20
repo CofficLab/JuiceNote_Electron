@@ -28,6 +28,8 @@ import TabContent from "../views/extensions/TabContent.js"
 import CodeEditor from "../views/extensions/CodeEditor.js"
 import CodeBlockTab from "../views/extensions/CodeTab.js"
 import Chat from "../views/extensions/Chat.js"
+import TimeLine from "../views/extensions/TimeLine.js"
+import TimeLineTitle from "../views/extensions/TimeLineTitle.js"
 
 let Extensions = [
     Banner,
@@ -78,6 +80,8 @@ let Extensions = [
     TableRow,
     TableHeader,
     Table,
+    TimeLine,
+    TimeLineTitle,
     Toc
 ];
 

@@ -1,0 +1,110 @@
+<time-line></time-line><chat position="start"><p>通道用于协程间的通信</p></chat><time-line-title class="time-line-title">简单例子</time-line-title><code-tab titles="例子1,监视通道元素个数与容量,监视协程数量,例子2" current="4"><pre index="1"><code language="go" run="1">package main 
+import "fmt"
+
+func main() {
+    ch := make(chan string)
+
+    go sayHello(ch)
+    
+    fmt.Print(&lt;-ch)
+}
+
+func sayHello(ch chan string) {
+    ch&lt;-"Hello"
+}</code></pre><pre index="2"><code language="go" run="1">package main 
+import "fmt"
+
+func main() {
+    ch := make(chan string)
+    fmt.Println("通道初始化后："+printChannel(ch))
+
+    go sayHello(ch)
+    fmt.Println("子协程启动后："+printChannel(ch))
+    
+    fmt.Println(&lt;-ch)
+    fmt.Println("读取通道数据后："+printChannel(ch))
+}
+
+func sayHello(ch chan string) {
+    fmt.Println("往通道写数据前："+printChannel(ch))
+    ch&lt;-"Hello"
+    fmt.Println("往通道写数据后："+printChannel(ch))
+}
+
+func printChannel(ch chan string) string {
+    return fmt.Sprintf("通道的容量是 %d 通道现有元素个数 %d",cap(ch),len(ch))
+}</code></pre><pre index="3"><code language="go" run="1">package main 
+import "fmt"
+import "runtime"
+
+func main() {
+    ch := make(chan string)
+    printNumGoroutine("通道初始化后")
+
+    go sayHello(ch)
+    printNumGoroutine("子协程启动后")
+    
+    fmt.Println(&lt;-ch)
+    printNumGoroutine("读取通道数据后")
+}
+
+func sayHello(ch chan string) {
+    ch&lt;-"Hello"
+}
+
+func printNumGoroutine(milestone string) {
+    fmt.Printf(milestone+"协程个数 %d \n",runtime.NumGoroutine())
+}</code></pre><pre index="4"><code language="go" run="1">package main
+import "fmt"
+
+func main() {
+    messages := make(chan string)
+
+    go func() { messages &lt;- "ping" }()
+
+    msg := &lt;-messages
+    fmt.Print(msg)
+}</code></pre></code-tab><time-line-title class="time-line-title">死锁</time-line-title><chat position="end"><p>创建了通道，发送了消息，但是不接收消息，会怎么样？</p></chat><chat position="start"><p>人类的话真是不明确。有两种情况：</p></chat><chat position="start"><p>只有一个协程，你还玩通道，肯定会报错的。</p><p>通道专门用于协程间通信，发现不知道将消息发送给谁，会报错：</p><p>all goroutines are asleep - deadlock!</p><p>看例子1</p></chat><chat position="start"><p>有两个协程，发送了但不接收，不报错，但是这样做有什么意义呢？浪费资源。</p><p>看例子2</p></chat><code-tab titles="例子1,例子2" current="2"><pre index="1"><code language="go" run="1">package main 
+
+func main() {
+    ch := make(chan string)
+    ch&lt;-"Hello"
+}</code></pre><pre index="2"><code language="go" run="1">package main
+import "fmt"
+
+func main() {
+    messages := make(chan string)
+
+    go func() { messages &lt;- "ping" }()
+
+    fmt.Print("The End")
+}</code></pre></code-tab><p>缓冲</p><chat position="start"><p>小明是一家酒店的清洁工，小红是前台，每打扫完一个房间，小明就通过对讲机告诉小红，小红操作电脑将房间状态标记为“已清理”</p></chat><code-tab titles="正常情况,主进程忙的情况" current="1"><pre index="1"><code language="go" run="1">package main 
+import "fmt"
+
+func main() {
+    ch := make(chan string)
+    
+    go clear(ch)
+
+    fmt.Print("收到")
+}
+
+func clear(ch chan string) {
+    ch&lt;-"101清理完成"
+}</code></pre><pre index="2"><code language="go" run="NaN">package main 
+import "fmt"
+import "time"
+
+func main() {
+    ch := make(chan string)
+    
+    go clear(ch)
+
+    
+    fmt.Print("收到")
+}
+
+func clear(ch chan string) {
+    ch&lt;-"101清理完成"
+    fmt.Print("清理下一个房间")
+}</code></pre></code-tab>

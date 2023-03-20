@@ -15,7 +15,6 @@
             <div class="flex-grow">
               <h6 class="title-font mb-1 text-xl font-medium text-gray-900">
                 <a :href="`#${heading.id}`" class="py-2 px-4 no-underline">
-                  <DynamicPadding :count="heading.level - 1"></DynamicPadding>
                   {{ heading.text }}
                 </a>
               </h6>
@@ -50,13 +49,16 @@ export default {
       const transaction = this.editor.state.tr;
 
       this.editor.state.doc.descendants((node, pos) => {
-        if (node.type.name === "heading") {
+        if (node.type.name === "timeLineTitle") {
+          console.log(node);
           const id = `heading-${headings.length + 1}`;
+          const className = "bg-red-300";
 
           if (node.attrs.id !== id) {
             transaction.setNodeMarkup(pos, undefined, {
               ...node.attrs,
               id,
+              className,
             });
           }
 
@@ -72,7 +74,6 @@ export default {
       transaction.setMeta("preventUpdate", true);
 
       this.editor.view.dispatch(transaction);
-
       this.headings = headings;
     },
   },

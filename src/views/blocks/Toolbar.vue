@@ -24,6 +24,7 @@
       <ul tabindex="0">
         <li @click="toggleBanner" :class="{ 'is-active': editor.isActive('banner') }">提示框</li>
         <li @click="toggleBrick" :class="{ 'is-active': editor.isActive('brick') }">砖块</li>
+        <li @click="toggleTimeLineTitle" :class="{ 'is-active': editor.isActive('time-line-title') }">时间线标题</li>
         <li @click="toggleOfficialLink" :class="{ 'is-active': editor.isActive('official-link') }">官网</li>
 
         <li @click="toggleCode">行内代码</li>
@@ -107,6 +108,7 @@
     <button @click="inputLink" :class="{ 'is-active': editor.isActive('link') }"><IconLink></IconLink></button>
     <!-- <button @click="editor.chain().focus().unsetLink().run()" :disabled="!editor.isActive('link')">取消链接</button> -->
     <button @click="editor.chain().toggleToc().run()"><IconQueueList></IconQueueList></button>
+    <button @click="editor.chain().toggleTimeLine().run()">时间线</button>
     <button @click="editor.chain().focus().addTab().run()">TAB</button>
     <button
       @click="editor.chain().focus().toggleCodeBlock().run()"
@@ -237,6 +239,9 @@ export default defineComponent({
     },
     toggleBrick() {
       this.editor.chain().focus().toggleBrick().run();
+    },
+    toggleTimeLineTitle() {
+      this.editor.chain().focus().toggleTimeLineTitle().run();
     },
     toggleBold() {
       this.editor.chain().focus().toggleBold().run();

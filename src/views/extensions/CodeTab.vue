@@ -27,7 +27,7 @@
             <Plus class="w-6 self-center"></Plus>
           </button>
 
-          <button class="btn-ghost btn-sm btn flex self-end rounded-none" @click="deleteSelf">
+          <button v-if="editable" class="btn-ghost btn-sm btn flex self-end rounded-none" @click="deleteSelf">
             <Trash class="w-6"></Trash>
           </button>
         </div>
