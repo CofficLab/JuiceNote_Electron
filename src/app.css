@@ -12,7 +12,7 @@
 } */
 
 body {
-  @apply h-screen w-screen bg-cyan-800/10 text-base-content dark:bg-slate-900/90;
+  @apply h-screen w-screen bg-cyan-800/10 text-base-content dark:bg-slate-900/10;
 }
 
 [contenteditable]:focus {

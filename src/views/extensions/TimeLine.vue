@@ -1,7 +1,7 @@
 <template>
   <node-view-wrapper class="toc hidden lg:flex">
-    <section class="body-font fixed left-44 top-20 text-gray-600">
-      <div class="container mx-auto flex flex-wrap px-5 py-24">
+    <section class="body-font fixed left-24 top-20 text-gray-600">
+      <div class="mx-auto flex flex-wrap px-5 py-24">
         <div v-for="(heading, index) in headings" class="relative mx-auto flex sm:items-center md:w-2/3">
           <div class="absolute inset-0 flex h-full w-6 items-center justify-center">
             <div class="pointer-events-none h-full w-1 bg-gray-200"></div>
@@ -50,7 +50,6 @@ export default {
 
       this.editor.state.doc.descendants((node, pos) => {
         if (node.type.name === "timeLineTitle") {
-          console.log(node);
           const id = `heading-${headings.length + 1}`;
           const className = "bg-red-300";
 

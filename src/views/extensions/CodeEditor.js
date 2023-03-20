@@ -29,6 +29,7 @@ export default CodeBlock.extend({
       },
       index: {
         default: 1,
+        rendered: true,
       },
     };
   },

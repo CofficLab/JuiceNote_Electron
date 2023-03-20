@@ -13,8 +13,8 @@
               class="code-title"
               contenteditable="true"
               :data-index="index"
-              :class="{ 'bg-gray-800': current == index + 1 }"
-              @click="activate(index + 1)"
+              :class="{ 'bg-gray-800': current == index }"
+              @click="activate(index)"
               @keyup="(event) => save(event)"
               >{{ title }}</a
             >
@@ -33,7 +33,7 @@
         </div>
       </div>
 
-      <node-view-content ref="contents" v-bind:data-current="current" class="bg-red-400/40 p-0"></node-view-content>
+      <node-view-content ref="contents" :data-current="current" class="bg-red-400/40 p-0"></node-view-content>
     </div>
   </node-view-wrapper>
 </template>
@@ -73,20 +73,36 @@ export default {
       });
     },
     add() {
-      let index = this.titles.length + 1;
+      let index = this.titles.length;
       this.updateAttributes({
-        titles: this.node.attrs.titles + "," + index,
+        titles: this.node.attrs.titles + ",新标签",
       });
       let dom = document.createElement("pre");
       dom.setAttribute("index", index);
-      dom.innerHTML = "<code language=" + this.currentLanguage + ">第" + index + "个标签的内容</code>";
+      dom.innerHTML = "<code language=" + this.currentLanguage + ">新标签的内容</code>";
       this.$refs.contents.$el.append(dom);
       this.updateAttributes({
         current: index,
       });
     },
     deleteSelf() {
-      this.deleteNode();
+      let children = this.$refs.contents.$el.children;
+
+      // 如果只剩一个CodeEditor，删除自己
+      if (children.length == 1) {
+        return this.deleteNode();
+      }
+
+      // 删除当前激活的CodeEditor
+      children.item(this.current).remove();
+
+      // 删除刚才删除的CodeEditor对应的title，并更新current为第一个
+      let titles = this.node.attrs.titles.split(",");
+      titles.splice(this.current, 1);
+      this.updateAttributes({
+        titles: titles.join(","),
+        current: 0,
+      });
     },
     save(event) {
       let target = event.target;

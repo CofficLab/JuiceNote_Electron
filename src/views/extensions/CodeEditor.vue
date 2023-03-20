@@ -1,30 +1,27 @@
 <template>
   <!-- 支持在多个标签之间切换，当前节点的index=current时才显示 -->
-  <node-view-wrapper ref="content" v-show="this.current == this.node.attrs.index" contenteditable="false">
+  <node-view-wrapper ref="content" v-show="index == current" contenteditable="false" class="code-editor">
     <div class="rounded-b bg-slate-900">
       <!-- 操作栏 -->
       <div class="code-block-operators" v-if="editable && loadMonaco" contenteditable="false">
-        <button @click="deleteSelf">删除</button>
-        <div>
-          <button @click="toggleRun" v-html="this.node.attrs.run == 1 ? '关运行' : '开运行'"></button>
-          <select name="language" @change="setLanguage">
-            <option value="text" v-bind:selected="node.attrs.language == 'text'">纯文本</option>
-            <option value="html" v-bind:selected="node.attrs.language == 'html'">HTML</option>
-            <option value="go" v-bind:selected="node.attrs.language == 'go'">Golang</option>
-            <option value="php" v-bind:selected="node.attrs.language == 'php'">PHP</option>
-            <option value="javascript" v-bind:selected="node.attrs.language == 'javascript'">JavaScript</option>
-            <option value="java" v-bind:selected="node.attrs.language == 'java'">Java</option>
-            <option value="python" v-bind:selected="node.attrs.language == 'python'">Python</option>
-            <option value="shell" v-bind:selected="node.attrs.language == 'shell'">Shell</option>
-          </select>
-        </div>
+        <button @click="toggleRun" v-html="this.node.attrs.run == 1 ? '关运行' : '开运行'"></button>
+        <select name="language" @change="setLanguage">
+          <option value="text" v-bind:selected="language == 'text'">纯文本</option>
+          <option value="html" v-bind:selected="language == 'html'">HTML</option>
+          <option value="go" v-bind:selected="language == 'go'">Golang</option>
+          <option value="php" v-bind:selected="language == 'php'">PHP</option>
+          <option value="javascript" v-bind:selected="language == 'javascript'">JavaScript</option>
+          <option value="java" v-bind:selected="language == 'java'">Java</option>
+          <option value="python" v-bind:selected="language == 'python'">Python</option>
+          <option value="shell" v-bind:selected="language == 'shell'">Shell</option>
+        </select>
       </div>
 
       <!-- Monaco编辑器，可修改 -->
       <Monaco
         v-if="this.editable && loadMonaco"
         :code="code"
-        :language="node.attrs.language"
+        :language="language"
         :showRunButton="node.attrs.run == 1"
         :keyUpCallback="keyup"
         :showLineNumbers="true"
@@ -34,7 +31,7 @@
       <Monaco
         v-if="!this.editable && loadMonaco"
         :code="code"
-        :language="node.attrs.language"
+        :language="language"
         :showRunButton="node.attrs.run == 1"
         :readOnly="true"
       ></Monaco>
@@ -57,6 +54,7 @@ export default {
     return {
       code: "",
       current: 0,
+      index: 0,
       loadMonaco: false, // 获取code后再加载Monaco
     };
   },
@@ -71,6 +69,21 @@ export default {
     },
     runButtonDisplay() {
       return this.node.attrs.run == 1;
+    },
+    currentLanguage() {
+      let book = NodeController.getCurrentPage().getBook();
+      let language = book.title.toLowerCase();
+      if (language == "Golang") return "go";
+      if (language == "golang") return "go";
+      return language;
+    },
+    language() {
+      if (this.node.attrs.language == "") {
+        this.updateAttributes({ language: this.currentLanguage });
+        return this.currentLanguage;
+      }
+
+      return this.node.attrs.language;
     },
   },
 
@@ -94,17 +107,23 @@ export default {
         language: event.target.value,
       });
     },
+    setIndex() {
+      this.$nextTick(function () {
+        if (!this.$refs.content) return;
+        let myElement = this.$refs.content.$el;
+        let parentElement = myElement.parentElement;
+        if (!parentElement) return;
+        this.index = Array.from(parentElement.children).indexOf(myElement);
+      });
+    },
     setCurrent: function () {
       this.$nextTick(function () {
         let parentElement = this.$refs.content;
         if (!parentElement) return;
 
-        this.current = parentElement.$el.parentElement?.getAttribute("data-current") ?? 1;
+        this.current = parentElement.$el.parentElement?.getAttribute("data-current") ?? 0;
+        console.log("active index is", this.current, "my index is", this.index);
       });
-    },
-    deleteSelf() {
-      console.log("删除代码块");
-      this.deleteNode();
     },
   },
 
@@ -112,7 +131,11 @@ export default {
     this.code = this.node.attrs.code;
     this.loadMonaco = true;
     this.setCurrent();
-    this.editor.on("update", this.setCurrent);
+    this.setIndex();
+    this.editor.on("update", () => {
+      this.setCurrent();
+      this.setIndex();
+    });
   },
 
   props: nodeViewProps,
@@ -121,7 +144,7 @@ export default {
 
 <style lang="postcss">
 .code-block-operators {
-  @apply flex h-8 items-end justify-between bg-sky-600 shadow-xl dark:bg-green-900/50;
+  @apply flex h-8 items-end justify-end bg-sky-600 shadow-xl dark:bg-green-900/50;
 
   button {
     @apply btn-sm btn m-0 rounded-none;

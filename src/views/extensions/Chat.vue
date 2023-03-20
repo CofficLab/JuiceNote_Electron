@@ -5,7 +5,7 @@
         <div class="dropdown-hover dropdown">
           <label tabindex="0" class="flex items-end">
             <div class="avatar">
-              <div class="w-12 rounded-full">
+              <div class="w-10 rounded-full">
                 <img src="/images/logo-Golang.png" @click="switchPosition" />
               </div>
             </div>

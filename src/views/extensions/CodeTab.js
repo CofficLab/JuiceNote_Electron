@@ -18,7 +18,7 @@ export default Node.create({
         parseHTML: (element) => element.getAttribute("titles"),
         rendered: true,
       },
-      current: { default: 1 },
+      current: { default: 0 },
       count: {
         default: 0,
         parseHTML: (element) => element.childNodes.length,
@@ -49,7 +49,7 @@ export default Node.create({
         (attributes) =>
         ({ commands }) => {
           return commands.insertContent(
-            '<code-tab titles="1,2" current="1">' +
+            '<code-tab titles="1,2" current="0">' +
               "<pre index=1><code>第1个tab的内容</code></pre>" +
               "<pre index=2><code>第2个tab的内容</code></pre>" +
               "</code-tab>"

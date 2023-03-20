@@ -1,8 +1,9 @@
 <template>
   <node-view-wrapper>
-    <div class="mt-4 h-0 -translate-x-96 border-2 border-b-rose-200 text-xl">
+    <div class="h-0 -translate-x-96 border-t border-cyan-700 text-xl" v-show="editable">
       <node-view-content
-        class="border border-dashed px-4 dark:border-cyan-800"
+        class="w-56 border border-t-0 border-dashed px-4 dark:border-cyan-800"
+        v-show="editable"
         v-bind:class="{ 'border-none': !editable }"
       />
     </div>
@@ -12,7 +13,7 @@
 <script>
 import { NodeViewContent, nodeViewProps, NodeViewWrapper } from "@tiptap/vue-3";
 import Info from "../../assets/icons/info.svg";
-import RouteController from "../../controllers/RouteController";
+import NodeController from "../../controllers/NodeController";
 
 export default {
   components: {
@@ -26,7 +27,7 @@ export default {
   },
 
   computed: {
-    editable: () => RouteController.editMode,
+    editable: () => NodeController.getEditable(),
   },
 
   props: nodeViewProps,
