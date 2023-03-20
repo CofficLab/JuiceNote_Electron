@@ -2,23 +2,35 @@
   <node-view-wrapper class="flex flex-row overflow-auto rounded">
     <div class="flex w-full flex-col overflow-clip shadow-sm">
       <!-- 标题标签 -->
-      <div class="tabs rounded-none bg-yellow-500/50 p-0" contenteditable="false" v-if="titles.length > 1 || editable">
-        <div v-for="(title, index) in titles" class="p-0 outline-none">
-          <a
-            class="code-title"
-            contenteditable="true"
-            :data-index="index"
-            :class="{ 'bg-gray-800': current == index + 1 }"
-            @click="activate(index + 1)"
-            @keyup="(event) => save(event)"
-            >{{ title }}</a
-          >
+      <div
+        class="tabs flex justify-between rounded-none bg-yellow-500/50 p-0"
+        contenteditable="false"
+        v-if="titles.length > 1 || editable"
+      >
+        <div class="flex flex-row">
+          <div v-for="(title, index) in titles" class="p-0 outline-none">
+            <a
+              class="code-title"
+              contenteditable="true"
+              :data-index="index"
+              :class="{ 'bg-gray-800': current == index + 1 }"
+              @click="activate(index + 1)"
+              @keyup="(event) => save(event)"
+              >{{ title }}</a
+            >
+          </div>
         </div>
 
-        <!-- 添加更多标签的按钮 -->
-        <button v-if="editable" class="btn-ghost btn-sm btn rounded-none" @click="add">
-          <Plus class="w-4 self-center"></Plus>
-        </button>
+        <div class="flex">
+          <!-- 添加更多标签的按钮 -->
+          <button v-if="editable" class="btn-ghost btn-sm btn rounded-none" @click="add">
+            <Plus class="w-6 self-center"></Plus>
+          </button>
+
+          <button class="btn-ghost btn-sm btn flex self-end rounded-none" @click="deleteSelf">
+            <Trash class="w-6"></Trash>
+          </button>
+        </div>
       </div>
 
       <node-view-content ref="contents" v-bind:data-current="current" class="bg-red-400/40 p-0"></node-view-content>
@@ -30,12 +42,14 @@
 import { nodeViewProps, NodeViewWrapper, NodeViewContent } from "@tiptap/vue-3";
 import NodeController from "../../controllers/NodeController";
 import Plus from "../../assets/icons/plus.svg";
+import Trash from "../../assets/icons/trash.svg";
 
 export default {
   components: {
     NodeViewWrapper,
     NodeViewContent,
     Plus,
+    Trash,
   },
   props: nodeViewProps,
   computed: {
@@ -70,6 +84,9 @@ export default {
       this.updateAttributes({
         current: index,
       });
+    },
+    deleteSelf() {
+      this.deleteNode();
     },
     save(event) {
       let target = event.target;
