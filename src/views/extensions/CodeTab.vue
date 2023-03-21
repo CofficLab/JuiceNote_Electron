@@ -34,7 +34,11 @@
         </div>
       </div>
 
-      <node-view-content ref="contents" :data-current="current" class="bg-red-400/40 p-0"></node-view-content>
+      <node-view-content
+        ref="contents"
+        :data-current="current"
+        class="code-editor-container bg-red-400/40 p-0"
+      ></node-view-content>
     </div>
   </node-view-wrapper>
 </template>

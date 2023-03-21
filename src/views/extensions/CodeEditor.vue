@@ -113,7 +113,14 @@ export default {
         let myElement = this.$refs.content.$el;
         let parentElement = myElement.parentElement;
         if (!parentElement) return;
+
+        if (Array.from(parentElement.classList).indexOf("code-editor-container") < 0) {
+          this.index = 0;
+          return;
+        }
+
         this.index = Array.from(parentElement.children).indexOf(myElement);
+        console.log("my index is", this.index);
       });
     },
     setCurrent: function () {

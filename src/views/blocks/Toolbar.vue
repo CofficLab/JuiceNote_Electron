@@ -33,6 +33,7 @@
 
     <button @click="editor.chain().focus().setHorizontalRule().run()"><IconMinus></IconMinus></button>
     <button @click="editor.chain().focus().setHardBreak().run()"><IconBarsArrowDown></IconBarsArrowDown></button>
+    <button @click="insertNewLine"><IconBarsArrowDown></IconBarsArrowDown></button>
     <button @click="editor.chain().focus().addChat().run()" class="tooltip tooltip-bottom" data-tip="对话框">
       <IconChat></IconChat>
     </button>
@@ -230,6 +231,10 @@ export default defineComponent({
     saveAndShow() {
       this.save();
       NodeController.toggleEditable();
+    },
+    insertNewLine() {
+      this.editor.commands.setContent(this.editor.getHTML() + "<p>type here</p>");
+      this.editor.commands.focus("end");
     },
     setParagraph() {
       this.editor.chain().focus().setParagraph().run();

@@ -8,6 +8,7 @@
         :class="{ loading: running }"
         @click="run"
         v-html="runTitle"
+        v-if="showRunButton"
       ></button>
 
       <div ref="monaco" class="z-10"></div>
