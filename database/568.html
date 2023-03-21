@@ -78,7 +78,7 @@ func main() {
     go func() { messages &lt;- "ping" }()
 
     fmt.Print("The End")
-}</code></pre></code-tab><h2 id="heading-3">缓冲</h2><chat position="start"><p>小明是一家酒店的清洁工，小红是前台，每打扫完一个房间，小明就通过对讲机告诉小红，小红操作电脑将房间状态标记为“已清理”</p></chat><code-tab titles="正常情况,主进程忙的情况" current="1"><pre index="1"><code language="go" run="1">package main 
+}</code></pre></code-tab><h2 id="heading-3">缓冲</h2><chat position="start"><p>小明是一家酒店的清洁工，小红是前台，每打扫完一个房间，小明就通过对讲机告诉小红，小红操作电脑将房间状态标记为“已清理”</p></chat><code-tab titles="正常情况,主进程忙的情况,带hu" current="2"><pre index="1"><code language="go" run="1">package main 
 import "fmt"
 
 func main() {
@@ -107,4 +107,16 @@ func main() {
 func clear(ch chan string) {
     ch&lt;-"101清理完成"
     fmt.Print("清理下一个房间")
+}</code></pre><pre index="2"><code language="go" run="NaN">package main
+
+import "fmt"
+
+func main() {
+    messages := make(chan string, 2)
+
+    messages &lt;- "buffered"
+    messages &lt;- "channel"
+
+    fmt.Println(&lt;-messages)
+    fmt.Print(&lt;-messages)
 }</code></pre></code-tab>

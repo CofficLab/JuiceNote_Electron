@@ -115,21 +115,10 @@ export default {
         titles: titles.join(","),
       });
     },
-    checkTitles() {
-      console.log("标题数量", this.titles.length, "代码块数量", this.node.attrs.count);
-      if (this.titles.length > this.node.attrs.count) {
-        let titles = this.titles.slice(0, this.node.attrs.count);
-        console.log(this.titles);
-        this.updateAttributes({
-          titles: titles.join(","),
-        });
-      }
-    },
   },
   mounted() {
     // console.log("tab加载");
     this.activate(this.current);
-    this.checkTitles();
   },
 };
 </script>

@@ -122,7 +122,7 @@ export default {
         if (!parentElement) return;
 
         this.current = parentElement.$el.parentElement?.getAttribute("data-current") ?? 0;
-        console.log("active index is", this.current, "my index is", this.index);
+        // console.log("active index is", this.current, "my index is", this.index);
       });
     },
   },
