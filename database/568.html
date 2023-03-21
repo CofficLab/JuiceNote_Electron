@@ -1,4 +1,4 @@
-<toc></toc><h1 id="heading-1">通道</h1><h2 id="heading-2">简单例子</h2><code-tab titles="例子1,监视通道元素个数与容量,监视协程数量,例子2" current="0"><pre index="1"><code language="go" run="1">package main 
+<toc></toc><h1 id="heading-1">通道</h1><h2 id="heading-2">简单例子</h2><code-tab titles="命名函数,监视通道元素个数与容量,监视协程数量,匿名函数" current="3"><pre index="1"><code language="go" run="1">package main 
 import "fmt"
 
 func main() {
@@ -64,7 +64,7 @@ func main() {
 
     msg := &lt;-messages
     fmt.Print(msg)
-}</code></pre></code-tab><h2 id="heading-3">死锁</h2><code-tab titles="例子1,例子2" current="0"><pre index="1"><code language="go" run="1">package main 
+}</code></pre></code-tab><h2 id="heading-3">死锁</h2><chat position="start"><p>例子1：通道必须将两个协程联系起来，没有接收者不会通过编译</p></chat><chat position="start"><p>例子2：自己给自己发送消息，可以通过编译</p></chat><code-tab titles="例子1,例子2" current="1"><pre index="1"><code language="go" run="1">package main 
 
 func main() {
     ch := make(chan string)
@@ -75,11 +75,12 @@ import "fmt"
 func main() {
     messages := make(chan string)
 
-    go func() { messages &lt;- "ping" }()
+    messages &lt;- "ping"
 
+    fmt.Println(&lt;-messages)
     fmt.Print("The End")
 }</code></pre></code-tab><h2 id="heading-4">缓冲</h2><code-tab titles="正常情况,主进程忙的情况,带缓冲区
-,协程同步" current="3"><pre index="1"><code language="go" run="1">package main 
+,协程同步" current="2"><pre index="1"><code language="go" run="1">package main 
 import "fmt"
 
 func main() {
@@ -108,7 +109,7 @@ func main() {
 func clear(ch chan string) {
     ch&lt;-"101清理完成"
     fmt.Print("清理下一个房间")
-}</code></pre><pre index="2"><code language="go" run="NaN">package main
+}</code></pre><pre index="2"><code language="go" run="1">package main
 
 import "fmt"
 
@@ -138,7 +139,7 @@ func main() {
 
     &lt;-done
     fmt.Print("The End")
-}</code></pre></code-tab><h2 id="heading-5">Select</h2><code-tab titles="使用select,不用select,两个子协程耗时相同" current="1"><pre index="1"><code language="go" run="NaN">package main
+}</code></pre></code-tab><h2 id="heading-5">Select</h2><chat position="start"><p>select 是专门为 channel 设计的关键词，看名字就知道是应用于多个 channel 的场景</p></chat><code-tab titles="不用select,用select,两个子协程耗时相同" current="0"><pre index="1"><code language="go" run="1">package main
 import "fmt"
 import "time"
 
@@ -148,77 +149,97 @@ func main() {
     c1 := make(chan string)
     c2 := make(chan string)
 
-    go func() {
-        time.Sleep(1 * time.Second)
-        c1 &lt;- "one"
-    }()
-    go func() {
-        time.Sleep(2 * time.Second)
-        c2 &lt;- "two"
-    }()
+    // 两个协程同时运行
+    go sayOne(c1)
+    go sayTwo(c2)
 
+    // 这样永远先输出 sayOne 的结果
+    // 即使 sayTwo 是先完成的
+    fmt.Println(&lt;-c1)
+    fmt.Println(&lt;-c2)
+
+    fmt.Printf("耗时 %v", time.Now().Sub(start))
+}
+
+func sayOne(ch chan string) {
+    time.Sleep(2 * time.Second)
+    ch&lt;-"one"
+}
+
+func sayTwo(ch chan string) {
+    time.Sleep(1 * time.Second)
+    ch&lt;-"two"
+}</code></pre><pre index="2"><code language="go" run="1">package main
+import "fmt"
+import "time"
+
+func main() {
+    start := time.Now()
+
+    c1 := make(chan string)
+    c2 := make(chan string)
+
+    go sayOne(c1)
+    go sayTwo(c2)
+
+    // 这段代码的for语句的作用是执行两次select语句，
+    // 有消息则打印，没消息则阻塞等待。
+    for i := 0; i &lt; 2; i++ {
+        // select 会一直等到有一条消息
+        select {
+        case msg1 := &lt;-c1:
+            fmt.Println(msg1)
+        case msg2 := &lt;-c2:
+            fmt.Println(msg2)
+        }
+
+        // 取出了1条消息，本次循环结束
+    }
+
+    fmt.Printf("耗时 %v", time.Now().Sub(start))
+}
+
+func sayOne(ch chan string) {
+    time.Sleep(2 * time.Second)
+    ch&lt;-"one"
+}
+
+func sayTwo(ch chan string) {
+    time.Sleep(1 * time.Second)
+    ch&lt;-"two"
+}</code></pre><pre index="2"><code language="go" run="1">package main
+import "fmt"
+import "time"
+
+func main() {
+    start := time.Now()
+
+    c1 := make(chan string)
+    c2 := make(chan string)
+
+    go sayOne(c1)
+    go sayTwo(c2)
+
+    // 两个子协程耗时相近，都有可能先输出 
+    // 运行很多次，会出现先输出 sayTwo 结果的情况 
     for i := 0; i &lt; 2; i++ {
         select {
         case msg1 := &lt;-c1:
-            fmt.Println("received", msg1)
+            fmt.Println(msg1)
         case msg2 := &lt;-c2:
-            fmt.Println("received", msg2)
+            fmt.Println(msg2)
         }
     }
 
     fmt.Printf("耗时 %v", time.Now().Sub(start))
-}</code></pre><pre index="2"><code language="go" run="NaN">package main
-import "fmt"
-import "time"
+}
 
-func main() {
-    start := time.Now()
+func sayOne(ch chan string) {
+    time.Sleep(1 * time.Second)
+    ch&lt;-"one"
+}
 
-    c1 := make(chan string)
-    c2 := make(chan string)
-
-    go func() {
-        time.Sleep(1 * time.Second)
-        c1 &lt;- "one"
-    }()
-    go func() {
-        time.Sleep(2 * time.Second)
-        c2 &lt;- "two"
-    }()
-
-    msg1 := &lt;-c1
-    fmt.Println("received", msg1)
-    msg2 := &lt;-c2
-    fmt.Println("received", msg2)
-
-    fmt.Printf("耗时 %v", time.Now().Sub(start))
-}</code></pre><pre index="2"><code language="go" run="NaN">package main
-import "fmt"
-import "time"
-
-func main() {
-    start := time.Now()
-
-    c1 := make(chan string)
-    c2 := make(chan string)
-
-    go func() {
-        time.Sleep(1 * time.Second)
-        c1 &lt;- "one"
-    }()
-    go func() {
-        time.Sleep(1 * time.Second)
-        c2 &lt;- "two"
-    }()
-    
-    for i:=0;i&lt;2;i++ {
-        select {
-            case msg1 := &lt;-c1:
-                fmt.Println("received", msg1)
-            case msg2 := &lt;-c2:
-                fmt.Println("received", msg2)
-        }
-    }
-
-    fmt.Printf("耗时 %v", time.Now().Sub(start))
-}</code></pre></code-tab><chat position="start"><p>select 是专门为 channel 设计的关键词，看名字就知道是应用于多个channel 的场景</p></chat><p>select的规则：</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>只能用于通道操作</p></li><li class="m-0 p-0"><p>每一个case必须是通道操作，要么发送，要么接收</p></li><li class="m-0 p-0"><p>同时监听所有通道，监听到就执行</p></li><li class="m-0 p-0"><p>如果多个通道都准备好，那么 select 语句会随机选择一个通道执行。如果所有通道都没有准备好，那么执行 default 块中的代码</p></li></ul>
+func sayTwo(ch chan string) {
+    time.Sleep(1 * time.Second)
+    ch&lt;-"two"
+}</code></pre></code-tab><p>select的规则：</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>只能用于通道操作</p></li><li class="m-0 p-0"><p>每一个case必须是通道操作，要么发送，要么接收</p></li><li class="m-0 p-0"><p>同时监听所有通道，监听到就执行</p></li><li class="m-0 p-0"><p>如果多个通道都准备好，那么 select 语句会随机选择一个通道执行。如果所有通道都没有准备好，那么执行 default 块中的代码</p></li></ul>

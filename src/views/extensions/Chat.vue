@@ -1,7 +1,9 @@
 <template>
   <node-view-wrapper>
-    <div class="chat" :class="node.attrs.position == 'start' ? 'chat-start' : 'chat-end'">
-      <div class="chat-image flex items-end" contenteditable="false">
+    <div class="chat flex items-end" :class="node.attrs.position == 'start' ? 'chat-start' : 'chat-end'">
+      <!-- 对话框 -->
+      <div class="chat-image flex flex-col items-end" contenteditable="false">
+        <div class="chat-header">编译器</div>
         <div class="dropdown-hover dropdown">
           <label tabindex="0" class="flex items-end">
             <div class="avatar">
@@ -16,8 +18,6 @@
           </ul>
         </div>
       </div>
-
-      <!-- 对话框 -->
       <div class="chat-bubble relative" :class="node.attrs.position == 'end' ? 'chat-bubble-info' : ''">
         <node-view-content
           class="border border-dashed px-4 dark:border-cyan-800"
