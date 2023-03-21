@@ -1,4 +1,5 @@
-import { existsSync, writeFile } from "fs";
+import { execSync } from "child_process";
+import { existsSync, readFileSync, writeFile } from "fs";
 import { join } from "path";
 import Config from "../entities/Config";
 
@@ -7,7 +8,6 @@ const db = require('better-sqlite3')(join(Config.databasePath, 'database.db'));
 class Node {
     public id: number = 0
     public title: string = ''
-    public content: string = ''
     public isBook: boolean = false
     public isChapter: boolean = false
     public isTab: boolean = false
@@ -18,6 +18,7 @@ class Node {
     public parentId: number = 0
     public level: number = 0
     public isEmpty: boolean = false
+    private content: string = ''
 
     public constructor(dbResult: object | null) {
         if (dbResult == null) {
@@ -68,6 +69,15 @@ class Node {
         if (this.isBook || this.isEmpty) return this
 
         return this.getParent().getBook()
+    }
+
+    getContent(): string {
+        let file = join(Config.databasePath, this.id + '.html')
+        if (existsSync(file)) {
+            return readFileSync(file).toString()
+        }
+
+        return this.content
     }
 
     getTabs(): Node[] {

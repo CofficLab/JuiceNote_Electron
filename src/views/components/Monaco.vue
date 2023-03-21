@@ -137,7 +137,7 @@ export default defineComponent({
       this.editor.getModel().onDidChangeContent(() => {
         // 使用 this.editor.getValue() 会导致整个界面卡住
         // https://github.com/microsoft/monaco-editor/issues/2439
-        console.log("changed", monaco.editor.getModels()[this.index].getValue());
+        console.log("monaco editor content changed", monaco.editor.getModels()[this.index].getValue());
         this.keyUpCallback(monaco.editor.getModels()[this.index].getValue());
         this.resetHeight();
       });

@@ -22,7 +22,14 @@
 
     <!-- 源码 -->
     <div class="container">
-      <Monaco v-if="sourceCodeDisplay" :code="code" language="html" :readOnly="true" :showLineNumbers="true"></Monaco>
+      <Monaco
+        :keyUpCallback="save"
+        v-if="sourceCodeDisplay"
+        :code="code"
+        language="html"
+        :readOnly="false"
+        :showLineNumbers="true"
+      ></Monaco>
     </div>
 
     <!-- 右键菜单 -->
@@ -90,10 +97,11 @@ export default {
     },
     toggleSourceCode() {
       this.sourceCodeDisplay = !this.sourceCodeDisplay;
+      this.editor.commands.setContent(this.node.getContent(), false);
     },
-    save() {
-      console.log("保存节点", this.node.id, "的内容");
-      this.node.updateContent(this.editor.getHTML());
+    save(content) {
+      console.log("保存节点", this.node.id, "的内容", content);
+      this.node.updateContent(content ?? this.editor.getHTML());
     },
   },
   mounted() {
@@ -109,7 +117,7 @@ export default {
       },
       onCreate: () => {
         this.node = this.current;
-        this.editor.commands.setContent(this.node.content, false);
+        this.editor.commands.setContent(this.node.getContent(), false);
         this.checkToc();
         this.code = this.editor.getHTML();
       },
@@ -130,7 +138,7 @@ export default {
       // console.log("current changed, update editor content");
       this.save();
       this.node = this.current;
-      this.editor.commands.setContent(this.node.content, true);
+      this.editor.commands.setContent(this.node.getContent(), true);
     },
     editable() {
       this.editor.setEditable(this.editable, false);
