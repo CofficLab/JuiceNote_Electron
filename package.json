@@ -19,7 +19,7 @@
   "devDependencies": {
     "@types/alpinejs": "^3.7.1",
     "@vitejs/plugin-vue": "^3.0.1",
-    "electron": "^20.0.2",
+    "electron": "^21.4.3",
     "electron-builder": "^23.3.3",
     "electron-rebuild": "^3.2.9",
     "prettier": "^2.8.4",
