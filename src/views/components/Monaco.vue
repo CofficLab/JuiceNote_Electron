@@ -4,10 +4,10 @@
       <span v-html="language" v-if="!editable" class="absolute top-0 right-2 z-20 text-sm text-info"></span>
       <button
         contenteditable="false"
-        class="btn-sm btn absolute bottom-2 right-2 z-20 bg-slate-900 shadow-sm"
+        class="btn-sm btn absolute bottom-2 right-2 z-20 transition-none"
+        :class="{ loading: running }"
         @click="run"
-        v-if="showRunButton"
-        v-html="resultEditorDisplay ? '收起' : '运行'"
+        v-html="runTitle"
       ></button>
 
       <div ref="monaco" class="z-10"></div>
@@ -47,10 +47,16 @@ export default defineComponent({
       resultEditor: null,
       resultEditorIndex: 0,
       resultEditorDisplay: false,
+      running: false,
     };
   },
   computed: {
     editable: () => NodeController.getEditable(),
+    runTitle() {
+      if (this.running) return "运行中";
+      if (this.resultEditorDisplay) return "收起";
+      return "运行";
+    },
   },
   mounted: function () {
     this.setWorker();
@@ -63,11 +69,24 @@ export default defineComponent({
   },
   methods: {
     run() {
-      this.resultEditorDisplay = !this.resultEditorDisplay;
-      monaco.editor
-        .getModels()
-        [this.resultEditorIndex].setValue(CodeRunner(monaco.editor.getModels()[this.index].getValue(), this.language));
-      this.$refs.result.style.height = this.getEditorHeight(this.resultEditor) + 10 + "px";
+      if (this.running) return;
+
+      // 收起结果
+      if (this.resultEditorDisplay) {
+        this.resultEditorDisplay = false;
+        this.running = false;
+        return;
+      }
+
+      this.running = true;
+
+      setTimeout(() => {
+        let result = CodeRunner(monaco.editor.getModels()[this.index].getValue(), this.language);
+        monaco.editor.getModels()[this.resultEditorIndex].setValue(result);
+        this.$refs.result.style.height = this.getEditorHeight(this.resultEditor) + 10 + "px";
+        this.running = false;
+        this.resultEditorDisplay = true;
+      }, 0);
     },
     resetHeight() {
       let height = this.getEditorHeight(this.editor);
