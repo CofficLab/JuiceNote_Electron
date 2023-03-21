@@ -1,7 +1,7 @@
 <template>
   <!-- 支持在多个标签之间切换，当前节点的index=current时才显示 -->
   <node-view-wrapper ref="content" v-show="index == current" contenteditable="false" class="code-editor">
-    <div class="rounded-b bg-slate-900">
+    <div class="relative rounded-b bg-slate-900">
       <!-- 操作栏 -->
       <div class="code-block-operators" v-if="editable && loadMonaco" contenteditable="false">
         <button @click="toggleRun" v-html="this.node.attrs.run == 1 ? '关运行' : '开运行'"></button>
@@ -144,7 +144,7 @@ export default {
 
 <style lang="postcss">
 .code-block-operators {
-  @apply flex h-8 items-end justify-end bg-sky-600 shadow-xl dark:bg-green-900/50;
+  @apply absolute right-0 top-0 z-50 flex h-8 w-48 items-end justify-end bg-sky-600 shadow-xl dark:bg-green-900/50;
 
   button {
     @apply btn-sm btn m-0 rounded-none;

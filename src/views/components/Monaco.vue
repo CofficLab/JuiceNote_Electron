@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="relative">
-      <span v-html="language" class="absolute top-0 right-2 z-20 text-sm text-info"></span>
+      <span v-html="language" v-if="!editable" class="absolute top-0 right-2 z-20 text-sm text-info"></span>
       <button
         contenteditable="false"
         class="btn-sm btn absolute bottom-2 right-2 z-20 bg-slate-900 shadow-sm"
@@ -27,6 +27,7 @@ import htmlWorker from "monaco-editor/esm/vs/language/html/html.worker?worker";
 import tsWorker from "monaco-editor/esm/vs/language/typescript/ts.worker?worker";
 import CodeRunner from "../../tools/CodeRunner";
 import { defineComponent } from "vue";
+import NodeController from "../../controllers/NodeController";
 
 export default defineComponent({
   props: {
@@ -47,6 +48,9 @@ export default defineComponent({
       resultEditorIndex: 0,
       resultEditorDisplay: false,
     };
+  },
+  computed: {
+    editable: () => NodeController.getEditable(),
   },
   mounted: function () {
     this.setWorker();
