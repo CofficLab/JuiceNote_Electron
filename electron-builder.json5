@@ -10,8 +10,8 @@
   files: [
     "dist",
     {
-      from: "markdown",
-      to: "markdown",
+      from: "database",
+      to: "database",
     },
     {
       from: "temp",
