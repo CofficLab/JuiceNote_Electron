@@ -22,7 +22,15 @@ func main() {
     var t time.Time = time.Unix(1608632200, 0)
 
     fmt.Println(t)
-}</code></pre><h2 id="heading-6">定时器</h2><pre index="1"><code language="go" run="1">package main
+}</code></pre><h2 id="heading-6">时间加减</h2><code-tab titles="1,2" current="0"><pre index="1"><code language="go" run="1">package main 
+import "time"
+import "fmt"
+
+func main() {
+    now := time.Now()
+    want := now.Add(time.Duration(time.Hour*-24))
+    fmt.Print(want.Format("2006-01-02 15:04:05"))
+}</code></pre><pre index="2"><code language="go" run="NaN">第2个tab的内容</code></pre></code-tab><h2 id="heading-7">定时器</h2><pre index="1"><code language="go" run="1">package main
 
 import "fmt"
 import "time"

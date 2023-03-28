@@ -7,7 +7,7 @@
 
     <!-- TAB -->
     <div id="tabs-container" v-if="current.getParent().isTab">
-      <Link v-for="sibling in current.getSiblings()" class="tab tab-lifted" :node="sibling">{{ sibling.title }}</Link>
+      <Link v-for="sibling in current.getSiblings()" class="tab-lifted tab" :node="sibling">{{ sibling.title }}</Link>
     </div>
 
     <!-- 编辑框 -->
@@ -155,7 +155,7 @@ export default {
   @apply sticky top-0 z-40 flex w-full flex-row items-center justify-center gap-2 bg-green-300/10 shadow-2xl;
 }
 #tabs-container {
-  @apply tabs mt-4 flex justify-center rounded-t-xl bg-yellow-400/10;
+  @apply tabs mt-0 flex w-full justify-center rounded-t-xl  bg-yellow-400/10;
 }
 #editor-container {
   @apply mt-1 flex w-full justify-center overflow-auto border-0 p-4;
