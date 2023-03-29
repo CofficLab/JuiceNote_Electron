@@ -1,20 +1,28 @@
 <template>
-  <div
-    :id="'node-' + node.id"
-    v-bind:data-id="node.id"
-    v-on:contextmenu="showRightMenu"
-    v-on:click="go"
-    v-bind:class="{ ring: shouldShowRightMenu, 'active tab-active': shouldActive(node.id) }"
-  >
+  <div :id="'node-' + node.id" v-bind:data-id="node.id" v-on:contextmenu="showRightMenu" v-on:click="go"
+    v-bind:class="{ ring: shouldShowRightMenu, 'active tab-active': shouldActive(node.id) }">
     <slot></slot>
 
     <!-- 右键菜单 -->
     <RightMenu v-if="shouldShowRightMenu" v-bind:event="rightClickEvent">
-      <li><Rename :node="node"></Rename></li>
-      <li><Edit :bookNode="node"></Edit></li>
-      <li><ToTab :node="node"></ToTab></li>
-      <li><Delete :bookNode="node"></Delete></li>
-      <li><CreateChild :node="node"></CreateChild></li>
+      <li>
+        <Rename :node="node"></Rename>
+      </li>
+      <li>
+        <Edit :bookNode="node"></Edit>
+      </li>
+      <li>
+        <ToTab :node="node"></ToTab>
+      </li>
+      <li>
+        <Delete :bookNode="node"></Delete>
+      </li>
+      <li>
+        <CreateChild :node="node"></CreateChild>
+      </li>
+      <li>
+        <Visible :node="node"></Visible>
+      </li>
     </RightMenu>
   </div>
 </template>
@@ -30,6 +38,7 @@ import RightMenuController from "../../controllers/RightMenuController";
 import { Node } from "../../models/Node";
 import NodeController from "../../controllers/NodeController";
 import CreateChild from "../operators/CreateChild.vue";
+import Visible from "../operators/Visible.vue";
 
 export default defineComponent({
   props: { node: { type: Node, required: true } },
@@ -70,6 +79,6 @@ export default defineComponent({
       RightMenuController.shouldShow = true;
     },
   },
-  components: { Rename, RightMenu, Edit, Delete, ToTab, CreateChild },
+  components: { Rename, RightMenu, Edit, Delete, ToTab, CreateChild, Visible },
 });
 </script>

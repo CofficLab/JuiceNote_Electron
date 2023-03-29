@@ -111,6 +111,13 @@ const NodeController = reactive({
         history.pushState([], "", location.pathname + "?id=" + this.currentPage.id + '&editable=' + this.editable);
     },
 
+    updateVisible(node: Node): string {
+        let result = node.updateVisible()
+        this.setCurrentPage(this.getCurrentPage().id)
+
+        return result
+    },
+
     transformToTab(node: Node): string {
         let result = node.transformToTab()
         this.setCurrentPage(this.getCurrentPage().id)

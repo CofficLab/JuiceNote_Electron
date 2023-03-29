@@ -14,6 +14,7 @@ class Node {
     public isPage: boolean = false
     public isLesson: boolean = true
     public isManual: boolean = false
+    public isVisible: boolean = false
     public priority: number = 0
     public parentId: number = 0
     public level: number = 0
@@ -31,6 +32,7 @@ class Node {
             let isChapter = Object.getOwnPropertyDescriptor(dbResult, 'is_chapter')?.value
             let isTab = Object.getOwnPropertyDescriptor(dbResult, 'is_tab')?.value
             let isPage = Object.getOwnPropertyDescriptor(dbResult, 'is_page')?.value
+            let isVisible = Object.getOwnPropertyDescriptor(dbResult, 'is_visible')?.value
             let priority = Object.getOwnPropertyDescriptor(dbResult, 'priority')?.value
             let level = Object.getOwnPropertyDescriptor(dbResult, 'level')?.value
 
@@ -41,6 +43,7 @@ class Node {
             this.isChapter = isChapter
             this.isTab = isTab
             this.isPage = isPage
+            this.isVisible = isVisible == 1
             this.priority = priority
             this.level = level
             this.parentId = Object.getOwnPropertyDescriptor(dbResult, 'parent_id')?.value
@@ -232,6 +235,15 @@ class Node {
             return '「' + this.title + '」的标题更新成功'
         } else {
             return '「' + this.title + '」的标题更新失败'
+        }
+    }
+
+    updateVisible(): string {
+        let result = db.prepare('update nodes set is_visible=abs(is_visible-1) where id=?').run(this.id)
+        if (result != null) {
+            return '「' + this.title + '」的已' + (this.isVisible ? '隐藏' : '展示')
+        } else {
+            return '「' + this.title + '」的可见性更新失败'
         }
     }
 
