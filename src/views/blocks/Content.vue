@@ -156,7 +156,7 @@
   }
 
   #tabs-container {
-    @apply tabs mt-0 flex w-full justify-center rounded-t-xl bg-yellow-400/10;
+    @apply tabs mt-0 flex w-full justify-center bg-yellow-400/10;
   }
 
   #editor-container {
