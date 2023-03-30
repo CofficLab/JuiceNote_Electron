@@ -7,7 +7,7 @@ before_script:
   - hostname
 
 stages:
-  - build
+  # - build
   - sync
 
 # build_win:
