@@ -1,3 +1,5 @@
+<!-- @format -->
+
 <template>
   <div>
     <div class="dropdown-hover dropdown-end dropdown">
@@ -11,27 +13,28 @@
         <li><Edit :showText="false" class="btn-ghost btn-sm btn w-12"></Edit></li>
         <li><Copy :showText="false" class="btn-ghost btn-sm btn w-12"></Copy></li>
         <li><Commit :showText="false" class="btn-ghost btn-sm btn w-12"></Commit></li>
+        <li><Visible :showText="false" :node="book" class="btn-ghost btn-sm btn w-12"></Visible></li>
       </ul>
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-import ChevronDoubleDown from "../../assets/icons/chevron-double-down.svg";
-import Copy from "../operators/Copy.vue";
-import Delete from "../operators/Delete.vue";
-import Commit from "../operators/Commit.vue";
-import Edit from "../operators/Edit.vue";
-import CreateChild from "../operators/CreateChild.vue";
+<script setup>
+  import { computed } from 'vue';
+  import ChevronDoubleDown from '../../assets/icons/chevron-double-down.svg';
+  import Copy from '../operators/Copy.vue';
+  import Delete from '../operators/Delete.vue';
+  import Commit from '../operators/Commit.vue';
+  import Edit from '../operators/Edit.vue';
+  import CreateChild from '../operators/CreateChild.vue';
+  import Visible from '../operators/Visible.vue';
+  import NodeController from '../../controllers/NodeController';
 
-export default defineComponent({
-  components: { ChevronDoubleDown, Copy, Delete, CreateChild, Edit, Commit },
-});
+  const book = computed(() => NodeController.getCurrentPage().getBook());
 </script>
 
 <style scoped lang="postcss">
-ul li {
-  @apply flex justify-center;
-}
+  ul li {
+    @apply flex justify-center;
+  }
 </style>

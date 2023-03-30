@@ -249,7 +249,7 @@ class Node {
     updateVisible(): string {
         let result = db.prepare('update nodes set is_visible=abs(is_visible-1) where id=?').run(this.id)
         if (result != null) {
-            return '「' + this.title + '」的已' + (this.isVisible ? '隐藏' : '展示')
+            return '「' + this.title + '」已' + (this.isVisible ? '隐藏' : '展示')
         } else {
             return '「' + this.title + '」的可见性更新失败'
         }
