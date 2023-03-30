@@ -1,0 +1,45 @@
+<toc></toc><h1 id="heading-1">简介</h1><p>对于任何编程语言来说，函数都是非常重要的组成部分。</p><h2 id="heading-2">数学中的函数</h2><pre index="1"><code language="text" run="NaN">已知： f(x, y) = x + y
+求: f(2, 3),f(3,4)</code></pre><p>f 就是一个函数，它的作用</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>处理一段相对独立的逻辑，在这里是： <code>x + y</code></p></li><li class="m-0 p-0"><p>实现逻辑复用：<code>f(2, 3)</code>和<code>f(3,4)</code>都使用了同一段逻辑</p></li></ul><h2 id="heading-3">递归</h2><h2 id="heading-4">Go 中的函数</h2><p>Go 中也有函数的概念，而且内置很多函数，可以在代码的任何地方使用。</p><h3 id="heading-5">普通函数</h3><pre index="1"><code language="go" run="NaN">package main
+import "fmt"
+
+func main() {
+  // len 是内置函数，会输出提供的数据的长度
+  fmt.Println(len("abcdef"))
+}</code></pre><h3 id="heading-6">匿名函数</h3><p>闭包</p><h3 id="heading-7">lambda函数</h3><h3 id="heading-8">方法</h3><h2 id="heading-9">函数签名</h2><p>参数、返回值以及它们的类型称为函数签名。</p><h2 id="heading-10">调用函数</h2><p>调用（call）也称为请求（invoke）。</p><p>调用时有两个要点：</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>函数名：用来表明要调用哪个函数</p></li><li class="m-0 p-0"><p>参数：用来表明提供给函数的数据</p></li></ul><pre index="1"><code language="go" run="NaN">package main
+import "fmt"
+
+func main() {
+  // len 是内置函数，会输出提供的数据的长度
+  fmt.Println(len("abcdef"))
+}</code></pre><h2 id="heading-11">异常处理</h2><p>如果参数个数大于函数需要的个数会怎么样？</p><pre index="1"><code language="go" run="NaN">fmt.Println(len("abcdef", "abc"))</code></pre><p>如果让你来设计这门语言，会怎么做？</p><p>大概可以想到这些方案：</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>报错，必须提供函数要求的个数</p></li><li class="m-0 p-0"><p>忽略多余的参数</p></li></ul><pre index="1"><code language="go" run="NaN">package main
+import "fmt"
+
+func main() {
+  fmt.Println(len("abcdef", "abc"))
+}</code></pre><p>输出的关键内容：</p><pre index="1"><code language="shell" run="NaN">too many arguments for len("abcdef", "abc") (expected 1, found 2)</code></pre><p>Go 选择了更严谨的方案：报错。</p><p>常见的选择忽略多余的参数的编程语言：</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>JavaScript</p></li><li class="m-0 p-0"><p>PHP</p></li></ul><p>常见的选择报错的编程语言：</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>Java</p></li><li class="m-0 p-0"><p>Python</p></li><li class="m-0 p-0"><p>Golang</p></li></ul><banner class="banner"><div class="flex justify-center items-center"><div><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"></path>
+</svg></div></div><div>这两种选择并没有优劣之分</div></banner><h2 id="heading-12">规则</h2><p>除了main()、init()函数外，其它所有类型的函数都可以有参数与返回值。</p><h2 id="heading-13">执行时间</h2><p>有时候，能够知道一个计算执行消耗的时间是非常有意义的，尤其是在对比和基准测试中。最简单的一个办法就是在 计算开始之前设置一个起始时候，再由计算结束时的结束时间，最后取出它们的差值，就是这个计算所消耗的时间。 想要实现这样的做法，可以使用 time 包中的 Now() 和 Sub 函数:</p><pre index="1"><code language="go" run="0">start := time.Now()
+longCalculation()
+end := time.Now()
+delta := end.Sub(start)
+fmt.Printf("longCalculation took this amount of time: %s\n", delta)</code></pre><h2 id="heading-14">函数的顺序</h2><p>如果这样写代码：</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>调用函数</p></li><li class="m-0 p-0"><p>定义函数</p></li></ul><p>是不是应该报错呢？因为应该先定义再调用才对。</p><p>看看不同编程语言的例子：</p><code-tab titles="Golang,PHP,JavaScript,Python" current="4"><pre index="1"><code language="go" run="1">package main 
+import "fmt"
+
+func main() {
+    fmt.Println(sum(1,2))
+}
+
+func sum(x int,y int) int {
+    return x+y
+}</code></pre><pre index="2"><code language="php" run="1">echo sum(1,2);
+
+function sum($x,$y) {
+    return $x + $y;
+}</code></pre><pre index="3"><code language="javascript" run="1">console.log(sum(1,2))
+
+function sum(x,y) {
+    return x+y
+}</code></pre><pre index="4"><code language="python" run="1">print(sum(1,2))
+
+def sum(x,y):
+    return x+y</code></pre></code-tab><p>是否报错是由解读代码的程序决定的：</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>有的是先读完再执行，这样就不会报错</p></li><li class="m-0 p-0"><p>有的是先执行一行，再执行下一行，这样就会报错</p></li></ul><p>对 Golang 来说，解读代码的程序叫做：编译器；</p><p>对 Python、PHP、JavaScript来说，叫做：解释器。</p><h2 id="heading-15">赋值给变量</h2><p>函数是一等值(first-class value):它们可以赋值给变量，就像 add := binOp 一样。 这个变量知道自己指向的函数的签名，所以给它赋一个具有不同签名的函数值是不可能的。</p><p>函数值(functions value)之间可以相互比较:如果它们引用的是相同的函数或者都是 nil 的话，则认为它们 是相同的函数。函数不能在其它函数里面声明(不能嵌套)，不过我们可以通过使用匿名函数(参考 第 6.8 节)来 破除这个限制。</p><h2 id="heading-16">总结</h2><p>函数是一个通用的概念，并不是某个编程语言独有的。</p><p>函数是最基本的代码块。</p><p>函数将一部分代码“包裹”起来，用于：</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>多个地方复用这部分代码</p></li><li class="m-0 p-0"><p>描述相对独立的过程</p></li></ul><h2 id="heading-17">规范</h2><h3 id="heading-18">DRY</h3><p>DRY：Dont't Repeat Yourself，意思是执行特定任务的代码只能出现一次，多个地方使用的话要通过定义函数来实现复用。</p><h2 id="heading-19">参考资料</h2><p><a target="_blank" rel="noopener noreferrer nofollow" href="https://mp.weixin.qq.com/s/sO1PO7IEahtBYoQSRmQs6Q">https://mp.weixin.qq.com/s/sO1PO7IEahtBYoQSRmQs6Q</a></p>

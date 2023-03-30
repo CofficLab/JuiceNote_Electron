@@ -1,0 +1,91 @@
+<toc></toc><h1 id="heading-1">协程</h1><chat position="start"><p>协程就像一个工人，将一段代码运行起来</p></chat><h2 id="heading-2">main函数</h2><code-tab titles="输出,监视协程数量" current="0"><pre index="1"><code language="go" run="1">package main 
+import "fmt"
+
+func main() {
+    fmt.Print("let's go")
+}</code></pre><pre index="2"><code language="go" run="1">package main 
+import "fmt"
+import "runtime"
+
+func main() {
+    fmt.Println("let's go")
+    fmt.Printf("当前协程数量 %d", runtime.NumGoroutine())
+}</code></pre></code-tab><p>每个Go程序的main函数都是用协程启动的。</p><h2 id="heading-3">顺序执行</h2><pre index="1"><code language="go" run="1">package main
+import "fmt"
+
+func a() {
+    fmt.Print("a")
+}
+
+func b() {
+    fmt.Print("b")
+}
+
+func main() {
+    a()
+    b()
+    fmt.Print("\nThe End")
+}</code></pre><p>在main函数中，先执行a函数，再执行b函数，很自然的，我们认为它们是按从上到下的顺序执行的。</p><p>但是a函数和b函数做的事情并没有什么联系，如果像一场比赛一样，让它们同时执行，看看谁的速度更快一些，该怎么办呢？</p><h2 id="heading-4">同时执行</h2><p>在函数前加 go 关键字表示同时执行：</p><code-tab titles="使用命名函数,使用匿名函数" current="0"><pre index="1"><code language="go" run="1">package main
+import "fmt"
+
+func a() {
+    fmt.Print("a")
+}
+
+func b() {
+    fmt.Print("b")
+}
+
+func main() {
+    go a()
+    go b()
+    fmt.Print("The End")
+}</code></pre><pre index="2"><code language="go" run="1">package main
+import "fmt"
+
+func main() {
+    go func () {
+        fmt.Print("a")
+    }()
+    go func () {
+        fmt.Print("b")
+    }()
+    fmt.Print("The End")
+}</code></pre></code-tab><p>这样会创建 3 个协程：</p><p>a b main</p><p>main函数的协程做的事情非常轻量：</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>让 a 函数做事，不等待结果</p></li><li class="m-0 p-0"><p>让 b 函数做事，不等待结果</p></li><li class="m-0 p-0"><p>输出：The End</p></li></ul><p>所以 a、b 的结果还没来得及告诉 main，main 已经结束并退出了。</p><h2 id="heading-5">等待</h2><p>我们可以让 main 慢一点，等一等 a、b 的执行结果：</p><code-tab titles="使用命名函数,使用匿名函数" current="1"><pre index="1"><code language="go" run="1">package main
+import "fmt"
+import "time"
+
+func a() {
+    fmt.Print("a")
+}
+
+func b() {
+    fmt.Print("b")
+}
+
+func main() {
+    go a()
+    go b()
+    time.Sleep(time.Second * 1)
+    fmt.Print("\nThe End")
+}</code></pre><pre index="2"><code language="go" run="1">package main
+import "fmt"
+import "time"
+
+func main() {
+    go func () {
+        fmt.Print("a")
+    }()
+    go func () {
+        fmt.Print("b")
+    }()
+    time.Sleep(time.Second * 1)
+    fmt.Print("\nThe End")
+}</code></pre></code-tab><p>&lt;div class="bg-cyan flex flex-col gap-4 p-2"&gt; &lt;div class="brick w-36"&gt;a&lt;/div&gt; &lt;div class="brick w-36"&gt;b&lt;/div&gt; &lt;div class="brick w-72"&gt;main&lt;/div&gt; &lt;/div&gt;</p><p>但是这样是没有什么实际的意义的，main 并不知道要等待多久，多了浪费时间，少了等不到。</p><p>实际上，Go 有一套协程间的通信机制。</p><h2 id="heading-6">获取并发线程数量</h2><code-tab titles="1" current="0"><pre index="1"><code language="go" run="1">package main
+
+import "fmt"
+import "runtime"
+
+func main() {
+    fmt.Printf("GOMAXPROCS = %d", runtime.GOMAXPROCS(0))
+}</code></pre></code-tab><h2 id="heading-7">术语</h2><table><tbody><tr><th colspan="1" rowspan="1"><p>名称</p></th><th colspan="1" rowspan="1"><p>中文</p></th><th colspan="1" rowspan="1"><p>解释</p></th></tr><tr><td colspan="1" rowspan="1"><p>concurrency</p></td><td colspan="1" rowspan="1"><p>并发</p></td><td colspan="1" rowspan="1"><p>让多个程序同时运行</p></td></tr><tr><td colspan="1" rowspan="1"><p>goroutine</p></td><td colspan="1" rowspan="1"><p>协程</p></td><td colspan="1" rowspan="1"><p>go语言中一种实现并发的技术</p></td></tr></tbody></table><h2 id="heading-8">了解其他编程语言</h2><p>在 Go 中，并发任务称为：goroutine。</p><p>其他编程语言有类似的概念，比如：线程，goroutine 可认为是轻量线程。</p><p>但是 goroutine 更轻量，需要更少的内存，启动和停止的时间更少。</p>

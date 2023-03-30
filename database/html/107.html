@@ -1,0 +1,88 @@
+<toc></toc><h1 id="heading-1">接口</h1><h2 id="heading-2">简介</h2><p>接口(interface) 定义了 0 个或多个方法，某个对象有这些方法，就可以说该对象实现了该接口。</p><p>Go 语言里有非常灵活的 接口 概念，通过它可以实现很多面向对象的特性。接口提供了一种方式来 说明 对象 的行为:如果谁能搞定这件事，它就可以用在这儿。</p><p>接口定义了一组方法(方法集)，但是这些方法不包含(实现)代码:它们没有被实现(它们是抽象的)。接口里也 不能包含变量。</p><h2 id="heading-3">类型断言</h2><p>类型断言 可用于判断一个对象是否实现了某个接口。</p><pre index="1"><code language="go" run="1">package main
+
+import "fmt"
+
+type geometry interface {
+    area() float64
+    perimeter() float64
+}
+
+type rectangle struct {
+    width, height float64
+}
+
+type circle struct {
+    radius float64
+}
+
+func (r *rectangle) area() float64 {
+    return r.width * r.height
+}
+
+func (r *rectangle) perimeter() float64 {
+    return (r.width + r.height) * 2
+}
+
+func main() {
+    var r interface{}
+
+    r = &amp;rectangle{
+        width:  10,
+        height: 5,
+    }
+    if v, ok := r.(geometry); ok {
+        fmt.Printf("r implements interface geometry, area = %.2f, perimeter = %.2f \n", v.area(), v.perimeter())
+    }
+
+    var c interface{}
+    c = &amp;circle{
+        radius: 10,
+    }
+    if _, ok := c.(geometry); !ok {
+        fmt.Println("c does not implement interface geometry")
+    }
+}</code></pre><h2 id="heading-4">any</h2><pre index="1"><code language="" run="NaN">type any = interface{}</code></pre><p>any 是空接口 interface{} 的别名。</p><p>空接口没有方法，所以所有类型都实现了空接口。</p><h3 id="heading-5">例子</h3><p>用在函数的参数中：</p><pre index="1"><code language="go" run="NaN">package main
+import "fmt"
+
+// InArray 判断数组中是否包括某个元素
+func InArray(needle any, hystack any) bool {
+	switch key := needle.(type) {
+	case string:
+		for _, item := range hystack.([]string) {
+			if key == item {
+				return true
+			}
+		}
+	case int:
+		for _, item := range hystack.([]int) {
+			if key == item {
+				return true
+			}
+		}
+	case int64:
+		for _, item := range hystack.([]int64) {
+			if key == item {
+				return true
+			}
+		}
+	default:
+		return false
+	}
+	return false
+}
+
+func main() {
+    staff := []string{"佟湘玉","白展堂","莫小贝"}
+
+    if InArray("燕小六", staff) {
+        fmt.Println("燕小六是同福客栈的成员")
+    } else {
+        fmt.Println("燕小六不是同福客栈的成员")
+    }
+
+    if InArray("佟湘玉", staff) {
+        fmt.Println("佟湘玉是同福客栈的成员")
+    } else {
+        fmt.Println("佟湘玉不是同福客栈的成员")
+    }
+}</code></pre>

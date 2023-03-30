@@ -1,0 +1,74 @@
+<toc></toc><h1 id="heading-1">条件判断</h1><p>条件判断指的是满足某个条件时，执行某个操作。</p><h2 id="heading-2">if 系列</h2><h3 id="heading-3">if...else</h3><pre index="1"><code language="go" run="NaN">package main
+import "fmt"
+
+func main() {
+    var password string = "123"
+    if (password == "123") {
+        fmt.Println("密码正确")
+    } else {
+        fmt.Println("密码错误")
+    }
+}</code></pre><p>这其中的 password == '123' 返回的其实是一个布尔值，在这个例子中是：true。</p><p>布尔值的最主要的作用就是配合 if 做条件判断。</p><h3 id="heading-4">if</h3><p>仅有 if 也是符合语法要求的，但 else 不能单独使用，这也符合人类的语言习惯。</p><pre index="1"><code language="go" run="NaN">package main
+import "fmt"
+
+func main() {
+    var password string = "123"
+    if (password == "123") {
+        fmt.Println("密码正确")
+    }
+}</code></pre><p>常见的写法：</p><pre index="1"><code language="go" run="NaN">if err := c.ShouldBindQuery(); err != nil {
+}
+</code></pre><h3 id="heading-5">if...else if</h3><p>条件分枝较多时，可使用 else if：</p><pre index="1"><code language="go" run="NaN">package main
+import "fmt"
+
+func main() {
+    var age int8 = 10
+    if (age &lt; 3) {
+        fmt.Println("婴儿")
+    } else if (age &lt; 7) {
+        fmt.Println("幼儿")
+    } else if (age &lt; 12) {
+        fmt.Println("儿童")
+    } else {
+        fmt.Println("成人")
+    }
+}
+</code></pre><h3 id="heading-6">带初始化</h3><pre index="1"><code language="go" run="NaN">if err := process(); err != nil {
+  return err
+}
+</code></pre><h3 id="heading-7">嵌套</h3><p>支持灵活的嵌套：</p><pre index="1"><code language="go" run="NaN">package main
+import "fmt"
+
+func main() {
+    var password string = "123456"
+    if (len(password) &lt; 3) {
+        fmt.Println("密码长度错误")
+    } else {
+        if (password == "123456") {
+            fmt.Println("密码正确")
+        } else {
+            fmt.Println("密码错误")
+        }
+    }
+}
+</code></pre><h2 id="heading-8">switch...case</h2><p>语法：</p><pre index="1"><code language="go" run="NaN">switch var1 {
+    case val1:
+        ...
+    case val2:
+        ...
+    default:
+        ...
+}</code></pre><pre index="1"><code language="go" run="NaN">package main
+import "fmt"
+
+func main()  {
+    x := 1
+
+    switch x {
+    case 1,2:
+        fmt.Println("x等于1或2")
+    case 3:
+        fmt.Println("x等于3")
+    }
+}
+</code></pre><h2 id="heading-9">type-switch</h2><h2 id="heading-10">比较运算符</h2><p>除了常用的 == 用于判断是否相等外，还有很多比较运算符，举例如下：</p><table><tbody><tr><th colspan="1" rowspan="1"><p>表达式</p></th><th colspan="1" rowspan="1"><p>描述</p></th></tr><tr><td colspan="1" rowspan="1"><p>x &lt; y</p></td><td colspan="1" rowspan="1"><p>x 小于 y 则为 true</p></td></tr><tr><td colspan="1" rowspan="1"><p>x &gt; y</p></td><td colspan="1" rowspan="1"><p>x 大于 y 则为 true</p></td></tr><tr><td colspan="1" rowspan="1"><p>x &lt;= y</p></td><td colspan="1" rowspan="1"><p>x 小于等于 y 则为 true</p></td></tr><tr><td colspan="1" rowspan="1"><p>x &gt;= y</p></td><td colspan="1" rowspan="1"><p>x 大于等于 y 则为 true</p></td></tr><tr><td colspan="1" rowspan="1"><p>x != y</p></td><td colspan="1" rowspan="1"><p>x 不等于 y 则为 true</p></td></tr></tbody></table>

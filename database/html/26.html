@@ -1,0 +1,18 @@
+<h1 id="heading-1">自定义</h1><p>如果基础数据类型不满足需求，可以基于基础数据类型来自定义类型。</p><pre index="1"><code language="go" run="1">package main
+import "fmt"
+import "reflect"
+
+type km float64
+type m float64
+type (
+    cm float64
+    mm float64
+)
+
+func main() {
+    var height m = 2.0
+    var distance km = 1000.24
+
+    fmt.Println(reflect.TypeOf(height), height)
+    fmt.Println(reflect.TypeOf(distance), distance)
+}</code></pre>

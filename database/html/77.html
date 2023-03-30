@@ -1,0 +1,100 @@
+<toc></toc><h1 id="heading-1">内置函数</h1><p>内置函数，也可以叫做预定义函数，指的是内建的随时可用的函数。</p><p>Go 内置了少量的不需要导入包就可以使用的函数。</p><official-link class="bg-cyan-800/20 p-4">https://tip.golang.org/ref/spec#Built-in_functions</official-link><official-link class="bg-cyan-800/20 p-4">https://pkg.go.dev/builtin@go1.19.5</official-link><h2 id="heading-2">官方文档</h2><p>如果有人问你，Go 的内置函数有哪些，应该去哪里查询呢？</p><p>应该去找官方文档。</p><p>你可以去搜索引擎搜：</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>Go 官方文档</p></li><li class="m-0 p-0"><p>Go Documents</p></li></ul><p>但不要搜：</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>Go 的内置函数有哪些</p></li></ul><p>因为这样搜不到权威、准确的信息，大多是复制的无用的、片面的信息。</p><p>以下为从官方文档摘录的部分常用的内置函数。</p><h2 id="heading-3">append</h2><pre index="1"><code language="go" run="NaN">package main
+
+import "fmt"
+
+func main() {
+    var sum func(...int) int // 声明 sum 函数
+
+    sum = func(numbers ...int) int { // 定义 sum 函数
+        total := 0
+        for _, num := range numbers {
+            total += num
+        }
+        return total
+    }
+
+    fmt.Printf("1 + 2 + 3 = %d\n", sum(1, 2, 3))
+}</code></pre><h2 id="heading-4">cap</h2><p>获取容器分配的容量的大小。</p><pre index="1"><code language="go" run="NaN">package main
+import "fmt"
+
+func main() {
+    x := []int{1,2,3}
+    fmt.Println(cap(x))
+}</code></pre><h2 id="heading-5">copy</h2><h2 id="heading-6">count</h2><h2 id="heading-7">delete</h2><p>从映射中删除一个值：</p><pre index="1"><code language="go" run="NaN">package main
+import "fmt"
+
+func main() {
+    stuff := make(map[string]string)
+    stuff["掌柜"] = "佟湘玉"
+    stuff["厨师"] = "李大嘴"
+    stuff["账房"] = "吕轻侯"
+    stuff["跑堂"] = "白展堂"
+
+    delete(stuff, "跑堂")
+
+    fmt.Println(stuff)
+}</code></pre><h2 id="heading-8">destination</h2><h2 id="heading-9">destinationStart</h2><h2 id="heading-10">len</h2><h3 id="heading-11">字符串</h3><p>获取字符串的字节（byte）数：</p><pre index="1"><code language="go" run="NaN">package main
+import "fmt"
+import "reflect"
+
+func main() {
+    // 一个英文字母占 1 个 byte
+    var a string = "A"
+    // 一个汉字占 3 个 byte
+    var b string = "中"
+    var c string = "老白，吃了吗"
+
+    fmt.Println(reflect.TypeOf(a), len(a))
+    fmt.Println(reflect.TypeOf(b), len(b))
+    fmt.Println(reflect.TypeOf(c), len(c))
+}</code></pre><p>如果需要获取字符串中的字符的个数，需要先把字符串转换成字符数组：</p><pre index="1"><code language="go" run="NaN">package main
+import "fmt"
+import "reflect"
+
+func main() {
+    var a string = "老白，吃了吗"
+    b := []rune(a)
+
+    fmt.Println(reflect.TypeOf(a), len(a))
+    fmt.Println(reflect.TypeOf(b), len(b))
+}</code></pre><h3 id="heading-12">数组</h3><p>获取数组中元素的个数：</p><pre index="1"><code language="go" run="NaN">package main
+import "fmt"
+import "reflect"
+
+func main() {
+    a := []string{"白展堂", "佟湘玉"}
+
+    fmt.Println(reflect.TypeOf(a), len(a))
+}</code></pre><h3 id="heading-13">映射(map)</h3><pre index="1"><code language="go" run="NaN">package main
+import "fmt"
+import "reflect"
+
+func main() {
+    a := map[string]string{"跑堂":"白展堂", "掌柜":"佟湘玉"}
+
+    fmt.Println(reflect.TypeOf(a), len(a))
+}</code></pre><h2 id="heading-14">make</h2><p>make用于slice，map，channel的初始化。</p><pre index="1"><code language="go" run="NaN">package main
+import "fmt"
+
+func main() {
+    staff := make([]string, 3)
+
+    fmt.Println(len(staff))
+    fmt.Println(staff)
+}</code></pre><banner class="banner"><div class="flex justify-center items-center"><div><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"></path>
+</svg></div></div><div>为什么专门针对这三种类型定义一个函数？</div></banner><p>因为这三种数据类型要求使用时必须完成初始化。</p><h2 id="heading-15">new</h2><p>创建和初始化变量，并返回其地址。</p><pre index="1"><code language="go" run="NaN">package main
+import "fmt"
+import "reflect"
+
+func main() {
+    var a = new(int)
+
+    fmt.Println("类型：", reflect.TypeOf(a))
+    fmt.Println("地址：", a)
+    fmt.Println("初始值：", *a)
+
+    *a = 1000
+
+    fmt.Println("赋值后：", *a)
+}</code></pre><h2 id="heading-16">range</h2><h2 id="heading-17">source</h2><h2 id="heading-18">sourceStart</h2>

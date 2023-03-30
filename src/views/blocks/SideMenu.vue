@@ -1,3 +1,5 @@
+<!-- @format -->
+
 <template>
   <div class="flex flex-col overflow-scroll">
     <div class="sticky top-0 z-50">
@@ -34,85 +36,86 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import FullScreenController from "../../controllers/FullScreenController";
-import Children from "../components/Children.vue";
-import Link from "../components/Link.vue";
-import SideMenuItem from "./SideMenuItem.vue";
-import { Node } from "../../models/Node";
-import NodeController from "../../controllers/NodeController";
+  import { defineComponent } from 'vue';
+  import FullScreenController from '../../controllers/FullScreenController';
+  import Children from '../components/Children.vue';
+  import Link from '../components/Link.vue';
+  import SideMenuItem from './SideMenuItem.vue';
+  import { Node } from '../../models/Node';
+  import NodeController from '../../controllers/NodeController';
 
-export default defineComponent({
-  data() {
-    return {
-      activatedBookTab: this.book,
-    };
-  },
-  computed: {
-    current: () => NodeController.getCurrentPage(),
-    hideTitleBar: () => FullScreenController.full,
-    book(): Node {
-      return this.current.getBook();
+  export default defineComponent({
+    data() {
+      return {
+        activatedBookTab: this.book,
+      };
     },
-    bookTabs() {
-      return this.book.getTabs();
-    },
-    menusRoot() {
-      if (this.bookTabs.length > 0) {
-        return this.current.getParents().find((parent) => parent.getParent().isBook);
-      }
+    computed: {
+      current: () => NodeController.getCurrentPage(),
+      editable: () => NodeController.getEditable(),
+      hideTitleBar: () => FullScreenController.full,
+      book(): Node {
+        return this.current.getBook();
+      },
+      bookTabs() {
+        return this.book.getTabs();
+      },
+      menusRoot() {
+        if (this.bookTabs.length > 0) {
+          return this.current.getParents().find((parent) => parent.getParent().isBook);
+        }
 
-      return this.book;
+        return this.book;
+      },
+      menus() {
+        // console.log("获取左侧栏菜单");
+        return this.menusRoot.getVisibleChildren();
+      },
     },
-    menus() {
-      // console.log("获取左侧栏菜单");
-      return this.menusRoot.getChildren();
+    methods: {
+      // 滚动到激活的菜单的章节
+      scrollToCurrent() {
+        var target = document.getElementById('node-' + this.current.id);
+        // console.log(target);
+        // console.log("需要滚动");
+        if (target != null) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+          });
+        }
+      },
     },
-  },
-  methods: {
-    // 滚动到激活的菜单的章节
-    scrollToCurrent() {
-      var target = document.getElementById("node-" + this.current.id);
-      // console.log(target);
-      // console.log("需要滚动");
-      if (target != null) {
-        target.scrollIntoView({
-          behavior: "smooth",
-          block: "center",
-        });
-      }
-    },
-  },
-  mounted: function () {
-    this.$nextTick(() => {
-      setTimeout(() => {
-        this.scrollToCurrent();
-      }, 500);
-    });
-
-    if (this.bookTabs.length > 0) {
-      this.activatedBookTab = this.bookTabs[0];
-    }
-  },
-  watch: {
-    current() {
-      console.log("current发生变化，滚动到current");
+    mounted: function () {
       this.$nextTick(() => {
         setTimeout(() => {
           this.scrollToCurrent();
         }, 500);
       });
+
+      if (this.bookTabs.length > 0) {
+        this.activatedBookTab = this.bookTabs[0];
+      }
     },
-  },
-  components: { Link, SideMenuItem, Children },
-});
+    watch: {
+      current() {
+        console.log('current发生变化，滚动到current');
+        this.$nextTick(() => {
+          setTimeout(() => {
+            this.scrollToCurrent();
+          }, 500);
+        });
+      },
+    },
+    components: { Link, SideMenuItem, Children },
+  });
 </script>
 
 <style scoped lang="postcss">
-#book-name {
-  @apply flex justify-center bg-gradient-to-r from-red-500 to-cyan-500 bg-clip-text pb-2 text-lg text-transparent md:text-2xl lg:text-3xl;
-}
-.book-info {
-  @apply flex flex-col bg-base-300/90 dark:border-cyan-900/10;
-}
+  #book-name {
+    @apply flex justify-center bg-gradient-to-r from-red-500 to-cyan-500 bg-clip-text pb-2 text-lg text-transparent md:text-2xl lg:text-3xl;
+  }
+  .book-info {
+    @apply flex flex-col bg-base-300/90 dark:border-cyan-900/10;
+  }
 </style>

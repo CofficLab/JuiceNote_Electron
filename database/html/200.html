@@ -1,0 +1,10 @@
+<h1 id="heading-1">推导</h1><h2 id="heading-2">简单推导</h2><p>列表推导是一种从其他列表创建列表的方式:</p><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre index="1"><code language="" run="NaN">a = [x * x for x in range(10)]
+
+print(a)
+</code></pre><p>这样拆开理解这段程序：</p><p>&lt;div class="flex flex-row gap-2"&gt; &lt;div class="w-12 brick"&gt;x*x&lt;/div&gt; &lt;div class="w-48 brick"&gt;for x in range(10)&lt;/div&gt; &lt;/div&gt;</p><p>这个列表由 10 以内的数字的平方组成。</p><p>如果不要这么多，只需要 3、6、9 的平方：</p><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre index="1"><code language="" run="NaN">a = [x * x for x in range(10) if x % 3 == 0]
+
+print(a)
+</code></pre><h2 id="heading-3">二维推导</h2><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre index="1"><code language="" run="NaN">a = [(x,y) for x in range(3) for y in range(3)]
+
+print(a)
+</code></pre><p>可以想象，这样是在建立一个矩阵：</p><p>&lt;div class="flex flex-col gap-2 bg-cyan-500/20 p-2 w-48 "&gt; &lt;div class="flex flex-row gap-2 justify-center"&gt; &lt;div class="w-12 brick"&gt;0,0&lt;/div&gt; &lt;div class="w-12 brick"&gt;0,1&lt;/div&gt; &lt;div class="w-12 brick"&gt;0,2&lt;/div&gt; &lt;/div&gt; &lt;div class="flex flex-row gap-2 justify-center"&gt; &lt;div class="w-12 brick"&gt;1,0&lt;/div&gt; &lt;div class="w-12 brick"&gt;1,1&lt;/div&gt; &lt;div class="w-12 brick"&gt;1,2&lt;/div&gt; &lt;/div&gt; &lt;div class="flex flex-row gap-2 justify-center"&gt; &lt;div class="w-12 brick"&gt;2,0&lt;/div&gt; &lt;div class="w-12 brick"&gt;2,1&lt;/div&gt; &lt;div class="w-12 brick"&gt;2,2&lt;/div&gt; &lt;/div&gt; &lt;/div&gt;</p><p>&lt;div&gt;&lt;/div&gt;</p>
