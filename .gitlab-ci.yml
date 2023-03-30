@@ -39,4 +39,4 @@ sync:
     - dev
   tags:
     - tencent
-  script: rm -rf /www/database/lessons.db && cp -rf database/database.db /www/database
+  script: rm -rf /www/database/lessons.db && cp -rf database/database.db /www/database/lessons.db
