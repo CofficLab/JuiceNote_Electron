@@ -20,13 +20,7 @@
       </div>
 
       <!-- Monaco编辑器，可修改 -->
-      <Monaco
-        v-if="this.editable && loadMonaco"
-        :code="code"
-        :language="language"
-        :showRunButton="node.attrs.run == 1"
-        :keyUpCallback="keyup"
-        :showLineNumbers="true"></Monaco>
+      <Monaco v-if="this.editable && loadMonaco" :code="code" :language="language" :showRunButton="node.attrs.run == 1" :keyUpCallback="keyup" :showLineNumbers="true"></Monaco>
 
       <!-- Monaco编辑器，只读模式。应该实例化一个Monaco，然后动态改变readonly属性，但是有BUG：动态改变整个界面会卡住 -->
       <Monaco v-if="!this.editable && loadMonaco" :code="code" :language="language" :showRunButton="node.attrs.run == 1" :readOnly="true"></Monaco>
@@ -70,11 +64,14 @@
         let language = book.title.toLowerCase();
         if (language == 'Golang') return 'go';
         if (language == 'golang') return 'go';
+
+        console.log('自动判断图书对应的编程语言，结果', language);
         return language;
       },
       language() {
         if (this.node.attrs.language == '') {
-          this.updateAttributes({ language: this.currentLanguage });
+          // console.log('没有设置编程语言，自动设置为', this.currentLanguage);
+          // this.updateAttributes({ language: this.currentLanguage });
           return this.currentLanguage;
         }
 
