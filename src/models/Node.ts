@@ -237,6 +237,15 @@ class Node {
         }
     }
 
+    updateCover(raw: string): string {
+        let result = db.prepare('update nodes set cover=? where id=?').run(raw, this.id)
+        if (result != null) {
+            return '「' + this.title + '」的封面更新成功'
+        } else {
+            return '「' + this.title + '」的封面更新失败'
+        }
+    }
+
     updateTitle(title: string): string {
         let result = db.prepare('update nodes set title=? where id=?').run(title, this.id)
         if (result != null) {
