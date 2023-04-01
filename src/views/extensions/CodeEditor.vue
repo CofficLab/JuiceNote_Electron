@@ -6,6 +6,10 @@
     <div class="relative rounded-b bg-slate-900">
       <!-- 操作栏 -->
       <div class="code-block-operators" v-if="editable && loadMonaco" contenteditable="false">
+        <!-- 删除的按钮 -->
+        <button v-if="editable" class="btn-ghost btn-sm btn flex self-end rounded-none" @click="deleteSelf">
+          <Trash class="w-6"></Trash>
+        </button>
         <button @click="toggleRun" v-html="this.node.attrs.run == 1 ? '关运行' : '开运行'"></button>
         <select name="language" @change="setLanguage">
           <option value="text" v-bind:selected="language == 'text'">纯文本</option>
@@ -35,9 +39,10 @@
   import { NodeViewContent, nodeViewProps, NodeViewWrapper } from '@tiptap/vue-3';
   import Monaco from '../components/Monaco.vue';
   import NodeController from '../../controllers/NodeController';
+  import Trash from '../../assets/icons/trash.svg';
 
   export default {
-    components: { NodeViewWrapper, NodeViewContent, Monaco },
+    components: { NodeViewWrapper, NodeViewContent, Monaco, Trash },
 
     data() {
       return {
@@ -123,6 +128,9 @@
           this.current = parentElement.$el.parentElement?.getAttribute('data-current') ?? 0;
           // console.log("active index is", this.current, "my index is", this.index);
         });
+      },
+      deleteSelf() {
+        this.deleteNode();
       },
     },
 
