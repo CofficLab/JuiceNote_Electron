@@ -1,5 +1,3 @@
-<!-- @format -->
-
 <template>
   <div id="breadcrumbs" :class="{ 'text-yellow-500': editable }">
     <ul class="flex flex-row justify-center">
@@ -21,30 +19,26 @@
   </div>
 </template>
 
-<script lang="ts">
-  import { defineComponent } from 'vue';
-  import NodeController from '../../controllers/NodeController';
-  import { Node } from '../../models/Node';
-  import Children from '../components/Children.vue';
+<script setup>
+import { computed } from "vue";
+import { useRoute } from "vue-router";
+import { Node } from "../../models/Node";
+import Children from "../components/Children.vue";
+import NodeController from "../../controllers/NodeController";
 
-  export default defineComponent({
-    props: { current: { type: Node, required: true } },
-    computed: {
-      editable: () => NodeController.getEditable(),
-      breadcrumbs: () => NodeController.getBreadcrumbs(),
-    },
-    components: { Children },
-  });
+const current = computed(() => Node.find(useRoute().params.id));
+const editable = computed(() => NodeController.getEditable());
+const breadcrumbs = computed(() => current.value.getParents().concat([current.value]));
 </script>
 
 <style scoped lang="postcss">
-  #breadcrumbs {
-    @apply breadcrumbs flex h-full flex-grow justify-start overflow-visible;
-    .breadcrumb-item {
-      @apply dropdown-hover dropdown dropdown-bottom flex justify-center;
-    }
+#breadcrumbs {
+  @apply breadcrumbs flex h-full flex-grow justify-start overflow-visible;
+  .breadcrumb-item {
+    @apply dropdown-hover dropdown-bottom dropdown flex justify-center;
   }
-  #breadcrumb-name {
-    @apply self-center rounded p-1 ring-primary ring-opacity-30 transition duration-200 hover:scale-105 hover:ring-2;
-  }
+}
+#breadcrumb-name {
+  @apply self-center rounded p-1 ring-primary ring-opacity-30 transition duration-200 hover:scale-105 hover:ring-2;
+}
 </style>

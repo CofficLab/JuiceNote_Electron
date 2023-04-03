@@ -33,10 +33,6 @@ const NodeController = reactive({
         return this.editable
     },
 
-    getBreadcrumbs(): Node[] {
-        return this.getCurrentPage().getParents().concat([this.getCurrentPage()])
-    },
-
     getSideMenus(): Node[] {
         if (this.sideMenus.filter(menu => { return !menu.isEmpty }).length == 0) {
             this.setSideMenus()
