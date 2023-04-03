@@ -289,6 +289,14 @@ class Node {
         // console.log('get first book', result)
         return new Node(result)
     }
+
+    static getBooks(): Node {
+        let items = db.prepare('select * from nodes where is_book=1 order by priority asc').all()
+
+        return items.map((item: object) => {
+            return new Node(item)
+        });
+    }
 }
 
 const emptyNode = new Node({})

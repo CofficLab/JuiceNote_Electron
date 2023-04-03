@@ -76,6 +76,7 @@
     "sqlite3": "^5.1.4",
     "tailwindcss": "^3.1.8",
     "vue-drag-resize": "^2.0.3",
+    "vue-router": "^4.1.6",
     "vuedraggable": "^4.1.0",
     "xterm": "^5.1.0",
     "xterm-addon-fit": "^0.7.0",

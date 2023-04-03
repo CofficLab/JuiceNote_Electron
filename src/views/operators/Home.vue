@@ -1,20 +1,7 @@
 <template>
-  <div @click="goHome"><Home></Home></div>
+  <router-link to="/"><Home></Home></router-link>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup>
 import Home from "../../assets/icons/home.svg";
-import NodeController from "../../controllers/NodeController";
-import { Node } from "../../models/Node";
-import Link from "../components/Link.vue";
-
-export default defineComponent({
-  components: { Home, Link },
-  methods: {
-    goHome() {
-      NodeController.setCurrentPage(0);
-    },
-  },
-});
 </script>

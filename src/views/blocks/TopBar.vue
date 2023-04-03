@@ -2,7 +2,7 @@
   <!-- 顶栏 -->
   <div id="top-bar">
     <div class="ml-20 flex items-center lg:ml-2">
-      <Breadcrumbs :current="current"></Breadcrumbs>
+      <Breadcrumbs :current="current" v-if="currentId > 0"></Breadcrumbs>
     </div>
     <div class="draggable flex-grow"></div>
     <div class="flex h-12 flex-row items-center justify-end pr-4">
@@ -18,8 +18,7 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup>
 import { Node } from "../../models/Node";
 import Home from "../operators/Home.vue";
 import BtnMore from "../components/BtnMore.vue";
@@ -27,14 +26,14 @@ import Next from "../operators/Next.vue";
 import BtnOfficialLink from "../components/BtnOfficialLink.vue";
 import Prev from "../operators/Prev.vue";
 import BtnTerminal from "../components/BtnTerminal.vue";
-import Languages from "../components/Languages.vue";
 import Breadcrumbs from "./Breadcrumbs.vue";
 import Toast from "./Toast.vue";
+import { useRoute } from "vue-router";
+import { computed } from "vue";
 
-export default defineComponent({
-  components: { Breadcrumbs, Languages, BtnOfficialLink, BtnTerminal, Toast, Prev, Home, Next, BtnMore },
-  props: { current: { type: Node, required: true } },
-});
+const props = defineProps({ current: { type: Node, required: true } });
+
+const currentId = computed(() => useRoute().params.id);
 </script>
 
 <style scoped lang="postcss">
