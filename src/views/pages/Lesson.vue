@@ -1,5 +1,3 @@
-<!-- @format -->
-
 <template>
   <div class="flex h-full w-full flex-col items-center overflow-scroll">
     <!-- 工具栏 -->
@@ -9,34 +7,17 @@
 
     <!-- TAB -->
     <div id="tabs-container" v-if="current.getParent().isTab">
-      <Link
-        v-for="sibling in current.getSiblings()"
-        class="tab-lifted tab"
-        :node="sibling"
-        >{{ sibling.title }}</Link
-      >
+      <Link v-for="sibling in current.getSiblings()" class="tab-lifted tab" :node="sibling">{{ sibling.title }}</Link>
     </div>
 
     <!-- 编辑框 -->
     <div id="editor-container" @contextmenu.prevent="showRightMenu">
-      <editor-content
-        v-if="!sourceCodeDisplay"
-        :editor="editor"
-        class="prose h-screen w-full overflow-visible xl:prose-lg"
-        :class="{ 'lg:mr-56': hasToc }"
-      />
+      <editor-content v-if="!sourceCodeDisplay" :editor="editor" class="prose h-screen w-full overflow-visible xl:prose-lg" :class="{ 'lg:mr-56': hasToc }" />
     </div>
 
     <!-- 源码 -->
     <div class="container">
-      <Monaco
-        :keyUpCallback="save"
-        v-if="sourceCodeDisplay"
-        :code="code"
-        language="html"
-        :readOnly="false"
-        :showLineNumbers="true"
-      ></Monaco>
+      <Monaco :keyUpCallback="save" v-if="sourceCodeDisplay" :code="code" language="html" :readOnly="false" :showLineNumbers="true"></Monaco>
     </div>
 
     <!-- 右键菜单 -->
@@ -52,7 +33,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup>
 import { Editor, EditorContent } from "@tiptap/vue-3";
 import Extensions from "../../entities/Extensions";
 import Link from "../components/Link.vue";
@@ -69,125 +50,84 @@ import NodeController from "../../controllers/NodeController";
 import Delete from "../operators/Delete.vue";
 import Monaco from "../components/Monaco.vue";
 import { Node } from "../../models/Node";
+import { computed, watch, onBeforeUnmount } from "vue";
+import { useRoute } from "vue-router";
 
-export default {
-  components: {
-    CreateChild,
-    Copy,
-    EditorContent,
-    Edit,
-    Toolbar,
-    Rename,
-    Link,
-    RightMenu,
-    Next,
-    Prev,
-    Delete,
-    Monaco,
-  },
-  data() {
-    return {
-      editor: undefined,
-      currentTab: 0,
-      rightClickEvent: null,
-      hasToc: false,
-      sourceCodeDisplay: false,
-      headings: [],
-      node: null,
-      code: "",
-    };
-  },
-  computed: {
-    editable: () => NodeController.getEditable(),
-    shouldShowRightMenu: function () {
-      return RightMenuController.shouldShow && this.rightClickEvent;
-    },
-    current() {
-      let currentId = this.$route.params.id;
-      console.log("current id is", currentId);
-      return Node.find(currentId);
-    },
-  },
-  methods: {
-    switchTab(index) {
-      console.log("switch tab to", index);
-      this.currentTab = index;
-    },
-    showRightMenu(event) {
-      this.rightClickEvent = event;
-      RightMenuController.show();
-    },
-    checkToc() {
-      this.hasToc = this.editor.getHTML().startsWith("<toc></toc>");
-    },
-    toggleSourceCode() {
-      this.sourceCodeDisplay = !this.sourceCodeDisplay;
-      this.editor.commands.setContent(this.node.getContent(), false);
-    },
-    save(content) {
-      content = content ?? this.editor.getHTML();
-
-      if (content != this.node.content) {
-        console.log(
-          "保存节点",
-          this.node.id,
-          "的内容",
-          content.substring(0, 20) + "..."
-        );
-        this.node.updateContent(content);
-      }
-    },
-  },
-  mounted() {
-    console.log("加载content");
-    this.editor = new Editor({
-      extensions: Extensions,
-      autofocus: true,
-      editable: this.editable,
-      injectCSS: true,
-      enableInputRules: true,
-      enablePasteRules: false,
-      parseOptions: {
-        preserveWhitespace: "full",
-      },
-      onCreate: () => {
-        this.node = this.current;
-        this.editor.commands.setContent(
-          this.node.getContent() == "" ? "「空」" : this.node.getContent(),
-          false
-        );
-        this.checkToc();
-        this.code = this.editor.getHTML();
-      },
-      onUpdate: (event) => {
-        if (!this.editable) return;
-
-        console.log("editor updated,save content and check toc");
-        this.save();
-        this.checkToc();
-        this.code = this.editor.getHTML();
-      },
-    });
-
-    document.addEventListener("click", () => {
-      this.rightClickEvent = null;
-    });
-  },
-  watch: {
-    current() {
-      console.log("current changed, update editor content");
-      if (this.editable) this.save();
-      this.node = this.current;
-      this.editor.commands.setContent(this.node.getContent(), true);
-    },
-    editable() {
-      this.editor.setEditable(this.editable, false);
-    },
-  },
-  beforeUnmount() {
-    this.editor.destroy();
-  },
+let rightClickEvent = null;
+let hasToc = false;
+let sourceCodeDisplay = false;
+let node = null;
+let code = "";
+let route = useRoute();
+let editable = computed(() => NodeController.getEditable());
+let shouldShowRightMenu = computed(() => RightMenuController.shouldShow && this.rightClickEvent);
+let current = computed(() => Node.find(route.params.id));
+let showRightMenu = function (event) {
+  rightClickEvent = event;
+  RightMenuController.show();
 };
+let checkToc = function () {
+  hasToc = editor.getHTML().startsWith("<toc></toc>");
+};
+
+let toggleSourceCode = function () {
+  this.sourceCodeDisplay = !this.sourceCodeDisplay;
+  this.editor.commands.setContent(this.node.getContent(), false);
+};
+
+let save = function () {
+  let content = editor.getHTML();
+
+  if (content != node.content) {
+    console.log("保存节点", node.id, "的内容", content.substring(0, 20) + "...");
+    node.updateContent(content);
+  }
+};
+
+const editor = new Editor({
+  extensions: Extensions,
+  autofocus: true,
+  editable: editable.value,
+  injectCSS: true,
+  enableInputRules: true,
+  enablePasteRules: false,
+  parseOptions: {
+    preserveWhitespace: "full",
+  },
+  onCreate: () => {
+    node = current.value;
+    editor.commands.setContent(node.getContent() == "" ? "「空」" : node.getContent(), false);
+    checkToc();
+    code = editor.getHTML();
+  },
+  onUpdate: (event) => {
+    if (!editable) return;
+
+    console.log("editor updated,save content and check toc");
+    save();
+    checkToc();
+    code = editor.getHTML();
+  },
+});
+
+document.addEventListener("click", () => {
+  rightClickEvent = null;
+});
+
+watch(current, () => {
+  console.log("current changed, update editor content");
+  if (editable.value) save();
+  node.value = current.value;
+  editor.commands.setContent(node.value.getContent(), true);
+});
+
+watch(editable, () => {
+  editor.setEditable(editable.value, false);
+});
+
+onBeforeUnmount(() => {
+  editor.destroy();
+});
 </script>
 
 <style lang="postcss">
