@@ -8,12 +8,8 @@
         <li @click="toggleHeading(3)" :class="{ 'is-active': editor.isActive('heading', { level: 3 }) }">H3</li>
         <li @click="toggleHeading(4)" :class="{ 'is-active': editor.isActive('heading', { level: 4 }) }">H4</li>
         <li @click="toggleBold" :disabled="!canToggleBold" :class="{ 'is-active': isBoldActive }">加粗</li>
-        <li @click="toggleItalic" :disabled="!canToggleItalic" :class="{ 'is-active': editor.isActive('italic') }">
-          斜体
-        </li>
-        <li @click="toggleStrike" :disabled="!canToggleStrike" :class="{ 'is-active': editor.isActive('strike') }">
-          划线
-        </li>
+        <li @click="toggleItalic" :disabled="!canToggleItalic" :class="{ 'is-active': editor.isActive('italic') }">斜体</li>
+        <li @click="toggleStrike" :disabled="!canToggleStrike" :class="{ 'is-active': editor.isActive('strike') }">划线</li>
         <li @click="toggleBlockquote" :class="{ 'is-active': isBlockQuoteActive }">引用</li>
         <li @click="setParagraph()" :class="{ 'is-active': isParagraphActive }">正文</li>
       </ul>
@@ -47,40 +43,17 @@
     <div class="dropdown-hover dropdown">
       <label tabindex="0"><IconListBullet></IconListBullet></label>
       <ul tabindex="0">
-        <li
-          @click="editor.chain().focus().toggleBulletList().run()"
-          :class="{ 'is-active': editor.isActive('bulletList') }"
-        >
+        <li @click="editor.chain().focus().toggleBulletList().run()" :class="{ 'is-active': editor.isActive('bulletList') }">
           <IconListBullet></IconListBullet>
         </li>
-        <li
-          @click="editor.chain().focus().splitListItem('listItem').run()"
-          :disabled="!editor.can().splitListItem('listItem')"
-        >
-          splitListItem
-        </li>
-        <li
-          @click="editor.chain().focus().sinkListItem('listItem').run()"
-          :disabled="!editor.can().sinkListItem('listItem')"
-        >
-          sinkListItem
-        </li>
-        <li
-          @click="editor.chain().focus().liftListItem('listItem').run()"
-          :disabled="!editor.can().liftListItem('listItem')"
-        >
-          liftListItem
-        </li>
-        <button
-          @click="editor.chain().focus().toggleOrderedList().run()"
-          :class="{ 'is-active': editor.isActive('orderedList') }"
-        >
-          有序列表
-        </button>
+        <li @click="editor.chain().focus().splitListItem('listItem').run()" :disabled="!editor.can().splitListItem('listItem')">splitListItem</li>
+        <li @click="editor.chain().focus().sinkListItem('listItem').run()" :disabled="!editor.can().sinkListItem('listItem')">sinkListItem</li>
+        <li @click="editor.chain().focus().liftListItem('listItem').run()" :disabled="!editor.can().liftListItem('listItem')">liftListItem</li>
+        <button @click="editor.chain().focus().toggleOrderedList().run()" :class="{ 'is-active': editor.isActive('orderedList') }">有序列表</button>
       </ul>
     </div>
 
-    <div class="dropdown-bottom dropdown-hover dropdown">
+    <div class="dropdown-hover dropdown-bottom dropdown">
       <label tabindex="0"><IconTable></IconTable></label>
       <ul tabindex="0">
         <li>
@@ -111,10 +84,7 @@
     <button @click="editor.chain().toggleToc().run()"><IconQueueList></IconQueueList></button>
     <button @click="editor.chain().toggleTimeLine().run()">时间线</button>
     <button @click="editor.chain().focus().addTab().run()">TAB</button>
-    <button
-      @click="editor.chain().focus().toggleCodeBlock().run()"
-      :class="{ 'is-active': editor.isActive('codeBlock') }"
-    >
+    <button @click="editor.chain().focus().toggleCodeBlock().run()" :class="{ 'is-active': editor.isActive('codeBlock') }">
       <IconCode></IconCode>
     </button>
     <button @click="editor.chain().focus().addCodeTab().run()">CodeBlockTab</button>
@@ -143,9 +113,9 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup>
 import { Editor } from "@tiptap/vue-3";
-import { defineComponent } from "vue";
+import { computed } from "vue";
 import NodeController from "../../controllers/NodeController";
 import ToastController from "../../controllers/ToastController";
 import { Node } from "../../models/Node";
@@ -166,140 +136,119 @@ import IconSaveBack from "../../assets/icons/arrow-up-tray.svg";
 import IconQueueList from "../../assets/icons/queue-list.svg";
 import IconChat from "../../assets/icons/chat-bubble-left-ellipsis.svg";
 
-export default defineComponent({
-  components: {
-    SaveIcon,
-    IconCode,
-    IconListBullet,
-    IconBack,
-    IconRedo,
-    IconLink,
-    IconTable,
-    IconMinus,
-    IconX,
-    IconBarsArrowDown,
-    IconClear,
-    IconPuzzle,
-    IconBars2,
-    IconSaveBack,
-    IconQueueList,
-    IconChat,
-  },
-  props: {
-    editor: { type: Editor, required: true },
-    current: { type: Node },
-  },
-
-  data() {
-    return {
-      showLinkModal: false,
-      url: "", // 设置链接扩展用到的，记录用户输入的URL
-    };
-  },
-
-  computed: {
-    canToggleBold() {
-      return this.editor.can().chain().focus().toggleBold().run();
-    },
-    canToggleItalic() {
-      return this.editor.can().chain().focus().toggleItalic().run();
-    },
-    canToggleStrike() {
-      return this.editor.can().chain().focus().toggleStrike().run();
-    },
-    isBoldActive() {
-      return this.editor.isActive("bold");
-    },
-    isBlockQuoteActive() {
-      return this.editor.isActive("blockquote");
-    },
-    isParagraphActive() {
-      return this.editor.isActive("paragraph");
-    },
-    isCodeActive() {
-      return this.editor.isActive("code");
-    },
-  },
-
-  methods: {
-    empty() {
-      ToastController.set(NodeController.updateContent(this.current, ""));
-    },
-    save() {
-      ToastController.set(NodeController.updateContent(this.current, this.editor.getHTML()));
-    },
-    saveAndShow() {
-      this.save();
-      NodeController.toggleEditable();
-    },
-    insertNewLine() {
-      this.editor.commands.setContent(this.editor.getHTML() + "<p>type here</p>");
-      this.editor.commands.focus("end");
-    },
-    setParagraph() {
-      this.editor.chain().focus().setParagraph().run();
-    },
-    toggleBanner() {
-      this.editor.chain().focus().toggleBanner().run();
-    },
-    toggleBrick() {
-      this.editor.chain().focus().toggleBrick().run();
-    },
-    toggleTimeLineTitle() {
-      this.editor.chain().focus().toggleTimeLineTitle().run();
-    },
-    toggleBold() {
-      this.editor.chain().focus().toggleBold().run();
-    },
-    toggleHeading(level: number) {
-      this.editor.chain().focus().toggleHeading({ level: level }).run();
-    },
-    toggleItalic() {
-      this.editor.chain().focus().toggleItalic().run();
-    },
-    toggleStrike() {
-      this.editor.chain().focus().toggleStrike().run();
-    },
-    toggleCode() {
-      this.editor.chain().focus().toggleCode().run();
-    },
-    toggleOfficialLink() {
-      this.editor.chain().focus().toggleOfficialLink().run();
-    },
-    toggleBlockquote() {
-      this.editor.chain().focus().toggleBlockquote().run();
-    },
-    toggleSourceCode() {
-      this.$parent.toggleSourceCode();
-    },
-    inputLink() {
-      this.showLinkModal = true;
-    },
-    cancelSetLink() {
-      this.showLinkModal = false;
-    },
-    setLink() {
-      this.showLinkModal = false;
-      const previousUrl = this.editor.getAttributes("link").href;
-      const url = this.url ?? previousUrl;
-
-      // cancelled
-      if (url === null) {
-        return;
-      }
-
-      // empty
-      if (url === "") {
-        this.editor.chain().focus().extendMarkRange("link").unsetLink().run();
-
-        return;
-      }
-
-      // update link
-      this.editor.chain().focus().extendMarkRange("link").setLink({ href: url }).run();
-    },
-  },
+const props = defineProps({
+  editor: { type: Editor, required: true },
+  current: { type: Node },
+  sourceCodeCallback: null,
 });
+
+let showLinkModal = false;
+let url = ""; // 设置链接扩展用到的，记录用户输入的URL
+let canToggleBold = computed(() => {
+  return props.editor.can().chain().focus().toggleBold().run();
+});
+let canToggleItalic = computed(() => {
+  return props.editor.can().chain().focus().toggleItalic().run();
+});
+let canToggleStrike = computed(() => {
+  return props.editor.can().chain().focus().toggleStrike().run();
+});
+let isBoldActive = computed(() => {
+  return props.editor.isActive("bold");
+});
+let isBlockQuoteActive = computed(() => {
+  return props.editor.isActive("blockquote");
+});
+let isParagraphActive = computed(() => {
+  return props.editor.isActive("paragraph");
+});
+let isCodeActive = computed(() => {
+  return props.editor.isActive("code");
+});
+
+let empty = function () {
+  ToastController.set(NodeController.updateContent(props.current, ""));
+};
+let save = function () {
+  ToastController.set(NodeController.updateContent(this.current, this.editor.getHTML()));
+};
+
+let saveAndShow = function () {
+  save();
+  NodeController.toggleEditable();
+};
+
+let insertNewLine = function () {
+  props.editor.commands.setContent(props.editor.getHTML() + "<p>type here</p>");
+  props.editor.commands.focus("end");
+};
+
+let setParagraph = function () {
+  props.editor.chain().focus().setParagraph().run();
+};
+
+let toggleBanner = function () {
+  props.editor.chain().focus().toggleBanner().run();
+};
+
+let toggleBrick = function () {
+  props.editor.chain().focus().toggleBrick().run();
+};
+
+let toggleTimeLineTitle = function () {
+  props.editor.chain().focus().toggleTimeLineTitle().run();
+};
+let toggleBold = function () {
+  props.editor.chain().focus().toggleBold().run();
+};
+
+let toggleHeading = function (level = 0) {
+  props.editor.chain().focus().toggleHeading({ level: level }).run();
+};
+let toggleItalic = function () {
+  props.editor.chain().focus().toggleItalic().run();
+};
+let toggleStrike = function () {
+  props.editor.chain().focus().toggleStrike().run();
+};
+let toggleCode = function () {
+  props.editor.chain().focus().toggleCode().run();
+};
+let toggleOfficialLink = function () {
+  props.editor.chain().focus().toggleOfficialLink().run();
+};
+let toggleBlockquote = function () {
+  props.editor.chain().focus().toggleBlockquote().run();
+};
+let toggleSourceCode = function () {
+  props.sourceCodeCallback();
+};
+let inputLink = function () {
+  props.showLinkModal = true;
+};
+let cancelSetLink = function () {
+  props.showLinkModal = false;
+};
+let setLink = function () {
+  props.showLinkModal = false;
+  const previousUrl = props.editor.getAttributes("link").href;
+  const url = props.url ?? previousUrl;
+
+  // cancelled
+  if (url === null) {
+    return;
+  }
+
+  // empty
+  if (url === "") {
+    props.editor.chain().focus().extendMarkRange("link").unsetLink().run();
+
+    return;
+  }
+
+  // update link
+  props.editor.chain().focus().extendMarkRange("link").setLink({ href: url }).run();
+};
 </script>
 
 <style scoped lang="postcss">

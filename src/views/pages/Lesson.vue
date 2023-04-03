@@ -2,7 +2,7 @@
   <div class="flex h-full w-full flex-col items-center overflow-scroll">
     <!-- 工具栏 -->
     <div id="toolbar-container" v-if="editor && editable">
-      <Toolbar :editor="editor" :current="current"></Toolbar>
+      <Toolbar :editor="editor" :current="current" :source-code-callback="toggleSourceCode"></Toolbar>
     </div>
 
     <!-- TAB -->
@@ -50,14 +50,14 @@ import NodeController from "../../controllers/NodeController";
 import Delete from "../operators/Delete.vue";
 import Monaco from "../components/Monaco.vue";
 import { Node } from "../../models/Node";
-import { computed, watch, onBeforeUnmount } from "vue";
+import { computed, watch, onBeforeUnmount, ref } from "vue";
 import { useRoute } from "vue-router";
 
 let rightClickEvent = null;
 let hasToc = false;
-let sourceCodeDisplay = false;
+let code = ref("");
+let sourceCodeDisplay = ref(false);
 let node = null;
-let code = "";
 let route = useRoute();
 let editable = computed(() => NodeController.getEditable());
 let shouldShowRightMenu = computed(() => RightMenuController.shouldShow && this.rightClickEvent);
@@ -70,21 +70,7 @@ let checkToc = function () {
   hasToc = editor.getHTML().startsWith("<toc></toc>");
 };
 
-let toggleSourceCode = function () {
-  this.sourceCodeDisplay = !this.sourceCodeDisplay;
-  this.editor.commands.setContent(this.node.getContent(), false);
-};
-
-let save = function () {
-  let content = editor.getHTML();
-
-  if (content != node.content) {
-    console.log("保存节点", node.id, "的内容", content.substring(0, 20) + "...");
-    node.updateContent(content);
-  }
-};
-
-const editor = new Editor({
+let editor = new Editor({
   extensions: Extensions,
   autofocus: true,
   editable: editable.value,
@@ -98,7 +84,7 @@ const editor = new Editor({
     node = current.value;
     editor.commands.setContent(node.getContent() == "" ? "「空」" : node.getContent(), false);
     checkToc();
-    code = editor.getHTML();
+    code.value = editor.getHTML();
   },
   onUpdate: (event) => {
     if (!editable) return;
@@ -106,9 +92,25 @@ const editor = new Editor({
     console.log("editor updated,save content and check toc");
     save();
     checkToc();
-    code = editor.getHTML();
   },
 });
+
+let toggleSourceCode = function () {
+  sourceCodeDisplay.value = !sourceCodeDisplay.value;
+};
+
+let save = function (content) {
+  if (content == undefined) {
+    content = editor.getHTML();
+  }
+
+  if (content != node.content) {
+    console.log("保存节点", node.id, "的内容", content.substring(0, 20) + "...");
+    node.updateContent(content);
+    code.value = content;
+    editor.commands.setContent(content, false);
+  }
+};
 
 document.addEventListener("click", () => {
   rightClickEvent = null;
