@@ -109,42 +109,10 @@ let editor = new Editor({
     editor.commands.setContent(node.getContent() == "" ? "「空」" : node.getContent(), false);
     checkToc();
     code.value = editor.getHTML();
-
-    console.log("lesson page created,hash is", route.hash);
-
-    if (route.hash.length > 0) {
-      // 获取带有锚点的元素
-      var target = document.querySelector(route.hash);
-
-      // // 如果有锚点并且目标元素存在，则滚动到该元素
-      if (window.location.hash && target) {
-        window.scrollTo({
-          top: target.offsetTop,
-          behavior: "smooth",
-        });
-      }
-    }
   },
   onUpdate: (event) => {
-    if (!editable) return;
-
     save();
     checkToc();
-
-    console.log("lesson page updated,hash is", route.hash);
-
-    if (route.hash.length > 0) {
-      // 获取带有锚点的元素
-      var target = document.querySelector(route.hash);
-
-      // // 如果有锚点并且目标元素存在，则滚动到该元素
-      if (window.location.hash && target) {
-        window.scrollTo({
-          top: target.offsetTop,
-          behavior: "smooth",
-        });
-      }
-    }
   },
 });
 
@@ -157,17 +125,32 @@ onBeforeUnmount(() => {
 });
 
 onBeforeRouteUpdate((to, from) => {
-  console.log("路由发生了变化", to.fullPath);
-  if (from.query.editable == 1) save();
+  console.log("路由发生了变化，处理lesson的展示", from.fullPath, to.fullPath);
 
   // 更新当前节点
   node.value = NodeController.getNodeById(to.params.id);
   // 更新内容
-  editor.commands.setContent(node.value.getContent(), true);
+  editor.commands.setContent(node.value.getContent(), false);
   // 更新是否可编辑
   editor.setEditable(to.query.editable == 1, false);
   // 是否显示添加的模态框
   adding = to.query.adding != undefined;
+  // 检查TOC
+  checkToc();
+
+  if (to.hash.length > 0) {
+    // 获取带有锚点的元素
+    var target = document.querySelector(to.hash);
+    console.log("滚动到锚点", target);
+
+    // 如果有锚点并且目标元素存在，则滚动到该元素
+    if (window.location.hash && target) {
+      document.querySelector("#editor-container").scrollTo({
+        top: target.offsetTop,
+        behavior: "smooth",
+      });
+    }
+  }
 });
 </script>
 

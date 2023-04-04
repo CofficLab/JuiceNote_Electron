@@ -7,10 +7,9 @@
       ring: shouldShowRightMenu,
       'active tab-active': shouldActive(node.id),
     }"
+    @click="go"
   >
-    <router-link :to="'/lessons/' + node.id">
-      <slot></slot>
-    </router-link>
+    <slot></slot>
 
     <!-- 右键菜单 -->
     <RightMenu v-if="shouldShowRightMenu" v-bind:event="rightClickEvent">
@@ -83,6 +82,9 @@ export default defineComponent({
     showRightMenu(event) {
       this.rightClickEvent = event;
       RightMenuController.shouldShow = true;
+    },
+    go() {
+      this.$router.push("/lessons/" + this.node.id);
     },
   },
   components: { Rename, RightMenu, Edit, Delete, ToTab, CreateChild, Visible },

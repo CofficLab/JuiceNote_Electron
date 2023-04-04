@@ -40,6 +40,7 @@ import { NodeViewContent, nodeViewProps, NodeViewWrapper } from "@tiptap/vue-3";
 import Monaco from "../components/Monaco.vue";
 import Trash from "../../assets/icons/trash.svg";
 import { useRoute } from "vue-router";
+import { Node } from "../../models/Node.ts";
 
 export default {
   components: { NodeViewWrapper, NodeViewContent, Monaco, Trash },
@@ -65,7 +66,7 @@ export default {
       return this.node.attrs.run == 1;
     },
     currentLanguage() {
-      let book = NodeController.getCurrentPage().getBook();
+      let book = Node.find(useRoute().params.id).getBook();
       let language = book.title.toLowerCase();
       if (language == "Golang") return "go";
       if (language == "golang") return "go";

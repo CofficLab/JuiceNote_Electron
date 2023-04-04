@@ -5,7 +5,7 @@
     <ul class="menu fixed right-4 top-28 w-56 overflow-scroll rounded-2xl bg-cyan-900/10 py-4 dark:bg-base-300" style="padding-left: 0">
       <div v-for="(heading, index) in headings">
         <li class="list-none rounded-none" style="margin: 0" :key="index">
-          <router-link :to="`#${heading.id}`" class="no-underline">
+          <router-link :to="getLink(heading)" class="no-underline">
             <DynamicPadding :count="heading.level - 1"></DynamicPadding>
             {{ heading.text }}
           </router-link>
@@ -18,6 +18,7 @@
 <script>
 import { nodeViewProps, NodeViewWrapper } from "@tiptap/vue-3";
 import DynamicPadding from "../components/DynamicPadding.vue";
+import { useRoute } from "vue-router";
 
 export default {
   components: {
@@ -32,6 +33,9 @@ export default {
   },
 
   methods: {
+    getLink(heading) {
+      return useRoute().path + `#${heading.id}`;
+    },
     handleUpdate() {
       // console.log("toc handle update");
       const headings = [];
