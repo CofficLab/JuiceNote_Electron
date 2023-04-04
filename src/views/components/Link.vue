@@ -1,5 +1,5 @@
 <template>
-  <router-link
+  <div
     :id="'node-' + node.id"
     v-bind:data-id="node.id"
     v-on:contextmenu="showRightMenu"
@@ -7,9 +7,10 @@
       ring: shouldShowRightMenu,
       'active tab-active': shouldActive(node.id),
     }"
-    :to="'/lessons/' + node.id"
   >
-    <slot></slot>
+    <router-link :to="'/lessons/' + node.id">
+      <slot></slot>
+    </router-link>
 
     <!-- 右键菜单 -->
     <RightMenu v-if="shouldShowRightMenu" v-bind:event="rightClickEvent">
@@ -32,7 +33,7 @@
         <Visible :node="node"></Visible>
       </li>
     </RightMenu>
-  </router-link>
+  </div>
 </template>
 
 <script lang="ts">
