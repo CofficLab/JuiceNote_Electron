@@ -1,19 +1,12 @@
 <template>
   <!-- 新建图书节点的弹层 -->
-  <div class="modal-open modal" v-show="adding">
+  <div class="modal-open modal">
     <Transition name="bounce">
-      <div class="modal-box" v-if="adding">
+      <div class="modal-box">
         <p class="mb-6">
-          为<span class="text-lg font-bold">「{{ parent.title }}」</span>添加子节点
+          为<span class="text-lg font-bold">「{{ node.title }}」</span>添加子节点
         </p>
-        <input
-          ref="title"
-          type="text"
-          v-model="title"
-          placeholder="输入标题"
-          class="input-bordered input-primary input w-full max-w-xs"
-          @keyup.enter="submitPageForm"
-        />
+        <input ref="title" type="text" v-model="title" placeholder="输入标题" class="input-bordered input-primary input w-full max-w-xs" @keyup.enter="submitPageForm" />
         <div class="modal-action">
           <label for="my-modal" class="btn" v-on:click="hide">取消</label>
           <label for="my-modal" class="btn" v-on:click="submitChapterForm">创建章节</label>
@@ -24,54 +17,57 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script lang="ts" setup>
+import { computed, onMounted, nextTick, ref } from "vue";
+import { useRouter, useRoute } from "vue-router";
 import NodeController from "../../controllers/NodeController";
 import ToastController from "../../controllers/ToastController";
-export default defineComponent({
-  data() {
-    return {
-      title: "",
-    };
+import { Node } from "../../models/Node";
+
+const router = useRouter();
+const route = useRoute();
+
+const props = defineProps({
+  node: {
+    type: Node,
+    required: true,
   },
-  computed: {
-    adding: () => NodeController.adding,
-    parent: () => NodeController.createChildOf,
-  },
-  watch: {
-    adding: function () {
-      if (this.adding) {
-        this.$nextTick(function () {
-          this.$refs.title.focus();
-        });
-      }
-    },
-  },
-  methods: {
-    hide() {
-      NodeController.adding = false;
-    },
-    submitPageForm() {
-      let id = this.parent.createChildPage(this.title);
-      if (typeof id == "string") {
-        ToastController.set(id);
-      } else {
-        NodeController.setCurrentPage(id);
-        this.hide();
-        this.title = "";
-      }
-    },
-    submitChapterForm() {
-      let id = this.parent.createChildChapter(this.title);
-      if (typeof id == "string") {
-        ToastController.set(id);
-      } else {
-        NodeController.setCurrentPage(id);
-        this.hide();
-        this.title = "";
-      }
-    },
-  },
+});
+
+let title = "";
+
+const hide = function () {
+  router.push({
+    path: route.path,
+  });
+};
+
+const submitPageForm = function () {
+  let id = props.node.createChildPage(title, "子节点");
+  if (typeof id == "string") {
+    ToastController.set(id);
+  } else {
+    router.push({ path: "/lessons/" + id });
+    hide();
+    title = "";
+  }
+};
+
+const submitChapterForm = function () {
+  let id = props.node.createChildChapter(title);
+  if (typeof id == "string") {
+    ToastController.set(id);
+  } else {
+    router.push({ path: "/lessons/" + id });
+    hide();
+    title = "";
+  }
+};
+
+onMounted(() => {
+  nextTick(() => {
+    // ref(title).focus();
+  });
 });
 </script>
 

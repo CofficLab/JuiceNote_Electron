@@ -32,7 +32,7 @@
     </RightMenu>
 
     <!-- 弹层 -->
-    <Add></Add>
+    <Add :node="current" v-if="adding"></Add>
     <RenameModal></RenameModal>
   </div>
 </template>
@@ -60,13 +60,15 @@ import { computed, watch, onBeforeUnmount, ref, onMounted } from "vue";
 import { onBeforeRouteUpdate, useRoute } from "vue-router";
 
 const route = useRoute();
+
+let adding = route.query.adding != undefined;
 let rightClickEvent = null;
 let hasToc = false;
 let code = ref("");
 let sourceCodeDisplay = ref(false);
 let node = null;
 let editable = computed(() => route.query.editable == 1);
-let shouldShowRightMenu = computed(() => RightMenuController.shouldShow && this.rightClickEvent);
+let shouldShowRightMenu = computed(() => RightMenuController.shouldShow && rightClickEvent);
 let current = computed(() => Node.find(route.params.id));
 
 let showRightMenu = function (event) {
@@ -155,6 +157,7 @@ onBeforeUnmount(() => {
 });
 
 onBeforeRouteUpdate((to, from) => {
+  console.log("路由发生了变化", to.fullPath);
   if (from.query.editable == 1) save();
 
   // 更新当前节点
@@ -163,6 +166,8 @@ onBeforeRouteUpdate((to, from) => {
   editor.commands.setContent(node.value.getContent(), true);
   // 更新是否可编辑
   editor.setEditable(to.query.editable == 1, false);
+  // 是否显示添加的模态框
+  adding = to.query.adding != undefined;
 });
 </script>
 

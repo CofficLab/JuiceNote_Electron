@@ -6,12 +6,13 @@
 </template>
 
 <script setup>
-import { useRoute } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import Plus from "../../assets/icons/plus.svg";
 import NodeController from "../../controllers/NodeController";
 import { Node } from "../../models/Node";
 
 let route = useRoute();
+let router = useRouter();
 let props = defineProps({
   showText: {
     type: Boolean,
@@ -30,8 +31,11 @@ let props = defineProps({
 });
 
 let add = function () {
-  // console.log("显示添加的弹层，父节点设置为", this.node);
-  NodeController.setCreateChildOf(this.node);
-  NodeController.adding = true;
+  router.push({
+    path: "/lessons/" + props.node.id,
+    query: {
+      adding: 1,
+    },
+  });
 };
 </script>
