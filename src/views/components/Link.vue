@@ -84,7 +84,7 @@ export default defineComponent({
       RightMenuController.shouldShow = true;
     },
     go() {
-      this.$router.push("/lessons/" + this.node.id);
+      this.$router.push("/lessons/" + this.node.id + "/show");
     },
   },
   components: { Rename, RightMenu, Edit, Delete, ToTab, CreateChild, Visible },

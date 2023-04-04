@@ -76,11 +76,14 @@ class Node {
 
     getContent(): string {
         let file = join(Config.databasePath, this.id + '.html')
+        let content = ''
         if (existsSync(file)) {
-            return readFileSync(file).toString()
+            content = readFileSync(file).toString()
+        } else {
+            content = this.content
         }
 
-        return this.content
+        return content == '' ? '{空}' : content
     }
 
     getTabs(): Node[] {
