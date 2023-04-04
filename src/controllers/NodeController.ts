@@ -1,12 +1,12 @@
 import { Node, emptyNode } from '../models/Node'
 import { reactive } from 'vue'
+import { useRoute } from 'vue-router'
 
 const NodeController = reactive({
     search: decodeURI(location.search),
     currentPage: new Node({}),
     isProd: location.protocol === 'file:',
     isHomePage: (new URL(location.href)).searchParams.get('id') == '/',
-    editable: (new URL(location.href)).searchParams.get('editable') == 'true',
     renderedHtml: '',
     adding: false,            // 用于判断是否显示添加的表单
     renamingNode: emptyNode,  // 正在重命名的图书节点
@@ -22,15 +22,10 @@ const NodeController = reactive({
     },
 
     getCurrentPage(): Node {
-        // console.log('get current page')
-        if (!this.currentPage.isEmpty) return this.currentPage
+        let id = useRoute().params.id
+        console.log('get current page', id)
 
-        this.setCurrentPage()
-        return this.currentPage
-    },
-
-    getEditable(): boolean {
-        return this.editable
+        return Node.find(id)
     },
 
     getSideMenus(): Node[] {
@@ -53,28 +48,12 @@ const NodeController = reactive({
         this.sideMenus = this.getCurrentPage().getBook().getChildren()
     },
 
-    setCurrentPage(id?: number) {
-        id = id ?? parseInt((new URL(location.href)).searchParams.get('id') || '0')
-        console.log('set current page to', id)
-
-        this.currentPage = Node.find(id).getFirstPage()
-        this.setSideMenus()
-        this.updateUrl()
-    },
-
     setRenamingNode(node: Node) {
         this.renamingNode = node
     },
 
     setCreateChildOf(node: Node) {
         this.createChildOf = node
-    },
-
-    toggleEditable(): string {
-        this.editable = !this.editable
-        this.updateUrl()
-        this.setCurrentPage()
-        return this.editable ? '已开启编辑模式' : '已关闭编辑模式'
     },
 
     updateChildrenPriority(children: Node[]) {
@@ -86,19 +65,16 @@ const NodeController = reactive({
         parent.setChildrenPriority(children)
 
         this.setSideMenus()
-        this.setCurrentPage(this.currentPage.id)
     },
 
     updateTitle(node: Node, title: string): string {
         let result = node.updateTitle(title)
-        this.setCurrentPage(this.getCurrentPage().id)
 
         return result
     },
 
     updateContent(node: Node, content: string): string {
         let result = node.updateContent(content)
-        this.setCurrentPage(this.getCurrentPage().id)
 
         return result
     },
@@ -109,21 +85,17 @@ const NodeController = reactive({
 
     updateVisible(node: Node): string {
         let result = node.updateVisible()
-        this.setCurrentPage(this.getCurrentPage().id)
 
         return result
     },
 
     transformToTab(node: Node): string {
         let result = node.transformToTab()
-        this.setCurrentPage(this.getCurrentPage().id)
 
         return result
     },
 
     delete(target: Node): string {
-        this.setCurrentPage(target.getParent().id)
-
         return target.delete()
     },
 })

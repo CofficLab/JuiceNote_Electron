@@ -36,134 +36,134 @@
 </template>
 
 <script>
-  import { NodeViewContent, nodeViewProps, NodeViewWrapper } from '@tiptap/vue-3';
-  import Monaco from '../components/Monaco.vue';
-  import NodeController from '../../controllers/NodeController';
-  import Trash from '../../assets/icons/trash.svg';
+import { NodeViewContent, nodeViewProps, NodeViewWrapper } from "@tiptap/vue-3";
+import Monaco from "../components/Monaco.vue";
+import Trash from "../../assets/icons/trash.svg";
+import { useRoute } from "vue-router";
 
-  export default {
-    components: { NodeViewWrapper, NodeViewContent, Monaco, Trash },
+export default {
+  components: { NodeViewWrapper, NodeViewContent, Monaco, Trash },
 
-    data() {
-      return {
-        code: '',
-        current: 0,
-        index: 0,
-        loadMonaco: false, // 获取code后再加载Monaco
-      };
+  data() {
+    return {
+      code: "",
+      current: 0,
+      index: 0,
+      loadMonaco: false, // 获取code后再加载Monaco
+    };
+  },
+
+  computed: {
+    editable: () => useRoute().query.editable,
+    monacoEditorDisplay() {
+      return this.node.attrs.editor == true;
     },
-
-    computed: {
-      editable: () => NodeController.getEditable(),
-      monacoEditorDisplay() {
-        return this.node.attrs.editor == true;
-      },
-      nodeViewContentDisplay() {
-        return !this.nodeViewContentHidden && this.node.attrs.editor != true;
-      },
-      runButtonDisplay() {
-        return this.node.attrs.run == 1;
-      },
-      currentLanguage() {
-        let book = NodeController.getCurrentPage().getBook();
-        let language = book.title.toLowerCase();
-        if (language == 'Golang') return 'go';
-        if (language == 'golang') return 'go';
-
-        console.log('自动判断图书对应的编程语言，结果', language);
-        return language;
-      },
-      language() {
-        if (this.node.attrs.language == '') {
-          // console.log('没有设置编程语言，自动设置为', this.currentLanguage);
-          // this.updateAttributes({ language: this.currentLanguage });
-          return this.currentLanguage;
-        }
-
-        return this.node.attrs.language;
-      },
+    nodeViewContentDisplay() {
+      return !this.nodeViewContentHidden && this.node.attrs.editor != true;
     },
-
-    methods: {
-      keyup(value) {
-        // console.log("更新代码块的内容为", value);
-        this.updateAttributes({
-          code: value,
-        });
-      },
-      toggleRun() {
-        let run = parseInt(this.node.attrs.run);
-        run = isNaN(run) ? 0 : run;
-        this.updateAttributes({
-          run: Math.abs(run - 1),
-        });
-      },
-      setLanguage(event) {
-        console.log('set language to', event.target.value);
-        this.updateAttributes({
-          language: event.target.value,
-        });
-      },
-      setIndex() {
-        this.$nextTick(function () {
-          if (!this.$refs.content) return;
-          let myElement = this.$refs.content.$el;
-          let parentElement = myElement.parentElement;
-          if (!parentElement) return;
-
-          if (Array.from(parentElement.classList).indexOf('code-editor-container') < 0) {
-            this.index = 0;
-            return;
-          }
-
-          this.index = Array.from(parentElement.children).indexOf(myElement);
-          // console.log("my index is", this.index);
-        });
-      },
-      setCurrent: function () {
-        this.$nextTick(function () {
-          let parentElement = this.$refs.content;
-          if (!parentElement) return;
-
-          this.current = parentElement.$el.parentElement?.getAttribute('data-current') ?? 0;
-          // console.log("active index is", this.current, "my index is", this.index);
-        });
-      },
-      deleteSelf() {
-        this.deleteNode();
-      },
+    runButtonDisplay() {
+      return this.node.attrs.run == 1;
     },
+    currentLanguage() {
+      let book = NodeController.getCurrentPage().getBook();
+      let language = book.title.toLowerCase();
+      if (language == "Golang") return "go";
+      if (language == "golang") return "go";
 
-    mounted() {
-      this.code = this.node.attrs.code;
-      this.loadMonaco = true;
-      this.setCurrent();
-      this.setIndex();
-      this.editor.on('update', () => {
-        this.setCurrent();
-        this.setIndex();
+      console.log("自动判断图书对应的编程语言，结果", language);
+      return language;
+    },
+    language() {
+      if (this.node.attrs.language == "") {
+        // console.log('没有设置编程语言，自动设置为', this.currentLanguage);
+        // this.updateAttributes({ language: this.currentLanguage });
+        return this.currentLanguage;
+      }
+
+      return this.node.attrs.language;
+    },
+  },
+
+  methods: {
+    keyup(value) {
+      // console.log("更新代码块的内容为", value);
+      this.updateAttributes({
+        code: value,
       });
     },
+    toggleRun() {
+      let run = parseInt(this.node.attrs.run);
+      run = isNaN(run) ? 0 : run;
+      this.updateAttributes({
+        run: Math.abs(run - 1),
+      });
+    },
+    setLanguage(event) {
+      console.log("set language to", event.target.value);
+      this.updateAttributes({
+        language: event.target.value,
+      });
+    },
+    setIndex() {
+      this.$nextTick(function () {
+        if (!this.$refs.content) return;
+        let myElement = this.$refs.content.$el;
+        let parentElement = myElement.parentElement;
+        if (!parentElement) return;
 
-    props: nodeViewProps,
-  };
+        if (Array.from(parentElement.classList).indexOf("code-editor-container") < 0) {
+          this.index = 0;
+          return;
+        }
+
+        this.index = Array.from(parentElement.children).indexOf(myElement);
+        // console.log("my index is", this.index);
+      });
+    },
+    setCurrent: function () {
+      this.$nextTick(function () {
+        let parentElement = this.$refs.content;
+        if (!parentElement) return;
+
+        this.current = parentElement.$el.parentElement?.getAttribute("data-current") ?? 0;
+        // console.log("active index is", this.current, "my index is", this.index);
+      });
+    },
+    deleteSelf() {
+      this.deleteNode();
+    },
+  },
+
+  mounted() {
+    this.code = this.node.attrs.code;
+    this.loadMonaco = true;
+    this.setCurrent();
+    this.setIndex();
+    this.editor.on("update", () => {
+      this.setCurrent();
+      this.setIndex();
+    });
+  },
+
+  props: nodeViewProps,
+};
 </script>
 
 <style lang="postcss">
-  .code-block-operators {
-    @apply absolute right-0 top-0 z-50 flex h-8 w-48 items-end justify-end bg-sky-600 shadow-xl dark:bg-green-900/50;
+.code-block-operators {
+  @apply absolute right-0 top-0 z-50 flex h-8 w-48 items-end justify-end bg-sky-600 shadow-xl dark:bg-green-900/50;
 
-    button {
-      @apply btn-sm btn m-0 rounded-none;
-    }
-    select {
-      @apply select-sm max-w-xs rounded-none bg-green-500/60 outline-none dark:bg-green-800/60;
-    }
-    div.selected {
-      @apply max-w-xs rounded-none px-4 outline-none;
-    }
+  button {
+    @apply btn-sm btn m-0 rounded-none;
   }
-  .monaco-banner {
-    @apply flex items-center justify-end rounded-tr bg-gradient-to-r from-transparent via-transparent to-cyan-500/20 pr-2 text-slate-400;
+  select {
+    @apply select-sm max-w-xs rounded-none bg-green-500/60 outline-none dark:bg-green-800/60;
   }
+  div.selected {
+    @apply max-w-xs rounded-none px-4 outline-none;
+  }
+}
+.monaco-banner {
+  @apply flex items-center justify-end rounded-tr bg-gradient-to-r from-transparent via-transparent to-cyan-500/20 pr-2 text-slate-400;
+}
 </style>

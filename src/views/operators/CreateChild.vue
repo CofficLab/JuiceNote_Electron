@@ -5,36 +5,33 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup>
+import { useRoute } from "vue-router";
 import Plus from "../../assets/icons/plus.svg";
 import NodeController from "../../controllers/NodeController";
 import { Node } from "../../models/Node";
-export default defineComponent({
-  props: {
-    showText: {
-      type: Boolean,
-      default: true,
-      required: false,
-    },
-    showIcon: {
-      type: Boolean,
-      default: true,
-      required: false,
-    },
-    node: {
-      type: Node,
-      default: NodeController.getCurrentPage(),
-      require: false,
-    },
+
+let route = useRoute();
+let props = defineProps({
+  showText: {
+    type: Boolean,
+    default: true,
+    required: false,
   },
-  methods: {
-    add() {
-      // console.log("显示添加的弹层，父节点设置为", this.node);
-      NodeController.setCreateChildOf(this.node);
-      NodeController.adding = true;
-    },
+  showIcon: {
+    type: Boolean,
+    default: true,
+    required: false,
   },
-  components: { Plus },
+  node: {
+    type: Node,
+    require: false,
+  },
 });
+
+let add = function () {
+  // console.log("显示添加的弹层，父节点设置为", this.node);
+  NodeController.setCreateChildOf(this.node);
+  NodeController.adding = true;
+};
 </script>

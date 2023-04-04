@@ -22,24 +22,25 @@
 </template>
 
 <script setup>
-  import { computed, watch } from 'vue';
-  import NodeController from '../../controllers/NodeController';
-  import { Node } from '../../models/Node';
-  import DynamicPadding from '../components/DynamicPadding.vue';
-  import Link from '../components/Link.vue';
+import { computed, watch } from "vue";
+import { useRoute } from "vue-router";
+import { Node } from "../../models/Node";
+import DynamicPadding from "../components/DynamicPadding.vue";
+import Link from "../components/Link.vue";
 
-  const editable = computed(() => NodeController.getEditable());
+const route = useRoute();
+const editable = computed(() => route.query.editable == 1);
 
-  const getSubMenus = function (menu) {
-    return editable ? menu.getChildren() : menu.getVisibleChildren();
-  };
+const getSubMenus = function (menu) {
+  return editable ? menu.getChildren() : menu.getVisibleChildren();
+};
 
-  const props = defineProps({
-    item: Node,
-    current: Node,
-  });
+const props = defineProps({
+  item: Node,
+  current: Node,
+});
 
-  watch(editable, () => {
-    console.log('side menus 检测到 editable 发生变化');
-  });
+watch(editable, () => {
+  console.log("side menus 检测到 editable 发生变化");
+});
 </script>

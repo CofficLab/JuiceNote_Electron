@@ -31,9 +31,8 @@ import Toast from "./Toast.vue";
 import { useRoute } from "vue-router";
 import { computed } from "vue";
 
-const props = defineProps({ current: { type: Node, required: true } });
-
 const currentId = computed(() => useRoute().params.id);
+const current = computed(() => Node.find(currentId.value));
 </script>
 
 <style scoped lang="postcss">

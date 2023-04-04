@@ -2,22 +2,10 @@
   <node-view-wrapper class="flex flex-row overflow-auto rounded">
     <div class="flex w-full flex-col overflow-clip shadow-sm">
       <!-- 标题标签 -->
-      <div
-        class="tabs flex justify-between rounded-none bg-yellow-500/50 p-0"
-        contenteditable="false"
-        v-if="titles.length > 1 || editable"
-      >
+      <div class="tabs flex justify-between rounded-none bg-yellow-500/50 p-0" contenteditable="false" v-if="titles.length > 1 || editable">
         <div class="flex flex-row">
           <div v-for="(title, index) in titles" class="p-0 outline-none">
-            <a
-              class="code-title"
-              contenteditable="true"
-              :data-index="index"
-              :class="{ 'bg-gray-800': current == index }"
-              @click="activate(index)"
-              @keyup="(event) => save(event)"
-              >{{ title }}</a
-            >
+            <a class="code-title" contenteditable="true" :data-index="index" :class="{ 'bg-gray-800': current == index }" @click="activate(index)" @keyup="(event) => save(event)">{{ title }}</a>
           </div>
         </div>
 
@@ -34,11 +22,7 @@
         </div>
       </div>
 
-      <node-view-content
-        ref="contents"
-        :data-current="current"
-        class="code-editor-container bg-red-400/40 p-0"
-      ></node-view-content>
+      <node-view-content ref="contents" :data-current="current" class="code-editor-container bg-red-400/40 p-0"></node-view-content>
     </div>
   </node-view-wrapper>
 </template>
@@ -48,6 +32,7 @@ import { nodeViewProps, NodeViewWrapper, NodeViewContent } from "@tiptap/vue-3";
 import NodeController from "../../controllers/NodeController";
 import Plus from "../../assets/icons/plus.svg";
 import Trash from "../../assets/icons/trash.svg";
+import { useRoute } from "vue-router";
 
 export default {
   components: {
@@ -58,7 +43,7 @@ export default {
   },
   props: nodeViewProps,
   computed: {
-    editable: () => NodeController.getEditable(),
+    editable: () => useRoute().query.editable,
     current() {
       return this.node.attrs.current;
     },

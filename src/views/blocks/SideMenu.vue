@@ -3,44 +3,30 @@
     <div class="sticky top-0 z-50">
       <!-- 空白，用于拖动 -->
       <div class="z-50 w-full bg-base-300">
-        <div
-          class="draggable"
-          :class="{ 'h-12': !hideTitleBar, 'h-0': hideTitleBar }"
-        ></div>
+        <div class="draggable" :class="{ 'h-12': !hideTitleBar, 'h-0': hideTitleBar }"></div>
       </div>
       <!-- 图书信息 -->
-      <div
-        class="book-info"
-        :class="{ 'top-12': !hideTitleBar, 'top-0': hideTitleBar }"
-      >
+      <div class="book-info" :class="{ 'top-12': !hideTitleBar, 'top-0': hideTitleBar }">
         <!-- 图书名 -->
         <h1 id="book-name">{{ book.title }}</h1>
 
         <!-- 图书的TAB，比如：教程、手册 -->
         <div class="tabs flex justify-center" v-if="bookTabs.length > 0">
-          <Link class="tab-lifted tab" v-for="tab in bookTabs" :node="tab">{{
-            tab.title
-          }}</Link>
+          <Link class="tab-lifted tab" v-for="tab in bookTabs" :node="tab">{{ tab.title }}</Link>
         </div>
       </div>
     </div>
 
     <div class="h-full pb-24">
       <!-- 章节与页面 -->
-      <ul
-        class="menu menu-compact flex w-full flex-col p-0 px-1"
-        v-for="(item, index) in menus"
-      >
+      <ul class="menu menu-compact flex w-full flex-col p-0 px-1" v-for="(item, index) in menus">
         <li v-if="index > 0"></li>
         <SideMenuItem :item="item" :current="current"></SideMenuItem>
       </ul>
       <div class="pointer-events-none sticky bottom-0 flex h-20"></div>
 
       <!-- 底部的图书logo -->
-      <div
-        v-if="book.getLogoUrl().length > 0"
-        class="h-20 opacity-90 dark:brightness-50"
-      >
+      <div v-if="book.getLogoUrl().length > 0" class="h-20 opacity-90 dark:brightness-50">
         <img :src="book.getLogoUrl()" alt="" />
       </div>
     </div>
@@ -66,7 +52,7 @@ export default defineComponent({
     current() {
       return Node.find(this.$route.params.id);
     },
-    editable: () => NodeController.getEditable(),
+    editable: () => useRoute().query.editable,
     hideTitleBar: () => FullScreenController.full,
     book(): Node {
       return this.current.getBook();
@@ -78,9 +64,7 @@ export default defineComponent({
       if (this.bookTabs.length > 0) {
         let firstPage = this.current.getFirstPage();
 
-        return firstPage
-          .getParents()
-          .find((parent) => parent.getParent().isBook);
+        return firstPage.getParents().find((parent) => parent.getParent().isBook);
       }
 
       return this.book;

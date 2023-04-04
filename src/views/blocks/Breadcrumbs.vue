@@ -24,10 +24,9 @@ import { computed } from "vue";
 import { useRoute } from "vue-router";
 import { Node } from "../../models/Node";
 import Children from "../components/Children.vue";
-import NodeController from "../../controllers/NodeController";
 
 const current = computed(() => Node.find(useRoute().params.id));
-const editable = computed(() => NodeController.getEditable());
+const editable = computed(() => useRoute().query.editable == 1);
 const breadcrumbs = computed(() => current.value.getParents().concat([current.value]));
 </script>
 

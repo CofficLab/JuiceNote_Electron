@@ -19,44 +19,29 @@
         </div>
       </div>
       <div class="chat-bubble relative" :class="node.attrs.position == 'end' ? 'chat-bubble-info' : ''">
-        <node-view-content
-          class="border border-dashed px-4 dark:border-cyan-800"
-          v-bind:class="{ 'border-none': !editable }"
-        />
+        <node-view-content class="border border-dashed px-4 dark:border-cyan-800" v-bind:class="{ 'border-none': !editable }" />
       </div>
     </div>
   </node-view-wrapper>
 </template>
 
-<script>
+<script setup>
 import { NodeViewContent, nodeViewProps, NodeViewWrapper } from "@tiptap/vue-3";
-import Info from "../../assets/icons/info.svg";
-import RouteController from "../../controllers/RouteController";
+import { useRoute } from "vue-router";
 
-export default {
-  components: {
-    NodeViewWrapper,
-    NodeViewContent,
-    Info,
-  },
+const props = defineProps(nodeViewProps);
 
-  computed: {
-    editable: () => RouteController.editMode,
-  },
+const route = useRoute();
+const editable = computed(() => route.query.editable == 1);
 
-  methods: {
-    switchPosition() {
-      console.log("切换左右");
-      this.updateAttributes({
-        position: this.node.attrs.position == "start" ? "end" : "start",
-      });
-    },
-    deleteSelf() {
-      this.deleteNode();
-    },
-  },
-
-  props: nodeViewProps,
+const switchPosition = function () {
+  console.log("切换左右");
+  this.updateAttributes({
+    position: this.node.attrs.position == "start" ? "end" : "start",
+  });
+};
+const deleteSelf = function () {
+  this.deleteNode();
 };
 </script>
 

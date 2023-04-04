@@ -7,13 +7,8 @@
             <h2 class="card-title">{{ book.title }}</h2>
           </div>
           <figure class="max-h-40 rounded-t-xl">
-            <img v-if="!book.cover" src="/images/book.png" alt="Shoes" />
-            <img
-              v-else
-              :src="'data:image/png;base64,' + book.cover"
-              alt="Shoes"
-              class="object-none"
-            />
+            <img v-if="!book.cover" src="/images/book.png" />
+            <img v-else :src="'data:image/png;base64,' + book.cover" class="object-none" />
           </figure>
         </div>
       </router-link>
@@ -22,8 +17,8 @@
 </template>
 
 <script setup>
-import { Node } from "../../models/Node";
 import { computed } from "vue";
+import { Node } from "../../models/Node";
 
 const books = computed(() => Node.getBooks());
 </script>

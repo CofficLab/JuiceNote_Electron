@@ -2,27 +2,15 @@
   <node-view-wrapper>
     <div class="flex flex-row overflow-auto pb-4" :class="{ ring: editable }">
       <!-- 拖动的把手 -->
-      <div
-        class="drag-handle bg-primary-600/40 mr-1 h-10 w-4"
-        v-bind:class="{ hidden: !editable }"
-        contenteditable="false"
-        draggable="true"
-        data-drag-handle
-      ></div>
+      <div class="drag-handle bg-primary-600/40 mr-1 h-10 w-4" v-bind:class="{ hidden: !editable }" contenteditable="false" draggable="true" data-drag-handle></div>
 
       <div class="flex w-full flex-col overflow-clip shadow-sm">
         <!-- 标题按钮 -->
         <div class="tabs tabs-boxed rounded-none bg-yellow-500/50" contenteditable="false">
           <div v-for="(title, index) in titles">
-            <a
-              class="tab no-underline"
-              contenteditable="true"
-              v-bind:data-index="index"
-              v-bind:class="{ 'tab-active': current == index }"
-              @click="activate(index)"
-              @keyup="(event) => save(event)"
-              >{{ title }}</a
-            >
+            <a class="tab no-underline" contenteditable="true" v-bind:data-index="index" v-bind:class="{ 'tab-active': current == index }" @click="activate(index)" @keyup="(event) => save(event)">{{
+              title
+            }}</a>
           </div>
         </div>
 
@@ -49,7 +37,7 @@ export default {
     };
   },
   computed: {
-    editable: () => NodeController.getEditable(),
+    editable: () => useRoute().query.editable,
   },
   methods: {
     activate: function (index) {

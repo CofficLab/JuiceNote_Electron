@@ -4,30 +4,17 @@
       <div class="flex items-center justify-between">
         <Info></Info>
       </div>
-      <node-view-content
-        class="border border-dashed px-4 dark:border-cyan-800"
-        v-bind:class="{ 'border-none': !editable }"
-      />
+      <node-view-content class="border border-dashed px-4 dark:border-cyan-800" v-bind:class="{ 'border-none': !editable }" />
     </div>
   </node-view-wrapper>
 </template>
 
-<script>
+<script setup>
 import { NodeViewContent, nodeViewProps, NodeViewWrapper } from "@tiptap/vue-3";
+import { useRoute } from "vue-router";
 import Info from "../../assets/icons/info.svg";
-import RouteController from "../../controllers/RouteController";
 
-export default {
-  components: {
-    NodeViewWrapper,
-    NodeViewContent,
-    Info,
-  },
-
-  computed: {
-    editable: () => RouteController.editMode,
-  },
-
-  props: nodeViewProps,
-};
+const route = useRoute();
+const editable = route.query.editable;
+const props = defineProps(nodeViewProps);
 </script>
