@@ -8,8 +8,6 @@
 
 <script setup>
 import RightMenuController from "../../controllers/RightMenuController";
-import ToastController from "../../controllers/ToastController";
-import NodeController from "../../controllers/NodeController";
 import PencilSquare from "../../assets/icons/pencil-square.svg";
 import ArrowUturnLeft from "../../assets/icons/arrow-uturn-left.svg";
 import { useRoute, useRouter } from "vue-router";
@@ -34,7 +32,7 @@ const editable = computed(() => route.query.editable == 1);
 const toggleEditable = function () {
   RightMenuController.hide();
   router.push({
-    path: route.path,
+    path: "/lessons/" + route.params.id + "/edit",
     query: {
       editable: Math.abs((route.query.editable ?? 0) - 1),
     },
