@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="grid grid-cols-3 gap-4 bg-sky-400/10 p-12">
-      <router-link :to="'/lessons/' + book.id" v-for="book in books">
+      <router-link :to="'/lessons/' + book.id + '/show'" v-for="book in books">
         <div class="card w-56 bg-base-100 shadow-xl">
           <div class="card-body">
             <h2 class="card-title">{{ book.title }}</h2>

@@ -26,7 +26,7 @@ import { Node } from "../../models/Node";
 import Children from "../components/Children.vue";
 
 const current = computed(() => Node.find(useRoute().params.id));
-const editable = computed(() => useRoute().query.editable == 1);
+const editable = computed(() => useRoute().name == "lessons.edit");
 const breadcrumbs = computed(() => current.value.getParents().concat([current.value]));
 </script>
 

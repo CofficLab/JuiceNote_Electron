@@ -5,34 +5,35 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-import NodeController from "../../controllers/NodeController";
+<script setup>
 import ArrowLeftCircle from "../../assets/icons/arrow-left-circle.svg";
 import { Node } from "../../models/Node";
-export default defineComponent({
-  props: {
-    showText: {
-      type: Boolean,
-      default: true,
-      required: false,
-    },
-    showIcon: {
-      type: Boolean,
-      default: true,
-      required: false,
-    },
-    node: {
-      type: Node,
-      require: true,
-    },
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+const props = defineProps({
+  showText: {
+    type: Boolean,
+    default: true,
+    required: false,
   },
-  methods: {
-    rename() {
-      console.log("显示重命名的弹层");
-      NodeController.setRenamingNode(this.node);
-    },
+  showIcon: {
+    type: Boolean,
+    default: true,
+    required: false,
   },
-  components: { ArrowLeftCircle },
+  node: {
+    type: Node,
+    require: true,
+  },
 });
+
+const rename = function () {
+  router.push({
+    path: "/lessons/" + props.node.id + "/edit",
+    query: {
+      renaming: 1,
+    },
+  });
+};
 </script>

@@ -1,17 +1,9 @@
 <template>
   <!-- 重命名的弹层 -->
-  <div class="modal-open modal" v-show="display">
+  <div class="modal-open modal">
     <Transition name="bounce">
-      <div class="modal-box" v-if="display">
-        <input
-          ref="title"
-          type="text"
-          v-model="title"
-          placeholder="输入新的标题"
-          autofocus
-          class="input-bordered input-primary input w-full max-w-xs bg-yellow-300/10"
-          @keyup.enter="submit"
-        />
+      <div class="modal-box">
+        <input ref="title" type="text" v-model="title" placeholder="输入新的标题" autofocus class="input-bordered input-primary input w-full max-w-xs bg-yellow-300/10" @keyup.enter="submit" />
         <div class="modal-action">
           <label for="my-modal" class="btn" v-on:click="hide">取消</label>
           <label for="my-modal" class="btn" v-on:click="submit">确定</label>
@@ -21,46 +13,35 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script lang="ts" setup>
 import NodeController from "../../controllers/NodeController";
 import ToastController from "../../controllers/ToastController";
-import { emptyNode } from "../../models/Node";
-export default defineComponent({
-  data() {
-    return {
-      title: "",
-    };
-  },
-  computed: {
-    node: () => NodeController.getRenamingNode(),
-    display: () => !NodeController.getRenamingNode().isEmpty,
-  },
-  mounted: function () {
-    this.title = this.node.title;
-  },
-  watch: {
-    node() {
-      console.log("正在重命名的节点发生了变化，现在是", this.node.id, this.node.title);
-      this.title = this.node.title;
-    },
-    display() {
-      console.log("正在重命名的节点的display发生了变化");
-      this.$nextTick(function () {
-        if (this.$refs.title != null) this.$refs.title.focus();
-      });
-    },
-  },
-  methods: {
-    hide() {
-      NodeController.setRenamingNode(emptyNode);
-    },
-    submit() {
-      ToastController.set(NodeController.updateTitle(this.node, this.title));
-      this.hide();
-    },
+import { Node } from "../../models/Node";
+import { useRoute, useRouter } from "vue-router";
+
+const router = useRouter();
+const route = useRoute();
+
+const props = defineProps({
+  node: {
+    type: Node,
+    required: true,
   },
 });
+
+const title = "";
+
+const hide = () => {
+  router.push({
+    name: "lessons.show",
+    params: { id: route.params.id },
+  });
+};
+
+const submit = () => {
+  ToastController.set(NodeController.updateTitle(props.node, title));
+  hide();
+};
 </script>
 
 <style>

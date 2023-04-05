@@ -1,7 +1,7 @@
 <template>
   <div class="flex h-full w-full flex-col items-center overflow-scroll">
     <!-- 工具栏 -->
-    <div id="toolbar-container" v-if="editor && editable">
+    <div id="toolbar-container">
       <Toolbar :editor="editor" :current="current" :source-code-callback="toggleSourceCode"></Toolbar>
     </div>
 
@@ -30,7 +30,7 @@
 
     <!-- 弹层 -->
     <Add :node="current" v-if="adding"></Add>
-    <RenameModal></RenameModal>
+    <RenameModal :node="current" v-if="renaming"></RenameModal>
   </div>
 </template>
 
@@ -56,9 +56,13 @@ import Add from "../modals/Add.vue";
 import { computed, watch, onBeforeUnmount, ref, onMounted } from "vue";
 import { onBeforeRouteUpdate, useRoute } from "vue-router";
 
+console.log("编辑模式");
+
 const route = useRoute();
 
 let adding = route.query.adding != undefined;
+let renaming = route.query.renaming != undefined;
+
 let rightClickEvent = null;
 let hasToc = false;
 let code = ref("");

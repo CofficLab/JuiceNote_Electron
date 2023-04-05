@@ -28,14 +28,13 @@ const props = defineProps({
 
 const router = useRouter();
 const route = useRoute();
-const editable = computed(() => route.query.editable == 1);
+const editable = computed(() => route.name == "lessons.edit");
 const toggleEditable = function () {
   RightMenuController.hide();
-  router.push({
-    path: "/lessons/" + route.params.id + "/edit",
-    query: {
-      editable: Math.abs((route.query.editable ?? 0) - 1),
-    },
-  });
+  if (editable.value == true) {
+    router.push({ name: "lessons.show", params: { id: route.params.id } });
+  } else {
+    router.push({ name: "lessons.edit", params: { id: route.params.id } });
+  }
 };
 </script>
