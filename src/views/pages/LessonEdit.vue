@@ -9,7 +9,7 @@
 
     <!-- 编辑框 -->
     <div id="editor-container" @contextmenu.prevent="showRightMenu">
-      <editor-content v-if="!sourceCodeDisplay" :editor="editor" class="prose h-screen w-full overflow-visible xl:prose-lg" :class="{ 'lg:mr-56': hasToc }" />
+      <editor-content v-if="!sourceCodeDisplay" :editor="editor" class="prose h-screen w-full overflow-visible xl:prose-lg lg:mr-56" />
     </div>
 
     <!-- 源码 -->
@@ -18,7 +18,7 @@
     </div>
 
     <!-- 右键菜单 -->
-    <RightMenu v-if="shouldShowRightMenu" :event="rightClickEvent">
+    <RightMenu :event="rightClickEvent">
       <Edit :node="current"></Edit>
       <Rename :node="current"></Rename>
       <CreateChild :node="current"></CreateChild>
@@ -53,7 +53,7 @@ import Delete from "../operators/Delete.vue";
 import Monaco from "../components/Monaco.vue";
 import { Node } from "../../models/Node";
 import Add from "../modals/Add.vue";
-import { computed, watch, onBeforeUnmount, ref, onMounted } from "vue";
+import { computed, onBeforeUnmount, ref } from "vue";
 import { onBeforeRouteUpdate, useRoute } from "vue-router";
 
 console.log("编辑模式");
@@ -63,21 +63,14 @@ const route = useRoute();
 let adding = route.query.adding != undefined;
 let renaming = route.query.renaming != undefined;
 
-let rightClickEvent = null;
-let hasToc = false;
+let rightClickEvent = ref(null);
 let code = ref("");
 let sourceCodeDisplay = ref(false);
 let node = null;
-let editable = computed(() => route.query.editable == 1);
-let shouldShowRightMenu = computed(() => RightMenuController.shouldShow && rightClickEvent);
 let current = computed(() => Node.find(route.params.id));
 
 let showRightMenu = function (event) {
-  rightClickEvent = event;
-  RightMenuController.show();
-};
-let checkToc = function () {
-  hasToc = editor.getHTML().startsWith("<toc></toc>");
+  rightClickEvent.value = event;
 };
 let toggleSourceCode = function () {
   sourceCodeDisplay.value = !sourceCodeDisplay.value;
@@ -98,7 +91,6 @@ let save = function (content) {
 let editor = new Editor({
   extensions: Extensions,
   autofocus: true,
-  editable: editable.value,
   injectCSS: true,
   enableInputRules: true,
   enablePasteRules: false,
@@ -108,17 +100,11 @@ let editor = new Editor({
   onCreate: () => {
     node = current.value;
     editor.commands.setContent(node.getContent() == "" ? "「空」" : node.getContent(), false);
-    checkToc();
     code.value = editor.getHTML();
   },
   onUpdate: (event) => {
     save();
-    checkToc();
   },
-});
-
-document.addEventListener("click", () => {
-  rightClickEvent = null;
 });
 
 onBeforeUnmount(() => {
@@ -136,8 +122,6 @@ onBeforeRouteUpdate((to, from) => {
   editor.setEditable(to.query.editable == 1, false);
   // 是否显示添加的模态框
   adding = to.query.adding != undefined;
-  // 检查TOC
-  checkToc();
 
   if (to.hash.length > 0) {
     // 获取带有锚点的元素

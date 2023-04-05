@@ -1,21 +1,38 @@
 <template>
-  <div ref="menus" class="right-menus" v-bind:style="{ left: x + 'px', top: y + 'px' }">
+  <div ref="menus" v-show="isVisible" class="right-menus" v-bind:style="{ left: x + 'px', top: y + 'px' }">
     <slot></slot>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup>
+import { defineProps, watch, ref } from "vue";
 
-export default defineComponent({
-  props: ["event"],
-  data() {
-    return {
-      x: this.event.x,
-      y: this.event.y,
-    };
+const props = defineProps({
+  event: {
+    type: Object,
+    require: false,
   },
 });
+
+let isVisible = ref(false);
+
+let x = 0;
+let y = 0;
+
+document.addEventListener("click", () => {
+  console.log("右键菜单检测到click事件");
+  isVisible.value = false;
+});
+
+watch(
+  () => props.event,
+  (newValue, oldValue) => {
+    console.log("event发生变化", newValue);
+    x = newValue.x;
+    y = newValue.y;
+    isVisible.value = true;
+  }
+);
 </script>
 
 <style lang="postcss">

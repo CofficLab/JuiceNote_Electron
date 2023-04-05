@@ -7,8 +7,9 @@
       ring: shouldShowRightMenu,
       'active tab-active': shouldActive(node.id),
     }"
+    @click="go"
   >
-    <div @click="go">
+    <div>
       <slot></slot>
     </div>
 
@@ -86,6 +87,7 @@ export default defineComponent({
       RightMenuController.shouldShow = true;
     },
     go() {
+      if (this.shouldShowRightMenu) return;
       this.$router.push("/lessons/" + this.node.id + "/show");
     },
   },

@@ -4,11 +4,11 @@
 
     <!-- 编辑框 -->
     <div id="editor-container" @contextmenu.prevent="showRightMenu">
-      <editor-content v-if="!sourceCodeDisplay" :editor="editor" class="prose h-screen w-full overflow-visible xl:prose-lg" :class="{ 'lg:mr-56': hasToc }" />
+      <editor-content v-if="!sourceCodeDisplay" :editor="editor" class="prose h-screen w-full overflow-visible xl:prose-lg lg:mr-56" />
     </div>
 
     <!-- 右键菜单 -->
-    <RightMenu v-if="shouldShowRightMenu" :event="rightClickEvent">
+    <RightMenu :event="rightClickEvent">
       <Copy :bookNode="current"></Copy>
       <Prev :node="current" :current="current"></Prev>
       <Next :node="current"></Next>
@@ -24,76 +24,37 @@ import Copy from "../operators/Copy.vue";
 import Prev from "../operators/Prev.vue";
 import Next from "../operators/Next.vue";
 import NodeController from "../../controllers/NodeController";
-import RightMenuController from "../../controllers/RightMenuController";
 import { Node } from "../../models/Node";
-import { computed, onBeforeUnmount, ref } from "vue";
-import { onBeforeRouteUpdate, useRoute, useRouter } from "vue-router";
+import { onBeforeUnmount, ref } from "vue";
+import { onBeforeRouteUpdate, useRoute } from "vue-router";
 import NodeTab from "../components/NodeTab.vue";
 
 const route = useRoute();
-const router = useRouter();
 
-let rightClickEvent = null;
-let hasToc = false;
-let code = ref("");
+let rightClickEvent = ref(null);
 let sourceCodeDisplay = ref(false);
-let node = null;
-let shouldShowRightMenu = computed(() => RightMenuController.shouldShow && rightClickEvent);
-let current = computed(() => Node.find(route.params.id));
-
-let showRightMenu = function (event) {
-  rightClickEvent = event;
-  RightMenuController.show();
-};
-let checkToc = function () {
-  hasToc = editor.getHTML().startsWith("<toc></toc>");
-};
-
+let current = Node.find(route.params.id);
 let editor = new Editor({
   extensions: Extensions,
-  autofocus: true,
   editable: false,
-  injectCSS: true,
-  enableInputRules: true,
-  enablePasteRules: false,
-  parseOptions: {
-    preserveWhitespace: "full",
-  },
-  onCreate: () => {
-    node = current.value;
-    editor.commands.setContent(node.getContent(), false);
-    checkToc();
-    code.value = editor.getHTML();
-  },
-  onUpdate: (event) => {
-    checkToc();
-  },
+  content: current.getContent(),
 });
 
-document.addEventListener("click", () => {
-  rightClickEvent = null;
-});
-
-onBeforeUnmount(() => {
-  editor.destroy();
-});
+let showRightMenu = function (event) {
+  rightClickEvent.value = event;
+};
 
 onBeforeRouteUpdate((to, from) => {
   console.log("路由发生了变化，处理lesson的展示", from.fullPath, to.fullPath);
 
   // 更新当前节点
-  node.value = NodeController.getNodeById(to.params.id);
+  current = NodeController.getNodeById(to.params.id);
   // 更新内容
-  editor.commands.setContent(node.value.getContent(), false);
-  // 检查TOC
-  checkToc();
+  editor.commands.setContent(current.getContent(), true);
 
+  // 如果有锚点并且目标元素存在，则滚动到该元素
   if (to.hash.length > 0) {
-    // 获取带有锚点的元素
     var target = document.querySelector(to.hash);
-    console.log("滚动到锚点", target);
-
-    // 如果有锚点并且目标元素存在，则滚动到该元素
     if (window.location.hash && target) {
       document.querySelector("#editor-container").scrollTo({
         top: target.offsetTop,
@@ -102,13 +63,13 @@ onBeforeRouteUpdate((to, from) => {
     }
   }
 });
+
+onBeforeUnmount(() => {
+  editor.destroy();
+});
 </script>
 
 <style lang="postcss">
-#toolbar-container {
-  @apply sticky top-0 z-40 flex w-full flex-row items-center justify-center gap-2 bg-green-300/10 shadow-2xl;
-}
-
 #editor-container {
   @apply mt-1 flex w-full justify-center overflow-auto border-0 p-4;
 }
