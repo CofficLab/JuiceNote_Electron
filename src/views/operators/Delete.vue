@@ -5,39 +5,38 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup>
+import { computed } from "vue";
 import ToastController from "../../controllers/ToastController";
 import Trash from "../../assets/icons/trash.svg";
 import { Node } from "../../models/Node";
-import NodeController from "../../controllers/NodeController";
-export default defineComponent({
-  props: {
-    showText: {
-      type: Boolean,
-      default: true,
-      required: false,
-    },
-    showIcon: {
-      type: Boolean,
-      default: true,
-      required: false,
-    },
-    node: {
-      type: Node,
-      required: false,
-    },
+import { useRoute, useRouter } from "vue-router";
+
+const router = useRouter();
+const route = useRoute();
+const props = defineProps({
+  showText: {
+    type: Boolean,
+    default: true,
+    required: false,
   },
-  computed: {
-    target() {
-      return this.node ?? NodeController.getCurrentPage();
-    },
+  showIcon: {
+    type: Boolean,
+    default: true,
+    required: false,
   },
-  methods: {
-    deleteBookNode() {
-      ToastController.set(NodeController.delete(this.target));
-    },
+  node: {
+    type: Node,
+    required: false,
   },
-  components: { Trash },
 });
+
+const target = computed(() => {
+  return props.node ?? Node.find(route.params.id);
+});
+
+const deleteBookNode = function () {
+  router.push("/lessons/" + target.value.parentId + "/show");
+  ToastController.set(target.value.delete());
+};
 </script>

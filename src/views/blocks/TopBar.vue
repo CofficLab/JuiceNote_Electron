@@ -4,7 +4,9 @@
     <div class="ml-20 flex items-center lg:ml-2">
       <Breadcrumbs :current="current" v-if="currentId > 0"></Breadcrumbs>
     </div>
-    <div class="draggable flex-grow"></div>
+    <div class="draggable flex-grow">
+      <Address></Address>
+    </div>
     <div class="flex h-12 flex-row items-center justify-end pr-4">
       <!-- <Languages></Languages> -->
       <BtnOfficialLink></BtnOfficialLink>
@@ -28,6 +30,7 @@ import Prev from "../operators/Prev.vue";
 import BtnTerminal from "../components/BtnTerminal.vue";
 import Breadcrumbs from "./Breadcrumbs.vue";
 import Toast from "./Toast.vue";
+import Address from "../components/Address.vue";
 import { useRoute } from "vue-router";
 import { computed } from "vue";
 

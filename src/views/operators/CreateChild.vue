@@ -8,7 +8,6 @@
 <script setup>
 import { useRouter, useRoute } from "vue-router";
 import Plus from "../../assets/icons/plus.svg";
-import NodeController from "../../controllers/NodeController";
 import { Node } from "../../models/Node";
 
 let route = useRoute();
@@ -32,7 +31,7 @@ let props = defineProps({
 
 let add = function () {
   router.push({
-    path: "/lessons/" + props.node.id,
+    path: "/lessons/" + props.node.id + "/edit",
     query: {
       adding: 1,
     },

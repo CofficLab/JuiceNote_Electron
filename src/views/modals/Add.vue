@@ -47,9 +47,9 @@ const submitPageForm = function () {
   if (typeof id == "string") {
     ToastController.set(id);
   } else {
-    router.push({ path: "/lessons/" + id });
-    hide();
-    title = "";
+    router.push({ path: "/lessons/" + id + "/show" });
+    // hide();
+    // title = "";
   }
 };
 

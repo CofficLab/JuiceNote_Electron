@@ -5,10 +5,7 @@
       <Toolbar :editor="editor" :current="current" :source-code-callback="toggleSourceCode"></Toolbar>
     </div>
 
-    <!-- TAB -->
-    <div id="tabs-container" v-if="current.getParent().isTab">
-      <Link v-for="sibling in current.getSiblings()" class="tab tab-lifted" :node="sibling">{{ sibling.title }}</Link>
-    </div>
+    <NodeTab :current="current"></NodeTab>
 
     <!-- 编辑框 -->
     <div id="editor-container" @contextmenu.prevent="showRightMenu">
@@ -40,7 +37,7 @@
 <script setup>
 import { Editor, EditorContent } from "@tiptap/vue-3";
 import Extensions from "../../entities/Extensions";
-import Link from "../components/Link.vue";
+import NodeTab from "../components/NodeTab.vue";
 import RightMenu from "../components/RightMenu.vue";
 import Toolbar from "../blocks/Toolbar.vue";
 import CreateChild from "../operators/CreateChild.vue";
@@ -157,10 +154,6 @@ onBeforeRouteUpdate((to, from) => {
 <style lang="postcss">
 #toolbar-container {
   @apply sticky top-0 z-40 flex w-full flex-row items-center justify-center gap-2 bg-green-300/10 shadow-2xl;
-}
-
-#tabs-container {
-  @apply tabs mt-0 flex w-full justify-center bg-yellow-400/10;
 }
 
 #editor-container {

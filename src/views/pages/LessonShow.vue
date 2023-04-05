@@ -1,9 +1,6 @@
 <template>
   <div class="flex h-full w-full flex-col items-center overflow-scroll">
-    <!-- TAB -->
-    <div id="tabs-container" v-if="current.getParent().isTab">
-      <Link v-for="sibling in current.getSiblings()" class="tab tab-lifted" :node="sibling">{{ sibling.title }}</Link>
-    </div>
+    <NodeTab :current="current"></NodeTab>
 
     <!-- 编辑框 -->
     <div id="editor-container" @contextmenu.prevent="showRightMenu">
@@ -22,7 +19,6 @@
 <script setup>
 import { Editor, EditorContent } from "@tiptap/vue-3";
 import Extensions from "../../entities/Extensions";
-import Link from "../components/Link.vue";
 import RightMenu from "../components/RightMenu.vue";
 import Copy from "../operators/Copy.vue";
 import Prev from "../operators/Prev.vue";
@@ -31,9 +27,11 @@ import NodeController from "../../controllers/NodeController";
 import RightMenuController from "../../controllers/RightMenuController";
 import { Node } from "../../models/Node";
 import { computed, onBeforeUnmount, ref } from "vue";
-import { onBeforeRouteUpdate, useRoute } from "vue-router";
+import { onBeforeRouteUpdate, useRoute, useRouter } from "vue-router";
+import NodeTab from "../components/NodeTab.vue";
 
 const route = useRoute();
+const router = useRouter();
 
 let rightClickEvent = null;
 let hasToc = false;
@@ -109,10 +107,6 @@ onBeforeRouteUpdate((to, from) => {
 <style lang="postcss">
 #toolbar-container {
   @apply sticky top-0 z-40 flex w-full flex-row items-center justify-center gap-2 bg-green-300/10 shadow-2xl;
-}
-
-#tabs-container {
-  @apply tabs mt-0 flex w-full justify-center bg-yellow-400/10;
 }
 
 #editor-container {

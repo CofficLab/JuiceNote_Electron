@@ -7,9 +7,10 @@
       ring: shouldShowRightMenu,
       'active tab-active': shouldActive(node.id),
     }"
-    @click="go"
   >
-    <slot></slot>
+    <div @click="go">
+      <slot></slot>
+    </div>
 
     <!-- 右键菜单 -->
     <RightMenu v-if="shouldShowRightMenu" v-bind:event="rightClickEvent">
@@ -37,7 +38,6 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { RouterLink } from "vue-router";
 import Rename from "../operators/Rename.vue";
 import Edit from "../operators/Edit.vue";
 import Delete from "../operators/Delete.vue";
@@ -80,6 +80,8 @@ export default defineComponent({
       );
     },
     showRightMenu(event) {
+      event.preventDefault();
+
       this.rightClickEvent = event;
       RightMenuController.shouldShow = true;
     },

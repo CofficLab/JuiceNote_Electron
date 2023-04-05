@@ -94,10 +94,6 @@ const NodeController = reactive({
 
         return result
     },
-
-    delete(target: Node): string {
-        return target.delete()
-    },
 })
 
 export default NodeController
