@@ -44,7 +44,7 @@ const submit = () => {
 };
 </script>
 
-<style>
+<style scoped>
 .bounce-enter-active {
   animation: bounce-in 0.5s;
 }

@@ -18,9 +18,8 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted, nextTick, ref } from "vue";
+import { onMounted, nextTick } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import NodeController from "../../controllers/NodeController";
 import ToastController from "../../controllers/ToastController";
 import { Node } from "../../models/Node";
 
@@ -71,7 +70,7 @@ onMounted(() => {
 });
 </script>
 
-<style>
+<style scoped>
 .bounce-enter-active {
   animation: bounce-in 0.5s;
 }
