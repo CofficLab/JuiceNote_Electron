@@ -4,7 +4,6 @@
     v-bind:data-id="node.id"
     v-on:contextmenu="showRightMenu"
     v-bind:class="{
-      ring: shouldShowRightMenu,
       'active tab-active': shouldActive(node.id),
     }"
     @click="go"
@@ -14,7 +13,7 @@
     </div>
 
     <!-- 右键菜单 -->
-    <RightMenu v-if="shouldShowRightMenu" v-bind:event="rightClickEvent">
+    <RightMenu :event="rightClickEvent">
       <li>
         <Rename :node="node"></Rename>
       </li>
@@ -37,60 +36,52 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup>
+import { computed, defineProps, ref } from "vue";
 import Rename from "../operators/Rename.vue";
 import Edit from "../operators/Edit.vue";
 import Delete from "../operators/Delete.vue";
 import ToTab from "../operators/ToTab.vue";
 import RightMenu from "./RightMenu.vue";
-import RightMenuController from "../../controllers/RightMenuController";
 import { Node } from "../../models/Node";
 import CreateChild from "../operators/CreateChild.vue";
 import Visible from "../operators/Visible.vue";
+import { useRoute, useRouter } from "vue-router";
 
-export default defineComponent({
-  props: { node: { type: Node, required: true } },
-  data() {
-    return {
-      rightClickEvent: null,
-    };
-  },
-  mounted: function () {
-    document.addEventListener("click", () => {
-      // console.log("检测到click事件，隐藏我的右键菜单");
-      this.rightClickEvent = null;
-    });
-  },
-  computed: {
-    shouldShowRightMenu() {
-      return this.rightClickEvent && RightMenuController.shouldShow;
-    },
-    current() {
-      return Node.find(this.$route.params.id);
-    },
-  },
-  methods: {
-    shouldActive: function (id: number) {
-      if (this.node.isChapter && !this.node.isTab) return false;
+const route = useRoute();
+const router = useRouter();
 
-      return (
-        this.current.getParents().some((parent) => {
-          return parent.id == id;
-        }) || this.current.id == id
-      );
-    },
-    showRightMenu(event) {
-      event.preventDefault();
-
-      this.rightClickEvent = event;
-      RightMenuController.shouldShow = true;
-    },
-    go() {
-      if (this.shouldShowRightMenu) return;
-      this.$router.push("/lessons/" + this.node.id + "/show");
-    },
+const props = defineProps({
+  node: {
+    type: Node,
+    required: true,
   },
-  components: { Rename, RightMenu, Edit, Delete, ToTab, CreateChild, Visible },
 });
+
+const current = computed(() => {
+  return Node.find(parseInt(route.params.id.toString()));
+});
+
+let rightClickEvent = ref(null);
+
+const shouldActive = function (id) {
+  if (props.node.isChapter && !props.node.isTab) return false;
+
+  return (
+    current.value.getParents().some((parent) => {
+      return parent.id == id;
+    }) || current.value.id == id
+  );
+};
+
+const showRightMenu = function (event) {
+  event.preventDefault();
+
+  rightClickEvent.value = event;
+};
+
+const go = function () {
+  if (rightClickEvent) return;
+  router.push("/lessons/" + props.node.id + "/show");
+};
 </script>
