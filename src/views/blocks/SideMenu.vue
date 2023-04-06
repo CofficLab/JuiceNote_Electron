@@ -12,7 +12,7 @@
 
         <!-- 图书的TAB，比如：教程、手册 -->
         <div class="tabs flex justify-center" v-if="bookTabs.length > 0">
-          <Link class="tab-lifted tab" v-for="tab in bookTabs" :node="tab">{{ tab.title }}</Link>
+          <Link class="tab tab-lifted" v-for="tab in bookTabs" :node="tab">{{ tab.title }}</Link>
         </div>
       </div>
     </div>
@@ -26,8 +26,8 @@
       <div class="pointer-events-none sticky bottom-0 flex h-20"></div>
 
       <!-- 底部的图书logo -->
-      <div v-if="book.getLogoUrl().length > 0" class="h-20 opacity-90 dark:brightness-50">
-        <img :src="book.getLogoUrl()" alt="" />
+      <div v-if="book.cover.length > 0" class="h-20 opacity-90 dark:brightness-50">
+        <img :src="'data:image/png;base64,' + book.cover" alt="" />
       </div>
     </div>
   </div>

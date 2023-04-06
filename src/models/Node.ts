@@ -210,12 +210,6 @@ class Node {
         return this.getNext().getFirstPage()
     }
 
-    getLogoUrl(): string {
-        let relativePath = 'images/logo-' + this.title + '.png'
-        let absolutePath = join(Config.publicPath, relativePath)
-        return existsSync(absolutePath) ? relativePath : ''
-    }
-
     setChildrenPriority(children: Node[]) {
         // console.log('设置子元素的排序', children)
         children.forEach((child, index) => {
