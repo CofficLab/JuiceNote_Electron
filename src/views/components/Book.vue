@@ -2,7 +2,7 @@
   <div class="card w-56 bg-base-100 shadow-xl">
     <div class="card-body">
       <h2 class="card-title text-yellow-700">{{ book.title }}</h2>
-      <div class="dropdown-left dropdown absolute top-1 right-0">
+      <div class="dropdown-left dropdown absolute top-1 right-0" v-if="editable">
         <label tabindex="0" class="btn-ghost btn m-1">...</label>
         <ul tabindex="0" class="dropdown-content menu rounded-box w-52 bg-base-100 p-2 shadow">
           <li><a href="javascript:void(0)" @click="openUploadDialog">更换封面</a></li>
@@ -20,15 +20,20 @@
 
 <script setup>
 import { readFile } from "fs";
-import { ref } from "vue";
+import { ref, computed } from "vue";
+import { useRoute } from "vue-router";
 import ToastController from "../../controllers/ToastController";
 import { Node } from "../../models/Node";
 
+const route = useRoute();
 const props = defineProps({
   book: Node,
 });
 
 let book = ref(props.book);
+let editable = computed(() => {
+  return route.name == "home.edit";
+});
 
 const openUploadDialog = () => {
   // 创建一个<input>元素
