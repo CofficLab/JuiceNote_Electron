@@ -1,17 +1,9 @@
 <template>
   <div class="w-full">
     <div class="grid grid-cols-3 gap-4 bg-sky-400/10 p-12 md:grid-cols-4 xl:grid-cols-5">
-      <router-link :to="'/lessons/' + book.id + '/show'" v-for="book in books">
-        <div class="card w-56 bg-base-100 shadow-xl">
-          <div class="card-body">
-            <h2 class="card-title">{{ book.title }}</h2>
-          </div>
-          <figure class="max-h-40 rounded-t-xl">
-            <img v-if="!book.cover" src="/images/book.png" />
-            <img v-else :src="'data:image/png;base64,' + book.cover" class="object-none" />
-          </figure>
-        </div>
-      </router-link>
+      <template v-for="book in books">
+        <Book :book="book"></Book>
+      </template>
     </div>
   </div>
 </template>
@@ -19,6 +11,7 @@
 <script setup>
 import { computed } from "vue";
 import { Node } from "../../models/Node";
+import Book from "../components/Book.vue";
 
 const books = computed(() => Node.getBooks());
 </script>

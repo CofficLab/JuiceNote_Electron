@@ -19,6 +19,7 @@ class Node {
     public parentId: number = 0
     public level: number = 0
     public isEmpty: boolean = false
+    public cover: string = ''
     private content: string = ''
 
     public constructor(dbResult: object | null) {
@@ -35,6 +36,7 @@ class Node {
             let isVisible = Object.getOwnPropertyDescriptor(dbResult, 'is_visible')?.value
             let priority = Object.getOwnPropertyDescriptor(dbResult, 'priority')?.value
             let level = Object.getOwnPropertyDescriptor(dbResult, 'level')?.value
+            let cover = Object.getOwnPropertyDescriptor(dbResult, 'cover')?.value
 
             this.id = id ?? 0
             this.title = title ?? '无效节点'
@@ -46,6 +48,7 @@ class Node {
             this.isVisible = isVisible == 1
             this.priority = priority
             this.level = level
+            this.cover = cover
             this.parentId = Object.getOwnPropertyDescriptor(dbResult, 'parent_id')?.value
 
             if (this.id == 0) this.isEmpty = true
@@ -220,6 +223,10 @@ class Node {
         })
     }
 
+    refresh(): Node {
+        return Node.find(this.id)
+    }
+
     updatePriority(priority: number) {
         // console.log(this.title, '更新priority为', priority)
         db.prepare('update nodes set priority=? where id=?').run(priority, this.id)
@@ -240,12 +247,12 @@ class Node {
         }
     }
 
-    updateCover(raw: string): string {
-        let result = db.prepare('update nodes set cover=? where id=?').run(raw, this.id)
+    updateCover(base64Code: string): string {
+        let result = db.prepare('update nodes set cover=? where id=?').run(base64Code, this.id)
         if (result != null) {
-            return '「' + this.title + '」的封面更新成功'
+            return this.id + '「' + this.title + '」的封面更新成功'
         } else {
-            return '「' + this.title + '」的封面更新失败'
+            return this.id + '「' + this.title + '」的封面更新失败'
         }
     }
 
