@@ -7,7 +7,6 @@
 </template>
 
 <script setup>
-import RightMenuController from "../../controllers/RightMenuController";
 import PencilSquare from "../../assets/icons/pencil-square.svg";
 import ArrowUturnLeft from "../../assets/icons/arrow-uturn-left.svg";
 import { useRoute, useRouter } from "vue-router";
@@ -28,13 +27,18 @@ const props = defineProps({
 
 const router = useRouter();
 const route = useRoute();
-const editable = computed(() => route.name == "lessons.edit");
+const editable = computed(() => {
+  return route.name == "lessons.edit" || route.name == "home.edit";
+});
 const toggleEditable = function () {
-  RightMenuController.hide();
-  if (editable.value == true) {
+  if (route.name == "lessons.edit") {
     router.push({ name: "lessons.show", params: { id: route.params.id } });
-  } else {
+  } else if (route.name == "lessons.show") {
     router.push({ name: "lessons.edit", params: { id: route.params.id } });
+  } else if (route.name == "home.show") {
+    router.push({ name: "home.edit" });
+  } else if (route.name == "home.edit") {
+    router.push({ name: "home.show" });
   }
 };
 </script>

@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import { ipcRenderer } from 'electron'
 import App from './views/App.vue'
 import Home from './views/pages/Home.vue'
+import HomeEdit from './views/pages/HomeEdit.vue'
 import LessonEdit from './views/pages/LessonEdit.vue'
 import LessonShow from './views/pages/LessonShow.vue'
 import NotFound from './views/pages/NotFound.vue'
@@ -26,7 +27,13 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes: [
     { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound },
-    { path: '/', component: Home },
+    {
+      path: '/',
+      children: [
+        { path: '/', component: Home, name: "home.show" },
+        { path: '/edit', component: HomeEdit, name: "home.edit" }
+      ]
+    },
     {
       path: '/lessons/:id',
       children: [

@@ -48,7 +48,6 @@ import RenameModal from "../modals/Rename.vue";
 import Prev from "../operators/Prev.vue";
 import Next from "../operators/Next.vue";
 import NodeController from "../../controllers/NodeController";
-import RightMenuController from "../../controllers/RightMenuController";
 import Delete from "../operators/Delete.vue";
 import Monaco from "../components/Monaco.vue";
 import { Node } from "../../models/Node";
