@@ -81,7 +81,7 @@ const showRightMenu = function (event) {
 };
 
 const go = function () {
-  if (rightClickEvent) return;
+  if (rightClickEvent.value != null) return;
   router.push("/lessons/" + props.node.id + "/show");
 };
 </script>
