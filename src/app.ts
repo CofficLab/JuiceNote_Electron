@@ -40,17 +40,6 @@ const router = createRouter({
 router.beforeEach(function (to, from) {
   console.log("从", from.fullPath, "到", to.fullPath)
 
-  // 如果是编辑模式，路由里需要加入editable=1
-  // if (from.query.editable?.toString() == "1" && (to.query.editable?.toString() == "" || to.query.editable == undefined)) {
-  //   console.log("路由守卫修改路由")
-  //   return {
-  //     path: to.path,
-  //     query: Object.assign({}, to.query, {
-  //       editable: 1
-  //     })
-  //   };
-  // }
-
   // 如果不是page，跳转到第一个page子节点
   if (to.name == 'lessons.show') {
     let node = Node.find(parseInt(to.params.id.toString()))
@@ -59,6 +48,14 @@ router.beforeEach(function (to, from) {
         name: "lessons.show",
         params: { id: node.getFirstPage().id }
       }
+    }
+  }
+
+  // 如果是编辑模式
+  if (from.name == 'lessons.edit' && to.name == 'lessons.show' && from.params.id != to.params.id) {
+    return {
+      name: "lessons.edit",
+      params: { id: to.params.id }
     }
   }
 })

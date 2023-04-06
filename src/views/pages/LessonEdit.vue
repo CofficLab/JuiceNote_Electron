@@ -117,7 +117,7 @@ onBeforeRouteUpdate((to, from) => {
   // 更新当前节点
   node.value = NodeController.getNodeById(to.params.id);
   // 更新内容
-  editor.commands.setContent(node.value.getContent(), false);
+  editor.commands.setContent(node.value.getContent(), true);
   // 更新是否可编辑
   editor.setEditable(to.query.editable == 1, false);
   // 是否显示添加的模态框
@@ -141,7 +141,7 @@ onBeforeRouteUpdate((to, from) => {
 
 <style lang="postcss">
 #toolbar-container {
-  @apply sticky top-0 z-40 flex w-full flex-row items-center justify-center gap-2 bg-green-300/10 shadow-2xl;
+  @apply sticky top-0 z-40 flex w-full flex-row items-center justify-center gap-2 bg-yellow-300/30 shadow-2xl;
 }
 
 #editor-container {

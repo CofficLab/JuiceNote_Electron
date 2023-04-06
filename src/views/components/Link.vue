@@ -8,30 +8,16 @@
     }"
     @click="go"
   >
-    <div>
-      <slot></slot>
-    </div>
+    <div><slot></slot></div>
 
     <!-- 右键菜单 -->
     <RightMenu :event="rightClickEvent">
-      <li>
-        <Rename :node="node"></Rename>
-      </li>
-      <li>
-        <Edit :bookNode="node"></Edit>
-      </li>
-      <li>
-        <ToTab :node="node"></ToTab>
-      </li>
-      <li>
-        <Delete :bookNode="node"></Delete>
-      </li>
-      <li>
-        <CreateChild :node="node"></CreateChild>
-      </li>
-      <li>
-        <Visible :node="node"></Visible>
-      </li>
+      <li><Rename :node="node"></Rename></li>
+      <li><Edit :bookNode="node"></Edit></li>
+      <li><ToTab :node="node"></ToTab></li>
+      <li><Delete :bookNode="node"></Delete></li>
+      <li><CreateChild :node="node"></CreateChild></li>
+      <li><Visible :node="node"></Visible></li>
     </RightMenu>
   </div>
 </template>

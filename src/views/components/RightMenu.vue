@@ -1,13 +1,13 @@
 <template>
   <Transition name="slide-fade">
-    <div ref="menus" v-show="isVisible" class="right-menus" v-bind:style="{ left: x + 'px', top: y + 'px' }">
+    <div ref="menus" v-if="isVisible" class="right-menus" v-bind:style="{ left: x + 'px', top: y + 'px' }">
       <slot></slot>
     </div>
   </Transition>
 </template>
 
 <script setup>
-import { defineProps, watch, ref } from "vue";
+import { defineProps, watch, ref, onMounted, onBeforeUnmount } from "vue";
 
 const props = defineProps({
   event: {
@@ -20,9 +20,17 @@ let isVisible = ref(false);
 let x = 0;
 let y = 0;
 
-document.addEventListener("click", () => {
+const handleClick = () => {
   console.log("右键菜单检测到click事件");
   isVisible.value = false;
+};
+
+onMounted(() => {
+  window.addEventListener("click", handleClick);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("click", handleClick);
 });
 
 watch(
