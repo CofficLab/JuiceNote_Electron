@@ -1,5 +1,5 @@
 <template>
-  <div class="card w-56 bg-base-100 shadow-xl">
+  <div class="card h-56 w-56 bg-base-100 shadow-xl">
     <div class="card-body">
       <h2 class="card-title text-yellow-700">{{ book.title }}</h2>
       <div class="dropdown-left dropdown absolute top-1 right-0" v-if="editable">
@@ -12,9 +12,33 @@
     <router-link :to="'/lessons/' + book.id + '/show'">
       <figure class="max-h-40 rounded-b-xl">
         <img v-if="!book.cover" src="/images/book.png" />
-        <img v-else :src="'data:image/png;base64,' + book.cover" class="h-40 w-auto" />
+        <img v-else :src="book.cover" class="h-28 w-56" />
       </figure>
     </router-link>
+
+    <!-- 封面的裁剪框 -->
+    <div class="modal modal-open" v-if="isCropperVisible">
+      <div class="modal-box flex flex-col items-center">
+        <div class="h-96 w-screen">
+          <VueCropper
+            ref="cropper"
+            :img="option.img"
+            :fixedNumber="[2, 1]"
+            :fixed="true"
+            :maxImgSize="500"
+            :limitMinSize="20"
+            :autoCrop="true"
+            :info="true"
+            :centerBox="true"
+            :outputSize="option.size"
+            :outputType="option.outputType"
+          ></VueCropper>
+        </div>
+        <div class="modal-action">
+          <button @click="submit" class="btn">Yay!</button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -24,10 +48,20 @@ import { ref, computed } from "vue";
 import { useRoute } from "vue-router";
 import ToastController from "../../controllers/ToastController";
 import { Node } from "../../models/Node";
+import "vue-cropper/dist/index.css";
+import { VueCropper } from "vue-cropper";
 
 const route = useRoute();
 const props = defineProps({
   book: Node,
+});
+
+let isCropperVisible = ref(false);
+let cropper = ref(null);
+let option = ref({
+  img: "",
+  size: 1,
+  outputType: "png",
 });
 
 let book = ref(props.book);
@@ -44,12 +78,20 @@ const openUploadDialog = () => {
   input.addEventListener("change", function (event) {
     var file = event.target.files[0]; // 获取选中的文件
     readFile(file.path, (err, data) => {
-      ToastController.set(book.value.updateCover(data.toString("base64")));
-      book.value = book.value.refresh();
+      option.value.img = "data:image/png;base64," + data.toString("base64");
+      isCropperVisible.value = true;
     });
   });
 
   // 模拟点击<input>元素，触发文件选择对话框
   input.click();
+};
+
+const submit = function () {
+  cropper.value.getCropData((data) => {
+    ToastController.set(book.value.updateCover(data));
+    book.value = book.value.refresh();
+    isCropperVisible.value = false;
+  });
 };
 </script>

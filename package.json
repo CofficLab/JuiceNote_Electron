@@ -75,6 +75,7 @@
     "slug": "^8.2.2",
     "sqlite3": "^5.1.4",
     "tailwindcss": "^3.1.8",
+    "vue-cropper": "^1.0.8",
     "vue-drag-resize": "^2.0.3",
     "vue-router": "^4.1.6",
     "vuedraggable": "^4.1.0",
