@@ -1,5 +1,5 @@
 <template>
-  <div class="card h-56 w-56 bg-base-100 shadow-xl">
+  <div class="card h-56 w-56 bg-base-100 shadow-2xl">
     <div class="card-body">
       <h2 class="card-title text-yellow-700">{{ book.title }}</h2>
       <div class="dropdown-left dropdown absolute top-1 right-0" v-if="editable">
@@ -17,7 +17,7 @@
     </router-link>
 
     <!-- 封面的裁剪框 -->
-    <div class="modal modal-open" v-if="isCropperVisible">
+    <div class="modal-open modal" v-if="isCropperVisible">
       <div class="modal-box flex flex-col items-center">
         <div class="h-96 w-screen">
           <VueCropper

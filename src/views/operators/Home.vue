@@ -1,5 +1,5 @@
 <template>
-  <a href="/"><Home></Home></a>
+  <router-link to="/"><Home></Home></router-link>
 </template>
 
 <script setup>
