@@ -253,7 +253,7 @@ let setLink = function () {
 
 <style scoped lang="postcss">
 #toolbar {
-  @apply flex flex-row items-center bg-yellow-500;
+  @apply flex flex-row items-center;
 }
 
 label {

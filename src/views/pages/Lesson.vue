@@ -1,6 +1,6 @@
 <template>
   <div class="flex h-full w-full flex-col items-center">
-    <div class="fixed top-12 z-50 w-full"><NodeTab :current="node"></NodeTab></div>
+    <div class="fixed top-12 z-50 w-full bg-green-200/90" :class="{ 'top-24': editable }"><NodeTab :current="node"></NodeTab></div>
 
     <div @contextmenu="showRightMenu" class="z-40 w-full">
       <Editor :node="node" :saveCallback="save" :editable="editable"></Editor>

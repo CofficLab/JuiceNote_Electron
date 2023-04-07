@@ -18,6 +18,6 @@ const props = defineProps({
 
 <style lang="postcss">
 .tabs-container {
-  @apply tabs mt-0 flex w-full justify-center bg-yellow-400/10;
+  @apply tabs mt-0 flex w-full justify-center;
 }
 </style>
