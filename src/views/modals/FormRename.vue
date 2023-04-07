@@ -1,6 +1,6 @@
 <template>
   <!-- 重命名的弹层 -->
-  <div class="modal-open modal">
+  <div class="modal modal-open">
     <Transition name="bounce">
       <div class="modal-box">
         <input ref="title" type="text" v-model="title" placeholder="输入新的标题" autofocus class="input-bordered input-primary input w-full max-w-xs bg-yellow-300/10" @keyup.enter="submit" />
@@ -29,7 +29,7 @@ const props = defineProps({
   },
 });
 
-const title = "";
+let title = "";
 
 const hide = () => {
   router.push({
