@@ -27,10 +27,9 @@ build_win:
 
 build_linux:
   stage: build
+  image: electronuserland/builder:latest
   only:
     - main
-  tags:
-    - tencent
   artifacts:
     paths:
       - release
@@ -39,7 +38,7 @@ build_linux:
     npm install node-gyp@latest -g
     npm i
     npm run rebuild 
-    npm run build:win
+    npm run build:linux
 
 build_mac:
   stage: build
