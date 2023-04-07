@@ -10,20 +10,20 @@ stages:
   - build
   - sync
 
-build_win:
-  stage: build
-  image: electronuserland/builder:wine
-  only:
-    - main
-  artifacts:
-    paths:
-      - release
-    expire_in: 30 mins
-  script: |
-    npm install node-gyp@latest -g
-    npm i
-    npm run rebuild 
-    npm run build:win
+# build_win:
+#   stage: build
+#   image: electronuserland/builder:wine
+#   only:
+#     - main
+#   artifacts:
+#     paths:
+#       - release
+#     expire_in: 30 mins
+#   script: |
+#     npm install node-gyp@latest -g
+#     npm i
+#     npm run rebuild 
+#     npm run build:win
 
 build_linux:
   stage: build
@@ -36,33 +36,33 @@ build_linux:
     expire_in: 30 mins
   script: |
     npm install node-gyp@latest -g
-    npm i
+    npm ci
     npm run rebuild 
     npm run build:linux
 
-build_mac:
-  stage: build
-  only:
-    - main
-  tags:
-    - tencent
-  artifacts:
-    paths:
-      - release
-    expire_in: 30 mins
-  script: |
-    # Pull the macOS Docker image
-    docker pull electronuserland/builder:latest-mac
+# build_mac:
+#   stage: build
+#   only:
+#     - main
+#   tags:
+#     - tencent
+#   artifacts:
+#     paths:
+#       - release
+#     expire_in: 30 mins
+#   script: |
+#     # Pull the macOS Docker image
+#     docker pull electronuserland/builder:latest-mac
 
-    # Run the macOS Docker container
-    docker run -it -v "$(pwd):/project" electronuserland/builder:latest-mac /bin/bash -c "
-      # Install dependencies (if needed)
-      # ...
+#     # Run the macOS Docker container
+#     docker run -it -v "$(pwd):/project" electronuserland/builder:latest-mac /bin/bash -c "
+#       # Install dependencies (if needed)
+#       # ...
 
-      # Build Electron App
-      npm install
-      npm run build-macos
-    "
+#       # Build Electron App
+#       npm install
+#       npm run build-macos
+#     "
 
 sync:
   stage: sync
