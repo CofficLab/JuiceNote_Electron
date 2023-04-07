@@ -37,6 +37,9 @@ jobs:
       - name: Rebuild
         run: npm run rebuild
 
+      - name: Install node-gyp
+        run: npm install node-gyp@latest -g
+
       - name: Build Release Files
         run: npm run build
         env:
