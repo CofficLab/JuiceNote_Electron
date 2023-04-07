@@ -19,7 +19,7 @@
     },
   ],
   mac: {
-    artifactName: "${productName}_${version}.${ext}",
+    artifactName: "${productName}.${ext}",
     target: ["dmg"],
     icon: "./public/logo6.icns",
   },
@@ -30,7 +30,7 @@
         arch: ["x64"],
       },
     ],
-    artifactName: "${productName}_${version}.${ext}",
+    artifactName: "${productName}.${ext}",
     icon: "./public/logo.png",
   },
   nsis: {
