@@ -27,6 +27,12 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
 
+      - name: Install Windows Build Tools
+        if: matrix.os == 'windows-latest'
+        run: |
+          npm install --global --production windows-build-tools
+          npm config set msvs_version 2019
+
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
@@ -37,12 +43,6 @@ jobs:
 
       - name: Install node-gyp
         run: npm install node-gyp@latest -g
-
-      - name: Install Windows Build Tools
-        if: matrix.os == 'windows-latest'
-        run: |
-          npm install --global --production windows-build-tools
-          npm config set msvs_version 2019
 
       - name: Rebuild
         run: npm run rebuild
