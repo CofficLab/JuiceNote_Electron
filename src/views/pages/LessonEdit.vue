@@ -84,6 +84,8 @@ let save = function (content) {
     node.updateContent(content);
     code.value = content;
     editor.commands.setContent(content, false);
+  } else {
+    console.log("节点", node.id, "的内容没有变化");
   }
 };
 
@@ -117,8 +119,7 @@ onBeforeRouteUpdate((to, from) => {
   node.value = NodeController.getNodeById(to.params.id);
   // 更新内容
   editor.commands.setContent(node.value.getContent(), true);
-  // 更新是否可编辑
-  editor.setEditable(to.query.editable == 1, false);
+
   // 是否显示添加的模态框
   adding = to.query.adding != undefined;
 
