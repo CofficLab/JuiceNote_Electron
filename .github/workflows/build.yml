@@ -24,7 +24,9 @@ jobs:
         uses: actions/checkout@v2
 
       - name: make file 
-        run: touch release/x.txt
+        run: |
+          mkdir release
+          touch release/x.txt
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
