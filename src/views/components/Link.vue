@@ -30,7 +30,7 @@ import Delete from "../operators/Delete.vue";
 import ToTab from "../operators/ToTab.vue";
 import RightMenu from "./RightMenu.vue";
 import { Node } from "../../models/Node";
-import CreateChild from "../operators/CreateChild.vue";
+import CreateChild from "../operators/Add.vue";
 import Visible from "../operators/Visible.vue";
 import { useRoute, useRouter } from "vue-router";
 

@@ -2,7 +2,7 @@
 
 <template>
   <div>
-    <div class="dropdown-hover dropdown-end dropdown">
+    <div class="dropdown dropdown-end dropdown-hover">
       <label tabindex="0"
         ><div class="btn-ghost btn-sm btn my-auto flex w-12 items-center">
           <ChevronDoubleDown></ChevronDoubleDown></div
@@ -20,21 +20,21 @@
 </template>
 
 <script setup>
-  import { computed } from 'vue';
-  import ChevronDoubleDown from '../../assets/icons/chevron-double-down.svg';
-  import Copy from '../operators/Copy.vue';
-  import Delete from '../operators/Delete.vue';
-  import Commit from '../operators/Commit.vue';
-  import Edit from '../operators/Edit.vue';
-  import CreateChild from '../operators/CreateChild.vue';
-  import Visible from '../operators/Visible.vue';
-  import NodeController from '../../controllers/NodeController';
+import { computed } from "vue";
+import ChevronDoubleDown from "../../assets/icons/chevron-double-down.svg";
+import Copy from "../operators/Copy.vue";
+import Delete from "../operators/Delete.vue";
+import Commit from "../operators/Commit.vue";
+import Edit from "../operators/Edit.vue";
+import CreateChild from "../operators/Add.vue";
+import Visible from "../operators/Visible.vue";
+import NodeController from "../../controllers/NodeController";
 
-  const book = computed(() => NodeController.getCurrentPage().getBook());
+const book = computed(() => NodeController.getCurrentPage().getBook());
 </script>
 
 <style scoped lang="postcss">
-  ul li {
-    @apply flex justify-center;
-  }
+ul li {
+  @apply flex justify-center;
+}
 </style>
