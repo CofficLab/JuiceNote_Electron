@@ -1,6 +1,6 @@
 <template>
   <div id="toolbar">
-    <div class="dropdown-hover dropdown">
+    <div class="dropdown dropdown-hover">
       <label tabindex="0"><IconBars2></IconBars2></label>
       <ul tabindex="0" class="dropdown-content">
         <li @click="toggleHeading(1)" :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }">H1</li>
@@ -15,7 +15,7 @@
       </ul>
     </div>
 
-    <div class="dropdown-hover dropdown">
+    <div class="dropdown dropdown-hover">
       <label tabindex="0"><IconPuzzle></IconPuzzle></label>
       <ul tabindex="0">
         <li @click="toggleBanner" :class="{ 'is-active': editor.isActive('banner') }">提示框</li>
@@ -40,7 +40,7 @@
       <IconClear></IconClear>
     </button>
 
-    <div class="dropdown-hover dropdown">
+    <div class="dropdown dropdown-hover">
       <label tabindex="0"><IconListBullet></IconListBullet></label>
       <ul tabindex="0">
         <li @click="editor.chain().focus().toggleBulletList().run()" :class="{ 'is-active': editor.isActive('bulletList') }">
@@ -53,7 +53,7 @@
       </ul>
     </div>
 
-    <div class="dropdown-hover dropdown-bottom dropdown">
+    <div class="dropdown dropdown-bottom dropdown-hover">
       <label tabindex="0"><IconTable></IconTable></label>
       <ul tabindex="0">
         <li>
@@ -253,7 +253,7 @@ let setLink = function () {
 
 <style scoped lang="postcss">
 #toolbar {
-  @apply flex flex-row items-center;
+  @apply flex flex-row items-center bg-yellow-500;
 }
 
 label {

@@ -6,9 +6,7 @@
           <div class="absolute inset-0 flex h-full w-6 items-center justify-center">
             <div class="pointer-events-none h-full w-1 bg-gray-200"></div>
           </div>
-          <div
-            class="title-font relative z-10 mt-10 inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-indigo-500 text-sm font-medium text-white sm:mt-0"
-          >
+          <div class="title-font relative z-10 mt-10 inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-indigo-500 text-sm font-medium text-white sm:mt-0">
             {{ index + 1 }}
           </div>
           <div class="flex flex-grow flex-col items-start sm:flex-row sm:items-center">
@@ -82,7 +80,7 @@ export default {
     this.$nextTick(this.handleUpdate);
 
     // 监听滚动的距离以高亮toc菜单
-    document.getElementById("editor-container").addEventListener("scroll", function (e) {
+    window.addEventListener("scroll", function (e) {
       if (!e.target) return;
 
       // 已经滚动了多少距离

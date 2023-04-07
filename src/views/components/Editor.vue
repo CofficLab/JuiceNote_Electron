@@ -1,12 +1,12 @@
 <template>
   <!-- 工具栏 -->
-  <div id="toolbar-container" v-if="editable">
+  <div v-if="editable" class="sticky top-12 z-40">
     <Toolbar :editor="editor" :current="node" :source-code-callback="toggleSourceCode"></Toolbar>
   </div>
 
   <!-- 编辑框 -->
-  <div id="editor-container" class="mt-1 flex w-full flex-row justify-center border-0 p-4">
-    <editor-content v-if="!sourceCodeDisplay" :editor="editor" class="prose overflow-visible xl:prose-lg lg:mr-56" />
+  <div class="z-30 mt-1 flex w-full flex-row justify-center border-0 p-4">
+    <editor-content v-if="!sourceCodeDisplay" :editor="editor" class="prose w-full xl:prose-lg lg:mr-56" />
   </div>
 
   <!-- 源码 -->

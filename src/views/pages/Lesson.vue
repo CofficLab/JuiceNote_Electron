@@ -1,9 +1,9 @@
 <template>
   <div class="flex h-full w-full flex-col items-center">
-    <NodeTab :current="node"></NodeTab>
+    <div class="fixed top-12 z-50 w-full"><NodeTab :current="node"></NodeTab></div>
 
-    <div @contextmenu="showRightMenu" class="w-full overflow-scroll overscroll-none">
-      <Editor :node="node" :saveCallback="save" :editable="true"></Editor>
+    <div @contextmenu="showRightMenu" class="z-40 w-full">
+      <Editor :node="node" :saveCallback="save" :editable="editable"></Editor>
     </div>
 
     <!-- 右键菜单 -->
@@ -37,10 +37,12 @@ import FormAdd from "../modals/FormAdd.vue";
 import FormRename from "../modals/FormRename.vue";
 import Editor from "../components/Editor.vue";
 import { Node } from "../../models/Node";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { onBeforeRouteUpdate, useRoute } from "vue-router";
 
 const route = useRoute();
+
+const editable = computed(() => route.name == "lessons.edit");
 
 let adding = route.query.adding != undefined;
 let renaming = route.query.renaming != undefined;
@@ -72,7 +74,7 @@ onBeforeRouteUpdate((to, from) => {
 
     // 如果有锚点并且目标元素存在，则滚动到该元素
     if (window.location.hash && target) {
-      document.querySelector("#editor-container").scrollTo({
+      document.querySelector("main").scrollTo({
         top: target.offsetTop,
         behavior: "smooth",
       });
@@ -84,10 +86,6 @@ onBeforeRouteUpdate((to, from) => {
 <style lang="postcss">
 #toolbar-container {
   @apply sticky top-0 z-40 flex w-full flex-row items-center justify-center gap-2 bg-yellow-300/30 shadow-2xl;
-}
-
-#editor-container {
-  @apply mt-1 flex w-full justify-center overflow-auto border-0 p-4;
 }
 
 .ProseMirror {

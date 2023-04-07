@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col overflow-scroll">
+  <div class="flex flex-col overflow-scroll overscroll-none">
     <div class="sticky top-0 z-50">
       <!-- 空白，用于拖动 -->
       <div class="z-50 w-full bg-base-300">

@@ -1,26 +1,19 @@
 <template>
-  <div class="flex h-screen w-screen flex-row" v-if="error.length == 0">
-    <aside v-if="currentId > 0" class="hidden h-screen w-40 border-r-2 border-gray-300 bg-base-200 shadow-xl dark:border-cyan-900/10 lg:flex lg:flex-col">
-      <SideMenu></SideMenu>
-    </aside>
+  <aside v-if="sideMenuVisible" class="fixed left-0 z-50 hidden h-screen w-40 border-r-2 border-gray-300 bg-base-200 shadow-xl dark:border-cyan-900/10 lg:flex lg:flex-col">
+    <SideMenu></SideMenu>
+  </aside>
 
-    <div class="flex flex-grow flex-col">
-      <TopBar></TopBar>
-      <div class="flex flex-row overflow-scroll">
-        <main class="flex w-full justify-center">
-          <router-view v-slot="{ Component }">
-            <transition name="fade">
-              <component :is="Component" />
-            </transition>
-          </router-view>
-        </main>
-      </div>
-    </div>
-  </div>
+  <header class="fixed top-0 z-50 h-12 w-full pl-40">
+    <TopBar></TopBar>
+  </header>
 
-  <div v-if="error.length > 0" class="flex h-screen items-center justify-center">
-    <h1 v-html="error" class="text-3xl"></h1>
-  </div>
+  <main class="fixed top-12 h-screen w-full overflow-scroll overscroll-none bg-cyan-800/10 pl-40 dark:bg-slate-900/10">
+    <router-view v-slot="{ Component }">
+      <transition name="slide-fade">
+        <component :is="Component" />
+      </transition>
+    </router-view>
+  </main>
 </template>
 
 <script setup>
@@ -28,8 +21,22 @@ import { computed } from "vue";
 import { useRoute } from "vue-router";
 import TopBar from "./blocks/TopBar.vue";
 import SideMenu from "./blocks/SideMenu.vue";
-import ErrorController from "../controllers/ErrorController";
 
-const error = computed(() => ErrorController.error);
-const currentId = computed(() => useRoute().params.id);
+const sideMenuVisible = computed(() => useRoute().name == "lessons.show" || useRoute().name == "lessons.edit");
 </script>
+
+<style scoped>
+.slide-fade-enter-active {
+  transition: all 0.1s ease-out;
+}
+
+.slide-fade-leave-active {
+  transition: all 0.1s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateX(20px);
+  opacity: 0;
+}
+</style>

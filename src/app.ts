@@ -2,8 +2,7 @@ import { createApp } from 'vue'
 import { ipcRenderer } from 'electron'
 import App from './views/App.vue'
 import Home from './views/pages/Home.vue'
-import LessonEdit from './views/pages/LessonEdit.vue'
-import LessonShow from './views/pages/LessonShow.vue'
+import Lesson from './views/pages/Lesson.vue'
 import NotFound from './views/pages/NotFound.vue'
 import { createRouter, createWebHashHistory } from 'vue-router'
 import FullScreenController from './controllers/FullScreenController'
@@ -36,8 +35,8 @@ const router = createRouter({
     {
       path: '/lessons/:id',
       children: [
-        { path: 'edit', component: LessonEdit, name: "lessons.edit" },
-        { path: 'show', component: LessonShow, name: "lessons.show" },
+        { path: 'edit', component: Lesson, name: "lessons.edit" },
+        { path: 'show', component: Lesson, name: "lessons.show" },
       ]
     },
   ],

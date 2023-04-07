@@ -40,6 +40,6 @@ const current = computed(() => Node.find(currentId.value));
 
 <style scoped lang="postcss">
 #top-bar {
-  @apply z-50 flex h-12 w-full justify-between border-b border-gray-300 bg-base-200 shadow dark:border-cyan-900/10;
+  @apply flex justify-between border-b border-gray-300 bg-base-200 shadow dark:border-cyan-900/10;
 }
 </style>
