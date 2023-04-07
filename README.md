@@ -17,6 +17,7 @@
 
 ```sh
 npm i
+npm install node-gyp@latest -g
 npm run rebuild
 ```
 
