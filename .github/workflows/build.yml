@@ -2,7 +2,8 @@ name: Build
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
     paths-ignore:
       - "**.md"
       - "**.spec.js"
@@ -32,13 +33,13 @@ jobs:
           node-version: 14
 
       - name: Install Dependencies
-        run: npm install
-
-      - name: Rebuild
-        run: npm run rebuild
+        run: npm ci
 
       - name: Install node-gyp
         run: npm install node-gyp@latest -g
+
+      - name: Rebuild
+        run: npm run rebuild
 
       - name: Build Release Files
         run: npm run build
@@ -48,6 +49,6 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: release_on_${{ matrix. os }}
+          name: release_on_${{ matrix.os }}
           path: release/
           retention-days: 5
