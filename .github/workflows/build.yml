@@ -34,6 +34,9 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
+      - name: Rebuild
+        run: npm run rebuild
+
       - name: Build Release Files
         run: npm run build
         env:
