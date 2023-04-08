@@ -54,7 +54,7 @@ jobs:
           type: 'zip'
           path: 'release'
           filename: 'release.zip'
-          exclusions: '/*-unpacked/* /*mac/* /*.icon-ico/* /*.icon-set/* *.app *.yml *.blockmap'
+          recursive_exclusions: '*unpacked/* *mac/* *.icon-ico/* *.icon-set/* *.app *.yml *.blockmap'
 
       - name: 检查文件(macOS、Ubuntu)
         if: matrix.os != 'windows-latest'
