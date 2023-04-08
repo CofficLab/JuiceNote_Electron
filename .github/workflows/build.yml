@@ -55,9 +55,15 @@ jobs:
           path: 'release'
           filename: 'release.zip'
           exclusions: |
+            release/linux-unpacked
+            release/win-unpacked
+            release/mac
             linux-unpacked
             win-unpacked
             mac
+            linux-unpacked/*
+            win-unpacked/*
+            mac/*
             *.icon-ico
             *.icon-set
             *.app
