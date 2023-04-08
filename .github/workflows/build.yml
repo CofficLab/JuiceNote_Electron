@@ -48,13 +48,23 @@ jobs:
         run: |
           dir release
 
+      - name: 创建提取文件夹
+        run: mkdir release_filtered
+
+      - name: 提取文件(macOS、Ubuntu)
+        if: matrix.os != 'windows-latest'
+        run: cp release/*.dmg release/*.snap release/*.AppImage release_filtered/
+
+      - name: 提取文件(Windows)
+        if: matrix.os == 'windows-latest'
+        run: copy release\*.exe release_filtered
+
       - name: 压缩文件
         uses: thedoctor0/zip-release@0.7.1
         with:
           type: 'zip'
-          path: 'release'
+          path: 'release_filtered'
           filename: 'release.zip'
-          exclusions: '*unpacked/* mac/* .icon-ico/* .icon-set/* *.app/* *.yml *.blockmap'
 
       - name: 检查文件(macOS、Ubuntu)
         if: matrix.os != 'windows-latest'
@@ -88,16 +98,16 @@ jobs:
         run: |
           ls -alh
           ls -alh unzipped
-          ls -alh unzipped/release
+          ls -alh unzipped/release_filtered
       - name: 发布版本
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
-            unzipped/release/*.dmg
-            unzipped/release/*.exe
-            unzipped/release/*.AppImage
-            unzipped/release/*.snap
+            unzipped/release_filtered/*.dmg
+            unzipped/release_filtered/*.exe
+            unzipped/release_filtered/*.AppImage
+            unzipped/release_filtered/*.snap
 
   sync:
     runs-on: self-hosted
