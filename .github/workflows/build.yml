@@ -98,16 +98,16 @@ jobs:
         run: |
           ls -alh
           ls -alh unzipped
-          ls -alh unzipped/release_filtered
+          ls -alh unzipped/release
       - name: 发布版本
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
-            unzipped/release_filtered/*.dmg
-            unzipped/release_filtered/*.exe
-            unzipped/release_filtered/*.AppImage
-            unzipped/release_filtered/*.snap
+            unzipped/release/*.dmg
+            unzipped/release/*.exe
+            unzipped/release/*.AppImage
+            unzipped/release/*.snap
 
   sync:
     runs-on: self-hosted
