@@ -128,7 +128,7 @@ jobs:
           ls -alh unzipped/release
       - name: 同步到服务器
         run: |
-          cp -rf unzipped/release /www/storage/kuaiyizhi_desktop_temp
+          find unzipped -type f -exec cp {} /www/storage/kuaiyizhi_desktop_temp/
           rm -rf /www/storage/kuaiyizhi_desktop
           mv /www/storage/kuaiyizhi_desktop_temp /www/storage/kuaiyizhi_desktop
             
