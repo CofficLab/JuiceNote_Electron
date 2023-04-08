@@ -32,6 +32,7 @@
     ],
     artifactName: "${productName}.${ext}",
     icon: "./public/logo.png",
+    category: "Utility",
   },
   nsis: {
     oneClick: false,
