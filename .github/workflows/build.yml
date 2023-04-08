@@ -56,6 +56,16 @@ jobs:
           filename: 'release.zip'
           exclusions: 'release/*.yml release/*.blockmap'
 
+      - name: 检查文件(macOS、Ubuntu)
+        if: matrix.os != 'windows-latest'
+        run: |
+          ls -alh 
+
+      - name: 检查文件(Windows)
+        if: matrix.os == 'windows-latest'
+        run: |
+          dir
+
       - name: 上传构件
         uses: actions/upload-artifact@v3
         with:
