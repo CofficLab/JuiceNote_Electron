@@ -83,8 +83,6 @@ jobs:
     steps:
       - name: 下载构件
         uses: actions/download-artifact@v3
-        with:
-          path: .
       - name: 检查文件
         run: ls -alhR
       - name: 扁平化
