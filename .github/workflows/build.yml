@@ -45,6 +45,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: 检查文件
+        run: |
+          ls -alh release
+
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
@@ -67,4 +71,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: release/**/*
+          files: |
+            macos-latest/Kuaiyizhi.dmg
+            ubuntu-latest/Kuaiyizhi_0.1.1_amd64.snap
+            ubuntu-latest/Kuaiyizhi-0.1.1.AppImage
