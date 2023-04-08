@@ -12,6 +12,9 @@ stages:
   - build
   - sync
 
+# gitlab ci没有提供macOS环境，所以构建electron要使用GitHub Actions
+# 相关代码在.github/workflows
+
 # build_win:
 #   stage: build
 #   image: electronuserland/builder:wine
