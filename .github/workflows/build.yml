@@ -75,3 +75,19 @@ jobs:
             release/ubuntu-latest/Kuaiyizhi_0.1.1_amd64.snap
             release/ubuntu-latest/Kuaiyizhi-0.1.1.AppImage
             release/windows-latest/*
+
+  sync:
+    runs-on: self-hosted
+    needs: build
+    steps:
+      - name: 下载构件
+        uses: actions/download-artifact@v3
+        with:
+          path: release
+      - name: 检查文件
+        run: |
+          ls -alh release
+      - name: 同步到服务器
+        run: |
+          cp -rf release /www/storage/kuaiyizhi_desktop
+            
