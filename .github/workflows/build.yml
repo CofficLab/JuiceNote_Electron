@@ -46,8 +46,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: 检查文件
+        if: matrix.os != 'windows-latest'
         run: |
           ls -alh release
+
+      - name: 检查文件
+        if: matrix.os == 'windows-latest'
+        run: |
+          dir /a /l /h
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
