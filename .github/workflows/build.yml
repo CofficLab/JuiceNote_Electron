@@ -54,7 +54,7 @@ jobs:
           type: 'zip'
           path: 'release'
           filename: 'release.zip'
-          exclusions: 'release/*.yml release/*.blockmap'
+          exclusions: 'release/*.yml release/*.blockmap release/linux-unpacked'
 
       - name: 检查文件(macOS、Ubuntu)
         if: matrix.os != 'windows-latest'
@@ -93,7 +93,10 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
-            unzipped/**/*
+            unzipped/**/*.dmg
+            unzipped/**/*.exe
+            unzipped/**/*.AppImage
+            unzipped/**/*.snap
 
   sync:
     runs-on: self-hosted
