@@ -86,20 +86,19 @@ jobs:
           ls -alh release
       - name: 解压文件
         run: |
-          find release -type f -name "*.zip" -exec unzip {} \;
+          find release -type f -name "*.zip" -exec unzip {} -d unzipped \;
+      - name: 检查文件
+        run: |
+          ls -alh
+          ls -alh unzipped
       - name: 发布版本
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
-            release/macos-latest/*
-            release/ubuntu-latest/*
-            release/windows-latest/*
-          exclude: |
-            file3.txt
-            folder1/
-            *.yaml
-            *.blockmap
+            unzipped/macos-latest/*
+            unzipped/ubuntu-latest/*
+            unzipped/windows-latest/*
 
   sync:
     runs-on: self-hosted
@@ -114,8 +113,12 @@ jobs:
           ls -alh release
       - name: 解压文件
         run: |
-          find release -type f -name "*.zip" -exec unzip {} \;
+          find release -type f -name "*.zip" -exec unzip {} -d unzipped \;
+      - name: 检查文件
+        run: |
+          ls -alh
+          ls -alh unzipped
       - name: 同步到服务器
         run: |
-          cp -rf release /www/storage/kuaiyizhi_desktop
+          cp -rf unzipped /www/storage/kuaiyizhi_desktop
             
