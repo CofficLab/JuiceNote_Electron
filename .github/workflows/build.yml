@@ -48,39 +48,16 @@ jobs:
         run: |
           dir release
 
-      - name: 创建提取文件夹
-        run: mkdir release_filtered
-
-      - name: 提取文件(macOS、Ubuntu)
-        if: matrix.os != 'windows-latest'
-        run: cp release/*.dmg release/*.snap release/*.AppImage release_filtered/
-
-      - name: 提取文件(Windows)
-        if: matrix.os == 'windows-latest'
-        run: copy release\*.exe release_filtered
-
-      - name: 压缩文件
-        uses: thedoctor0/zip-release@0.7.1
-        with:
-          type: 'zip'
-          path: 'release_filtered'
-          filename: 'release.zip'
-
-      - name: 检查文件(macOS、Ubuntu)
-        if: matrix.os != 'windows-latest'
-        run: |
-          ls -alh 
-
-      - name: 检查文件(Windows)
-        if: matrix.os == 'windows-latest'
-        run: |
-          dir
-
       - name: 上传构件
         uses: actions/upload-artifact@v3
         with:
           name: ${{ matrix.os }}
-          path: release.zip
+          path: |
+            *.zip 
+            release/*.exe 
+            release/*.dmg
+            release/*.AppImage
+            release/*.snap
           retention-days: 5
 
   release:
