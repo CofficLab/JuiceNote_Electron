@@ -3,7 +3,7 @@
  */
 {
   appId: "YourAppID",
-  asar: false,
+  asar: true,
   directories: {
     output: "release/",
   },
