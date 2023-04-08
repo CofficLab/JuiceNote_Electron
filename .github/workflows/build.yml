@@ -46,7 +46,7 @@ jobs:
       - name: 检查文件
         if: matrix.os == 'windows-latest'
         run: |
-          dir 
+          dir release
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
