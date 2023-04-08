@@ -48,6 +48,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
+          name: ${{ matrix.os }}
           path: release/
           retention-days: 5
 
@@ -66,4 +67,4 @@ jobs:
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: release/*
+          files: release/**/*
