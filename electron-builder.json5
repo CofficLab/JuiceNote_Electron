@@ -33,6 +33,10 @@
     artifactName: "${productName}.${ext}",
     icon: "./public/logo.png",
   },
+  linux: {
+    artifactName: "${productName}.${ext}",
+    category: "Utility",
+  },
   nsis: {
     oneClick: false,
     perMachine: false,
