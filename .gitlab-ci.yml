@@ -38,7 +38,6 @@ build_linux:
     expire_in: 30 mins
   script:
     - npm config set registry https://registry.npm.taobao.org/
-    - npm cache clean
     - npm install -g npm@8.15.0
     - npm install node-gyp@latest -g
     - npm -v
