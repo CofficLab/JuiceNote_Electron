@@ -20,11 +20,11 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
 
-      - name: Install Windows Build Tools
-        if: matrix.os == 'windows-latest'
-        run: |
-          npm install --global --production windows-build-tools
-          # npm config set msvs_version 2022
+      # - name: Install Windows Build Tools
+      #   if: matrix.os == 'windows-latest'
+      #   run: |
+      #     npm install --global --production windows-build-tools
+      #     # npm config set msvs_version 2022
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
