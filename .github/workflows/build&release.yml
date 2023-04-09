@@ -36,6 +36,13 @@ jobs:
           echo "新版本号 $NEW_TAG"
           echo "tag=$NEW_TAG" >> $GITHUB_ENV
 
+      - name: 检查tag-1
+        run: echo ${{ env.tag }}
+      - name: 检查tag-2
+        env: 
+          TAG: ${{ env.tag }}
+        run: echo $TAG
+
   test:
     runs-on: ubuntu-latest
     needs: 
@@ -46,7 +53,7 @@ jobs:
       - name: 检查tag-2
         env: 
           TAG: ${{ env.tag }}
-        run: echo $NEW_TAG
+        run: echo $TAG
 
   build:
     runs-on: ${{ matrix.os }}   
