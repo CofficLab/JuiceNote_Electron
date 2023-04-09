@@ -9,7 +9,6 @@
 </template>
 
 <script setup>
-import { defineProps } from "vue";
 import Link from "../components/Link.vue";
 const props = defineProps({
   current: null,

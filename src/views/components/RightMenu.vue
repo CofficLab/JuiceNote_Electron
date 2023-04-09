@@ -7,7 +7,7 @@
 </template>
 
 <script setup>
-import { defineProps, watch, ref, onMounted, onBeforeUnmount } from "vue";
+import { watch, ref, onMounted, onBeforeUnmount } from "vue";
 
 const props = defineProps({
   event: {

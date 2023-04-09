@@ -18,7 +18,7 @@
 <script setup>
 import Extensions from "../../entities/Extensions";
 import { Node } from "../../models/Node";
-import { defineProps, ref, watch, onBeforeUnmount } from "vue";
+import { ref, watch, onBeforeUnmount } from "vue";
 import Monaco from "./Monaco.vue";
 import Toolbar from "../blocks/Toolbar.vue";
 import { Editor, EditorContent } from "@tiptap/vue-3";

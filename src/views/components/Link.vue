@@ -23,7 +23,7 @@
 </template>
 
 <script setup>
-import { computed, defineProps, ref } from "vue";
+import { computed, ref } from "vue";
 import Rename from "../operators/Rename.vue";
 import Edit from "../operators/Edit.vue";
 import Delete from "../operators/Delete.vue";

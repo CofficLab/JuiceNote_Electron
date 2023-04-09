@@ -17,7 +17,7 @@
 import { nodeViewProps, NodeViewWrapper } from "@tiptap/vue-3";
 import DynamicPadding from "../components/DynamicPadding.vue";
 import { useRoute } from "vue-router";
-import { defineProps, onMounted, nextTick, ref } from "vue";
+import { onMounted, nextTick, ref } from "vue";
 
 const route = useRoute();
 
