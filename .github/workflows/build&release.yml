@@ -15,7 +15,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: 'cat package.json'
+      - name: '检查 package.json'
         run: cat ./package.json
 
       - name: 'Automated Version Bump'
@@ -26,15 +26,31 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
-      - name: 'cat package.json'
+      - name: '检查 package.json'
         run: cat ./package.json
         
-      - name: 'Output Step'
+      - name: 输出新的版本号
         env:
           NEW_TAG: ${{ steps.version-bump.outputs.newTag }}
         run: |
-          echo "new tag $NEW_TAG"
-          echo "::set-output name=NEW_TAG::${{ steps.version-bump.outputs.newTag }}"
+          echo "新版本号 $NEW_TAG"
+          echo "action_state=$NEW_TAG" >> $GITHUB_ENV
+
+  test:
+    runs-on: ubuntu-latest
+    needs: 
+      - update_version
+    steps:
+      - name: 检查tag-1
+        run: echo ${{ env.tag }}
+      - name: 检查tag-2
+        env: 
+          TAG: ${{ env.tag }}
+        run: echo $NEW_TAG
+      - name: 检查tag-3
+        with: 
+          TAG: ${{ env.tag }}
+        run: echo $NEW_TAG
 
   build:
     runs-on: ${{ matrix.os }}   
@@ -90,8 +106,8 @@ jobs:
   release:
     runs-on: ubuntu-latest
     needs: 
-    - build
-    - update_version
+      - build
+      - update_version
     steps:
       - name: 下载构件
         uses: actions/download-artifact@v3
@@ -102,7 +118,7 @@ jobs:
       - name: 发布版本
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{ steps.update_version.outputs.NEW_TAG }}
+          tag_name: ${{ env.tag }}
           files: |
             ./**/*.dmg
             ./**/*.exe
@@ -113,22 +129,29 @@ jobs:
     runs-on: self-hosted
     needs: build
     steps:
-      - name: 下载构件
-        uses: actions/download-artifact@v3
-      - name: 检查文件
-        run: ls -alhR 
-      - name: 扁平化
+      - name: 准备文件夹
         run: |
-          rm -rf flattened && mkdir flattened
-          find . -type f -exec cp {} flattened/ \;
-      - name: 检查文件
-        run: ls -alhR
-      - name: 同步到服务器
-        run: |
+          rm -rf downloads && mkdir downloads
           rm -rf /www/storage/kuaiyizhi_desktop_temp/
           mkdir /www/storage/kuaiyizhi_desktop_temp/
 
-          cp flattened/* /www/storage/kuaiyizhi_desktop_temp/
+      - name: 下载构件
+        uses: actions/download-artifact@v3
+        with:
+          path: downloads
+
+      - name: 检查文件
+        run: ls -alhR downloads
+
+      - name: 扁平化
+        run: |
+          find downloads -type f -exec cp {} /www/storage/kuaiyizhi_desktop_temp/ \;
+
+      - name: 检查文件
+        run: ls -alhR /www/storage/kuaiyizhi_desktop_temp
+
+      - name: 同步到服务器
+        run: |
           rm -rf /www/storage/kuaiyizhi_desktop
           mv /www/storage/kuaiyizhi_desktop_temp /www/storage/kuaiyizhi_desktop
             
