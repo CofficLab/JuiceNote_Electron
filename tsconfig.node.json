@@ -14,9 +14,5 @@
   "include": [
     "package.json",
     "electron"
-  ],
-  "types": [
-    "vue",
-    "nconf"
   ]
 }
