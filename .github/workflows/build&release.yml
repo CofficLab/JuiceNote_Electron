@@ -34,22 +34,32 @@ jobs:
           NEW_TAG: ${{ steps.version-bump.outputs.newTag }}
         run: |
           echo "新版本号 $NEW_TAG"
-          echo "tag=$NEW_TAG" >> $GITHUB_ENV
+          echo $NEW_TAG >> tag
 
-      - name: 检查tag-1
-        run: echo ${{ env.tag }}
-      - name: 检查tag-2
-        env: 
-          TAG: ${{ env.tag }}
-        run: echo $TAG
+      - name: 上传版本号构件
+        uses: actions/upload-artifact@v3
+        with:
+          name: tag
+          path: tag
+          retention-days: 1
 
   test:
     runs-on: ubuntu-latest
     needs: 
       - update_version
     steps:
+      - name: 下载版本号构件
+        uses: actions/download-artifact@v3
+        with: 
+          name: tag
+
+      - name: 存储版本号到环境变量
+        run: |
+          echo "tag=$(cat tag)" >> $GITHUB_ENV 
+
       - name: 检查tag-1
         run: echo ${{ env.tag }}
+        
       - name: 检查tag-2
         env: 
           TAG: ${{ env.tag }}
@@ -112,6 +122,21 @@ jobs:
       - build
       - update_version
     steps:
+      - name: 下载版本号构件
+        uses: actions/download-artifact@v3
+        with: 
+          name: tag
+
+      - name: 清理版本号构件
+        uses: geekyeggo/delete-artifact@v2
+        with:
+          name: tag
+
+      - name: 存储版本号到环境变量
+        run: |
+          echo "tag=$(cat tag)" >> $GITHUB_ENV 
+          rm -rf tag
+      
       - name: 下载构件
         uses: actions/download-artifact@v3
 
