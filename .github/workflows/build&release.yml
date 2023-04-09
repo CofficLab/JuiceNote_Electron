@@ -34,7 +34,7 @@ jobs:
           NEW_TAG: ${{ steps.version-bump.outputs.newTag }}
         run: |
           echo "新版本号 $NEW_TAG"
-          echo "action_state=$NEW_TAG" >> $GITHUB_ENV
+          echo "tag=$NEW_TAG" >> $GITHUB_ENV
 
   test:
     runs-on: ubuntu-latest
