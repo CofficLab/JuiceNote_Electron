@@ -2,9 +2,6 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    types:
-      - synchronize
 
 permissions:
   contents: write
@@ -48,10 +45,6 @@ jobs:
         run: echo ${{ env.tag }}
       - name: 检查tag-2
         env: 
-          TAG: ${{ env.tag }}
-        run: echo $NEW_TAG
-      - name: 检查tag-3
-        with: 
           TAG: ${{ env.tag }}
         run: echo $NEW_TAG
 
