@@ -117,7 +117,7 @@ jobs:
       - name: 扁平化
         run: |
           mkdir flattened_${GITHUB_REF#refs/tags/}
-          find ${GITHUB_REF#refs/tags/} -type f -exec cp {} flattened_${GITHUB_REF#refs/tags/}/ \
+          find ${GITHUB_REF#refs/tags/} -type f -exec cp {} flattened_${GITHUB_REF#refs/tags/}/ \;
       - name: 检查文件
         run: ls -alhR
       - name: 同步到服务器
