@@ -28,6 +28,7 @@ jobs:
           
       - name: 'cat package.json'
         run: cat ./package.json
+        
       - name: 'Output Step'
         env:
           NEW_TAG: ${{ steps.version-bump.outputs.newTag }}
@@ -95,6 +96,7 @@ jobs:
       - name: 发布版本
         uses: softprops/action-gh-release@v1
         with:
+          tag_name: ${{ steps.version-bump.outputs.newTag }}
           files: |
             ./**/*.dmg
             ./**/*.exe
@@ -111,7 +113,9 @@ jobs:
         run: ls -alhR 
       - name: 扁平化
         run: |
-          mkdir flattened
+          if [ ! -d 'flattened' ]; then 
+            mkdir flattened
+          fi
           find ${GITHUB_REF#refs/tags/} -type f -exec cp {} flattened/ \;
       - name: 检查文件
         run: ls -alhR
