@@ -6,7 +6,7 @@ on:
 permissions:
   contents: write
 
-name: Upload Version
+name: Update Version
 
 jobs:
   update_version:
