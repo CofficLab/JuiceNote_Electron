@@ -157,6 +157,11 @@ jobs:
     runs-on: self-hosted
     needs: build
     steps:
+      - name: 清理版本号构件
+        uses: geekyeggo/delete-artifact@v2
+        with:
+          name: tag
+          
       - name: 准备文件夹
         run: |
           rm -rf downloads && mkdir downloads
