@@ -59,7 +59,7 @@ jobs:
 
       - name: 检查tag-1
         run: echo ${{ env.tag }}
-        
+
       - name: 检查tag-2
         env: 
           TAG: ${{ env.tag }}
@@ -157,11 +157,14 @@ jobs:
     runs-on: self-hosted
     needs: build
     steps:
+      - name: 清理版本号构件
+        uses: geekyeggo/delete-artifact@v2
+        with:
+          name: tag
+          
       - name: 准备文件夹
         run: |
           rm -rf downloads && mkdir downloads
-          rm -rf /www/storage/kuaiyizhi_desktop_temp/
-          mkdir /www/storage/kuaiyizhi_desktop_temp/
 
       - name: 下载构件
         uses: actions/download-artifact@v3
@@ -180,6 +183,9 @@ jobs:
 
       - name: 同步到服务器
         run: |
+          rm -rf /www/storage/kuaiyizhi_desktop_temp/
+          mkdir /www/storage/kuaiyizhi_desktop_temp/
+
           rm -rf /www/storage/kuaiyizhi_desktop
           mv /www/storage/kuaiyizhi_desktop_temp /www/storage/kuaiyizhi_desktop
             
