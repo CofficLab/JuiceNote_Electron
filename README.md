@@ -23,14 +23,10 @@
 - 项目初始化
 
 ```sh
-npm i
+npm ci
 npm install node-gyp@latest -g
 npm run rebuild
 ```
-
-> 尽量不使用 cnpm，可能会存在问题
-
-以上操作是为了将项目依赖存储在`node_modules`文件夹。
 
 - 运行与调试
 
@@ -41,7 +37,7 @@ npm run dev
 - 查看样式
 
 ```
-npm run tailwind
+npm run t
 ```
 
 ## Thanks To

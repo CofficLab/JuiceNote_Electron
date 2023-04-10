@@ -1,5 +1,5 @@
 {
-  "name": "Kuaiyizhi",
+  "name": "kuaiyizhi",
   "version": "0.9.40",
   "author": "kuaiyizhi.cn",
   "description": "一站式学习软件",
@@ -16,22 +16,18 @@
     "build:mwl": "vite build && electron-builder -mwl"
   },
   "engines": {
-    "node": "^14.18.0 || >=16.0.0"
+    "node": ">=16.0.0"
   },
   "devDependencies": {
-    "@types/alpinejs": "^3.7.1",
-    "@vitejs/plugin-vue": "^3.0.1",
-    "electron": "^21.4.3",
-    "electron-builder": "^23.3.3",
-    "prettier": "^2.8.4",
+    "@types/node": "^18.15.11",
+    "autoprefixer": "^10.4.14",
+    "electron": "^24.0.0",
+    "electron-builder": "^23.6.0",
+    "postcss": "^8.4.16",
+    "postcss-nesting": "^10.1.10",
+    "prettier": "^2.8.7",
     "prettier-plugin-tailwindcss": "^0.2.3",
-    "tailwind-config-viewer": "^1.7.2",
-    "typescript": "^4.7.4",
-    "vite": "^3.0.8",
-    "vite-plugin-electron": "^0.9.2",
-    "vite-svg-loader": "^4.0.0",
-    "vue": "^3.2.37",
-    "vue-tsc": "^0.40.1"
+    "tailwind-config-viewer": "^1.7.2"
   },
   "debug": {
     "env": {
@@ -61,29 +57,23 @@
     "@tiptap/pm": "^2.0.0-beta.218",
     "@tiptap/starter-kit": "^2.0.0-beta.220",
     "@tiptap/vue-3": "^2.0.0-beta.218",
-    "@types/nconf": "^0.10.3",
-    "@types/node": "^18.14.6",
-    "@types/validator": "^13.7.13",
-    "autoprefixer": "^10.4.8",
+    "@vitejs/plugin-vue": "^3.2.0",
     "better-sqlite3": "^8.1.0",
     "clipboard": "^2.0.11",
     "daisyui": "^2.24.0",
     "monaco-editor": "^0.36.1",
-    "nconf": "^0.12.0",
     "node-pty": "^0.10.1",
-    "postcss": "^8.4.16",
-    "postcss-nesting": "^10.1.10",
-    "sequelize": "^6.29.0",
-    "slug": "^8.2.2",
-    "sqlite3": "^5.1.4",
     "tailwindcss": "^3.1.8",
+    "vite": "^3.2.5",
+    "vite-plugin-electron": "^0.9.2",
+    "vite-svg-loader": "^4.0.0",
+    "vue": "^3.2.38",
     "vue-cropper": "^1.0.8",
     "vue-drag-resize": "^2.0.3",
     "vue-router": "^4.1.6",
     "vuedraggable": "^4.1.0",
     "xterm": "^5.1.0",
     "xterm-addon-fit": "^0.7.0",
-    "xterm-theme": "^1.1.0",
-    "xterm-webfont": "^2.0.0"
+    "xterm-theme": "^1.1.0"
   }
 }
