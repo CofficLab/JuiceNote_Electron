@@ -190,6 +190,9 @@ jobs:
           rm -rf /www/storage/kuaiyizhi_desktop_temp/
           mkdir /www/storage/kuaiyizhi_desktop_temp/
 
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
       - name: 下载构件
         uses: actions/download-artifact@v3
         with:
@@ -209,4 +212,5 @@ jobs:
         run: |
           rm -rf /www/storage/kuaiyizhi_desktop
           mv /www/storage/kuaiyizhi_desktop_temp /www/storage/kuaiyizhi_desktop
+          cp -rf database/database.db /www/database/lessons.db
             
