@@ -88,7 +88,13 @@ jobs:
 
       - name: 存储版本号到环境变量
         run: |
-          echo "tag=$(cat tag)" >> $GITHUB_ENV 
+          if [ "${{ runner.os }}" == "ubuntu" ] || [ "${{ runner.os }}" == "macOS" ]; then
+            echo "tag=$(cat tag)" >> $GITHUB_ENV 
+          elif [ "${{ runner.os }}" == "windows" ]; then
+            echo tag=$(Get-Content tag) >> $env:GITHUB_ENV
+          else
+            echo "Unknown OS"
+          fi
 
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -115,14 +121,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: 检查文件(macOS、Ubuntu)
-        if: matrix.os != 'windows-latest'
-        run: |
-          ls -alh release
-
-      - name: 检查文件(Windows)
-        if: matrix.os == 'windows-latest'
-        run: |
-          dir release
+        run: 
+          if [ "${{ runner.os }}" == "ubuntu" ] || [ "${{ runner.os }}" == "macOS" ]; then
+            ls -alh release
+          elif [ "${{ runner.os }}" == "windows" ]; then
+            dir release
+          else
+            echo "Unknown OS"
+          fi
 
       - name: 上传构件
         uses: actions/upload-artifact@v3
