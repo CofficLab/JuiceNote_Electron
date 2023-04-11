@@ -31,7 +31,7 @@
   "devDependencies": {
     "@types/node": "^18.15.11",
     "autoprefixer": "^10.4.14",
-    "electron": "^24.0.0",
+    "electron": "^21.4.4",
     "electron-builder": "^23.6.0",
     "postcss": "^8.4.16",
     "postcss-nesting": "^10.1.10",
