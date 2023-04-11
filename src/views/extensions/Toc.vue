@@ -1,6 +1,6 @@
 <template>
   <node-view-wrapper class="toc hidden lg:flex">
-    <ul class="menu fixed right-4 top-28 w-56 overflow-scroll rounded-2xl bg-cyan-900/10 py-4 dark:bg-base-300" style="padding-left: 0">
+    <ul class="menu fixed right-4 top-32 w-56 overflow-scroll rounded-2xl bg-cyan-900/10 py-4 dark:bg-base-300" style="padding-left: 0">
       <div v-for="(heading, index) in headings">
         <li class="list-none rounded-none" style="margin: 0" :key="index">
           <router-link :to="getLink(heading)" class="no-underline">
