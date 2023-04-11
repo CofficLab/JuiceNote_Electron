@@ -10,9 +10,9 @@
       <BtnOfficialLink></BtnOfficialLink>
       <BtnTerminal></BtnTerminal>
       <Toast></Toast>
-      <Prev class="btn-ghost btn-sm btn" :showText="false"></Prev>
+      <Prev class="btn-ghost btn-sm btn" :showText="false" v-if="isRouteLesson"></Prev>
       <Home class="btn-ghost btn-sm btn"></Home>
-      <Next class="btn-ghost btn-sm btn" :showText="false"></Next>
+      <Next class="btn-ghost btn-sm btn" :showText="false" v-if="isRouteLesson"></Next>
       <BtnMore></BtnMore>
     </div>
   </div>
@@ -33,6 +33,7 @@ import { computed } from "vue";
 
 const currentId = computed(() => useRoute().params.id);
 const current = computed(() => Node.find(currentId.value));
+const isRouteLesson = computed(() => useRoute().name.startsWith("lessons"));
 </script>
 
 <style scoped lang="postcss">

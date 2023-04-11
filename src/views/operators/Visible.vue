@@ -5,40 +5,33 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script lang="ts" setup>
+import { computed } from "vue";
 import ToastController from "../../controllers/ToastController";
-import Trash from "../../assets/icons/trash.svg";
-import HideIcon from "../../assets/icons/no-symbol.svg"
+import HideIcon from "../../assets/icons/no-symbol.svg";
 import { Node } from "../../models/Node";
 import NodeController from "../../controllers/NodeController";
-export default defineComponent({
-  props: {
-    showText: {
-      type: Boolean,
-      default: true,
-      required: false,
-    },
-    showIcon: {
-      type: Boolean,
-      default: true,
-      required: false,
-    },
-    node: {
-      type: Node,
-      required: false,
-    },
+
+const props = defineProps({
+  showText: {
+    type: Boolean,
+    default: true,
+    required: false,
   },
-  computed: {
-    target() {
-      return this.node ?? NodeController.getCurrentPage();
-    },
+  showIcon: {
+    type: Boolean,
+    default: true,
+    required: false,
   },
-  methods: {
-    toggleVisible() {
-      ToastController.set(NodeController.updateVisible(this.target));
-    },
+  node: {
+    type: Node,
+    required: false,
   },
-  components: { HideIcon },
 });
+
+const target = computed(() => props.node ?? NodeController.getCurrentPage());
+
+const toggleVisible = function () {
+  ToastController.set(NodeController.updateVisible(target.value));
+};
 </script>
