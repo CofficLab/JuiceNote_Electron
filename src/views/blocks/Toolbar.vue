@@ -119,7 +119,6 @@ import { computed } from "vue";
 import NodeController from "../../controllers/NodeController";
 import ToastController from "../../controllers/ToastController";
 import { Node } from "../../models/Node";
-import SaveIcon from "../../assets/icons/inbox-arrow-down.svg";
 import IconCode from "../../assets/icons/code-bracket.svg";
 import IconListBullet from "../../assets/icons/list-bullet.svg";
 import IconBack from "../../assets/icons/arrow-uturn-left.svg";
@@ -253,7 +252,7 @@ let setLink = function () {
 
 <style scoped lang="postcss">
 #toolbar {
-  @apply flex flex-row items-center;
+  @apply flex flex-row flex-wrap items-center;
 }
 
 label {
