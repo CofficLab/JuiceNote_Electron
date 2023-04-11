@@ -1,27 +1,26 @@
 <template>
-  <aside v-if="sideMenuVisible" class="fixed left-0 z-50 hidden h-screen w-40 border-r-2 border-gray-300 bg-base-200 shadow-xl dark:border-cyan-900/10 lg:flex lg:flex-col">
-    <SideMenu></SideMenu>
-  </aside>
+  <div>
+    <header class="fixed top-0 z-40 h-12 w-full border-b border-gray-300 bg-base-200 pl-40 shadow dark:border-cyan-900/10">
+      <TopBar></TopBar>
+    </header>
 
-  <header class="fixed top-0 z-50 h-12 w-full pl-40">
-    <TopBar></TopBar>
-  </header>
-
-  <main class="fixed top-12 h-screen w-full overflow-scroll overscroll-none bg-cyan-800/10 pl-40 dark:bg-slate-900/10">
     <router-view v-slot="{ Component }">
       <transition name="slide-fade">
         <component :is="Component" />
       </transition>
     </router-view>
-  </main>
+
+    <DebugBar v-if="!isProd"></DebugBar>
+  </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed } from "vue";
 import { useRoute } from "vue-router";
-import TopBar from "./blocks/TopBar.vue";
-import SideMenu from "./blocks/SideMenu.vue";
+import TopBar from "../blocks/TopBar.vue";
+import DebugBar from "../blocks/DebugBar.vue";
 
+const isProd = window.location.protocol === "file:";
 const sideMenuVisible = computed(() => useRoute().name == "lessons.show" || useRoute().name == "lessons.edit");
 </script>
 

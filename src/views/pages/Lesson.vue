@@ -1,26 +1,28 @@
 <template>
-  <div class="flex h-full w-full flex-col items-center">
-    <div class="fixed top-12 z-50 w-full bg-green-200/90" :class="{ 'top-24': editable }"><NodeTab :current="node"></NodeTab></div>
+  <LessonLayout>
+    <div class="flex h-full w-full flex-col items-center">
+      <div class="fixed top-12 z-50 w-full bg-green-200/90" :class="{ 'top-24': editable }"><NodeTab :current="node"></NodeTab></div>
 
-    <div @contextmenu="showRightMenu" class="z-40 w-full">
-      <Editor :node="node" :saveCallback="save" :editable="editable"></Editor>
+      <div @contextmenu="showRightMenu" class="z-40 w-full">
+        <Editor :node="node" :saveCallback="save" :editable="editable"></Editor>
+      </div>
+
+      <!-- 右键菜单 -->
+      <RightMenu :event="rightClickEvent">
+        <Edit :node="node"></Edit>
+        <Rename :node="node"></Rename>
+        <Add :node="node"></Add>
+        <Copy :bookNode="node"></Copy>
+        <Prev :node="node"></Prev>
+        <Next :node="node"></Next>
+        <Delete></Delete>
+      </RightMenu>
+
+      <!-- 弹层 -->
+      <FormAdd :node="node" v-if="adding"></FormAdd>
+      <FormRename :node="node" v-if="renaming"></FormRename>
     </div>
-
-    <!-- 右键菜单 -->
-    <RightMenu :event="rightClickEvent">
-      <Edit :node="node"></Edit>
-      <Rename :node="node"></Rename>
-      <Add :node="node"></Add>
-      <Copy :bookNode="node"></Copy>
-      <Prev :node="node"></Prev>
-      <Next :node="node"></Next>
-      <Delete></Delete>
-    </RightMenu>
-
-    <!-- 弹层 -->
-    <FormAdd :node="node" v-if="adding"></FormAdd>
-    <FormRename :node="node" v-if="renaming"></FormRename>
-  </div>
+  </LessonLayout>
 </template>
 
 <script setup>
@@ -36,6 +38,7 @@ import Delete from "../operators/Delete.vue";
 import FormAdd from "../modals/FormAdd.vue";
 import FormRename from "../modals/FormRename.vue";
 import Editor from "../components/Editor.vue";
+import LessonLayout from "../layouts/LessonLayout.vue";
 import { Node } from "../../models/Node";
 import { ref, computed } from "vue";
 import { onBeforeRouteUpdate, useRoute } from "vue-router";

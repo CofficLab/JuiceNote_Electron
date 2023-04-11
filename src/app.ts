@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
 import { ipcRenderer } from 'electron'
-import App from './views/App.vue'
+import App from './views/layouts/App.vue'
 import Home from './views/pages/Home.vue'
 import Lesson from './views/pages/Lesson.vue'
 import NotFound from './views/pages/NotFound.vue'
