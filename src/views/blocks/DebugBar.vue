@@ -10,7 +10,6 @@
 </template>
 
 <script setup>
-import { Node } from "../../models/Node";
 import { useRoute } from "vue-router";
 import { computed } from "vue";
 
