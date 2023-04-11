@@ -5,7 +5,7 @@
         <NodeTab :current="node"></NodeTab>
       </div>
 
-      <div @contextmenu="showRightMenu" class="z-40 w-full" :class="{ 'mt-4': node.getParent().isTab }">
+      <div @contextmenu="showRightMenu" class="z-40" :class="{ 'mt-4': node.getParent().isTab }">
         <Editor :node="node" :saveCallback="save" :editable="editable"></Editor>
       </div>
 
