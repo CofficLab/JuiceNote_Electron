@@ -1,10 +1,6 @@
 <template>
-  <div class="toast-center toast toast-top ml-24 w-72" v-show="message.length > 0">
-    <div class="alert alert-success w-full">
-      <div>
-        <span v-html="message"></span>
-      </div>
-    </div>
+  <div class="alert alert-success h-8" v-show="message.length > 0">
+    <span v-html="message"></span>
   </div>
 </template>
 

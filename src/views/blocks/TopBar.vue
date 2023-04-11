@@ -6,10 +6,10 @@
     </div>
     <div class="draggable flex-grow"></div>
     <div class="flex h-12 flex-row items-center justify-end pr-4">
+      <Toast></Toast>
       <!-- <Languages></Languages> -->
       <BtnOfficialLink></BtnOfficialLink>
       <BtnTerminal></BtnTerminal>
-      <Toast></Toast>
       <Prev class="btn-ghost btn-sm btn" :showText="false" v-if="isRouteLesson"></Prev>
       <Home class="btn-ghost btn-sm btn"></Home>
       <Next class="btn-ghost btn-sm btn" :showText="false" v-if="isRouteLesson"></Next>
