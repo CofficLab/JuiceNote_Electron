@@ -1,21 +1,19 @@
 <template>
-  <div class="card h-56 w-56 bg-base-100 shadow-2xl">
+  <div class="card relative h-36 w-72 bg-base-100 shadow-2xl">
+    <div class="badge-warning badge absolute left-0 top-2 gap-2 shadow-2xl" v-if="!book.isVisible">已隐藏</div>
+    <div class="dropdown-left dropdown absolute bottom-0 right-0" v-if="editable">
+      <label tabindex="0" class="btn-sm btn m-1 ring">...</label>
+      <ul tabindex="0" class="dropdown-content menu rounded-box w-52 bg-base-100 p-2 shadow">
+        <li><ChangeCover @click="openUploadDialog" :node="book"></ChangeCover></li>
+        <li><Visible :showText="true" :node="book"></Visible></li>
+      </ul>
+    </div>
     <router-link :to="'/lessons/' + book.id + '/show'">
-      <figure class="max-h-40 rounded-t-xl">
+      <figure class="max-h-56 rounded-xl">
         <img v-if="!book.cover" src="/images/book.png" />
-        <img v-else :src="book.cover" class="h-28 w-56" />
+        <img v-else :src="book.cover" class="h-36 w-72" />
       </figure>
     </router-link>
-    <div class="card-body">
-      <h2 class="card-title" :class="{ 'text-info': !book.isVisible }">{{ book.title }}</h2>
-      <div class="dropdown-left dropdown absolute bottom-0 right-0" v-if="editable">
-        <label tabindex="0" class="btn-ghost btn m-1">...</label>
-        <ul tabindex="0" class="dropdown-content menu rounded-box w-52 bg-base-100 p-2 shadow">
-          <li><a href="javascript:void(0)" @click="openUploadDialog">更换封面</a></li>
-          <li><Visible :showText="true" :node="book"></Visible></li>
-        </ul>
-      </div>
-    </div>
 
     <!-- 封面的裁剪框 -->
     <div class="modal modal-open" v-if="isCropperVisible">
@@ -52,6 +50,7 @@ import Visible from "../operators/Visible.vue";
 import { Node } from "../../models/Node";
 import "vue-cropper/dist/index.css";
 import { VueCropper } from "vue-cropper";
+import ChangeCover from "../operators/ChangeCover.vue";
 
 const route = useRoute();
 let props = defineProps({
