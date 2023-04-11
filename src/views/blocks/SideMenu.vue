@@ -118,6 +118,6 @@ export default defineComponent({
   @apply flex justify-center bg-gradient-to-r from-red-500 to-cyan-500 bg-clip-text pb-2 text-lg text-transparent md:text-2xl lg:text-3xl;
 }
 .book-info {
-  @apply flex flex-col bg-base-300/90 dark:border-cyan-900/10;
+  @apply flex flex-col bg-base-200/80 shadow-2xl pt-1 drop-shadow dark:border-cyan-900/10;
 }
 </style>
