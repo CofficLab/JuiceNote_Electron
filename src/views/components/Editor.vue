@@ -50,6 +50,7 @@ let editor = new Editor({
   },
   onUpdate: (event) => {
     props.saveCallback && props.saveCallback(event.editor.getHTML());
+    code.value = event.editor.getHTML();
   },
 });
 
@@ -60,7 +61,9 @@ let save = function (content) {
 };
 
 watch(props, () => {
+  console.log("editor 发现 props 发生变化");
   editor.commands.setContent(props.node.getContent(), true);
+  code.value = editor.getHTML();
 });
 
 onBeforeUnmount(() => {

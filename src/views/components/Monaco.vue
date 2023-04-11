@@ -1,5 +1,3 @@
-<!-- @format -->
-
 <template>
   <div>
     <div class="relative">
@@ -181,6 +179,9 @@ export default defineComponent({
   watch: {
     language() {
       this.setLanguage();
+    },
+    code() {
+      monaco.editor.getModels()[this.index].setValue(this.code);
     },
   },
 
