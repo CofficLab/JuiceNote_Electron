@@ -64,7 +64,7 @@ let handleUpdate = function () {
 onMounted(() => {
   console.log("toc mounted");
   props.editor.on("update", handleUpdate);
-  nextTick(() => handleUpdate);
+  nextTick(() => handleUpdate());
 
   // 监听滚动的距离以高亮toc菜单
   document.querySelector("main").addEventListener("scroll", function (e) {
