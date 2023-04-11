@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+/* 覆盖@tailwind base中的字体设置 */
+/* 如果不覆盖，npm run dev后会有大量warning */
+html {
+  font-family: "";
+}
+
 .draggable {
   -webkit-app-region: drag;
 }
@@ -95,8 +101,8 @@ flex-row
   rounded-xl
   bg-gradient-to-r
   from-cyan-800/30
-  py-3
   px-4
+  py-3
   ring-1;
 }
 
@@ -108,14 +114,14 @@ flex-row
   rounded-xl
   bg-gradient-to-r
   from-yellow-800/30
-  py-3
   px-2
+  py-3
   ring-1;
 }
 
 .ask {
   @apply mb-4
   flex flex-col gap-0
-  rounded-sm bg-sky-800/20 py-2
-  px-2 ring-1;
+  rounded-sm bg-sky-800/20 px-2
+  py-2 ring-1;
 }
