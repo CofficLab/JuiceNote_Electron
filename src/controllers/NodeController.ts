@@ -12,6 +12,8 @@ const NodeController = reactive({
     renamingNode: emptyNode,  // 正在重命名的图书节点
     createChildOf: emptyNode, // 正在添加子节点的节点
     sideMenus: [emptyNode],
+    books: [emptyNode],
+    visibleBooks: [emptyNode],
 
     createChildPage(): Number {
         return this.getCurrentPage().createChildPage('子页面', '')
@@ -44,8 +46,22 @@ const NodeController = reactive({
         return Node.find(id)
     },
 
+    getBooks(): Node[] {
+        console.log('获取图书列表')
+        this.setBooks()
+        return this.books
+    },
+
+    getVisibleBooks(): Node[] {
+        return Node.getVisibleBooks()
+    },
+
     setSideMenus() {
         this.sideMenus = this.getCurrentPage().getBook().getChildren()
+    },
+
+    setBooks() {
+        this.books = Node.getBooks()
     },
 
     setRenamingNode(node: Node) {
@@ -85,6 +101,7 @@ const NodeController = reactive({
 
     updateVisible(node: Node): string {
         let result = node.updateVisible()
+        this.setBooks()
 
         return result
     },

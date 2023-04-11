@@ -294,7 +294,7 @@ class Node {
         return new Node(result)
     }
 
-    static getBooks(): Node {
+    static getBooks(): Node[] {
         let items = db.prepare('select * from nodes where is_book=1 order by priority asc').all()
 
         return items.map((item: object) => {
@@ -302,7 +302,7 @@ class Node {
         });
     }
 
-    static getVisibleBooks(): Node {
+    static getVisibleBooks(): Node[] {
         let items = db.prepare('select * from nodes where is_book=1 and is_visible=1 order by priority asc').all()
 
         return items.map((item: object) => {

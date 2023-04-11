@@ -31,9 +31,10 @@ import Toast from "./Toast.vue";
 import { useRoute } from "vue-router";
 import { computed } from "vue";
 
-const currentId = computed(() => useRoute().params.id);
+const route = useRoute();
+const currentId = computed(() => route.params.id);
 const current = computed(() => Node.find(currentId.value));
-const isRouteLesson = computed(() => useRoute().name.startsWith("lessons"));
+const isRouteLesson = computed(() => route.name && route.name.startsWith("lessons"));
 </script>
 
 <style scoped lang="postcss">

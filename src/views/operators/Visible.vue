@@ -1,7 +1,9 @@
 <template>
   <div @click="toggleVisible">
-    <HideIcon v-if="showIcon"></HideIcon>
-    <span v-if="showText">隐藏或显示</span>
+    <div class="flex flex-row gap-4">
+      <HideIcon v-if="showIcon"></HideIcon>
+      <span v-if="showText">隐藏或显示</span>
+    </div>
   </div>
 </template>
 
@@ -11,6 +13,7 @@ import ToastController from "../../controllers/ToastController";
 import HideIcon from "../../assets/icons/no-symbol.svg";
 import { Node } from "../../models/Node";
 import NodeController from "../../controllers/NodeController";
+import { useRoute, useRouter } from "vue-router";
 
 const props = defineProps({
   showText: {
@@ -28,6 +31,9 @@ const props = defineProps({
     required: false,
   },
 });
+
+const router = useRouter();
+const route = useRoute();
 
 const target = computed(() => props.node ?? NodeController.getCurrentPage());
 
