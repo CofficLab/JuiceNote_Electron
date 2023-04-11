@@ -13,7 +13,6 @@
 <script setup>
 import { computed } from "vue";
 import { useRoute } from "vue-router";
-import TopBar from "../blocks/TopBar.vue";
 import SideMenu from "../blocks/SideMenu.vue";
 
 const sideMenuVisible = computed(() => useRoute().name == "lessons.show" || useRoute().name == "lessons.edit");

@@ -1,6 +1,6 @@
 <template>
   <div class="tabs-container" v-if="current.getParent().isTab">
-    <Link v-for="sibling in current.getSiblings()" class="tab-lifted tab" :node="sibling">{{ sibling.title }}</Link>
+    <Link v-for="sibling in current.getSiblings()" class="tab" :node="sibling">{{ sibling.title }}</Link>
   </div>
 
   <div class="tabs-container" v-if="current.isTab">
@@ -8,7 +8,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import Link from "../components/Link.vue";
 const props = defineProps({
   current: null,
@@ -17,6 +17,6 @@ const props = defineProps({
 
 <style lang="postcss">
 .tabs-container {
-  @apply tabs mt-0 flex w-full justify-center;
+  @apply tabs tabs-boxed mt-0 flex w-full justify-center;
 }
 </style>

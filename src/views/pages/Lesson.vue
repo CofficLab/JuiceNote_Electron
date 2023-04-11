@@ -1,9 +1,11 @@
 <template>
   <LessonLayout>
     <div class="flex h-full w-full flex-col items-center">
-      <div class="fixed top-12 z-50 w-full bg-green-200/90" :class="{ 'top-24': editable }"><NodeTab :current="node"></NodeTab></div>
+      <div class="fixed top-12 z-50 w-full bg-green-200/90 dark:bg-green-600/40" :class="{ 'top-24': editable }">
+        <NodeTab :current="node"></NodeTab>
+      </div>
 
-      <div @contextmenu="showRightMenu" class="z-40 w-full">
+      <div @contextmenu="showRightMenu" class="z-40" :class="{ 'mt-4': node.getParent().isTab }">
         <Editor :node="node" :saveCallback="save" :editable="editable"></Editor>
       </div>
 
