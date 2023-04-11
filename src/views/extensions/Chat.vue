@@ -4,11 +4,11 @@
       <!-- 对话框 -->
       <div class="chat-image flex flex-col items-end" contenteditable="false">
         <div class="chat-header">编译器</div>
-        <div class="dropdown-hover dropdown">
+        <div class="dropdown dropdown-hover">
           <label tabindex="0" class="flex items-end">
             <div class="avatar">
               <div class="w-10 rounded-full">
-                <img src="/images/logo-Golang.png" @click="switchPosition" />
+                <img src="/images/logo-Golang.png" class="dark:brightness-50" @click="switchPosition" />
               </div>
             </div>
           </label>
@@ -28,6 +28,7 @@
 <script setup>
 import { NodeViewContent, nodeViewProps, NodeViewWrapper } from "@tiptap/vue-3";
 import { useRoute } from "vue-router";
+import { computed } from "vue";
 
 const props = defineProps(nodeViewProps);
 
