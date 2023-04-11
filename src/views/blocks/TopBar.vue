@@ -6,13 +6,13 @@
     </div>
     <div class="draggable flex-grow"></div>
     <div class="flex h-12 flex-row items-center justify-end pr-4">
+      <Toast></Toast>
       <!-- <Languages></Languages> -->
       <BtnOfficialLink></BtnOfficialLink>
       <BtnTerminal></BtnTerminal>
-      <Toast></Toast>
-      <Prev class="btn-ghost btn-sm btn" :showText="false"></Prev>
+      <Prev class="btn-ghost btn-sm btn" :showText="false" v-if="isRouteLesson"></Prev>
       <Home class="btn-ghost btn-sm btn"></Home>
-      <Next class="btn-ghost btn-sm btn" :showText="false"></Next>
+      <Next class="btn-ghost btn-sm btn" :showText="false" v-if="isRouteLesson"></Next>
       <BtnMore></BtnMore>
     </div>
   </div>
@@ -31,8 +31,10 @@ import Toast from "./Toast.vue";
 import { useRoute } from "vue-router";
 import { computed } from "vue";
 
-const currentId = computed(() => useRoute().params.id);
+const route = useRoute();
+const currentId = computed(() => route.params.id);
 const current = computed(() => Node.find(currentId.value));
+const isRouteLesson = computed(() => route.name && route.name.startsWith("lessons"));
 </script>
 
 <style scoped lang="postcss">

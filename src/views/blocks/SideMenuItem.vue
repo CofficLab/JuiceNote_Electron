@@ -4,7 +4,7 @@
   <div>
     <!-- 是一个页面或一个tab -->
     <li v-if="item.isPage || item.isTab">
-      <Link class="flex gap-4 xl:text-lg" :node="item" :class="{ 'text-blue-400': !item.isVisible }">
+      <Link class="flex gap-4 xl:text-lg" :node="item" :class="{ 'text-info': !item.isVisible }">
         <DynamicPadding :count="item.level - 3"></DynamicPadding>
         {{ item.title }}
       </Link>
@@ -29,10 +29,10 @@ import DynamicPadding from "../components/DynamicPadding.vue";
 import Link from "../components/Link.vue";
 
 const route = useRoute();
-const editable = computed(() => route.query.editable == 1);
+const editable = computed(() => route.name == "lessons.edit");
 
 const getSubMenus = function (menu) {
-  return editable ? menu.getChildren() : menu.getVisibleChildren();
+  return editable.value ? menu.getChildren() : menu.getVisibleChildren();
 };
 
 const props = defineProps({

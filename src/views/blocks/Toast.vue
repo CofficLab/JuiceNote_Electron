@@ -1,10 +1,6 @@
 <template>
-  <div class="toast-start toast toast-top mt-24 ml-72" v-show="message.length > 0">
-    <div class="alert alert-success">
-      <div>
-        <span v-html="message"></span>
-      </div>
-    </div>
+  <div class="alert alert-success h-8" v-show="message.length > 0">
+    <span v-html="message"></span>
   </div>
 </template>
 

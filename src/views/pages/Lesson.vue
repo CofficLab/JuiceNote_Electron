@@ -64,7 +64,7 @@ let save = function (content) {
 };
 
 onBeforeRouteUpdate((to, from) => {
-  console.log("pages.lesson.edit，路由发生了变化，处理lesson的展示");
+  console.log("pages.lesson，路由发生了变化，处理lesson的展示");
 
   node = Node.find(to.params.id);
   adding = to.query.adding != undefined;
