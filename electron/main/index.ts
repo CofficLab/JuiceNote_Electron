@@ -36,11 +36,12 @@ async function createWindow() {
     minWidth: 780,
     height: 880,
     width: 1300,
+    backgroundColor: '#07404b',
     title: 'Main window',
     icon: path.join(ROOT_PATH.public, 'favicon.ico'),
-    frame: false, // false：不显示可拖动的那个顶栏，形成一个无边框窗口
-    titleBarStyle: 'hidden',
-    trafficLightPosition: { x: 10, y: 10 },
+    frame: true, // false：不显示可拖动的那个顶栏，形成一个无边框窗口
+    titleBarStyle: 'hiddenInset',
+    // trafficLightPosition: { x: 10, y: 10 },
     webPreferences: {
       preload,
       nodeIntegration: true,

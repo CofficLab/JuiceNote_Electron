@@ -1,7 +1,9 @@
 <template>
-  <div id="toolbar">
+  <div class="flex flex-row flex-wrap items-center gap-0">
     <div class="dropdown dropdown-hover">
-      <label tabindex="0"><IconBars2></IconBars2></label>
+      <label tabindex="0">
+        <IconHashTag></IconHashTag>
+      </label>
       <ul tabindex="0" class="dropdown-content">
         <li @click="toggleHeading(1)" :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }">H1</li>
         <li @click="toggleHeading(2)" :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }">H2</li>
@@ -15,35 +17,47 @@
       </ul>
     </div>
 
-    <div class="dropdown dropdown-hover">
-      <label tabindex="0"><IconPuzzle></IconPuzzle></label>
+    <div class="dropdown-hover dropdown">
+      <label tabindex="0">
+        <IconPuzzle></IconPuzzle>
+      </label>
       <ul tabindex="0">
         <li @click="toggleBanner" :class="{ 'is-active': editor.isActive('banner') }">提示框</li>
         <li @click="toggleBrick" :class="{ 'is-active': editor.isActive('brick') }">砖块</li>
         <li @click="toggleTimeLineTitle" :class="{ 'is-active': editor.isActive('time-line-title') }">时间线标题</li>
         <li @click="toggleOfficialLink" :class="{ 'is-active': editor.isActive('official-link') }">官网</li>
-
         <li @click="toggleCode">行内代码</li>
       </ul>
     </div>
 
-    <button @click="editor.chain().focus().setHorizontalRule().run()"><IconMinus></IconMinus></button>
-    <button @click="editor.chain().focus().setHardBreak().run()"><IconBarsArrowDown></IconBarsArrowDown></button>
-    <button @click="insertNewLine"><IconBarsArrowDown></IconBarsArrowDown></button>
-    <button @click="editor.chain().focus().addChat().run()" class="tooltip tooltip-bottom" data-tip="对话框">
+    <button @click="setHorizontalRule" class="tooltip tooltip-bottom" data-tip="插入横线">
+      <IconMinus></IconMinus>
+    </button>
+
+    <button @click="setHardBreak" class="tooltip tooltip-bottom" data-tip="插入换行">
+      <IconBarsArrowDown></IconBarsArrowDown>
+    </button>
+
+    <button @click="insertNewLine">
+      <IconBarsArrowDown></IconBarsArrowDown>
+    </button>
+
+    <button @click="addChat" class="tooltip tooltip-bottom" data-tip="对话框">
       <IconChat></IconChat>
     </button>
-    <button @click="editor.chain().focus().unsetAllMarks().run()" class="tooltip tooltip-bottom" data-tip="清除格式">
+
+    <button @click="unsetAllMarks" class="tooltip tooltip-bottom" data-tip="清除格式">
       <IconX></IconX>
     </button>
+
     <button @click="editor.chain().focus().clearNodes().run()" class="tooltip tooltip-bottom" data-tip="清除节点">
       <IconClear></IconClear>
     </button>
 
-    <div class="dropdown dropdown-hover">
+    <div class="dropdown-hover dropdown">
       <label tabindex="0"><IconListBullet></IconListBullet></label>
       <ul tabindex="0">
-        <li @click="editor.chain().focus().toggleBulletList().run()" :class="{ 'is-active': editor.isActive('bulletList') }">
+        <li @click="toggleBulletList" :class="{ 'is-active': editor.isActive('bulletList') }">
           <IconListBullet></IconListBullet>
         </li>
         <li @click="editor.chain().focus().splitListItem('listItem').run()" :disabled="!editor.can().splitListItem('listItem')">splitListItem</li>
@@ -53,7 +67,7 @@
       </ul>
     </div>
 
-    <div class="dropdown dropdown-bottom dropdown-hover">
+    <div class="dropdown-hover dropdown dropdown-bottom">
       <label tabindex="0"><IconTable></IconTable></label>
       <ul tabindex="0">
         <li>
@@ -79,25 +93,55 @@
       </ul>
     </div>
 
-    <button @click="inputLink" :class="{ 'is-active': editor.isActive('link') }"><IconLink></IconLink></button>
+    <button @click="inputLink" :class="{ 'is-active': editor.isActive('link') }">
+      <IconLink></IconLink>
+    </button>
+
     <!-- <button @click="editor.chain().focus().unsetLink().run()" :disabled="!editor.isActive('link')">取消链接</button> -->
-    <button @click="editor.chain().toggleToc().run()"><IconQueueList></IconQueueList></button>
-    <button @click="editor.chain().toggleTimeLine().run()">时间线</button>
-    <button @click="editor.chain().focus().addTab().run()">TAB</button>
-    <button @click="editor.chain().focus().toggleCodeBlock().run()" :class="{ 'is-active': editor.isActive('codeBlock') }">
+
+    <button @click="editor.chain().toggleToc().run()">
+      <IconQueueList></IconQueueList>
+    </button>
+
+    <button @click="editor.chain().toggleTimeLine().run()" class="tooltip tooltip-bottom" data-tip="时间线">
+      <IconFilm></IconFilm>
+    </button>
+
+    <button @click="addTab" class="tooltip tooltip-bottom" data-tip="标签页">
+      <IconTab></IconTab>
+    </button>
+
+    <button @click="toggleCodeBlock" :class="{ 'is-active': editor.isActive('codeBlock') }">
       <IconCode></IconCode>
     </button>
-    <button @click="editor.chain().focus().addCodeTab().run()">CodeBlockTab</button>
-    <button @click="editor.chain().focus().undo().run()" :disabled="!editor.can().chain().focus().undo().run()">
+
+    <button @click="editor.chain().focus().addCodeTab().run()" class="tooltip tooltip-bottom" data-tip="并排的多个代码框">
+      <IconViewColumns></IconViewColumns>
+    </button>
+
+    <button @click="cancel" :disabled="!editor.can().chain().focus().undo().run()" class="tooltip tooltip-bottom" data-tip="撤销修改">
       <IconBack></IconBack>
     </button>
-    <button @click="editor.chain().focus().redo().run()" :disabled="!editor.can().chain().focus().redo().run()">
+
+    <button @click="redo" :disabled="!isRedoActive" class="tooltip tooltip-bottom" data-tip="恢复修改">
       <IconRedo></IconRedo>
     </button>
-    <button @click="toggleSourceCode">源码</button>
-    <!-- <button @click="save"><SaveIcon></SaveIcon></button> -->
-    <button @click="saveAndShow"><IconSaveBack></IconSaveBack></button>
-    <button @click="empty">清空</button>
+
+    <button @click="toggleSourceCode" class="tooltip tooltip-bottom" data-tip="源码">
+      <IconSourceCode></IconSourceCode>
+    </button>
+
+    <button @click="save" class="tooltip tooltip-bottom" data-tip="保存">
+      <IconSave></IconSave>
+    </button>
+
+    <button @click="saveAndShow" class="tooltip tooltip-bottom" data-tip="保存并跳转到展示页面">
+      <IconSaveBack></IconSaveBack>
+    </button>
+
+    <button @click="empty" class="tooltip tooltip-bottom" data-tip="清空">
+      <IconEmpty></IconEmpty>
+    </button>
 
     <!-- 设置URL的模态框 -->
     <div class="modal" v-bind:class="{ 'modal-open': showLinkModal }">
@@ -134,6 +178,13 @@ import IconBars2 from "../../assets/icons/bars-2.svg";
 import IconSaveBack from "../../assets/icons/arrow-up-tray.svg";
 import IconQueueList from "../../assets/icons/queue-list.svg";
 import IconChat from "../../assets/icons/chat-bubble-left-ellipsis.svg";
+import IconViewColumns from "../../assets/icons/view-columns.svg";
+import IconFilm from "../../assets/icons/film.svg";
+import IconSourceCode from "../../assets/icons/document-text.svg";
+import IconTab from "../../assets/icons/server-stack.svg";
+import IconSave from "../../assets/icons/save.svg";
+import IconEmpty from "../../assets/icons/empty.svg";
+import IconHashTag from "../../assets/icons/hashtag.svg";
 
 const props = defineProps({
   editor: { type: Editor, required: true },
@@ -143,64 +194,62 @@ const props = defineProps({
 
 let showLinkModal = false;
 let url = ""; // 设置链接扩展用到的，记录用户输入的URL
-let canToggleBold = computed(() => {
-  return props.editor.can().chain().focus().toggleBold().run();
-});
-let canToggleItalic = computed(() => {
-  return props.editor.can().chain().focus().toggleItalic().run();
-});
-let canToggleStrike = computed(() => {
-  return props.editor.can().chain().focus().toggleStrike().run();
-});
-let isBoldActive = computed(() => {
-  return props.editor.isActive("bold");
-});
-let isBlockQuoteActive = computed(() => {
-  return props.editor.isActive("blockquote");
-});
-let isParagraphActive = computed(() => {
-  return props.editor.isActive("paragraph");
-});
-let isCodeActive = computed(() => {
-  return props.editor.isActive("code");
-});
 
-let empty = function () {
-  ToastController.set(NodeController.updateContent(props.current, ""));
-};
-let save = function () {
-  ToastController.set(NodeController.updateContent(this.current, this.editor.getHTML()));
-};
+// 判断是否激活
+let canToggleBold = computed(() => props.editor.can().chain().focus().toggleBold().run());
+let canToggleItalic = computed(() => props.editor.can().chain().focus().toggleItalic().run());
+let canToggleStrike = computed(() => props.editor.can().chain().focus().toggleStrike().run());
+let isBoldActive = computed(() => props.editor.isActive("bold"));
+let isBlockQuoteActive = computed(() => props.editor.isActive("blockquote"));
+let isParagraphActive = computed(() => props.editor.isActive("paragraph"));
+let isCodeActive = computed(() => props.editor.isActive("code"));
+let isRedoActive = computed(() => props.editor.can().chain().focus().redo().run());
 
-let saveAndShow = function () {
+// 操作列表
+let unsetAllMarks = () => editor.chain().focus().unsetAllMarks().run();
+let addChat = () => props.editor.chain().focus().addChat().run();
+let cancel = () => props.editor.chain().focus().undo().run();
+let redo = () => props.editor.chain().focus().redo().run();
+let empty = () => ToastController.set(NodeController.updateContent(props.current, ""));
+let save = () => ToastController.set(NodeController.updateContent(this.current, this.editor.getHTML()));
+let setParagraph = () => {
+  props.editor.chain().focus().setParagraph().run();
+};
+let addTab = function () {
+  props.editor.chain().focus().addTab().run();
+};
+let setHorizontalRule = function () {
+  props.editor.chain().focus().setHorizontalRule().run();
+};
+let setHardBreak = function () {
+  props.editor.chain().focus().setHardBreak().run();
+};
+let saveAndShow = () => {
   save();
   NodeController.toggleEditable();
 };
-
 let insertNewLine = function () {
   props.editor.commands.setContent(props.editor.getHTML() + "<p>type here</p>");
   props.editor.commands.focus("end");
 };
 
-let setParagraph = function () {
-  props.editor.chain().focus().setParagraph().run();
+// toggle相关的操作
+let toggleBulletList = () => editor.chain().focus().toggleBulletList().run();
+let toggleCodeBlock = function () {
+  props.editor.chain().focus().toggleCodeBlock().run();
 };
-
 let toggleBanner = function () {
   props.editor.chain().focus().toggleBanner().run();
 };
-
 let toggleBrick = function () {
   props.editor.chain().focus().toggleBrick().run();
 };
-
 let toggleTimeLineTitle = function () {
   props.editor.chain().focus().toggleTimeLineTitle().run();
 };
 let toggleBold = function () {
   props.editor.chain().focus().toggleBold().run();
 };
-
 let toggleHeading = function (level = 0) {
   props.editor.chain().focus().toggleHeading({ level: level }).run();
 };
@@ -251,22 +300,14 @@ let setLink = function () {
 </script>
 
 <style scoped lang="postcss">
-#toolbar {
-  @apply flex flex-row flex-wrap items-center;
-}
-
+button,
 label {
-  @apply btn-ghost btn-sm btn m-1;
-}
-
-button {
-  @apply btn-ghost btn-sm btn mx-1;
+  @apply btn-ghost btn-sm btn mx-0 px-2;
 
   svg {
     @apply my-auto;
   }
 }
-
 .bubble-menu button,
 .floating-menu button {
   @apply btn-sm btn mx-1 rounded-none;

@@ -1,6 +1,6 @@
 <template>
   <node-view-wrapper>
-    <div class="banner mt-4">
+    <div class="my-4 gap-2 rounded-xl bg-gradient-to-r from-cyan-800/50 p-3 ring-1">
       <div class="flex items-center justify-between">
         <Info></Info>
       </div>
