@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="relative">
-      <span v-html="language" v-if="!editable" class="absolute top-0 right-0 z-20 bg-cyan-800/20 px-2 py-1 text-sm text-info"></span>
+      <span v-html="language" v-if="!editable" class="absolute right-0 top-0 z-20 rounded-bl-lg bg-cyan-800/20 px-2 py-1 text-sm text-info"></span>
       <button contenteditable="false" class="btn-sm btn absolute bottom-2 right-2 z-20 transition-none" :class="{ loading: running }" @click="run" v-html="runTitle" v-if="showRunButton"></button>
 
       <div ref="monaco" class="z-10"></div>
