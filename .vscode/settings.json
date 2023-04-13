@@ -39,11 +39,13 @@
     "tinymce",
     "Tiptap",
     "toastui",
+    "togglefullscreen",
     "tongxiangyu",
     "uintptr",
     "Uturn",
     "vuedraggable",
     "vuex",
     "webfont"
-  ]
+  ],
+  "files.autoSave": "onFocusChange"
 }

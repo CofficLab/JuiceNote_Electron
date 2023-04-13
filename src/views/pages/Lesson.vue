@@ -1,6 +1,6 @@
 <template>
-  <LessonLayout>
-    <div class="fixed top-12 z-50 flex w-full flex-grow pr-40">
+    <div>
+      <div class="fixed top-12 z-50 flex w-full flex-grow pr-40">
       <NodeTab :current="node"></NodeTab>
     </div>
 
@@ -24,7 +24,7 @@
       <FormAdd :node="node" v-if="adding"></FormAdd>
       <FormRename :node="node" v-if="renaming"></FormRename>
     </div>
-  </LessonLayout>
+    </div>
 </template>
 
 <script setup>
@@ -40,7 +40,6 @@ import Delete from "../operators/Delete.vue";
 import FormAdd from "../modals/FormAdd.vue";
 import FormRename from "../modals/FormRename.vue";
 import Editor from "../components/Editor.vue";
-import LessonLayout from "../layouts/LessonLayout.vue";
 import { Node } from "../../models/Node";
 import { ref, computed } from "vue";
 import { onBeforeRouteUpdate, useRoute } from "vue-router";
