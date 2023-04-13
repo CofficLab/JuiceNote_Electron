@@ -185,6 +185,9 @@ import IconTab from "../../assets/icons/server-stack.svg";
 import IconSave from "../../assets/icons/save.svg";
 import IconEmpty from "../../assets/icons/empty.svg";
 import IconHashTag from "../../assets/icons/hashtag.svg";
+import { useRouter } from "vue-router";
+
+const router = useRouter()
 
 const props = defineProps({
   editor: { type: Editor, required: true },
@@ -211,7 +214,7 @@ let addChat = () => props.editor.chain().focus().addChat().run();
 let cancel = () => props.editor.chain().focus().undo().run();
 let redo = () => props.editor.chain().focus().redo().run();
 let empty = () => ToastController.set(NodeController.updateContent(props.current, ""));
-let save = () => ToastController.set(NodeController.updateContent(this.current, this.editor.getHTML()));
+let save = () => ToastController.set(NodeController.updateContent(props.current, props.editor.getHTML()));
 let setParagraph = () => {
   props.editor.chain().focus().setParagraph().run();
 };
@@ -226,7 +229,7 @@ let setHardBreak = function () {
 };
 let saveAndShow = () => {
   save();
-  NodeController.toggleEditable();
+router.push({'name':'lessons.show',params:{'id':props.current.id}})
 };
 let insertNewLine = function () {
   props.editor.commands.setContent(props.editor.getHTML() + "<p>type here</p>");

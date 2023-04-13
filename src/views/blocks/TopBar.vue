@@ -5,7 +5,7 @@
       <Breadcrumbs :current="current" v-if="currentId > 0"></Breadcrumbs>
     </div>
     <div class="draggable flex-grow"></div>
-    <div class="flex h-12 flex-row items-center justify-end pr-4">
+    <div class="flex h-10 flex-row items-center justify-end pr-4">
       <Toast></Toast>
       <!-- <Languages></Languages> -->
       <BtnOfficialLink></BtnOfficialLink>

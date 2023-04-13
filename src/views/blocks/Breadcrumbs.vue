@@ -1,5 +1,5 @@
 <template>
-  <div class="breadcrumbs flex h-full flex-grow justify-start overflow-visible" :class="{ 'text-yellow-500': editable }">
+  <div class="breadcrumbs flex h-full flex-grow justify-start overflow-visible text-xs" :class="{ 'text-yellow-500': editable }">
     <ul class="flex flex-row justify-center">
       <li v-for="breadcrumb in breadcrumbs" class="flex justify-center">
         <div class="dropdown dropdown-bottom dropdown-hover flex justify-center" v-if="breadcrumb.getSiblings().length > 0">
