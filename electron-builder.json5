@@ -3,6 +3,7 @@
  */
 {
   appId: "YourAppID",
+  productName: "快易知",
   asar: false,
   directories: {
     output: "release/",
