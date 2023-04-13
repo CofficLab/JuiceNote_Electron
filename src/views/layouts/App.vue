@@ -1,6 +1,6 @@
 <template>
   <div>
-    <header v-if="headerVisible" class="fixed top-0 z-40 h-12 w-full border-b border-gray-300 bg-base-200 pl-40 shadow dark:border-cyan-900/10">
+    <header v-if="headerVisible" class="fixed top-0 z-40 h-10 w-full border-b border-gray-300 bg-base-200 pl-40 shadow dark:border-cyan-900/10">
       <TopBar></TopBar>
     </header>
 
@@ -8,7 +8,7 @@
       <SideMenu></SideMenu>
     </aside>
 
-    <main :class="{'pl-40':asideVisible,'top-12':headerVisible}" class="fixed h-screen w-full overflow-scroll overscroll-none bg-cyan-800/10 dark:bg-slate-900/10">
+    <main :class="{'pl-40':asideVisible,'top-10':headerVisible}" class="fixed h-screen w-full overflow-scroll overscroll-none bg-cyan-800/10 dark:bg-slate-900/10">
       <router-view v-slot="{ Component }">
       <transition name="slide-fade">
         <component :is="Component" />
@@ -28,8 +28,8 @@ import TopBar from "../blocks/TopBar.vue";
 import DebugBar from "../blocks/DebugBar.vue";
 
 const isProd = window.location.protocol === "file:";
-const asideVisible = computed(()=>['lessons.show','lessons.index'].includes(useRoute().name))
-const headerVisible = computed(()=>['lessons.show','lessons.index','home.show','home.edit'].includes(useRoute().name))
+const asideVisible = computed(()=>['lessons.show','lessons.edit'].includes(useRoute().name))
+const headerVisible = computed(()=>['lessons.show','home.show','home.edit'].includes(useRoute().name))
 </script>
 
 <style scoped>

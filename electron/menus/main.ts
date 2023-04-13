@@ -15,20 +15,23 @@ export default new MenuItem({
         {
             label: '关于',
             role:'about',
-            // click:()=> {
-            //     const win = new BrowserWindow({
-            //         width: 400, height: 300, webPreferences: {
-            //             nodeIntegration: true,
-            //             contextIsolation: false,
-            //             spellcheck: false,
-            //         },
-            //     })
-            //     if (app.isPackaged) {
-            //         win.loadFile(indexHtml, { hash: '/about' })
-            //     } else {
-            //         win.loadURL(url + '#about')
-            //     }
-            // }
+        },
+        {
+            label: '版本详情',
+            click:()=> {
+                const win = new BrowserWindow({
+                    width: 400, height: 300, webPreferences: {
+                        nodeIntegration: true,
+                        contextIsolation: false,
+                        spellcheck: false,
+                    },
+                })
+                if (app.isPackaged) {
+                    win.loadFile(indexHtml, { hash: '/about' })
+                } else {
+                    win.loadURL(url + '#about')
+                }
+            }
         },
         { type: 'separator' }, 
         {

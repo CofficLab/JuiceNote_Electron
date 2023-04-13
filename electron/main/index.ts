@@ -43,9 +43,10 @@ async function createWindow() {
     backgroundColor: '#07404b',
     title: 'Main window',
     icon: path.join(ROOT_PATH.public, 'favicon.ico'),
-    frame: true, // false：不显示可拖动的那个顶栏，形成一个无边框窗口
-    titleBarStyle: 'hiddenInset',
-    // trafficLightPosition: { x: 10, y: 10 },
+    frame: false, // false：不显示可拖动的那个顶栏，形成一个无边框窗口
+    titleBarStyle: 'hidden',
+    trafficLightPosition: { x: 10, y: 10 },
+    titleBarOverlay:true,
     webPreferences: {
       preload,
       nodeIntegration: true,
@@ -94,7 +95,8 @@ app.whenReady().then(function () {
 
 app.on('window-all-closed', () => {
   win = null
-  if (process.platform !== 'darwin') app.quit()
+  // if (process.platform !== 'darwin')
+  app.quit()
 })
 
 app.on('second-instance', () => {
