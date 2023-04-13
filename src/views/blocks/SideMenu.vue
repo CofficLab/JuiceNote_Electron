@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col overflow-scroll overscroll-none">
+  <div class="flex flex-col overflow-scroll overscroll-none scroll-smooth">
     <div class="sticky top-0 z-50">
       <!-- 空白，用于拖动 -->
       <div class="z-50 w-full bg-base-300">
@@ -118,6 +118,6 @@ export default defineComponent({
   @apply flex justify-center bg-gradient-to-r from-red-500 to-cyan-500 bg-clip-text pb-2 text-lg text-transparent md:text-2xl lg:text-3xl;
 }
 .book-info {
-  @apply flex flex-col bg-base-200/80 shadow-2xl pt-1 drop-shadow dark:border-cyan-900/10;
+  @apply flex flex-col bg-base-200/80 pt-1 shadow-2xl drop-shadow dark:border-cyan-900/10;
 }
 </style>

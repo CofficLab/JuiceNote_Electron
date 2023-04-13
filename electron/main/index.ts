@@ -1,6 +1,7 @@
-import { app, BrowserWindow, shell, ipcMain } from 'electron'
+import { app, BrowserWindow, shell, ipcMain, Menu } from 'electron'
 import { release } from 'os'
 import path from 'path'
+import menus from '../menus/all'
 
 // Disable GPU Acceleration for Windows 7
 if (release().startsWith('6.1')) app.disableHardwareAcceleration()
@@ -30,6 +31,9 @@ let win: BrowserWindow | null = null
 const preload = path.join(__dirname, '../preload/index.js')
 const url = process.env.VITE_DEV_SERVER_URL as string
 const indexHtml = path.join(ROOT_PATH.dist, 'index.html')
+
+// 配置菜单
+Menu.setApplicationMenu(menus)
 
 async function createWindow() {
   win = new BrowserWindow({
@@ -162,4 +166,9 @@ ipcMain.handle("terminal-create", (event) => {
 // 供子进程查询app path
 ipcMain.on('get-app-path', function (event) {
   return event.returnValue = app.getAppPath()
+})
+
+// 供子进程查询app version
+ipcMain.on('get-app-version', function (event) {
+  return event.returnValue = app.getVersion()
 })

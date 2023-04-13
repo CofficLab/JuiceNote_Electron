@@ -1,4 +1,3 @@
-import { execSync } from "child_process";
 import { existsSync, readFileSync, writeFile } from "fs";
 import { join } from "path";
 import Config from "../entities/Config";
