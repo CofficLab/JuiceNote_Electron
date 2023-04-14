@@ -1,9 +1,9 @@
 <template>
   <div class="flex flex-col overflow-scroll overscroll-none scroll-smooth">
-    <div class="sticky top-0 z-50">
+    <div class="sticky top-0 z-40">
       <!-- 空白，用于拖动 -->
-      <div class="z-50 w-full bg-base-300">
-        <div class="draggable" :class="{ 'h-12': !hideTitleBar, 'h-0': hideTitleBar }"></div>
+      <div class="z-40 w-full bg-base-300" v-if="!isWindows">
+        <div class="draggable" :class="{ 'h-8': !hideTitleBar, 'h-0': hideTitleBar }"></div>
       </div>
       <!-- 图书信息 -->
       <div class="book-info" :class="{ 'top-12': !hideTitleBar, 'top-0': hideTitleBar }">
@@ -73,6 +73,10 @@ export default defineComponent({
       // console.log("获取左侧栏菜单");
       return this.menusRoot.getVisibleChildren();
     },
+    isWindows() {
+      const electron = require("electron");
+      return electron.ipcRenderer.sendSync("get-app-version") == "win32";
+    },
   },
   methods: {
     // 滚动到激活的菜单的章节
@@ -118,6 +122,6 @@ export default defineComponent({
   @apply flex justify-center bg-gradient-to-r from-red-500 to-cyan-500 bg-clip-text pb-2 text-lg text-transparent md:text-2xl lg:text-3xl;
 }
 .book-info {
-  @apply flex flex-col bg-base-200/80 pt-1 shadow-2xl drop-shadow dark:border-cyan-900/10;
+  @apply flex flex-col bg-base-200/80 pt-1 shadow drop-shadow dark:border-cyan-900/10;
 }
 </style>

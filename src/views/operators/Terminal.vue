@@ -1,5 +1,5 @@
 <template>
-  <div class="dropdown dropdown-end mt-12 w-0 bg-red-300" v-bind:class="{ 'dropdown-open': open == true }">
+  <div class="dropdown-end dropdown mt-12 w-0 bg-red-300" v-bind:class="{ 'dropdown-open': open == true }">
     <label class="swap mr-96" v-bind:class="{ 'swap-active': open }">
       <div class="swap-on mr-96 -translate-x-96">
         <Terminal v-if="open"></Terminal>
@@ -7,36 +7,23 @@
     </label>
   </div>
 
-  <button
-    tabindex="0"
-    class="btn-ghost tooltip tooltip-left btn-sm btn m-1 my-auto flex w-12 items-center"
-    data-tip="打开终端"
-    v-bind:onClick="click"
-    v-bind:class="{ 'btn-active': open }"
-  >
+  <button tabindex="0" :class="class" class='tooltip tooltip-left' data-tip="打开终端" v-bind:onClick="click" v-bind:class="{ 'btn-active': open }">
     <CommandLine></CommandLine>
   </button>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script lang="ts" setup>
+import { ref } from "vue";
 import CommandLine from "../../assets/icons/command-line.svg";
 import Terminal from "../blocks/Terminal.vue";
 
-export default defineComponent({
-  components: {
-    CommandLine,
-    Terminal,
-  },
-  data() {
-    return {
-      open: false,
-    };
-  },
-  methods: {
-    click() {
-      this.open = !this.open;
-    },
-  },
+const props = defineProps({
+  class: String,
 });
+
+const open = ref(false);
+
+const click = function () {
+  open.value = !open.value;
+};
 </script>

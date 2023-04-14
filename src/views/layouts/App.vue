@@ -1,14 +1,16 @@
 <template>
   <div>
-    <header v-if="headerVisible" class="fixed top-0 z-40 h-10 w-full border-b border-gray-300 bg-base-200 pl-40 shadow dark:border-cyan-900/10">
+    <Toast></Toast>
+
+    <header v-if="headerVisible" class="fixed top-0 z-40 h-8 w-full border-b border-gray-300 bg-base-200 pl-40 shadow dark:border-cyan-900/10">
       <TopBar></TopBar>
     </header>
 
-    <aside v-if="asideVisible" class="fixed left-0 z-50 hidden h-screen w-40 border-r-2 border-gray-300 bg-base-200 shadow-xl dark:border-cyan-900/10 lg:flex lg:flex-col">
+    <aside v-if="asideVisible" class="fixed left-0 z-40 hidden h-screen w-40 border-r-2 border-gray-300 bg-base-200 shadow-xl dark:border-cyan-900/10 lg:flex lg:flex-col">
       <SideMenu></SideMenu>
     </aside>
 
-    <main :class="{'pl-40':asideVisible,'top-10':headerVisible}" class="fixed h-screen w-full overflow-scroll overscroll-none bg-cyan-800/10 dark:bg-slate-900/10">
+    <main :class="{'pl-40':asideVisible,'top-8':headerVisible}" class="fixed h-screen w-full overflow-scroll overscroll-none bg-cyan-800/10 dark:bg-slate-900/10">
       <router-view v-slot="{ Component }">
       <transition name="slide-fade">
         <component :is="Component" />
@@ -17,6 +19,7 @@
     </main>
 
     <DebugBar v-if="!isProd"></DebugBar>
+    <!-- <BottomBar></BottomBar> -->
   </div>
 </template>
 
@@ -26,6 +29,8 @@ import { useRoute } from "vue-router";
 import SideMenu from "../blocks/SideMenu.vue";
 import TopBar from "../blocks/TopBar.vue";
 import DebugBar from "../blocks/DebugBar.vue";
+import BottomBar from "../blocks/BottomBar.vue";
+import Toast from "../blocks/Toast.vue";
 
 const isProd = window.location.protocol === "file:";
 const asideVisible = computed(()=>['lessons.show','lessons.edit'].includes(useRoute().name))
