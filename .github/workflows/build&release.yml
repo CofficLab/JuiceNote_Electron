@@ -214,3 +214,14 @@ jobs:
           mv /www/storage/kuaiyizhi_desktop_temp /www/storage/kuaiyizhi_desktop
           cp -rf database/database.db /www/database/lessons.db
             
+  sync_source_code:
+    runs-on: self-hosted
+    needs: build
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: 同步到服务器
+        run: |
+          rm -rf /www/wwwroot/kuaiyizhi
+          rsync -rapq ./ /www/wwwroot/kuaiyizhi
