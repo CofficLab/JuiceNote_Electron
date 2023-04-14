@@ -1,6 +1,6 @@
 <template>
-  <div class="alert alert-success h-8" v-show="message.length > 0">
-    <span v-html="message"></span>
+  <div class="alert alert-success h-8 rounded-sm" v-show="message.length > 0">
+    <span v-html="html"></span>
   </div>
 </template>
 
