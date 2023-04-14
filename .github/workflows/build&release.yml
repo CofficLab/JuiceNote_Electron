@@ -174,10 +174,25 @@ jobs:
       - build
       - update_version
     steps:
-      - name: 下载构件
+      - name: 下载 tag
         uses: actions/download-artifact@v3
         with: 
-          name: tag, macos-latest, ubuntu-latest, windows-latest
+          name: tag
+
+      - name: 下载 macos-latest
+        uses: actions/download-artifact@v3
+        with: 
+          name: macos-latest
+
+      - name: 下载 ubuntu-latest
+        uses: actions/download-artifact@v3
+        with: 
+          name: ubuntu-latest
+          
+      - name: 下载 windows-latest
+        uses: actions/download-artifact@v3
+        with: 
+          name: windows-latest
 
       - name: 检查文件
         run: ls -alhR
@@ -205,10 +220,20 @@ jobs:
           rm -rf /www/storage/kuaiyizhi_desktop_temp/
           mkdir /www/storage/kuaiyizhi_desktop_temp/
 
-      - name: 下载 APP 构件
+      - name: 下载 macos-latest
         uses: actions/download-artifact@v3
-        with:
-          name: macos-latest, ubuntu-latest, windows-latest
+        with: 
+          name: macos-latest
+
+      - name: 下载 ubuntu-latest
+        uses: actions/download-artifact@v3
+        with: 
+          name: ubuntu-latest
+          
+      - name: 下载 windows-latest
+        uses: actions/download-artifact@v3
+        with: 
+          name: windows-latest
 
       - name: 检查文件
         run: ls -alhR
