@@ -174,25 +174,8 @@ jobs:
       - build
       - update_version
     steps:
-      - name: 下载 tag
+      - name: 下载构件
         uses: actions/download-artifact@v3
-        with: 
-          name: tag
-
-      - name: 下载 macos-latest
-        uses: actions/download-artifact@v3
-        with: 
-          name: macos-latest
-
-      - name: 下载 ubuntu-latest
-        uses: actions/download-artifact@v3
-        with: 
-          name: ubuntu-latest
-          
-      - name: 下载 windows-latest
-        uses: actions/download-artifact@v3
-        with: 
-          name: windows-latest
 
       - name: 检查文件
         run: ls -alhR
@@ -220,22 +203,9 @@ jobs:
           rm -rf /www/storage/kuaiyizhi_desktop_temp/
           mkdir /www/storage/kuaiyizhi_desktop_temp/
 
-      - name: 下载 macos-latest
+      - name: 下载构件
         uses: actions/download-artifact@v3
-        with: 
-          name: macos-latest
-          path: downloads
-
-      - name: 下载 ubuntu-latest
-        uses: actions/download-artifact@v3
-        with: 
-          name: ubuntu-latest
-          path: downloads
-          
-      - name: 下载 windows-latest
-        uses: actions/download-artifact@v3
-        with: 
-          name: windows-latest
+        with:
           path: downloads
 
       - name: 检查文件
@@ -253,15 +223,3 @@ jobs:
           rm -rf /www/storage/kuaiyizhi_desktop
           mv /www/storage/kuaiyizhi_desktop_temp /www/storage/kuaiyizhi_desktop
           cp -rf database/database.db /www/database/lessons.db
-
-      - name: 下载 CSS 构件
-        uses: actions/download-artifact@v3
-        with:
-          name: kuaiyizhi.css
-
-      - name: 检查文件
-        run: ls -alhR
-
-      - name: 同步到服务器
-        run: |
-          cp -f kuaiyizhi.css /www/wwwroot/www.kuaiyizhi.cn/production/public/
