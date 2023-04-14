@@ -2,7 +2,7 @@
   <div class="flex flex-col overflow-scroll overscroll-none scroll-smooth">
     <div class="sticky top-0 z-50">
       <!-- 空白，用于拖动 -->
-      <div class="z-50 w-full bg-base-300">
+      <div class="z-50 w-full bg-base-300" v-if="!isWindows">
         <div class="draggable" :class="{ 'h-12': !hideTitleBar, 'h-0': hideTitleBar }"></div>
       </div>
       <!-- 图书信息 -->
@@ -73,6 +73,10 @@ export default defineComponent({
       // console.log("获取左侧栏菜单");
       return this.menusRoot.getVisibleChildren();
     },
+    isWindows() {
+      const electron = require('electron')
+      return electron.ipcRenderer.sendSync("get-app-version") == 'win32'
+    }
   },
   methods: {
     // 滚动到激活的菜单的章节

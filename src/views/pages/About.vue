@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-row w-full w-screen h-screen justify-center items-center text-center">
+  <div class="flex flex-row w-screen h-screen justify-center items-center text-center">
     <h1>版本 <span v-html="version"></span></h1>
   </div>
 </template>

@@ -45,7 +45,7 @@ async function createWindow() {
     icon: path.join(ROOT_PATH.public, 'favicon.ico'),
     frame: false, // false：不显示可拖动的那个顶栏，形成一个无边框窗口
     titleBarStyle: 'hidden',
-    trafficLightPosition: { x: 10, y: 10 },
+    trafficLightPosition: { x: 8, y: 8 },
     titleBarOverlay:true,
     webPreferences: {
       preload,
@@ -173,4 +173,9 @@ ipcMain.on('get-app-path', function (event) {
 // 供子进程查询app version
 ipcMain.on('get-app-version', function (event) {
   return event.returnValue = app.getVersion()
+})
+
+// 供子进程查询platform
+ipcMain.on('get-platform', function (event) {
+  return process.platform
 })
