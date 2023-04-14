@@ -1,5 +1,5 @@
 <template>
-  <div class="alert alert-success h-8 rounded-sm fixed top-0 z-50" v-show="message.length > 0">
+  <div class="alert alert-success fixed top-0 z-50 h-8 rounded-sm" v-show="message.length > 0">
     <span class="mx-auto" v-html="message"></span>
   </div>
 </template>
@@ -8,5 +8,5 @@
 import { computed } from "vue";
 import ToastController from "../../controllers/ToastController";
 
-const message= computed(()=>ToastController.toast)
+const message = computed(() => ToastController.toast);
 </script>
