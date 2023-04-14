@@ -4,7 +4,7 @@
   </div>
 
   <div class="tabs-container" v-if="current.isTab">
-    <Link v-for="child in current.getChildren()" class="tab-lifted tab" :node="child">{{ child.title }}</Link>
+    <Link v-for="child in current.getChildren()" class="tab tab-lifted" :node="child">{{ child.title }}</Link>
   </div>
 </template>
 
@@ -17,6 +17,6 @@ const props = defineProps({
 
 <style lang="postcss">
 .tabs-container {
-  @apply tabs tabs-boxed mt-0 flex w-full justify-center;
+  @apply tabs tabs-boxed mt-0 flex w-11/12 mx-auto justify-center bg-lime-100/90;
 }
 </style>
