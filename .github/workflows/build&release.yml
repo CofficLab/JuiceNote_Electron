@@ -224,23 +224,26 @@ jobs:
         uses: actions/download-artifact@v3
         with: 
           name: macos-latest
+          path: downloads
 
       - name: 下载 ubuntu-latest
         uses: actions/download-artifact@v3
         with: 
           name: ubuntu-latest
+          path: downloads
           
       - name: 下载 windows-latest
         uses: actions/download-artifact@v3
         with: 
           name: windows-latest
+          path: downloads
 
       - name: 检查文件
         run: ls -alhR
 
       - name: 扁平化
         run: |
-          find . -type f -exec cp {} /www/storage/kuaiyizhi_desktop_temp/ \;
+          find downloads -type f -exec cp {} /www/storage/kuaiyizhi_desktop_temp/ \;
 
       - name: 检查文件
         run: ls -alhR /www/storage/kuaiyizhi_desktop_temp

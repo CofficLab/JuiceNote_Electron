@@ -20,7 +20,7 @@
     },
   ],
   mac: {
-    artifactName: "${productName}_${version}.${ext}",
+    artifactName: "kuaiyizhi_${version}.${ext}",
     target: ["dmg"],
     icon: "./public/logo5.icns",
   },
@@ -31,11 +31,11 @@
         arch: ["x64"],
       },
     ],
-    artifactName: "${productName}_${version}.${ext}",
+    artifactName: "kuaiyizhi_${version}.${ext}",
     icon: "./public/logo.png",
   },
   linux: {
-    artifactName: "${productName}_${version}.${ext}",
+    artifactName: "kuaiyizhi_${version}.${ext}",
     category: "Utility",
   },
   nsis: {
