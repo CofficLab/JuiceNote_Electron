@@ -43,10 +43,10 @@ async function createWindow() {
     backgroundColor: '#07404b',
     title: 'Main window',
     icon: path.join(ROOT_PATH.public, 'favicon.ico'),
-    frame: false, // false：不显示可拖动的那个顶栏，形成一个无边框窗口
+    frame: process.platform == 'win32' ? true : false, // false：不显示可拖动的那个顶栏，形成一个无边框窗口
     titleBarStyle: 'hidden',
     trafficLightPosition: { x: 8, y: 8 },
-    titleBarOverlay:true,
+    titleBarOverlay: true,
     webPreferences: {
       preload,
       nodeIntegration: true,
@@ -177,5 +177,5 @@ ipcMain.on('get-app-version', function (event) {
 
 // 供子进程查询platform
 ipcMain.on('get-platform', function (event) {
-  return process.platform
+  return event.returnValue = process.platform
 })
