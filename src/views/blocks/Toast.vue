@@ -1,18 +1,12 @@
 <template>
-  <div class="alert alert-success h-8 rounded-sm" v-show="message.length > 0">
-    <span v-html="message"></span>
+  <div class="alert alert-success h-8 rounded-sm fixed top-0 z-50" v-show="message.length > 0">
+    <span class="mx-auto" v-html="message"></span>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script lang="ts" setup>
+import { computed } from "vue";
 import ToastController from "../../controllers/ToastController";
 
-export default defineComponent({
-  computed: {
-    message() {
-      return ToastController.toast;
-    },
-  },
-});
+const message= computed(()=>ToastController.toast)
 </script>

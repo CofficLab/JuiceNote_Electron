@@ -1,8 +1,8 @@
 <template>
   <div class="flex flex-col overflow-scroll overscroll-none scroll-smooth">
-    <div class="sticky top-0 z-50">
+    <div class="sticky top-0 z-40">
       <!-- 空白，用于拖动 -->
-      <div class="z-50 w-full bg-base-300" v-if="!isWindows">
+      <div class="z-40 w-full bg-base-300" v-if="!isWindows">
         <div class="draggable" :class="{ 'h-8': !hideTitleBar, 'h-0': hideTitleBar }"></div>
       </div>
       <!-- 图书信息 -->

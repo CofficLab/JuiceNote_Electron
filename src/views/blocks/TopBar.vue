@@ -6,7 +6,6 @@
     </div>
     <div class="draggable flex-grow"></div>
     <div class="flex h-8 flex-row items-center justify-end gap-4 pr-4">
-      <Toast></Toast>
       <!-- <Languages></Languages> -->
       <BtnOfficialLink></BtnOfficialLink>
       <Terminal :class="'btn-ghost btn-xs btn rounded-sm px-1'"></Terminal>
@@ -27,7 +26,6 @@ import BtnOfficialLink from "../components/BtnOfficialLink.vue";
 import Prev from "../operators/Prev.vue";
 import Terminal from "../operators/Terminal.vue";
 import Breadcrumbs from "./Breadcrumbs.vue";
-import Toast from "./Toast.vue";
 import { useRoute } from "vue-router";
 import { computed } from "vue";
 
