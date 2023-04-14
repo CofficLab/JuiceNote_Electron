@@ -88,11 +88,11 @@ jobs:
 
       - name: 存储版本号到环境变量(Windows)
         if: matrix.os == 'windows-latest'
-        run: echo tag=$(Get-Content tag) >> $env:GITHUB_ENV
+        run: echo tag=$(Get-Content tag.txt) >> $env:GITHUB_ENV
 
       - name: 存储版本号到环境变量(macOS、Ubuntu)
         if: matrix.os != 'windows-latest'
-        run: echo "tag=$(cat tag)" >> $GITHUB_ENV
+        run: echo "tag=$(cat tag.txt)" >> $GITHUB_ENV
 
       - name: Checkout Code
         uses: actions/checkout@v3
