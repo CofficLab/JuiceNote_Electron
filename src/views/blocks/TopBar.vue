@@ -34,5 +34,5 @@ const route = useRoute();
 const currentId = computed(() => route.params.id);
 const current = computed(() => Node.find(currentId.value));
 const isRouteLesson = computed(() => route.name && route.name.startsWith("lessons"));
-const isWindows = electron.ipcRenderer.sendSync("get-app-version") == "win32";
+const isWindows = electron.ipcRenderer.sendSync("get-platform") == "win32";
 </script>

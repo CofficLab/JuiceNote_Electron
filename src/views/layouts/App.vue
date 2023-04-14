@@ -10,15 +10,15 @@
       <SideMenu></SideMenu>
     </aside>
 
-    <main :class="{'pl-40':asideVisible,'top-8':headerVisible}" class="fixed h-screen w-full overflow-scroll overscroll-none bg-cyan-800/10 dark:bg-slate-900/10">
+    <main :class="{ 'pl-40': asideVisible, 'top-8': headerVisible }" class="fixed h-screen w-full overflow-scroll overscroll-none bg-cyan-800/10 dark:bg-slate-900/10">
       <router-view v-slot="{ Component }">
-      <transition name="slide-fade">
-        <component :is="Component" />
-      </transition>
-    </router-view>
+        <transition name="slide-fade">
+          <component :is="Component" />
+        </transition>
+      </router-view>
     </main>
 
-    <DebugBar v-if="!isProd"></DebugBar>
+    <DebugBar></DebugBar>
     <!-- <BottomBar></BottomBar> -->
   </div>
 </template>
@@ -33,8 +33,8 @@ import BottomBar from "../blocks/BottomBar.vue";
 import Toast from "../blocks/Toast.vue";
 
 const isProd = window.location.protocol === "file:";
-const asideVisible = computed(()=>['lessons.show','lessons.edit'].includes(useRoute().name))
-const headerVisible = computed(()=>['lessons.show','home.show','home.edit'].includes(useRoute().name))
+const asideVisible = computed(() => ["lessons.show", "lessons.edit"].includes(useRoute().name));
+const headerVisible = computed(() => ["lessons.show", "home.show", "home.edit"].includes(useRoute().name));
 </script>
 
 <style scoped>

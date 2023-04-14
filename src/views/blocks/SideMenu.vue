@@ -75,7 +75,7 @@ export default defineComponent({
     },
     isWindows() {
       const electron = require("electron");
-      return electron.ipcRenderer.sendSync("get-app-version") == "win32";
+      return electron.ipcRenderer.sendSync("get-platform") == "win32";
     },
   },
   methods: {
