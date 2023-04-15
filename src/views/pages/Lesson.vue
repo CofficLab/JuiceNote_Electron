@@ -42,7 +42,7 @@ import FormRename from "../modals/FormRename.vue";
 import Editor from "../components/Editor.vue";
 import { Node } from "../../models/Node";
 import { ref, computed, watch } from "vue";
-import { onBeforeRouteUpdate, useRoute } from "vue-router";
+import { useRoute } from "vue-router";
 
 const route = useRoute();
 
