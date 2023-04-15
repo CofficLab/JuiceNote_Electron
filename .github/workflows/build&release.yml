@@ -34,13 +34,13 @@ jobs:
           NEW_TAG: ${{ steps.version-bump.outputs.newTag }}
         run: |
           echo "新版本号 $NEW_TAG"
-          echo $NEW_TAG >> tag
+          echo $NEW_TAG >> tag.txt
 
       - name: 上传版本号构件
         uses: actions/upload-artifact@v3
         with:
           name: tag
-          path: tag
+          path: tag.txt
           retention-days: 1
 
   test:
@@ -88,11 +88,11 @@ jobs:
 
       - name: 存储版本号到环境变量(Windows)
         if: matrix.os == 'windows-latest'
-        run: echo tag=$(Get-Content tag) >> $env:GITHUB_ENV
+        run: echo tag=$(Get-Content tag.txt) >> $env:GITHUB_ENV
 
       - name: 存储版本号到环境变量(macOS、Ubuntu)
         if: matrix.os != 'windows-latest'
-        run: echo "tag=$(cat tag)" >> $GITHUB_ENV
+        run: echo "tag=$(cat tag.txt)" >> $GITHUB_ENV
 
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -181,7 +181,7 @@ jobs:
         run: ls -alhR
 
       - name: 存储版本号到环境变量
-        run: echo "tag=$(cat tag)" >> $GITHUB_ENV 
+        run: echo "tag=$(cat tag/tag.txt)" >> $GITHUB_ENV 
 
       - name: 发布版本
         uses: softprops/action-gh-release@v1
