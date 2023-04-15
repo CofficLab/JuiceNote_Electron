@@ -1,5 +1,3 @@
-<!-- @format -->
-
 <template>
   <!-- 支持在多个标签之间切换，当前节点的index=current时才显示 -->
   <node-view-wrapper ref="content" v-show="index == current" contenteditable="false" class="code-editor">
@@ -55,7 +53,7 @@ export default {
   },
 
   computed: {
-    editable: () => useRoute().query.editable,
+    editable: () => useRoute().name == "lessons.edit",
     monacoEditorDisplay() {
       return this.node.attrs.editor == true;
     },
