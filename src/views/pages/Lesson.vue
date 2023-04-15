@@ -1,6 +1,6 @@
 <template>
-    <div>
-      <div class="fixed top-8 z-50 flex w-full flex-grow pr-40">
+  <div>
+    <div class="fixed top-8 z-50 flex w-full flex-grow pr-40">
       <NodeTab :current="node"></NodeTab>
     </div>
 
@@ -24,7 +24,7 @@
       <FormAdd :node="node" v-if="adding"></FormAdd>
       <FormRename :node="node" v-if="renaming"></FormRename>
     </div>
-    </div>
+  </div>
 </template>
 
 <script setup>
@@ -41,7 +41,7 @@ import FormAdd from "../modals/FormAdd.vue";
 import FormRename from "../modals/FormRename.vue";
 import Editor from "../components/Editor.vue";
 import { Node } from "../../models/Node";
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
 import { onBeforeRouteUpdate, useRoute } from "vue-router";
 
 const route = useRoute();
@@ -64,16 +64,14 @@ let save = function (content) {
   }
 };
 
-onBeforeRouteUpdate((to, from) => {
-  console.log("pages.lesson，路由发生了变化，处理lesson的展示");
+watch(route, () => {
+  node = Node.find(route.params.id);
+  adding = route.query.adding != undefined;
+  renaming = route.query.renaming != undefined;
 
-  node = Node.find(to.params.id);
-  adding = to.query.adding != undefined;
-  renaming = to.query.renaming != undefined;
-
-  if (to.hash.length > 0) {
+  if (route.hash.length > 0) {
     // 获取带有锚点的元素
-    var target = document.querySelector(to.hash);
+    var target = document.querySelector(route.hash);
     console.log("滚动到锚点", target);
 
     // 如果有锚点并且目标元素存在，则滚动到该元素

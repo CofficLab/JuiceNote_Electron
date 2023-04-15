@@ -14,19 +14,13 @@
   </div>
 </template>
 
-<script setup>
-import { computed, ref } from "vue";
-import { useRoute, onBeforeRouteUpdate } from "vue-router";
+<script lang="ts" setup>
+import { computed } from "vue";
+import { useRoute } from "vue-router";
 import Book from "../components/Book.vue";
 import NodeController from "../../controllers/NodeController";
-
-console.log("加载pages.home");
 
 const route = useRoute();
 let booksVisible = computed(() => NodeController.getBooks().filter((book) => book.isVisible));
 let books = computed(() => NodeController.getBooks());
-
-onBeforeRouteUpdate((to, from) => {
-  console.log("pages.home，路由发生了变化");
-});
 </script>
