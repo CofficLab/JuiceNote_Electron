@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-row flex-wrap items-center gap-0">
-    <div class="dropdown dropdown-hover">
+    <div class="dropdown-hover dropdown">
       <label tabindex="0">
         <IconHashTag></IconHashTag>
       </label>
@@ -159,7 +159,7 @@
 
 <script setup>
 import { Editor } from "@tiptap/vue-3";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import NodeController from "../../controllers/NodeController";
 import ToastController from "../../controllers/ToastController";
 import { Node } from "../../models/Node";
@@ -174,7 +174,6 @@ import IconX from "../../assets/icons/x-mark.svg";
 import IconBarsArrowDown from "../../assets/icons/bars-arrow-down.svg";
 import IconClear from "../../assets/icons/no-symbol.svg";
 import IconPuzzle from "../../assets/icons/puzzle-pieces.svg";
-import IconBars2 from "../../assets/icons/bars-2.svg";
 import IconSaveBack from "../../assets/icons/arrow-up-tray.svg";
 import IconQueueList from "../../assets/icons/queue-list.svg";
 import IconChat from "../../assets/icons/chat-bubble-left-ellipsis.svg";
@@ -187,7 +186,7 @@ import IconEmpty from "../../assets/icons/empty.svg";
 import IconHashTag from "../../assets/icons/hashtag.svg";
 import { useRouter } from "vue-router";
 
-const router = useRouter()
+const router = useRouter();
 
 const props = defineProps({
   editor: { type: Editor, required: true },
@@ -195,7 +194,7 @@ const props = defineProps({
   sourceCodeCallback: null,
 });
 
-let showLinkModal = false;
+let showLinkModal = ref(false);
 let url = ""; // 设置链接扩展用到的，记录用户输入的URL
 
 // 判断是否激活
@@ -229,7 +228,7 @@ let setHardBreak = function () {
 };
 let saveAndShow = () => {
   save();
-router.push({'name':'lessons.show',params:{'id':props.current.id}})
+  router.push({ name: "lessons.show", params: { id: props.current.id } });
 };
 let insertNewLine = function () {
   props.editor.commands.setContent(props.editor.getHTML() + "<p>type here</p>");
@@ -237,7 +236,7 @@ let insertNewLine = function () {
 };
 
 // toggle相关的操作
-let toggleBulletList = () => editor.chain().focus().toggleBulletList().run();
+let toggleBulletList = () => props.editor.chain().focus().toggleBulletList().run();
 let toggleCodeBlock = function () {
   props.editor.chain().focus().toggleCodeBlock().run();
 };
@@ -275,15 +274,15 @@ let toggleSourceCode = function () {
   props.sourceCodeCallback();
 };
 let inputLink = function () {
-  props.showLinkModal = true;
+  showLinkModal.value = true;
 };
 let cancelSetLink = function () {
-  props.showLinkModal = false;
+  showLinkModal.value = false;
 };
 let setLink = function () {
-  props.showLinkModal = false;
+  showLinkModal.value = false;
   const previousUrl = props.editor.getAttributes("link").href;
-  const url = props.url ?? previousUrl;
+  url = url ?? previousUrl;
 
   // cancelled
   if (url === null) {
