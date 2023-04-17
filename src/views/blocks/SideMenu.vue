@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col overflow-scroll overscroll-none scroll-smooth">
+  <div id="side-menus" class="flex flex-col overflow-scroll overscroll-none scroll-smooth">
     <div class="sticky top-0 z-40">
       <!-- 空白，用于拖动 -->
       <div class="z-40 w-full bg-base-300" v-if="!isWindows">
@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts" setup>
-import { nextTick, watch, ref, onMounted } from "vue";
+import { nextTick, watch, ref } from "vue";
 import FullScreenController from "../../controllers/FullScreenController";
 import Link from "../components/Link.vue";
 import SideMenuItem from "./SideMenuItem.vue";
@@ -59,17 +59,12 @@ window.addEventListener("nodeUpdated", () => {
 watch(
   route,
   () => {
-    console.log("current发生变化,滚动到current");
     nextTick(() => {
       setTimeout(() => {
-        var target = document.getElementById("node-" + current.id);
-        console.log(target);
-        if (target != null) {
-          target.scrollIntoView({
-            behavior: "smooth",
-            block: "center",
-          });
-        }
+        document.querySelector(`#side-menus [data-id="${route.params.id}"]`)?.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
       }, 500);
     });
   },

@@ -1,5 +1,3 @@
-<!-- @format -->
-
 <template>
   <div>
     <!-- 是一个页面或一个tab -->
@@ -11,7 +9,7 @@
     </li>
 
     <!-- 是一个章节 -->
-    <li :id="'node-' + item.id" v-if="item.isChapter && !item.isTab" class="text-indigo-400/70">
+    <li v-if="item.isChapter && !item.isTab" class="text-indigo-400/70">
       <Link class="text-lg" :node="item">
         <DynamicPadding :count="item.level - 3"></DynamicPadding>
         {{ item.title }}

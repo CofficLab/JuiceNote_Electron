@@ -1,6 +1,5 @@
 <template>
   <div
-    :id="'node-' + node.id"
     v-bind:data-id="node.id"
     v-on:contextmenu="showRightMenu"
     v-bind:class="{
