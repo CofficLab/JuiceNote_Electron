@@ -59,13 +59,13 @@ class Node {
     }
 
     createChildPage(title: string, content: string): Number {
-        let result = db.prepare('insert into nodes (parent_id,title,content,is_page) values (?,?,?,1)').run(this.id, title, content)
+        let result = db.prepare('insert into nodes (parent_id,title,content,is_page,is_visible) values (?,?,?,1,1)').run(this.id, title, content)
 
         return result.lastInsertRowid
     }
 
     createChildChapter(title: string): Number {
-        let result = db.prepare('insert into nodes (parent_id,title,is_page,is_chapter) values (?,?,0,1)').run(this.id, title)
+        let result = db.prepare('insert into nodes (parent_id,title,is_page,is_chapter,is_visible) values (?,?,0,1,1)').run(this.id, title)
         return result.lastInsertRowid
     }
 
@@ -264,10 +264,12 @@ class Node {
 
     updateVisible(): string {
         let result = db.prepare('update nodes set is_visible=abs(is_visible-1) where id=?').run(this.id)
+
+        let updated = this.refresh()
         if (result != null) {
-            return '「' + this.title + '」已' + (this.isVisible ? '隐藏' : '展示')
+            return '「' + updated.title + '」已' + (updated.isVisible ? '展示' : '隐藏')
         } else {
-            return '「' + this.title + '」的可见性更新失败'
+            return '「' + updated.title + '」的可见性更新失败'
         }
     }
 

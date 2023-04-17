@@ -33,7 +33,7 @@ const props = defineProps({
 const router = useRouter();
 const route = useRoute();
 
-const target = computed(() => props.node ?? NodeController.getCurrentPage());
+const target = computed(() => props.node ?? Node.find(route.params.id));
 
 const toggleVisible = function () {
   ToastController.set(NodeController.updateVisible(target.value));

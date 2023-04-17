@@ -24,15 +24,15 @@ import { useRoute } from "vue-router";
 import { Node } from "../../models/Node";
 import Children from "../components/Children.vue";
 
+const route = useRoute()
+
 const getBreadcrumbs = () => current.value.getParents().concat([current.value]);
 
-const current = computed(() => Node.find(useRoute().params.id));
-const editable = computed(() => useRoute().name == "lessons.edit");
+const current = computed(() => Node.find(route.params.id));
+const editable = computed(() => route.name == "lessons.edit");
 let breadcrumbs = ref(getBreadcrumbs());
 
-onMounted(() => {
-  window.addEventListener("nodeUpdated", function () {
-    breadcrumbs.value = getBreadcrumbs();
-  });
+window.addEventListener("nodeUpdated", function () {
+  breadcrumbs.value = getBreadcrumbs();
 });
 </script>

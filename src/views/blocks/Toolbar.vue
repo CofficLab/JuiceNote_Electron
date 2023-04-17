@@ -143,6 +143,10 @@
       <IconEmpty></IconEmpty>
     </button>
 
+    <button class="tooltip tooltip-bottom" data-tip="隐藏或显示">
+      <Visible :showText='false'></Visible>
+    </button>
+
     <!-- 设置URL的模态框 -->
     <div class="modal" v-bind:class="{ 'modal-open': showLinkModal }">
       <div class="modal-box">
@@ -185,6 +189,7 @@ import IconSave from "../../assets/icons/save.svg";
 import IconEmpty from "../../assets/icons/empty.svg";
 import IconHashTag from "../../assets/icons/hashtag.svg";
 import { useRouter } from "vue-router";
+import Visible from "../operators/Visible.vue"
 
 const router = useRouter();
 

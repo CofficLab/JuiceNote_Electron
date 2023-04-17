@@ -3,25 +3,12 @@ import { reactive } from 'vue'
 import { useRoute } from 'vue-router'
 
 const NodeController = reactive({
-    search: decodeURI(location.search),
-    currentPage: new Node({}),
     isProd: location.protocol === 'file:',
-    isHomePage: (new URL(location.href)).searchParams.get('id') == '/',
-    renderedHtml: '',
     adding: false,            // 用于判断是否显示添加的表单
     renamingNode: emptyNode,  // 正在重命名的图书节点
     createChildOf: emptyNode, // 正在添加子节点的节点
-    sideMenus: [emptyNode],
     books: [emptyNode],
     visibleBooks: [emptyNode],
-
-    getSideMenus(): Node[] {
-        if (this.sideMenus.filter(menu => { return !menu.isEmpty }).length == 0) {
-            this.setSideMenus()
-        }
-
-        return this.sideMenus
-    },
 
     getRenamingNode(): Node {
         return this.renamingNode
@@ -82,6 +69,7 @@ const NodeController = reactive({
     updateVisible(node: Node): string {
         let result = node.updateVisible()
         this.setBooks()
+        dispatchEvent(new Event('nodeUpdated'))
 
         return result
     },
