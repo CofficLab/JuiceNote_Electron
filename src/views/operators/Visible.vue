@@ -1,9 +1,7 @@
 <template>
   <div @click="toggleVisible">
-    <div class="flex flex-row gap-4">
       <HideIcon v-if="showIcon"></HideIcon>
       <span v-if="showText">隐藏或显示</span>
-    </div>
   </div>
 </template>
 

@@ -15,21 +15,6 @@ const NodeController = reactive({
     books: [emptyNode],
     visibleBooks: [emptyNode],
 
-    createChildPage(): Number {
-        return this.getCurrentPage().createChildPage('子页面', '')
-    },
-
-    createChildChapter(): Number {
-        return this.getCurrentPage().createChildChapter('子章节')
-    },
-
-    getCurrentPage(): Node {
-        let id = useRoute().params.id
-        console.log('get current page', id)
-
-        return Node.find(id)
-    },
-
     getSideMenus(): Node[] {
         if (this.sideMenus.filter(menu => { return !menu.isEmpty }).length == 0) {
             this.setSideMenus()
@@ -56,10 +41,6 @@ const NodeController = reactive({
         return Node.getVisibleBooks()
     },
 
-    setSideMenus() {
-        this.sideMenus = this.getCurrentPage().getBook().getChildren()
-    },
-
     setBooks() {
         this.books = Node.getBooks()
     },
@@ -79,8 +60,7 @@ const NodeController = reactive({
         }
 
         parent.setChildrenPriority(children)
-
-        this.setSideMenus()
+        dispatchEvent(new Event('nodeUpdated'))
     },
 
     updateTitle(node: Node, title: string): string {

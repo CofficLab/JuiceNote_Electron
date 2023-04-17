@@ -38,10 +38,10 @@ import Commit from "./Commit.vue";
 import Edit from "./Edit.vue";
 import CreateChild from "./Add.vue";
 import Visible from "./Visible.vue";
-import NodeController from "../../controllers/NodeController";
+import { Node } from "../../models/Node";
 
 const route = useRoute();
-const book = computed(() => NodeController.getCurrentPage().getBook());
+const book = computed(() => Node.find(parseInt(route.params.id.toString())).getBook());
 const isRouteLesson = computed(() => route.name && route.name.startsWith("lessons"));
 </script>
 

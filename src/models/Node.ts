@@ -19,7 +19,7 @@ class Node {
     public level: number = 0
     public isEmpty: boolean = false
     public cover: string = ''
-    private content: string = ''
+    public content: string = ''
 
     public constructor(dbResult: object | null) {
         if (dbResult == null) {
@@ -74,6 +74,10 @@ class Node {
         if (this.isBook || this.isEmpty) return this
 
         return this.getParent().getBook()
+    }
+
+    getFirstTabInParents(): Node | undefined {
+        return this.getFirstPage().getParents().find((parent) => parent.getParent().isBook)
     }
 
     getContent(): string {

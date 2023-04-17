@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 /* Hide scrollbar on all elements */
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   display: none;
-}
+} */
 
 .draggable {
   -webkit-app-region: drag;

@@ -33,94 +33,55 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script lang="ts" setup>
+import { nextTick, watch, ref, onMounted } from "vue";
 import FullScreenController from "../../controllers/FullScreenController";
-import Children from "../components/Children.vue";
 import Link from "../components/Link.vue";
 import SideMenuItem from "./SideMenuItem.vue";
 import { Node } from "../../models/Node";
-import NodeController from "../../controllers/NodeController";
+import { useRoute } from "vue-router";
 
-export default defineComponent({
-  data() {
-    return {
-      activatedBookTab: this.book,
-    };
-  },
-  computed: {
-    current() {
-      return Node.find(this.$route.params.id);
-    },
-    editable: () => useRoute().query.editable,
-    hideTitleBar: () => FullScreenController.full,
-    book(): Node {
-      return this.current.getBook();
-    },
-    bookTabs() {
-      return this.book.getTabs();
-    },
-    menusRoot() {
-      if (this.bookTabs.length > 0) {
-        let firstPage = this.current.getFirstPage();
+const route = useRoute();
 
-        return firstPage.getParents().find((parent) => parent.getParent().isBook);
-      }
+let getMenus = () => (bookTabs.length > 0 ? current.getFirstTabInParents()?.getVisibleChildren() : book.getVisibleChildren());
 
-      return this.book;
-    },
-    menus() {
-      // console.log("获取左侧栏菜单");
-      return this.menusRoot.getVisibleChildren();
-    },
-    isWindows() {
-      const electron = require("electron");
-      return electron.ipcRenderer.sendSync("get-platform") == "win32";
-    },
-  },
-  methods: {
-    // 滚动到激活的菜单的章节
-    scrollToCurrent() {
-      var target = document.getElementById("node-" + this.current.id);
-      // console.log(target);
-      // console.log("需要滚动");
-      if (target != null) {
-        target.scrollIntoView({
-          behavior: "smooth",
-          block: "center",
-        });
-      }
-    },
-  },
-  mounted: function () {
-    this.$nextTick(() => {
+let current = Node.find(parseInt(route.params.id.toString()));
+let book = current.getBook();
+let bookTabs = book.getTabs();
+let hideTitleBar = FullScreenController.full;
+let isWindows = require("electron").ipcRenderer.sendSync("get-platform") == "win32";
+let menus = ref(getMenus());
+
+window.addEventListener("nodeUpdated", () => {
+  menus.value = getMenus();
+});
+
+watch(
+  route,
+  () => {
+    console.log("current发生变化,滚动到current");
+    nextTick(() => {
       setTimeout(() => {
-        this.scrollToCurrent();
+        var target = document.getElementById("node-" + current.id);
+        console.log(target);
+        if (target != null) {
+          target.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+          });
+        }
       }, 500);
     });
-
-    if (this.bookTabs.length > 0) {
-      this.activatedBookTab = this.bookTabs[0];
-    }
   },
-  watch: {
-    current() {
-      console.log("current发生变化，滚动到current");
-      this.$nextTick(() => {
-        setTimeout(() => {
-          this.scrollToCurrent();
-        }, 500);
-      });
-    },
-  },
-  components: { Link, SideMenuItem, Children },
-});
+  { immediate: true }
+);
 </script>
 
 <style scoped lang="postcss">
 #book-name {
   @apply flex justify-center bg-gradient-to-r from-red-500 to-cyan-500 bg-clip-text pb-2 text-lg text-transparent md:text-2xl lg:text-3xl;
 }
+
 .book-info {
   @apply flex flex-col bg-base-200/80 pt-1 shadow drop-shadow dark:border-cyan-900/10;
 }

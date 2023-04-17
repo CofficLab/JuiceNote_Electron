@@ -22,7 +22,7 @@
   </div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { computed, ref } from "vue";
 import Rename from "../operators/Rename.vue";
 import Edit from "../operators/Edit.vue";

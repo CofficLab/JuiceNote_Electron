@@ -21,6 +21,7 @@
     "src/views/extensions/Brick.js",
     "src/views/extensions/Brick.js",
   ],
+  "exclude": ["node_modules", ".next"],
   "references": [
     {
       "path": "./tsconfig.node.json"
