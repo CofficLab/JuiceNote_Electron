@@ -44,17 +44,19 @@ import { useRoute } from "vue-router";
 
 const route = useRoute();
 
-let getMenus = () => (bookTabs.length > 0 ? current.getFirstTabInParents()?.getVisibleChildren() : book.getVisibleChildren());
+let getMenus = computed(() => {
+  return (bookTabs.value.length > 0 ? current.value.getFirstTabInParents()?.getVisibleChildren() : book.value.getVisibleChildren())
+});
 
-let current = Node.find(parseInt(route.params.id.toString()));
-let book = current.getBook();
-let bookTabs = book.getTabs();
+let current = computed(()=>Node.find(parseInt(route.params.id.toString())));
+let book = computed(()=>current.value.getBook())
+let bookTabs = computed(()=>book.value.getTabs());
 let hideTitleBar = computed(()=> FullScreenController.full);
 let isWindows = require("electron").ipcRenderer.sendSync("get-platform") == "win32";
-let menus = ref(getMenus());
+let menus = getMenus
 
 window.addEventListener("nodeUpdated", () => {
-  menus.value = getMenus();
+  menus = getMenus;
 });
 
 watch(

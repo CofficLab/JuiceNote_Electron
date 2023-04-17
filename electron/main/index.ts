@@ -38,7 +38,7 @@ Menu.setApplicationMenu(menus)
 async function createWindow() {
   win = new BrowserWindow({
     minWidth: 780,
-    height: 880,
+    height: app.isPackaged ? 800 : 1600,
     width: 1300,
     backgroundColor: '#07404b',
     title: 'Main window',

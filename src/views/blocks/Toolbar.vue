@@ -213,7 +213,7 @@ let isCodeActive = computed(() => props.editor.isActive("code"));
 let isRedoActive = computed(() => props.editor.can().chain().focus().redo().run());
 
 // 操作列表
-let unsetAllMarks = () => editor.chain().focus().unsetAllMarks().run();
+let unsetAllMarks = () => props.editor.chain().focus().unsetAllMarks().run();
 let addChat = () => props.editor.chain().focus().addChat().run();
 let cancel = () => props.editor.chain().focus().undo().run();
 let redo = () => props.editor.chain().focus().redo().run();

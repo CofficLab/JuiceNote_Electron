@@ -42,13 +42,11 @@ const hide = function () {
 };
 
 const submitPageForm = function () {
-  let id = props.node.createChildPage(title, "子节点");
+  let id = props.node.createChildPage(title, `<h1>${title}</h1>`);
   if (typeof id == "string") {
     ToastController.set(id);
   } else {
-    router.push({ path: "/lessons/" + id + "/show" });
-    // hide();
-    // title = "";
+    router.push({ name: "lessons.show", params: { id: id.toString() } });
   }
 };
 

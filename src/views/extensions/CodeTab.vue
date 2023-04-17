@@ -43,7 +43,7 @@ export default {
   },
   props: nodeViewProps,
   computed: {
-    editable: () => useRoute().query.editable,
+    editable: () => useRoute().name=='lessons.edit',
     current() {
       return this.node.attrs.current;
     },

@@ -1,6 +1,6 @@
 <template>
   <!-- 工具栏 -->
-  <div v-if="editable" class="fixed top-0 z-40 flex w-full justify-center bg-yellow-500/80 dark:bg-yellow-900/40">
+  <div v-if="editable" class="fixed top-0 left-0 pl-24 lg:pl-40 w-full z-40 flex justify-center bg-yellow-500/80 dark:bg-yellow-900/40">
     <Toolbar :editor="editor" :current="node" :source-code-callback="toggleSourceCode"></Toolbar>
   </div>
 
