@@ -17,6 +17,6 @@ const props = defineProps({
 
 <style lang="postcss">
 .tabs-container {
-  @apply tabs tabs-boxed mt-0 flex w-11/12 mx-auto justify-center bg-lime-100/90;
+  @apply tabs tabs-boxed mt-0 flex w-11/12 mx-auto justify-center bg-lime-100/90 dark:bg-lime-900/20;
 }
 </style>
