@@ -1,0 +1,181 @@
+<h1 id="heading-1">结构体</h1><p>&lt;div class="o"&gt;https://go.dev/ref/spec#Struct_types&lt;/div&gt;</p><h2 id="heading-2">简介</h2><p>结构体 是一个复合数据类型，它可以将零个或多个字段组合在一起。</p><pre index="1"><code language="" run="NaN">type Date struct {
+    Year int
+    Month int
+    Day int
+}
+</code></pre><h2 id="heading-3">初始化</h2><p>声明与赋值同时进行：</p><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre index="1"><code language="" run="NaN">package main
+import "fmt"
+import "reflect"
+
+type Date struct {
+    Year int
+    Month int
+    Day int
+}
+
+func main() {
+    date := Date{Year: 2020, Month: 5, Day: 2}
+
+    fmt.Println(reflect.TypeOf(date), date)
+}
+</code></pre><p>也可以先声明后赋值：</p><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre index="1"><code language="" run="NaN">package main
+import "fmt"
+import "reflect"
+
+type Date struct {
+    Year int
+    Month int
+    Day int
+}
+
+func main() {
+    date := Date{}
+    date.Year = 2020
+    date.Month = 5
+    date.Day = 2
+
+    fmt.Println(reflect.TypeOf(date), date)
+}
+</code></pre><h2 id="heading-4">关联函数</h2><h3 id="heading-5">关联到结构体</h3><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre index="1"><code language="" run="NaN">package main
+
+import "fmt"
+
+type Dog struct {
+  Name string
+}
+
+func (d Dog) Shout() {
+  fmt.Println("汪汪汪")
+}
+
+func main() {
+    dog := Dog{Name: "123"}
+    dog.Shout()
+}
+</code></pre><h3 id="heading-6">关联到指针</h3><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre index="1"><code language="" run="NaN">package main
+
+import "fmt"
+
+type Dog struct {
+  Name string
+}
+
+func (d *Dog) Shout() {
+  fmt.Println("汪汪汪")
+}
+
+func main() {
+    dog := &amp;Dog{Name: "123"}
+    dog.Shout()
+}
+</code></pre><p>&lt;div class="ask"&gt;如何理解上面的代码？&lt;/div&gt;</p><p>*Dog 类型是 Shout 方法的接受者。然后我们可以通过下面的代码去调用 Shout 方法：</p><pre index="1"><code language="" run="NaN">dog := &amp;Dog{Name: "123"}
+dog.Shout()
+</code></pre><h2 id="heading-7">构造器</h2><p>传递参数给构造器，构造器会返回初始化完成的结构体。</p><p>很多编程语言都原生支持构造器，但 Go 不支持。</p><p>但是，你可以创建一个返回所期望类型的实例的函数（类似于工厂）：</p><pre index="1"><code language="" run="NaN">func NewDog(name string, power int) *Dog {
+  return &amp;Dog{
+    Name: name,
+    Power: power,
+  }
+}
+</code></pre><p>这样也可以：</p><pre index="1"><code language="" run="NaN">func NewDog(name string, power int) Dog {
+  return Dog{
+    Name: name,
+    Power: power,
+  }
+}
+</code></pre><h2 id="heading-8">新建</h2><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre index="1"><code language="" run="NaN">package main
+import "fmt"
+import "reflect"
+
+type Dog struct {
+    Name string
+}
+
+func main() {
+    dog := new(Dog)
+    dog.Name = "123"
+
+    fmt.Println(reflect.TypeOf(dog), dog)
+}
+</code></pre><p>也可以这样：</p><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre index="1"><code language="" run="NaN">package main
+import "fmt"
+import "reflect"
+
+type Dog struct {
+    Name string
+}
+
+func main() {
+    dog := &amp;Dog{Name: "123"}
+
+    fmt.Println(reflect.TypeOf(dog), dog)
+}
+
+</code></pre><p>以下两种写法是等价的：</p><pre index="1"><code language="" run="NaN">dog := new(Dog)
+</code></pre><pre index="1"><code language="" run="NaN">dog := &amp;Dog{}
+</code></pre><h2 id="heading-9">组合 composition</h2><p>将一个或多个结构体包含进另一个结构体的行为，称为 <strong>嵌套</strong>，或者 <strong>组合</strong>。</p><p>在某些编程语言中，叫做 特质 或者 混合。</p><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre index="1"><code language="" run="NaN">package main
+import "fmt"
+
+type Animal struct {
+  Legs int
+}
+
+func (this *Animal) Introduce() {
+  fmt.Printf("早上好，我有 %d 条腿", this.Legs)
+}
+
+type Dog struct {
+  *Animal
+  Name string
+}
+
+func main() {
+  dog := &amp;Dog{
+    Animal: &amp;Animal{Legs: 4},
+    Name: "123",
+  }
+
+  dog.Introduce()
+}
+</code></pre><p>Dog 结构体有一个 Animal 类型的字段。有两种方式访问 Animal 类型中的字段：</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>dog.Animal.Legs</p></li><li class="m-0 p-0"><p>dog.Legs</p></li></ul><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre index="1"><code language="" run="NaN">package main
+import "fmt"
+
+type Animal struct {
+  Legs int
+}
+
+func (this *Animal) Introduce() {
+  fmt.Printf("早上好，我有 %d 条腿", this.Legs)
+}
+
+type Dog struct {
+  *Animal
+  Name string
+}
+
+func main() {
+  dog := &amp;Dog{
+    Animal: &amp;Animal{Legs: 4},
+    Name: "123",
+  }
+
+  fmt.Println(dog.Legs)
+  fmt.Println(dog.Animal.Legs)
+}
+</code></pre><h2 id="heading-10">标签</h2><h2 id="heading-11">继承方法</h2><p>&lt;div class="run"&gt;&lt;/div&gt;</p><pre index="1"><code language="" run="NaN">package main
+import "fmt"
+import "reflect"
+
+type Animal struct {}
+type Dog struct {
+    Animal
+}
+
+func (a *Animal) Shout() {
+    fmt.Println(reflect.TypeOf(a), a)
+}
+
+func main() {
+    var dog = new(Dog)
+    dog.Shout()
+}
+</code></pre><h2 id="heading-12">参考资料</h2><p>&lt;div class="link"&gt;https://mp.weixin.qq.com/s/SZn3g5J1v6T-AQKKHhwH2A&lt;/div&gt;</p>
