@@ -2,7 +2,7 @@
   <div>
     <!-- 是一个页面或一个tab -->
     <li v-if="item.isPage || item.isTab">
-      <Link class="flex gap-4 2xl:text-lg" :node="item" :class="{ 'text-info': !item.isVisible }">
+      <Link class="3xl:text-lg flex gap-4" :node="item" :class="{ 'text-info': !item.isVisible }">
         <DynamicPadding :count="item.level - 3"></DynamicPadding>
         {{ item.title }}
       </Link>
