@@ -8,7 +8,7 @@
             <span v-if="editable">[{{ breadcrumb.id }}]</span>
           </label>
           <div class="dropdown-content mt-0 pt-4">
-            <ul tabindex="0" class="rounded-box ml-32 h-96 w-52 gap-2 overflow-y-scroll bg-cyan-900/80 p-2 shadow">
+            <ul tabindex="0" class="rounded-box ml-36 h-96 w-52 gap-2 overflow-y-scroll bg-cyan-900/80 p-2 shadow">
               <Children :list="breadcrumb.getParent().getChildren()" :current="current"></Children>
             </ul>
           </div>
@@ -19,7 +19,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from "vue";
+import { computed, ref,watch } from "vue";
 import { useRoute } from "vue-router";
 import { Node } from "../../models/Node";
 import Children from "../components/Children.vue";
@@ -35,4 +35,8 @@ let breadcrumbs = ref(getBreadcrumbs());
 window.addEventListener("nodeUpdated", function () {
   breadcrumbs.value = getBreadcrumbs();
 });
+
+watch(route, function () {
+  breadcrumbs.value = getBreadcrumbs();
+})
 </script>

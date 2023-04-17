@@ -7,9 +7,9 @@
       </div>
 
       <!-- 图书信息 -->
-      <div class="book-info" :class="{ 'top-12': !hideTitleBar, 'top-0': hideTitleBar }">
+      <div class="book-info z-40" :class="{ 'top-12': !hideTitleBar, 'top-0': hideTitleBar }">
         <!-- 图书名 -->
-        <h1 id="book-name">{{ book.title }}</h1>
+        <Link :node="book" class="z-40">{{ book.title }}</Link>
 
         <!-- 图书的TAB，比如：教程、手册 -->
         <div class="tabs flex justify-center" v-if="bookTabs.length > 0">

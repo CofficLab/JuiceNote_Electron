@@ -16,7 +16,7 @@ const ToastController = reactive({
         setTimeout(() => {
             console.log("清理toast")
             this.toast = ""
-        }, 3000)
+        }, 1000)
     },
 })
 
