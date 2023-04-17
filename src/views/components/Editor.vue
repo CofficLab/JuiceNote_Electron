@@ -1,11 +1,11 @@
 <template>
   <!-- 工具栏 -->
-  <div v-if="editable" class="sticky z-40 flex w-full justify-center bg-yellow-500/80 dark:bg-yellow-900/40" :class="{ 'top-0': !node.getParent().isTab, 'top-12': node.getParent().isTab }">
+  <div v-if="editable" class="fixed top-0 z-40 flex w-full justify-center bg-yellow-500/80 dark:bg-yellow-900/40">
     <Toolbar :editor="editor" :current="node" :source-code-callback="toggleSourceCode"></Toolbar>
   </div>
 
   <!-- 编辑框 -->
-  <div class="z-30 mt-1 flex w-full flex-row justify-center border-0 p-4">
+  <div class="z-30 flex w-full flex-row justify-center border-0 px-4">
     <editor-content v-if="!sourceCodeDisplay" :editor="editor" class="prose w-full xl:prose-lg lg:mr-56" />
   </div>
 

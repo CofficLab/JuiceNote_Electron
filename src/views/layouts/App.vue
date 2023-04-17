@@ -10,7 +10,7 @@
       <SideMenu></SideMenu>
     </aside>
 
-    <main :class="{ 'pl-40': asideVisible, 'top-8': headerVisible }" class="fixed h-screen w-full overflow-scroll overscroll-none bg-cyan-800/10 dark:bg-slate-900/10">
+    <main :class="{ 'pl-40': asideVisible }" class="fixed top-8 h-screen w-full overflow-scroll overscroll-none bg-cyan-800/10 dark:bg-slate-900/10">
       <router-view v-slot="{ Component }">
         <transition name="slide-fade">
           <component :is="Component" />

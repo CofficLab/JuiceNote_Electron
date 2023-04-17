@@ -2,9 +2,10 @@
   <div id="side-menus" class="flex flex-col overflow-scroll overscroll-none scroll-smooth">
     <div class="sticky top-0 z-40">
       <!-- 空白，用于拖动 -->
-      <div class="z-40 w-full bg-base-300" v-if="!isWindows">
+      <div class="z-40 w-full bg-base-300" v-if="!isWindows && !hideTitleBar">
         <div class="draggable" :class="{ 'h-8': !hideTitleBar, 'h-0': hideTitleBar }"></div>
       </div>
+
       <!-- 图书信息 -->
       <div class="book-info" :class="{ 'top-12': !hideTitleBar, 'top-0': hideTitleBar }">
         <!-- 图书名 -->
@@ -34,7 +35,7 @@
 </template>
 
 <script lang="ts" setup>
-import { nextTick, watch, ref } from "vue";
+import { nextTick, watch, ref,computed } from "vue";
 import FullScreenController from "../../controllers/FullScreenController";
 import Link from "../components/Link.vue";
 import SideMenuItem from "./SideMenuItem.vue";
@@ -48,7 +49,7 @@ let getMenus = () => (bookTabs.length > 0 ? current.getFirstTabInParents()?.getV
 let current = Node.find(parseInt(route.params.id.toString()));
 let book = current.getBook();
 let bookTabs = book.getTabs();
-let hideTitleBar = FullScreenController.full;
+let hideTitleBar = computed(()=> FullScreenController.full);
 let isWindows = require("electron").ipcRenderer.sendSync("get-platform") == "win32";
 let menus = ref(getMenus());
 
