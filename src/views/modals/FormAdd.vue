@@ -1,16 +1,19 @@
 <template>
   <!-- 新建图书节点的弹层 -->
-  <div class="modal-open modal">
+  <div class="modal modal-open">
     <Transition name="bounce">
       <div class="modal-box">
+
+    <label for="my-modal-3" @click="hide" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
         <p class="mb-6">
           为<span class="text-lg font-bold">「{{ node.title }}」</span>添加子节点
         </p>
-        <input ref="title" autofocus type="text" v-model="title" placeholder="输入标题" class="input-bordered input-primary input w-full max-w-xs" @keyup.enter="submitPageForm" />
+        <input id="add-node-form-title" autofocus type="text" v-model="title" placeholder="输入标题" class="input-bordered input-primary input w-full max-w-xs" @keyup.enter="submitPageForm" />
         <div class="modal-action">
-          <label for="my-modal" class="btn" v-on:click="hide">取消</label>
-          <label for="my-modal" class="btn" v-on:click="submitChapterForm">创建章节</label>
-          <label for="my-modal" class="btn" v-on:click="submitPageForm">创建页面</label>
+          <label for="my-modal" class="btn" v-on:click="submit(true)">创建章节</label>
+          <label for="my-modal" class="btn" v-on:click="submit(false)">创建页面</label>
+          <label for="my-modal" class="btn" v-on:click="submit(false, true)">创建兄弟页面</label>
+          <label for="my-modal" class="btn" v-on:click="submit(true, true)">创建兄弟章节</label>
         </div>
       </div>
     </Transition>
@@ -18,9 +21,8 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, nextTick,ref } from "vue";
+import { onMounted, nextTick, ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import ToastController from "../../controllers/ToastController";
 import { Node } from "../../models/Node";
 
 const router = useRouter();
@@ -41,25 +43,17 @@ const hide = function () {
   });
 };
 
-const submitPageForm = function () {
-  let id = props.node.createChildPage(title, `<h1>${title}</h1>`);
-  if (typeof id == "string") {
-    ToastController.set(id);
-  } else {
-    router.push({ name: "lessons.show", params: { id: id.toString() } });
-  }
+const submit = function (isChapter: boolean, createSibling = false) {
+  let parent = createSibling ? props.node.getParent() : props.node;
+  let id = isChapter ? parent.createChildChapter(title) : parent.createChildPage(title, `<h1>${title}</h1>`);
+
+  console.log("创建新节点后返回的ID", id);
+  router.push({ name: "lessons.show", params: { id: id.toString() } });
 };
 
-const submitChapterForm = function () {
-  let id = props.node.createChildChapter(title);
-  if (typeof id == "string") {
-    ToastController.set(id);
-  } else {
-    router.push({ path: "/lessons/" + id });
-    hide();
-    title = "";
-  }
-};
+onMounted(function() {
+  document.querySelector('#add-node-form-title')?.focus()
+})
 </script>
 
 <style scoped>

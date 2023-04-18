@@ -5,20 +5,9 @@
     </div>
 
     <div class="flex h-full w-full flex-col items-center">
-      <div @contextmenu="showRightMenu" class="z-40 w-full" :class="{ 'mt-12': node.getParent().isTab }">
+      <div class="z-40 w-full" :class="{ 'mt-12': node.getParent().isTab }">
         <Editor :node="node" :saveCallback="save" :editable="editable"></Editor>
       </div>
-
-      <!-- 右键菜单 -->
-      <RightMenu :event="rightClickEvent">
-        <Edit :node="node"></Edit>
-        <Rename :node="node"></Rename>
-        <Add :node="node"></Add>
-        <Copy :bookNode="node"></Copy>
-        <Prev :node="node"></Prev>
-        <Next :node="node"></Next>
-        <Delete></Delete>
-      </RightMenu>
 
       <!-- 弹层 -->
       <FormAdd :node="node" v-if="adding"></FormAdd>
@@ -29,19 +18,11 @@
 
 <script setup>
 import NodeTab from "../components/NodeTab.vue";
-import RightMenu from "../components/RightMenu.vue";
-import Add from "../operators/Add.vue";
-import Copy from "../operators/Copy.vue";
-import Edit from "../operators/Edit.vue";
-import Rename from "../operators/Rename.vue";
-import Prev from "../operators/Prev.vue";
-import Next from "../operators/Next.vue";
-import Delete from "../operators/Delete.vue";
 import FormAdd from "../modals/FormAdd.vue";
 import FormRename from "../modals/FormRename.vue";
 import Editor from "../components/Editor.vue";
 import { Node } from "../../models/Node";
-import { ref, computed, watch } from "vue";
+import { computed, watch } from "vue";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
@@ -50,13 +31,8 @@ const editable = computed(() => route.name == "lessons.edit");
 
 let adding = route.query.adding != undefined;
 let renaming = route.query.renaming != undefined;
-
-let rightClickEvent = ref(null);
 let node = Node.find(route.params.id);
 
-let showRightMenu = function (event) {
-  rightClickEvent.value = event;
-};
 let save = function (content) {
   if (content != node.content) {
     console.log("保存节点", node.id, "的内容", content.substring(0, 20) + "...");

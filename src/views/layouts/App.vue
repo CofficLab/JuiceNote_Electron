@@ -10,7 +10,8 @@
       <SideMenu></SideMenu>
     </aside>
 
-    <main :class="{ 'pl-40': asideVisible }" class="fixed top-8 h-screen w-full overflow-scroll overscroll-none bg-cyan-800/10 dark:bg-slate-900/10">
+    <main 
+    v-on:contextmenu="showRightMenu" :class="{ 'pl-40': asideVisible }" class="fixed top-8 h-screen w-full overflow-scroll overscroll-none bg-cyan-800/10 dark:bg-slate-900/10">
       <router-view v-slot="{ Component }">
         <transition name="slide-fade">
           <component :is="Component" />
@@ -18,23 +19,35 @@
       </router-view>
     </main>
 
+    <RightMenuModal :event="rightClickEvent"></RightMenuModal>
+
     <DebugBar></DebugBar>
     <!-- <BottomBar></BottomBar> -->
   </div>
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { computed,ref } from "vue";
 import { useRoute } from "vue-router";
 import SideMenu from "../blocks/SideMenu.vue";
 import TopBar from "../blocks/TopBar.vue";
 import DebugBar from "../blocks/DebugBar.vue";
 import BottomBar from "../blocks/BottomBar.vue";
 import Toast from "../blocks/Toast.vue";
+import RightMenuModal from "../modals/RightMenuModal.vue";
 
 const isProd = window.location.protocol === "file:";
 const asideVisible = computed(() => ["lessons.show", "lessons.edit"].includes(useRoute().name));
 const headerVisible = computed(() => ["lessons.show", "home.show", "home.edit"].includes(useRoute().name));
+
+let rightClickEvent = ref(null)
+
+const showRightMenu = function (event) {
+  event.preventDefault();
+
+  rightClickEvent.value = event;
+};
+
 </script>
 
 <style scoped>
