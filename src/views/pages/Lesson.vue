@@ -1,12 +1,14 @@
 <template>
-  <div class="mt-8">
+  <div class="mt-8 z-50">
     <div class="fixed top-9 z-50 flex w-full flex-grow pr-40">
       <NodeTab :current="node"></NodeTab>
     </div>
 
     <div class="flex h-full w-full flex-col items-center">
       <div class="z-40 w-full" :class="{ 'mt-12': node.getParent().isTab }">
-        <Editor :node="node" :saveCallback="save" :editable="editable"></Editor>
+        <Add :node="node" class="flex justify-center flex-row btn w-72 mx-auto items-center gap-4"  v-if="node.isChapter"></Add>
+
+        <Editor :node="node" :saveCallback="save" :editable="editable" v-else></Editor>
       </div>
 
       <!-- 弹层 -->
@@ -21,6 +23,7 @@ import NodeTab from "../components/NodeTab.vue";
 import FormAdd from "../modals/FormAdd.vue";
 import FormRename from "../modals/FormRename.vue";
 import Editor from "../components/Editor.vue";
+import Add from "../operators/Add.vue"
 import { Node } from "../../models/Node";
 import { computed, watch } from "vue";
 import { useRoute } from "vue-router";

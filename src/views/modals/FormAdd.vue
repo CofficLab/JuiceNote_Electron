@@ -6,12 +6,12 @@
 
     <label for="my-modal-3" @click="hide" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
         <p class="mb-6">
-          为<span class="text-lg font-bold">「{{ node.title }}」</span>添加子节点
+          为<span class="text-lg font-bold">「{{ node.title }}」</span>添加节点
         </p>
         <input id="add-node-form-title" autofocus type="text" v-model="title" placeholder="输入标题" class="input-bordered input-primary input w-full max-w-xs" @keyup.enter="submitPageForm" />
-        <div class="modal-action">
-          <label for="my-modal" class="btn" v-on:click="submit(true)">创建章节</label>
-          <label for="my-modal" class="btn" v-on:click="submit(false)">创建页面</label>
+        <div class="modal-action justify-start">
+          <label for="my-modal" class="btn" v-on:click="submit(true)"  v-if="!node.isPage">创建章节</label>
+          <label for="my-modal" class="btn" v-on:click="submit(false)" v-if="!node.isPage">创建页面</label>
           <label for="my-modal" class="btn" v-on:click="submit(false, true)">创建兄弟页面</label>
           <label for="my-modal" class="btn" v-on:click="submit(true, true)">创建兄弟章节</label>
         </div>

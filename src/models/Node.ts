@@ -77,7 +77,7 @@ class Node {
     }
 
     getFirstTabInParents(): Node | undefined {
-        return this.getFirstPage().getParents().find((parent) => parent.getParent().isBook)
+        return this.getParents().find((parent) => parent.getParent().isBook)
     }
 
     getContent(): string {

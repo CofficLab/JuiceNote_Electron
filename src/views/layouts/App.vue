@@ -34,11 +34,19 @@ import TopBar from "../blocks/TopBar.vue";
 import DebugBar from "../blocks/DebugBar.vue";
 import BottomBar from "../blocks/BottomBar.vue";
 import Toast from "../blocks/Toast.vue";
+import {Node} from "../../models/Node.ts"
 import RightMenuModal from "../modals/RightMenuModal.vue";
 
+const route = useRoute()
 const isProd = window.location.protocol === "file:";
-const asideVisible = computed(() => ["lessons.show", "lessons.edit"].includes(useRoute().name));
-const headerVisible = computed(() => ["lessons.show", "home.show", "home.edit"].includes(useRoute().name));
+const asideVisible = computed(() => ["lessons.show", "lessons.edit"].includes(route.name));
+const headerVisible = computed(() => {
+  if (route.name == 'lessons.edit') {
+    return Node.find(route.params.id).isChapter
+  }
+
+  return ["lessons.show", "home.show", "home.edit"].includes(route.name)
+});
 
 let rightClickEvent = ref(null)
 

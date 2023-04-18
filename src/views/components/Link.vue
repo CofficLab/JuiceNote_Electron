@@ -27,13 +27,17 @@ const current = computed(() => {
 });
 
 const shouldActive = function (id) {
-  if (props.node.isChapter && !props.node.isTab) return false;
+  let node = Node.find(id)
 
-  return (
-    current.value.getParents().some((parent) => {
+  if (node.isPage) return current.value.id == id
+
+  if (node.isTab) return current.value.getParents().some((parent) => {
       return parent.id == id;
-    }) || current.value.id == id
-  );
+  })
+
+  if (node.isChapter && node.getChildren().length ==0) return current.value.id == id
+
+  return false
 };
 </script>
 
