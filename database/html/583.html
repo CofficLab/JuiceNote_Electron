@@ -1,0 +1,20 @@
+<h1 id="heading-1">列表</h1><p>列表是Redis中的链表数据结构。它们用于表示有序数据、队列或时间轴。Redis列表的一些主要属性:• 链表,所以元素是按插入时间顺序排序的。<br>• 从列表中的任何位置快速插入和删除。<br>• 可选的最大列表长度。<br>• 复杂时间:大多数操作的O(N)(线性时间)。&nbsp;<br>• 可用作队列、栈或用于模拟时间序列数据。Redis列表中的常用命令:• LPUSH key value1 value2 ... - 将一个或多个值推入列表头部。<br>• RPUSH key value1 value2 ... - 将一个或多个值推入列表尾部。<br>• LPOP key - 移除并返回列表的第一个元素。<br>• RPOP key - 移除并返回列表的最后一个元素。<br>• LRANGE key start stop - 从列表中获取一系列元素。&nbsp;<br>• LLEN key - 获取列表的长度。<br>• LSET key index value - 设置特定索引位置的元素的值。<br>• LREM key count value - 从列表中移除value的前count个出现。<br>• LTRIM key start stop - 将列表裁剪为特定范围的元素。示例用法:</p><pre index="1"><code language="" run="1"># 添加到头和尾 
+LPUSH fruits "Apple"  
+RPUSH fruits "Banana"
+
+# 获取列表长度  
+LLEN fruits  
+# 返回2
+
+# 获取范围
+LRANGE fruits 0 1
+# 返回["Apple","Banana"]
+
+# 用于队列  
+LPOP fruits
+# 返回"Apple"
+
+# 将列表裁剪为最后2个元素  
+LTRIM fruits 0 1  
+LRANGE fruits 0 -1
+# 返回["Banana"]</code></pre>

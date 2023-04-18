@@ -131,13 +131,9 @@
       <IconSourceCode></IconSourceCode>
     </button>
 
-    <button @click="save" class="tooltip tooltip-bottom" data-tip="保存">
+    <!-- <button @click="save" class="tooltip tooltip-bottom" data-tip="保存">
       <IconSave></IconSave>
-    </button>
-
-    <button @click="saveAndShow" class="tooltip tooltip-bottom" data-tip="保存并跳转到展示页面">
-      <IconSaveBack></IconSaveBack>
-    </button>
+    </button> -->
 
     <button @click="empty" class="tooltip tooltip-bottom" data-tip="清空">
       <IconEmpty></IconEmpty>
@@ -145,6 +141,10 @@
 
     <button class="tooltip tooltip-bottom" data-tip="隐藏或显示">
       <Visible :showText='false'></Visible>
+    </button>
+
+    <button @click="saveAndShow" class="tooltip tooltip-bottom ml-4" data-tip="保存并跳转到展示页面">
+      <IconSaveBack></IconSaveBack>
     </button>
 
     <!-- 设置URL的模态框 -->
@@ -309,7 +309,7 @@ let setLink = function () {
 <style scoped lang="postcss">
 button,
 label {
-  @apply btn-ghost btn-sm btn mx-0 px-2;
+  @apply btn-ghost btn-sm btn px-2;
 
   svg {
     @apply my-auto;

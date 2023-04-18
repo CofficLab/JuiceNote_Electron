@@ -1,0 +1,21 @@
+<h1 id="heading-1">哈希</h1><p>哈希是字符串字段和字符串值之间的映射。它们用于表示对象或存储首选项数据。Redis哈希的一些主要属性:• 最大字段数:2^32 - 1&nbsp;<br>• 最大字段大小:512 MB&nbsp;<br>• 用于表示对象或存储用户配置文件。&nbsp;<br>• 复杂时间:大多数操作的O(1)。哈希非常快。<br>• 可以类似于数组使用,但提供一些优势。Redis哈希中的常用命令:• HSET key field value - 设置哈希字段的字符串值。<br>• HGET key field - 获取哈希字段的值。&nbsp;<br>• HMSET key field1 value1 field2 value2 .. - 将多个哈希字段设置为多个值。&nbsp;<br>• HGETALL key - 获取哈希中的所有字段和值。&nbsp;<br>• HDEL key field1 field2 .. - 删除一个或多个哈希字段。&nbsp;<br>• HLEN key - 获取哈希中的字段数。&nbsp;&nbsp;<br>• HEXISTS key field - 如果哈希包含该字段,则返回1,否则返回0。<br>• HINCRBY key field increment - 将哈希字段的整数值增加给定数量。示例用法:&nbsp;</p><pre index="1"><code language="" run="1"># 添加到集合
+SADD fruits "Apple" "Orange" "Banana"   
+
+# 检查成员是否存在  
+SISMEMBER fruits "Apple"  
+# 返回1
+
+# 获取集合基数  
+SCARD fruits  
+# 返回3  
+
+# 从集合中移除  
+SREM fruits "Orange"
+
+# 与另一个集合相交  
+SINTER fruits veggies  
+# 返回两个集合中的成员  
+
+# 多个集合并集  
+SUNION fruits veggies nuts
+# 返回任何集合中的成员 </code></pre>

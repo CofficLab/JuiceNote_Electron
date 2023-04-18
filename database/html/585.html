@@ -1,0 +1,21 @@
+<h1 id="heading-1">集合</h1><p>集合是Redis中无序的唯一字符串集合。它们用于缓存,存储关系等。Redis集合的一些主要属性:• 仅存储唯一值(无重复项)<br>• 最大集合大小为2^32 - 1个元素&nbsp;<br>• 复杂时间:&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;- 大多数操作的O(1)(快)<br>&nbsp;&nbsp;&nbsp;&nbsp;- 交集/联合的O(N)(慢)&nbsp;<br>• 可用于缓存,标签存储,关系等。Redis集合中的常用命令:• SADD key member1 member2 .. - 向集合中添加一个或多个成员。<br>• SMEMBERS key - 获取集合中的所有成员。&nbsp;<br>• SISMEMBER key member - 如果member在集合中,则返回1,否则返回0。&nbsp;<br>• SCARD key - 获取集合中的成员数。&nbsp;<br>• SREM key member1 member2 .. - 从集合中移除一个或多个成员。<br>• SPOP key - 随机移除并返回集合中的一个成员。<br>• SRANDMEMBER key count - 随机获取集合中的一个或多个成员。<br>• SINTER key1 key2 .. - 求交多个集合。<br>• SUNION key1 key2 .. - 求并多个集合。&nbsp;<br>• SDIFF key1 key2 .. - 求差多个集合。</p><pre index="1"><code language="shell" run="1"># 添加到集合
+SADD fruits "Apple" "Orange" "Banana"   
+
+# 检查成员是否存在  
+SISMEMBER fruits "Apple"  
+# 返回1
+
+# 获取集合基数  
+SCARD fruits  
+# 返回3  
+
+# 从集合中移除  
+SREM fruits "Orange"
+
+# 与另一个集合相交  
+SINTER fruits veggies  
+# 返回两个集合中的成员  
+
+# 多个集合并集  
+SUNION fruits veggies nuts
+# 返回任何集合中的成员 </code></pre>

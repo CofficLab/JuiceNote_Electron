@@ -36,7 +36,7 @@ let toggleSourceCode = function () {
   sourceCodeDisplay.value = !sourceCodeDisplay.value;
 };
 
-let editor = new Editor({
+let getEditor = () => new Editor({
   extensions: Extensions,
   content: props.node.getContent(),
   autofocus: true,
@@ -50,7 +50,9 @@ let editor = new Editor({
     props.saveCallback && props.saveCallback(event.editor.getHTML());
     code.value = event.editor.getHTML();
   },
-});
+})
+
+let editor = getEditor();
 
 let save = function (content) {
   props.saveCallback(content);
@@ -59,9 +61,9 @@ let save = function (content) {
 };
 
 watch(props, () => {
-  console.log("editor 发现 props 发生变化");
-  editor.commands.setContent(props.node.getContent(), true);
-  code.value = editor.getHTML();
+  console.log("editor 发现 props 发生变化，更新内容");
+  editor.destroy()
+  editor = getEditor()
 });
 
 onBeforeUnmount(() => {

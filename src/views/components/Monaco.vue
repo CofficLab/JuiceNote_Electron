@@ -181,6 +181,7 @@ export default defineComponent({
       this.setLanguage();
     },
     code() {
+      console.log('更新monaco内容')
       monaco.editor.getModels()[this.index].setValue(this.code);
     },
   },
