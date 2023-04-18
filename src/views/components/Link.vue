@@ -70,3 +70,9 @@ const go = function () {
   router.push("/lessons/" + props.node.id + "/show");
 };
 </script>
+
+<style scoped lang="postcss">
+li {
+  @apply list-none text-base
+}
+</style>

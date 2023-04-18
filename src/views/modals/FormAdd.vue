@@ -6,7 +6,7 @@
         <p class="mb-6">
           为<span class="text-lg font-bold">「{{ node.title }}」</span>添加子节点
         </p>
-        <input ref="title" type="text" v-model="title" placeholder="输入标题" class="input-bordered input-primary input w-full max-w-xs" @keyup.enter="submitPageForm" />
+        <input ref="title" autofocus type="text" v-model="title" placeholder="输入标题" class="input-bordered input-primary input w-full max-w-xs" @keyup.enter="submitPageForm" />
         <div class="modal-action">
           <label for="my-modal" class="btn" v-on:click="hide">取消</label>
           <label for="my-modal" class="btn" v-on:click="submitChapterForm">创建章节</label>
@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, nextTick } from "vue";
+import { onMounted, nextTick,ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import ToastController from "../../controllers/ToastController";
 import { Node } from "../../models/Node";
@@ -60,12 +60,6 @@ const submitChapterForm = function () {
     title = "";
   }
 };
-
-onMounted(() => {
-  nextTick(() => {
-    // ref(title).focus();
-  });
-});
 </script>
 
 <style scoped>
