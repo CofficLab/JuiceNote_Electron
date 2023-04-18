@@ -1,5 +1,5 @@
 <template>
-  <div id="side-menus" class="flex flex-col overflow-scroll overscroll-none scroll-smooth">
+  <div>
     <!-- 空白，用于拖动 -->
     <div class="sticky top-0 z-40 w-full bg-base-300" v-if="!isWindows && item.isBook">
       <div class="draggable" :class="{ 'h-8': !hideTitleBar, 'h-0': hideTitleBar }"></div>
@@ -34,11 +34,6 @@
 
       <SideMenuItem v-for="sub in getSubMenus(item)" v-if="!item.isPage && !item.isTab" :item="sub" :current="current"></SideMenuItem>
     </ul>
-
-    <!-- 底部的图书logo -->
-    <div v-if="item.isBook && item.cover.length > 0" class="h-20 opacity-90 dark:brightness-50">
-      <img :src="item.cover" alt="" />
-    </div>
   </div>
 </template>
 

@@ -34,7 +34,7 @@ import TopBar from "../blocks/TopBar.vue";
 import DebugBar from "../blocks/DebugBar.vue";
 import BottomBar from "../blocks/BottomBar.vue";
 import Toast from "../blocks/Toast.vue";
-import {Node} from "../../models/Node.ts"
+import { Node } from "../../models/Node.ts"
 import RightMenuModal from "../modals/RightMenuModal.vue";
 
 const route = useRoute()

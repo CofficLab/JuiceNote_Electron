@@ -1,6 +1,11 @@
 <template>
-  <div id="side-menus" class="flex flex-col overflow-scroll overscroll-none scroll-smooth">
+  <div id="side-menus" class="flex flex-col overflow-scroll overscroll-none scroll-smooth h-screen justify-between">
     <SideMenuItem :item="book" :current="current"></SideMenuItem>
+
+    <!-- 底部的图书logo -->
+    <div v-if="book.cover.length > 0" class="h-20 mt-12 opacity-90 dark:brightness-50">
+      <img :src="book.cover" alt="" />
+    </div>
   </div>
 </template>
 
