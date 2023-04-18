@@ -1,0 +1,19 @@
+<toc></toc><h1 id="heading-1">WaitGroup</h1><h2 id="heading-2">简介</h2><p>WaitGroup翻译成中文为“等待组”或者“同步等待组”。它用来等待一组 goroutine 结束。主要用于主 goroutine 等待其他辅助 goroutine 结束后再退出。</p><h2 id="heading-3">方法</h2><p>WaitGroup有两个方法:- </p><p>Add(n):增加WaitGroup计数n。<br>- Done():减少WaitGroup计数1。<br>- Wait():阻塞直到WaitGroup计数为0。示例代码:</p><pre index="1"><code language="" run="1">package main 
+import "sync"
+
+var wg sync.WaitGroup
+
+func foo() {
+    defer wg.Done() // 减少计数
+    // do something
+}
+
+func main() {
+    wg.Add(10) // 增加计数10
+    for i := 0; i &lt; 10; i++ {
+        go foo() // 启动10个goroutine
+    }
+    wg.Wait()  // 等待所有goroutine结束
+    // do something
+} 
+</code></pre><p>这段代码启动了10个goroutine,然后使用wg.Wait()使主goroutine阻塞等待。<br>每个goroutine运行结束后会执行wg.Done()减少计数。<br>当10个goroutine都结束时,计数变为0,主goroutine的wg.Wait()解除阻塞,继续执行。所以,WaitGroup的作用是:1. 实时记录有多少个goroutine在执行(Add增加计数)<br>2. 当goroutine结束是通知WaitGroup(Done减少计数)&nbsp;&nbsp;<br>3. 可以阻塞主goroutine或其它goroutine,等待这些goroutine结束(Wait会阻塞,直到计数为0)<br>4. 实现了goroutine之间的同步等待。WaitGroup常用于这种主goroutine启动若干辅助goroutine,然后需要等待所有辅助goroutine结束后才能退出的场景。它实现了这种同步等待效果。</p><h2 id="heading-4">其他同步方式</h2><p>除WaitGroup外,Go还提供其他同步方式: </p><ul class="m-0 p-0"><li class="m-0 p-0"><p>Mutex:实现互斥锁,保证同时只有一个goroutine访问共享资源。</p></li><li class="m-0 p-0"><p>Channel:用于goroutine之间的同步通信。</p></li><li class="m-0 p-0"><p>atomic:实现基本数据类型的原子操作。</p></li></ul><p>理解这些同步方式的原理和应用场景,是编写高性能并发Go程序的基础。<br>WaitGroup是一种比较简单但实用的同步方式,熟练使用可以让我们的代码具有很好的并发Semantics。所以,学会运用WaitGroup这种简单但实用的同步方式,也需要对并发编程有比较深入的理解。这需要不断学习和实践。<br>但一旦熟练掌握,可以让我们的Go代码具有很好的并发语义,实现高效的goroutine同步。</p>

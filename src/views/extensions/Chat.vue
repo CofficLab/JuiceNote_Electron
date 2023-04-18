@@ -1,6 +1,6 @@
 <template>
   <node-view-wrapper>
-    <div class="chat flex items-end" :class="node.attrs.position == 'start' ? 'chat-start' : 'chat-end'">
+    <div class="chat" :class="node.attrs.position == 'start' ? 'chat-start  items-end flex' : 'chat-end'">
       <!-- 对话框 -->
       <div class="chat-image flex flex-col items-end" contenteditable="false">
         <div class="chat-header">编译器</div>
@@ -37,8 +37,8 @@ const editable = computed(() => route.query.editable == 1);
 
 const switchPosition = function () {
   console.log("切换左右");
-  this.updateAttributes({
-    position: this.node.attrs.position == "start" ? "end" : "start",
+  props.updateAttributes({
+    position: props.node.attrs.position == "start" ? "end" : "start",
   });
 };
 const deleteSelf = function () {
