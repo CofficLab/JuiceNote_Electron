@@ -15,19 +15,19 @@
       </div>
     </div>
 
-    <ul class="menu menu-compact flex w-full flex-col p-0 px-1">
+    <ul class="menu menu-compact">
       <!-- 是一个页面或一个tab -->
       <li v-if="item.isPage || item.isTab">
         <Link class="3xl:text-lg flex gap-4" :node="item" :class="{ 'text-info': !item.isVisible }">
-          <DynamicPadding :count="item.level - 3"></DynamicPadding>
+          <DynamicPadding :count="item.getParents().length-3"></DynamicPadding>
           {{ item.title }}
         </Link>
       </li>
 
       <!-- 是一个章节 -->
-      <li v-if="item.isChapter && !item.isTab" class="text-indigo-400/70">
+      <li v-if="item.isChapter && !item.isTab" class="text-indigo-400/70 pl-0">
         <Link class="text-lg" :node="item">
-          <DynamicPadding :count="item.level - 3"></DynamicPadding>
+          <DynamicPadding :count="item.getParents().length-3"></DynamicPadding>
           {{ item.title }}
         </Link>
       </li>

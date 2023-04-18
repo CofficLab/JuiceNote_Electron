@@ -1,4 +1,4 @@
-<toc></toc><h1 id="heading-1">分布式锁</h1><p>在单机程序并发或并行修改全局变量时，需要对修改行为加锁以创造临界区。为什么需要加锁呢?我们看看在不加锁的情况下并发计数会发生什么情况:</p><h2 id="heading-2">不加锁</h2><pre index="1"><code language="" run="1">package main
+<toc></toc><h1 id="heading-1">分布式锁</h1><h2 id="heading-2">场景</h2><p>有1000个子工作单元，每个子工作单元完成工作后，将计数器加一，最终计数器的值应该是1000。</p><h2 id="heading-4">单机程序</h2><h3 id="heading-5">不加锁</h3><pre index="1"><code language="" run="1">package main
 import "sync"
 import "fmt"
 
@@ -19,7 +19,7 @@ func work() {
     defer wg.Done()
 
     counter++
-}</code></pre><p>启动1000个子协程，每个协程将counter加1，期望输出1000，但实际上会小于1000。</p><h2 id="heading-3">加锁</h2><p>sync.Mutex 是一个互斥锁,用于同步对共享变量的访问。</p><p>它可以确保同一时间只有一个 goroutine 可以访问被 mutex 保护的共享变量。</p><p>这可以解决并发环境下的数据竞争问题。</p><pre index="1"><code language="" run="1">package main
+}</code></pre><p>启动1000个子协程，每个协程将counter加1，期望输出1000，但实际上会小于1000。</p><p>因为协程要先读出counter的值，然后计算加1后的值。</p><p>在这个计算过程中，counter的值可能被其他协程改变了。</p><p>counter++不是一个原子性操作。counter++实际上分为三个步骤:</p><p>1. 获取counter的值<br>2. 对该值加1<br>3. 将加1后的值存回counter在多核CPU下,多个goroutine可能会同时执行步骤1,得到counter的值。此时,某个goroutine完成步骤2和3,将值+1并存回counter。其他goroutine继续执行步骤2和3,使用的还是之前得到的counter值,导致最后结果错误。</p><h3 id="heading-6">加锁且阻塞</h3><p>sync.Mutex 是一个互斥锁，确保同一时间只有一个 goroutine 可以访问被 mutex 保护的共享变量。</p><p>Mutex是mutual exclusion的缩写。</p><pre index="1"><code language="" run="1">package main
 import "sync"
 import "fmt"
 
@@ -43,59 +43,32 @@ func work() {
     mutex.Lock()
     counter++
     mutex.Unlock()
-}</code></pre><h2 id="heading-4">TryLock</h2><p>在某些场景，我们只是希望一个任务有单一的执行者。而不像计数器场景一样，所 有goroutine都执行成功。后来的goroutine在抢锁失败后，需要放弃其流程。这时候 就需要trylock了。</p><p>trylock顾名思义，尝试加锁，加锁成功执行后续流程，如果加锁失败的话也不会阻 塞，而会直接返回加锁的结果。在Go语言中我们可以用大小为1的Channel来模拟 trylock:</p><pre index="1"><code language="" run="1">package main 
+}</code></pre><h3 id="heading-7">加锁但不阻塞</h3><p>在某些场景，我们只是希望一个任务有单一的执行者。而不像计数器场景一样，所有goroutine都执行成功。后来的goroutine在抢锁失败后，需要放弃其流程。这时候就需要trylock了。</p><pre index="1"><code language="go" run="1">package main
 import "sync"
 import "fmt"
 
-// Lock try lock
-type Lock struct {
-    c chan struct{}
-}
-
-// NewLock generate a try lock
-func NewLock() Lock {
-    var l Lock
-    l.c = make(chan struct{}, 1)
-    l.c &lt;- struct{}{}
-    return l
-}
-
-// Lock try lock, return lock result
-func (l Lock) Lock() bool {
-    lockResult := false
-    select {
-        case &lt;-l.c:
-            lockResult = true
-        default:
-    }
-    return lockResult
-}
-
-// Unlock , Unlock the try lock
-func (l Lock) Unlock() {
-    l.c &lt;- struct{}{}
-}
-
 var counter int
 var wg sync.WaitGroup
-var l = NewLock()
+var mutex = sync.Mutex{}
 
 func main() {
-    for i := 0; i &lt; 10; i++ {
+    for i := 0; i &lt; 1000; i++ {
         wg.Add(1)
         go work()
     }
+
     wg.Wait()
+    fmt.Print(counter)
 }
 
 func work() {
     defer wg.Done()
 
-    if !l.Lock() {
-        fmt.Println("lock failed")
-        return
+    locked := mutex.TryLock()
+    if locked {
+        counter++
+        mutex.Unlock()
+    } else {
+        fmt.Println("加锁失败")
     }
-    counter++
-    fmt.Println("current counter", counter)
-    l.Unlock()
-}</code></pre><h2 id="heading-5">Reidis的setnx</h2>
+}</code></pre><h2 id="heading-8">Reidis的setnx</h2>
