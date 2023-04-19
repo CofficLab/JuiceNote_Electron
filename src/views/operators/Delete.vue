@@ -1,6 +1,6 @@
 <template>
   <div @click="deleteBookNode">
-    <Trash v-if="showIcon"></Trash>
+    <Trash class="h-6 w-6" v-if="showIcon"></Trash>
     <span v-if="showText">删除</span>
   </div>
 </template>

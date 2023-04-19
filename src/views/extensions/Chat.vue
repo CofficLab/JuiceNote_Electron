@@ -1,6 +1,6 @@
 <template>
   <node-view-wrapper>
-    <div class="chat" :class="node.attrs.position == 'start' ? 'chat-start  items-end flex' : 'chat-end'">
+    <div class="chat" :class="node.attrs.position == 'start' ? 'chat-start  flex items-end' : 'chat-end'">
       <!-- 对话框 -->
       <div class="chat-image flex flex-col items-end" contenteditable="false">
         <div class="chat-header">编译器</div>
@@ -12,14 +12,14 @@
               </div>
             </div>
           </label>
-          <ul tabindex="0" class="chat-operators dropdown-content rounded-box">
+          <ul tabindex="0" class="chat-operators dropdown-content rounded-box" v-if="editable">
             <li class="cursor-pointer list-none hover:bg-base-200" @click="switchPosition">左右切换</li>
             <li class="cursor-pointer list-none hover:bg-base-200" @click="deleteSelf">删除</li>
           </ul>
         </div>
       </div>
       <div class="chat-bubble relative" :class="node.attrs.position == 'end' ? 'chat-bubble-info' : ''">
-        <node-view-content class="border border-dashed px-4 dark:border-cyan-800" v-bind:class="{ 'border-none': !editable }" />
+        <node-view-content class="border border-dashed border-yellow-500/50 px-4 dark:border-cyan-800" v-bind:class="{ 'border-none': !editable }" />
       </div>
     </div>
   </node-view-wrapper>
@@ -27,13 +27,11 @@
 
 <script setup>
 import { NodeViewContent, nodeViewProps, NodeViewWrapper } from "@tiptap/vue-3";
-import { useRoute } from "vue-router";
 import { computed } from "vue";
 
 const props = defineProps(nodeViewProps);
 
-const route = useRoute();
-const editable = computed(() => route.query.editable == 1);
+const editable = computed(() => props.editor.options.editable);
 
 const switchPosition = function () {
   console.log("切换左右");

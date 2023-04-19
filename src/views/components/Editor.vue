@@ -1,6 +1,6 @@
 <template>
   <!-- 工具栏 -->
-  <div v-if="editable" class="fixed top-0 left-0 pl-24 lg:pl-40 w-full z-40 flex justify-center bg-yellow-500/80 dark:bg-yellow-900/40">
+  <div v-if="editable" class="fixed left-0 top-0 z-40 flex w-full justify-center bg-yellow-500/80 pl-24 dark:bg-yellow-900/40 lg:pl-40">
     <Toolbar :editor="editor" :current="node" :source-code-callback="toggleSourceCode"></Toolbar>
   </div>
 
@@ -36,21 +36,33 @@ let toggleSourceCode = function () {
   sourceCodeDisplay.value = !sourceCodeDisplay.value;
 };
 
-let getEditor = () => new Editor({
-  extensions: Extensions,
-  content: props.node.getContent(),
-  autofocus: true,
-  injectCSS: true,
-  enableInputRules: true,
-  enablePasteRules: false,
-  parseOptions: {
-    preserveWhitespace: "full",
-  },
-  onUpdate: (event) => {
-    props.saveCallback && props.saveCallback(event.editor.getHTML());
-    code.value = event.editor.getHTML();
-  },
-})
+let getEditor = () =>
+  new Editor({
+    extensions: Extensions,
+    content: props.node.getContent(),
+    autofocus: props.editable ? 1 : true,
+    injectCSS: true,
+    enableInputRules: true,
+    enablePasteRules: false,
+    editable: props.editable,
+    parseOptions: {
+      preserveWhitespace: "full",
+    },
+    cursor: {
+      color: "blue",
+      background: "blue",
+      width: 2,
+      "border-left-width": 2,
+      "border-left-style": "solid",
+    },
+    onCreate: (event) => {
+      // event.editor.commands.focus(1);
+    },
+    onUpdate: (event) => {
+      props.saveCallback && props.saveCallback(event.editor.getHTML());
+      code.value = event.editor.getHTML();
+    },
+  });
 
 let editor = getEditor();
 
@@ -62,8 +74,8 @@ let save = function (content) {
 
 watch(props, () => {
   console.log("editor 发现 props 发生变化，更新内容");
-  editor.destroy()
-  editor = getEditor()
+  editor.destroy();
+  editor = getEditor();
 });
 
 onBeforeUnmount(() => {
@@ -73,7 +85,7 @@ onBeforeUnmount(() => {
 
 <style lang="postcss">
 .ProseMirror {
-  @apply mb-24 px-2 pb-56 pt-1;
+  @apply mb-24 px-2 pb-56 pt-1 caret-red-900;
 }
 
 table {
