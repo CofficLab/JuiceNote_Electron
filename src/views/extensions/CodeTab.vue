@@ -2,7 +2,7 @@
   <node-view-wrapper class="flex flex-row overflow-auto rounded">
     <div class="flex w-full flex-col shadow-sm">
       <!-- 标题标签 -->
-      <div class="tabs flex flex-row justify-between overflow-hidden rounded-none bg-gray-600 p-0" contenteditable="false" v-if="titles.length > 1 || editable">
+      <div class="tabs flex flex-row justify-between overflow-hidden rounded-none bg-yellow-600 p-0" contenteditable="false" v-if="titles.length > 1 || editable">
         <!-- 标签列表 -->
         <div class="flex w-5/6 max-w-max flex-grow flex-row gap-px overflow-x-scroll overscroll-none bg-gray-800" ref="titlesDom">
           <div
