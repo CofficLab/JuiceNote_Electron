@@ -1,6 +1,6 @@
 {
   "name": "kuaiyizhi",
-  "version": "0.9.57",
+  "version": "0.9.58",
   "author": "kuaiyizhi.cn",
   "description": "一站式学习软件",
   "main": "dist/electron/main/index.js",
