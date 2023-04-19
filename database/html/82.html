@@ -51,7 +51,7 @@ func main() {
         fmt.Print("b")
     }()
     fmt.Print("The End")
-}</code></pre></code-tab><p>这样会创建 3 个协程：</p><p>a b main</p><p>main函数的协程做的事情非常轻量：</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>让 a 函数做事，不等待结果</p></li><li class="m-0 p-0"><p>让 b 函数做事，不等待结果</p></li><li class="m-0 p-0"><p>输出：The End</p></li></ul><p>所以 a、b 的结果还没来得及告诉 main，main 已经结束并退出了。</p><h2 id="heading-5">等待</h2><p>我们可以让 main 慢一点，等一等 a、b 的执行结果：</p><code-tab titles="使用命名函数,使用匿名函数" current="0"><pre index="1"><code language="go" run="1">package main
+}</code></pre></code-tab><p>这样会创建 3 个协程：</p><p><brick class="brick">a</brick> <brick class="brick">b</brick> <brick class="brick">main</brick></p><p>main函数的协程做的事情非常轻量：</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>让 a 函数做事，不等待结果</p></li><li class="m-0 p-0"><p>让 b 函数做事，不等待结果</p></li><li class="m-0 p-0"><p>输出：The End</p></li></ul><p>所以 a、b 的结果还没来得及告诉 main，main 已经结束并退出了。</p><h2 id="heading-5">等待</h2><p>我们可以让 main 慢一点，等一等 a、b 的执行结果：</p><code-tab titles="使用命名函数,使用匿名函数" current="0"><pre index="1"><code language="go" run="1">package main
 import "fmt"
 import "time"
 
