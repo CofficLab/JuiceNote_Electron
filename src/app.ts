@@ -10,7 +10,7 @@ import FullScreenController from './controllers/FullScreenController'
 import "./app.css"
 import { Node } from './models/Node'
 
-// 检测全屏状态
+// 监听主进程传递的消息
 ipcRenderer.on('main-process-message', (_event, ...args) => {
   if (args[0] === 'enter-full-screen') {
     FullScreenController.enter()

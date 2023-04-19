@@ -10,8 +10,7 @@
       <SideMenu></SideMenu>
     </aside>
 
-    <main 
-    v-on:contextmenu="showRightMenu" :class="{ 'pl-40': asideVisible }" class="fixed top-8 h-screen w-full overflow-scroll overscroll-none bg-cyan-800/10 dark:bg-slate-900/10">
+    <main v-on:contextmenu="showRightMenu" :class="{ 'pl-40': asideVisible }" class="fixed top-8 h-screen w-full overflow-scroll overscroll-none bg-cyan-800/10 dark:bg-slate-900/10">
       <router-view v-slot="{ Component }">
         <transition name="slide-fade">
           <component :is="Component" />
@@ -20,6 +19,7 @@
     </main>
 
     <RightMenuModal :event="rightClickEvent"></RightMenuModal>
+    <FormSearch v-if="searchVisible"></FormSearch>
 
     <DebugBar></DebugBar>
     <!-- <BottomBar></BottomBar> -->
@@ -27,35 +27,45 @@
 </template>
 
 <script setup>
-import { computed,ref } from "vue";
+import { computed, ref } from "vue";
 import { useRoute } from "vue-router";
 import SideMenu from "../blocks/SideMenu.vue";
 import TopBar from "../blocks/TopBar.vue";
 import DebugBar from "../blocks/DebugBar.vue";
 import BottomBar from "../blocks/BottomBar.vue";
 import Toast from "../blocks/Toast.vue";
-import { Node } from "../../models/Node.ts"
+import { Node } from "../../models/Node.ts";
 import RightMenuModal from "../modals/RightMenuModal.vue";
+import FormSearch from "../modals/FormSearch.vue";
+import { ipcRenderer } from "electron";
 
-const route = useRoute()
+let searchVisible = ref(false);
+
+ipcRenderer.on("main-process-message", (_event, ...args) => {
+  if (args[0] === "show-search") {
+    console.log("show search");
+    searchVisible.value = !searchVisible.value;
+  }
+});
+
+const route = useRoute();
 const isProd = window.location.protocol === "file:";
 const asideVisible = computed(() => ["lessons.show", "lessons.edit"].includes(route.name));
 const headerVisible = computed(() => {
-  if (route.name == 'lessons.edit') {
-    return Node.find(route.params.id).isChapter
+  if (route.name == "lessons.edit") {
+    return Node.find(route.params.id).isChapter;
   }
 
-  return ["lessons.show", "home.show", "home.edit"].includes(route.name)
+  return ["lessons.show", "home.show", "home.edit"].includes(route.name);
 });
 
-let rightClickEvent = ref(null)
+let rightClickEvent = ref(null);
 
 const showRightMenu = function (event) {
   event.preventDefault();
 
   rightClickEvent.value = event;
 };
-
 </script>
 
 <style scoped>

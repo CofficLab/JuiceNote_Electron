@@ -1,7 +1,7 @@
 import { app, BrowserWindow, shell, ipcMain, Menu } from 'electron'
 import { release } from 'os'
 import path from 'path'
-import menus from '../menus/all'
+import setMenus from '../menus/all'
 
 // Disable GPU Acceleration for Windows 7
 if (release().startsWith('6.1')) app.disableHardwareAcceleration()
@@ -31,9 +31,6 @@ let win: BrowserWindow | null = null
 const preload = path.join(__dirname, '../preload/index.js')
 const url = process.env.VITE_DEV_SERVER_URL as string
 const indexHtml = path.join(ROOT_PATH.dist, 'index.html')
-
-// 配置菜单
-Menu.setApplicationMenu(menus)
 
 async function createWindow() {
   win = new BrowserWindow({
@@ -70,6 +67,9 @@ async function createWindow() {
 
     win?.webContents.send('main-process-message', 'did_finish-load')
   })
+
+  // 配置菜单
+  setMenus(win)
 
   // Make all links open with the browser, not with the application
   win.webContents.setWindowOpenHandler(({ url }) => {
