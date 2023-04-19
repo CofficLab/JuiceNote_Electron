@@ -44,6 +44,7 @@ let getEditor = () =>
     injectCSS: true,
     enableInputRules: true,
     enablePasteRules: false,
+    editable: props.editable,
     parseOptions: {
       preserveWhitespace: "full",
     },

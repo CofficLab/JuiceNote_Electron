@@ -1,6 +1,6 @@
 <template>
   <!-- 支持在多个标签之间切换，当前节点的index=current时才显示 -->
-  <node-view-wrapper ref="content" v-show="index == current" contenteditable="false" class="code-editor">
+  <node-view-wrapper ref="content" v-show="index == current" contenteditable="false" class="code-editor overflow-hidden" :class="{ rounded: !hasSiblings }">
     <div class="relative rounded-b bg-slate-900">
       <!-- Monaco编辑器，可修改 -->
       <Monaco v-if="this.editable && loadMonaco" :code="code" :language="language" :showRunButton="node.attrs.run == 1" :keyUpCallback="keyup" :showLineNumbers="true"></Monaco>
@@ -59,6 +59,7 @@ export default {
       code: "",
       current: 0,
       index: 0,
+      hasSiblings: false,
       loadMonaco: false, // 获取code后再加载Monaco
     };
   },
@@ -152,6 +153,10 @@ export default {
     this.editor.on("update", () => {
       this.setCurrent();
       this.setIndex();
+    });
+
+    this.$nextTick(function () {
+      this.hasSiblings = this.$refs.content.$el.parentElement.classList.contains("code-editor-container");
     });
   },
 
