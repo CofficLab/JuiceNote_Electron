@@ -2,25 +2,6 @@
   <!-- 支持在多个标签之间切换，当前节点的index=current时才显示 -->
   <node-view-wrapper ref="content" v-show="index == current" contenteditable="false" class="code-editor">
     <div class="relative rounded-b bg-slate-900">
-      <!-- 操作栏 -->
-      <div class="code-block-operators" v-if="editable && loadMonaco" contenteditable="false">
-        <!-- 删除的按钮 -->
-        <button v-if="editable" class="btn-ghost btn-sm btn flex self-end rounded-none" @click="deleteSelf">
-          <Trash class="w-6"></Trash>
-        </button>
-        <button @click="toggleRun" v-html="this.node.attrs.run == 1 ? '关运行' : '开运行'"></button>
-        <select name="language" @change="setLanguage">
-          <option value="text" v-bind:selected="language == 'text'">纯文本</option>
-          <option value="html" v-bind:selected="language == 'html'">HTML</option>
-          <option value="go" v-bind:selected="language == 'go'">Golang</option>
-          <option value="php" v-bind:selected="language == 'php'">PHP</option>
-          <option value="javascript" v-bind:selected="language == 'javascript'">JavaScript</option>
-          <option value="java" v-bind:selected="language == 'java'">Java</option>
-          <option value="python" v-bind:selected="language == 'python'">Python</option>
-          <option value="shell" v-bind:selected="language == 'shell'">Shell</option>
-        </select>
-      </div>
-
       <!-- Monaco编辑器，可修改 -->
       <Monaco v-if="this.editable && loadMonaco" :code="code" :language="language" :showRunButton="node.attrs.run == 1" :keyUpCallback="keyup" :showLineNumbers="true"></Monaco>
 
@@ -29,6 +10,29 @@
 
       <!-- 代码框，存储从文件系统读出的代码，然后放到Monaco编辑器中 -->
       <node-view-content ref="nodeViewContent" class="hidden" />
+
+      <!-- 操作栏 -->
+      <div class="code-block-operators" v-if="editable && loadMonaco" contenteditable="false">
+        <div class="flex">
+          <button v-if="editable" class="btn-ghost btn-sm btn flex self-start rounded-none" @click="deleteSelf">
+            <Trash class="h-4 w-4"></Trash>
+          </button>
+        </div>
+        <div class="flex justify-end">
+          <button v-bind:data-clipboard-text="code" class="copy justify-end self-end justify-self-end">复制代码</button>
+          <button @click="toggleRun" v-html="this.node.attrs.run == 1 ? '关运行' : '开运行'" class="justify-end self-end justify-self-end"></button>
+          <select name="language" @change="setLanguage">
+            <option value="text" v-bind:selected="language == 'text'">纯文本</option>
+            <option value="html" v-bind:selected="language == 'html'">HTML</option>
+            <option value="go" v-bind:selected="language == 'go'">Golang</option>
+            <option value="php" v-bind:selected="language == 'php'">PHP</option>
+            <option value="javascript" v-bind:selected="language == 'javascript'">JavaScript</option>
+            <option value="java" v-bind:selected="language == 'java'">Java</option>
+            <option value="python" v-bind:selected="language == 'python'">Python</option>
+            <option value="shell" v-bind:selected="language == 'shell'">Shell</option>
+          </select>
+        </div>
+      </div>
     </div>
   </node-view-wrapper>
 </template>
@@ -39,6 +43,13 @@ import Monaco from "../components/Monaco.vue";
 import Trash from "../../assets/icons/trash.svg";
 import { useRoute } from "vue-router";
 import { Node } from "../../models/Node.ts";
+import ClipboardJS from "clipboard";
+import ToastController from "../../controllers/ToastController";
+
+var clipboard = new ClipboardJS(".copy");
+clipboard.on("success", function () {
+  ToastController.set("已将源码复制到剪贴板");
+});
 
 export default {
   components: { NodeViewWrapper, NodeViewContent, Monaco, Trash },
@@ -150,13 +161,13 @@ export default {
 
 <style lang="postcss">
 .code-block-operators {
-  @apply absolute right-0 top-0 z-50 flex h-8 w-48 items-end justify-end bg-sky-600 shadow-xl dark:bg-green-900/50;
+  @apply z-50 flex h-6 w-full justify-between bg-sky-600 shadow-xl dark:bg-green-900/50;
 
   button {
-    @apply btn-sm btn m-0 rounded-none;
+    @apply btn-ghost btn-xs btn m-0 rounded-none text-gray-100;
   }
   select {
-    @apply select-sm max-w-xs rounded-none bg-green-500/60 outline-none dark:bg-green-800/60;
+    @apply select-xs max-w-xs rounded-none bg-green-500/60 outline-none dark:bg-green-800/60;
   }
   div.selected {
     @apply max-w-xs rounded-none px-4 outline-none;

@@ -21,7 +21,7 @@ let x = 0;
 let y = 0;
 
 const handleClick = () => {
-  console.log("右键菜单检测到click事件");
+  // console.log("右键菜单检测到click事件");
   isVisible.value = false;
 };
 
