@@ -48,6 +48,10 @@ ipcRenderer.on("main-process-message", (_event, ...args) => {
   }
 });
 
+window.addEventListener("hide-search", () => {
+  searchVisible.value = false;
+});
+
 const route = useRoute();
 const isProd = window.location.protocol === "file:";
 const asideVisible = computed(() => ["lessons.show", "lessons.edit"].includes(route.name));
