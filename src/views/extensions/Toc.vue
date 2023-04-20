@@ -32,7 +32,7 @@ let getLink = function (heading) {
 };
 
 let handleUpdate = function () {
-  console.log("toc handle update");
+  // console.log("toc handle update");
   headings.value = [];
   const transaction = props.editor.state.tr;
 
@@ -62,7 +62,7 @@ let handleUpdate = function () {
 };
 
 onMounted(() => {
-  console.log("toc mounted");
+  // console.log("toc mounted");
   props.editor.on("update", handleUpdate);
   nextTick(() => handleUpdate());
 

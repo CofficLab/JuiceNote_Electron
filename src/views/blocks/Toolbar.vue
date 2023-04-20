@@ -140,7 +140,7 @@
     </button>
 
     <button class="tooltip tooltip-bottom" data-tip="隐藏或显示">
-      <Visible :showText='false'></Visible>
+      <Visible :showText="false"></Visible>
     </button>
 
     <button @click="saveAndShow" class="tooltip tooltip-bottom ml-4" data-tip="保存并跳转到展示页面">
@@ -189,7 +189,7 @@ import IconSave from "../../assets/icons/save.svg";
 import IconEmpty from "../../assets/icons/empty.svg";
 import IconHashTag from "../../assets/icons/hashtag.svg";
 import { useRouter } from "vue-router";
-import Visible from "../operators/Visible.vue"
+import Visible from "../operators/Visible.vue";
 
 const router = useRouter();
 

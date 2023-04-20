@@ -21,7 +21,7 @@
     <RightMenuModal :event="rightClickEvent"></RightMenuModal>
     <FormSearch v-if="searchVisible"></FormSearch>
 
-    <DebugBar></DebugBar>
+    <!-- <DebugBar></DebugBar> -->
     <!-- <BottomBar></BottomBar> -->
   </div>
 </template>

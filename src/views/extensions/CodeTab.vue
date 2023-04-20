@@ -1,21 +1,27 @@
 <template>
-  <node-view-wrapper class="flex flex-row overflow-auto rounded">
+  <node-view-wrapper class="relative flex flex-row overflow-auto rounded">
+    <div v-if="tabOperatorsVisible" class="fixed z-50" @mouseenter="hoverOperatorBar" @mouseleave="leaveOperatorBar" v-bind:style="{ left: x + 'px', top: y + 'px' }">
+      <button v-if="editable" class="btn-xs btn" @click="deleteTab(hoveredTabIndex)">
+        <Trash class="h-4 w-4 text-red-400"></Trash>
+      </button>
+    </div>
+
     <div class="flex w-full flex-col shadow-sm">
       <!-- 标题标签 -->
       <div class="tabs flex flex-row justify-between overflow-hidden rounded-none bg-yellow-600 p-0" contenteditable="false" v-if="titles.length > 1 || editable">
         <!-- 标签列表 -->
         <div class="flex w-5/6 max-w-max flex-grow flex-row gap-px overflow-x-scroll overscroll-none bg-gray-800" ref="titlesDom">
-          <div
-            v-for="(title, index) in titles"
-            class="dropdown dropdown-hover relative flex h-8 flex-row flex-nowrap items-stretch outline-none"
-            :class="{ 'bg-gray-800': current == index, 'bg-gray-700': current != index, 'pl-5': editable }"
-          >
-            <a class="code-title" :contenteditable="editable" :data-index="index" @click="activate(index)" @keyup="(event) => save(event)">{{ title }}</a>
-
-            <!-- 删除标签的按钮 -->
-            <button v-if="editable" tabindex="0" class="dropdown-content absolute left-0 top-0 flex h-8 w-8 items-center justify-center bg-slate-600">
-              <Trash class="h-4 w-4 text-red-400" @click="deleteTab(index)">x</Trash>
-            </button>
+          <div v-for="(title, index) in titles" class="flex h-8 flex-row flex-nowrap items-stretch outline-none" :class="{ 'bg-gray-800': current == index, 'bg-gray-700': current != index }">
+            <a
+              class="code-title"
+              @mouseenter="(e) => setHoveredTabIndex(e, index)"
+              @mouseleave="leaveTab"
+              :contenteditable="editable"
+              :data-index="index"
+              @click="activate(index)"
+              @keyup="(event) => save(event)"
+              >{{ title }}</a
+            >
           </div>
         </div>
 
@@ -55,10 +61,44 @@ const currentLanguage = computed(() => {
 const activate = function (index) {
   // console.log("激活标签", index);
   props.editor.storage.codeTab.current = index;
-  console.log(props.node.attrs);
   props.updateAttributes({
     current: index,
   });
+};
+
+// 单个标签对应的操作栏
+let tabOperatorsVisible = ref(false);
+let x = ref(0);
+let y = ref(0);
+let hoveredTabIndex = ref(-1);
+let hoveredOperatorBar = ref(false);
+
+const hoverOperatorBar = function () {
+  hoveredOperatorBar.value = true;
+};
+
+const leaveOperatorBar = function () {
+  hoveredOperatorBar.value = false;
+
+  setTimeout(hideOperatorBarIfNecessary, 1000);
+};
+
+const leaveTab = () => {
+  hoveredTabIndex.value = -1;
+
+  setTimeout(hideOperatorBarIfNecessary, 1000);
+};
+
+const hideOperatorBarIfNecessary = function() {
+  console.log("是否hover操作栏", hoveredOperatorBar.value, "是否hovered tab", hoveredTabIndex.value);
+    if (!hoveredOperatorBar.value && hoveredTabIndex.value == -1) tabOperatorsVisible.value = false;
+}
+
+const setHoveredTabIndex = function (e, index) {
+  hoveredTabIndex.value = index;
+  x.value = e.target.getBoundingClientRect().x;
+  y.value = e.target.getBoundingClientRect().y - e.target.getBoundingClientRect().height - 2;
+  tabOperatorsVisible.value = true;
 };
 
 const add = function () {
@@ -82,24 +122,11 @@ const add = function () {
 
   // 光标移动到新建的标签
   nextTick(focusToLastTitle);
-
-  console.log("当前已滚动的距离", document.querySelector("main")?.scrollTop);
-  // console.log("设置focus");
-  // props.editor.commands.focus(position);
-  // document.querySelector("main")?.scrollTo({
-  //   top: scrollTop,
-  // });
 };
 
 // 删除一个标签及该标签对应的内容
 const deleteTab = function (index) {
   console.log("删除下标为", index, "的标签及内容");
-
-  let position = props.getPos();
-  let scrollTop = document.querySelector("main")?.scrollTop;
-  console.log("当前CodeTab的position", position);
-  console.log("当前光标位置", props.editor.state.selection.head);
-  console.log("当前已滚动的距离", scrollTop);
 
   let children = contents.value.$el.children;
 
@@ -125,6 +152,10 @@ const deleteTab = function (index) {
 
   // 光标移动到最后一个标签
   nextTick(focusToLastTitle);
+
+  // 隐藏单个标签的操作栏
+  tabOperatorsVisible.value = false;
+  hoveredOperatorBar.value = false;
 
   // props.editor.commands.focus(position);
 };
