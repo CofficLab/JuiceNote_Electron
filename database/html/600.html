@@ -1,4 +1,4 @@
-<toc></toc><h1 id="heading-1">原子操作</h1><h2 id="heading-2">典型场景</h2><chat position="start"><p>我现在需要统计班级里12岁以上的小朋友的人数，请大家报数</p></chat><p></p><chat position="end"><p>1</p></chat><chat position="start"><p>2</p></chat><chat position="end"><p>2</p></chat><p>第二个小朋友和第三个小朋友同时看到了第一个小朋友发出的：1，各自的大脑开始思考：</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>读：现在的数字是1</p></li><li class="m-0 p-0"><p>改：我需要加1，将其变成2</p></li><li class="m-0 p-0"><p>写：向群里发结果-&gt;2</p></li></ul><p>结果并不是我们期望的，因为出现了两个2。</p><p>用 Go 语言来表达上述场景：</p><pre index="1"><code language="go" run="1">package main 
+<toc></toc><h1 id="heading-1">原子操作 Atomic</h1><h2 id="heading-2">典型场景</h2><chat position="start"><p>我现在需要统计班级里12岁以上的小朋友的人数，请大家报数</p></chat><p></p><chat position="end"><p>1</p></chat><chat position="start"><p>2</p></chat><chat position="end"><p>2</p></chat><p>第二个小朋友和第三个小朋友同时看到了第一个小朋友发出的：1，各自的大脑开始思考：</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>读：现在的数字是1</p></li><li class="m-0 p-0"><p>改：我需要加1，将其变成2</p></li><li class="m-0 p-0"><p>写：向群里发结果-&gt;2</p></li></ul><p>结果并不是我们期望的，因为出现了两个2。</p><p>用 Go 语言来表达上述场景：</p><pre index="1"><code language="go" run="1">package main 
 import "fmt"
 import "sync"
 
@@ -101,4 +101,4 @@ func main() {
     
     wg.Wait()
     fmt.Print(count)
-} </code></pre>
+} </code></pre><h2 id="heading-7">参考资料</h2><ul class="m-0 p-0"><li class="m-0 p-0"><p><a target="_blank" rel="noopener noreferrer nofollow" href="https://mp.weixin.qq.com/s?__biz=MzI1MzI3OTA5OQ==&amp;mid=2247484161&amp;idx=1&amp;sn=e982920bb11d1e4d710eec7de77b4678&amp;chksm=e9d7ad15dea0240353fff7602cab745bc4bbeafa409ee68c9c3e395f4ab18fd2d505c6658bf3&amp;scene=178&amp;cur_album_id=2837102654035296258#rd">sync/atomic 设计与实现</a></p></li></ul>
