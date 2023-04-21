@@ -1,5 +1,5 @@
 import { BrowserWindow, MenuItem, app } from "electron"
-import { indexHtml,url } from "../config"
+import Config from "../config"
 
 export default new MenuItem({
     label: '快易知',
@@ -19,9 +19,9 @@ export default new MenuItem({
                     },
                 })
                 if (app.isPackaged) {
-                    win.loadFile(indexHtml, { hash: '/about' })
+                    win.loadFile(Config.INDEX_HTML_PATH, { hash: '/about' })
                 } else {
-                    win.loadURL(url + '#about')
+                    win.loadURL(Config.URL + '#about')
                 }
             }
         },

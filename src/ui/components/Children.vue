@@ -9,7 +9,7 @@
 <script lang="ts" setup>
 import draggable from "vuedraggable/src/vuedraggable";
 import NodeController from "../controllers/NodeController";
-import { Node } from "../../models/Node";
+import { Node } from "../models/Node";
 import Link from "./Link.vue";
 
 const props = defineProps({

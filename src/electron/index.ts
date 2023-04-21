@@ -12,7 +12,7 @@ process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
 ipcMain.handle('open-win', createWindow)
 
 // 实时的终端
-ipcMain.handle("terminal-create", () => registerTerminal(win));
+ipcMain.handle("terminal-create", () => registerTerminal(win!));
 
 // 供子进程查询app path
 ipcMain.on('get-app-path', (event) => event.returnValue = app.getAppPath())

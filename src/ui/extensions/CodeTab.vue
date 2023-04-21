@@ -40,7 +40,7 @@
 
 <script lang="ts" setup>
 import { nodeViewProps, NodeViewWrapper, NodeViewContent } from "@tiptap/vue-3";
-import { Node } from "../../models/Node";
+import { Node } from "../models/Node";
 import Plus from "../assets/icons/plus.svg";
 import Trash from "../assets/icons/trash.svg";
 import { useRoute } from "vue-router";

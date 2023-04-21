@@ -11,7 +11,7 @@
 
 <script lang="ts" setup>
 import { computed, ref } from "vue";
-import { Node } from "../../models/Node";
+import { Node } from "../models/Node";
 import { useRoute, useRouter } from "vue-router";
 
 const route = useRoute();

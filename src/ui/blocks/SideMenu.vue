@@ -12,7 +12,7 @@
 <script lang="ts" setup>
 import { nextTick, watch, computed,ref } from "vue";
 import SideMenuItem from "../components/SideMenuItem.vue";
-import { Node } from "../../models/Node";
+import { Node } from "../models/Node";
 import { useRoute } from "vue-router";
 
 const route = useRoute();

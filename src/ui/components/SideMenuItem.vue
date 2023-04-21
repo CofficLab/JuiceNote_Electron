@@ -40,7 +40,7 @@
 <script setup>
 import { computed } from "vue";
 import { useRoute } from "vue-router";
-import { Node } from "../../models/Node";
+import { Node } from "../models/Node";
 import DynamicPadding from "./DynamicPadding.vue";
 import Link from "./Link.vue";
 import FullScreenController from "../controllers/FullScreenController";

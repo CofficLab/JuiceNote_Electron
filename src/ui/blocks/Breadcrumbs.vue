@@ -21,7 +21,7 @@
 <script setup>
 import { computed, ref,watch } from "vue";
 import { useRoute } from "vue-router";
-import { Node } from "../../models/Node";
+import { Node } from "../models/Node";
 import Children from "../components/Children.vue";
 
 const route = useRoute()

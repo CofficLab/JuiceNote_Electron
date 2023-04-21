@@ -14,7 +14,7 @@ import { defineComponent } from "vue";
 import ArrowRightCircle from "../assets/icons/arrow-right-circle.svg";
 import Link from "./Link.vue";
 import Next from "../operators/Next.vue";
-import { Node } from "../../models/Node";
+import { Node } from "../models/Node";
 
 export default defineComponent({
   props: { current: { type: Node, required: true } },

@@ -17,7 +17,7 @@ import Rename from "../operators/Rename.vue";
 import Edit from "../operators/Edit.vue";
 import Delete from "../operators/Delete.vue";
 import ToTab from "../operators/ToTab.vue";
-import { Node } from "../../models/Node";
+import { Node } from "../models/Node";
 import CreateChild from "../operators/Add.vue";
 import Visible from "../operators/Visible.vue";
 

@@ -1,7 +1,7 @@
 import { app, BrowserWindow, shell, BrowserWindowConstructorOptions } from 'electron'
 import path from 'path'
 import setMenus from './menus/all'
-import { ROOT_PATH,preload,indexHtml,url } from './config'
+import Config from './config'
 
 function createWindow(option?: BrowserWindowConstructorOptions):BrowserWindow {
     const defaultOption = {
@@ -10,26 +10,25 @@ function createWindow(option?: BrowserWindowConstructorOptions):BrowserWindow {
         width: 1300,
         backgroundColor: '#07404b',
         title: 'Main window',
-        icon: path.join(ROOT_PATH.public, 'favicon.ico'),
+        icon: path.join(Config.PUBLIC_PATH, 'favicon.ico'),
         frame: process.platform == 'win32' ? true : false, // false：不显示可拖动的那个顶栏，形成一个无边框窗口
         titleBarStyle: 'hidden',
         trafficLightPosition: { x: 8, y: 8 },
         titleBarOverlay: true,
         webPreferences: {
-            preload,
+            preload:Config.PRELOAD_FILE,
             nodeIntegration: true,
             contextIsolation: false,
             spellcheck: false,
         },
     }
 
-    let win: BrowserWindow | null = null
-    win = new BrowserWindow(Object.assign({}, defaultOption, option))
+    let win = new BrowserWindow(Object.assign({}, defaultOption, option))
 
     if (app.isPackaged) {
-        win.loadFile(indexHtml)
+        win.loadFile(Config.INDEX_HTML_PATH)
     } else {
-        win.loadURL(url)
+        win.loadURL(Config.URL)
         win.webContents.openDevTools()
     }
 

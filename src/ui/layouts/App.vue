@@ -39,7 +39,7 @@ import BottomBar from "../blocks/BottomBar.vue";
 import FormAdd from "../modals/FormAdd.vue";
 import FormRename from "../modals/FormRename.vue";
 import Toast from "../blocks/Toast.vue";
-import { Node } from "../../models/Node.ts";
+import { Node } from "../models/Node.ts";
 import RightMenuModal from "../modals/RightMenuModal.vue";
 import FormSearch from "../modals/FormSearch.vue";
 

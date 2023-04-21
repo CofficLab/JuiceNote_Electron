@@ -23,7 +23,7 @@
 
 <script lang="ts" setup>
 import { onMounted,ref, onBeforeUnmount, nextTick } from "vue";
-import { Node } from "../../models/Node";
+import { Node } from "../models/Node";
 import { useRouter } from "vue-router";
 
 let router = useRouter()

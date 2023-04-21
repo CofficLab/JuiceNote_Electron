@@ -17,7 +17,7 @@
 
 <script setup>
 import Extensions from "../entities/Extensions";
-import { Node } from "../../models/Node";
+import { Node } from "../models/Node";
 import { ref, watch, onBeforeUnmount } from "vue";
 import Monaco from "./Monaco.vue";
 import Toolbar from "../blocks/Toolbar.vue";

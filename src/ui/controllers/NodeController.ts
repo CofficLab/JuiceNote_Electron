@@ -1,4 +1,4 @@
-import { Node, emptyNode } from '../../models/Node'
+import { Node, emptyNode } from '../models/Node'
 import { reactive } from 'vue'
 import { useRoute } from 'vue-router'
 

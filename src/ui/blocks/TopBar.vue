@@ -18,7 +18,7 @@
 </template>
 
 <script setup>
-import { Node } from "../../models/Node";
+import { Node } from "../models/Node";
 import Home from "../operators/Home.vue";
 import More from "../operators/More.vue";
 import Next from "../operators/Next.vue";

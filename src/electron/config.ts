@@ -1,19 +1,18 @@
 import { app } from 'electron'
 import path from 'path'
 
-const ROOT_PATH = {
-    dist: path.join(__dirname, '../..'),
-    public: path.join(__dirname, app.isPackaged ? '../..' : '../../../public'),
+const DIST_PATH = path.join(__dirname, '../..')
+const PUBLIC_PATH = path.join(__dirname, app.isPackaged ? '../..' : '../../../public')
+const PRELOAD_FILE = path.join(__dirname, '../preload/index.js')
+const URL = process.env.VITE_DEV_SERVER_URL as string
+const INDEX_HTML_PATH = path.join(DIST_PATH, 'src/ui/index.html')
+
+const Config = {
+    DIST_PATH,
+    PUBLIC_PATH,
+    PRELOAD_FILE,
+    URL,
+    INDEX_HTML_PATH
 }
 
-// Here, you can also use other preload
-const preload = path.join(__dirname, '../preload/index.js')
-const url = process.env.VITE_DEV_SERVER_URL as string
-const indexHtml = path.join(ROOT_PATH.dist, 'src/ui/index.html')
-
-export {
-    ROOT_PATH,
-    preload,
-    url,
-    indexHtml
-}
+export default Config

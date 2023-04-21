@@ -166,7 +166,7 @@ import { Editor } from "@tiptap/vue-3";
 import { computed, ref } from "vue";
 import NodeController from "../controllers/NodeController";
 import ToastController from "../controllers/ToastController";
-import { Node } from "../../models/Node";
+import { Node } from "../models/Node";
 import IconCode from "../assets/icons/code-bracket.svg";
 import IconListBullet from "../assets/icons/list-bullet.svg";
 import IconBack from "../assets/icons/arrow-uturn-left.svg";

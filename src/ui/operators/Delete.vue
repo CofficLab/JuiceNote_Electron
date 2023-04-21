@@ -9,7 +9,7 @@
 import { computed } from "vue";
 import ToastController from "../controllers/ToastController";
 import Trash from "../assets/icons/trash.svg";
-import { Node } from "../../models/Node";
+import { Node } from "../models/Node";
 import { useRoute, useRouter } from "vue-router";
 
 const router = useRouter();

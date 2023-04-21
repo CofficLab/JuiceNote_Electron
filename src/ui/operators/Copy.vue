@@ -11,7 +11,7 @@ import ClipboardJS from "clipboard";
 import ToastController from "../controllers/ToastController";
 import IconCopy from "../assets/icons/clipboard-document.svg";
 import { useRoute } from "vue-router";
-import { Node } from "../../models/Node";
+import { Node } from "../models/Node";
 
 var clipboard = new ClipboardJS(".copy");
 clipboard.on("success", function () {

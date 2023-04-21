@@ -18,7 +18,7 @@
 import NodeTab from "../components/NodeTab.vue";
 import Editor from "../components/Editor.vue";
 import Add from "../operators/Add.vue"
-import { Node } from "../../models/Node";
+import { Node } from "../models/Node";
 import { computed, watch } from "vue";
 import { useRoute } from "vue-router";
 

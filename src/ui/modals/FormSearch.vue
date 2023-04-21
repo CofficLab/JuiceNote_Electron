@@ -31,7 +31,7 @@
 
 <script lang="ts" setup>
 import { nextTick, ref } from "vue";
-import { Node } from "../../models/Node";
+import { Node } from "../models/Node";
 import { useRouter } from "vue-router";
 import { ipcRenderer } from "electron";
 
