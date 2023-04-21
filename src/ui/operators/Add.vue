@@ -6,7 +6,7 @@
 </template>
 
 <script setup>
-import Plus from "../../assets/icons/plus.svg";
+import Plus from "../assets/icons/plus.svg";
 import { Node } from "../../models/Node";
 
 let props = defineProps({

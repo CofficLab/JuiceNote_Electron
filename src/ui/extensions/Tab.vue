@@ -22,7 +22,7 @@
 
 <script>
 import { nodeViewProps, NodeViewWrapper, NodeViewContent } from "@tiptap/vue-3";
-import NodeController from "../../controllers/NodeController";
+import NodeController from "../controllers/NodeController";
 
 export default {
   components: {

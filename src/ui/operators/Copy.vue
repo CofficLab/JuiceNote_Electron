@@ -8,8 +8,8 @@
 <script lang="ts" setup>
 import { computed } from "vue";
 import ClipboardJS from "clipboard";
-import ToastController from "../../controllers/ToastController";
-import IconCopy from "../../assets/icons/clipboard-document.svg";
+import ToastController from "../controllers/ToastController";
+import IconCopy from "../assets/icons/clipboard-document.svg";
 import { useRoute } from "vue-router";
 import { Node } from "../../models/Node";
 

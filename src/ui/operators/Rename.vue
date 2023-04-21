@@ -6,7 +6,7 @@
 </template>
 
 <script setup>
-import ArrowLeftCircle from "../../assets/icons/arrow-left-circle.svg";
+import ArrowLeftCircle from "../assets/icons/arrow-left-circle.svg";
 import { Node } from "../../models/Node";
 import { useRouter } from "vue-router";
 

@@ -6,7 +6,7 @@
 
 <script lang="ts" setup>
 import { computed } from "vue";
-import ToastController from "../../controllers/ToastController";
+import ToastController from "../controllers/ToastController";
 
 const message = computed(() => ToastController.toast);
 </script>

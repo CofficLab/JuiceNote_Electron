@@ -7,8 +7,8 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import ArrowRightCircle from "../../assets/icons/arrow-right-circle.svg";
-import NodeController from "../../controllers/NodeController";
+import ArrowRightCircle from "../assets/icons/arrow-right-circle.svg";
+import NodeController from "../controllers/NodeController";
 import Link from "../components/Link.vue";
 
 export default defineComponent({

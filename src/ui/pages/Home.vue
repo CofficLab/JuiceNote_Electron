@@ -18,7 +18,7 @@
 import { computed } from "vue";
 import { useRoute } from "vue-router";
 import Book from "../components/Book.vue";
-import NodeController from "../../controllers/NodeController";
+import NodeController from "../controllers/NodeController";
 
 const route = useRoute();
 let booksVisible = computed(() => NodeController.getBooks().filter((book) => book.isVisible));

@@ -1,19 +1,7 @@
 import { app, BrowserWindow, shell, BrowserWindowConstructorOptions } from 'electron'
 import path from 'path'
 import setMenus from './menus/all'
-
-const ROOT_PATH = {
-    // /dist
-    dist: path.join(__dirname, '../..'),
-    // /dist or /public
-    public: path.join(__dirname, app.isPackaged ? '../..' : '../../../public'),
-}
-
-
-// Here, you can also use other preload
-const preload = path.join(__dirname, '../preload/index.js')
-const url = process.env.VITE_DEV_SERVER_URL as string
-const indexHtml = path.join(ROOT_PATH.dist, 'index.html')
+import { ROOT_PATH,preload,indexHtml,url } from './config'
 
 function createWindow(option?: BrowserWindowConstructorOptions):BrowserWindow {
     const defaultOption = {

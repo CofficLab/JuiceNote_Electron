@@ -16,7 +16,7 @@
 </template>
 
 <script setup>
-import Extensions from "../../entities/Extensions";
+import Extensions from "../entities/Extensions";
 import { Node } from "../../models/Node";
 import { ref, watch, onBeforeUnmount } from "vue";
 import Monaco from "./Monaco.vue";

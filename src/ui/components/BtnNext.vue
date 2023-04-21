@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import ArrowRightCircle from "../../assets/icons/arrow-right-circle.svg";
+import ArrowRightCircle from "../assets/icons/arrow-right-circle.svg";
 import Link from "./Link.vue";
 import Next from "../operators/Next.vue";
 import { Node } from "../../models/Node";

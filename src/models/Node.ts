@@ -1,6 +1,6 @@
 import { existsSync, readFileSync, writeFile } from "fs";
 import { join } from "path";
-import Config from "../entities/Config";
+import Config from "../ui/entities/Config";
 
 const db = require('better-sqlite3')(join(Config.databasePath, 'database.db'));
 

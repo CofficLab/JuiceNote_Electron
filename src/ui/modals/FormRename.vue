@@ -27,8 +27,8 @@
 </template>
 
 <script lang="ts" setup>
-import NodeController from "../../controllers/NodeController";
-import ToastController from "../../controllers/ToastController";
+import NodeController from "../controllers/NodeController";
+import ToastController from "../controllers/ToastController";
 import { Node } from "../../models/Node";
 import { onMounted, ref, onBeforeUnmount, nextTick } from "vue";
 

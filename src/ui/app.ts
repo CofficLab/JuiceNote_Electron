@@ -6,7 +6,7 @@ import Lesson from './pages/Lesson.vue'
 import About from './pages/About.vue'
 import NotFound from './pages/NotFound.vue'
 import { createRouter, createWebHashHistory } from 'vue-router'
-import FullScreenController from '../controllers/FullScreenController'
+import FullScreenController from './controllers/FullScreenController'
 import "./app.css"
 import { Node } from '../models/Node'
 

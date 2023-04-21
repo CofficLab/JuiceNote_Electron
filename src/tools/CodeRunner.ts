@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import electron from 'electron'
-import Config from '../entities/Config'
+import Config from '../ui/entities/Config'
 
 let CodeRunner = function (code = '', language = 'PHP') {
     let suffix = 'unknown'

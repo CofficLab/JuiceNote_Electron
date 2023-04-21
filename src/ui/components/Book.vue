@@ -45,7 +45,7 @@
 import { readFile } from "fs";
 import { ref, computed, watch } from "vue";
 import { useRoute } from "vue-router";
-import ToastController from "../../controllers/ToastController";
+import ToastController from "../controllers/ToastController";
 import Visible from "../operators/Visible.vue";
 import { Node } from "../../models/Node";
 import "vue-cropper/dist/index.css";

@@ -1,5 +1,5 @@
 import { BrowserWindow, MenuItem, app } from "electron"
-import { indexHtml,url } from "../app"
+import { indexHtml,url } from "../config"
 
 export default new MenuItem({
     label: '快易知',

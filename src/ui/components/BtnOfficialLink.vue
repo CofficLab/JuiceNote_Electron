@@ -16,7 +16,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import ArrowTopRightOnSquare from "../../assets/icons/arrow-top-right-on-square.svg";
+import ArrowTopRightOnSquare from "../assets/icons/arrow-top-right-on-square.svg";
 
 export default defineComponent({
   components: {

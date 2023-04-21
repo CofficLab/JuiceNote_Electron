@@ -14,7 +14,7 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import CommandLine from "../../assets/icons/command-line.svg";
+import CommandLine from "../assets/icons/command-line.svg";
 import Terminal from "../blocks/Terminal.vue";
 
 const props = defineProps({

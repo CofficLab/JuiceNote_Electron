@@ -31,7 +31,7 @@
 <script setup>
 import { computed } from "vue";
 import { useRoute } from "vue-router";
-import ChevronDoubleDown from "../../assets/icons/chevron-double-down.svg";
+import ChevronDoubleDown from "../assets/icons/chevron-double-down.svg";
 import Copy from "./Copy.vue";
 import Delete from "./Delete.vue";
 import Commit from "./Commit.vue";

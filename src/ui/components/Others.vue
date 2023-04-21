@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import RouteController from "../../controllers/RouteController";
+import RouteController from "../controllers/RouteController";
 import Link from "./Link.vue";
 
 export default defineComponent({

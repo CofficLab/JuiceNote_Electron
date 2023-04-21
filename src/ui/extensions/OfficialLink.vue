@@ -13,8 +13,8 @@
 
 <script>
 import { NodeViewContent, nodeViewProps, NodeViewWrapper } from "@tiptap/vue-3";
-import LinkIcon from "../../assets/icons/arrow-top-right-on-square.svg";
-import InfoIcon from "../../assets/icons/info.svg";
+import LinkIcon from "../assets/icons/arrow-top-right-on-square.svg";
+import InfoIcon from "../assets/icons/info.svg";
 import { useRoute } from "vue-router";
 
 export default {

@@ -7,10 +7,10 @@
 
 <script lang="ts" setup>
 import { computed } from "vue";
-import ToastController from "../../controllers/ToastController";
-import HideIcon from "../../assets/icons/no-symbol.svg";
+import ToastController from "../controllers/ToastController";
+import HideIcon from "../assets/icons/no-symbol.svg";
 import { Node } from "../../models/Node";
-import NodeController from "../../controllers/NodeController";
+import NodeController from "../controllers/NodeController";
 import { useRoute, useRouter } from "vue-router";
 
 const props = defineProps({
