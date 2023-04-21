@@ -13,6 +13,6 @@
   },
   "include": [
     "package.json",
-    "electron"
+    "src/electron"
   ]
 }

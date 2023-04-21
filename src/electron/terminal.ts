@@ -1,7 +1,8 @@
 import { BrowserWindow, ipcMain } from "electron";
 
-const pty = require("node-pty");
-const os = require("os");
+import pty from "node-pty";
+import os from "os";
+
 const shellType = os.platform() === "win32" ? "powershell.exe" : "zsh";
 
 function registerTerminal(win: BrowserWindow) {
@@ -27,7 +28,7 @@ function registerTerminal(win: BrowserWindow) {
     // 终端关闭
     ipcMain.on(channels[3], (event) => {
         term.kill();
-        ipcMain.removeAllListeners([channels[1], channels[2], channels[3]]);
+        ipcMain.removeAllListeners([channels[1], channels[2], channels[3]].toString());
     });
     return pid;
 }
