@@ -1,44 +1,101 @@
 <template>
-  <RightMenu :event="event">
-    <li><ShowCurrent :node="node"></ShowCurrent></li>
-    <li><Rename :node="node"></Rename></li>
-    <li><Edit :bookNode="node"></Edit></li>
-    <li><ToTab :node="node"></ToTab></li>
-    <li><Delete :bookNode="node"></Delete></li>
-    <li><CreateChild :node="node"></CreateChild></li>
-    <li><Visible :node="node"></Visible></li>
-    <li><ShowCurrent :node="node.getBook()"></ShowCurrent></li>
-    <li><CreateChild :node="node.getBook()"></CreateChild></li>
-  </RightMenu>
+  <Transition name="slide-fade">
+    <ul ref="menus" v-if="visible" :x="x" :y="y" class="right-menus" v-bind:style="{ left: x + 'px', top: y + 'px' }">
+      <li><Rename :node="node"></Rename></li>
+      <li><Edit :bookNode="node"></Edit></li>
+      <li><ToTab :node="node"></ToTab></li>
+      <li><Delete :bookNode="node"></Delete></li>
+      <li><CreateChild :node="node"></CreateChild></li>
+      <li><Visible :node="node"></Visible></li>
+    </ul>
+  </Transition>
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from "vue";
+import { onBeforeUnmount, onMounted, ref } from "vue";
 import Rename from "../operators/Rename.vue";
 import Edit from "../operators/Edit.vue";
 import Delete from "../operators/Delete.vue";
 import ToTab from "../operators/ToTab.vue";
-import RightMenu from "../components/RightMenu.vue";
 import { Node } from "../../models/Node";
 import CreateChild from "../operators/Add.vue";
 import Visible from "../operators/Visible.vue";
-import ShowCurrent from "../operators/ShowCurrent.vue";
-import { useRoute } from "vue-router";
 
-const props = defineProps({
-  event:null
-})
+let x = ref(0);
+let y = ref(0);
+let node = ref<Node>();
+let visible = ref(false);
 
-const route = useRoute();
+const handleClick = () => {
+  visible.value = false;
+};
 
-const node = computed(() => {
-  return Node.find(parseInt(route.params.id.toString()));
+const handleEvent = (e) => {
+  console.log("检测到右键事件", e.detail);
+  (x.value = e.detail.x), (y.value = e.detail.y);
+  node.value = e.detail.node;
+  visible.value = true;
+};
+
+onMounted(() => {
+  window.addEventListener("click", handleClick);
+  window.addEventListener("show-right-menus", handleEvent);
 });
 
+onBeforeUnmount(() => {
+  window.removeEventListener("click", handleClick);
+  window.removeEventListener("show-right-menus", handleEvent);
+});
 </script>
 
-<style scoped lang="postcss">
-li {
-  @apply list-none text-base
+<style lang="postcss">
+.right-menus {
+  @apply fixed p-2 z-50 rounded-md bg-gray-100 shadow-2xl ring-1 ring-gray-300/30 !important;
+
+  svg {
+    @apply mr-2 inline-block h-4 !important;
+  }
+
+  li {
+    @apply rounded list-none text-xs flex h-8 items-center justify-start justify-items-center p-2 text-yellow-900 hover:cursor-pointer hover:bg-green-800/40 !important;
+  }
+}
+</style>
+
+<style lang="postcss" scoped>
+.bounce-enter-active {
+  animation: bounce-in 0.5s;
+}
+.bounce-leave-active {
+  animation: bounce-in 0.5s reverse;
+}
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/*
+  进入和离开动画可以使用不同
+  持续时间和速度曲线。
+*/
+.slide-fade-enter-active {
+  transition: all 0.1s ease-out;
+}
+
+.slide-fade-leave-active {
+  transition: all 0.1s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateX(20px);
+  opacity: 0;
 }
 </style>

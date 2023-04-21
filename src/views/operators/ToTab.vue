@@ -14,7 +14,7 @@ import NodeController from "../../controllers/NodeController";
 
 export default defineComponent({
   props: {
-    node: { type: Node, required: true },
+    node: { type: Node },
     showText: { type: Boolean, default: true, required: false },
     showIcon: { type: Boolean, default: true, required: false },
   },

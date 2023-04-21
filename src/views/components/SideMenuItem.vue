@@ -17,7 +17,7 @@
 
     <ul class="menu menu-compact">
       <!-- 是一个页面或一个tab -->
-      <li v-if="item.isPage || item.isTab">
+      <li v-if="item.isPage || item.isTab" v-on:contextmenu="showRightMenu">
         <Link class="3xl:text-lg flex gap-4" :node="item" :class="{ 'text-info': !item.isVisible }">
           <DynamicPadding :count="item.getParents().length-3"></DynamicPadding>
           {{ item.title }}
@@ -25,7 +25,7 @@
       </li>
 
       <!-- 是一个章节 -->
-      <li v-if="item.isChapter && !item.isTab" class="text-indigo-400/70 pl-0">
+      <li v-if="item.isChapter && !item.isTab" class="text-indigo-400/70 pl-0"  v-on:contextmenu="showRightMenu">
         <Link class="text-lg" :node="item">
           <DynamicPadding :count="item.getParents().length-3"></DynamicPadding>
           {{ item.title }}
@@ -38,7 +38,7 @@
 </template>
 
 <script setup>
-import { computed, watch,nextTick } from "vue";
+import { computed } from "vue";
 import { useRoute } from "vue-router";
 import { Node } from "../../models/Node";
 import DynamicPadding from "./DynamicPadding.vue";
@@ -65,4 +65,14 @@ const getSubMenus = function (menu) {
 
   return editable.value ? menu.getChildren() : menu.getVisibleChildren();
 };
+
+const showRightMenu = function (e) {
+  dispatchEvent(new CustomEvent('show-right-menus', {
+    detail: {
+      x: e.x,
+      y: e.y,
+      node:props.item
+    }
+  }))
+}
 </script>

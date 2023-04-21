@@ -10,7 +10,7 @@
       <SideMenu></SideMenu>
     </aside>
 
-    <main v-on:contextmenu="showRightMenu" :class="{ 'pl-40': asideVisible }" class="fixed top-8 h-screen w-full overflow-scroll overscroll-none bg-cyan-800/10 dark:bg-slate-900/10">
+    <main :class="{ 'pl-40': asideVisible }" class="fixed top-8 h-screen w-full overflow-scroll overscroll-none bg-cyan-800/10 dark:bg-slate-900/10">
       <router-view v-slot="{ Component }">
         <transition name="slide-fade">
           <component :is="Component" />
@@ -18,7 +18,7 @@
       </router-view>
     </main>
 
-    <RightMenuModal :event="rightClickEvent"></RightMenuModal>
+    <RightMenuModal></RightMenuModal>
     <FormSearch v-if="searchVisible"></FormSearch>
 
     <!-- <DebugBar></DebugBar> -->
@@ -48,10 +48,6 @@ ipcRenderer.on("main-process-message", (_event, ...args) => {
   }
 });
 
-window.addEventListener("hide-search", () => {
-  searchVisible.value = false;
-});
-
 const route = useRoute();
 const isProd = window.location.protocol === "file:";
 const asideVisible = computed(() => ["lessons.show", "lessons.edit"].includes(route.name));
@@ -65,11 +61,12 @@ const headerVisible = computed(() => {
 
 let rightClickEvent = ref(null);
 
-const showRightMenu = function (event) {
-  event.preventDefault();
+/** 监听事件 */
 
-  rightClickEvent.value = event;
-};
+window.addEventListener("hide-search", () => {
+  searchVisible.value = false;
+});
+
 </script>
 
 <style scoped>
