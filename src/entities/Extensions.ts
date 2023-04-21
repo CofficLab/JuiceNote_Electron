@@ -18,18 +18,18 @@ import HardBreak from '@tiptap/extension-hard-break'
 import Italic from '@tiptap/extension-italic'
 import OrderList from '@tiptap/extension-ordered-list'
 import Strike from '@tiptap/extension-strike'
-import Brick from "../views/extensions/Brick.js";
-import Banner from "../views/extensions/Banner.js";
+import Brick from "../ui/extensions/Brick.js";
+import Banner from "../ui/extensions/Banner.js";
 import BlockQuote from '@tiptap/extension-blockquote'
-import OfficialLink from "../views/extensions/OfficialLink.js";
-import Toc from "../views/extensions/Toc.js"
-import Tab from "../views/extensions/Tab.js"
-import TabContent from "../views/extensions/TabContent.js"
-import CodeEditor from "../views/extensions/CodeEditor.js"
-import CodeBlockTab from "../views/extensions/CodeTab.js"
-import Chat from "../views/extensions/Chat.js"
-import TimeLine from "../views/extensions/TimeLine.js"
-import TimeLineTitle from "../views/extensions/TimeLineTitle.js"
+import OfficialLink from "../ui/extensions/OfficialLink.js";
+import Toc from "../ui/extensions/Toc.js"
+import Tab from "../ui/extensions/Tab.js"
+import TabContent from "../ui/extensions/TabContent.js"
+import CodeEditor from "../ui/extensions/CodeEditor.js"
+import CodeBlockTab from "../ui/extensions/CodeTab.js"
+import Chat from "../ui/extensions/Chat.js"
+import TimeLine from "../ui/extensions/TimeLine.js"
+import TimeLineTitle from "../ui/extensions/TimeLineTitle.js"
 
 let Extensions = [
     Banner,

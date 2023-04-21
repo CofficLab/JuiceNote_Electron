@@ -15,7 +15,6 @@ const preload = path.join(__dirname, '../preload/index.js')
 const url = process.env.VITE_DEV_SERVER_URL as string
 const indexHtml = path.join(ROOT_PATH.dist, 'index.html')
 
-
 function createWindow(option?: BrowserWindowConstructorOptions):BrowserWindow {
     const defaultOption = {
         minWidth: 780,

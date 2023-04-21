@@ -1,14 +1,14 @@
 import { createApp } from 'vue'
 import { ipcRenderer } from 'electron'
-import App from './views/layouts/App.vue'
-import Home from './views/pages/Home.vue'
-import Lesson from './views/pages/Lesson.vue'
-import About from './views/pages/About.vue'
-import NotFound from './views/pages/NotFound.vue'
+import App from './layouts/App.vue'
+import Home from './pages/Home.vue'
+import Lesson from './pages/Lesson.vue'
+import About from './pages/About.vue'
+import NotFound from './pages/NotFound.vue'
 import { createRouter, createWebHashHistory } from 'vue-router'
-import FullScreenController from './controllers/FullScreenController'
+import FullScreenController from '../controllers/FullScreenController'
 import "./app.css"
-import { Node } from './models/Node'
+import { Node } from '../models/Node'
 
 // 监听主进程传递的消息
 ipcRenderer.on('main-process-message', (_event, ...args) => {
