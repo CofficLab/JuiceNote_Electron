@@ -150,7 +150,6 @@ class Node {
     getFirstChild(): Node {
         let result = db.prepare('select * from nodes where parent_id=? order by priority asc').get(this.id)
 
-        // console.log('get first child', result)
         return new Node(result ?? {})
     }
 

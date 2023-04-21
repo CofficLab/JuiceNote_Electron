@@ -1,6 +1,6 @@
 <template>
   <!-- 搜索的弹层 -->
-  <div class="modal modal-open" @keydown.arrow-up="activate(current - 1)" @keydown.arrow-down="activate(current + 1)" @click="clickModal">
+  <div class="modal modal-open" @keydown.arrow-up="activate(current - 1)" @keydown.arrow-down="activate(current + 1)" @click="focus" v-if="visible">
     <Transition name="bounce">
       <div class="modal-box">
         <div class="form-control flex justify-center">
@@ -9,7 +9,7 @@
           </div>
           <ul class="mx-auto mt-4 w-full gap-4 bg-base-100">
             <li
-              @click="goto(node.id)"
+              @click="goto"
               class="flex cursor-pointer items-center justify-between rounded-lg p-2"
               v-for="(node, index) in nodes"
               @mouseenter="activate(index)"
@@ -30,17 +30,25 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from "vue";
+import { nextTick, ref } from "vue";
 import { Node } from "../../models/Node";
 import { useRouter } from "vue-router";
+import { ipcRenderer } from "electron";
 
 const router = useRouter();
 let keyword = "";
 let nodes = ref<Node[]>([]);
 let current = ref(0);
+let visible = ref(false)
 
-const submit = (e) => {
-  console.log(e);
+const focus = () => nextTick(()=>document.querySelector<HTMLDivElement>("#search-form-title")?.focus())
+const toggleVisible = () => (visible.value = !visible.value) && focus()
+const activate = (index: number) => current.value = Math.min(nodes.value.length - 1, Math.max(0, index));
+const goto = () => {
+  router.push({ name: "lessons.show", params: { id: nodes.value[current.value].id } });
+  toggleVisible()
+};
+const submit = (e:KeyboardEvent) => {
   if (e.key == "ArrowUp" || e.key == "ArrowDown") {
     return;
   }
@@ -53,24 +61,10 @@ const submit = (e) => {
   }
 };
 
-const activate = (index) => {
-  current.value = Math.min(nodes.value.length - 1, Math.max(0, index));
-  console.log("当前激活的下标", current.value);
-};
-
-const goto = () => {
-  router.push({ name: "lessons.show", params: { id: nodes.value[current.value].id } });
-  dispatchEvent(new Event("hide-search"));
-};
-
-const clickModal = (e) => {
-  console.log("click modal");
-  e.preventDefault();
-  document.querySelector("#search-form-title")?.focus();
-};
-
-onMounted(function () {
-  document.querySelector("#search-form-title")?.focus();
+ipcRenderer.on("main-process-message", (_event, ...args) => {
+  if (args[0] === "toggle-search") {
+    toggleVisible()
+  }
 });
 </script>
 

@@ -18,8 +18,11 @@
       </router-view>
     </main>
 
+    <!-- 弹层 -->
     <RightMenuModal></RightMenuModal>
-    <FormSearch v-if="searchVisible"></FormSearch>
+    <FormSearch></FormSearch>
+    <FormAdd></FormAdd>
+    <FormRename></FormRename>
 
     <!-- <DebugBar></DebugBar> -->
     <!-- <BottomBar></BottomBar> -->
@@ -33,23 +36,14 @@ import SideMenu from "../blocks/SideMenu.vue";
 import TopBar from "../blocks/TopBar.vue";
 import DebugBar from "../blocks/DebugBar.vue";
 import BottomBar from "../blocks/BottomBar.vue";
+import FormAdd from "../modals/FormAdd.vue";
+import FormRename from "../modals/FormRename.vue";
 import Toast from "../blocks/Toast.vue";
 import { Node } from "../../models/Node.ts";
 import RightMenuModal from "../modals/RightMenuModal.vue";
 import FormSearch from "../modals/FormSearch.vue";
-import { ipcRenderer } from "electron";
-
-let searchVisible = ref(false);
-
-ipcRenderer.on("main-process-message", (_event, ...args) => {
-  if (args[0] === "show-search") {
-    console.log("show search");
-    searchVisible.value = !searchVisible.value;
-  }
-});
 
 const route = useRoute();
-const isProd = window.location.protocol === "file:";
 const asideVisible = computed(() => ["lessons.show", "lessons.edit"].includes(route.name));
 const headerVisible = computed(() => {
   if (route.name == "lessons.edit") {
@@ -58,15 +52,6 @@ const headerVisible = computed(() => {
 
   return ["lessons.show", "home.show", "home.edit"].includes(route.name);
 });
-
-let rightClickEvent = ref(null);
-
-/** 监听事件 */
-
-window.addEventListener("hide-search", () => {
-  searchVisible.value = false;
-});
-
 </script>
 
 <style scoped>

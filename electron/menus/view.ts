@@ -33,7 +33,7 @@ function getViewMenu(win: BrowserWindow) {
                 label: '搜索',
                 accelerator: 'CommandOrControl+K',
                 click: () => {
-                    win.webContents.send('main-process-message', 'show-search')
+                    win.webContents.send('main-process-message', 'toggle-search')
                 }
             },
             {

@@ -1,17 +1,17 @@
 <template>
-  <!-- 新建图书节点的弹层 -->
-  <div class="modal modal-open">
+  <!-- 新建节点的弹层 -->
+  <div class="modal modal-open" v-if="visible">
     <Transition name="bounce">
       <div class="modal-box">
 
-    <label for="my-modal-3" @click="hide" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+    <label for="my-modal-3" @click="setUnVisible" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
         <p class="mb-6">
-          为<span class="text-lg font-bold">「{{ node.title }}」</span>添加节点
+          为<span class="text-lg font-bold">「{{ node?.title }}」</span>添加节点
         </p>
         <input id="add-node-form-title" autofocus type="text" v-model="title" placeholder="输入标题" class="input-bordered input-primary input w-full max-w-xs" @keyup.enter="submit(false)" />
         <div class="modal-action justify-start">
-          <label for="my-modal" class="btn" v-on:click="submit(false)" v-if="!node.isPage">创建页面</label>
-          <label for="my-modal" class="btn" v-on:click="submit(true)"  v-if="!node.isPage">创建章节</label>
+          <label for="my-modal" class="btn" v-on:click="submit(false)" v-if="!node?.isPage">创建页面</label>
+          <label for="my-modal" class="btn" v-on:click="submit(true)"  v-if="!node?.isPage">创建章节</label>
 
           <label for="my-modal" class="btn" v-on:click="submit(false, true)">创建兄弟页面</label>
           <label for="my-modal" class="btn" v-on:click="submit(true, true)">创建兄弟章节</label>
@@ -22,38 +22,40 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, nextTick, ref } from "vue";
-import { useRouter, useRoute } from "vue-router";
+import { onMounted,ref, onBeforeUnmount, nextTick } from "vue";
 import { Node } from "../../models/Node";
+import { useRouter } from "vue-router";
 
-const router = useRouter();
-const route = useRoute();
-
-const props = defineProps({
-  node: {
-    type: Node,
-    required: true,
-  },
-});
-
+let router = useRouter()
 let title = "";
+let visible = ref(false)
+let node = ref<Node>()
 
-const hide = function () {
-  router.push({
-    path: route.path,
-  });
-};
+const setUnVisible =  ()=> visible.value = false
+const setVisible = function(e:CustomEvent) {
+  visible.value = true
+  node.value = e.detail.node
+  nextTick(function () {
+    document.querySelector<HTMLDivElement>('#add-node-form-title')!.focus()
+  })
+}
 
 const submit = function (isChapter: boolean, createSibling = false) {
-  let parent = createSibling ? props.node.getParent() : props.node;
+  if (node == null || node.value == null) return 
+  let parent = createSibling ? node.value.getParent() : node.value;
   let id = isChapter ? parent.createChildChapter(title) : parent.createChildPage(title, `<h1>${title}</h1>`);
 
-  console.log("创建新节点后返回的ID", id);
+  // console.log("创建新节点后返回的ID", id);
   router.push({ name: "lessons.show", params: { id: id.toString() } });
+  setUnVisible()
 };
 
 onMounted(function() {
-  document.querySelector('#add-node-form-title')?.focus()
+  window.addEventListener('show-add-form',setVisible as EventListener)
+})
+
+onBeforeUnmount(function() {
+  window.removeEventListener('show-add-form',setVisible as EventListener)
 })
 </script>
 

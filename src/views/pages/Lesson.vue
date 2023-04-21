@@ -10,18 +10,12 @@
 
         <Editor :node="node" :saveCallback="save" :editable="editable" v-else></Editor>
       </div>
-
-      <!-- 弹层 -->
-      <FormAdd :node="node" v-if="adding"></FormAdd>
-      <FormRename :node="node" v-if="renaming"></FormRename>
     </div>
   </div>
 </template>
 
 <script setup>
 import NodeTab from "../components/NodeTab.vue";
-import FormAdd from "../modals/FormAdd.vue";
-import FormRename from "../modals/FormRename.vue";
 import Editor from "../components/Editor.vue";
 import Add from "../operators/Add.vue"
 import { Node } from "../../models/Node";

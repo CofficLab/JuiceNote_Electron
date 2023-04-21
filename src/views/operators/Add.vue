@@ -6,12 +6,9 @@
 </template>
 
 <script setup>
-import { useRouter, useRoute } from "vue-router";
 import Plus from "../../assets/icons/plus.svg";
 import { Node } from "../../models/Node";
 
-let route = useRoute();
-let router = useRouter();
 let props = defineProps({
   showText: {
     type: Boolean,
@@ -30,11 +27,6 @@ let props = defineProps({
 });
 
 let add = function () {
-  router.push({
-    path: "/lessons/" + props.node.id + "/edit",
-    query: {
-      adding: 1,
-    },
-  });
+  dispatchEvent(new CustomEvent('show-add-form',{detail:{node:props.node}}))
 };
 </script>

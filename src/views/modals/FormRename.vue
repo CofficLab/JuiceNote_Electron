@@ -1,15 +1,24 @@
 <template>
   <!-- 重命名的弹层 -->
-  <div class="modal modal-open">
-    <Transition name="bounce">
+  <div class="modal modal-open" v-show="visible">
+    <Transition name="bounce" v-if="visible">
       <div class="modal-box">
         <p class="mb-6">
-          为<span class="text-lg font-bold">「{{ node.title }}」</span>重命名
+          为<span class="text-lg font-bold">「{{ node!.title }}」</span>重命名
         </p>
 
-        <input id="rename-node-form-title" ref="title" type="text" v-model="title" placeholder="输入新的标题" autofocus class="input-bordered input-primary input w-full max-w-xs bg-yellow-300/10" @keyup.enter="submit" />
+        <input
+          id="rename-node-form-title"
+          ref="title"
+          type="text"
+          v-model="title"
+          placeholder="输入新的标题"
+          autofocus
+          class="input-bordered input-primary input w-full max-w-xs bg-yellow-300/10"
+          @keyup.enter="submit"
+        />
         <div class="modal-action">
-          <label for="my-modal" class="btn" v-on:click="hide">取消</label>
+          <label for="my-modal" class="btn" v-on:click="setUnVisible">取消</label>
           <label for="my-modal" class="btn" v-on:click="submit">确定</label>
         </div>
       </div>
@@ -21,36 +30,30 @@
 import NodeController from "../../controllers/NodeController";
 import ToastController from "../../controllers/ToastController";
 import { Node } from "../../models/Node";
-import {onMounted} from "vue"
-import { useRoute, useRouter } from "vue-router";
+import { onMounted, ref, onBeforeUnmount, nextTick } from "vue";
 
-const router = useRouter();
-const route = useRoute();
+let visible = ref(false);
+let title = "";
+let node = ref<Node>();
 
-const props = defineProps({
-  node: {
-    type: Node,
-    required: true,
-  },
+const setUnVisible = () => (visible.value = false);
+const setVisible = function (e: CustomEvent) {
+  visible.value = true;
+  node.value = e.detail.node;
+  nextTick(() => document.querySelector<HTMLDivElement>("#rename-node-form-title")!.focus());
+};
+const submit = () => {
+  ToastController.set(NodeController.updateTitle(node.value!, title));
+  setUnVisible();
+};
+
+onMounted(function () {
+  window.addEventListener("show-rename-modal", setVisible as EventListener);
 });
 
-let title = "";
-
-const hide = () => {
-  router.push({
-    name: "lessons.show",
-    params: { id: route.params.id },
-  });
-};
-
-const submit = () => {
-  ToastController.set(NodeController.updateTitle(props.node, title));
-  hide();
-};
-
-onMounted(function() {
-  document.querySelector('#rename-node-form-title')?.focus()
-})
+onBeforeUnmount(() => {
+  window.removeEventListener("show-rename-modal", setVisible as EventListener);
+});
 </script>
 
 <style scoped>

@@ -50,6 +50,7 @@ router.beforeEach(function (to, from) {
   // 如果不是page，跳转到第一个page子节点
   if (to.name == 'lessons.show') {
     let node = Node.find(parseInt(to.params.id.toString()))
+
     if (!node.isPage && node.getFirstPage().id > 0) {
       return {
         name: "lessons.show",

@@ -29,11 +29,6 @@ const props = defineProps({
 });
 
 const rename = function () {
-  router.push({
-    path: "/lessons/" + props.node.id + "/edit",
-    query: {
-      renaming: 1,
-    },
-  });
+  dispatchEvent(new CustomEvent('show-rename-modal', {detail:{node:props.node}}))
 };
 </script>
