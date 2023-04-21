@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Toast></Toast>
+    <Toast v-if="headerVisible"></Toast>
 
     <header v-if="headerVisible" class="fixed top-0 z-40 h-8 w-full border-b border-gray-300 bg-base-200 pl-40 shadow dark:border-cyan-900/10">
       <TopBar></TopBar>
@@ -10,7 +10,7 @@
       <SideMenu></SideMenu>
     </aside>
 
-    <main :class="{ 'pl-40': asideVisible }" class="fixed top-8 h-screen w-full overflow-scroll overscroll-none bg-cyan-800/10 dark:bg-slate-900/10">
+    <main :class="{ 'pl-40': asideVisible,'top-8':headerVisible}" class="fixed top-0 h-screen w-full overflow-scroll overscroll-none bg-cyan-800/10 dark:bg-slate-900/10">
       <router-view v-slot="{ Component }">
         <transition name="slide-fade">
           <component :is="Component" />

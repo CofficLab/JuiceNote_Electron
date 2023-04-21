@@ -1,4 +1,5 @@
 import { BrowserWindow, MenuItem } from "electron"
+import { createWindow } from "../window"
 
 const __DARWIN__ = process.platform === 'darwin'
 
@@ -39,6 +40,13 @@ function getViewMenu(win: BrowserWindow) {
             {
                 label: '切换开发者视图',
                 role: "toggleDevTools",
+            },
+
+            { type: 'separator' },
+            {
+                label: '新页面',
+                accelerator: 'CommandOrControl+N',
+                click: ()=>createWindow({x:10,y:10})
             },
         ],
     })

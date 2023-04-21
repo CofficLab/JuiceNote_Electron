@@ -14,7 +14,7 @@ export default defineConfig({
     svgLoader(),
     electron({
       main: {
-        entry: 'electron/main/index.ts',
+        entry: 'electron/index.ts',
         vite: {
           build: {
             // For Debug
@@ -28,7 +28,7 @@ export default defineConfig({
       preload: {
         input: {
           // You can configure multiple preload here
-          index: path.join(__dirname, 'electron/preload/index.ts'),
+          index: path.join(__dirname, 'electron/preload.ts'),
         },
         vite: {
           build: {

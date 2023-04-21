@@ -1,13 +1,5 @@
 import { BrowserWindow, MenuItem, app } from "electron"
-import path from "path"
-
-export const ROOT_PATH = {
-    dist: path.join(__dirname, '../..'),
-    public: path.join(__dirname, app.isPackaged ? '../..' : '../../../public'),
-}
-
-const url = process.env.VITE_DEV_SERVER_URL as string
-const indexHtml = path.join(ROOT_PATH.dist, 'index.html')
+import { indexHtml,url } from "../app"
 
 export default new MenuItem({
     label: '快易知',
