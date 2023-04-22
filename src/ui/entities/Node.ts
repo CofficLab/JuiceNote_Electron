@@ -1,4 +1,6 @@
-let ipcRender = window.ipcRender
+import IpcRender from "./IpcRender"
+
+let ipcRender = IpcRender
 
 class Node {
     public id: number = 0
@@ -55,13 +57,13 @@ class Node {
     }
 
     createChildPage(title: string, content: string): Number {
-        let result = window.ipcRender.sendSync('createChildPage',this.id, title, content)
+        let result = IpcRender.sendSync('createChildPage',this.id, title, content)
 
         return result.lastInsertRowid
     }
 
     createChildChapter(title: string): Number {
-        let result = window.ipcRender.sendSync('createChildChapter',this.id,title)
+        let result = IpcRender.sendSync('createChildChapter',this.id,title)
         return result.lastInsertRowid
     }
 
@@ -236,11 +238,11 @@ class Node {
     }
 
     updateTitle(title: string): string {
-        return window.ipcRender.sendSync('updateTitle', title,this.id)
+        return IpcRender.sendSync('updateTitle', title,this.id)
     }
 
     updateVisible(): string {
-        let result = window.ipcRender.sendSync('updateVisible', this.id)
+        let result = IpcRender.sendSync('updateVisible', this.id)
 
         let updated = this.refresh()
         if (result != null) {
@@ -261,7 +263,7 @@ class Node {
     }
 
     static find(id: number): Node {
-        let node = window.ipcRender.sendSync('getBook', id)
+        let node = IpcRender.sendSync('find', id)
         
         return new Node(node)
     }
@@ -281,7 +283,7 @@ class Node {
     }
 
     static search(keyword: string): Node[] {
-        let nodes = window.ipcRender.sendSync('search', keyword)
+        let nodes = IpcRender.sendSync('search', keyword)
         return nodes.map((node: object) => {
             return new Node(node)
         })

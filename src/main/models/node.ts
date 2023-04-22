@@ -315,9 +315,8 @@ class Node {
     }
 
     static search(keyword: string): Node[] {
-        console.log(keyword)
+        console.log('搜索', keyword)
         let nodes = db.prepare("select * from nodes where title like ? limit 5").all(`%${keyword}%`)
-        console.log(nodes)
         return nodes.map((node: object) => {
             return new Node(node)
         })

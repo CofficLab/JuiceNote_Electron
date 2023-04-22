@@ -7,7 +7,7 @@ export default function setNodeController() {
     })
 
     ipcMain.on('getBook', (event, id) => {
-        return event.returnValue = Node.find(id)
+        return event.returnValue = Node.find(id).getBook()
     })
 
     ipcMain.on('getContent', (event, id) => {
@@ -59,7 +59,6 @@ export default function setNodeController() {
     })
 
     ipcMain.on('delete', (e, id) => {
-        console.log('delete',id)
         return e.returnValue = Node.find(id).delete()
     })
 }

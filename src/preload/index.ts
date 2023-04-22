@@ -93,18 +93,10 @@ setTimeout(removeLoading, 1000)
 
 import { contextBridge, ipcRenderer } from 'electron'
 
+// 通过 ipcRender 调用主进程的 API
 contextBridge.exposeInMainWorld('ipcRender', ipcRenderer)
-contextBridge.exposeInMainWorld('api', {
-  'ping': () => ipcRenderer.invoke('ping'),
-  'config': ipcRenderer.invoke('get-config'),
-  'runner': (...args: any) => ipcRenderer.invoke('runner', ...args),
-  'versions': {
-    node: () => process.versions.node,
-    chrome: () => process.versions.chrome,
-    electron: () => process.versions.electron,
-  }
-})
 
+// 对主进程的消息作出响应
 ipcRenderer.on("main-process-message", (_event, ...args) => {
   if ('toggle-search' == args[0]) dispatchEvent(new Event('show-search'))
 });

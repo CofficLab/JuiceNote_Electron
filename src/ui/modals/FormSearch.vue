@@ -1,6 +1,6 @@
 <template>
   <!-- 搜索的弹层 -->
-  <div class="modal modal-open" @keydown.arrow-up="activate(current - 1)" @keydown.arrow-down="activate(current + 1)" @click="focus" v-if="visible">
+  <div class="modal modal-open" @keydown.esc="toggleVisible" @keydown.arrow-up="activate(current - 1)" @keydown.arrow-down="activate(current + 1)" @click="focus" v-if="visible">
     <Transition name="bounce">
       <div class="modal-box">
         <div class="form-control flex justify-center">
@@ -15,12 +15,18 @@
               @mouseenter="activate(index)"
               :class="{ 'bg-base-300': current == index }"
             >
-              <span>{{ node.title }}</span>
-              <span class="badge-info badge">
-                {{ node.isBook ? "图书" : "" }}
-                {{ node.isChapter ? "章节" : "" }}
-                {{ node.isPage ? "页面" : "" }}
-              </span>
+              <div>
+                <span>{{ node.title }}</span>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <span>{{ getBook(node).title }}</span>
+                <span class="badge-info badge">
+                  {{ node.isBook ? "图书" : "" }}
+                  {{ node.isChapter ? "章节" : "" }}
+                  {{ node.isPage ? "页面" : "" }}
+                </span>
+              </div>
             </li>
           </ul>
         </div>
@@ -33,21 +39,25 @@
 import { nextTick, ref } from "vue";
 import { useRouter } from "vue-router";
 import Node from "../entities/Node";
+import IpcRender from "../entities/IpcRender"
 
 const router = useRouter();
 let keyword = "";
 let nodes = ref<Node[]>([]);
 let current = ref(0);
-let visible = ref(false)
+let visible = ref(false);
 
-const focus = () => nextTick(()=>document.querySelector<HTMLDivElement>("#search-form-title")?.focus())
-const toggleVisible = () => (visible.value = !visible.value) && focus()
-const activate = (index: number) => current.value = Math.min(nodes.value.length - 1, Math.max(0, index));
+const getBook = function (node: Node) {
+  return IpcRender.sendSync("getBook", node.id);
+};
+const focus = () => nextTick(() => document.querySelector<HTMLDivElement>("#search-form-title")?.focus());
+const toggleVisible = () => (visible.value = !visible.value) && focus();
+const activate = (index: number) => (current.value = Math.min(nodes.value.length - 1, Math.max(0, index)));
 const goto = () => {
   router.push({ name: "lessons.show", params: { id: nodes.value[current.value].id } });
-  toggleVisible()
+  toggleVisible();
 };
-const submit = (e:KeyboardEvent) => {
+const submit = (e: KeyboardEvent) => {
   if (e.key == "ArrowUp" || e.key == "ArrowDown") {
     return;
   }
@@ -60,13 +70,13 @@ const submit = (e:KeyboardEvent) => {
   }
 };
 
-window.addEventListener('channel', (e) => {
-  console.log('监听到channel事件',e)
-})
+window.addEventListener("channel", (e) => {
+  console.log("监听到channel事件", e);
+});
 
-window.addEventListener('show-search', () => {
-  toggleVisible()
-})
+window.addEventListener("show-search", () => {
+  toggleVisible();
+});
 </script>
 
 <style scoped>

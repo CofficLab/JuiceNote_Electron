@@ -45,6 +45,7 @@ import DynamicPadding from "./DynamicPadding.vue";
 import Link from "./Link.vue";
 import FullScreenController from "../entities/FullScreenController";
 import Node from "../entities/Node";
+import IpcRender from "../entities/IpcRender";
 
 const route = useRoute();
 
@@ -57,7 +58,7 @@ let item = computed(()=>props.item ?? props.current.getBook());
 
 const editable = computed(() => route.name == "lessons.edit");
 let hideTitleBar = computed(() => FullScreenController.full);
-let isWindows = window.ipcRender.sendSync("get-platform") == "win32";
+let isWindows = IpcRender.sendSync("get-platform") == "win32";
 
 const getSubMenus = function (menu) {
   if (menu.isBook && menu.getTabs().length > 0) {
