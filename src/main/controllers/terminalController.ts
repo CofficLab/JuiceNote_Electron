@@ -33,4 +33,9 @@ function registerTerminal(win: BrowserWindow) {
     return pid;
 }
 
-export { registerTerminal }
+function setTerminalController(win: BrowserWindow | null) {
+    // 实时的终端
+    ipcMain.handle("terminal-create", () => registerTerminal(win!));
+}
+
+export { registerTerminal,setTerminalController }

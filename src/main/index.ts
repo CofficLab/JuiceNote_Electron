@@ -2,17 +2,24 @@ import { createWindow } from './window'
 import { registerTerminal } from './terminal'
 import { ipcMain } from 'electron'
 import { app, win } from './app'
+import Config from './config'
+import CodeRunner from './runner'
+import { Node } from './models/node'
+import setNodeController from './controllers/nodeController'
+import { setTerminalController } from './controllers/terminalController'
 
 // Remove electron security warnings
 // This warning only shows in development mode
 // Read more on https://www.electronjs.org/docs/latest/tutorial/security
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
 
-// 打开新窗口
 ipcMain.handle('open-win', createWindow)
+ipcMain.handle('get-config', () => Config)
+ipcMain.handle('ping', () => 'pong')
+ipcMain.handle('runner', (e, ...args) => CodeRunner(...args))
 
-// 实时的终端
-ipcMain.handle("terminal-create", () => registerTerminal(win!));
+setNodeController()
+setTerminalController(win)
 
 // 供子进程查询app path
 ipcMain.on('get-app-path', (event) => event.returnValue = app.getAppPath())

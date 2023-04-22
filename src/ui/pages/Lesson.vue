@@ -14,20 +14,18 @@
   </div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import NodeTab from "../components/NodeTab.vue";
 import Editor from "../components/Editor.vue";
 import Add from "../operators/Add.vue"
-import { Node } from "../models/Node";
 import { computed, watch } from "vue";
 import { useRoute } from "vue-router";
+import Node from "../entities/Node";
 
 const route = useRoute();
 
 const editable = computed(() => route.name == "lessons.edit");
 
-let adding = route.query.adding != undefined;
-let renaming = route.query.renaming != undefined;
 let node = Node.find(route.params.id);
 
 let save = function (content) {
@@ -39,8 +37,6 @@ let save = function (content) {
 
 watch(route, () => {
   node = Node.find(route.params.id);
-  adding = route.query.adding != undefined;
-  renaming = route.query.renaming != undefined;
 
   if (route.hash.length > 0) {
     // 获取带有锚点的元素

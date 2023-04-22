@@ -8,7 +8,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import CloudArrowUp from "../assets/icons/cloud-arrow-up.svg";
-import ToastController from "../controllers/ToastController";
+import ToastController from "../entities/Toast";
 
 export default defineComponent({
   props: {

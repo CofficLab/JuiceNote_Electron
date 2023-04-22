@@ -19,7 +19,6 @@ import jsonWorker from "monaco-editor/esm/vs/language/json/json.worker?worker";
 import cssWorker from "monaco-editor/esm/vs/language/css/css.worker?worker";
 import htmlWorker from "monaco-editor/esm/vs/language/html/html.worker?worker";
 import tsWorker from "monaco-editor/esm/vs/language/typescript/ts.worker?worker";
-import CodeRunner from "../tools/CodeRunner";
 import { defineComponent } from "vue";
 import { useRoute } from "vue-router";
 
@@ -75,7 +74,7 @@ export default defineComponent({
       this.running = true;
 
       setTimeout(() => {
-        let result = CodeRunner(monaco.editor.getModels()[this.index].getValue(), this.language);
+        let result = window.runner(monaco.editor.getModels()[this.index].getValue(), this.language);
         monaco.editor.getModels()[this.resultEditorIndex].setValue(result);
         this.$refs.result.style.height = this.getEditorHeight(this.resultEditor) + 10 + "px";
         this.running = false;

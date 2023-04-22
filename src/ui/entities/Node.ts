@@ -1,8 +1,4 @@
-import { existsSync, readFileSync, writeFile } from "fs";
-import { join } from "path";
-import Config from "../entities/Config";
-
-const db = require('better-sqlite3')(join(Config.databasePath, 'database.db'));
+let ipcRender = window.ipcRender
 
 class Node {
     public id: number = 0
@@ -28,11 +24,11 @@ class Node {
             let id = Object.getOwnPropertyDescriptor(dbResult, 'id')?.value
             let title = Object.getOwnPropertyDescriptor(dbResult, 'title')?.value
             let content = Object.getOwnPropertyDescriptor(dbResult, 'content')?.value
-            let isBook = Object.getOwnPropertyDescriptor(dbResult, 'is_book')?.value
-            let isChapter = Object.getOwnPropertyDescriptor(dbResult, 'is_chapter')?.value
-            let isTab = Object.getOwnPropertyDescriptor(dbResult, 'is_tab')?.value
-            let isPage = Object.getOwnPropertyDescriptor(dbResult, 'is_page')?.value
-            let isVisible = Object.getOwnPropertyDescriptor(dbResult, 'is_visible')?.value
+            let isBook = Object.getOwnPropertyDescriptor(dbResult, 'isBook')?.value
+            let isChapter = Object.getOwnPropertyDescriptor(dbResult, 'isChapter')?.value
+            let isTab = Object.getOwnPropertyDescriptor(dbResult, 'isTab')?.value
+            let isPage = Object.getOwnPropertyDescriptor(dbResult, 'isPage')?.value
+            let isVisible = Object.getOwnPropertyDescriptor(dbResult, 'isVisible')?.value
             let priority = Object.getOwnPropertyDescriptor(dbResult, 'priority')?.value
             let level = Object.getOwnPropertyDescriptor(dbResult, 'level')?.value
             let cover = Object.getOwnPropertyDescriptor(dbResult, 'cover')?.value
@@ -48,7 +44,7 @@ class Node {
             this.priority = priority
             this.level = level
             this.cover = cover
-            this.parentId = Object.getOwnPropertyDescriptor(dbResult, 'parent_id')?.value
+            this.parentId = Object.getOwnPropertyDescriptor(dbResult, 'parentId')?.value
 
             if (this.id == 0) this.isEmpty = true
         }
@@ -59,20 +55,19 @@ class Node {
     }
 
     createChildPage(title: string, content: string): Number {
-        let result = db.prepare('insert into nodes (parent_id,title,content,is_page,is_visible) values (?,?,?,1,1)').run(this.id, title, content)
+        let result = window.ipcRender.sendSync('createChildPage',this.id, title, content)
 
         return result.lastInsertRowid
     }
 
     createChildChapter(title: string): Number {
-        let result = db.prepare('insert into nodes (parent_id,title,is_page,is_chapter,is_visible) values (?,?,0,1,1)').run(this.id, title)
+        let result = window.ipcRender.sendSync('createChildChapter',this.id,title)
         return result.lastInsertRowid
     }
 
     getBook(): Node {
-        // console.log('get book,current is', this)
         if (this.isBook || this.isEmpty) return this
-
+        
         return this.getParent().getBook()
     }
 
@@ -81,19 +76,13 @@ class Node {
     }
 
     getContent(): string {
-        let file = join(Config.databasePath, this.id + '.html')
-        let content = ''
-        if (existsSync(file)) {
-            content = readFileSync(file).toString()
-        } else {
-            content = this.content
-        }
+        let content = ipcRender.sendSync('getContent', this.id)
 
         return content == '' ? '{空}' : content
     }
 
     getTabs(): Node[] {
-        let tabs = db.prepare('select * from nodes where parent_id=? and is_tab=1').all(this.id)
+        let tabs = ipcRender.sendSync('getTabs', this.id)
         return tabs.map((tab: object) => {
             return new Node(tab)
         })
@@ -104,8 +93,8 @@ class Node {
             return new Node({})
         }
 
-        // console.log('get parent from db,id is', this.id)
-        let result = db.prepare('select * from nodes where id=? limit 1').get(this.parentId)
+        // console.log('get parent from db,id is', this.id, 'parent id is',this.parentId)
+        let result = Node.find(this.parentId)
 
         return new Node(result ?? {})
     }
@@ -125,7 +114,7 @@ class Node {
     }
 
     getChildren(): Node[] {
-        let children = db.prepare('select * from nodes where parent_id=? order by priority asc').all(this.id)
+        let children = ipcRender.sendSync('getChildren', this.id)
 
         return children.map((child: object) => {
             return new Node(child)
@@ -133,7 +122,7 @@ class Node {
     }
 
     getVisibleChildren(): Node[] {
-        let children = db.prepare('select * from nodes where parent_id=? and is_visible=1 order by priority asc').all(this.id)
+        let children = ipcRender.sendSync('getVisibleChildren', this.id)
 
         return children.map((child: object) => {
             return new Node(child)
@@ -141,20 +130,20 @@ class Node {
     }
 
     getSiblings(): Node[] {
-        let siblings = db.prepare('select * from nodes where parent_id=? order by priority asc').all(this.parentId)
+        let siblings = ipcRender.sendSync('getChildren', this.parentId)
         return siblings.map((sibling: object) => {
             return new Node(sibling)
         })
     }
 
     getFirstChild(): Node {
-        let result = db.prepare('select * from nodes where parent_id=? order by priority asc').get(this.id)
+        let result = ipcRender.sendSync('getFirstChild', this.id)
 
         return new Node(result ?? {})
     }
 
     getLastChild(): Node {
-        let result = db.prepare('select * from nodes where parent_id=? order by priority desc').get(this.id)
+        let result = ipcRender.sendSync('getLastChild',this.id)
 
         // console.log('get last child', result)
         return result ? new Node(result) : emptyNode
@@ -223,46 +212,35 @@ class Node {
         return Node.find(this.id)
     }
 
+    static updateChildrenPriority(children: Node[]) {
+        let parent = children.at(0)?.getParent()
+        if (parent == undefined) {
+            throw '更新children发生错误，找不到parent'
+        }
+
+        parent.setChildrenPriority(children)
+        dispatchEvent(new Event('nodeUpdated'))
+    }
+
     updatePriority(priority: number) {
         // console.log(this.title, '更新priority为', priority)
-        db.prepare('update nodes set priority=? where id=?').run(priority, this.id)
+        ipcRender.sendSync('updatePriority',this.id,priority)
     }
 
     updateContent(content: string): string {
-        // if (content == this.content) return '「' + this.title + '」的内容没有发生改变'
-
-        let result = db.prepare('update nodes set content=? where id=?').run(content, this.id)
-        writeFile(join(Config.databasePath, 'html', this.id + '.html'), content, (err) => {
-            // console.log('已同步到磁盘', err)
-        })
-
-        if (result != null) {
-            return '「' + this.title + '」的内容更新成功'
-        } else {
-            return '「' + this.title + '」的内容更新失败'
-        }
+        return ipcRender.sendSync('updateContent',this.id,content)
     }
 
     updateCover(base64Code: string): string {
-        let result = db.prepare('update nodes set cover=? where id=?').run(base64Code, this.id)
-        if (result != null) {
-            return this.id + '「' + this.title + '」的封面更新成功'
-        } else {
-            return this.id + '「' + this.title + '」的封面更新失败'
-        }
+        return ipcRender.sendSync('updateCover', this.id,base64Code)
     }
 
     updateTitle(title: string): string {
-        let result = db.prepare('update nodes set title=? where id=?').run(title, this.id)
-        if (result != null) {
-            return '「' + this.title + '」的标题更新成功'
-        } else {
-            return '「' + this.title + '」的标题更新失败'
-        }
+        return window.ipcRender.sendSync('updateTitle', title,this.id)
     }
 
     updateVisible(): string {
-        let result = db.prepare('update nodes set is_visible=abs(is_visible-1) where id=?').run(this.id)
+        let result = window.ipcRender.sendSync('updateVisible', this.id)
 
         let updated = this.refresh()
         if (result != null) {
@@ -273,8 +251,7 @@ class Node {
     }
 
     delete(): string {
-        let result = db.prepare('delete from nodes where id=?').run(this.id)
-        return "已删除「" + this.title + "」"
+        return ipcRender.sendSync('delete',this.id)
     }
 
     transformToTab(): string {
@@ -284,22 +261,13 @@ class Node {
     }
 
     static find(id: number): Node {
-        if (id == 0) return Node.getFirstBook()
-        let result = db.prepare('select * from nodes where id=?').get(id)
-
-        // console.log('查找节点', id, '结果', result)
-        return new Node(result)
-    }
-
-    static getFirstBook(): Node {
-        let result = db.prepare('select * from nodes where is_book=1 order by priority asc limit 1').get()
-
-        // console.log('get first book', result)
-        return new Node(result)
+        let node = window.ipcRender.sendSync('getBook', id)
+        
+        return new Node(node)
     }
 
     static getBooks(): Node[] {
-        let items = db.prepare('select * from nodes where is_book=1 order by priority asc').all()
+        let items = ipcRender.sendSync('getBooks')
 
         return items.map((item: object) => {
             return new Node(item)
@@ -307,17 +275,13 @@ class Node {
     }
 
     static getVisibleBooks(): Node[] {
-        let items = db.prepare('select * from nodes where is_book=1 and is_visible=1 order by priority asc').all()
-
-        return items.map((item: object) => {
+        return Node.getBooks().map((item: object) => {
             return new Node(item)
-        });
+        }).filter(node => node.isVisible);
     }
 
     static search(keyword: string): Node[] {
-        console.log(keyword)
-        let nodes = db.prepare("select * from nodes where title like ? limit 5").all(`%${keyword}%`)
-        console.log(nodes)
+        let nodes = window.ipcRender.sendSync('search', keyword)
         return nodes.map((node: object) => {
             return new Node(node)
         })
@@ -325,9 +289,4 @@ class Node {
 
 }
 
-const emptyNode = new Node({})
-
-export {
-    Node,
-    emptyNode
-};
+export default Node;

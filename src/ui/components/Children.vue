@@ -8,9 +8,9 @@
 
 <script lang="ts" setup>
 import draggable from "vuedraggable/src/vuedraggable";
-import NodeController from "../controllers/NodeController";
-import { Node } from "../models/Node";
+
 import Link from "./Link.vue";
+import Node from "../entities/Node";
 
 const props = defineProps({
   current: { type: Node, required: true },
@@ -19,6 +19,6 @@ const props = defineProps({
 });
 
 let dragEnd = function () {
-  NodeController.updateChildrenPriority(props.list);
+  Node.updateChildrenPriority(props.list);
 };
 </script>

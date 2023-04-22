@@ -23,7 +23,7 @@
 
 <script>
 import "xterm/css/xterm.css";
-const ipc = require("electron").ipcRenderer;
+// const ipc = require("electron").ipcRenderer;
 import { Terminal } from "xterm";
 import { FitAddon } from "xterm-addon-fit";
 import xtermTheme from "xterm-theme";

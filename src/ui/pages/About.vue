@@ -5,6 +5,6 @@
 </template>
 
 <script setup>
-const electron = require("electron");
+// const electron = require("electron");
 const version = electron.ipcRenderer.sendSync("get-app-version");
 </script>

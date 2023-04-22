@@ -7,7 +7,7 @@
 
 <script setup>
 import Plus from "../assets/icons/plus.svg";
-import { Node } from "../models/Node";
+import Node from "../entities/Node";
 
 let props = defineProps({
   showText: {

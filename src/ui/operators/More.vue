@@ -38,7 +38,8 @@ import Commit from "./Commit.vue";
 import Edit from "./Edit.vue";
 import CreateChild from "./Add.vue";
 import Visible from "./Visible.vue";
-import { Node } from "../models/Node";
+import Node from "../entities/Node";
+
 
 const route = useRoute();
 const book = computed(() => Node.find(parseInt(route.params.id.toString())).getBook());

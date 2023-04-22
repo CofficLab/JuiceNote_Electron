@@ -10,7 +10,7 @@
       <SideMenu></SideMenu>
     </aside>
 
-    <main :class="{ 'pl-40': asideVisible,'top-8':headerVisible}" class="fixed top-0 h-screen w-full overflow-scroll overscroll-none bg-cyan-800/10 dark:bg-slate-900/10">
+    <main :class="{ 'pl-40': asideVisible, 'top-8': headerVisible }" class="fixed top-0 h-screen w-full overflow-scroll overscroll-none bg-cyan-800/10 dark:bg-slate-900/10">
       <router-view v-slot="{ Component }">
         <transition name="slide-fade">
           <component :is="Component" />
@@ -39,9 +39,9 @@ import BottomBar from "../blocks/BottomBar.vue";
 import FormAdd from "../modals/FormAdd.vue";
 import FormRename from "../modals/FormRename.vue";
 import Toast from "../blocks/Toast.vue";
-import { Node } from "../models/Node.ts";
 import RightMenuModal from "../modals/RightMenuModal.vue";
 import FormSearch from "../modals/FormSearch.vue";
+import Node from "../entities/Node";
 
 const route = useRoute();
 const asideVisible = computed(() => ["lessons.show", "lessons.edit"].includes(route.name));

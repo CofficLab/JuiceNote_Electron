@@ -17,11 +17,12 @@
 
 <script setup>
 import Extensions from "../entities/Extensions";
-import { Node } from "../models/Node";
+
 import { ref, watch, onBeforeUnmount } from "vue";
 import Monaco from "./Monaco.vue";
 import Toolbar from "../blocks/Toolbar.vue";
 import { Editor, EditorContent } from "@tiptap/vue-3";
+import Node from "../entities/Node";
 
 const props = defineProps({
   node: Node,
@@ -73,7 +74,7 @@ let save = function (content) {
 };
 
 watch(props, () => {
-  console.log("editor 发现 props 发生变化，更新内容");
+  // console.log("editor 发现 props 发生变化，更新内容");
   editor.destroy();
   editor = getEditor();
 });

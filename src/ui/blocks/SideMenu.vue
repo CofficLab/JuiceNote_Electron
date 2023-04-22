@@ -12,13 +12,20 @@
 <script lang="ts" setup>
 import { nextTick, watch, computed,ref } from "vue";
 import SideMenuItem from "../components/SideMenuItem.vue";
-import { Node } from "../models/Node";
+
 import { useRoute } from "vue-router";
+import Node from "../entities/Node";
 
 const route = useRoute();
-const current = computed(() => Node.find(parseInt(route.params.id.toString())));
+const current = computed(() => {
+  // console.log('确认当前节点', parseInt(route.params.id.toString()))
+
+  return Node.find(parseInt(route.params.id.toString()))
+});
 const getBook = () => current.value.getBook()
 let book = ref(getBook());
+
+// console.log(book.value)
 
 window.addEventListener("nodeUpdated", () => {
   book.value = getBook()

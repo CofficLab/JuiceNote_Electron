@@ -7,8 +7,9 @@
 
 <script setup>
 import ArrowLeftCircle from "../assets/icons/arrow-left-circle.svg";
-import { Node } from "../models/Node";
+
 import { useRouter } from "vue-router";
+import Node from "../entities/Node";
 
 const router = useRouter();
 const props = defineProps({
@@ -22,10 +23,7 @@ const props = defineProps({
     default: true,
     required: false,
   },
-  node: {
-    type: Node,
-    require: true,
-  },
+  node: Node,
 });
 
 const rename = function () {

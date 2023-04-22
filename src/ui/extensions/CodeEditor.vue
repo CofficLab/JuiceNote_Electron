@@ -42,9 +42,9 @@ import { NodeViewContent, nodeViewProps, NodeViewWrapper } from "@tiptap/vue-3";
 import Monaco from "../components/Monaco.vue";
 import Trash from "../assets/icons/trash.svg";
 import { useRoute } from "vue-router";
-import { Node } from "../models/Node.ts";
 import ClipboardJS from "clipboard";
-import ToastController from "../controllers/ToastController";
+import Node from "../entities/Node.ts"
+import ToastController from "../entities/Toast";
 
 var clipboard = new ClipboardJS(".copy");
 clipboard.on("success", function () {

@@ -31,9 +31,8 @@
 
 <script lang="ts" setup>
 import { nextTick, ref } from "vue";
-import { Node } from "../models/Node";
 import { useRouter } from "vue-router";
-import { ipcRenderer } from "electron";
+import Node from "../entities/Node";
 
 const router = useRouter();
 let keyword = "";
@@ -61,11 +60,13 @@ const submit = (e:KeyboardEvent) => {
   }
 };
 
-ipcRenderer.on("main-process-message", (_event, ...args) => {
-  if (args[0] === "toggle-search") {
-    toggleVisible()
-  }
-});
+window.addEventListener('channel', (e) => {
+  console.log('监听到channel事件',e)
+})
+
+window.addEventListener('show-search', () => {
+  toggleVisible()
+})
 </script>
 
 <style scoped>

@@ -17,8 +17,8 @@ function createWindow(option?: BrowserWindowConstructorOptions):BrowserWindow {
         titleBarOverlay: true,
         webPreferences: {
             preload:Config.PRELOAD_FILE,
-            nodeIntegration: true,
-            contextIsolation: false,
+            // nodeIntegration: true,
+            // contextIsolation: false,
             spellcheck: false,
         },
     }

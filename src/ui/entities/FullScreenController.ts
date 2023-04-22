@@ -1,6 +1,6 @@
 import { reactive } from 'vue'
 
-const FullScreenController = reactive({
+const FullScreen = reactive({
     full: false,
 
     enter(): void {
@@ -12,4 +12,4 @@ const FullScreenController = reactive({
     },
 })
 
-export default FullScreenController
+export default FullScreen

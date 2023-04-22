@@ -14,12 +14,12 @@ export default defineConfig({
     svgLoader(),
     electron({
       main: {
-        entry: 'src/electron/index.ts',
+        entry: 'src/main/index.ts',
         vite: {
           build: {
             // For Debug
             sourcemap: true,
-            outDir: 'dist/electron/main',
+            outDir: 'dist/main',
           },
           // Will start Electron via VSCode Debug
           plugins: [process.env.VSCODE_DEBUG ? onstart() : null],
@@ -28,13 +28,13 @@ export default defineConfig({
       preload: {
         input: {
           // You can configure multiple preload here
-          index: path.join(__dirname, 'src/electron/preload.ts'),
+          index: path.join(__dirname, 'src/preload/index.ts'),
         },
         vite: {
           build: {
             // For Debug
             sourcemap: 'inline',
-            outDir: 'dist/electron/preload',
+            outDir: 'dist/preload',
           },
         },
       },

@@ -18,7 +18,7 @@
 </template>
 
 <script setup>
-import { Node } from "../models/Node";
+
 import Home from "../operators/Home.vue";
 import More from "../operators/More.vue";
 import Next from "../operators/Next.vue";
@@ -28,11 +28,12 @@ import Terminal from "../operators/Terminal.vue";
 import Breadcrumbs from "./Breadcrumbs.vue";
 import { useRoute } from "vue-router";
 import { computed } from "vue";
+import Node from "../entities/Node";
 
-const electron = require("electron");
+// const electron = require("electron");
 const route = useRoute();
 const currentId = computed(() => route.params.id);
 const current = computed(() => Node.find(currentId.value));
 const isRouteLesson = computed(() => route.name && route.name.startsWith("lessons"));
-const isWindows = electron.ipcRenderer.sendSync("get-platform") == "win32";
+const isWindows = window.ipcRender.sendSync("get-platform") == "win32";
 </script>

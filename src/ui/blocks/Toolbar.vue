@@ -164,9 +164,8 @@
 <script setup>
 import { Editor } from "@tiptap/vue-3";
 import { computed, ref } from "vue";
-import NodeController from "../controllers/NodeController";
-import ToastController from "../controllers/ToastController";
-import { Node } from "../models/Node";
+import ToastController from "../entities/Toast";
+
 import IconCode from "../assets/icons/code-bracket.svg";
 import IconListBullet from "../assets/icons/list-bullet.svg";
 import IconBack from "../assets/icons/arrow-uturn-left.svg";
@@ -190,6 +189,7 @@ import IconEmpty from "../assets/icons/empty.svg";
 import IconHashTag from "../assets/icons/hashtag.svg";
 import { useRouter } from "vue-router";
 import Visible from "../operators/Visible.vue";
+import Node from "../entities/Node";
 
 const router = useRouter();
 

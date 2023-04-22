@@ -7,7 +7,7 @@ function truncate(str: string, maxLength: number): string {
     return str
 }
 
-const ToastController = reactive({
+const Toast = reactive({
     toast: '',
 
     set(message: string): void {
@@ -20,4 +20,4 @@ const ToastController = reactive({
     },
 })
 
-export default ToastController
+export default Toast

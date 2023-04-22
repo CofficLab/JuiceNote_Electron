@@ -1,6 +1,6 @@
 import { reactive } from 'vue'
 
-const ErrorController = reactive({
+const Error = reactive({
     error: '',
 
     set(message: string): void {
@@ -16,4 +16,4 @@ const ErrorController = reactive({
     }
 })
 
-export default ErrorController
+export default Error

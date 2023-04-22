@@ -23,8 +23,9 @@
 
 <script lang="ts" setup>
 import { onMounted,ref, onBeforeUnmount, nextTick } from "vue";
-import { Node } from "../models/Node";
+
 import { useRouter } from "vue-router";
+import Node from "../entities/Node";
 
 let router = useRouter()
 let title = "";

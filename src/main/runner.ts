@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import electron from 'electron'
-import Config from '../entities/Config'
+import Config from './config'
 
 let CodeRunner = function (code = '', language = 'PHP') {
     let suffix = 'unknown'
@@ -50,11 +50,11 @@ let CodeRunner = function (code = '', language = 'PHP') {
     if (suffix == 'php') content = "<?php \r\n" + content
 
     // 写入临时文件
-    let tmpFilePath = path.join(electron.ipcRenderer.sendSync('get-app-path'), 'temp', 'tmp.' + suffix)
+    let tmpFilePath = path.join(Config.ROOT_PATH, 'tmp.' + suffix)
     fs.writeFileSync(tmpFilePath, content)
 
-    console.log('language is', language, 'code is')
-    console.log(fs.readFileSync(tmpFilePath).toString())
+    // console.log('language is', language, 'code is')
+    // console.log(fs.readFileSync(tmpFilePath).toString())
 
     // 执行文件
     let execSync = require("child_process").execSync;
@@ -108,10 +108,10 @@ let CodeRunner = function (code = '', language = 'PHP') {
             output = '缺少' + suffix + '的解析器'
     }
 
-    return output.toString().
-        replaceAll(Config.rootPath + '/temp/', '').
-        replace('PATH=/opt/homebrew/bin/:/usr/local/bin:$PATH && ', '').
-        replace('Command failed: ', '')
+    return output.toString()
+        // replaceAll(Config.ROOT_PATH + '/temp/', '').
+        // replace('PATH=/opt/homebrew/bin/:/usr/local/bin:$PATH && ', '').
+        // replace('Command failed: ', '')
 }
 
 export default CodeRunner

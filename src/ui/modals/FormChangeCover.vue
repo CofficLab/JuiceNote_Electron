@@ -15,7 +15,7 @@
 <script setup>
 import { computed, ref } from "vue";
 import { useRoute } from "vue-router";
-import { Node } from "../models/Node";
+
 
 const route = useRoute();
 let node = computed(() => Node.find(route.params.id));

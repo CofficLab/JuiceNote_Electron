@@ -8,10 +8,11 @@
 <script lang="ts" setup>
 import { computed } from "vue";
 import ClipboardJS from "clipboard";
-import ToastController from "../controllers/ToastController";
+import ToastController from "../entities/Toast";
 import IconCopy from "../assets/icons/clipboard-document.svg";
 import { useRoute } from "vue-router";
-import { Node } from "../models/Node";
+import Node from "../entities/Node";
+
 
 var clipboard = new ClipboardJS(".copy");
 clipboard.on("success", function () {

@@ -8,7 +8,6 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import ArrowLeftCircle from "../assets/icons/arrow-left-circle.svg";
-import NodeController from "../controllers/NodeController";
 
 export default defineComponent({
   components: { ArrowLeftCircle },

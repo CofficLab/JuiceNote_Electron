@@ -13,7 +13,7 @@
 import { defineComponent } from "vue";
 import ArrowLeftCircle from "../assets/icons/arrow-left-circle.svg";
 import Link from "./Link.vue";
-import { Node } from "../models/Node";
+
 
 export default defineComponent({
   props: { current: { type: Node, required: true } },

@@ -13,7 +13,7 @@
 import { useRoute } from "vue-router";
 import { computed } from "vue";
 
-const electron = require("electron");
+// const electron = require("electron");
 const route = useRoute();
 const url = computed(() => location.href);
 const fullPath = computed(() => route.fullPath);

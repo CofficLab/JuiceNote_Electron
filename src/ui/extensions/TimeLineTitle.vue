@@ -9,7 +9,6 @@
 <script>
 import { NodeViewContent, nodeViewProps, NodeViewWrapper } from "@tiptap/vue-3";
 import Info from "../assets/icons/info.svg";
-import NodeController from "../controllers/NodeController";
 
 export default {
   components: {

@@ -27,10 +27,9 @@
 </template>
 
 <script lang="ts" setup>
-import NodeController from "../controllers/NodeController";
-import ToastController from "../controllers/ToastController";
-import { Node } from "../models/Node";
+import Toast from "../entities/Toast";
 import { onMounted, ref, onBeforeUnmount, nextTick } from "vue";
+import Node from "../entities/Node";
 
 let visible = ref(false);
 let title = "";
@@ -43,7 +42,7 @@ const setVisible = function (e: CustomEvent) {
   nextTick(() => document.querySelector<HTMLDivElement>("#rename-node-form-title")!.focus());
 };
 const submit = () => {
-  ToastController.set(NodeController.updateTitle(node.value!, title));
+  Toast.set(node.value!.updateTitle(title));
   setUnVisible();
 };
 

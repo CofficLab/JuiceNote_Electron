@@ -40,10 +40,11 @@
 <script setup>
 import { computed } from "vue";
 import { useRoute } from "vue-router";
-import { Node } from "../models/Node";
+
 import DynamicPadding from "./DynamicPadding.vue";
 import Link from "./Link.vue";
-import FullScreenController from "../controllers/FullScreenController";
+import FullScreenController from "../entities/FullScreenController";
+import Node from "../entities/Node";
 
 const route = useRoute();
 
@@ -56,7 +57,7 @@ let item = computed(()=>props.item ?? props.current.getBook());
 
 const editable = computed(() => route.name == "lessons.edit");
 let hideTitleBar = computed(() => FullScreenController.full);
-let isWindows = require("electron").ipcRenderer.sendSync("get-platform") == "win32";
+let isWindows = window.ipcRender.sendSync("get-platform") == "win32";
 
 const getSubMenus = function (menu) {
   if (menu.isBook && menu.getTabs().length > 0) {
