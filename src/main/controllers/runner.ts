@@ -1,9 +1,11 @@
+import { ipcMain } from 'electron'
 import fs from 'fs'
 import path from 'path'
-import electron from 'electron'
-import Config from './config'
+import Config from '../config'
 
-let CodeRunner = function (code = '', language = 'PHP') {
+const tempPath = path.join(Config.ROOT_PATH, 'temp')
+
+let run = function (code = '', language = 'PHP') {
     let suffix = 'unknown'
     switch (language) {
         case 'PHP':
@@ -50,7 +52,7 @@ let CodeRunner = function (code = '', language = 'PHP') {
     if (suffix == 'php') content = "<?php \r\n" + content
 
     // 写入临时文件
-    let tmpFilePath = path.join(Config.ROOT_PATH, 'tmp.' + suffix)
+    let tmpFilePath = path.join(tempPath, 'tmp.' + suffix)
     fs.writeFileSync(tmpFilePath, content)
 
     // console.log('language is', language, 'code is')
@@ -114,4 +116,8 @@ let CodeRunner = function (code = '', language = 'PHP') {
         // replace('Command failed: ', '')
 }
 
-export default CodeRunner
+export default function setRunController() {
+    ipcMain.on('run', function (event, code, language) {
+        return event.returnValue = run(code, language)
+    })
+}

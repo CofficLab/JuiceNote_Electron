@@ -50,6 +50,10 @@ export default function setNodeController() {
         return event.returnValue = Node.find(id).updateVisible()
     })
 
+    ipcMain.on('updateContent', (event, id, content) => {
+        return event.returnValue = Node.find(id).updateContent(content)
+    })
+
     ipcMain.on('createChildPage', (event, id,title,content) => {
         return event.returnValue = Node.find(id).createChildPage(title,content)
     })

@@ -232,7 +232,7 @@ class Node {
         // if (content == this.content) return '「' + this.title + '」的内容没有发生改变'
 
         let result = db.prepare('update nodes set content=? where id=?').run(content, this.id)
-        writeFile(join(Config.databasePath, 'html', this.id + '.html'), content, (err) => {
+        writeFile(join(Config.DATABASE_PATH, 'html', this.id + '.html'), content, (err) => {
             // console.log('已同步到磁盘', err)
         })
 
