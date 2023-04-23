@@ -8,7 +8,7 @@
     <div class="flex h-8 flex-row items-center justify-end gap-4 pr-4">
       <!-- <Languages></Languages> -->
       <BtnOfficialLink></BtnOfficialLink>
-      <Terminal :class="'btn-ghost btn-xs btn rounded-sm px-1'"></Terminal>
+      <Terminal class="btn-ghost btn-xs btn rounded-sm px-1"></Terminal>
       <Prev class="btn-ghost btn-xs btn rounded-sm px-1" :showText="false" v-if="isRouteLesson"></Prev>
       <Home class="btn-ghost btn-xs btn rounded-sm px-1"></Home>
       <Next class="btn-ghost btn-xs btn rounded-sm px-1" :showText="false" v-if="isRouteLesson"></Next>

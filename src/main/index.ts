@@ -47,7 +47,7 @@ app.on('second-instance', () => {
 })
 
 app.on('activate', () => {
-    console.log('event: activate')
+    console.log('主进程检测到事件: activate')
     const allWindows = BrowserWindow.getAllWindows()
     if (allWindows.length) {
         allWindows[0].focus()

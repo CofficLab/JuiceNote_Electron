@@ -24,6 +24,9 @@
     <FormAdd></FormAdd>
     <FormRename></FormRename>
 
+    <!-- 全局的组件 -->
+    <Terminal v-if="terminalVisible"></Terminal>
+
     <!-- <DebugBar></DebugBar> -->
     <!-- <BottomBar></BottomBar> -->
   </div>
@@ -42,6 +45,7 @@ import Toast from "../blocks/Toast.vue";
 import RightMenuModal from "../modals/RightMenuModal.vue";
 import FormSearch from "../modals/FormSearch.vue";
 import Node from "../entities/Node";
+import Terminal from "../components/Terminal.vue";
 
 const route = useRoute();
 const asideVisible = computed(() => ["lessons.show", "lessons.edit"].includes(route.name));
@@ -52,6 +56,9 @@ const headerVisible = computed(() => {
 
   return ["lessons.show", "home.show", "home.edit"].includes(route.name);
 });
+const terminalVisible = ref(false)
+
+window.addEventListener('toggle-terminal', () => terminalVisible.value = !terminalVisible.value)
 </script>
 
 <style scoped>
