@@ -26,7 +26,7 @@ const route = useRoute();
 
 const editable = computed(() => route.name == "lessons.edit");
 
-let node = Node.find(route.params.id);
+let node = Node.find(route.params.id.toString());
 
 let save = function (content) {
   if (content != node.content) {
@@ -36,16 +36,16 @@ let save = function (content) {
 };
 
 watch(route, () => {
-  node = Node.find(route.params.id);
+  node = Node.find(route.params.id.toString());
 
   if (route.hash.length > 0) {
     // 获取带有锚点的元素
-    var target = document.querySelector(route.hash);
+    var target = document.querySelector<HTMLDivElement>(route.hash);
     console.log("滚动到锚点", target);
 
     // 如果有锚点并且目标元素存在，则滚动到该元素
     if (window.location.hash && target) {
-      document.querySelector("main").scrollTo({
+      document.querySelector("main")!.scrollTo({
         top: target.offsetTop,
         behavior: "smooth",
       });
