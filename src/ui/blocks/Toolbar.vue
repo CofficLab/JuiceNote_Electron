@@ -119,6 +119,10 @@
       <IconViewColumns></IconViewColumns>
     </button>
 
+    <button @click="editor.chain().focus().addCodeProject().run()" class="tooltip tooltip-bottom" data-tip="代码项目">
+      <IconViewColumns></IconViewColumns>
+    </button>
+
     <button @click="cancel" :disabled="!editor.can().chain().focus().undo().run()" class="tooltip tooltip-bottom" data-tip="撤销修改">
       <IconBack></IconBack>
     </button>
@@ -217,7 +221,10 @@ let unsetAllMarks = () => props.editor.chain().focus().unsetAllMarks().run();
 let addChat = () => props.editor.chain().focus().addChat().run();
 let cancel = () => props.editor.chain().focus().undo().run();
 let redo = () => props.editor.chain().focus().redo().run();
-let empty = () => ToastController.set(props.current.updateContent( ""));
+let empty = () => {
+  ToastController.set(props.current.updateContent(""))
+  props.editor.commands.setContent('', false)
+};
 let save = () => ToastController.set(props.current.updateContent(props.editor.getHTML()));
 let setParagraph = () => {
   props.editor.chain().focus().setParagraph().run();

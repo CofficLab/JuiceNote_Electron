@@ -225,6 +225,7 @@ class Node {
     }
 
     updateContent(content: string): string {
+        dispatchEvent(new Event('nodeUpdated'))
         return Ipc.sendSync('updateContent',this.id,content)
     }
 
@@ -257,7 +258,7 @@ class Node {
         return '已转换成标签'
     }
 
-    static find(id: number): Node {
+    static find(id: number|String): Node {
         let node = Ipc.sendSync('find', id)
         
         return new Node(node)
