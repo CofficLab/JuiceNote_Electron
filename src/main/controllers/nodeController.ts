@@ -51,11 +51,16 @@ export default function setNodeController() {
     })
 
     ipcMain.on('updateContent', (event, id, content) => {
+        console.log('update content',id,content)
         return event.returnValue = Node.find(id).updateContent(content)
     })
 
     ipcMain.on('createChildPage', (event, id,title,content) => {
         return event.returnValue = Node.find(id).createChildPage(title,content)
+    })
+
+    ipcMain.on('createChildChapter', (event, id,title,content) => {
+        return event.returnValue = Node.find(id).createChildChapter(title)
     })
 
     ipcMain.on('delete', (e, id) => {

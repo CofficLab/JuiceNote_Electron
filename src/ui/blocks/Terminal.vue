@@ -23,12 +23,14 @@
 
 <script>
 import "xterm/css/xterm.css";
-// const ipc = require("electron").ipcRenderer;
 import { Terminal } from "xterm";
 import { FitAddon } from "xterm-addon-fit";
 import xtermTheme from "xterm-theme";
 import DraggableWindow from "../components/DraggableWindow.vue";
 import VueDragResize from "vue-drag-resize/src";
+import Preload from "../entities/Preload"
+
+const ipc = Preload.ipc
 
 export default {
   props: {
@@ -68,7 +70,7 @@ export default {
     initConnect() {
       this.destroyTerm();
       let that = this;
-      ipc.invoke("terminal-create").then((res) => {
+      Preload.ipc.invoke("terminal-create").then((res) => {
         let pid = res;
         let xterm = new Terminal({
           allowTransparency: true,
@@ -91,18 +93,10 @@ export default {
           "terminal-resize-" + pid,
           "terminal-close-" + pid,
         ];
-        xterm.onData((data) => {
-          ipc.send(that.channels[1], data);
-        });
-        xterm.onResize((size) => {
-          ipc.send(that.channels[2], size.cols, size.rows);
-        });
-        ipc.on(that.channels[0], (event, data) => {
-          xterm.write(data);
-        });
-        window.onresize = function () {
-          that.fitSize();
-        };
+        xterm.onData((data) => ipc.send(that.channels[1], data))
+        xterm.onResize((size) => ipc.send(that.channels[2], size.cols, size.rows))
+        window.preloadApi.terminal.incomingData(pid, (event, data) => xterm.write(data))
+        window.onresize = () => that.fitSize();
         that.fitSize();
         xterm.focus();
       });

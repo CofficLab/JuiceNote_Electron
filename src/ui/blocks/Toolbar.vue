@@ -217,8 +217,8 @@ let unsetAllMarks = () => props.editor.chain().focus().unsetAllMarks().run();
 let addChat = () => props.editor.chain().focus().addChat().run();
 let cancel = () => props.editor.chain().focus().undo().run();
 let redo = () => props.editor.chain().focus().redo().run();
-let empty = () => ToastController.set(NodeController.updateContent(props.current, ""));
-let save = () => ToastController.set(NodeController.updateContent(props.current, props.editor.getHTML()));
+let empty = () => ToastController.set(props.current.updateContent( ""));
+let save = () => ToastController.set(props.current.updateContent(props.editor.getHTML()));
 let setParagraph = () => {
   props.editor.chain().focus().setParagraph().run();
 };

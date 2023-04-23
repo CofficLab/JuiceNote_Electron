@@ -39,7 +39,7 @@
 import { nextTick, ref } from "vue";
 import { useRouter } from "vue-router";
 import Node from "../entities/Node";
-import IpcRender from "../entities/IpcRender"
+import Preload from "../entities/Preload"
 
 const router = useRouter();
 let keyword = "";
@@ -48,7 +48,7 @@ let current = ref(0);
 let visible = ref(false);
 
 const getBook = function (node: Node) {
-  return IpcRender.sendSync("getBook", node.id);
+  return Preload.ipc.sendSync("getBook", node.id);
 };
 const focus = () => nextTick(() => document.querySelector<HTMLDivElement>("#search-form-title")?.focus());
 const toggleVisible = () => (visible.value = !visible.value) && focus();
@@ -74,9 +74,7 @@ window.addEventListener("channel", (e) => {
   console.log("监听到channel事件", e);
 });
 
-window.addEventListener("show-search", () => {
-  toggleVisible();
-});
+Preload.listen("toggle-search", toggleVisible);
 </script>
 
 <style scoped>

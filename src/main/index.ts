@@ -1,36 +1,57 @@
 import { createWindow } from './window'
-import { ipcMain } from 'electron'
-import { app, win } from './app'
-import Config from './config'
+import { BrowserWindow, app } from 'electron'
 import setNodeController from './controllers/nodeController'
-import { setTerminalController } from './controllers/terminalController'
+import setTerminalController  from './controllers/terminalController'
 import setRunController from './controllers/runner'
+import { release } from 'os'
+import setWildController from './controllers/wildController'
 
 // Remove electron security warnings
 // This warning only shows in development mode
 // Read more on https://www.electronjs.org/docs/latest/tutorial/security
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
 
-ipcMain.handle('open-win', createWindow)
-ipcMain.handle('get-config', () => Config)
+// Disable GPU Acceleration for Windows 7
+if (release().startsWith('6.1')) app.disableHardwareAcceleration()
 
-// 供子进程查询app path
-ipcMain.on('get-app-path', (event) => event.returnValue = app.getAppPath())
+// Set application name for Windows 10+ notifications
+if (process.platform === 'win32') app.setAppUserModelId(app.getName())
 
-// 供子进程查询app version
-ipcMain.on('get-app-version', (event) => event.returnValue = app.getVersion())
+if (!app.requestSingleInstanceLock()) {
+    app.quit()
+    process.exit(0)
+}
 
-// 供子进程查询platform
-ipcMain.on('get-platform', (event) => event.returnValue = process.platform)
+let win: BrowserWindow | null = null
 
-ipcMain.on('versions', () => {
-    return {
-        node: () => process.versions.node,
-        chrome: () => process.versions.chrome,
-        electron: () => process.versions.electron,
+app.whenReady().then(function () {
+    win = createWindow()
+
+    setTerminalController(win)
+    setWildController(app)
+    setRunController()
+    setNodeController()
+})
+
+app.on('window-all-closed', () => {
+    win = null
+    app.quit()
+})
+
+app.on('second-instance', () => {
+    if (win) {
+        // Focus on the main window if the user tried to open another
+        if (win.isMinimized()) win.restore()
+        win.focus()
     }
 })
 
-setRunController()
-setNodeController()
-setTerminalController(win)
+app.on('activate', () => {
+    console.log('event: activate')
+    const allWindows = BrowserWindow.getAllWindows()
+    if (allWindows.length) {
+        allWindows[0].focus()
+    } else {
+        createWindow()
+    }
+})

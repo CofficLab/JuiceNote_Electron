@@ -96,7 +96,24 @@ import { contextBridge, ipcRenderer } from 'electron'
 // 通过 ipcRender 调用主进程的 API
 contextBridge.exposeInMainWorld('ipcRender', ipcRenderer)
 
+contextBridge.exposeInMainWorld('preloadApi', {
+  terminal: {
+    incomingData: (pid, callback) => {
+      ipcRenderer.on('terminal-incomingData-' + pid, (event, data) => callback(event, data))
+    },
+  }
+})
+
 // 对主进程的消息作出响应
-ipcRenderer.on("main-process-message", (_event, ...args) => {
-  if ('toggle-search' == args[0]) dispatchEvent(new Event('show-search'))
-});
+contextBridge.exposeInMainWorld('listen', (name, callback) => {
+  switch (name) {
+    case 'toggle-search':
+      ipcRenderer.on('toggle-search', () => callback())
+      break;
+
+    default:
+      break;
+  }
+})
+
+

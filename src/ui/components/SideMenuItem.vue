@@ -45,8 +45,9 @@ import DynamicPadding from "./DynamicPadding.vue";
 import Link from "./Link.vue";
 import FullScreenController from "../entities/FullScreenController";
 import Node from "../entities/Node";
-import IpcRender from "../entities/IpcRender";
+import Preload from "../entities/Preload";
 
+const IpcRender = Preload.ipc
 const route = useRoute();
 
 const props = defineProps({

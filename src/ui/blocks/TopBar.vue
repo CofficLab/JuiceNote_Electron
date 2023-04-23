@@ -29,12 +29,12 @@ import Breadcrumbs from "./Breadcrumbs.vue";
 import { useRoute } from "vue-router";
 import { computed } from "vue";
 import Node from "../entities/Node";
-import IpcRender from "../entities/IpcRender";
+import Preload from "../entities/Preload";
 
 // const electron = require("electron");
 const route = useRoute();
 const currentId = computed(() => route.params.id);
 const current = computed(() => Node.find(currentId.value));
 const isRouteLesson = computed(() => route.name && route.name.startsWith("lessons"));
-const isWindows = IpcRender.sendSync("get-platform") == "win32";
+const isWindows = Preload.IpcRender.sendSync("get-platform") == "win32";
 </script>

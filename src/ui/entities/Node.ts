@@ -1,6 +1,6 @@
-import IpcRender from "./IpcRender"
+import Preload from "./Preload"
 
-let ipcRender = IpcRender
+const Ipc = Preload.ipc
 
 class Node {
     public id: number = 0
@@ -52,19 +52,14 @@ class Node {
         }
     }
 
-    checkIsHomePage(): boolean {
-        return this.id == Node.getFirstBook().getFirstPage().id
-    }
-
+    // 创建子页面，返回新创建的ID
     createChildPage(title: string, content: string): Number {
-        let result = IpcRender.sendSync('createChildPage',this.id, title, content)
-
-        return result.lastInsertRowid
+        return Ipc.sendSync('createChildPage', this.id, title, content)
     }
 
+    // 创建兄弟章节，返回新创建的ID
     createChildChapter(title: string): Number {
-        let result = IpcRender.sendSync('createChildChapter',this.id,title)
-        return result.lastInsertRowid
+        return Ipc.sendSync('createChildChapter', this.id, title)
     }
 
     getBook(): Node {
@@ -78,13 +73,13 @@ class Node {
     }
 
     getContent(): string {
-        let content = ipcRender.sendSync('getContent', this.id)
+        let content = Ipc.sendSync('getContent', this.id)
 
         return content == '' ? '{空}' : content
     }
 
     getTabs(): Node[] {
-        let tabs = ipcRender.sendSync('getTabs', this.id)
+        let tabs = Ipc.sendSync('getTabs', this.id)
         return tabs.map((tab: object) => {
             return new Node(tab)
         })
@@ -116,7 +111,7 @@ class Node {
     }
 
     getChildren(): Node[] {
-        let children = ipcRender.sendSync('getChildren', this.id)
+        let children = Ipc.sendSync('getChildren', this.id)
 
         return children.map((child: object) => {
             return new Node(child)
@@ -124,7 +119,7 @@ class Node {
     }
 
     getVisibleChildren(): Node[] {
-        let children = ipcRender.sendSync('getVisibleChildren', this.id)
+        let children = Ipc.sendSync('getVisibleChildren', this.id)
 
         return children.map((child: object) => {
             return new Node(child)
@@ -132,20 +127,20 @@ class Node {
     }
 
     getSiblings(): Node[] {
-        let siblings = ipcRender.sendSync('getChildren', this.parentId)
+        let siblings = Ipc.sendSync('getChildren', this.parentId)
         return siblings.map((sibling: object) => {
             return new Node(sibling)
         })
     }
 
     getFirstChild(): Node {
-        let result = ipcRender.sendSync('getFirstChild', this.id)
+        let result = Ipc.sendSync('getFirstChild', this.id)
 
         return new Node(result ?? {})
     }
 
     getLastChild(): Node {
-        let result = ipcRender.sendSync('getLastChild',this.id)
+        let result = Ipc.sendSync('getLastChild',this.id)
 
         // console.log('get last child', result)
         return result ? new Node(result) : emptyNode
@@ -226,23 +221,23 @@ class Node {
 
     updatePriority(priority: number) {
         // console.log(this.title, '更新priority为', priority)
-        ipcRender.sendSync('updatePriority',this.id,priority)
+        Ipc.sendSync('updatePriority',this.id,priority)
     }
 
     updateContent(content: string): string {
-        return ipcRender.sendSync('updateContent',this.id,content)
+        return Ipc.sendSync('updateContent',this.id,content)
     }
 
     updateCover(base64Code: string): string {
-        return ipcRender.sendSync('updateCover', this.id,base64Code)
+        return Ipc.sendSync('updateCover', this.id,base64Code)
     }
 
     updateTitle(title: string): string {
-        return IpcRender.sendSync('updateTitle', title,this.id)
+        return Ipc.sendSync('updateTitle', title,this.id)
     }
 
     updateVisible(): string {
-        let result = IpcRender.sendSync('updateVisible', this.id)
+        let result = Ipc.sendSync('updateVisible', this.id)
 
         let updated = this.refresh()
         if (result != null) {
@@ -253,7 +248,7 @@ class Node {
     }
 
     delete(): string {
-        return ipcRender.sendSync('delete',this.id)
+        return Ipc.sendSync('delete',this.id)
     }
 
     transformToTab(): string {
@@ -263,13 +258,13 @@ class Node {
     }
 
     static find(id: number): Node {
-        let node = IpcRender.sendSync('find', id)
+        let node = Ipc.sendSync('find', id)
         
         return new Node(node)
     }
 
     static getBooks(): Node[] {
-        let items = ipcRender.sendSync('getBooks')
+        let items = Ipc.sendSync('getBooks')
 
         return items.map((item: object) => {
             return new Node(item)
@@ -283,7 +278,7 @@ class Node {
     }
 
     static search(keyword: string): Node[] {
-        let nodes = IpcRender.sendSync('search', keyword)
+        let nodes = Ipc.sendSync('search', keyword)
         return nodes.map((node: object) => {
             return new Node(node)
         })

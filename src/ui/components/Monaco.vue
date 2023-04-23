@@ -21,7 +21,7 @@ import htmlWorker from "monaco-editor/esm/vs/language/html/html.worker?worker";
 import tsWorker from "monaco-editor/esm/vs/language/typescript/ts.worker?worker";
 import { defineComponent } from "vue";
 import { useRoute } from "vue-router";
-import IpcRender from "../entities/IpcRender";
+import Preload from "../entities/Preload";
 
 export default defineComponent({
   props: {
