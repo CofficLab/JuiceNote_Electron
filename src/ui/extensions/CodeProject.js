@@ -17,6 +17,7 @@ export default Node.create({
         parseHTML: (element) => element.getAttribute("data"),
         rendered: true,
       },
+      current: 1
     };
   },
 
@@ -29,7 +30,7 @@ export default Node.create({
     // 第一个参数是HTML标签的名字
     // 第二个参数如果是object，将会被当成标签的属性
     // 后面的参数都是标签的子元素
-    return ["code-project", HTMLAttributes];
+    return ["code-project", HTMLAttributes, 0];
   },
 
   addNodeView() {
@@ -56,7 +57,7 @@ export default Node.create({
             }
           ]
           
-          return commands.insertContent('<code-project data='+JSON.stringify(data)+'></code-project>');
+          return commands.insertContent('<code-project current=1 data='+JSON.stringify(data)+'><pre><code></code></pre></code-project>');
         },
     };
   },

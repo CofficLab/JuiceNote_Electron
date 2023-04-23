@@ -7,6 +7,10 @@ export default CodeBlock.extend({
 
   addAttributes() {
     return {
+      height: {
+        default: 0,
+        rendered: true,
+      },
       code: {
         default: "",
         rendered: false,
@@ -31,6 +35,10 @@ export default CodeBlock.extend({
         default: 1,
         rendered: true,
       },
+      visible: {
+        default: true,
+        rendered:true
+      }
     };
   },
 
@@ -42,7 +50,11 @@ export default CodeBlock.extend({
     // console.log("转换成HTML", node.attrs);
     return [
       "pre",
-      { index: node.attrs.index },
+      {
+        index: node.attrs.index,
+        height: node.attrs.height,
+        visible:node.attrs.visible
+      },
       ["code", { language: node.attrs.language, run: node.attrs.run }, node.attrs.code],
     ];
   },

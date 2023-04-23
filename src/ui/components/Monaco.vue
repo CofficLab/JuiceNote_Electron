@@ -21,11 +21,11 @@ import htmlWorker from "monaco-editor/esm/vs/language/html/html.worker?worker";
 import tsWorker from "monaco-editor/esm/vs/language/typescript/ts.worker?worker";
 import { defineComponent } from "vue";
 import { useRoute } from "vue-router";
-import Preload from "../entities/Preload";
 
 export default defineComponent({
   props: {
     code: { type: String, default: "" },
+    height: 0, // 如果为0，则自动判断；如果大于0，则固定高度
     language: { type: String, default: "" },
     readOnly: { type: Boolean, default: false },
     showRunButton: { type: Boolean, default: false },
@@ -87,6 +87,9 @@ export default defineComponent({
       this.$refs.monaco.style.height = (this.readOnly ? height : height + 20) + "px";
     },
     getEditorHeight(editor) {
+      // 如果设置了高度，则固定高度
+      if (this.height > 0) return this.height
+
       let lineCount = editor.getModel().getLineCount();
       let lineHeight = editor.getOption(monaco.editor.EditorOption.lineHeight);
       return lineCount * lineHeight + this.paddingTop + this.paddingBottom;

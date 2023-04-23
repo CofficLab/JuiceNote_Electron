@@ -1,9 +1,11 @@
 <template>
   <!-- 支持在多个标签之间切换，当前节点的index=current时才显示 -->
-  <node-view-wrapper ref="content" v-show="index == current" contenteditable="false" class="code-editor overflow-hidden" :class="{ rounded: !hasSiblings }">
+  <node-view-wrapper ref="content" v-show="node.attrs.visible" contenteditable="false" class="code-editor overflow-hidden" :class="{ rounded: !hasSiblings }">
     <div class="relative rounded-b bg-slate-900">
       <!-- Monaco编辑器，可修改 -->
-      <Monaco v-if="this.editable && loadMonaco" :code="code" :language="language" :showRunButton="node.attrs.run == 1" :keyUpCallback="keyup" :showLineNumbers="true"></Monaco>
+      <Monaco v-if="this.editable && loadMonaco" 
+      :height="node.attrs.height"
+      :code="code" :language="language" :showRunButton="node.attrs.run == 1" :keyUpCallback="keyup" :showLineNumbers="true"></Monaco>
 
       <!-- Monaco编辑器，只读模式。应该实例化一个Monaco，然后动态改变readonly属性，但是有BUG：动态改变整个界面会卡住 -->
       <Monaco v-if="!this.editable && loadMonaco" :code="code" :language="language" :showRunButton="node.attrs.run == 1" :readOnly="true"></Monaco>
@@ -43,7 +45,7 @@ import Monaco from "../components/Monaco.vue";
 import Trash from "../assets/icons/trash.svg";
 import { useRoute } from "vue-router";
 import ClipboardJS from "clipboard";
-import Node from "../entities/Node.ts"
+import Node from "../entities/Node.ts";
 import ToastController from "../entities/Toast";
 
 var clipboard = new ClipboardJS(".copy");
@@ -137,7 +139,7 @@ export default {
         if (!parentElement) return;
 
         this.current = parentElement.$el.parentElement?.getAttribute("data-current") ?? 0;
-        // console.log("active index is", this.current, "my index is", this.index);
+        console.log("active index is", this.current, "my index is", this.index);
       });
     },
     deleteSelf() {
@@ -146,11 +148,15 @@ export default {
   },
 
   mounted() {
+    // console.log("code editor 的属性", this.node.attrs);
+    console.log("code editor extension", this.extension)
+    console.log("code editor's parent ->", this.extension.parent.name)
     this.code = this.node.attrs.code;
     this.loadMonaco = true;
     this.setCurrent();
     this.setIndex();
     this.editor.on("update", () => {
+      console.log('code editor检测到editor update')
       this.setCurrent();
       this.setIndex();
     });

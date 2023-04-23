@@ -59,7 +59,7 @@ const currentLanguage = computed(() => {
 });
 
 const activate = function (index) {
-  // console.log("激活标签", index);
+  console.log("激活标签", index);
   props.editor.storage.codeTab.current = index;
   props.updateAttributes({
     current: index,

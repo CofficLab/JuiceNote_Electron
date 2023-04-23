@@ -8,8 +8,7 @@
       </ul>
 
       <div class="flex w-full flex-col shadow-sm">
-        <Monaco :code="getContent" :showRunButton="node.attrs.run == 1" :keyUpCallback="keyup" :showLineNumbers="true"></Monaco>
-        <node-view-content ref="contents" :data-current="current" class="code-editor-container bg-red-400/40 p-0"></node-view-content>
+        <node-view-content ref="contents" :data-current="node.attrs.current" class="code-editor-container bg-red-400/40 p-0"></node-view-content>
       </div>
     </div>
   </node-view-wrapper>
@@ -30,7 +29,10 @@ const current = computed(() => props.node.attrs.current);
 const database = JSON.parse(props.node.attrs.data)
 const files = computed(()=> database)
 const selectedId = ref(1)
-console.log(files.value)
+console.log('code project extension', props.extension)
+console.log('code project decorations', props.decorations)
+console.log('code project selected', props.selected)
+console.log('code project node', props.node.content.content[0])
 
 const activate = function (id) {
   console.log("激活节点", id);
