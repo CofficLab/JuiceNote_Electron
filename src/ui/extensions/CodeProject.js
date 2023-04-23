@@ -43,12 +43,14 @@ export default Node.create({
           ({ commands }) => {
           let data = [
             {
-              "id":1,
+              "id": 1,
+              "parent_id": 0,
               "title":"文件1",
               "content":"文件1的内容"
             },
             {
-              "id":2,
+              "id": 2,
+              "parent_id": 0,
               "title":"文件2",
               "content":"文件2的内容"
             }
