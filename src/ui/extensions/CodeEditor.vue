@@ -3,36 +3,13 @@
   <node-view-wrapper ref="content" v-show="node.attrs.visible" contenteditable="false" class="code-editor overflow-visible" :class="{ rounded: !hasSiblings }">
     <div class="relative rounded-b bg-slate-900">
       <!-- Monaco编辑器，可修改 -->
-      <Monaco v-if="this.editable && loadMonaco" :height="monacoHeight" :code="code" :language="language" :showRunButton="node.attrs.run == 1" :keyUpCallback="keyup" :showLineNumbers="true"> </Monaco>
+      <Monaco v-if="this.editable && loadMonaco" :code="code" :language="language" :showRunButton="node.attrs.run == 1" :keyUpCallback="keyup" :showLineNumbers="true"> </Monaco>
 
       <!-- Monaco编辑器，只读模式。应该实例化一个Monaco，然后动态改变readonly属性，但是有BUG：动态改变整个界面会卡住 -->
       <Monaco v-if="!this.editable && loadMonaco" :code="code" :language="language" :showRunButton="node.attrs.run == 1" :readOnly="true"></Monaco>
 
       <!-- 代码框，存储从文件系统读出的代码，然后放到Monaco编辑器中 -->
       <node-view-content ref="nodeViewContent" class="hidden" />
-
-      <!-- 操作栏 -->
-      <!-- <div class="code-block-operators" v-if="editable && loadMonaco" contenteditable="false">
-        <div class="flex">
-          <button v-if="editable" class="btn-ghost btn-sm btn flex self-start rounded-none" @click="deleteSelf">
-            <Trash class="h-4 w-4"></Trash>
-          </button>
-        </div>
-        <div class="flex justify-end">
-          <button v-bind:data-clipboard-text="code" class="copy justify-end self-end justify-self-end">复制代码</button>
-          <button @click="toggleRun" v-html="this.node.attrs.run == 1 ? '关运行' : '开运行'" class="justify-end self-end justify-self-end"></button>
-          <select name="language" @change="setLanguage">
-            <option value="text" v-bind:selected="language == 'text'">纯文本</option>
-            <option value="html" v-bind:selected="language == 'html'">HTML</option>
-            <option value="go" v-bind:selected="language == 'go'">Golang</option>
-            <option value="php" v-bind:selected="language == 'php'">PHP</option>
-            <option value="javascript" v-bind:selected="language == 'javascript'">JavaScript</option>
-            <option value="java" v-bind:selected="language == 'java'">Java</option>
-            <option value="python" v-bind:selected="language == 'python'">Python</option>
-            <option value="shell" v-bind:selected="language == 'shell'">Shell</option>
-          </select>
-        </div>
-      </div> -->
     </div>
   </node-view-wrapper>
 </template>
