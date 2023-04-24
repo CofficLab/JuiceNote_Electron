@@ -64,7 +64,7 @@ class Node {
 
     getBook(): Node {
         if (this.isBook || this.isEmpty) return this
-        
+
         return this.getParent().getBook()
     }
 
@@ -140,7 +140,7 @@ class Node {
     }
 
     getLastChild(): Node {
-        let result = Ipc.sendSync('getLastChild',this.id)
+        let result = Ipc.sendSync('getLastChild', this.id)
 
         // console.log('get last child', result)
         return result ? new Node(result) : emptyNode
@@ -221,20 +221,20 @@ class Node {
 
     updatePriority(priority: number) {
         // console.log(this.title, '更新priority为', priority)
-        Ipc.sendSync('updatePriority',this.id,priority)
+        Ipc.sendSync('updatePriority', this.id, priority)
     }
 
     updateContent(content: string): string {
         dispatchEvent(new Event('nodeUpdated'))
-        return Ipc.sendSync('updateContent',this.id,content)
+        return Ipc.sendSync('updateContent', this.id, content)
     }
 
     updateCover(base64Code: string): string {
-        return Ipc.sendSync('updateCover', this.id,base64Code)
+        return Ipc.sendSync('updateCover', this.id, base64Code)
     }
 
     updateTitle(title: string): string {
-        return Ipc.sendSync('updateTitle', title,this.id)
+        return Ipc.sendSync('updateTitle', title, this.id)
     }
 
     updateVisible(): string {
@@ -249,7 +249,7 @@ class Node {
     }
 
     delete(): string {
-        return Ipc.sendSync('delete',this.id)
+        return Ipc.sendSync('delete', this.id)
     }
 
     transformToTab(): string {
@@ -258,9 +258,9 @@ class Node {
         return '已转换成标签'
     }
 
-    static find(id: number|String): Node {
+    static find(id: number | String): Node {
         let node = Ipc.sendSync('find', id)
-        
+
         return new Node(node)
     }
 

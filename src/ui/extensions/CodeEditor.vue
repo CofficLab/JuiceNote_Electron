@@ -1,11 +1,9 @@
 <template>
   <!-- 支持在多个标签之间切换，当前节点的index=current时才显示 -->
-  <node-view-wrapper ref="content" v-show="node.attrs.visible" contenteditable="false" class="code-editor overflow-hidden" :class="{ rounded: !hasSiblings }">
+  <node-view-wrapper ref="content" v-show="node.attrs.visible" contenteditable="false" class="code-editor overflow-visible" :class="{ rounded: !hasSiblings }">
     <div class="relative rounded-b bg-slate-900">
       <!-- Monaco编辑器，可修改 -->
-      <Monaco v-if="this.editable && loadMonaco" 
-      :height="node.attrs.height"
-      :code="code" :language="language" :showRunButton="node.attrs.run == 1" :keyUpCallback="keyup" :showLineNumbers="true"></Monaco>
+      <Monaco v-if="this.editable && loadMonaco" :height="monacoHeight" :code="code" :language="language" :showRunButton="node.attrs.run == 1" :keyUpCallback="keyup" :showLineNumbers="true"> </Monaco>
 
       <!-- Monaco编辑器，只读模式。应该实例化一个Monaco，然后动态改变readonly属性，但是有BUG：动态改变整个界面会卡住 -->
       <Monaco v-if="!this.editable && loadMonaco" :code="code" :language="language" :showRunButton="node.attrs.run == 1" :readOnly="true"></Monaco>
@@ -14,7 +12,7 @@
       <node-view-content ref="nodeViewContent" class="hidden" />
 
       <!-- 操作栏 -->
-      <div class="code-block-operators" v-if="editable && loadMonaco" contenteditable="false">
+      <!-- <div class="code-block-operators" v-if="editable && loadMonaco" contenteditable="false">
         <div class="flex">
           <button v-if="editable" class="btn-ghost btn-sm btn flex self-start rounded-none" @click="deleteSelf">
             <Trash class="h-4 w-4"></Trash>
@@ -34,7 +32,7 @@
             <option value="shell" v-bind:selected="language == 'shell'">Shell</option>
           </select>
         </div>
-      </div>
+      </div> -->
     </div>
   </node-view-wrapper>
 </template>
@@ -68,6 +66,17 @@ export default {
 
   computed: {
     editable: () => useRoute().name == "lessons.edit",
+    monacoHeight() {
+      // monaco editor 的高度是 code editor 的高度减去底部操作栏的高度
+      // code editor 的高度由父元素决定
+      let parentHeight = this.$refs.content.$el.parentElement.clientHeight;
+      if (this.editable && this.loadMonaco) {
+        let operatorBarHeight = this.$refs.content.$el.querySelector(".code-block-operators");
+        return parentHeight - operatorBarHeight;
+      }
+
+      return parentHeight;
+    },
     monacoEditorDisplay() {
       return this.node.attrs.editor == true;
     },
@@ -148,15 +157,12 @@ export default {
   },
 
   mounted() {
-    // console.log("code editor 的属性", this.node.attrs);
-    console.log("code editor extension", this.extension)
-    console.log("code editor's parent ->", this.extension.parent.name)
     this.code = this.node.attrs.code;
     this.loadMonaco = true;
     this.setCurrent();
     this.setIndex();
     this.editor.on("update", () => {
-      console.log('code editor检测到editor update')
+      console.log("code editor检测到editor update");
       this.setCurrent();
       this.setIndex();
     });
@@ -177,13 +183,16 @@ export default {
   button {
     @apply btn-ghost btn-xs btn m-0 rounded-none text-gray-100;
   }
+
   select {
-    @apply select-xs max-w-xs rounded-none bg-green-500/60 outline-none dark:bg-green-800/60;
+    @apply max-w-xs rounded-none bg-green-500/60 bg-green-800/60 outline-none dark:select-xs;
   }
+
   div.selected {
     @apply max-w-xs rounded-none px-4 outline-none;
   }
 }
+
 .monaco-banner {
   @apply flex items-center justify-end rounded-tr bg-gradient-to-r from-transparent via-transparent to-cyan-500/20 pr-2 text-slate-400;
 }
