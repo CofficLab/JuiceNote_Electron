@@ -114,13 +114,6 @@ onMounted(() => {
 
   // 编辑器
   editorBox = EditorBox.createEditor(props, codeDom.value!)
-    .onCreated((editorBox: EditorBox) => {
-      nextTick(() => {
-        let height = props.height > 0 ? props.height : editorBox.getLinesHeight();
-
-        codeDom.value!.style.height = height + "px";
-      });
-    })
     .onChanged((content) => {
       props.keyUpCallback(content);
     })

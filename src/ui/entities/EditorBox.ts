@@ -17,6 +17,11 @@ class EditorBox {
         this.editor = editor;
         this.index = index;
 
+        this.onCreated((editorBox: EditorBox) => {
+            let height = editorBox.getLinesHeight();
+
+            this.editor.getDomNode().style.height = height + "px";
+        })
         this.onChanged((content, editorBox: EditorBox) => {
             editorBox.editor.getDomNode().style.height = editorBox.getLinesHeight() + "px";
         });
