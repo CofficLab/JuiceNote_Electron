@@ -31,14 +31,18 @@ export default CodeBlock.extend({
         parseHTML: (element) => parseInt(element.firstElementChild?.getAttribute("run")),
         rendered: true,
       },
-      index: {
-        default: 1,
-        rendered: true,
-      },
       visible: {
         default: true,
-        rendered:true
-      }
+        rendered: true,
+        parseHTML: (element) => {
+          let parent = element.parentElement;
+          if (parent.nodeName == "CODE-TAB") {
+            return Array.from(parent.children).findIndex((node) => node == element) == parent.getAttribute("current");
+          }
+
+          return true;
+        },
+      },
     };
   },
 
@@ -51,9 +55,8 @@ export default CodeBlock.extend({
     return [
       "pre",
       {
-        index: node.attrs.index,
         height: node.attrs.height,
-        visible:node.attrs.visible
+        visible: node.attrs.visible,
       },
       ["code", { language: node.attrs.language, run: node.attrs.run }, node.attrs.code],
     ];

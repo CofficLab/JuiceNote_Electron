@@ -48,12 +48,7 @@ export default Node.create({
       addCodeTab:
         (attributes) =>
         ({ commands }) => {
-          return commands.insertContent(
-            '<code-tab titles="1,2" current="0">' +
-              "<pre index=1><code>第1个tab的内容</code></pre>" +
-              "<pre index=2><code>第2个tab的内容</code></pre>" +
-              "</code-tab>"
-          );
+          return commands.insertContent('<code-tab titles="1,2" current="0">' + "<pre><code>第1个tab的内容</code></pre>" + "<pre><code>第2个tab的内容</code></pre>" + "</code-tab>");
         },
     };
   },

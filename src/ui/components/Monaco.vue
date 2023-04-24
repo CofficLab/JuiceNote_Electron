@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="relative">
-      <span v-html="lan" v-if="!editable" class="absolute right-0 top-0 z-20 rounded-bl-lg bg-cyan-800/20 px-2 py-1 text-sm text-info"></span>
-      <button contenteditable="false" class="btn-sm btn absolute bottom-8 right-2 z-20 transition-none" :class="{ loading: running }" @click="handleRun" v-html="runTitle" v-if="runable"></button>
+      <span v-html="lan" class="absolute right-0 top-0 z-20 rounded-bl-lg bg-cyan-800/20 px-2 py-1 text-sm text-info"></span>
+      <button contenteditable="false" class="btn-sm btn absolute bottom-8 right-2 z-20 transition-none" :class="{ loading: running }" @click="handleRun" v-html="runTitle" v-if="runnable"></button>
 
       <div ref="codeDom" class="relative z-10">
         <!-- 操作栏 -->
@@ -14,7 +14,7 @@
           </div>
           <div class="flex justify-end">
             <button v-bind:data-clipboard-text="code" class="copy justify-end self-end justify-self-end">复制代码</button>
-            <button @click="handleToggleRun" v-html="runable ? '关运行' : '开运行'" class="justify-end self-end justify-self-end"></button>
+            <button @click="handleToggleRun" v-html="runnable ? '关运行' : '开运行'" class="justify-end self-end justify-self-end"></button>
             <select name="language" @change="handleChangeLanguage" class="text-sm">
               <option value="text" v-bind:selected="language == 'text'">纯文本</option>
               <option value="html" v-bind:selected="language == 'html'">HTML</option>
@@ -46,6 +46,13 @@ import { computed, onMounted, onUnmounted, watch, ref, nextTick } from "vue";
 import Trash from "../icons/trash.vue";
 import Preload from "../entities/Preload";
 import EditorBox from "../entities/EditorBox";
+import ClipboardJS from "clipboard";
+import Toast from "../entities/Toast";
+
+var clipboard = new ClipboardJS(".copy");
+clipboard.on("success", function () {
+  Toast.set("已将源码复制到剪贴板");
+});
 
 const props = defineProps({
   code: {
@@ -91,7 +98,7 @@ const props = defineProps({
  * 运行按钮相关的属性
  */
 let code = ref("");
-let runable = ref(true);
+let runnable = ref(true);
 let running = ref(false);
 let runResultVisible = ref(false);
 let runTitle = computed(() => {
@@ -142,7 +149,7 @@ let handleChangeLanguage = (e) => {
   editorBox.setLanguage(e.target.value);
 };
 let handleToggleRun = () => {
-  runable.value = !runable.value;
+  runnable.value = !runnable.value;
 };
 let handleRun = () => {
   if (running.value) return;
@@ -165,9 +172,7 @@ let handleRun = () => {
     console.log(editorBox.getLinesHeight());
   }, 0);
 };
-</script>
 
-<script lang="ts">
 function createWorker() {
   self.MonacoEnvironment = {
     getWorker(_, label) {

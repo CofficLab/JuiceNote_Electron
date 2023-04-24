@@ -10,7 +10,7 @@ import Trash from "../icons/trash.vue";
 import Preload from "../entities/Preload";
 
 class EditorBox {
-    public editor;
+    public editor: monaco.editor.IStandaloneCodeEditor;
     public index;
 
     public constructor(editor: any, index: any) {
@@ -20,10 +20,10 @@ class EditorBox {
         this.onCreated((editorBox: EditorBox) => {
             let height = editorBox.getLinesHeight();
 
-            this.editor.getDomNode().style.height = height + "px";
+            this.editor.getDomNode()!.style.height = height + "px";
         })
         this.onChanged((content, editorBox: EditorBox) => {
-            editorBox.editor.getDomNode().style.height = editorBox.getLinesHeight() + "px";
+            editorBox.editor.getDomNode()!.style.height = editorBox.getLinesHeight() + "px";
         });
     }
 
@@ -46,6 +46,12 @@ class EditorBox {
         return this.editor.getModel()!.getLanguageId();
     }
 
+    public getParentDomNode(): HTMLElement | null | undefined {
+        let domNode = this.editor.getDomNode()
+
+        return domNode?.parentElement
+    }
+
     public setContent(content: string | monaco.editor.ITextSnapshot) {
         console.log('设置monaco content', this.index)
         monaco.editor.getModels()[this.index.toString()].setValue(content);
@@ -62,7 +68,7 @@ class EditorBox {
     }
 
     public getHeight() {
-        return this.editor.getDomNode.style.height
+        return this.editor.getDomNode()!.style.height
     }
 
     public onChanged(callback: (arg0: string, arg1: any) => void) {
@@ -89,7 +95,7 @@ class EditorBox {
         return this;
     }
 
-    public onCreated(callback) {
+    public onCreated(callback: Function) {
         monaco.editor.onDidCreateEditor(() => callback(this));
 
         return this;
