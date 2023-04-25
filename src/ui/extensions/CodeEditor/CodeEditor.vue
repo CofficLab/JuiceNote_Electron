@@ -12,9 +12,9 @@
 
 <script lang="ts" setup>
 import { NodeViewContent, nodeViewProps, NodeViewWrapper } from "@tiptap/vue-3";
-import Monaco from "../components/Monaco.vue";
+import Monaco from "./Monaco.vue";
 import { useRoute } from "vue-router";
-import Node from "../entities/Node";
+import Node from "../../entities/Node";
 import { computed, ref } from "vue";
 
 const route = useRoute();

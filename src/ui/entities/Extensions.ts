@@ -25,7 +25,7 @@ import OfficialLink from "../extensions/OfficialLink.js";
 import Toc from "../extensions/Toc.js"
 import Tab from "../extensions/Tab.js"
 import TabContent from "../extensions/TabContent.js"
-import CodeEditor from "../extensions/CodeEditor.js"
+import CodeEditor from "../extensions/CodeEditor/CodeEditor.js"
 import CodeBlockTab from "../extensions/CodeTab.js"
 import CodeProject from "../extensions/CodeProject.js"
 import Chat from "../extensions/Chat.js"
