@@ -1,53 +1,90 @@
 <template>
-  <!-- 支持在多个标签之间切换，当前节点的index=current时才显示 -->
-  <node-view-wrapper ref="contentDom" v-show="visible" contenteditable="false" class="code-editor overflow-visible rounded">
+  <NodeViewWrapper ref="contentDom" contenteditable="false" class="code-editor overflow-visible rounded">
+    <div class="tabs flex flex-row justify-between overflow-hidden rounded-none bg-yellow-600 p-0" contenteditable="false">
+      <!-- 标签列表 -->
+      <div class="flex w-5/6 max-w-max flex-grow flex-row gap-px overflow-x-scroll overscroll-none bg-gray-800" ref="titlesDom">
+        <div v-for="(item, index) in items" class="flex h-8 flex-row flex-nowrap items-stretch outline-none" :class="{ 'bg-gray-900': index == activatedIndex }">
+          <a class="code-title" @click="activate(index)">{{ item.title }}</a>
+        </div>
+      </div>
+
+      <!-- 标签操作栏 -->
+      <div class="flex w-1/6 max-w-max justify-end border-l border-l-lime-950/30 shadow-2xl">
+        <button class="btn-ghost btn-sm btn rounded-none" @click="createTab">
+          <Plus class="w-6 self-center"></Plus>
+        </button>
+      </div>
+    </div>
+
     <div class="relative rounded-b bg-slate-900">
-      <Monaco :code="code" :language="language" :showRunButton="node.attrs.run == 1" :keyUpCallback="keyup" :showLineNumbers="true"></Monaco>
+      <Monaco
+        :code="activatedItem.content"
+        :deleteCallback="deleteTab"
+        :language="activatedItem.language"
+        :showRunButton="node.attrs.run == 1"
+        :languageUpdatedCallback="updateLanguage"
+        :keyUpCallback="keyup"
+        :showLineNumbers="true"
+      ></Monaco>
 
       <!-- 代码框，存储从文件系统读出的代码，然后放到Monaco编辑器中 -->
-      <node-view-content ref="nodeViewContent" class="hidden" />
+      <NodeViewContent ref="nodeViewContent" class="hidden" />
     </div>
-  </node-view-wrapper>
+  </NodeViewWrapper>
 </template>
 
 <script lang="ts" setup>
 import { NodeViewContent, nodeViewProps, NodeViewWrapper } from "@tiptap/vue-3";
 import Monaco from "./Monaco.vue";
-import { useRoute } from "vue-router";
-import Node from "../../entities/Node";
-import { computed, ref } from "vue";
+import { Database, CodeBlock } from "./Database";
+import { ref, computed } from "vue";
+import Plus from "./plus.vue";
 
-const route = useRoute();
 const props = defineProps(nodeViewProps);
 
-let visible = ref(props.node.attrs.visible);
 let contentDom = ref();
-let code = ref(props.node.attrs.code);
-
-let currentLanguage = computed(() => {
-  let book = Node.find(parseInt(route.params.id.toString())).getBook();
-  let language = book.title.toLowerCase();
-  if (language == "Golang") return "go";
-  if (language == "golang") return "go";
-
-  console.log("自动判断图书对应的编程语言，结果", language);
-  return language;
+let database = computed<Database>(() => new Database(props.node.attrs.database));
+let items = computed<CodeBlock[]>(() => {
+  console.log("get items from database", database.value);
+  return database.value.items;
 });
-
-let language = computed(() => {
-  if (props.node.attrs.language == "") {
-    // console.log('没有设置编程语言，自动设置为', this.currentLanguage);
-    // this.updateAttributes({ language: this.currentLanguage });
-    return currentLanguage;
-  }
-
-  return props.node.attrs.language;
+let activatedIndex = computed(() => database.value.activatedIndex);
+let activatedItem = computed(() => {
+  console.log("get activated item", items.value[activatedIndex.value]);
+  return items.value[activatedIndex.value];
 });
 
 function keyup(value) {
-  // console.log("更新代码块的内容为", value);
   props.updateAttributes({
     code: value,
+  });
+}
+
+function deleteTab() {
+  if (items.value.length == 1) {
+    return props.deleteNode();
+  }
+
+  props.updateAttributes({
+    database: database.value.deleteCodeBlock(activatedIndex.value).toJSON(),
+  });
+}
+
+function createTab() {
+  props.updateAttributes({
+    database: database.value.appendNewCodeBlock().toJSON(),
+  });
+}
+
+function activate(index) {
+  props.updateAttributes({
+    database: database.value.updateActivatedIndex(index).toJSON(),
+  });
+}
+
+function updateLanguage(language: string) {
+  props.updateAttributes({
+    database: database.value.updateLanguage(language).toJSON(),
   });
 }
 </script>
@@ -71,5 +108,9 @@ function keyup(value) {
 
 .monaco-banner {
   @apply flex items-center justify-end rounded-tr bg-gradient-to-r from-transparent via-transparent to-cyan-500/20 pr-2 text-slate-400;
+}
+
+.code-title {
+  @apply tab min-w-max max-w-xl flex-grow flex-nowrap whitespace-nowrap rounded-none text-gray-500 no-underline outline-none  focus-visible:outline-none dark:text-gray-200 !important;
 }
 </style>

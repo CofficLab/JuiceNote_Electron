@@ -1,6 +1,7 @@
 import CodeBlock from "@tiptap/extension-code-block";
 import { VueNodeViewRenderer } from "@tiptap/vue-3";
 import CodeEditor from "./CodeEditor.vue";
+import { Database, CodeBlock as DatabaseCodeBlock } from "./Database";
 
 export default CodeBlock.extend({
   name: "codeEditor",
@@ -16,31 +17,27 @@ export default CodeBlock.extend({
         rendered: false,
         parseHTML: (element) => element.firstElementChild?.innerText,
       },
-      language: {
-        default: "",
-        parseHTML: function (element) {
-          let language = element.firstElementChild?.getAttribute("language");
-          if (language == "Golang") return "go";
-          if (language == "golang") return "go";
-          return language;
-        },
-        rendered: true,
-      },
-      run: {
-        default: 1,
-        parseHTML: (element) => parseInt(element.firstElementChild?.getAttribute("run")),
-        rendered: true,
-      },
-      visible: {
-        default: true,
-        rendered: true,
+      database: {
+        default: new Database().toJSON(),
         parseHTML: (element) => {
-          let parent = element.parentElement;
-          if (parent.nodeName == "CODE-TAB") {
-            return Array.from(parent.children).findIndex((node) => node == element) == parent.getAttribute("current");
+          console.log(element, element.getAttribute("database"));
+          let getFromAttribute = element.getAttribute("database");
+
+          if (getFromAttribute && getFromAttribute.length > 0) {
+            try {
+              return new Database(getFromAttribute).toJSON();
+            } catch (error) {
+              console.log(error);
+            }
           }
 
-          return true;
+          return Database.createWithSingleCodeBlock(
+            new DatabaseCodeBlock({
+              content: element.innerText,
+              title: "1",
+              language: "go",
+            })
+          ).toJSON();
         },
       },
     };
@@ -56,9 +53,9 @@ export default CodeBlock.extend({
       "pre",
       {
         height: node.attrs.height,
-        visible: node.attrs.visible,
+        database: node.attrs.database,
       },
-      ["code", { language: node.attrs.language, run: node.attrs.run }, node.attrs.code],
+      ["code", node.attrs.code],
     ];
   },
 });

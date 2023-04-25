@@ -84,6 +84,18 @@ const props = defineProps({
     type: Function,
     default: null,
   },
+  deleteCallback: {
+    type: Function,
+    default: () => {
+      console.log("monaco delete button clicked");
+    },
+  },
+  languageUpdatedCallback: {
+    type: Function,
+    default: () => {
+      console.log("monaco language updated");
+    },
+  },
   showLineNumbers: {
     type: Boolean,
     default: true,
@@ -116,6 +128,8 @@ let editorBox: EditorBox;
 let resultBox: EditorBox;
 let lan = ref(props.language);
 
+let deleteSelf = () => props.deleteCallback();
+
 onMounted(() => {
   createWorker();
 
@@ -126,6 +140,7 @@ onMounted(() => {
     })
     .onLanguageChanged((language) => {
       lan.value = language;
+      props.languageUpdatedCallback(language);
     });
 
   // 展示运行结果的编辑器
@@ -138,7 +153,6 @@ onUnmounted(() => {
 
 watch(props, () => {
   console.log("monaco 检测到 props 发生变化");
-  editorBox.setLanguage(props.language);
   editorBox.setContent(props.code);
 });
 

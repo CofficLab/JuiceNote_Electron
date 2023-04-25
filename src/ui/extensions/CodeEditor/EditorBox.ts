@@ -87,8 +87,6 @@ class EditorBox {
 
     public onLanguageChanged(callback: (arg0: any) => void) {
         this.editor.getModel()?.onDidChangeLanguage((e: { newLanguage: any; }) => {
-            console.log("monaco editor languaged changed", e);
-
             callback(e.newLanguage);
         });
 
