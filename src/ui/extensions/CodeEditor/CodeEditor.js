@@ -20,7 +20,6 @@ export default CodeBlock.extend({
       database: {
         default: new Database().toJSON(),
         parseHTML: (element) => {
-          console.log(element, element.getAttribute("database"));
           let getFromAttribute = element.getAttribute("database");
 
           if (getFromAttribute && getFromAttribute.length > 0) {

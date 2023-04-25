@@ -64,7 +64,7 @@ const props = defineProps({
     type: Number,
     default: 0,
   },
-  runable: {
+  runnable: {
     type: Boolean,
     default: false,
   },

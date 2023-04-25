@@ -14,6 +14,8 @@ class EditorBox {
     public index;
 
     public constructor(editor: any, index: any) {
+        EditorBox.createWorker()
+
         this.editor = editor;
         this.index = index;
 
@@ -22,12 +24,14 @@ class EditorBox {
 
             this.editor.getDomNode()!.style.height = height + "px";
         })
-        this.onChanged((content, editorBox: EditorBox) => {
+        this.onChanged((editorBox: EditorBox) => {
             editorBox.editor.getDomNode()!.style.height = editorBox.getLinesHeight() + "px";
         });
     }
 
     public getContent() {
+        // 使用 this.editor.getValue() 会导致整个界面卡住
+        // https://github.com/microsoft/monaco-editor/issues/2439
         return monaco.editor.getModels()[this.index.toString()].getValue()
     }
 
@@ -41,7 +45,7 @@ class EditorBox {
     }
 
     public getLanguage() {
-        console.log("获取 monaco editor 的语言", this.editor.getModel()!.getLanguageId());
+        // console.log("获取 monaco editor 的语言", this.editor.getModel()!.getLanguageId());
 
         return this.editor.getModel()!.getLanguageId();
     }
@@ -53,12 +57,15 @@ class EditorBox {
     }
 
     public setContent(content: string | monaco.editor.ITextSnapshot) {
-        console.log('设置monaco content', this.index)
+        // console.log('设置monaco content', this.index)
+
+        if (content == this.getContent()) return
+
         monaco.editor.getModels()[this.index.toString()].setValue(content);
     }
 
     public setLanguage(language: string) {
-        console.log("设置Monaco Editor的Language为", language);
+        // console.log("设置Monaco Editor的Language为", language);
 
         if (this.editor == undefined) {
             return console.log("editor尚未实例化，不能设置language");
@@ -71,24 +78,9 @@ class EditorBox {
         return this.editor.getDomNode()!.style.height
     }
 
-    public onChanged(callback: (arg0: string, arg1: any) => void) {
-        this.editor.getModel()!.onDidChangeContent(() => {
-            console.log("monaco editor content changed");
-
-            // 使用 this.editor.getValue() 会导致整个界面卡住
-            // https://github.com/microsoft/monaco-editor/issues/2439
-            let content = monaco.editor.getModels()[this.index.toString()].getValue();
-
-            callback(content, this);
-        });
-
-        return this;
-    }
-
-    public onLanguageChanged(callback: (arg0: any) => void) {
-        this.editor.getModel()?.onDidChangeLanguage((e: { newLanguage: any; }) => {
-            callback(e.newLanguage);
-        });
+    public onChanged(callback: (arg0: any) => void) {
+        this.editor.getModel()!.onDidChangeContent(() => { callback(this) });
+        this.editor.getModel()?.onDidChangeLanguage(() => { callback(this) });
 
         return this;
     }
@@ -97,6 +89,27 @@ class EditorBox {
         monaco.editor.onDidCreateEditor(() => callback(this));
 
         return this;
+    }
+
+
+    static createWorker() {
+        self.MonacoEnvironment = {
+            getWorker(_, label) {
+                if (label === "json") {
+                    return new jsonWorker();
+                }
+                if (label === "css" || label === "scss" || label === "less") {
+                    return new cssWorker();
+                }
+                if (label === "html" || label === "handlebars" || label === "razor") {
+                    return new htmlWorker();
+                }
+                if (label === "typescript" || label === "javascript") {
+                    return new tsWorker();
+                }
+                return new editorWorker();
+            },
+        };
     }
 
     static createEditor(props, target: HTMLDivElement) {

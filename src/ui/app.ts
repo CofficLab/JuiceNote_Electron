@@ -33,7 +33,7 @@ const router = createRouter({
 })
 
 router.beforeEach(function (to, from) {
-  console.log("从", from.fullPath, "到", to.fullPath)
+  // console.log("从", from.fullPath, "到", to.fullPath)
 
   // 如果不是page，跳转到第一个page子节点
   if (to.name == 'lessons.show') {

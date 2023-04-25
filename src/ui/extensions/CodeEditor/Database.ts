@@ -11,8 +11,8 @@ export class CodeBlock {
 
     static create() {
         return new CodeBlock({
-            title: 'new code block',
-            content: Math.floor(Math.random() * 100) + " type here...\n\n\n\n",
+            title: 'new',
+            content: "type here...\n\n\n\n",
             language: 'go',
         });
     }
@@ -42,9 +42,9 @@ export class Database {
     }
 
     public getActivatedItem(): CodeBlock {
-        console.log('get activated item', this);
+        // console.log('get activated item', this);
         if (this.items && this.items.length > 0 && this.activatedIndex >= 0 && this.activatedIndex < this.items.length) {
-            console.log(this.items[this.activatedIndex]);
+            // console.log(this.items[this.activatedIndex]);
             return this.items[this.activatedIndex];
         } else {
             return new CodeBlock({
@@ -84,7 +84,7 @@ export class Database {
     }
 
     public updateLanguage(language: string): Database {
-        console.log('database: update language', language);
+        // console.log('database: update language', language);
         let activatedItem = this.getActivatedItem()
         activatedItem.language = language
 
@@ -95,7 +95,7 @@ export class Database {
             activatedIndex: this.activatedIndex,
         })
 
-        console.log('database: after update language', this.json);
+        // console.log('database: after update language', this.json);
 
         return new Database(this.json);
     }

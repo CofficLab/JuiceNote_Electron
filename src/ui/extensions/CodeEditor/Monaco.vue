@@ -1,14 +1,16 @@
 <template>
   <div>
     <div class="relative">
+      <!-- 语言 -->
       <span v-html="lan" class="absolute right-0 top-0 z-20 rounded-bl-lg bg-cyan-800/20 px-2 py-1 text-sm text-info"></span>
+
       <button contenteditable="false" class="btn-sm btn absolute bottom-8 right-2 z-20 transition-none" :class="{ loading: running }" @click="handleRun" v-html="runTitle" v-if="runnable"></button>
 
       <div ref="codeDom" class="relative z-10">
         <!-- 操作栏 -->
         <div class="code-block-operators absolute bottom-0" contenteditable="false">
           <div class="flex">
-            <button class="btn-ghost btn-sm btn flex self-start rounded-none" @click="deleteSelf">
+            <button class="btn-ghost btn-sm btn flex self-start rounded-none" @click="onDelete">
               <Trash class="h-4 w-4"></Trash>
             </button>
           </div>
@@ -36,13 +38,7 @@
 </template>
 
 <script lang="ts" setup>
-import * as monaco from "monaco-editor";
-import editorWorker from "monaco-editor/esm/vs/editor/editor.worker?worker";
-import jsonWorker from "monaco-editor/esm/vs/language/json/json.worker?worker";
-import cssWorker from "monaco-editor/esm/vs/language/css/css.worker?worker";
-import htmlWorker from "monaco-editor/esm/vs/language/html/html.worker?worker";
-import tsWorker from "monaco-editor/esm/vs/language/typescript/ts.worker?worker";
-import { computed, onMounted, onUnmounted, watch, ref, nextTick } from "vue";
+import { computed, onMounted, onUnmounted, watch, ref } from "vue";
 import Trash from "./trash.vue";
 import Preload from "../../entities/Preload";
 import EditorBox from "./EditorBox";
@@ -64,7 +60,7 @@ const props = defineProps({
     type: Number,
     default: 0,
   },
-  runable: {
+  runnable: {
     type: Boolean,
     default: false,
   },
@@ -80,20 +76,16 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  keyUpCallback: {
+  onChange: {
     type: Function,
-    default: null,
+    default: () => {
+      console.log("monaco changed");
+    },
   },
-  deleteCallback: {
+  onDelete: {
     type: Function,
     default: () => {
       console.log("monaco delete button clicked");
-    },
-  },
-  languageUpdatedCallback: {
-    type: Function,
-    default: () => {
-      console.log("monaco language updated");
     },
   },
   showLineNumbers: {
@@ -126,22 +118,13 @@ let codeDom = ref<HTMLDivElement>();
 let resultDom = ref<HTMLDivElement>();
 let editorBox: EditorBox;
 let resultBox: EditorBox;
-let lan = ref(props.language);
-
-let deleteSelf = () => props.deleteCallback();
+let lan = computed(() => props.language);
 
 onMounted(() => {
-  createWorker();
-
   // 编辑器
-  editorBox = EditorBox.createEditor(props, codeDom.value!)
-    .onChanged((content) => {
-      props.keyUpCallback(content);
-    })
-    .onLanguageChanged((language) => {
-      lan.value = language;
-      props.languageUpdatedCallback(language);
-    });
+  editorBox = EditorBox.createEditor(props, codeDom.value!).onChanged((editorBox) => {
+    props.onChange(editorBox);
+  });
 
   // 展示运行结果的编辑器
   resultBox = EditorBox.createEditor(props, resultDom.value!);
@@ -159,9 +142,7 @@ watch(props, () => {
 /**
  * 处理页面点击事件
  */
-let handleChangeLanguage = (e) => {
-  editorBox.setLanguage(e.target.value);
-};
+let handleChangeLanguage = (e) => editorBox.setLanguage(e.target.value);
 let handleToggleRun = () => {
   runnable.value = !runnable.value;
 };
@@ -186,24 +167,4 @@ let handleRun = () => {
     console.log(editorBox.getLinesHeight());
   }, 0);
 };
-
-function createWorker() {
-  self.MonacoEnvironment = {
-    getWorker(_, label) {
-      if (label === "json") {
-        return new jsonWorker();
-      }
-      if (label === "css" || label === "scss" || label === "less") {
-        return new cssWorker();
-      }
-      if (label === "html" || label === "handlebars" || label === "razor") {
-        return new htmlWorker();
-      }
-      if (label === "typescript" || label === "javascript") {
-        return new tsWorker();
-      }
-      return new editorWorker();
-    },
-  };
-}
 </script>
