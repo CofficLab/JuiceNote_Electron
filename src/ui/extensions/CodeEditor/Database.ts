@@ -2,11 +2,13 @@ export class CodeBlock {
     public title: string;
     public content: string;
     public language: string;
+    public runnable: boolean
 
-    constructor({ title, content, language }: { title: string, content: string, language: string }) {
+    constructor({ title, content, language, runnable }: { title: string, content: string, language: string, runnable: boolean }) {
         this.title = title;
         this.content = content;
         this.language = language;
+        this.runnable = runnable
     }
 
     static create() {
@@ -14,6 +16,7 @@ export class CodeBlock {
             title: 'new',
             content: "type here...\n\n\n\n",
             language: 'go',
+            runnable: true
         });
     }
 }
@@ -28,7 +31,7 @@ export class Database {
         this.activatedIndex = JSON.parse(this.json).activatedIndex || 0;
 
         const items = JSON.parse(this.json).items || [CodeBlock.create()];
-        items.forEach((element: { title: string; content: string; language: string }) => {
+        items.forEach((element: { title: string; content: string; language: string, runnable: boolean }) => {
             this.items.push(new CodeBlock(element));
         });
     }
@@ -41,25 +44,6 @@ export class Database {
 
     }
 
-    public getActivatedItem(): CodeBlock {
-        // console.log('get activated item', this);
-        if (this.items && this.items.length > 0 && this.activatedIndex >= 0 && this.activatedIndex < this.items.length) {
-            // console.log(this.items[this.activatedIndex]);
-            return this.items[this.activatedIndex];
-        } else {
-            return new CodeBlock({
-                title: 'new code block',
-                content: 'type here',
-                language: 'go',
-            });
-        }
-    }
-
-
-    public getLastIndex(): number {
-        return this.items.length - 1;
-    }
-
     public appendNewCodeBlock(): Database {
         this.items.push(CodeBlock.create());
         this.activatedIndex = this.items.length - 1;
@@ -67,11 +51,18 @@ export class Database {
         return this;
     }
 
-    public toJSON(): string {
-        return JSON.stringify({
-            items: this.items,
-            activatedIndex: this.activatedIndex,
-        });
+    public getActivatedItem(): CodeBlock {
+        // console.log('get activated item', this);
+        if (this.items && this.items.length > 0 && this.activatedIndex >= 0 && this.activatedIndex < this.items.length) {
+            // console.log(this.items[this.activatedIndex]);
+            return this.items[this.activatedIndex];
+        } else {
+            return CodeBlock.create();
+        }
+    }
+
+    public getLastIndex(): number {
+        return this.items.length - 1;
     }
 
     public updateActivatedIndex(id: String): Database {
@@ -98,6 +89,27 @@ export class Database {
         // console.log('database: after update language', this.json);
 
         return new Database(this.json);
+    }
+
+    public updateRunnable(runnable: Boolean): Database {
+        let activatedItem = this.getActivatedItem()
+        activatedItem.runnable = runnable
+
+        this.items[this.activatedIndex] = activatedItem
+
+        this.json = JSON.stringify({
+            items: this.items,
+            activatedIndex: this.activatedIndex,
+        })
+
+        return new Database(this.json);
+    }
+
+    public toJSON(): string {
+        return JSON.stringify({
+            items: this.items,
+            activatedIndex: this.activatedIndex,
+        });
     }
 
     public deleteCodeBlock(index: number): Database {

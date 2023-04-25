@@ -102,7 +102,7 @@ const props = defineProps({
  * 运行按钮相关的属性
  */
 let code = ref("");
-let runnable = ref(true);
+let runnable = computed(() => props.runnable);
 let running = ref(false);
 let runResultVisible = ref(false);
 let runTitle = computed(() => {
@@ -122,12 +122,12 @@ let lan = computed(() => props.language);
 
 onMounted(() => {
   // 编辑器
-  editorBox = EditorBox.createEditor(props, codeDom.value!).onChanged((editorBox) => {
+  editorBox = EditorBox.createEditor(props, codeDom.value!, props.runnable).onChanged((editorBox) => {
     props.onChange(editorBox);
   });
 
   // 展示运行结果的编辑器
-  resultBox = EditorBox.createEditor(props, resultDom.value!);
+  resultBox = EditorBox.createEditor(props, resultDom.value!, false);
 });
 
 onUnmounted(() => {
@@ -144,7 +144,8 @@ watch(props, () => {
  */
 let handleChangeLanguage = (e) => editorBox.setLanguage(e.target.value);
 let handleToggleRun = () => {
-  runnable.value = !runnable.value;
+  editorBox.toggleRunnable();
+  props.onChange(editorBox);
 };
 let handleRun = () => {
   if (running.value) return;

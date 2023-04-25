@@ -12,12 +12,14 @@ import Preload from "../../entities/Preload";
 class EditorBox {
     public editor: monaco.editor.IStandaloneCodeEditor;
     public index;
+    public runnable;
 
-    public constructor(editor: any, index: any) {
+    public constructor(editor: any, index: any, runnable = true) {
         EditorBox.createWorker()
 
         this.editor = editor;
         this.index = index;
+        this.runnable = runnable
 
         this.onCreated((editorBox: EditorBox) => {
             let height = editorBox.getLinesHeight();
@@ -74,6 +76,10 @@ class EditorBox {
         monaco.editor.setModelLanguage(this.editor.getModel()!, language);
     }
 
+    public toggleRunnable() {
+        this.runnable = !this.runnable
+    }
+
     public getHeight() {
         return this.editor.getDomNode()!.style.height
     }
@@ -90,7 +96,6 @@ class EditorBox {
 
         return this;
     }
-
 
     static createWorker() {
         self.MonacoEnvironment = {
@@ -112,7 +117,7 @@ class EditorBox {
         };
     }
 
-    static createEditor(props, target: HTMLDivElement) {
+    static createEditor(props, target: HTMLDivElement, runnable: boolean) {
         let editor = monaco.editor.create(target, {
             value: props.code,
             language: props.language,
@@ -145,7 +150,7 @@ class EditorBox {
             minimap: { enabled: false },
         });
 
-        return new EditorBox(editor, monaco.editor.getModels().length - 1);
+        return new EditorBox(editor, monaco.editor.getModels().length - 1, runnable);
     }
 }
 

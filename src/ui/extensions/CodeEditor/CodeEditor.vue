@@ -17,7 +17,15 @@
     </div>
 
     <div class="relative rounded-b bg-slate-900">
-      <Monaco :code="activatedItem.content" :language="activatedItem.language" :showRunButton="node.attrs.run == 1" :onChange="handleChange" :onDelete="handleDelete" :showLineNumbers="true"></Monaco>
+      <Monaco
+        :code="activatedItem.content"
+        :language="activatedItem.language"
+        :runnable="activatedItem.runnable"
+        :showRunButton="node.attrs.run == 1"
+        :onChange="handleChange"
+        :onDelete="handleDelete"
+        :showLineNumbers="true"
+      ></Monaco>
 
       <!-- 代码框，存储从文件系统读出的代码，然后放到Monaco编辑器中 -->
       <NodeViewContent ref="nodeViewContent" class="hidden" />
@@ -53,10 +61,10 @@ function activate(index) {
 }
 
 function handleChange(editorBox) {
-  // console.log("code editor found monaco changed");
+  console.log("code editor found monaco changed", editorBox.runnable);
   props.updateAttributes({
     code: editorBox.getContent(),
-    database: database.value.updateLanguage(editorBox.getLanguage()).toJSON(),
+    database: database.value.updateLanguage(editorBox.getLanguage()).updateRunnable(editorBox.runnable).toJSON(),
   });
 }
 
