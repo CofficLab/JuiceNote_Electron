@@ -30,7 +30,7 @@ export default function setNodeController() {
         return event.returnValue = Node.find(id).getVisibleChildren()
     })
 
-    ipcMain.on('find', (event,id) => {
+    ipcMain.on('find', (event, id) => {
         return event.returnValue = Node.find(id)
     })
 
@@ -42,7 +42,7 @@ export default function setNodeController() {
         return event.returnValue = Node.find(id).getFirstChild()
     })
 
-    ipcMain.on('updateTitle', (event, title,id) => {
+    ipcMain.on('updateTitle', (event, title, id) => {
         return event.returnValue = Node.find(id).updateTitle(title)
     })
 
@@ -51,15 +51,20 @@ export default function setNodeController() {
     })
 
     ipcMain.on('updateContent', (event, id, content) => {
-        console.log('update content',id,content)
+        console.log('update content', id, content)
         return event.returnValue = Node.find(id).updateContent(content)
     })
 
-    ipcMain.on('createChildPage', (event, id,title,content) => {
-        return event.returnValue = Node.find(id).createChildPage(title,content)
+    ipcMain.on('updatePriority', (event, id, priority) => {
+        console.log('update priority', id, priority)
+        return event.returnValue = Node.find(id).updatePriority(priority)
     })
 
-    ipcMain.on('createChildChapter', (event, id,title,content) => {
+    ipcMain.on('createChildPage', (event, id, title, content) => {
+        return event.returnValue = Node.find(id).createChildPage(title, content)
+    })
+
+    ipcMain.on('createChildChapter', (event, id, title, content) => {
         return event.returnValue = Node.find(id).createChildChapter(title)
     })
 
