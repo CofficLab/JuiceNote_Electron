@@ -18,7 +18,7 @@
 
     <div class="relative rounded-b bg-slate-900" ref="codeDom">
       <Monaco
-        :content="activatedItem.content"
+        :content="content"
         :language="activatedItem.language"
         :runnable="activatedItem.runnable"
         :showRunButton="node.attrs.run == 1"
@@ -51,6 +51,7 @@ let database = computed<Database>(() => new Database(props.node.attrs.database))
 let items = computed<CodeBlock[]>(() => database.value.items);
 let activatedIndex = computed(() => database.value.activatedIndex);
 let activatedItem = computed(() => items.value[activatedIndex.value]);
+let content = ref(activatedItem.value.content);
 
 function createTab() {
   props.updateAttributes({
@@ -65,14 +66,18 @@ function activate(index) {
   props.updateAttributes({
     database: database.value.updateActivatedIndex(index).toJSON(),
   });
+  content.value = items.value[index].content;
 }
 
 function handleContentChanged(editorBox) {
   console.log("code editor found monaco content changed");
 
-  props.updateAttributes({
-    code: editorBox.getContent(),
-    database: database.value.updateContent(editorBox.getContent()).toJSON(),
+  setTimeout(() => {
+    // 这个保存操作会导致编辑器响应变慢
+    props.updateAttributes({
+      code: editorBox.getContent(),
+      database: database.value.updateContent(editorBox.getContent()).toJSON(),
+    });
   });
 }
 
