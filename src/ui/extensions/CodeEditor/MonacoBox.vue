@@ -114,7 +114,6 @@ const props = defineProps({
 /**
  * 运行按钮相关的属性
  */
-let code = ref("");
 let runnable = ref(false);
 let running = ref(false);
 let runResultVisible = ref(false);

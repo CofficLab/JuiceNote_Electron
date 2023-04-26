@@ -30,7 +30,9 @@ class MonacoBox {
     }
 
     public getContent() {
-        return this.editor.getValue()
+        // 使用 this.editor.getValue() 会导致整个界面卡住
+        // https://github.com/microsoft/monaco-editor/issues/2439
+        return monaco.editor.getModels()[this.index.toString()].getValue()
     }
 
     // 所有的行合起来的高度
@@ -63,7 +65,9 @@ class MonacoBox {
 
         // if (content == this.getContent()) return
 
-        this.editor.setValue(content);
+        // 使用 this.editor.setValue() 会导致整个界面卡住
+        // https://github.com/microsoft/monaco-editor/issues/2439
+        return monaco.editor.getModels()[this.index.toString()].setValue(content)
     }
 
     public setLanguage(language: string) {

@@ -37,7 +37,7 @@
 
 <script lang="ts" setup>
 import { NodeViewContent, nodeViewProps, NodeViewWrapper } from "@tiptap/vue-3";
-import Monaco from "./Monaco.vue";
+import Monaco from "./MonacoBox.vue";
 import { Database, CodeBlock } from "./Database";
 import { ref, computed, nextTick } from "vue";
 import Plus from "./plus.vue";
