@@ -16,7 +16,7 @@
             </button>
           </div>
           <div class="flex justify-end">
-            <button v-bind:data-clipboard-text="code" class="copy justify-end self-end justify-self-end">复制代码</button>
+            <button v-bind:data-clipboard-text="codeForCopy" class="copy justify-end self-end justify-self-end">复制代码</button>
             <button @click="handleToggleRun" v-html="runnable ? '关运行' : '开运行'" class="justify-end self-end justify-self-end"></button>
             <select name="language" @change="handleChangeLanguage" class="text-sm">
               <option value="text" v-bind:selected="lan == 'text'">纯文本</option>
@@ -52,7 +52,7 @@ clipboard.on("success", function () {
 });
 
 const props = defineProps({
-  code: {
+  content: {
     type: String,
     default: "",
   },
@@ -128,15 +128,20 @@ let editorBox = ref<MonacoBox>();
 let resultBox: MonacoBox;
 let lan = ref();
 
+// 复制按钮相关的属性
+let codeForCopy = ref();
+
 onMounted(() => {
   // 编辑器
   editorBox.value = MonacoBox.createEditor(props, codeDom.value!, props.runnable)
-    .onCreated((editorBox) => {
-      lan.value = editorBox.getLanguage();
-      runnable.value = editorBox.getRunnable();
+    .onCreated((monacoBox) => {
+      lan.value = monacoBox.getLanguage();
+      runnable.value = monacoBox.getRunnable();
+      codeForCopy.value = monacoBox.getContent();
     })
-    .onContentChanged((editorBox) => {
-      props.onContentChanged(editorBox);
+    .onContentChanged((monacoBox) => {
+      props.onContentChanged(monacoBox);
+      codeForCopy.value = monacoBox.getContent();
     })
     .onRunnableChanged((v: boolean) => {
       props.onRunnableChanged(v);
@@ -156,10 +161,10 @@ onUnmounted(() => {
 });
 
 watch(
-  () => props.code,
+  () => props.content,
   () => {
-    console.log("monaco 检测到 props.code 发生变化");
-    editorBox.value!.setContent(props.code);
+    console.log("monaco 检测到 props.content 发生变化");
+    editorBox.value!.setContent(props.content);
   }
 );
 

@@ -63,7 +63,7 @@ class MonacoBox {
     public setContent(content: string) {
         // console.log('设置monaco content', content)
 
-        // if (content == this.getContent()) return
+        if (content == this.getContent()) return
 
         // 使用 this.editor.setValue() 会导致整个界面卡住
         // https://github.com/microsoft/monaco-editor/issues/2439
@@ -71,7 +71,6 @@ class MonacoBox {
     }
 
     public setLanguage(language: string) {
-
         if (this.editor == undefined) {
             return console.log("editor尚未实例化，不能设置language");
         }
@@ -145,7 +144,7 @@ class MonacoBox {
 
     static createEditor(props, target: HTMLDivElement, runnable: boolean) {
         let editor = monaco.editor.create(target, {
-            value: props.code,
+            value: props.content,
             language: props.language,
             readOnly: props.readOnly,
             theme: "vs-dark",

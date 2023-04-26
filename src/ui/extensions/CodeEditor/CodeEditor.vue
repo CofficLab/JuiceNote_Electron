@@ -18,7 +18,7 @@
 
     <div class="relative rounded-b bg-slate-900" ref="codeDom">
       <Monaco
-        :code="activatedItem.content"
+        :content="activatedItem.content"
         :language="activatedItem.language"
         :runnable="activatedItem.runnable"
         :showRunButton="node.attrs.run == 1"
@@ -60,13 +60,16 @@ function createTab() {
 }
 
 function activate(index) {
+  if (index == activatedIndex.value) return;
+  console.log("激活标签下标", index);
   props.updateAttributes({
     database: database.value.updateActivatedIndex(index).toJSON(),
   });
 }
 
 function handleContentChanged(editorBox) {
-  console.log("code editor found monaco content changed", editorBox.runnable);
+  console.log("code editor found monaco content changed");
+
   props.updateAttributes({
     code: editorBox.getContent(),
     database: database.value.updateContent(editorBox.getContent()).toJSON(),
