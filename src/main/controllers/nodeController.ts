@@ -51,7 +51,7 @@ export default function setNodeController() {
     })
 
     ipcMain.on('updateContent', (event, id, content) => {
-        console.log('update content', id, content)
+        // console.log('update content', id, content)
         return event.returnValue = Node.find(id).updateContent(content)
     })
 

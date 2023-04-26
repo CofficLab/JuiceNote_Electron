@@ -73,7 +73,6 @@ function handleContentChanged(editorBox) {
   console.log("code editor found monaco content changed");
 
   setTimeout(() => {
-    // 这个保存操作会导致编辑器响应变慢
     props.updateAttributes({
       code: editorBox.getContent(),
       database: database.value.updateContent(editorBox.getContent()).toJSON(),

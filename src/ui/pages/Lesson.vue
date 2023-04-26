@@ -1,12 +1,12 @@
 <template>
-  <div class="mt-8 z-50">
+  <div class="z-50 mt-8">
     <div class="fixed top-9 z-50 flex w-full flex-grow pr-40">
       <NodeTab :current="node"></NodeTab>
     </div>
 
     <div class="flex h-full w-full flex-col items-center">
       <div class="z-40 w-full" :class="{ 'mt-12': node.getParent().isTab }">
-        <Add :node="node" class="flex justify-center flex-row btn w-72 mx-auto items-center gap-4"  v-if="node.isChapter"></Add>
+        <Add :node="node" class="btn mx-auto flex w-72 flex-row items-center justify-center gap-4" v-if="node.isChapter"></Add>
 
         <Editor :node="node" :saveCallback="save" :editable="editable" v-else></Editor>
       </div>
@@ -17,7 +17,7 @@
 <script lang="ts" setup>
 import NodeTab from "../components/NodeTab.vue";
 import Editor from "../components/Editor.vue";
-import Add from "../operators/Add.vue"
+import Add from "../operators/Add.vue";
 import { computed, watch } from "vue";
 import { useRoute } from "vue-router";
 import Node from "../entities/Node";
@@ -31,7 +31,9 @@ let node = Node.find(route.params.id.toString());
 let save = function (content) {
   if (content != node.content) {
     console.log("保存节点", node.id, "的内容", content.substring(0, 20) + "...");
-    node.updateContent(content);
+    setTimeout(() => {
+      node.updateContent(content);
+    });
   }
 };
 
