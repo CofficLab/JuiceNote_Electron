@@ -20,12 +20,10 @@ class MonacoBox {
         this.runnableChangedCallback = () => { }
 
         this.onCreated((editorBox: MonacoBox) => {
-            let height = editorBox.getLinesHeight();
-
-            this.editor.getDomNode()!.style.height = height + "px";
+            this.setHeight()
         })
         this.onContentChanged((editorBox: MonacoBox) => {
-            editorBox.editor.getDomNode()!.style.height = editorBox.getLinesHeight() + "px";
+            this.setHeight()
         });
     }
 
@@ -33,6 +31,10 @@ class MonacoBox {
         // 使用 this.editor.getValue() 会导致整个界面卡住
         // https://github.com/microsoft/monaco-editor/issues/2439
         return monaco.editor.getModels()[this.index.toString()].getValue()
+    }
+
+    public getHeight() {
+        return this.editor.getDomNode()!.style.height
     }
 
     // 所有的行合起来的高度
@@ -70,6 +72,12 @@ class MonacoBox {
         return monaco.editor.getModels()[this.index.toString()].setValue(content)
     }
 
+    public setHeight() {
+        let height = this.getLinesHeight();
+
+        this.editor.getDomNode()!.style.height = height + "px";
+    }
+
     public setLanguage(language: string) {
         if (this.editor == undefined) {
             return console.log("editor尚未实例化，不能设置language");
@@ -91,10 +99,6 @@ class MonacoBox {
         if (this.runnableChangedCallback) {
             this.runnableChangedCallback(this.runnable)
         }
-    }
-
-    public getHeight() {
-        return this.editor.getDomNode()!.style.height
     }
 
     public onContentChanged(callback: (arg0: any) => void) {

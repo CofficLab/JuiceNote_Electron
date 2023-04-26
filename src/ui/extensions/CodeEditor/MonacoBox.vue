@@ -191,6 +191,7 @@ let handleRun = () => {
   if (runResultVisible.value) {
     runResultVisible.value = false;
     running.value = false;
+    resultBox.setContent("");
     return;
   }
 
@@ -199,6 +200,7 @@ let handleRun = () => {
   setTimeout(() => {
     let result = Preload.ipc.sendSync("run", editorBox.value!.getContent(), editorBox.value!.getLanguage());
     resultBox.setContent(result == "" ? "「程序没有输出」" : result);
+    console.log("运行结果", result);
     running.value = false;
     runResultVisible.value = true;
   }, 500);

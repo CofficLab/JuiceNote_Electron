@@ -57,6 +57,7 @@ function createTab() {
   props.updateAttributes({
     database: database.value.appendNewCodeBlock().toJSON(),
   });
+  activate(database.value.getLastIndex());
   nextTick(focusToLastTitle);
 }
 
