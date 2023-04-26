@@ -104,6 +104,7 @@ function handleDelete() {
   });
 
   nextTick(focusToLastTitle);
+  activate(database.value.getLastIndex());
 }
 
 function handleUpdateTitle(e) {
