@@ -1,10 +1,10 @@
 <template>
-  <NodeViewWrapper ref="contentDom" contenteditable="false" class="code-editor my-4 overflow-visible rounded">
+  <NodeViewWrapper contenteditable="false" class="code-editor my-4 overflow-visible rounded">
     <div class="tabs flex flex-row justify-between overflow-hidden rounded-none bg-yellow-600 p-0" contenteditable="false">
       <!-- 标签列表 -->
       <div class="tab-list" ref="titlesDom">
         <div v-for="(item, index) in items" class="flex h-8 flex-row flex-nowrap items-stretch outline-none" :class="{ 'bg-gray-900': index == activatedIndex }">
-          <a class="code-title" @click="activate(index)">{{ item.title }}</a>
+          <a class="code-title" contenteditable="true" @keyup="handleUpdateTitle" @click="activate(index)">{{ item.title }}</a>
         </div>
       </div>
 
@@ -16,7 +16,7 @@
       </div>
     </div>
 
-    <div class="relative rounded-b bg-slate-900">
+    <div class="relative rounded-b bg-slate-900" ref="codeDom">
       <Monaco
         :code="activatedItem.content"
         :language="activatedItem.language"
@@ -37,12 +37,13 @@
 import { NodeViewContent, nodeViewProps, NodeViewWrapper } from "@tiptap/vue-3";
 import Monaco from "./Monaco.vue";
 import { Database, CodeBlock } from "./Database";
-import { ref, computed } from "vue";
+import { ref, computed, nextTick } from "vue";
 import Plus from "./plus.vue";
 
 const props = defineProps(nodeViewProps);
 
-let contentDom = ref();
+let codeDom = ref();
+let titlesDom = ref();
 let database = computed<Database>(() => new Database(props.node.attrs.database));
 let items = computed<CodeBlock[]>(() => database.value.items);
 let activatedIndex = computed(() => database.value.activatedIndex);
@@ -52,6 +53,7 @@ function createTab() {
   props.updateAttributes({
     database: database.value.appendNewCodeBlock().toJSON(),
   });
+  nextTick(focusToLastTitle);
 }
 
 function activate(index) {
@@ -69,13 +71,33 @@ function handleChange(editorBox) {
 }
 
 function handleDelete() {
-  if (items.value.length == 1) {
-    return props.deleteNode();
-  }
+  if (items.value.length == 1) return props.deleteNode();
 
   props.updateAttributes({
     database: database.value.deleteCodeBlock(activatedIndex.value).toJSON(),
   });
+
+  nextTick(focusToLastTitle);
+}
+
+function handleUpdateTitle(e) {
+  props.updateAttributes({
+    database: database.value.updateTitle(e.target.innerText).toJSON(),
+  });
+}
+
+function focusToLastTitle() {
+  let titleTexts = titlesDom.value.querySelectorAll(".code-title");
+  let lastTitle = titleTexts[titleTexts.length - 1];
+
+  // 光标移到最后一个标签的内容的最后
+  lastTitle.focus(); // 聚焦到元素
+  const range = document.createRange(); // 创建一个 Range 对象
+  range.selectNodeContents(lastTitle); // 设置 Range 对象的范围为元素的内容
+  range.collapse(false); // 将 Range 对象的结束位置设置为最后一个字符的位置
+  const selection = window.getSelection(); // 获取 Selection 对象
+  selection?.removeAllRanges(); // 删除所有 Range 对象
+  selection?.addRange(range); // 添加设置好的 Range 对象
 }
 </script>
 

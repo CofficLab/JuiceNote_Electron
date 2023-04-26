@@ -4,13 +4,14 @@
       <!-- 语言 -->
       <span v-html="lan" class="absolute right-0 top-0 z-20 rounded-bl-lg bg-cyan-800/20 px-2 py-1 text-sm text-info"></span>
 
-      <button contenteditable="false" class="btn-sm btn absolute bottom-8 right-2 z-20 transition-none" :class="{ loading: running }" @click="handleRun" v-html="runTitle" v-if="runnable"></button>
+      <!-- 运行按钮 -->
+      <button contenteditable="false" class="btn-sm btn absolute bottom-8 right-2 z-20 transition-none" :class="{ loading: running }" @click="handleRun" v-html="runTitle" v-show="runnable"></button>
 
       <div ref="codeDom" class="relative z-10">
         <!-- 操作栏 -->
         <div class="code-block-operators absolute bottom-0" contenteditable="false">
           <div class="flex">
-            <button class="btn-ghost btn-sm btn flex self-start rounded-none" @click="onDelete">
+            <button class="btn-ghost btn-sm btn flex self-start rounded-none" @click="() => onDelete()">
               <Trash class="h-4 w-4"></Trash>
             </button>
           </div>
@@ -33,12 +34,12 @@
     </div>
 
     <!-- 展示运行结果 -->
-    <div ref="resultDom" v-show="runResultVisible" class="result-dom border-2 border-transparent border-t-sky-900"></div>
+    <div ref="resultDom" v-show="runResultVisible && runnable" class="result-dom border-2 border-transparent border-t-sky-900"></div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted, onUnmounted, watch, ref } from "vue";
+import { computed, onMounted, onUnmounted, watch, ref, nextTick } from "vue";
 import Trash from "./trash.vue";
 import Preload from "../../entities/Preload";
 import EditorBox from "./EditorBox";
@@ -105,11 +106,7 @@ let code = ref("");
 let runnable = computed(() => props.runnable);
 let running = ref(false);
 let runResultVisible = ref(false);
-let runTitle = computed(() => {
-  if (running.value) return "运行中";
-  if (runResultVisible.value) return "收起";
-  return "运行";
-});
+let runTitle = computed(() => (running.value ? "运行中" : runResultVisible.value ? "收起" : "运行"));
 
 /**
  * editor相关属性
@@ -146,6 +143,7 @@ let handleChangeLanguage = (e) => editorBox.setLanguage(e.target.value);
 let handleToggleRun = () => {
   editorBox.toggleRunnable();
   props.onChange(editorBox);
+  if (!editorBox.runnable) runResultVisible.value = false;
 };
 let handleRun = () => {
   if (running.value) return;
@@ -161,11 +159,9 @@ let handleRun = () => {
 
   setTimeout(() => {
     let result = Preload.ipc.sendSync("run", editorBox.getContent(), editorBox.getLanguage());
-    console.log(result);
-    resultBox.setContent(result);
+    resultBox.setContent(result == "" ? "「程序没有输出」" : result);
     running.value = false;
     runResultVisible.value = true;
-    console.log(editorBox.getLinesHeight());
-  }, 0);
+  }, 500);
 };
 </script>

@@ -8,6 +8,7 @@ import { computed, onMounted, onUnmounted, watch, ref, defineProps } from "vue";
 import { useRoute } from "vue-router";
 import Trash from "../icons/trash.vue";
 import Preload from "../../entities/Preload";
+import { connect } from "http2";
 
 class EditorBox {
     public editor: monaco.editor.IStandaloneCodeEditor;
@@ -59,9 +60,9 @@ class EditorBox {
     }
 
     public setContent(content: string | monaco.editor.ITextSnapshot) {
-        // console.log('设置monaco content', this.index)
+        // console.log('设置monaco content', content)
 
-        if (content == this.getContent()) return
+        // if (content == this.getContent()) return
 
         monaco.editor.getModels()[this.index.toString()].setValue(content);
     }
