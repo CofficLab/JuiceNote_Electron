@@ -1,5 +1,4 @@
 import { createApp } from 'vue'
-// import { ipcRenderer } from 'electron'
 import App from './layouts/App.vue'
 import Home from './pages/Home.vue'
 import Lesson from './pages/Lesson.vue'

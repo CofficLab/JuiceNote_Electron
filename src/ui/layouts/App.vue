@@ -28,7 +28,7 @@
     <Terminal v-if="terminalVisible"></Terminal>
 
     <!-- <DebugBar></DebugBar> -->
-    <!-- <BottomBar></BottomBar> -->
+    <BottomBar></BottomBar>
   </div>
 </template>
 

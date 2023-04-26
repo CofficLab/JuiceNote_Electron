@@ -98,14 +98,14 @@ contextBridge.exposeInMainWorld('ipcRender', ipcRenderer)
 
 contextBridge.exposeInMainWorld('preloadApi', {
   terminal: {
-    incomingData: (pid, callback) => {
+    incomingData: (pid: number, callback: (arg0: Electron.IpcRendererEvent, arg1: any) => void) => {
       ipcRenderer.on('terminal-incomingData-' + pid, (event, data) => callback(event, data))
     },
   }
 })
 
 // 对主进程的消息作出响应
-contextBridge.exposeInMainWorld('listen', (name, callback) => {
+contextBridge.exposeInMainWorld('listen', (name: string, callback: () => void) => {
   switch (name) {
     case 'toggle-search':
       ipcRenderer.on('toggle-search', () => callback())

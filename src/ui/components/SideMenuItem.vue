@@ -6,7 +6,7 @@
     </div>
 
     <!-- 是一个图书 -->
-    <div class="sticky z-40 bg-base-200" :class="{ 'top-8': !hideTitleBar, 'top-0': hideTitleBar }" v-if="item.isBook">
+    <div class="sticky z-40 bg-base-200" :class="{ 'top-10': !hideTitleBar, 'top-0': hideTitleBar }" v-if="item.isBook">
       <Link :node="item" class="flex justify-center bg-gradient-to-r from-red-500 to-cyan-500 bg-clip-text pb-2 text-lg text-transparent md:text-2xl lg:text-3xl">{{ item.title }}</Link>
 
       <!-- 图书的TAB，比如：教程、手册 -->
