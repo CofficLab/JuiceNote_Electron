@@ -30,10 +30,8 @@ let node = Node.find(route.params.id.toString());
 
 let save = function (content) {
   if (content != node.content) {
-    console.log("保存节点", node.id, "的内容", content.substring(0, 20) + "...");
-    setTimeout(() => {
-      node.updateContent(content);
-    });
+    // console.log("保存节点", node.id, "的内容", content.substring(0, 20) + "...");
+    node.updateContent(content);
   }
 };
 

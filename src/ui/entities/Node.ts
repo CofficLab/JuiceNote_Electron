@@ -224,9 +224,9 @@ class Node {
         Ipc.sendSync('updatePriority', this.id, priority)
     }
 
-    updateContent(content: string): string {
+    updateContent(content: string) {
         dispatchEvent(new Event('nodeUpdated'))
-        return Ipc.sendSync('updateContent', this.id, content)
+        Ipc.send('updateContent', this.id, content)
     }
 
     updateCover(base64Code: string): string {

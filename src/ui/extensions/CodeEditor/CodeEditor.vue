@@ -70,14 +70,15 @@ function activate(index) {
 }
 
 function handleContentChanged(editorBox) {
-  console.log("code editor found monaco content changed");
+  // console.log("code editor found monaco content changed");
 
+  // 异步更新，避免影响Monaco的响应速度
   setTimeout(() => {
     props.updateAttributes({
       code: editorBox.getContent(),
       database: database.value.updateContent(editorBox.getContent()).toJSON(),
     });
-  });
+  }, 5);
 }
 
 function handleLanguageChanged(editorBox: MonacoBox) {
