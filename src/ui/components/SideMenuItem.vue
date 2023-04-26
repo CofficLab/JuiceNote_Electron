@@ -2,7 +2,7 @@
   <div>
     <!-- 空白，用于拖动 -->
     <div class="sticky top-0 z-40 w-full bg-base-300" v-if="!isWindows && item.isBook">
-      <div class="draggable" :class="{ 'h-8': !hideTitleBar, 'h-0': hideTitleBar }"></div>
+      <div class="draggable" :class="{ 'h-10': !hideTitleBar, 'h-0': hideTitleBar }"></div>
     </div>
 
     <!-- 是一个图书 -->
@@ -19,15 +19,15 @@
       <!-- 是一个页面或一个tab -->
       <li v-if="item.isPage || item.isTab" v-on:contextmenu="showRightMenu">
         <Link class="3xl:text-lg flex gap-4" :node="item" :class="{ 'text-info': !item.isVisible }">
-          <DynamicPadding :count="item.getParents().length-3"></DynamicPadding>
+          <DynamicPadding :count="item.getParents().length - 3"></DynamicPadding>
           {{ item.title }}
         </Link>
       </li>
 
       <!-- 是一个章节 -->
-      <li v-if="item.isChapter && !item.isTab" class="text-indigo-400/70 pl-0"  v-on:contextmenu="showRightMenu">
+      <li v-if="item.isChapter && !item.isTab" class="pl-0 text-indigo-400/70" v-on:contextmenu="showRightMenu">
         <Link class="text-lg" :node="item">
-          <DynamicPadding :count="item.getParents().length-3"></DynamicPadding>
+          <DynamicPadding :count="item.getParents().length - 3"></DynamicPadding>
           {{ item.title }}
         </Link>
       </li>
@@ -47,7 +47,7 @@ import FullScreenController from "../entities/FullScreenController";
 import Node from "../entities/Node";
 import Preload from "../entities/Preload";
 
-const IpcRender = Preload.ipc
+const IpcRender = Preload.ipc;
 const route = useRoute();
 
 const props = defineProps({
@@ -55,7 +55,7 @@ const props = defineProps({
   current: Node,
 });
 
-let item = computed(()=>props.item ?? props.current.getBook());
+let item = computed(() => props.item ?? props.current.getBook());
 
 const editable = computed(() => route.name == "lessons.edit");
 let hideTitleBar = computed(() => FullScreenController.full);
@@ -70,12 +70,14 @@ const getSubMenus = function (menu) {
 };
 
 const showRightMenu = function (e) {
-  dispatchEvent(new CustomEvent('show-right-menus', {
-    detail: {
-      x: e.x,
-      y: e.y,
-      node:props.item
-    }
-  }))
-}
+  dispatchEvent(
+    new CustomEvent("show-right-menus", {
+      detail: {
+        x: e.x,
+        y: e.y,
+        node: props.item,
+      },
+    })
+  );
+};
 </script>

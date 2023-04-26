@@ -10,7 +10,7 @@ function truncate(str: string, maxLength: number): string {
 const Toast = reactive({
     toast: '',
 
-    set(message: string): void {
+    set(message: string = ''): void {
         this.toast = truncate(message, 20)
 
         setTimeout(() => {

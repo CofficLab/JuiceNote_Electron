@@ -33,7 +33,7 @@ export default CodeBlock.extend({
           return Database.createWithSingleCodeBlock(
             new DatabaseCodeBlock({
               content: element.innerText,
-              title: "1",
+              title: "代码块",
               language: "go",
             })
           ).toJSON();

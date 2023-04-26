@@ -5,20 +5,19 @@
       <Breadcrumbs :current="current" v-if="currentId > 0"></Breadcrumbs>
     </div>
     <div class="draggable flex-grow"></div>
-    <div class="flex h-8 flex-row items-center justify-end gap-4 pr-4">
+    <div class="flex flex-row items-center justify-end gap-2 pr-4">
       <!-- <Languages></Languages> -->
       <BtnOfficialLink></BtnOfficialLink>
-      <Terminal class="btn-ghost btn-xs btn rounded-sm px-1"></Terminal>
-      <Prev class="btn-ghost btn-xs btn rounded-sm px-1" :showText="false" v-if="isRouteLesson"></Prev>
-      <Home class="btn-ghost btn-xs btn rounded-sm px-1"></Home>
-      <Next class="btn-ghost btn-xs btn rounded-sm px-1" :showText="false" v-if="isRouteLesson"></Next>
-      <More class="btn-ghost btn-xs btn rounded-sm px-1"></More>
+      <Terminal class="btn-ghost btn rounded-sm px-2"></Terminal>
+      <Prev class="btn-ghost btn rounded-sm px-2" :showText="false" v-if="isRouteLesson"></Prev>
+      <Home class="btn-ghost btn rounded-sm px-2"></Home>
+      <Next class="btn-ghost btn rounded-sm px-2" :showText="false" v-if="isRouteLesson"></Next>
+      <More class="btn-ghost btn rounded-sm px-2"></More>
     </div>
   </div>
 </template>
 
 <script setup>
-
 import Home from "../operators/Home.vue";
 import More from "../operators/More.vue";
 import Next from "../operators/Next.vue";
