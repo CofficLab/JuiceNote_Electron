@@ -9,7 +9,7 @@
 
       <div ref="codeDom" class="relative z-10">
         <!-- 操作栏 -->
-        <div class="code-block-operators absolute bottom-0" contenteditable="false">
+        <div class="code-block-operators absolute bottom-0" contenteditable="false" v-if="editable">
           <div class="flex">
             <button class="btn-ghost btn-sm btn flex self-start rounded-none" @click="() => onDelete()">
               <Trash class="h-4 w-4"></Trash>
@@ -61,6 +61,10 @@ const props = defineProps({
     type: Number,
     default: 0,
   },
+  editable: {
+    type: Boolean,
+    default: true,
+  },
   runnable: {
     type: Boolean,
     default: false,
@@ -102,10 +106,6 @@ const props = defineProps({
     },
   },
   showLineNumbers: {
-    type: Boolean,
-    default: true,
-  },
-  editable: {
     type: Boolean,
     default: true,
   },

@@ -1,5 +1,4 @@
-<h1 id="heading-1">copy</h1><official-link class="bg-cyan-800/20 p-4">https://pkg.go.dev/builtin#copy</official-link><pre index="1"><code language="go" run="NaN">func copy(dst, src []Type) int
-</code></pre><pre index="1"><code language="go" run="NaN">package main
+<h1 id="heading-1">copy</h1><official-link class="bg-cyan-800/20 p-4">https://pkg.go.dev/builtin#copy</official-link><pre height="0" database="{&quot;items&quot;:[{&quot;title&quot;:&quot;代码块&quot;,&quot;content&quot;:&quot;func copy(dst, src []Type) int&quot;,&quot;language&quot;:&quot;go&quot;}],&quot;activatedIndex&quot;:0}"><code>func copy(dst, src []Type) int</code></pre><pre height="0" database="{&quot;items&quot;:[{&quot;title&quot;:&quot;代码块&quot;,&quot;content&quot;:&quot;package main\nimport \&quot;fmt\&quot;\n\nfunc main() {\n    a := []int{1,2,3}\n    b := []int{}\n    c := make([]int, 7)\n    d := make([]int, 2)\n    e := make([]int, len(a))\n    x := a\n\n    copy(b,a)\n    copy(c,a)\n    copy(d,a)\n    copy(e,a)\n\n    fmt.Printf(\&quot;%[1]p %[1]v\\n\&quot;, a)\n    fmt.Printf(\&quot;%[1]p %[1]v\\n\&quot;, x)\n    fmt.Printf(\&quot;%[1]p %[1]v\\n\&quot;, b)\n    fmt.Printf(\&quot;%[1]p %[1]v\\n\&quot;, c)\n    fmt.Printf(\&quot;%[1]p %[1]v\\n\&quot;, d)\n    fmt.Printf(\&quot;%[1]p %[1]v\\n\&quot;, e)\n}&quot;,&quot;language&quot;:&quot;go&quot;}],&quot;activatedIndex&quot;:0}"><code>package main
 import "fmt"
 
 func main() {
@@ -21,8 +20,7 @@ func main() {
     fmt.Printf("%[1]p %[1]v\n", c)
     fmt.Printf("%[1]p %[1]v\n", d)
     fmt.Printf("%[1]p %[1]v\n", e)
-}
-</code></pre><h2 id="heading-2">深拷贝(Deep Copy)</h2><p>完整复制一份，新旧元素各占一块内存，内存地址也不一样，例如：</p><pre index="1"><code language="go" run="NaN">package main
+}</code></pre><h2 id="heading-2">深拷贝(Deep Copy)</h2><p>完整复制一份，新旧元素各占一块内存，内存地址也不一样，例如：</p><pre height="0" database="{&quot;items&quot;:[{&quot;title&quot;:&quot;代码块&quot;,&quot;content&quot;:&quot;package main\nimport \&quot;fmt\&quot;\n\nfunc main() {\n    a := []int{1,2,3}\n    b := make([]int, len(a))\n\n    copy(b,a)\n\n    fmt.Printf(\&quot;%[1]p %[1]v\\n\&quot;, a)\n    fmt.Printf(\&quot;%[1]p %[1]v\\n\&quot;, b)\n}\n&quot;,&quot;language&quot;:&quot;go&quot;}],&quot;activatedIndex&quot;:0}"><code>package main
 import "fmt"
 
 func main() {
@@ -34,8 +32,8 @@ func main() {
     fmt.Printf("%[1]p %[1]v\n", a)
     fmt.Printf("%[1]p %[1]v\n", b)
 }
-</code></pre><p>值类型的数据，默认全部都是深复制，Array、Int、String、Struct、Float，Bool。</p><h2 id="heading-3">浅拷贝(Shadow Copy)</h2><pre index="1"><code language="go" run="NaN">b := a
-</code></pre><p>内存中实际只占一份空间，两者内存地址一致，修改一个也会影响另一个。</p><pre index="1"><code language="go" run="NaN">package main
+</code></pre><p>值类型的数据，默认全部都是深复制，Array、Int、String、Struct、Float，Bool。</p><h2 id="heading-3">浅拷贝(Shadow Copy)</h2><pre height="0" database="{&quot;items&quot;:[{&quot;title&quot;:&quot;代码块&quot;,&quot;content&quot;:&quot;b := a\n&quot;,&quot;language&quot;:&quot;go&quot;}],&quot;activatedIndex&quot;:0}"><code>b := a
+</code></pre><p>内存中实际只占一份空间，两者内存地址一致，修改一个也会影响另一个。</p><pre height="0" database="{&quot;items&quot;:[{&quot;title&quot;:&quot;代码块&quot;,&quot;content&quot;:&quot;package main\nimport \&quot;fmt\&quot;\n\nfunc main() {\n    a := []int{1,2,3}\n    b := a\n\n    fmt.Printf(\&quot;%[1]p %[1]v\\n\&quot;, a)\n    fmt.Printf(\&quot;%[1]p %[1]v\\n\&quot;, b)\n\n    b[0] = 28\n\n    fmt.Printf(\&quot;%[1]p %[1]v\\n\&quot;, a)\n    fmt.Printf(\&quot;%[1]p %[1]v\\n\&quot;, b)\n}\n&quot;,&quot;language&quot;:&quot;go&quot;}],&quot;activatedIndex&quot;:0}"><code>package main
 import "fmt"
 
 func main() {

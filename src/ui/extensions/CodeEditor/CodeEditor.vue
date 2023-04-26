@@ -1,6 +1,6 @@
 <template>
   <NodeViewWrapper contenteditable="false" class="code-editor my-4 overflow-visible rounded">
-    <div class="tabs flex flex-row justify-between overflow-hidden rounded-none bg-yellow-600 p-0" contenteditable="false">
+    <div class="tabs flex flex-row justify-between overflow-hidden rounded-none bg-yellow-600 p-0" contenteditable="false" v-if="editor.isEditable || items.length > 1">
       <!-- 标签列表 -->
       <div class="tab-list" ref="titlesDom">
         <div v-for="(item, index) in items" class="flex h-8 flex-row flex-nowrap items-stretch outline-none" :class="{ 'bg-gray-900': index == activatedIndex }">
@@ -18,6 +18,8 @@
 
     <div class="relative rounded-b bg-slate-900" ref="codeDom">
       <Monaco
+        :editable="editor.isEditable"
+        :readOnly="!editor.isEditable"
         :content="content"
         :language="activatedItem.language"
         :runnable="activatedItem.runnable"

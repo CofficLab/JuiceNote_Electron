@@ -173,8 +173,8 @@ class MonacoBox {
                 enabled: false,
             },
             padding: {
-                top: 10,
-                bottom: 50,
+                top: props.readOnly ? 10 : 10,
+                bottom: props.readOnly ? 10 : 50,
             },
             minimap: { enabled: false },
         });
