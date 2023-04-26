@@ -26,7 +26,6 @@ import Toc from "../extensions/Toc.js"
 import Tab from "../extensions/Tab.js"
 import TabContent from "../extensions/TabContent.js"
 import CodeEditor from "../extensions/CodeEditor/CodeEditor.js"
-import CodeProject from "../extensions/CodeProject.js"
 import Chat from "../extensions/Chat.js"
 import TimeLine from "../extensions/TimeLine.js"
 import TimeLineTitle from "../extensions/TimeLineTitle.js"
@@ -45,7 +44,6 @@ let Extensions = [
     Brick,
     Code,
     CodeEditor,
-    CodeProject,
     Chat,
     Document,
     Gapcursor,

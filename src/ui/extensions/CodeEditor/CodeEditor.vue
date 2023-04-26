@@ -1,5 +1,5 @@
 <template>
-  <NodeViewWrapper ref="contentDom" contenteditable="false" class="code-editor overflow-visible rounded">
+  <NodeViewWrapper ref="contentDom" contenteditable="false" class="code-editor my-4 overflow-visible rounded">
     <div class="tabs flex flex-row justify-between overflow-hidden rounded-none bg-yellow-600 p-0" contenteditable="false">
       <!-- 标签列表 -->
       <div class="tab-list" ref="titlesDom">

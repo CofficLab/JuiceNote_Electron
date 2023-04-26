@@ -115,14 +115,6 @@
       <IconCode></IconCode>
     </button>
 
-    <button @click="editor.chain().focus().addCodeTab().run()" class="tooltip tooltip-bottom" data-tip="并排的多个代码框">
-      <IconViewColumns></IconViewColumns>
-    </button>
-
-    <button @click="editor.chain().focus().addCodeProject().run()" class="tooltip tooltip-bottom" data-tip="代码项目">
-      <IconViewColumns></IconViewColumns>
-    </button>
-
     <button @click="cancel" :disabled="!editor.can().chain().focus().undo().run()" class="tooltip tooltip-bottom" data-tip="撤销修改">
       <IconBack></IconBack>
     </button>
@@ -222,8 +214,8 @@ let addChat = () => props.editor.chain().focus().addChat().run();
 let cancel = () => props.editor.chain().focus().undo().run();
 let redo = () => props.editor.chain().focus().redo().run();
 let empty = () => {
-  ToastController.set(props.current.updateContent(""))
-  props.editor.commands.setContent('', false)
+  ToastController.set(props.current.updateContent(""));
+  props.editor.commands.setContent("", false);
 };
 let save = () => ToastController.set(props.current.updateContent(props.editor.getHTML()));
 let setParagraph = () => {
@@ -283,7 +275,8 @@ let toggleBlockquote = function () {
   props.editor.chain().focus().toggleBlockquote().run();
 };
 let toggleSourceCode = function () {
-  props.sourceCodeCallback();
+  console.log("toggleSourceCode");
+  // props.editor.commands.setContent(props.editor.getHTML());
 };
 let inputLink = function () {
   showLinkModal.value = true;
