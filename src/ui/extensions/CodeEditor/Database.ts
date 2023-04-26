@@ -91,7 +91,21 @@ export class Database {
         return new Database(this.json);
     }
 
-    public updateRunnable(runnable: Boolean): Database {
+    public updateContent(content: string): Database {
+        let activatedItem = this.getActivatedItem()
+        activatedItem.content = content
+
+        this.items[this.activatedIndex] = activatedItem
+
+        this.json = JSON.stringify({
+            items: this.items,
+            activatedIndex: this.activatedIndex,
+        })
+
+        return new Database(this.json);
+    }
+
+    public updateRunnable(runnable: boolean): Database {
         let activatedItem = this.getActivatedItem()
         activatedItem.runnable = runnable
 

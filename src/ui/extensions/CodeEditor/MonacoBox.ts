@@ -4,38 +4,33 @@ import jsonWorker from "monaco-editor/esm/vs/language/json/json.worker?worker";
 import cssWorker from "monaco-editor/esm/vs/language/css/css.worker?worker";
 import htmlWorker from "monaco-editor/esm/vs/language/html/html.worker?worker";
 import tsWorker from "monaco-editor/esm/vs/language/typescript/ts.worker?worker";
-import { computed, onMounted, onUnmounted, watch, ref, defineProps } from "vue";
-import { useRoute } from "vue-router";
-import Trash from "../icons/trash.vue";
-import Preload from "../../entities/Preload";
-import { connect } from "http2";
 
-class EditorBox {
+class MonacoBox {
     public editor: monaco.editor.IStandaloneCodeEditor;
     public index;
     public runnable;
+    public runnableChangedCallback: Function;
 
     public constructor(editor: any, index: any, runnable = true) {
-        EditorBox.createWorker()
+        MonacoBox.createWorker()
 
         this.editor = editor;
         this.index = index;
         this.runnable = runnable
+        this.runnableChangedCallback = () => { }
 
-        this.onCreated((editorBox: EditorBox) => {
+        this.onCreated((editorBox: MonacoBox) => {
             let height = editorBox.getLinesHeight();
 
             this.editor.getDomNode()!.style.height = height + "px";
         })
-        this.onChanged((editorBox: EditorBox) => {
+        this.onContentChanged((editorBox: MonacoBox) => {
             editorBox.editor.getDomNode()!.style.height = editorBox.getLinesHeight() + "px";
         });
     }
 
     public getContent() {
-        // 使用 this.editor.getValue() 会导致整个界面卡住
-        // https://github.com/microsoft/monaco-editor/issues/2439
-        return monaco.editor.getModels()[this.index.toString()].getValue()
+        return this.editor.getValue()
     }
 
     // 所有的行合起来的高度
@@ -45,6 +40,10 @@ class EditorBox {
         let padding = this.editor.getOption(monaco.editor.EditorOption.padding);
 
         return lineCount * lineHeight + padding.top + padding.bottom;
+    }
+
+    public getRunnable(): boolean {
+        return this.runnable
     }
 
     public getLanguage() {
@@ -59,37 +58,59 @@ class EditorBox {
         return domNode?.parentElement
     }
 
-    public setContent(content: string | monaco.editor.ITextSnapshot) {
+    public setContent(content: string) {
         // console.log('设置monaco content', content)
 
         // if (content == this.getContent()) return
 
-        monaco.editor.getModels()[this.index.toString()].setValue(content);
+        this.editor.setValue(content);
     }
 
     public setLanguage(language: string) {
-        // console.log("设置Monaco Editor的Language为", language);
 
         if (this.editor == undefined) {
             return console.log("editor尚未实例化，不能设置language");
         }
+
+        if (language == this.getLanguage()) {
+            console.log('放弃设置monaco language，因为没有变化', language)
+
+            return
+        }
+
+        console.log("设置Monaco Editor的Language为", language);
 
         monaco.editor.setModelLanguage(this.editor.getModel()!, language);
     }
 
     public toggleRunnable() {
         this.runnable = !this.runnable
+        if (this.runnableChangedCallback) {
+            this.runnableChangedCallback(this.runnable)
+        }
     }
 
     public getHeight() {
         return this.editor.getDomNode()!.style.height
     }
 
-    public onChanged(callback: (arg0: any) => void) {
+    public onContentChanged(callback: (arg0: any) => void) {
         this.editor.getModel()!.onDidChangeContent(() => { callback(this) });
-        this.editor.getModel()?.onDidChangeLanguage(() => { callback(this) });
-
         return this;
+    }
+
+    public onLanguageChanged(callback: (arg0: any) => void) {
+        this.editor.getModel()?.onDidChangeLanguage(() => {
+            console.log('monaco editor language changed, call the callback function', this.editor.getModel()?.getLanguageId());
+            callback(this)
+        });
+        return this
+    }
+
+    public onRunnableChanged(callback: (arg0: any) => void): MonacoBox {
+        this.runnableChangedCallback = callback
+
+        return this
     }
 
     public onCreated(callback: Function) {
@@ -151,8 +172,8 @@ class EditorBox {
             minimap: { enabled: false },
         });
 
-        return new EditorBox(editor, monaco.editor.getModels().length - 1, runnable);
+        return new MonacoBox(editor, monaco.editor.getModels().length - 1, runnable);
     }
 }
 
-export default EditorBox
+export default MonacoBox

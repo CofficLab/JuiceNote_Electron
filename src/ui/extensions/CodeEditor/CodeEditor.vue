@@ -22,8 +22,10 @@
         :language="activatedItem.language"
         :runnable="activatedItem.runnable"
         :showRunButton="node.attrs.run == 1"
-        :onChange="handleChange"
+        :onContentChanged="handleContentChanged"
         :onDelete="handleDelete"
+        :onRunnableChanged="handleRunnableChanged"
+        :onLanguageChanged="handleLanguageChanged"
         :showLineNumbers="true"
       ></Monaco>
 
@@ -39,6 +41,7 @@ import Monaco from "./Monaco.vue";
 import { Database, CodeBlock } from "./Database";
 import { ref, computed, nextTick } from "vue";
 import Plus from "./plus.vue";
+import MonacoBox from "./MonacoBox";
 
 const props = defineProps(nodeViewProps);
 
@@ -62,11 +65,23 @@ function activate(index) {
   });
 }
 
-function handleChange(editorBox) {
-  console.log("code editor found monaco changed", editorBox.runnable);
+function handleContentChanged(editorBox) {
+  console.log("code editor found monaco content changed", editorBox.runnable);
   props.updateAttributes({
     code: editorBox.getContent(),
-    database: database.value.updateLanguage(editorBox.getLanguage()).updateRunnable(editorBox.runnable).toJSON(),
+    database: database.value.updateContent(editorBox.getContent()).toJSON(),
+  });
+}
+
+function handleLanguageChanged(editorBox: MonacoBox) {
+  props.updateAttributes({
+    database: database.value.updateLanguage(editorBox.getLanguage()).toJSON(),
+  });
+}
+
+function handleRunnableChanged(runnable: boolean) {
+  props.updateAttributes({
+    database: database.value.updateRunnable(runnable).toJSON(),
   });
 }
 

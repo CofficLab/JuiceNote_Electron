@@ -19,14 +19,14 @@
             <button v-bind:data-clipboard-text="code" class="copy justify-end self-end justify-self-end">复制代码</button>
             <button @click="handleToggleRun" v-html="runnable ? '关运行' : '开运行'" class="justify-end self-end justify-self-end"></button>
             <select name="language" @change="handleChangeLanguage" class="text-sm">
-              <option value="text" v-bind:selected="language == 'text'">纯文本</option>
-              <option value="html" v-bind:selected="language == 'html'">HTML</option>
-              <option value="go" v-bind:selected="language == 'go'">Golang</option>
-              <option value="php" v-bind:selected="language == 'php'">PHP</option>
-              <option value="javascript" v-bind:selected="language == 'javascript'">JavaScript</option>
-              <option value="java" v-bind:selected="language == 'java'">Java</option>
-              <option value="python" v-bind:selected="language == 'python'">Python</option>
-              <option value="shell" v-bind:selected="language == 'shell'">Shell</option>
+              <option value="text" v-bind:selected="lan == 'text'">纯文本</option>
+              <option value="html" v-bind:selected="lan == 'html'">HTML</option>
+              <option value="go" v-bind:selected="lan == 'go'">Golang</option>
+              <option value="php" v-bind:selected="lan == 'php'">PHP</option>
+              <option value="javascript" v-bind:selected="lan == 'javascript'">JavaScript</option>
+              <option value="java" v-bind:selected="lan == 'java'">Java</option>
+              <option value="python" v-bind:selected="lan == 'python'">Python</option>
+              <option value="shell" v-bind:selected="lan == 'shell'">Shell</option>
             </select>
           </div>
         </div>
@@ -39,10 +39,10 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted, onUnmounted, watch, ref, nextTick } from "vue";
+import { computed, onMounted, onUnmounted, watch, ref } from "vue";
 import Trash from "./trash.vue";
 import Preload from "../../entities/Preload";
-import EditorBox from "./EditorBox";
+import MonacoBox from "./MonacoBox";
 import ClipboardJS from "clipboard";
 import Toast from "../../entities/Toast";
 
@@ -77,16 +77,28 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  onChange: {
+  onContentChanged: {
     type: Function,
     default: () => {
-      console.log("monaco changed");
+      console.log("monaco content changed");
     },
   },
   onDelete: {
     type: Function,
     default: () => {
       console.log("monaco delete button clicked");
+    },
+  },
+  onRunnableChanged: {
+    type: Function,
+    default: () => {
+      console.log("monaco runnable changed");
+    },
+  },
+  onLanguageChanged: {
+    type: Function,
+    default: () => {
+      console.log("monaco language changed");
     },
   },
   showLineNumbers: {
@@ -103,7 +115,7 @@ const props = defineProps({
  * 运行按钮相关的属性
  */
 let code = ref("");
-let runnable = computed(() => props.runnable);
+let runnable = ref(false);
 let running = ref(false);
 let runResultVisible = ref(false);
 let runTitle = computed(() => (running.value ? "运行中" : runResultVisible.value ? "收起" : "运行"));
@@ -113,37 +125,60 @@ let runTitle = computed(() => (running.value ? "运行中" : runResultVisible.va
  */
 let codeDom = ref<HTMLDivElement>();
 let resultDom = ref<HTMLDivElement>();
-let editorBox: EditorBox;
-let resultBox: EditorBox;
-let lan = computed(() => props.language);
+let editorBox = ref<MonacoBox>();
+let resultBox: MonacoBox;
+let lan = ref();
 
 onMounted(() => {
   // 编辑器
-  editorBox = EditorBox.createEditor(props, codeDom.value!, props.runnable).onChanged((editorBox) => {
-    props.onChange(editorBox);
-  });
+  editorBox.value = MonacoBox.createEditor(props, codeDom.value!, props.runnable)
+    .onCreated((editorBox) => {
+      lan.value = editorBox.getLanguage();
+      runnable.value = editorBox.getRunnable();
+    })
+    .onContentChanged((editorBox) => {
+      props.onContentChanged(editorBox);
+    })
+    .onRunnableChanged((v: boolean) => {
+      props.onRunnableChanged(v);
+      runnable.value = v;
+    })
+    .onLanguageChanged((editorBox) => {
+      lan.value = editorBox.getLanguage();
+      props.onLanguageChanged(editorBox);
+    });
 
   // 展示运行结果的编辑器
-  resultBox = EditorBox.createEditor(props, resultDom.value!, false);
+  resultBox = MonacoBox.createEditor(props, resultDom.value!, false);
 });
 
 onUnmounted(() => {
   console.log("monaco component unmounted");
 });
 
-watch(props, () => {
-  console.log("monaco 检测到 props 发生变化");
-  editorBox.setContent(props.code);
-});
+watch(
+  () => props.code,
+  () => {
+    console.log("monaco 检测到 props.code 发生变化");
+    editorBox.value!.setContent(props.code);
+  }
+);
+
+watch(
+  () => props.language,
+  () => {
+    console.log("monaco 检测到 props.language 发生变化");
+    editorBox.value!.setLanguage(props.language);
+  }
+);
 
 /**
  * 处理页面点击事件
  */
-let handleChangeLanguage = (e) => editorBox.setLanguage(e.target.value);
+let handleChangeLanguage = (e) => editorBox.value!.setLanguage(e.target.value);
 let handleToggleRun = () => {
-  editorBox.toggleRunnable();
-  props.onChange(editorBox);
-  if (!editorBox.runnable) runResultVisible.value = false;
+  editorBox.value!.toggleRunnable();
+  if (!editorBox.value!.runnable) runResultVisible.value = false;
 };
 let handleRun = () => {
   if (running.value) return;
@@ -158,7 +193,7 @@ let handleRun = () => {
   running.value = true;
 
   setTimeout(() => {
-    let result = Preload.ipc.sendSync("run", editorBox.getContent(), editorBox.getLanguage());
+    let result = Preload.ipc.sendSync("run", editorBox.value!.getContent(), editorBox.value!.getLanguage());
     resultBox.setContent(result == "" ? "「程序没有输出」" : result);
     running.value = false;
     runResultVisible.value = true;
