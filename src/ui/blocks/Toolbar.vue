@@ -115,22 +115,6 @@
       <IconCode></IconCode>
     </button>
 
-    <button @click="cancel" :disabled="!editor.can().chain().focus().undo().run()" class="tooltip tooltip-bottom" data-tip="撤销修改">
-      <IconBack></IconBack>
-    </button>
-
-    <button @click="redo" :disabled="!isRedoActive" class="tooltip tooltip-bottom" data-tip="恢复修改">
-      <IconRedo></IconRedo>
-    </button>
-
-    <button @click="toggleSourceCode" class="tooltip tooltip-bottom" data-tip="源码">
-      <IconSourceCode></IconSourceCode>
-    </button>
-
-    <!-- <button @click="save" class="tooltip tooltip-bottom" data-tip="保存">
-      <IconSave></IconSave>
-    </button> -->
-
     <button @click="empty" class="tooltip tooltip-bottom" data-tip="清空">
       <IconEmpty></IconEmpty>
     </button>
@@ -140,7 +124,7 @@
     </button>
 
     <button @click="saveAndShow" class="tooltip tooltip-bottom ml-4" data-tip="保存并跳转到展示页面">
-      <IconSaveBack></IconSaveBack>
+      <IconBack></IconBack>
     </button>
 
     <!-- 设置URL的模态框 -->
@@ -161,11 +145,9 @@
 import { Editor } from "@tiptap/vue-3";
 import { computed, ref } from "vue";
 import ToastController from "../entities/Toast";
-
 import IconCode from "../assets/icons/code-bracket.svg";
 import IconListBullet from "../assets/icons/list-bullet.svg";
 import IconBack from "../assets/icons/arrow-uturn-left.svg";
-import IconRedo from "../assets/icons/arrow-uturn-right.svg";
 import IconLink from "../assets/icons/link.svg";
 import IconTable from "../assets/icons/table-cells.svg";
 import IconMinus from "../assets/icons/minus.svg";
@@ -173,14 +155,10 @@ import IconX from "../assets/icons/x-mark.svg";
 import IconBarsArrowDown from "../assets/icons/bars-arrow-down.svg";
 import IconClear from "../assets/icons/no-symbol.svg";
 import IconPuzzle from "../assets/icons/puzzle-pieces.svg";
-import IconSaveBack from "../assets/icons/arrow-up-tray.svg";
 import IconQueueList from "../assets/icons/queue-list.svg";
 import IconChat from "../assets/icons/chat-bubble-left-ellipsis.svg";
-import IconViewColumns from "../assets/icons/view-columns.svg";
 import IconFilm from "../assets/icons/film.svg";
-import IconSourceCode from "../assets/icons/document-text.svg";
 import IconTab from "../assets/icons/server-stack.svg";
-import IconSave from "../assets/icons/save.svg";
 import IconEmpty from "../assets/icons/empty.svg";
 import IconHashTag from "../assets/icons/hashtag.svg";
 import { useRouter } from "vue-router";
@@ -205,8 +183,6 @@ let canToggleStrike = computed(() => props.editor.can().chain().focus().toggleSt
 let isBoldActive = computed(() => props.editor.isActive("bold"));
 let isBlockQuoteActive = computed(() => props.editor.isActive("blockquote"));
 let isParagraphActive = computed(() => props.editor.isActive("paragraph"));
-let isCodeActive = computed(() => props.editor.isActive("code"));
-let isRedoActive = computed(() => props.editor.can().chain().focus().redo().run());
 
 // 操作列表
 let unsetAllMarks = () => props.editor.chain().focus().unsetAllMarks().run();
@@ -273,10 +249,6 @@ let toggleOfficialLink = function () {
 };
 let toggleBlockquote = function () {
   props.editor.chain().focus().toggleBlockquote().run();
-};
-let toggleSourceCode = function () {
-  console.log("toggleSourceCode");
-  // props.editor.commands.setContent(props.editor.getHTML());
 };
 let inputLink = function () {
   showLinkModal.value = true;
