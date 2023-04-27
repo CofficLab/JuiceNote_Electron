@@ -3,12 +3,20 @@
     <ul class="flex flex-row justify-center">
       <li v-for="breadcrumb in breadcrumbs" class="flex justify-center">
         <div class="dropdown-top dropdown-hover dropdown flex justify-center" v-if="breadcrumb.getSiblings().length > 0">
-          <label tabindex="0" :class="{ 'text-info': !breadcrumb.isVisible }" class="self-center rounded px-1 ring-primary ring-opacity-30 transition duration-200 hover:scale-105 hover:ring-2">
+          <label
+            tabindex="0"
+            :class="{ 'text-info': !breadcrumb.isVisible }"
+            class="flex flex-row items-center gap-1 self-center rounded px-1 ring-primary ring-opacity-30 transition duration-200 hover:scale-105 hover:ring-2"
+          >
+            <IconBook class="h-4 w-4" v-if="breadcrumb.isBook"></IconBook>
+            <IconChapter class="h-4 w-4" v-if="breadcrumb.isChapter"></IconChapter>
+            <IconPage class="h-4 w-4" v-if="breadcrumb.isPage"></IconPage>
             {{ breadcrumb.title }}
             <span v-if="editable">[{{ breadcrumb.id }}]</span>
           </label>
-          <div class="dropdown-content mt-0 pt-4 shadow-2xl">
-            <ul tabindex="0" class="rounded-box ml-36 h-96 w-52 gap-2 overflow-y-scroll bg-base-200 p-2 shadow">
+
+          <div class="dropdown-content mt-0 pt-4">
+            <ul tabindex="0" class="rounded-box ml-36 h-96 w-52 gap-2 overflow-y-scroll bg-base-200 p-2 shadow-2xl">
               <Children :list="breadcrumb.getSiblings()"></Children>
             </ul>
           </div>
@@ -23,6 +31,9 @@ import { computed, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import Children from "../components/Children.vue";
 import RouteBox from "../entities/RouteBox";
+import IconBook from "../icons/book.vue";
+import IconChapter from "../icons/chapter.vue";
+import IconPage from "../icons/page.vue";
 
 const route = useRoute();
 
