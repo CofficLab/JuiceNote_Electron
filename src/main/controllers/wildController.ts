@@ -23,5 +23,5 @@ export default function setWildController(app: Electron.App) {
         }
     })
 
-    ipcMain.on('is-packaged', () => app.isPackaged)
+    ipcMain.on('is-packaged', (event) => event.returnValue = app.isPackaged)
 }
