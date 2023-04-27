@@ -50,14 +50,14 @@ onBeforeUnmount(() => {
 
 <style lang="postcss">
 .right-menus {
-  @apply fixed p-2 z-50 rounded-md bg-gray-100 shadow-2xl ring-1 ring-gray-300/30 !important;
+  @apply fixed z-50 rounded-md bg-gray-900 bg-opacity-40 p-2 shadow-2xl ring-1 ring-gray-300/30 backdrop-blur backdrop-filter !important;
 
   svg {
     @apply mr-2 inline-block h-4 !important;
   }
 
   li {
-    @apply rounded list-none text-xs flex h-8 items-center justify-start justify-items-center p-2 text-yellow-900 hover:cursor-pointer hover:bg-green-800/40 !important;
+    @apply flex h-8 list-none items-center justify-start justify-items-center rounded p-2 text-xs text-yellow-900 hover:cursor-pointer hover:bg-green-800/40 !important;
   }
 }
 </style>

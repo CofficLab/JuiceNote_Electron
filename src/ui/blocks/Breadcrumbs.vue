@@ -16,7 +16,7 @@
           </label>
 
           <div class="dropdown-content mt-0 pt-4">
-            <ul tabindex="0" class="rounded-box ml-36 h-96 w-52 gap-2 overflow-y-scroll bg-base-200 p-2 shadow-2xl">
+            <ul tabindex="0" class="rounded-box min-h-16 ml-32 max-h-96 w-40 gap-2 overflow-y-scroll bg-gray-900 bg-opacity-50 p-2 shadow-2xl backdrop-blur backdrop-filter">
               <Children :list="breadcrumb.getSiblings()"></Children>
             </ul>
           </div>
