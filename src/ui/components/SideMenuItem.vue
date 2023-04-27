@@ -21,7 +21,6 @@
 <script setup>
 import { computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
-
 import DynamicPadding from "./DynamicPadding.vue";
 import Node from "../entities/Node";
 import RouteBox from "../entities/RouteBox";
