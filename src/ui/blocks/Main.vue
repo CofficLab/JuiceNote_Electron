@@ -8,21 +8,15 @@
   </main>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { computed, ref } from "vue";
 import { useRoute } from "vue-router";
-import Node from "../entities/Node";
+import RouteBox from "../entities/RouteBox";
 
 const theme = ref("light");
 const route = useRoute();
-const asideVisible = computed(() => ["lessons.show", "lessons.edit"].includes(route.name));
-const headerVisible = computed(() => {
-  if (route.name == "lessons.edit") {
-    return Node.find(route.params.id).isChapter;
-  }
-
-  return ["lessons.show", "home.show", "home.edit"].includes(route.name);
-});
+const asideVisible = computed(() => RouteBox.isAsideVisible(route));
+const headerVisible = computed(() => RouteBox.isHeaderVisible(route));
 const terminalVisible = ref(false);
 
 window.addEventListener("toggle-terminal", () => (terminalVisible.value = !terminalVisible.value));

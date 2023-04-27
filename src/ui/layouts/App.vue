@@ -17,7 +17,6 @@
     <!-- 全局的组件 -->
     <Terminal v-if="terminalVisible"></Terminal>
 
-    <!-- <DebugBar></DebugBar> -->
     <BottomBar></BottomBar>
   </div>
 </template>
@@ -27,7 +26,6 @@ import { computed, ref } from "vue";
 import { useRoute } from "vue-router";
 import Aside from "../blocks/Aside.vue";
 import Header from "../blocks/Header.vue";
-import DebugBar from "../blocks/DebugBar.vue";
 import Main from "../blocks/Main.vue";
 import BottomBar from "../blocks/BottomBar.vue";
 import FormAdd from "../modals/FormAdd.vue";

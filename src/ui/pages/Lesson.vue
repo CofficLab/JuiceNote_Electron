@@ -36,6 +36,8 @@ let save = function (content) {
 };
 
 watch(route, () => {
+  if (route.name != "lessons.show" && route.name != "lessons.edit") return;
+
   node = Node.find(route.params.id.toString());
 
   if (route.hash.length > 0) {

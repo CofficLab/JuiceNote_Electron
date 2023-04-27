@@ -2,7 +2,7 @@ import { ipcMain } from "electron"
 import Config from "../config"
 import { createWindow } from "../window"
 
-export default function setWildController(app) {
+export default function setWildController(app: Electron.App) {
     ipcMain.handle('open-win', createWindow)
     ipcMain.handle('get-config', () => Config)
 
@@ -22,4 +22,6 @@ export default function setWildController(app) {
             electron: () => process.versions.electron,
         }
     })
+
+    ipcMain.on('is-packaged', () => app.isPackaged)
 }

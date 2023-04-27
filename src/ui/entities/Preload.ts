@@ -2,8 +2,21 @@
 
 const Preload = {
     ipc: window.ipcRender,
-    ipcRender: window.ipcRender,
-    IpcRender: window.ipcRender,
-    listen: window.listen
+    listen: window.listen,
+
+    isWindows: () => Preload.ipc.sendSync("get-platform") == "win32",
+
+    isPackaged: () => Preload.ipc.sendSync('is-packaged'),
+
+    isDev: () => !Preload.isPackaged(),
+
+    getAppVersion: function () {
+        return Preload.ipc.sendSync("get-app-version");
+    },
+
+    onToggleSearch(callback: Function) {
+        Preload.listen("toggle-search", callback);
+    }
 }
+
 export default Preload
