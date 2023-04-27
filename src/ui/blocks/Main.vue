@@ -1,5 +1,5 @@
 <template>
-  <main :class="{ 'pl-40': asideVisible, 'top-10': headerVisible }" class="fixed top-0 h-screen w-full overflow-scroll overscroll-none bg-base-300">
+  <main :class="{ 'pl-40': asideVisible, 'top-10': headerVisible }">
     <router-view v-slot="{ Component }">
       <transition name="slide-fade">
         <component :is="Component" />
@@ -25,7 +25,11 @@ window.addEventListener("set-theme", (e) => {
 });
 </script>
 
-<style scoped>
+<style scoped lang="postcss">
+main {
+  @apply fixed top-0 h-screen w-full overflow-scroll overscroll-none bg-base-100;
+}
+
 .slide-fade-enter-active {
   transition: all 0.1s ease-out;
 }

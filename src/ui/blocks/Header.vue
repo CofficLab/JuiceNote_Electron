@@ -1,5 +1,5 @@
 <template>
-  <header class="fixed top-0 z-40 h-10 w-full border-b border-base-300 bg-base-200 pl-40 shadow">
+  <header>
     <div class="flex h-full justify-between" :class="{ 'mr-40': isWindows }">
       <div class="draggable flex-grow"></div>
       <div class="flex flex-row items-center justify-end gap-2 pr-4">
@@ -33,3 +33,9 @@ const isLesson = computed(() => RouteBox.isLesson(route));
 const isWindows = Preload.isWindows();
 const isDev = Preload.isDev();
 </script>
+
+<style lang="postcss" scoped>
+header {
+  @apply fixed top-0 z-40 h-10 w-full border-b border-base-300 bg-base-200 pl-40 shadow;
+}
+</style>

@@ -1,5 +1,5 @@
 <template>
-  <aside class="fixed left-0 z-40 hidden h-screen w-40 border-r border-base-300 bg-base-300 shadow-xl lg:flex lg:flex-col">
+  <aside>
     <div id="side-menus" class="flex h-screen flex-col justify-between overflow-scroll overscroll-none scroll-smooth">
       <!-- 空白，用于拖动 -->
       <div class="sticky top-0 z-40 w-full bg-base-300" v-if="!isWindows">
@@ -62,3 +62,9 @@ watch(
   { immediate: true }
 );
 </script>
+
+<style lang="postcss" scope>
+aside {
+  @apply fixed left-0 z-40 hidden h-screen w-40 border-r border-base-300 bg-base-100  shadow-xl lg:flex lg:flex-col;
+}
+</style>

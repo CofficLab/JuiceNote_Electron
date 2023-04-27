@@ -36,7 +36,30 @@ import FormSearch from "../modals/FormSearch.vue";
 import Node from "../entities/Node";
 import Terminal from "../components/Terminal.vue";
 
-const theme = ref("light");
+// 初始化主题
+const darkModeQuery = window.matchMedia("(prefers-color-scheme: dark)");
+const isDarkMode = ref(darkModeQuery.matches);
+const themeLight = ref("cloud");
+const themeDark = computed(() => themeLight.value + "-dark");
+const theme = computed(() => (isDarkMode.value ? themeDark.value : themeLight.value));
+
+// 主动设置主题
+window.addEventListener("set-theme", (e) => {
+  themeLight.value = e.detail;
+  console.log("设置主题为", theme.value);
+});
+
+// 颜色模式变化监听
+darkModeQuery.addListener((e) => {
+  if (e.matches) {
+    console.log("主题变为暗黑模式");
+    isDarkMode.value = true;
+  } else {
+    console.log("主题变化明亮模式");
+    isDarkMode.value = false;
+  }
+});
+
 const route = useRoute();
 const asideVisible = computed(() => ["lessons.show", "lessons.edit"].includes(route.name));
 const headerVisible = computed(() => {
@@ -49,9 +72,6 @@ const headerVisible = computed(() => {
 const terminalVisible = ref(false);
 
 window.addEventListener("toggle-terminal", () => (terminalVisible.value = !terminalVisible.value));
-window.addEventListener("set-theme", (e) => {
-  theme.value = e.detail;
-});
 </script>
 
 <style scoped>
