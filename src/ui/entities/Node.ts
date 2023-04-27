@@ -127,8 +127,7 @@ class Node {
     }
 
     getSiblings(): Node[] {
-        let siblings = Ipc.sendSync('getChildren', this.parentId)
-        return siblings.map((sibling: object) => {
+        return Ipc.sendSync('getSiblings', this.id).map((sibling: object) => {
             return new Node(sibling)
         })
     }

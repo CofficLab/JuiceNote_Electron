@@ -7,9 +7,9 @@
             {{ breadcrumb.title }}
             <span v-if="editable">[{{ breadcrumb.id }}]</span>
           </label>
-          <div class="dropdown-content mt-0 pt-4">
+          <div class="dropdown-content mt-0 pt-4 shadow-2xl">
             <ul tabindex="0" class="rounded-box ml-36 h-96 w-52 gap-2 overflow-y-scroll bg-base-200 p-2 shadow">
-              <Children :list="breadcrumb.getParent().getChildren()" :current="current"></Children>
+              <Children :list="breadcrumb.getSiblings()"></Children>
             </ul>
           </div>
         </div>
@@ -29,7 +29,6 @@ const route = useRoute();
 const getBreadcrumbs = () => RouteBox.getBreadcrumbs(route);
 
 const visible = computed(() => !RouteBox.isHome(route));
-const current = computed(() => RouteBox.getCurrentNode(route));
 const editable = computed(() => RouteBox.isEditable(route));
 let breadcrumbs = ref(getBreadcrumbs());
 

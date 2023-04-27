@@ -18,6 +18,10 @@ export default function setNodeController() {
         return event.returnValue = Node.find(id).getChildren()
     })
 
+    ipcMain.on('getSiblings', (event, id) => {
+        return event.returnValue = Node.find(id).getSiblings()
+    })
+
     ipcMain.on('search', (event, keyword) => {
         return event.returnValue = Node.search(keyword)
     })
