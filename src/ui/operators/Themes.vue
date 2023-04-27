@@ -36,38 +36,8 @@ import IconTheme from "../icons/theme.vue";
 import IconRight from "../icons/right.vue";
 import { ref } from "vue";
 
-const themes = [
-  "light",
-  "dark",
-  "cupcake",
-  "bumblebee",
-  "emerald",
-  "corporate",
-  "synthwave",
-  "retro",
-  "cyberpunk",
-  "valentine",
-  "halloween",
-  "garden",
-  "forest",
-  "aqua",
-  "lofi",
-  "pastel",
-  "fantasy",
-  "wireframe",
-  "black",
-  "luxury",
-  "dracula",
-  "cmyk",
-  "autumn",
-  "business",
-  "acid",
-  "lemonade",
-  "night",
-  "coffee",
-  "winter",
-];
-const themeName = ref("light");
+const themes = ["cloud", "mountain"];
+const themeName = ref(themes[0]);
 
 const setTheme = (name) => {
   themeName.value = name;
