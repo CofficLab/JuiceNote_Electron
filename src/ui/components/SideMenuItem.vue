@@ -1,35 +1,9 @@
 <template>
   <div>
-    <!-- 空白，用于拖动 -->
-    <div class="sticky top-0 z-40 w-full bg-base-300" v-if="!isWindows && item.isBook">
-      <div class="draggable" :class="{ 'h-10': !hideTitleBar, 'h-0': hideTitleBar }"></div>
-    </div>
-
-    <!-- 是一个图书 -->
-    <div class="sticky z-40 mb-4 bg-base-200" :class="{ 'top-10': !hideTitleBar, 'top-0': hideTitleBar }" v-if="item.isBook">
-      <Link :node="item" class="flex justify-center bg-gradient-to-r from-red-500 to-cyan-500 bg-clip-text pb-2 text-lg text-transparent md:text-2xl lg:text-3xl">{{ item.title }}</Link>
-
-      <!-- 图书的TAB，比如：教程、手册 -->
-      <div class="tabs flex justify-center" v-if="item.getTabs().length > 0">
-        <Link class="tab tab-lifted" :class="{ 'tab-active': shouldActive(tab.id) }" v-for="tab in item.getTabs()" :node="tab">{{ tab.title }}</Link>
-      </div>
-    </div>
-
     <ul class="flex flex-col px-1 text-sm">
-      <!-- 是一个页面或一个tab -->
-      <li v-if="item.isPage || item.isTab" v-on:contextmenu="showRightMenu" class="btn-ghost btn flex justify-start" :class="{ 'btn-active': shouldActive(item.id) }">
-        <Link class="flex gap-4" :node="item" :class="{ 'text-info': !item.isVisible }">
-          <DynamicPadding :count="item.getParents().length - 3"></DynamicPadding>
-          {{ item.title }}
-        </Link>
-      </li>
-
-      <!-- 是一个章节 -->
-      <li v-if="item.isChapter && !item.isTab" class="flex justify-start rounded-lg p-2" v-on:contextmenu="showRightMenu">
-        <Link :node="item">
-          <DynamicPadding :count="item.getParents().length - 4"></DynamicPadding>
-          {{ item.title }}
-        </Link>
+      <li v-if="!item.isBook" v-on:contextmenu="showRightMenu" @click="goto(item)" class="btn-ghost btn flex justify-start" :class="{ 'btn-active': shouldActive(item) }">
+        <DynamicPadding :count="item.getParents().length - 3"></DynamicPadding>
+        {{ item.title }}
       </li>
 
       <SideMenuItem v-for="sub in getSubMenus(item)" v-if="!item.isPage && !item.isTab" :item="sub" :current="current"></SideMenuItem>
@@ -39,16 +13,14 @@
 
 <script setup>
 import { computed } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 import DynamicPadding from "./DynamicPadding.vue";
-import Link from "./Link.vue";
-import FullScreenController from "../entities/FullScreenController";
 import Node from "../entities/Node";
-import Preload from "../entities/Preload";
+import RouteBox from "../entities/RouteBox";
 
-const IpcRender = Preload.ipc;
 const route = useRoute();
+const router = useRouter();
 
 const props = defineProps({
   item: Node,
@@ -57,17 +29,9 @@ const props = defineProps({
 
 let item = computed(() => props.item ?? props.current.getBook());
 
-const editable = computed(() => route.name == "lessons.edit");
-let hideTitleBar = computed(() => FullScreenController.full);
-let isWindows = IpcRender.sendSync("get-platform") == "win32";
-
-const getSubMenus = function (menu) {
-  if (menu.isBook && menu.getTabs().length > 0) {
-    return props.current.getFirstTabInParents()?.getChildren();
-  }
-
-  return editable.value ? menu.getChildren() : menu.getVisibleChildren();
-};
+const goto = (node) => RouteBox.goto(router, node);
+const shouldActive = (node) => RouteBox.isActive(route, node);
+const getSubMenus = (node) => RouteBox.getSubMenus(route, node);
 
 const showRightMenu = function (e) {
   dispatchEvent(
@@ -79,21 +43,5 @@ const showRightMenu = function (e) {
       },
     })
   );
-};
-
-const shouldActive = function (id) {
-  let node = Node.find(id);
-  let current = Node.find(parseInt(route.params.id.toString()));
-
-  if (node.isPage) return current.id == id;
-
-  if (node.isTab)
-    return current.getParents().some((parent) => {
-      return parent.id == id;
-    });
-
-  if (node.isChapter && node.getChildren().length == 0) return current.id == id;
-
-  return false;
 };
 </script>

@@ -1,4 +1,4 @@
-import { RouteLocationNormalizedLoaded, RouterLink, useRoute } from "vue-router";
+import { RouteLocationNormalizedLoaded, Router, RouterLink, useRoute, useRouter } from "vue-router";
 import Node from "./Node";
 
 class RouteBox {
@@ -32,6 +32,21 @@ class RouteBox {
         return ["lessons.show", "home.show", "home.edit"].includes(route.name?.toString()!);
     }
 
+    static isActive(route: RouteLocationNormalizedLoaded, node: Node) {
+        let current = RouteBox.getCurrentNode(route);
+
+        if (node.isPage) return current!.id == node.id;
+
+        if (node.isTab)
+            return current!.getParents().some((parent) => {
+                return parent.id == node.id;
+            });
+
+        if (node.isChapter && node.getChildren().length == 0) return current!.id == node.id;
+
+        return false;
+    }
+
     static getCurrentNode(route: RouteLocationNormalizedLoaded) {
         if (this.isLesson(route)) {
             return Node.find(route.params.id.toString())
@@ -39,6 +54,17 @@ class RouteBox {
 
         return null
     }
+
+    static getSubMenus(route: RouteLocationNormalizedLoaded, node: Node) {
+        let current = RouteBox.getCurrentNode(route)
+        let editable = RouteBox.isEditable(route)
+
+        if (node.isBook && node.getTabs().length > 0) {
+            return current!.getFirstTabInParents()?.getChildren();
+        }
+
+        return editable ? node.getChildren() : node.getVisibleChildren();
+    };
 
     static getCurrentBook(route: RouteLocationNormalizedLoaded) {
         if (this.isLesson(route)) {
@@ -51,6 +77,10 @@ class RouteBox {
     static getBreadcrumbs(route: RouteLocationNormalizedLoaded) {
         let current = RouteBox.getCurrentNode(route)
         return current!.getParents().concat([current!])
+    }
+
+    static goto(router: Router, node: Node) {
+        router.push({ name: 'lessons.show', params: { id: node.id } })
     }
 
     public isHome() {

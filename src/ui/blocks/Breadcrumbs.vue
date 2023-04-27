@@ -1,5 +1,5 @@
 <template>
-  <div class="breadcrumbs flex h-full flex-grow justify-start overflow-visible text-xs" :class="{ 'text-yellow-500': editable }">
+  <div class="breadcrumbs flex h-full flex-grow justify-start overflow-visible text-xs" :class="{ 'text-yellow-500': editable }" v-if="visible">
     <ul class="flex flex-row justify-center">
       <li v-for="breadcrumb in breadcrumbs" class="flex justify-center">
         <div class="dropdown-top dropdown-hover dropdown flex justify-center" v-if="breadcrumb.getSiblings().length > 0">
@@ -28,6 +28,7 @@ const route = useRoute();
 
 const getBreadcrumbs = () => RouteBox.getBreadcrumbs(route);
 
+const visible = computed(() => !RouteBox.isHome(route));
 const current = computed(() => RouteBox.getCurrentNode(route));
 const editable = computed(() => RouteBox.isEditable(route));
 let breadcrumbs = ref(getBreadcrumbs());
@@ -37,6 +38,6 @@ window.addEventListener("nodeUpdated", function () {
 });
 
 watch(route, function () {
-  breadcrumbs.value = getBreadcrumbs();
+  if (visible.value) breadcrumbs.value = getBreadcrumbs();
 });
 </script>
