@@ -1,10 +1,12 @@
 <template>
-  <div class="fixed bottom-0 left-40 w-full bg-yellow-500/70 px-4 shadow-2xl dark:bg-blue-500">
+  <div class="shadow-3xl fixed bottom-0 flex h-6 w-full items-center justify-between bg-neutral px-4 pl-44 text-neutral-content">
     <div class="flex flex-row items-center gap-12">
       <Breadcrumbs :current="current" v-if="currentId > 0"></Breadcrumbs>
+    </div>
+    <!-- <div>
       <span class="my-auto text-red-700" v-html="url"></span>
       <span class="my-auto text-red-900" v-html="fullPath"></span>
-    </div>
+    </div> -->
   </div>
 </template>
 

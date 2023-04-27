@@ -1,16 +1,16 @@
 <template>
-  <div id="side-menus" class="flex flex-col overflow-scroll overscroll-none scroll-smooth h-screen justify-between">
+  <div id="side-menus" class="flex h-screen flex-col justify-between overflow-scroll overscroll-none scroll-smooth">
     <SideMenuItem :item="book" :current="current"></SideMenuItem>
 
     <!-- 底部的图书logo -->
-    <div v-if="book.cover.length > 0" class="h-20 mt-12 opacity-90 dark:brightness-50">
+    <div v-if="book.cover.length > 0" class="mt-12 h-20 opacity-90 dark:brightness-50">
       <img :src="book.cover" alt="" />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { nextTick, watch, computed,ref } from "vue";
+import { nextTick, watch, computed, ref } from "vue";
 import SideMenuItem from "../components/SideMenuItem.vue";
 
 import { useRoute } from "vue-router";
@@ -20,21 +20,21 @@ const route = useRoute();
 const current = computed(() => {
   // console.log('确认当前节点', parseInt(route.params.id.toString()))
 
-  return Node.find(parseInt(route.params.id.toString()))
+  return Node.find(parseInt(route.params.id.toString()));
 });
-const getBook = () => current.value.getBook()
+const getBook = () => current.value.getBook();
 let book = ref(getBook());
 
 // console.log(book.value)
 
 window.addEventListener("nodeUpdated", () => {
-  book.value = getBook()
+  book.value = getBook();
 });
 
 watch(
   route,
   () => {
-    book.value = getBook()
+    book.value = getBook();
     nextTick(() => {
       setTimeout(() => {
         document.querySelector(`#side-menus [data-id="${route.params.id}"]`)?.scrollIntoView({
@@ -47,13 +47,3 @@ watch(
   { immediate: true }
 );
 </script>
-
-<style scoped lang="postcss">
-#book-name {
-  @apply flex justify-center bg-gradient-to-r from-red-500 to-cyan-500 bg-clip-text pb-2 text-lg text-transparent md:text-2xl lg:text-3xl;
-}
-
-.book-info {
-  @apply flex flex-col bg-base-200/80 pt-1 shadow drop-shadow dark:border-cyan-900/10;
-}
-</style>

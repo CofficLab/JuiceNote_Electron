@@ -1,22 +1,12 @@
 <template>
-  <div>
+  <div :data-theme="theme">
     <Toast v-if="headerVisible"></Toast>
 
-    <header v-if="headerVisible" class="fixed top-0 z-40 h-10 w-full border-b border-gray-300 bg-base-200 pl-40 shadow dark:border-cyan-900/10">
-      <TopBar></TopBar>
-    </header>
+    <Header v-if="headerVisible"></Header>
 
-    <aside v-if="asideVisible" class="fixed left-0 z-40 hidden h-screen w-40 border-r-2 border-gray-300 bg-base-200 shadow-xl dark:border-cyan-900/10 lg:flex lg:flex-col">
-      <SideMenu></SideMenu>
-    </aside>
+    <Aside v-if="asideVisible"></Aside>
 
-    <main :class="{ 'pl-40': asideVisible, 'top-10': headerVisible }" class="fixed top-0 h-screen w-full overflow-scroll overscroll-none bg-cyan-800/10 dark:bg-slate-900/10">
-      <router-view v-slot="{ Component }">
-        <transition name="slide-fade">
-          <component :is="Component" />
-        </transition>
-      </router-view>
-    </main>
+    <Main></Main>
 
     <!-- 弹层 -->
     <RightMenuModal></RightMenuModal>
@@ -35,9 +25,10 @@
 <script setup>
 import { computed, ref } from "vue";
 import { useRoute } from "vue-router";
-import SideMenu from "../blocks/SideMenu.vue";
-import TopBar from "../blocks/TopBar.vue";
+import Aside from "../blocks/Aside.vue";
+import Header from "../blocks/Header.vue";
 import DebugBar from "../blocks/DebugBar.vue";
+import Main from "../blocks/Main.vue";
 import BottomBar from "../blocks/BottomBar.vue";
 import FormAdd from "../modals/FormAdd.vue";
 import FormRename from "../modals/FormRename.vue";
@@ -47,6 +38,7 @@ import FormSearch from "../modals/FormSearch.vue";
 import Node from "../entities/Node";
 import Terminal from "../components/Terminal.vue";
 
+const theme = ref("light");
 const route = useRoute();
 const asideVisible = computed(() => ["lessons.show", "lessons.edit"].includes(route.name));
 const headerVisible = computed(() => {
@@ -59,6 +51,9 @@ const headerVisible = computed(() => {
 const terminalVisible = ref(false);
 
 window.addEventListener("toggle-terminal", () => (terminalVisible.value = !terminalVisible.value));
+window.addEventListener("set-theme", (e) => {
+  theme.value = e.detail;
+});
 </script>
 
 <style scoped>

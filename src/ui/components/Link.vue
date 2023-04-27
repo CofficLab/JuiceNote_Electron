@@ -1,10 +1,5 @@
 <template>
-  <router-link
-    v-bind:data-id="node.id"
-    v-bind:class="{
-      'active tab-active': shouldActive(node.id),
-    }" :to="{name:'lessons.show',params:{id:node.id}}"
-  >
+  <router-link v-bind:data-id="node.id" :to="{ name: 'lessons.show', params: { id: node.id } }">
     <slot></slot>
   </router-link>
 </template>
@@ -28,22 +23,23 @@ const current = computed(() => {
 });
 
 const shouldActive = function (id) {
-  let node = Node.find(id)
+  let node = Node.find(id);
 
-  if (node.isPage) return current.value.id == id
+  if (node.isPage) return current.value.id == id;
 
-  if (node.isTab) return current.value.getParents().some((parent) => {
+  if (node.isTab)
+    return current.value.getParents().some((parent) => {
       return parent.id == id;
-  })
+    });
 
-  if (node.isChapter && node.getChildren().length ==0) return current.value.id == id
+  if (node.isChapter && node.getChildren().length == 0) return current.value.id == id;
 
-  return false
+  return false;
 };
 </script>
 
 <style scoped lang="postcss">
 li {
-  @apply list-none text-base
+  @apply list-none text-base;
 }
 </style>

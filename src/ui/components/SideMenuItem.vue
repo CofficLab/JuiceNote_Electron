@@ -6,28 +6,28 @@
     </div>
 
     <!-- 是一个图书 -->
-    <div class="sticky z-40 bg-base-200" :class="{ 'top-10': !hideTitleBar, 'top-0': hideTitleBar }" v-if="item.isBook">
+    <div class="sticky z-40 mb-4 bg-base-200" :class="{ 'top-10': !hideTitleBar, 'top-0': hideTitleBar }" v-if="item.isBook">
       <Link :node="item" class="flex justify-center bg-gradient-to-r from-red-500 to-cyan-500 bg-clip-text pb-2 text-lg text-transparent md:text-2xl lg:text-3xl">{{ item.title }}</Link>
 
       <!-- 图书的TAB，比如：教程、手册 -->
       <div class="tabs flex justify-center" v-if="item.getTabs().length > 0">
-        <Link class="tab-lifted tab" v-for="tab in item.getTabs()" :node="tab">{{ tab.title }}</Link>
+        <Link class="tab tab-lifted" :class="{ 'tab-active': shouldActive(tab.id) }" v-for="tab in item.getTabs()" :node="tab">{{ tab.title }}</Link>
       </div>
     </div>
 
-    <ul class="menu menu-compact">
+    <ul class="flex flex-col px-1 text-sm">
       <!-- 是一个页面或一个tab -->
-      <li v-if="item.isPage || item.isTab" v-on:contextmenu="showRightMenu">
-        <Link class="3xl:text-lg flex gap-4" :node="item" :class="{ 'text-info': !item.isVisible }">
+      <li v-if="item.isPage || item.isTab" v-on:contextmenu="showRightMenu" class="btn-ghost btn flex justify-start" :class="{ 'btn-active': shouldActive(item.id) }">
+        <Link class="flex gap-4" :node="item" :class="{ 'text-info': !item.isVisible }">
           <DynamicPadding :count="item.getParents().length - 3"></DynamicPadding>
           {{ item.title }}
         </Link>
       </li>
 
       <!-- 是一个章节 -->
-      <li v-if="item.isChapter && !item.isTab" class="pl-0 text-indigo-400/70" v-on:contextmenu="showRightMenu">
-        <Link class="text-lg" :node="item">
-          <DynamicPadding :count="item.getParents().length - 3"></DynamicPadding>
+      <li v-if="item.isChapter && !item.isTab" class="flex justify-start rounded-lg p-2" v-on:contextmenu="showRightMenu">
+        <Link :node="item">
+          <DynamicPadding :count="item.getParents().length - 4"></DynamicPadding>
           {{ item.title }}
         </Link>
       </li>
@@ -79,5 +79,21 @@ const showRightMenu = function (e) {
       },
     })
   );
+};
+
+const shouldActive = function (id) {
+  let node = Node.find(id);
+  let current = Node.find(parseInt(route.params.id.toString()));
+
+  if (node.isPage) return current.id == id;
+
+  if (node.isTab)
+    return current.getParents().some((parent) => {
+      return parent.id == id;
+    });
+
+  if (node.isChapter && node.getChildren().length == 0) return current.id == id;
+
+  return false;
 };
 </script>
