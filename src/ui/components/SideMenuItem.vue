@@ -5,7 +5,7 @@
       v-if="!item.isBook"
       v-on:contextmenu="showRightMenu"
       @click="goto(item)"
-      :class="{ 'text-primary-content': shouldActive(item), 'font-bold text-opacity-50': item.isChapter }"
+      :class="{ 'text-primary-content bg-accent': shouldActive(item), 'font-bold text-opacity-50': item.isChapter }"
     >
       <DynamicPadding :count="item.getParents().length - (item.isChapter ? 4 : 3)"></DynamicPadding>
       <IconPage v-if="item.isPage" class="w-4 h-4 text-accent" :class="{ 'text-accent-focus': shouldActive(item) }"></IconPage>
@@ -55,7 +55,7 @@ const showRightMenu = function (e) {
 ul {
   @apply flex flex-col px-1 text-xs;
   li {
-    @apply my-0 flex cursor-pointer items-center justify-start gap-2 rounded px-4 py-2;
+    @apply hover:bg-primary-focus/20 my-0 flex cursor-pointer items-center justify-start gap-2 rounded px-4 py-2;
   }
 }
 </style>

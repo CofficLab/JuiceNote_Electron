@@ -77,7 +77,10 @@ window.addEventListener("channel", (e) => {
 Preload.listen("toggle-search", toggleVisible);
 </script>
 
-<style scoped>
+<style scoped lang="postcss">
+.modal-box {
+  @apply bg-primary backdrop-filter backdrop-blur-sm bg-opacity-10
+}
 .bounce-enter-active {
   animation: bounce-in 0.5s;
 }

@@ -48,7 +48,7 @@ const editable = computed(() => route.name == "lessons.edit");
 
 <style scoped lang="postcss">
 ul {
-  @apply dropdown-content rounded-box z-50 flex translate-x-4 flex-col bg-info/30 bg-opacity-50 py-4 shadow-2xl backdrop-blur backdrop-filter;
+  @apply dropdown-content rounded-box z-50 flex translate-x-4 flex-col bg-primary bg-opacity-50 py-4 shadow-2xl backdrop-blur-sm backdrop-filter;
 
   li {
     @apply flex justify-center;

@@ -6,7 +6,7 @@
 
   <!-- 编辑框 -->
   <div class="z-30 flex flex-row justify-center w-full px-4 border-0">
-    <editor-content :editor="editor" class="w-full prose xl:prose-lg lg:mr-56" />
+    <editor-content :editor="editor" class="w-full prose xl:prose-lg" />
   </div>
 </template>
 

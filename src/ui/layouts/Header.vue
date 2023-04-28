@@ -6,7 +6,7 @@
         <BtnOfficialLink></BtnOfficialLink>
         <Terminal class="flex items-center px-2 rounded btn-ghost btn-sm"></Terminal>
         <Prev class="flex items-center px-2 rounded btn-ghost btn-sm" :showText="false" v-if="isLesson"></Prev>
-        <Home class="flex items-center px-2 rounded btn-ghost btn-sm"></Home>
+        <Home class="flex items-center px-2 rounded btn-ghost btn-sm text-accent"></Home>
         <Next class="flex items-center px-2 rounded btn-ghost btn-sm" :showText="false" v-if="isLesson"></Next>
         <More class="flex items-center px-2 rounded btn-ghost btn-sm"></More>
       </div>
@@ -33,6 +33,6 @@ const isWindows = Preload.isWindows();
 
 <style lang="postcss" scoped>
 header {
-  @apply fixed top-0 z-40 h-10 w-full border-b border-base-300 bg-base-100 pl-40 shadow;
+  @apply fixed top-0 z-40 h-10 w-full border-b border-base-300 bg-base-100 bg-opacity-60  backdrop-filter backdrop-blur-sm pl-40 shadow;
 }
 </style>

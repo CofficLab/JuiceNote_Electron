@@ -1,6 +1,6 @@
 <template>
   <div class="z-50 mt-8">
-    <div class="fixed top-9 z-50 flex w-full flex-grow pr-40">
+    <div class="fixed top-9 z-50 flex w-full flex-grow">
       <NodeTab :current="node"></NodeTab>
     </div>
 

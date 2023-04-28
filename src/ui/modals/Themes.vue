@@ -110,7 +110,7 @@ ul li {
   @apply border border-base-content/20 outline-2 outline-offset-2 outline-base-content hover:border-base-content/40;
 }
 .themes-list {
-  @apply dropdown-content rounded-t-box rounded-b-box top-px mt-16 h-[70vh] max-h-96 w-52 overflow-y-auto bg-base-200 bg-opacity-30 text-base-content shadow-2xl backdrop-blur backdrop-filter;
+  @apply dropdown-content rounded-t-box rounded-b-box top-px mt-16 h-[70vh] max-h-96 w-52 overflow-y-auto bg-primary bg-opacity-30 text-base-content shadow-2xl backdrop-blur-sm backdrop-filter;
 }
 
 .theme-btn {
