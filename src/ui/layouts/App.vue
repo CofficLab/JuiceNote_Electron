@@ -4,7 +4,7 @@
     <Header></Header>
 
     <router-view v-slot="{ Component }">
-      <transition name="slide-fade">
+      <transition name="fade">
         <component :is="Component" />
       </transition>
     </router-view>
@@ -53,17 +53,20 @@ darkModeQuery.addListener((e) => {
 </script>
 
 <style scoped>
-.slide-fade-enter-active {
-  transition: all 0.1s ease-out;
+.fade-enter-active {
+  transition: all 0s ease-out;
 }
 
-.slide-fade-leave-active {
-  transition: all 0.1s cubic-bezier(1, 0.5, 0.8, 1);
+.fade-leave-active {
+  transition: all 0s cubic-bezier(1, 0.5, 0.8, 1);
 }
 
-.slide-fade-enter-from,
-.slide-fade-leave-to {
-  transform: translateX(20px);
+.fade-enter-from {
+  transform: translateY(0px);
+  opacity: 0;
+}
+.fade-leave-to {
+  transform: translateY(0px);
   opacity: 0;
 }
 </style>
