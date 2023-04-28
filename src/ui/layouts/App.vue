@@ -2,14 +2,13 @@
   <!-- 在root层配置底色 -->
   <!-- 如果不配置底色，daisyui会自动配置为bg-primary -->
   <!-- 因为electron配置了全透明窗口，这里最好配置一个底色 -->
-  <div id="root" :data-theme="theme" class="bg-primary bg-opacity-30">
+  <div id="root" :data-theme="theme" class="absolute w-full bg-primary bg-opacity-30">
     <LessonAside v-if="isLesson"></LessonAside>
-    <Toast></Toast>
-    <Header></Header>
+    <Header class="ml-40"></Header>
 
     <!-- 所有的滚动都基于main -->
     <!-- 必须有固定高度 -->
-    <main class="h-screen overflow-scroll overscroll-none">
+    <main class="ml-40 h-screen overflow-scroll overscroll-none bg-primary">
       <router-view v-slot="{ Component }">
         <transition name="fade">
           <component :is="Component" />
@@ -34,7 +33,6 @@ import { computed, ref } from "vue";
 import Preload from "../entities/Preload";
 import Header from "./Header.vue";
 import Footer from "./Footer.vue";
-import Toast from "./Toast.vue";
 import FormSearch from "../modals/FormSearch.vue";
 import Themes from "../modals/Themes.vue";
 import FormAdd from "../modals/FormAdd.vue";

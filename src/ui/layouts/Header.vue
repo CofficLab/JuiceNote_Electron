@@ -1,5 +1,7 @@
 <template>
   <header>
+    <Toast></Toast>
+
     <div class="flex h-full justify-between" :class="{ 'mr-40': isWindows }">
       <div class="draggable flex-grow"></div>
       <div class="flex flex-row items-center justify-end gap-2 pr-4">
@@ -27,6 +29,7 @@ import { computed } from "vue";
 import Preload from "../entities/Preload";
 import RouteBox from "../entities/RouteBox";
 import Shop from "../operators/Shop.vue";
+import Toast from "./Toast.vue";
 
 const route = useRoute();
 const isLesson = computed(() => RouteBox.isLesson(route));
@@ -35,6 +38,6 @@ const isWindows = Preload.isWindows();
 
 <style lang="postcss" scoped>
 header {
-  @apply fixed top-0 z-50 h-10 w-full border-b border-base-300 bg-base-100  bg-opacity-60 pl-40 shadow backdrop-blur-sm backdrop-filter;
+  @apply z-50 h-10 flex-grow border-b border-base-300 bg-base-100  bg-opacity-60 pl-40 shadow backdrop-blur-sm backdrop-filter;
 }
 </style>

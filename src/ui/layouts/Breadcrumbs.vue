@@ -2,7 +2,7 @@
   <div class="breadcrumbs flex h-full flex-grow justify-start overflow-visible text-xs" :class="{ 'text-yellow-500': editable }" v-if="visible">
     <ul class="flex flex-row justify-center">
       <li class="flex justify-center">
-        <div class="dropdown-top dropdown-hover dropdown flex justify-center">
+        <div class="dropdown-hover dropdown-top dropdown flex justify-center">
           <label tabindex="0" class="flex flex-row items-center gap-1 self-center rounded px-1 ring-primary ring-opacity-30 transition duration-200 hover:scale-105 hover:ring-2">
             <IconDatabase class="h-4 w-4"></IconDatabase>
             知识库

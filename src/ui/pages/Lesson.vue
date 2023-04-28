@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-primary pt-8">
+  <div class="pt-8">
     <div class="fixed top-9 z-50 flex w-full flex-grow">
       <NodeTab :current="node"></NodeTab>
     </div>
