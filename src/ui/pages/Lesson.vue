@@ -1,6 +1,6 @@
 <template>
   <LessonLayout>
-    <div class="mt-8 bg-primary/40">
+    <div class="bg-primary pt-8">
       <div class="fixed top-9 z-50 flex w-full flex-grow">
         <NodeTab :current="node"></NodeTab>
       </div>
