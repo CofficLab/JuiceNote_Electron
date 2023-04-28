@@ -1,17 +1,19 @@
 <template>
-  <div class="z-50 mt-8">
-    <div class="fixed top-9 z-50 flex w-full flex-grow">
-      <NodeTab :current="node"></NodeTab>
-    </div>
+  <LessonLayout>
+    <div class="mt-8">
+      <div class="fixed top-9 z-50 flex w-full flex-grow">
+        <NodeTab :current="node"></NodeTab>
+      </div>
 
-    <div class="flex h-full w-full flex-col items-center">
-      <div class="z-40 w-full" :class="{ 'mt-12': node.getParent().isTab }">
-        <Add :node="node" class="btn mx-auto flex w-72 flex-row items-center justify-center gap-4" v-if="node.isChapter"></Add>
+      <div class="flex h-full w-full flex-col items-center">
+        <div class="w-full" :class="{ 'mt-12': node.getParent().isTab }">
+          <Add :node="node" class="btn mx-auto flex w-72 flex-row items-center justify-center gap-4" v-if="node.isChapter"></Add>
 
-        <Editor :node="node" :saveCallback="save" :editable="editable" v-else></Editor>
+          <Editor :node="node" :saveCallback="save" :editable="editable" v-else></Editor>
+        </div>
       </div>
     </div>
-  </div>
+  </LessonLayout>
 </template>
 
 <script lang="ts" setup>
@@ -21,6 +23,7 @@ import Add from "../operators/Add.vue";
 import { computed, watch } from "vue";
 import { useRoute } from "vue-router";
 import Node from "../entities/Node";
+import LessonLayout from "../layouts/LessonLayout.vue";
 
 const route = useRoute();
 

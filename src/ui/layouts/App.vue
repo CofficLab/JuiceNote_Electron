@@ -1,43 +1,30 @@
 <template>
   <div :data-theme="theme">
-    <Toast v-if="headerVisible"></Toast>
+    <Toast></Toast>
+    <Header></Header>
 
-    <Header v-if="headerVisible"></Header>
-
-    <Aside v-if="asideVisible"></Aside>
-
-    <Main></Main>
-
-    <!-- 弹层 -->
-    <RightMenuModal></RightMenuModal>
-    <FormSearch></FormSearch>
-    <FormAdd></FormAdd>
-    <FormRename></FormRename>
-    <Themes></Themes>
-
-    <!-- 全局的组件 -->
-    <Terminal v-if="terminalVisible"></Terminal>
+    <router-view v-slot="{ Component }">
+      <transition name="slide-fade">
+        <component :is="Component" />
+      </transition>
+    </router-view>
 
     <Footer></Footer>
+
+    <!-- 弹层 -->
+    <Themes></Themes>
+    <FormSearch></FormSearch>
   </div>
 </template>
 
 <script setup>
 import { computed, ref } from "vue";
-import { useRoute } from "vue-router";
 import Preload from "../entities/Preload";
-import Aside from "./Aside.vue";
 import Header from "./Header.vue";
-import Main from "./Main.vue";
 import Footer from "./Footer.vue";
-import FormAdd from "../modals/FormAdd.vue";
-import FormRename from "../modals/FormRename.vue";
 import Toast from "./Toast.vue";
-import RightMenuModal from "../modals/RightMenuModal.vue";
 import FormSearch from "../modals/FormSearch.vue";
 import Themes from "../modals/Themes.vue";
-import Node from "../entities/Node";
-import Terminal from "../components/Terminal.vue";
 
 // 初始化主题
 const themes = Preload.getThemes();
@@ -63,19 +50,6 @@ darkModeQuery.addListener((e) => {
     isDarkMode.value = false;
   }
 });
-
-const route = useRoute();
-const asideVisible = computed(() => ["lessons.show", "lessons.edit"].includes(route.name));
-const headerVisible = computed(() => {
-  if (route.name == "lessons.edit") {
-    return Node.find(route.params.id).isChapter;
-  }
-
-  return ["lessons.show", "home.show", "home.edit"].includes(route.name);
-});
-const terminalVisible = ref(false);
-
-window.addEventListener("toggle-terminal", () => (terminalVisible.value = !terminalVisible.value));
 </script>
 
 <style scoped>

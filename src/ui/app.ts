@@ -3,6 +3,7 @@ import App from './layouts/App.vue'
 import Home from './pages/Home.vue'
 import Lesson from './pages/Lesson.vue'
 import About from './pages/About.vue'
+import Shop from './pages/Shop.vue'
 import NotFound from './pages/NotFound.vue'
 import { createRouter, createWebHashHistory } from 'vue-router'
 import "./app.css"
@@ -26,6 +27,12 @@ const router = createRouter({
       children: [
         { path: 'edit', component: Lesson, name: "lessons.edit" },
         { path: 'show', component: Lesson, name: "lessons.show" },
+      ]
+    },
+    {
+      path: '/shop',
+      children: [
+        { path: '', component: Shop, name: "shop" },
       ]
     },
   ],

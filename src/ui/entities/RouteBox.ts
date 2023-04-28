@@ -76,7 +76,7 @@ class RouteBox {
 
     static getBreadcrumbs(route: RouteLocationNormalizedLoaded) {
         let current = RouteBox.getCurrentNode(route)
-        return current!.getParents().concat([current!])
+        return current?.getParents().concat([current!])
     }
 
     static goto(router: Router, node: Node) {
