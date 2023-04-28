@@ -1,17 +1,17 @@
 <template>
   <aside>
-    <div id="side-menus" class="flex h-screen flex-col justify-between overflow-scroll overscroll-none scroll-smooth">
+    <div id="side-menus">
       <!-- 空白，用于拖动 -->
-      <div class="sticky top-0 z-40 w-full bg-base-300" v-if="!isWindows">
+      <div class="sticky top-0 z-40 w-full bg-primary" v-if="!isWindows">
         <div class="draggable" :class="{ 'h-10': !hideTitleBar, 'h-0': hideTitleBar }"></div>
       </div>
 
       <!-- 是一个图书 -->
-      <div class="sticky z-40 mb-4 bg-base-200" :class="{ 'top-10': !hideTitleBar, 'top-0': hideTitleBar }">
-        <Link :node="book" class="flex justify-center bg-gradient-to-r from-red-500 to-cyan-500 bg-clip-text pb-2 text-lg text-transparent md:text-2xl lg:text-3xl">{{ book.title }}</Link>
+      <div class="sticky z-40 mb-4 bg-base-200 bg-opacity-90 backdrop-blur backdrop-filter" :class="{ 'top-10': !hideTitleBar, 'top-0': hideTitleBar }">
+        <Link :node="book" class="flex justify-center pb-2 text-lg text-transparent bg-gradient-to-r from-red-500 to-cyan-500 bg-clip-text md:text-2xl lg:text-3xl">{{ book.title }}</Link>
 
         <!-- 图书的TAB，比如：教程、手册 -->
-        <div class="tabs flex justify-center" v-if="book.getTabs().length > 0">
+        <div class="flex justify-center tabs" v-if="book.getTabs().length > 0">
           <Link class="tab-lifted tab" :class="{ 'tab-active': shouldActive(tab) }" v-for="tab in book.getTabs()" :node="tab">{{ tab.title }}</Link>
         </div>
       </div>
@@ -19,7 +19,7 @@
       <SideMenuItem :item="book" :current="current"></SideMenuItem>
 
       <!-- 底部的图书logo -->
-      <div v-if="book.cover.length > 0" class="mt-12 h-20 opacity-90 dark:brightness-50">
+      <div v-if="book.cover.length > 0" class="h-20 mt-12 opacity-90 dark:brightness-50">
         <img :src="book.cover" alt="" />
       </div>
     </div>
@@ -65,6 +65,10 @@ watch(
 
 <style lang="postcss" scope>
 aside {
-  @apply fixed left-0 z-40 hidden h-screen w-40 border-r border-base-300 bg-base-100  shadow-xl lg:flex lg:flex-col;
+  @apply fixed left-0 z-40 hidden h-screen w-40 border-r border-base-300 bg-gradient-to-b from-primary via-secondary to-transparent  shadow-xl lg:flex lg:flex-col;
+
+  #side-menus {
+    @apply flex h-screen flex-col justify-between overflow-scroll overscroll-none scroll-smooth bg-info/10 bg-opacity-10 backdrop-blur backdrop-filter;
+  }
 }
 </style>

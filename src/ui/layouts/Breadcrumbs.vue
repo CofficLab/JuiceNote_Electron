@@ -1,22 +1,22 @@
 <template>
-  <div class="breadcrumbs flex h-full flex-grow justify-start overflow-visible text-xs" :class="{ 'text-yellow-500': editable }" v-if="visible">
+  <div class="flex justify-start flex-grow h-full overflow-visible text-xs breadcrumbs" :class="{ 'text-yellow-500': editable }" v-if="visible">
     <ul class="flex flex-row justify-center">
       <li v-for="breadcrumb in breadcrumbs" class="flex justify-center">
-        <div class="dropdown-top dropdown-hover dropdown flex justify-center" v-if="breadcrumb.getSiblings().length > 0">
+        <div class="flex justify-center dropdown-top dropdown-hover dropdown" v-if="breadcrumb.getSiblings().length > 0">
           <label
             tabindex="0"
             :class="{ 'text-info': !breadcrumb.isVisible }"
-            class="flex flex-row items-center gap-1 self-center rounded px-1 ring-primary ring-opacity-30 transition duration-200 hover:scale-105 hover:ring-2"
+            class="flex flex-row items-center self-center gap-1 px-1 transition duration-200 rounded ring-primary ring-opacity-30 hover:scale-105 hover:ring-2"
           >
-            <IconBook class="h-4 w-4" v-if="breadcrumb.isBook"></IconBook>
-            <IconChapter class="h-4 w-4" v-if="breadcrumb.isChapter"></IconChapter>
-            <IconPage class="h-4 w-4" v-if="breadcrumb.isPage"></IconPage>
+            <IconBook class="w-4 h-4" v-if="breadcrumb.isBook"></IconBook>
+            <IconChapter class="w-4 h-4" v-if="breadcrumb.isChapter"></IconChapter>
+            <IconPage class="w-4 h-4" v-if="breadcrumb.isPage"></IconPage>
             {{ breadcrumb.title }}
             <span v-if="editable">[{{ breadcrumb.id }}]</span>
           </label>
 
-          <div class="dropdown-content mt-0 pt-4">
-            <ul tabindex="0" class="rounded-box min-h-16 ml-32 max-h-96 w-40 gap-2 overflow-y-scroll bg-gray-900 bg-opacity-50 p-2 shadow-2xl backdrop-blur backdrop-filter">
+          <div class="pt-4 mt-0 dropdown-content">
+            <ul tabindex="0" class="siblings-list">
               <Children :list="breadcrumb.getSiblings()"></Children>
             </ul>
           </div>
@@ -51,3 +51,9 @@ watch(route, function () {
   if (visible.value) breadcrumbs.value = getBreadcrumbs();
 });
 </script>
+
+<style lang="postcss" scoped>
+.siblings-list {
+  @apply rounded-box min-h-16 ml-32 max-h-96 w-40 gap-2 overflow-y-scroll bg-gray-900 bg-opacity-50 px-6 py-6 shadow-2xl backdrop-blur backdrop-filter;
+}
+</style>

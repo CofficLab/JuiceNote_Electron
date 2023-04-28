@@ -39,7 +39,7 @@
 import { nextTick, ref } from "vue";
 import { useRouter } from "vue-router";
 import Node from "../entities/Node";
-import Preload from "../entities/Preload"
+import Preload from "../entities/Preload";
 
 const router = useRouter();
 let keyword = "";

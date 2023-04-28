@@ -13,33 +13,37 @@
     <FormSearch></FormSearch>
     <FormAdd></FormAdd>
     <FormRename></FormRename>
+    <Themes></Themes>
 
     <!-- 全局的组件 -->
     <Terminal v-if="terminalVisible"></Terminal>
 
-    <BottomBar></BottomBar>
+    <Footer></Footer>
   </div>
 </template>
 
 <script setup>
 import { computed, ref } from "vue";
 import { useRoute } from "vue-router";
-import Aside from "../blocks/Aside.vue";
-import Header from "../blocks/Header.vue";
-import Main from "../blocks/Main.vue";
-import BottomBar from "../blocks/BottomBar.vue";
+import Preload from "../entities/Preload";
+import Aside from "./Aside.vue";
+import Header from "./Header.vue";
+import Main from "./Main.vue";
+import Footer from "./Footer.vue";
 import FormAdd from "../modals/FormAdd.vue";
 import FormRename from "../modals/FormRename.vue";
-import Toast from "../blocks/Toast.vue";
+import Toast from "./Toast.vue";
 import RightMenuModal from "../modals/RightMenuModal.vue";
 import FormSearch from "../modals/FormSearch.vue";
+import Themes from "../modals/Themes.vue";
 import Node from "../entities/Node";
 import Terminal from "../components/Terminal.vue";
 
 // 初始化主题
+const themes = Preload.getThemes();
 const darkModeQuery = window.matchMedia("(prefers-color-scheme: dark)");
 const isDarkMode = ref(darkModeQuery.matches);
-const themeLight = ref("cloud");
+const themeLight = ref(themes[0]);
 const themeDark = computed(() => themeLight.value + "-dark");
 const theme = computed(() => (isDarkMode.value ? themeDark.value : themeLight.value));
 

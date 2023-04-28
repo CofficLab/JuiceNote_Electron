@@ -38,6 +38,13 @@ function getViewMenu(win: BrowserWindow) {
                 }
             },
             {
+                label: '配置主题',
+                accelerator: 'CommandOrControl+T',
+                click: () => {
+                    win.webContents.send('toggle-theme-setting')
+                }
+            },
+            {
                 label: '切换开发者视图',
                 role: "toggleDevTools",
             },
@@ -46,7 +53,7 @@ function getViewMenu(win: BrowserWindow) {
             {
                 label: '新页面',
                 accelerator: 'CommandOrControl+N',
-                click: ()=>createWindow({x:10,y:10})
+                click: () => createWindow({ x: 10, y: 10 })
             },
         ],
     })

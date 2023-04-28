@@ -1,27 +1,27 @@
 <template>
   <div>
-    <div class="dropdown-hover dropdown-end dropdown">
+    <div class="dropdown-hover dropdown dropdown-end">
       <label tabindex="0">
         <ChevronDoubleDown></ChevronDoubleDown>
       </label>
-      <ul tabindex="0" class="shadow-3xl dropdown-content z-50 flex translate-x-4 flex-col rounded-sm bg-base-100 shadow-green-600">
+      <ul tabindex="0">
         <li v-if="isRouteLesson">
-          <Delete :showText="false" class="btn-ghost btn rounded-sm"></Delete>
+          <Delete :showText="false" class="rounded-sm btn-ghost btn"></Delete>
         </li>
         <li v-if="isRouteLesson">
-          <CreateChild :showText="false" class="btn-ghost btn rounded-sm"></CreateChild>
+          <CreateChild :showText="false" class="rounded-sm btn-ghost btn"></CreateChild>
         </li>
         <li>
-          <Edit :showText="false" class="btn-ghost btn rounded-sm"></Edit>
+          <Edit :showText="false" class="rounded-sm btn-ghost btn"></Edit>
         </li>
         <li v-if="isRouteLesson">
-          <Copy :showText="false" class="btn-ghost btn rounded-sm"></Copy>
+          <Copy :showText="false" class="rounded-sm btn-ghost btn"></Copy>
         </li>
         <li>
-          <Commit :showText="false" class="btn-ghost btn rounded-sm"></Commit>
+          <Commit :showText="false" class="rounded-sm btn-ghost btn"></Commit>
         </li>
         <li v-if="isRouteLesson">
-          <Visible :showText="false" :node="book" class="btn-ghost btn rounded-sm"></Visible>
+          <Visible :showText="false" :node="book" class="rounded-sm btn-ghost btn"></Visible>
         </li>
       </ul>
     </div>
@@ -47,7 +47,11 @@ const editable = computed(() => route.name == "lessons.edit");
 </script>
 
 <style scoped lang="postcss">
-ul li {
-  @apply flex justify-center;
+ul {
+  @apply dropdown-content rounded-box z-50 flex translate-x-4 flex-col bg-info/30 bg-opacity-50 py-4 shadow-2xl backdrop-blur backdrop-filter;
+
+  li {
+    @apply flex justify-center;
+  }
 }
 </style>

@@ -1,9 +1,9 @@
 <template>
-  <div v-if="isLesson" class="shadow-3xl fixed bottom-0 flex h-6 w-full items-center justify-between bg-neutral px-4 pl-44 text-neutral-content">
+  <footer v-if="isLesson">
     <div class="flex flex-row items-center gap-12">
       <Breadcrumbs :current="current"></Breadcrumbs>
     </div>
-  </div>
+  </footer>
 </template>
 
 <script lang="ts" setup>
@@ -16,3 +16,9 @@ const route = useRoute();
 const isLesson = computed(() => RouteBox.isLesson(route));
 const current = computed(() => RouteBox.getCurrentNode(route));
 </script>
+
+<style lang="postcss" scope>
+footer {
+  @apply fixed bottom-0 flex h-6 w-full items-center justify-between bg-info bg-opacity-30 px-4 pl-44 text-info-content shadow backdrop-blur-lg backdrop-filter;
+}
+</style>

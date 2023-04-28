@@ -106,14 +106,7 @@ contextBridge.exposeInMainWorld('preloadApi', {
 
 // 对主进程的消息作出响应
 contextBridge.exposeInMainWorld('listen', (name: string, callback: () => void) => {
-  switch (name) {
-    case 'toggle-search':
-      ipcRenderer.on('toggle-search', () => callback())
-      break;
-
-    default:
-      break;
-  }
+  ipcRenderer.on(name, () => callback())
 })
 
 

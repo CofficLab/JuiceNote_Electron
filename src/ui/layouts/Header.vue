@@ -1,15 +1,14 @@
 <template>
   <header>
-    <div class="flex h-full justify-between" :class="{ 'mr-40': isWindows }">
-      <div class="draggable flex-grow"></div>
+    <div class="flex justify-between h-full" :class="{ 'mr-40': isWindows }">
+      <div class="flex-grow draggable"></div>
       <div class="flex flex-row items-center justify-end gap-2 pr-4">
         <BtnOfficialLink></BtnOfficialLink>
-        <Terminal class="btn-ghost btn-sm flex items-center rounded px-2"></Terminal>
-        <Prev class="btn-ghost btn-sm flex items-center rounded px-2" :showText="false" v-if="isLesson"></Prev>
-        <Home class="btn-ghost btn-sm flex items-center rounded px-2"></Home>
-        <Next class="btn-ghost btn-sm flex items-center rounded px-2" :showText="false" v-if="isLesson"></Next>
-        <Themes v-if="isDev"></Themes>
-        <More class="btn-ghost btn-sm flex items-center rounded px-2"></More>
+        <Terminal class="flex items-center px-2 rounded btn-ghost btn-sm"></Terminal>
+        <Prev class="flex items-center px-2 rounded btn-ghost btn-sm" :showText="false" v-if="isLesson"></Prev>
+        <Home class="flex items-center px-2 rounded btn-ghost btn-sm"></Home>
+        <Next class="flex items-center px-2 rounded btn-ghost btn-sm" :showText="false" v-if="isLesson"></Next>
+        <More class="flex items-center px-2 rounded btn-ghost btn-sm"></More>
       </div>
     </div>
   </header>
@@ -25,17 +24,15 @@ import Terminal from "../operators/Terminal.vue";
 import { useRoute } from "vue-router";
 import { computed } from "vue";
 import Preload from "../entities/Preload";
-import Themes from "../operators/Themes.vue";
 import RouteBox from "../entities/RouteBox";
 
 const route = useRoute();
 const isLesson = computed(() => RouteBox.isLesson(route));
 const isWindows = Preload.isWindows();
-const isDev = Preload.isDev();
 </script>
 
 <style lang="postcss" scoped>
 header {
-  @apply fixed top-0 z-40 h-10 w-full border-b border-base-300 bg-base-200 pl-40 shadow;
+  @apply fixed top-0 z-40 h-10 w-full border-b border-base-300 bg-base-100 pl-40 shadow;
 }
 </style>

@@ -15,6 +15,8 @@ export default function setWildController(app: Electron.App) {
     // 供子进程查询platform
     ipcMain.on('get-platform', (event) => event.returnValue = process.platform)
 
+    ipcMain.on('get-themes', (event) => event.returnValue = Config.THEMEMS)
+
     ipcMain.on('versions', () => {
         return {
             node: () => process.versions.node,

@@ -14,6 +14,8 @@ const Preload = {
         return Preload.ipc.sendSync("get-app-version");
     },
 
+    getThemes: () => Preload.ipc.sendSync("get-themes"),
+
     onToggleSearch(callback: Function) {
         Preload.listen("toggle-search", callback);
     }
