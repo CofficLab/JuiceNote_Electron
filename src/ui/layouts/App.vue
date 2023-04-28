@@ -1,19 +1,26 @@
 <template>
   <div :data-theme="theme" class="bg-primary bg-opacity-30">
+    <LessonAside v-if="isLesson"></LessonAside>
     <Toast></Toast>
     <Header></Header>
 
-    <router-view v-slot="{ Component }">
-      <transition name="fade">
-        <component :is="Component" />
-      </transition>
-    </router-view>
+    <main>
+      <router-view v-slot="{ Component }">
+        <transition name="fade">
+          <component :is="Component" />
+        </transition>
+      </router-view>
+    </main>
 
     <Footer></Footer>
 
     <!-- 弹层 -->
     <Themes></Themes>
     <FormSearch></FormSearch>
+    <RightMenuModal></RightMenuModal>
+    <FormAdd></FormAdd>
+    <FormRename></FormRename>
+    <Terminal></Terminal>
   </div>
 </template>
 
@@ -25,6 +32,16 @@ import Footer from "./Footer.vue";
 import Toast from "./Toast.vue";
 import FormSearch from "../modals/FormSearch.vue";
 import Themes from "../modals/Themes.vue";
+import FormAdd from "../modals/FormAdd.vue";
+import FormRename from "../modals/FormRename.vue";
+import RightMenuModal from "../modals/RightMenuModal.vue";
+import Terminal from "../modals/Terminal.vue";
+import LessonAside from "./LessonAside.vue";
+import RouteBox from "../entities/RouteBox";
+import { useRoute } from "vue-router";
+
+const route = useRoute();
+const isLesson = computed(() => RouteBox.isLesson(route));
 
 // 初始化主题
 const themes = Preload.getThemes();
