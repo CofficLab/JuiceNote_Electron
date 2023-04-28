@@ -3,12 +3,13 @@ import path from 'path'
 import setMenus from './menus/all'
 import Config from './config'
 
-function createWindow(option?: BrowserWindowConstructorOptions):BrowserWindow {
+function createWindow(option?: BrowserWindowConstructorOptions): BrowserWindow {
     const defaultOption = {
         minWidth: 780,
         height: app.isPackaged ? 800 : 1600,
         width: 1300,
-        backgroundColor: '#07404b',
+        // backgroundColor: '#07404b',
+        transparent: true,
         title: 'Main window',
         icon: path.join(Config.PUBLIC_PATH, 'favicon.ico'),
         frame: process.platform == 'win32' ? true : false, // false：不显示可拖动的那个顶栏，形成一个无边框窗口
@@ -16,7 +17,7 @@ function createWindow(option?: BrowserWindowConstructorOptions):BrowserWindow {
         trafficLightPosition: { x: 8, y: 8 },
         titleBarOverlay: true,
         webPreferences: {
-            preload:Config.PRELOAD_FILE,
+            preload: Config.PRELOAD_FILE,
             // nodeIntegration: true,
             // contextIsolation: false,
             spellcheck: false,
