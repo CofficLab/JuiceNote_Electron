@@ -4,15 +4,13 @@
     <Toast></Toast>
     <Header></Header>
 
-    <main>
+    <main class="overflow-scroll">
       <router-view v-slot="{ Component }">
         <transition name="fade">
           <component :is="Component" />
         </transition>
       </router-view>
     </main>
-
-    <Footer></Footer>
 
     <!-- 弹层 -->
     <Themes></Themes>
@@ -21,6 +19,8 @@
     <FormAdd></FormAdd>
     <FormRename></FormRename>
     <Terminal></Terminal>
+
+    <Footer></Footer>
   </div>
 </template>
 
