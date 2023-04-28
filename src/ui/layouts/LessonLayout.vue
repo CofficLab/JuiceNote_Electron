@@ -1,6 +1,6 @@
 <template>
   <div>
-    <LessonAside class="hidden lg:flex"></LessonAside>
+    <LessonAside></LessonAside>
 
     <main class="lg:pl-40">
       <slot></slot>
@@ -15,7 +15,6 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
 import LessonAside from "./LessonAside.vue";
 import FormAdd from "../modals/FormAdd.vue";
 import FormRename from "../modals/FormRename.vue";

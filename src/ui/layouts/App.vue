@@ -1,5 +1,5 @@
 <template>
-  <div :data-theme="theme">
+  <div :data-theme="theme" class="bg-white">
     <Toast></Toast>
     <Header></Header>
 

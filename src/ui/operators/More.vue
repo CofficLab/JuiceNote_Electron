@@ -6,22 +6,22 @@
       </label>
       <ul tabindex="0">
         <li v-if="isRouteLesson">
-          <Delete :showText="false" class="rounded-sm btn-ghost btn"></Delete>
+          <Delete :showText="false" class="btn-ghost btn rounded-sm"></Delete>
         </li>
         <li v-if="isRouteLesson">
-          <CreateChild :showText="false" class="rounded-sm btn-ghost btn"></CreateChild>
+          <CreateChild :showText="false" class="btn-ghost btn rounded-sm"></CreateChild>
         </li>
         <li>
-          <Edit :showText="false" class="rounded-sm btn-ghost btn"></Edit>
+          <Edit :showText="false" class="btn-ghost btn rounded-sm"></Edit>
         </li>
         <li v-if="isRouteLesson">
-          <Copy :showText="false" class="rounded-sm btn-ghost btn"></Copy>
+          <Copy :showText="false" class="btn-ghost btn rounded-sm"></Copy>
         </li>
         <li>
-          <Commit :showText="false" class="rounded-sm btn-ghost btn"></Commit>
+          <Commit :showText="false" class="btn-ghost btn rounded-sm"></Commit>
         </li>
         <li v-if="isRouteLesson">
-          <Visible :showText="false" :node="book" class="rounded-sm btn-ghost btn"></Visible>
+          <Visible :showText="false" :node="book" class="btn-ghost btn rounded-sm"></Visible>
         </li>
       </ul>
     </div>
@@ -43,12 +43,11 @@ import Node from "../entities/Node";
 const route = useRoute();
 const book = computed(() => Node.find(parseInt(route.params.id.toString())).getBook());
 const isRouteLesson = computed(() => route.name && route.name.startsWith("lessons"));
-const editable = computed(() => route.name == "lessons.edit");
 </script>
 
 <style scoped lang="postcss">
 ul {
-  @apply dropdown-content rounded-box z-50 flex translate-x-4 flex-col bg-primary bg-opacity-50 py-4 shadow-2xl backdrop-blur-sm backdrop-filter;
+  @apply dropdown-content rounded-box z-50 flex translate-x-4 flex-col bg-primary/90 py-4 shadow-2xl backdrop-blur-sm backdrop-filter;
 
   li {
     @apply flex justify-center;

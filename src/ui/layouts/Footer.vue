@@ -19,6 +19,6 @@ const isLesson = computed(() => RouteBox.isLesson(route));
 
 <style lang="postcss" scope>
 footer {
-  @apply fixed bottom-0 z-50 flex h-6 w-full text-info-content;
+  @apply fixed bottom-0 z-30 flex h-6 w-full text-info-content;
 }
 </style>

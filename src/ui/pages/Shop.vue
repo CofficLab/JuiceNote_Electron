@@ -1,6 +1,6 @@
 <template>
   <ShopLayout
-    ><div class="h-screen w-full overflow-scroll overscroll-none bg-sky-400/10 py-12">
+    ><div class="h-screen w-full overflow-scroll overscroll-none py-12">
       <div class="navbar bg-base-100">
         <div class="navbar-start">
           <a class="btn-ghost btn text-xl normal-case">商店</a>

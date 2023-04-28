@@ -1,8 +1,8 @@
 <template>
-  <node-view-wrapper class="hidden toc lg:flex">
+  <node-view-wrapper class="toc">
     <ul style="padding-left: 0">
       <div v-for="(heading, index) in headings">
-        <li class="text-sm list-none rounded-none" style="margin: 0" :key="index">
+        <li class="list-none rounded-none text-sm" style="margin: 0" :key="index">
           <router-link :to="getLink(heading)" class="no-underline">
             <DynamicPadding :count="heading.level - 1"></DynamicPadding>
             {{ heading.text }}
@@ -104,7 +104,10 @@ onMounted(() => {
 </script>
 
 <style lang="postcss" scoped>
-ul {
-  @apply menu fixed right-4 top-32 w-56 overflow-scroll;
+.toc {
+  @apply hidden lg:flex;
+  ul {
+    @apply menu fixed right-0 top-32 z-40 w-36 overflow-scroll rounded bg-primary/40 text-primary-content/90 backdrop-blur-sm backdrop-filter md:w-40 xl:w-48 2xl:w-56;
+  }
 }
 </style>

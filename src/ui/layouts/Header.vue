@@ -1,15 +1,15 @@
 <template>
   <header>
-    <div class="z-40 flex h-full justify-between" :class="{ 'mr-40': isWindows }">
+    <div class="flex h-full justify-between" :class="{ 'mr-40': isWindows }">
       <div class="draggable flex-grow"></div>
       <div class="flex flex-row items-center justify-end gap-2 pr-4">
         <BtnOfficialLink></BtnOfficialLink>
-        <Terminal class="btn-ghost btn-sm flex items-center rounded px-2" v-if="isLesson"></Terminal>
-        <Prev class="btn-ghost btn-sm flex items-center rounded px-2" :showText="false" v-if="isLesson"></Prev>
+        <Terminal class="btn-ghost btn-sm flex items-center rounded px-2 text-accent" v-if="isLesson"></Terminal>
+        <Prev class="btn-ghost btn-sm flex items-center rounded px-2 text-accent" :showText="false" v-if="isLesson"></Prev>
         <Home class="btn-ghost btn-sm flex items-center rounded px-2 text-accent"></Home>
         <Shop class="btn-ghost btn-sm flex items-center rounded px-2 text-accent"></Shop>
-        <Next class="btn-ghost btn-sm flex items-center rounded px-2" :showText="false" v-if="isLesson"></Next>
-        <More class="btn-ghost btn-sm flex items-center rounded px-2"></More>
+        <Next class="btn-ghost btn-sm flex items-center rounded px-2 text-accent" :showText="false" v-if="isLesson"></Next>
+        <More class="btn-ghost btn-sm flex items-center rounded px-2 text-accent"></More>
       </div>
     </div>
   </header>
@@ -35,6 +35,6 @@ const isWindows = Preload.isWindows();
 
 <style lang="postcss" scoped>
 header {
-  @apply fixed top-0 z-40 h-10 w-full border-b border-base-300 bg-base-100  bg-opacity-60 pl-40 shadow backdrop-blur-sm backdrop-filter;
+  @apply fixed top-0 z-50 h-10 w-full border-b border-base-300 bg-base-100  bg-opacity-60 pl-40 shadow backdrop-blur-sm backdrop-filter;
 }
 </style>

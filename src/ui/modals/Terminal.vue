@@ -1,5 +1,5 @@
 <template>
-  <div v-if="visible">
+  <div class="fixed top-12 z-40" v-if="visible">
     <Terminal></Terminal>
   </div>
 </template>

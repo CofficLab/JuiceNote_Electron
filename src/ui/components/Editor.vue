@@ -1,12 +1,12 @@
 <template>
   <!-- 工具栏 -->
-  <div v-if="editable" class="fixed top-0 left-0 z-40 flex justify-center w-full pl-24 draggable bg-yellow-500/80 dark:bg-yellow-900/40 lg:pl-40">
+  <div v-if="editable" class="draggable fixed left-0 top-0 z-40 flex w-full justify-center bg-yellow-500/80 pl-24 dark:bg-yellow-900/40 lg:pl-40">
     <Toolbar :editor="editor" :current="node"></Toolbar>
   </div>
 
   <!-- 编辑框 -->
-  <div class="z-30 flex flex-row justify-center w-full px-4 border-0">
-    <editor-content :editor="editor" class="w-full prose xl:prose-lg" />
+  <div class="flex w-full flex-row justify-center border-0 px-4">
+    <editor-content :editor="editor" class="prose w-full xl:prose-lg" />
   </div>
 </template>
 
