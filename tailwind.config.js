@@ -31,7 +31,7 @@ module.exports = {
       },
       {
         mountain: {
-          primary: "#bae6fd",
+          primary: "#d1fae5",
           secondary: "#e0f2fe",
           accent: "#1FB2A5",
           neutral: "#191D24",
