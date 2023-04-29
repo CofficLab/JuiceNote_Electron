@@ -1,14 +1,17 @@
 <template>
   <ul>
     <li
-      :data-id="item.id"
       v-if="!item.isBook"
-      v-on:contextmenu="showRightMenu"
+      :data-id="item.id"
+      @contextmenu="showRightMenu"
       @click="goto(item)"
-      :class="{ 'bg-accent text-primary-content': shouldActive(item), 'font-bold text-opacity-50': item.isChapter }"
+      :class="{
+        'bg-primary text-primary-content': shouldActive(item),
+        'font-bold text-opacity-50': item.isChapter,
+      }"
     >
       <DynamicPadding :count="item.getParents().length - (item.isChapter ? 4 : 3)"></DynamicPadding>
-      <IconPage v-if="item.isPage" class="h-4 w-4 text-accent" :class="{ 'text-accent-focus': shouldActive(item) }"></IconPage>
+      <IconPage v-if="item.isPage" class="h-4 w-4"></IconPage>
       {{ item.title }}
     </li>
 

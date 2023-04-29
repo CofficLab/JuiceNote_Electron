@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div class="dropdown-hover dropdown dropdown-end">
+    <div class="dropdown-hover dropdown-end dropdown">
       <label tabindex="0">
         <ChevronDoubleDown></ChevronDoubleDown>
       </label>
-      <ul tabindex="0">
+      <ul tabindex="0" class="dropdown-content rounded-box z-50 flex translate-x-4 flex-col bg-base-200/90 py-4 shadow-2xl backdrop-blur-sm backdrop-filter">
         <li v-if="isRouteLesson">
           <Delete :showText="false" class="btn-ghost btn rounded-sm"></Delete>
         </li>
@@ -47,8 +47,6 @@ const isRouteLesson = computed(() => route.name && route.name.startsWith("lesson
 
 <style scoped lang="postcss">
 ul {
-  @apply dropdown-content rounded-box z-50 flex translate-x-4 flex-col bg-primary/90 py-4 shadow-2xl backdrop-blur-sm backdrop-filter;
-
   li {
     @apply flex justify-center;
   }

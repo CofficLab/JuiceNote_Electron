@@ -1,6 +1,6 @@
 <template>
   <footer>
-    <div class="z-50 flex w-full flex-row items-center gap-12 bg-info bg-opacity-30 px-4 shadow backdrop-blur-lg backdrop-filter">
+    <div class="z-50 flex w-full flex-row items-center gap-12 px-4 shadow">
       <Breadcrumbs :current="current"></Breadcrumbs>
     </div>
   </footer>

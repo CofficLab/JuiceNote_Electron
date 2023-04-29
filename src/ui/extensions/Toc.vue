@@ -107,7 +107,7 @@ onMounted(() => {
 .toc {
   @apply hidden lg:flex;
   ul {
-    @apply menu fixed right-1 top-32 z-30 w-36 overflow-scroll rounded bg-primary/90 text-primary-content/90 ring-1 backdrop-blur-sm backdrop-filter md:w-40 xl:w-48 2xl:w-56;
+    @apply menu fixed right-1 top-32 z-30 w-36 overflow-scroll rounded bg-base-300/90 ring-1 backdrop-blur-sm backdrop-filter md:w-40 xl:w-48 2xl:w-56;
   }
 }
 </style>

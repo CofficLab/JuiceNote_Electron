@@ -17,7 +17,7 @@
         </transition>
       </router-view>
 
-      <Footer class="sticky bottom-0 z-50 h-10"></Footer>
+      <Footer class="sticky bottom-0 z-50 h-10 bg-primary/10 shadow-2xl backdrop-blur-lg backdrop-filter"></Footer>
     </main>
 
     <!-- 弹层 -->

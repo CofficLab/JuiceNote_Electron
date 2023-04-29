@@ -6,12 +6,12 @@
       <div class="draggable flex-grow"></div>
       <div class="flex flex-row items-center justify-end gap-2 pr-4">
         <BtnOfficialLink></BtnOfficialLink>
-        <Terminal class="btn-ghost btn-sm flex items-center rounded px-2 text-accent" v-if="isLesson"></Terminal>
-        <!-- <Prev class="btn-ghost btn-sm flex items-center rounded px-2 text-accent" :showText="false" v-if="isLesson"></Prev> -->
-        <!-- <Next class="btn-ghost btn-sm flex items-center rounded px-2 text-accent" :showText="false" v-if="isLesson"></Next> -->
-        <Home class="btn-ghost btn-sm flex items-center rounded px-2 text-accent"></Home>
-        <Shop class="btn-ghost btn-sm flex items-center rounded px-2 text-accent"></Shop>
-        <More class="btn-ghost btn-sm flex items-center rounded px-2 text-accent"></More>
+        <Terminal class="btn-ghost btn-sm flex items-center rounded px-2" v-if="isLesson"></Terminal>
+        <!-- <Prev class="btn-ghost btn-sm flex items-center rounded px-2" :showText="false" v-if="isLesson"></Prev> -->
+        <!-- <Next class="btn-ghost btn-sm flex items-center rounded px-2" :showText="false" v-if="isLesson"></Next> -->
+        <Home class="btn-ghost btn-sm flex items-center rounded px-2"></Home>
+        <Shop class="btn-ghost btn-sm flex items-center rounded px-2"></Shop>
+        <More class="btn-ghost btn-sm flex items-center rounded px-2"></More>
       </div>
     </div>
   </header>

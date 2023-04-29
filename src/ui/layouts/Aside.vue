@@ -2,13 +2,15 @@
   <aside>
     <div id="side-menus">
       <!-- 空白，用于拖动 -->
-      <div class="sticky top-0 z-40 w-full" v-if="!isWindows">
+      <div class="sticky top-0 z-40 w-full bg-base-200" v-if="!isWindows">
         <div class="draggable" :class="{ 'h-10': !hideTitleBar, 'h-0': hideTitleBar }"></div>
       </div>
 
       <!-- 是一个图书 -->
-      <div class="sticky z-40 mb-4 bg-base-200 bg-opacity-90 backdrop-blur backdrop-filter" :class="{ 'top-10': !hideTitleBar, 'top-0': hideTitleBar }">
-        <Link :node="book!" class="flex justify-center bg-gradient-to-r from-red-500 to-cyan-500 bg-clip-text pb-2 text-lg text-transparent md:text-2xl lg:text-3xl">{{ book!.title }}</Link>
+      <div class="sticky z-40 mb-4 bg-base-200 bg-opacity-90 shadow backdrop-blur backdrop-filter" :class="{ 'top-10': !hideTitleBar, 'top-0': hideTitleBar }">
+        <Link :node="book!" class="flex justify-center bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text pb-2 text-lg text-transparent md:text-2xl lg:text-3xl">{{
+          book!.title
+        }}</Link>
 
         <!-- 图书的TAB，比如：教程、手册 -->
         <div class="tabs flex justify-center" v-if="book!.getTabs().length > 0">
