@@ -7,7 +7,10 @@
     <Header class="fixed top-0 z-50 h-10 w-full bg-base-300"></Header>
 
     <!-- 左侧导航侧栏 -->
-    <Aside v-if="isLesson" class="z-50 bg-base-200/90"></Aside>
+    <Aside
+      v-if="isLesson"
+      class="z-50 hidden h-screen w-40 overflow-scroll overscroll-none scroll-smooth border-r border-base-300 bg-base-200/90 shadow-xl backdrop-blur-sm backdrop-filter lg:flex lg:flex-col"
+    ></Aside>
 
     <!-- 右侧主内容，所有的滚动都基于main，必须有固定高度 -->
     <main class="flex h-screen flex-grow flex-col justify-between overflow-scroll overscroll-none bg-base-100">
@@ -32,7 +35,6 @@
 
 <script setup>
 import { computed, ref } from "vue";
-import Preload from "../entities/Preload";
 import Header from "./Header.vue";
 import Footer from "./Footer.vue";
 import FormSearch from "../modals/ModalSearch.vue";
@@ -42,6 +44,7 @@ import FormRename from "../modals/FormRename.vue";
 import RightMenuModal from "../modals/RightMenuModal.vue";
 import Terminal from "../modals/Terminal.vue";
 import Aside from "./Aside.vue";
+import ThemesConfig from "../entities/Themes";
 import RouteBox from "../entities/RouteBox";
 import { useRoute } from "vue-router";
 
@@ -49,7 +52,7 @@ const route = useRoute();
 const isLesson = computed(() => RouteBox.isLesson(route));
 
 // 初始化主题
-const themes = Preload.getThemes();
+const themes = ThemesConfig;
 const darkModeQuery = window.matchMedia("(prefers-color-scheme: dark)");
 const isDarkMode = ref(darkModeQuery.matches);
 const themeLight = ref(themes[0]);

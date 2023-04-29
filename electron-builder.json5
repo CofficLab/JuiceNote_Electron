@@ -8,17 +8,8 @@
   directories: {
     output: "release/",
   },
-  files: [
-    "dist",
-    {
-      from: "database",
-      to: "database",
-    },
-    {
-      from: "temp",
-      to: "temp",
-    },
-  ],
+  // 打包时复制这些文件
+  files: ["dist", "database", "temp"],
   mac: {
     artifactName: "kuaiyizhi_${version}.${ext}",
     target: ["dmg"],

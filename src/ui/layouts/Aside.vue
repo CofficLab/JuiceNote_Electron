@@ -1,29 +1,25 @@
 <template>
   <aside>
-    <div id="side-menus">
-      <!-- 空白，用于拖动 -->
-      <div class="sticky top-0 z-40 w-full bg-base-200" v-if="!isWindows">
-        <div class="draggable" :class="{ 'h-10': !hideTitleBar, 'h-0': hideTitleBar }"></div>
+    <!-- 空白，用于拖动 -->
+    <div class="sticky top-0 z-40 w-full bg-base-200" v-if="!isWindows">
+      <div class="draggable" :class="{ 'h-10': !hideTitleBar, 'h-0': hideTitleBar }"></div>
+    </div>
+
+    <!-- 是一个图书 -->
+    <div class="sticky z-40 mb-4 bg-base-200 bg-opacity-90 shadow backdrop-blur backdrop-filter" :class="{ 'top-10': !hideTitleBar, 'top-0': hideTitleBar }">
+      <Link :node="book!" class="flex justify-center bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text pb-2 text-lg text-transparent md:text-2xl lg:text-3xl">{{ book!.title }}</Link>
+
+      <!-- 图书的TAB，比如：教程、手册 -->
+      <div class="tabs flex justify-center" v-if="book!.getTabs().length > 0">
+        <Link class="tab tab-lifted" :class="{ 'tab-active': shouldActive(tab) }" v-for="tab in book!.getTabs()" :node="tab">{{ tab.title }}</Link>
       </div>
+    </div>
 
-      <!-- 是一个图书 -->
-      <div class="sticky z-40 mb-4 bg-base-200 bg-opacity-90 shadow backdrop-blur backdrop-filter" :class="{ 'top-10': !hideTitleBar, 'top-0': hideTitleBar }">
-        <Link :node="book!" class="flex justify-center bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text pb-2 text-lg text-transparent md:text-2xl lg:text-3xl">{{
-          book!.title
-        }}</Link>
+    <SideMenuItem class="flex flex-grow" :item="book!" :current="current!"></SideMenuItem>
 
-        <!-- 图书的TAB，比如：教程、手册 -->
-        <div class="tabs flex justify-center" v-if="book!.getTabs().length > 0">
-          <Link class="tab-lifted tab" :class="{ 'tab-active': shouldActive(tab) }" v-for="tab in book!.getTabs()" :node="tab">{{ tab.title }}</Link>
-        </div>
-      </div>
-
-      <SideMenuItem :item="book!" :current="current!"></SideMenuItem>
-
-      <!-- 底部的图书logo -->
-      <div v-if="book!.cover.length > 0" class="mt-12 h-20 opacity-90 dark:brightness-50">
-        <img :src="book!.cover" alt="" />
-      </div>
+    <!-- 底部的图书logo -->
+    <div v-if="book!.cover.length > 0" class="sticky bottom-0 mt-12 h-20 opacity-90 backdrop-blur-sm backdrop-filter dark:brightness-50">
+      <img :src="book!.cover" alt="" />
     </div>
   </aside>
 </template>
@@ -54,7 +50,7 @@ watch(
     book.value = RouteBox.getCurrentBook(route);
     nextTick(() => {
       setTimeout(() => {
-        document.querySelector(`#side-menus [data-id="${route.params.id}"]`)?.scrollIntoView({
+        document.querySelector(`aside [data-id="${route.params.id}"]`)?.scrollIntoView({
           behavior: "smooth",
           block: "center",
         });
@@ -64,13 +60,3 @@ watch(
   { immediate: true }
 );
 </script>
-
-<style lang="postcss" scope>
-aside {
-  @apply hidden h-screen w-40 border-r border-base-300 shadow-xl backdrop-blur-sm backdrop-filter lg:flex lg:flex-col;
-
-  #side-menus {
-    @apply flex h-screen flex-col justify-between overflow-scroll overscroll-none scroll-smooth;
-  }
-}
-</style>
