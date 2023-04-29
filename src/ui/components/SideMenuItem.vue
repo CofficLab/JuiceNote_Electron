@@ -7,7 +7,7 @@
       @click="goto(item)"
       :class="{
         'bg-primary text-primary-content': shouldActive(item),
-        'font-bold text-opacity-50': item.isChapter,
+        'font-bold text-opacity-50': item.isChapter && !item.isTab,
       }"
     >
       <DynamicPadding :count="item.getParents().length - (item.isChapter ? 4 : 3)"></DynamicPadding>
