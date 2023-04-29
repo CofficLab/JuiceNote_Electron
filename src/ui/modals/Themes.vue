@@ -12,16 +12,16 @@
     <Transition name="bounce">
       <div class="themes-list">
         <div class="flex w-full rounded-none">
-          <input type="hidden" placeholder="输入关键词" autofocus class="w-full input-primary input" />
+          <input type="hidden" placeholder="输入关键词" autofocus class="input-primary input w-full" />
         </div>
         <div class="grid grid-cols-1 gap-3 p-3" tabindex="0">
           <button class="theme-btn" :class="{ 'ring-4': current == index }" @click="setTheme(index)" v-for="(theme, index) in themes">
-            <div :data-theme="theme" class="w-full font-sans cursor-pointer bg-base-100 text-base-content">
+            <div :data-theme="theme" class="w-full cursor-pointer bg-base-100 font-sans text-base-content">
               <div class="grid grid-cols-5 grid-rows-3">
-                <div class="flex items-center col-span-5 row-span-3 row-start-1 gap-2 px-4 py-3">
+                <div class="col-span-5 row-span-3 row-start-1 flex items-center gap-2 px-4 py-3">
                   <IconRight v-if="current == index"></IconRight>
                   <div class="flex-grow text-sm font-bold">{{ theme }}</div>
-                  <div class="flex flex-wrap flex-shrink-0 h-full gap-1">
+                  <div class="flex h-full flex-shrink-0 flex-wrap gap-1">
                     <div class="w-2 rounded bg-primary"></div>
                     <div class="w-2 rounded bg-secondary"></div>
                     <div class="w-2 rounded bg-accent"></div>
@@ -38,7 +38,7 @@
 </template>
 
 <script lang="ts" setup>
-import IconRight from "../icons/right.vue";
+import IconRight from "../icons/IconCorrect.vue";
 import { ref, nextTick } from "vue";
 import Preload from "../entities/Preload";
 

@@ -3,5 +3,5 @@
 </template>
 
 <script setup>
-import Shop from "../icons/shop.vue";
+import Shop from "../icons/IconShop.vue";
 </script>

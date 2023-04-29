@@ -2,12 +2,12 @@
   <!-- 搜索的弹层 -->
   <div class="modal modal-open" @keydown.esc="toggleVisible" @keydown.arrow-up="activate(current - 1)" @keydown.arrow-down="activate(current + 1)" @click="focus" v-if="visible">
     <Transition name="bounce">
-      <div class="modal-box">
+      <div class="modal-box bg-primary/30 text-primary-content backdrop-blur-sm backdrop-filter">
         <div class="form-control flex justify-center">
           <div class="flex w-full rounded-none">
             <input id="search-form-title" type="text" v-model="keyword" placeholder="输入关键词" autofocus class="input-primary input w-full" @keyup="submit" @keyup.enter="goto" />
           </div>
-          <ul class="mx-auto mt-4 w-full gap-4 bg-base-100">
+          <ul class="mx-auto mt-4 w-full gap-4">
             <li
               @click="goto"
               class="flex cursor-pointer items-center justify-between rounded-lg p-2"
@@ -15,17 +15,13 @@
               @mouseenter="activate(index)"
               :class="{ 'bg-base-300': current == index }"
             >
-              <div>
-                <span>{{ node.title }}</span>
-              </div>
+              <div class="flex flex-row gap-4">
+                <IconBook></IconBook>
+                {{ getBook(node).title }}
 
-              <div class="flex items-center gap-2">
-                <span>{{ getBook(node).title }}</span>
-                <span class="badge-info badge">
-                  {{ node.isBook ? "图书" : "" }}
-                  {{ node.isChapter ? "章节" : "" }}
-                  {{ node.isPage ? "页面" : "" }}
-                </span>
+                <IconChapter v-if="node.isChapter"></IconChapter>
+                <IconPage v-if="node.isPage"></IconPage>
+                <span v-if="!node.isBook">{{ node.title }}</span>
               </div>
             </li>
           </ul>
@@ -40,6 +36,9 @@ import { nextTick, ref } from "vue";
 import { useRouter } from "vue-router";
 import { Node } from "../entities/Node";
 import Preload from "../entities/Preload";
+import IconBook from "../icons/IconBook.vue";
+import IconChapter from "../icons/IconChapter.vue";
+import IconPage from "../icons/IconPage.vue";
 
 const router = useRouter();
 let keyword = "";
@@ -78,9 +77,6 @@ Preload.listen("toggle-search", toggleVisible);
 </script>
 
 <style scoped lang="postcss">
-.modal-box {
-  @apply bg-primary bg-opacity-10 backdrop-blur-sm backdrop-filter;
-}
 .bounce-enter-active {
   animation: bounce-in 0.5s;
 }
@@ -97,23 +93,5 @@ Preload.listen("toggle-search", toggleVisible);
   100% {
     transform: scale(1);
   }
-}
-
-/*
-  进入和离开动画可以使用不同
-  持续时间和速度曲线。
-*/
-.slide-fade-enter-active {
-  transition: all 0.3s ease-out;
-}
-
-.slide-fade-leave-active {
-  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
-}
-
-.slide-fade-enter-from,
-.slide-fade-leave-to {
-  transform: translateX(20px);
-  opacity: 0;
 }
 </style>

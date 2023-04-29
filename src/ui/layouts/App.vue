@@ -35,7 +35,7 @@ import { computed, ref } from "vue";
 import Preload from "../entities/Preload";
 import Header from "./Header.vue";
 import Footer from "./Footer.vue";
-import FormSearch from "../modals/FormSearch.vue";
+import FormSearch from "../modals/ModalSearch.vue";
 import Themes from "../modals/Themes.vue";
 import FormAdd from "../modals/FormAdd.vue";
 import FormRename from "../modals/FormRename.vue";

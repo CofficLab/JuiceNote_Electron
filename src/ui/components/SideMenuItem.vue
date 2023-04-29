@@ -22,7 +22,7 @@ import { useRoute, useRouter } from "vue-router";
 import DynamicPadding from "./DynamicPadding.vue";
 import { Node } from "../entities/Node";
 import RouteBox from "../entities/RouteBox";
-import IconPage from "../icons/page.vue";
+import IconPage from "../icons/IconPage.vue";
 
 const route = useRoute();
 const router = useRouter();

@@ -2,7 +2,7 @@
   <div class="breadcrumbs flex h-full flex-grow justify-start overflow-visible text-xs" :class="{ 'text-yellow-500': editable }">
     <ul class="flex flex-row justify-center">
       <li v-for="breadcrumb in breadcrumbs" class="flex justify-center">
-        <div class="dropdown-top dropdown-hover dropdown flex justify-center" v-if="breadcrumb.getSiblings().length > 0">
+        <div class="dropdown-hover dropdown-top dropdown flex justify-center" v-if="breadcrumb.getSiblings().length > 0">
           <label
             tabindex="0"
             :class="{ 'text-info': !breadcrumb.isVisible }"
@@ -34,11 +34,11 @@ import { computed, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import Children from "../components/Children.vue";
 import RouteBox from "../entities/RouteBox";
-import IconBook from "../icons/book.vue";
-import IconChapter from "../icons/chapter.vue";
-import IconPage from "../icons/page.vue";
-import IconDatabase from "../icons/database.vue";
-import IconShop from "../icons/shop.vue";
+import IconBook from "../icons/IconBook.vue";
+import IconChapter from "../icons/IconChapter.vue";
+import IconPage from "../icons/IconPage.vue";
+import IconDatabase from "../icons/IconDatabase.vue";
+import IconShop from "../icons/IconShop.vue";
 import IconHome from "../icons/IconHome.vue";
 
 const route = useRoute();
