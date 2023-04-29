@@ -2,6 +2,27 @@ import Preload from "./Preload"
 
 const Ipc = Preload.ipc
 
+interface NodeOptions {
+    id?: number
+    title: string
+    isDatabase?: boolean
+    isShop?: boolean
+    isHome?: boolean
+    isBook?: boolean
+    isChapter?: boolean
+    isTab?: boolean
+    isPage?: boolean
+    isLesson?: boolean
+    isManual?: boolean
+    isVisible?: boolean
+    priority?: number
+    parentId?: number
+    level?: number
+    isEmpty?: boolean
+    cover?: string
+    content?: string
+}
+
 class Node {
     public id: number = 0
     public title: string = ''
@@ -14,7 +35,7 @@ class Node {
     public isPage: boolean = false
     public isLesson: boolean = true
     public isManual: boolean = false
-    public isVisible: boolean = false
+    public isVisible: boolean = true
     public priority: number = 0
     public parentId: number = 0
     public level: number = 0
@@ -22,41 +43,8 @@ class Node {
     public cover: string = ''
     public content: string = ''
 
-    public constructor(dbResult: object | null) {
-        if (dbResult == null) {
-            this.isEmpty = true
-        } else {
-            let id = Object.getOwnPropertyDescriptor(dbResult, 'id')?.value
-            let title = Object.getOwnPropertyDescriptor(dbResult, 'title')?.value
-            let content = Object.getOwnPropertyDescriptor(dbResult, 'content')?.value
-            let isBook = Object.getOwnPropertyDescriptor(dbResult, 'isBook')?.value
-            let isChapter = Object.getOwnPropertyDescriptor(dbResult, 'isChapter')?.value
-            let isTab = Object.getOwnPropertyDescriptor(dbResult, 'isTab')?.value
-            let isPage = Object.getOwnPropertyDescriptor(dbResult, 'isPage')?.value
-            let isVisible = Object.getOwnPropertyDescriptor(dbResult, 'isVisible')?.value
-            let priority = Object.getOwnPropertyDescriptor(dbResult, 'priority')?.value
-            let level = Object.getOwnPropertyDescriptor(dbResult, 'level')?.value
-            let cover = Object.getOwnPropertyDescriptor(dbResult, 'cover')?.value
-
-            this.id = id ?? 0
-            this.title = title ?? '无效节点'
-            this.content = content ?? '[空]'
-            this.isDatabase = Object.getOwnPropertyDescriptor(dbResult, 'isDatabase')?.value
-            this.isShop = Object.getOwnPropertyDescriptor(dbResult, 'isShop')?.value
-            this.isHome = Object.getOwnPropertyDescriptor(dbResult, 'isHome')?.value
-            this.isLesson = Object.getOwnPropertyDescriptor(dbResult, 'isLesson')?.value
-            this.isBook = isBook
-            this.isChapter = isChapter
-            this.isTab = isTab
-            this.isPage = isPage
-            this.isVisible = isVisible == 1
-            this.priority = priority
-            this.level = level
-            this.cover = cover
-            this.parentId = Object.getOwnPropertyDescriptor(dbResult, 'parentId')?.value
-
-            if (this.id == 0) this.isEmpty = true
-        }
+    constructor(public options: NodeOptions) {
+        if (options.title) Object.assign(this, options)
     }
 
     // 创建子页面，返回新创建的ID
@@ -70,13 +58,13 @@ class Node {
     }
 
     getBook(): Node {
-        if (this.isBook || this.isEmpty) return this
+        if (this.isBook) return this
 
-        return this.getParent().getBook()
+        return this.getParent()!.getBook()
     }
 
     getFirstTabInParents(): Node | undefined {
-        return this.getParents().find((parent) => parent.getParent().isBook)
+        return this.getParents().find((parent) => parent.getParent()?.isBook)
     }
 
     getContent(): string {
@@ -87,14 +75,14 @@ class Node {
 
     getTabs(): Node[] {
         let tabs = Ipc.sendSync('getTabs', this.id)
-        return tabs.map((tab: object) => {
+        return tabs.map((tab: NodeOptions) => {
             return new Node(tab)
         })
     }
 
-    getParent(): Node {
+    getParent(): Node | null {
         if (this.parentId == 0) {
-            return new Node({})
+            return null
         }
 
         // console.log('get parent from db,id is', this.id, 'parent id is',this.parentId)
@@ -104,12 +92,10 @@ class Node {
     }
 
     getParents(): Node[] {
-        if (this.isEmpty) return []
-
         let parents: Node[] = []
         let parent = this.getParent()
 
-        while (!parent.isEmpty) {
+        while (parent) {
             parents.push(parent)
             parent = parent.getParent()
         }
@@ -120,7 +106,7 @@ class Node {
     getChildren(): Node[] {
         let children = Ipc.sendSync('getChildren', this.id)
 
-        return children.map((child: object) => {
+        return children.map((child: NodeOptions) => {
             return new Node(child)
         });
     }
@@ -128,13 +114,13 @@ class Node {
     getVisibleChildren(): Node[] {
         let children = Ipc.sendSync('getVisibleChildren', this.id)
 
-        return children.map((child: object) => {
+        return children.map((child: NodeOptions) => {
             return new Node(child)
         });
     }
 
     getSiblings(): Node[] {
-        return Ipc.sendSync('getSiblings', this.id).map((sibling: object) => {
+        return Ipc.sendSync('getSiblings', this.id).map((sibling: NodeOptions) => {
             return new Node(sibling)
         })
     }
@@ -143,13 +129,6 @@ class Node {
         let result = Ipc.sendSync('getFirstChild', this.id)
 
         return new Node(result ?? {})
-    }
-
-    getLastChild(): Node {
-        let result = Ipc.sendSync('getLastChild', this.id)
-
-        // console.log('get last child', result)
-        return result ? new Node(result) : emptyNode
     }
 
     getFirstPage(): Node {
@@ -293,70 +272,9 @@ class Node {
 
 }
 
-const DatabaseNode = new Node(
-    {
-        id: 0,
-        title: '知识库',
-        isBook: false,
-        isDatabase: true,
-        isChapter: false,
-        isTab: false,
-        isPage: false,
-        isLesson: false,
-        isManual: false,
-        isVisible: true,
-        priority: 0,
-        parentId: 0,
-        level: 0,
-        isEmpty: false,
-        cover: '',
-        content: '',
-    }
-)
-
-const ShopNode = new Node(
-    {
-        id: 0,
-        title: '商店',
-        isBook: false,
-        isDatabase: false,
-        isChapter: false,
-        isShop: true,
-        isTab: false,
-        isPage: false,
-        isLesson: false,
-        isManual: false,
-        isVisible: true,
-        priority: 0,
-        parentId: 0,
-        level: 0,
-        isEmpty: false,
-        cover: '',
-        content: '',
-    }
-)
-
-const HomeNode = new Node(
-    {
-        id: 0,
-        title: '首页',
-        isBook: false,
-        isDatabase: false,
-        isChapter: false,
-        isHome: true,
-        isTab: false,
-        isPage: false,
-        isLesson: false,
-        isManual: false,
-        isVisible: true,
-        priority: 0,
-        parentId: 0,
-        level: 0,
-        isEmpty: false,
-        cover: '',
-        content: '',
-    }
-)
+const DatabaseNode = new Node({ title: '知识库', isDatabase: true })
+const ShopNode = new Node({ title: '商店', isShop: true })
+const HomeNode = new Node({ title: '首页', isHome: true })
 
 export {
     Node,
