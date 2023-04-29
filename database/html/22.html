@@ -1,11 +1,11 @@
-<toc></toc><h1 id="heading-1">注释</h1><p><a target="_blank" rel="noopener noreferrer nofollow" href="https://go.dev/ref/spec#Comments">https://go.dev/ref/spec#Comments</a></p><h2 id="heading-2">单行注释</h2><pre index="1"><code language="" run="NaN">package main
+<toc></toc><h1 id="heading-1">注释</h1><p><a target="_blank" rel="noopener noreferrer nofollow" href="https://go.dev/ref/spec#Comments">https://go.dev/ref/spec#Comments</a></p><h2 id="heading-2">单行注释</h2><pre height="0" database="{&quot;items&quot;:[{&quot;title&quot;:&quot;代码块&quot;,&quot;content&quot;:&quot;package main\nimport \&quot;fmt\&quot;\n\nfunc main() {\n    // 输出问候\n    fmt.Println(\&quot;你好\&quot;)\n    fmt.Println(\&quot;白展堂\&quot;) // 输出名字\n}&quot;,&quot;language&quot;:&quot;go&quot;}],&quot;activatedIndex&quot;:0}"><code>package main
 import "fmt"
 
 func main() {
     // 输出问候
     fmt.Println("你好")
     fmt.Println("白展堂") // 输出名字
-}</code></pre><h2 id="heading-3">多行注释</h2><pre index="1"><code language="" run="NaN">package main
+}</code></pre><h2 id="heading-3">多行注释</h2><pre height="0" database="{&quot;items&quot;:[{&quot;title&quot;:&quot;代码块&quot;,&quot;content&quot;:&quot;package main\nimport \&quot;fmt\&quot;\n\nfunc main() {\n    // 输出名字\n    // 然后输出问候\n    fmt.Println(\&quot;老白\&quot;)\n    fmt.Println(\&quot;吃了吗？\&quot;)\n}&quot;,&quot;language&quot;:&quot;go&quot;}],&quot;activatedIndex&quot;:0}"><code>package main
 import "fmt"
 
 func main() {
@@ -13,7 +13,7 @@ func main() {
     // 然后输出问候
     fmt.Println("老白")
     fmt.Println("吃了吗？")
-}</code></pre><p>另一种更常用的方式：</p><pre index="1"><code language="" run="NaN">package main
+}</code></pre><p>另一种更常用的方式：</p><pre height="0" database="{&quot;items&quot;:[{&quot;title&quot;:&quot;代码块&quot;,&quot;content&quot;:&quot;package main\nimport \&quot;fmt\&quot;\n\nfunc main() {\n    /*\n    * 输出名字\n    * 然后输出问候\n    */\n    fmt.Println(\&quot;老白\&quot;)\n    fmt.Println(\&quot;吃了吗？\&quot;)\n\n    /*\n    输出名字\n    然后输出问候\n    */\n    fmt.Println(\&quot;老白\&quot;)\n    fmt.Println(\&quot;吃了吗？\&quot;)\n}&quot;,&quot;language&quot;:&quot;go&quot;}],&quot;activatedIndex&quot;:0}"><code>package main
 import "fmt"
 
 func main() {

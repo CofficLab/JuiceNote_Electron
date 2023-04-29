@@ -27,6 +27,8 @@
     "linebreak",
     "Lowlight",
     "mavon",
+    "minh",
+    "minw",
     "moxiaobei",
     "phips",
     "postcss",
@@ -47,5 +49,6 @@
     "vuex",
     "webfont"
   ],
-  "files.autoSave": "onFocusChange"
+  "files.autoSave": "onFocusChange",
+  "vue.features.codeActions.enable": false
 }

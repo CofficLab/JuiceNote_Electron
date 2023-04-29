@@ -1,4 +1,4 @@
-<toc></toc><h1 id="heading-1">协程</h1><chat position="start"><p>协程就像一个工人，将一段代码运行起来</p></chat><h2 id="heading-2">main函数</h2><code-tab titles="输出,监视协程数量" current="1"><pre index="1"><code language="go" run="1">package main 
+<toc></toc><h1 id="heading-1">协程</h1><chat position="start"><p>协程就像一个工人，将一段代码运行起来</p></chat><h2 id="heading-2">main函数</h2><code-tab titles="输出,监视协程数量,监视内存用量,新标签" current="3"><pre index="1"><code language="go" run="1">package main 
 import "fmt"
 
 func main() {
@@ -10,7 +10,26 @@ import "runtime"
 func main() {
     fmt.Println("let's go")
     fmt.Printf("当前协程数量 %d", runtime.NumGoroutine())
-}</code></pre></code-tab><p>每个Go程序的main函数都是用协程启动的。</p><h2 id="heading-3">顺序执行</h2><pre index="1"><code language="go" run="1">package main
+}</code></pre><pre index="2"><code language="go" run="1">package main
+
+import (
+    "fmt"
+    "runtime"
+)
+
+func printMemoryUsage() {
+    var stats runtime.MemStats
+    runtime.ReadMemStats(&amp;stats)
+
+    fmt.Printf("%d KB \n",stats.Alloc/1024)
+}
+
+func main() {
+    printMemoryUsage()
+
+    fmt.Print("let's go")
+}
+</code></pre><pre index="3"><code language="go" run="NaN">新标签的内容</code></pre><pre index="3"><code language="go" run="NaN">新标签的内容</code></pre><pre index="3"><code language="go" run="NaN">新标签的内容</code></pre><pre index="3"><code language="go" run="NaN">新标签的内容</code></pre><pre index="3"><code language="go" run="NaN">新标签的内容</code></pre><pre index="3"><code language="go" run="NaN">新标签的内容</code></pre><pre index="4"><code language="go" run="NaN">新标签的内容</code></pre><pre index="4"><code language="go" run="NaN">新标签的内容</code></pre></code-tab><p>每个Go程序的main函数都是用协程启动的。</p><h2 id="heading-3">顺序执行</h2><pre index="1"><code language="go" run="1">package main
 import "fmt"
 
 func a() {
@@ -51,7 +70,7 @@ func main() {
         fmt.Print("b")
     }()
     fmt.Print("The End")
-}</code></pre></code-tab><p>这样会创建 3 个协程：</p><p>a b main</p><p>main函数的协程做的事情非常轻量：</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>让 a 函数做事，不等待结果</p></li><li class="m-0 p-0"><p>让 b 函数做事，不等待结果</p></li><li class="m-0 p-0"><p>输出：The End</p></li></ul><p>所以 a、b 的结果还没来得及告诉 main，main 已经结束并退出了。</p><h2 id="heading-5">等待</h2><p>我们可以让 main 慢一点，等一等 a、b 的执行结果：</p><code-tab titles="使用命名函数,使用匿名函数" current="0"><pre index="1"><code language="go" run="1">package main
+}</code></pre></code-tab><p>这样会创建 3 个协程：</p><p><brick class="brick">a</brick> <brick class="brick">b</brick> <brick class="brick">main</brick></p><p>main函数的协程做的事情非常轻量：</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>让 a 函数做事，不等待结果</p></li><li class="m-0 p-0"><p>让 b 函数做事，不等待结果</p></li><li class="m-0 p-0"><p>输出：The End</p></li></ul><p>所以 a、b 的结果还没来得及告诉 main，main 已经结束并退出了。</p><h2 id="heading-5">等待</h2><p>我们可以让 main 慢一点，等一等 a、b 的执行结果：</p><code-tab titles="使用命名函数,使用匿名函数" current="0"><pre index="1"><code language="go" run="1">package main
 import "fmt"
 import "time"
 
@@ -81,7 +100,7 @@ func main() {
     }()
     time.Sleep(time.Second * 1)
     fmt.Print("\nThe End")
-}</code></pre></code-tab><p>但是这样是没有什么实际的意义的，main 并不知道要等待多久，多了浪费时间，少了等不到。</p><p>WaitGroup可用来等待多个协程的执行结果：</p><code-tab titles="使用命名函数,使用匿名函数" current="0"><pre index="1"><code language="" run="1">package main
+}</code></pre></code-tab><p>但是这样是没有什么实际的意义的，main 并不知道要等待多久，多了浪费时间，少了等不到。</p><p>WaitGroup可用来等待多个协程的执行结果：</p><code-tab titles="使用命名函数,使用匿名函数" current="1"><pre index="1"><code language="" run="1">package main
 import "fmt"
 import "sync"
 

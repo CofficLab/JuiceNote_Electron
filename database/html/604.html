@@ -1,0 +1,47 @@
+<toc></toc><h1 id="heading-1">运行环境</h1><h2 id="heading-2">操作系统信息</h2><code-tab titles="主机名,获取工作目录" current="0"><pre index="1"><code language="" run="1">package main 
+import "fmt"
+import "os"
+
+func main() {
+    hostname,_ := os.Hostname()
+
+    fmt.Print(hostname)
+}</code></pre><pre index="2"><code language="" run="1">package main 
+import "fmt"
+import "os"
+
+func main() {
+    info,_ := os.Getwd()
+
+    fmt.Print(info)
+}</code></pre></code-tab><h2 id="heading-3">Golang 信息</h2><code-tab titles="版本,编译器,GOROOT" current="0"><pre index="1"><code language="" run="1">package main
+
+import (
+	"fmt"
+	"runtime"
+)
+
+func main() {
+	version := runtime.Version()
+	fmt.Print(version)
+}</code></pre><pre index="2"><code language="" run="1">package main
+
+import (
+	"fmt"
+	"runtime"
+)
+
+func main() {
+	compiler := runtime.Compiler
+	fmt.Print(compiler)
+}</code></pre><pre index="2"><code language="go" run="1">package main
+
+import (
+	"fmt"
+	"runtime"
+)
+
+func main() {
+	root := runtime.GOROOT()
+	fmt.Print(root)
+}</code></pre></code-tab>
