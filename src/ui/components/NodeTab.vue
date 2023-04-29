@@ -1,12 +1,12 @@
 <template>
   <div class="tabs-container" v-if="current.getParent().isTab">
-    <button class="btn-xs btn" :class="{ 'btn-active': shouldActive(sibling.id) }" v-for="sibling in current.getSiblings()">
+    <button class="tab" :class="{ 'tab-active': shouldActive(sibling.id) }" v-for="sibling in current.getSiblings()">
       <Link :node="sibling">{{ sibling.title }}</Link>
     </button>
   </div>
 
   <div class="tabs-container" v-if="current.isTab">
-    <Link v-for="child in current.getChildren()" class="tab-lifted tab" :node="child">{{ child.title }}</Link>
+    <Link v-for="child in current.getChildren()" class="tab tab-lifted" :node="child">{{ child.title }}</Link>
   </div>
 </template>
 
@@ -43,6 +43,6 @@ const shouldActive = function (id) {
 
 <style lang="postcss">
 .tabs-container {
-  @apply tabs tabs-boxed mx-auto mt-0 flex w-11/12 justify-center gap-4 bg-neutral text-neutral-content;
+  @apply tabs tabs-boxed mx-auto flex justify-center gap-4 bg-opacity-80 backdrop-blur backdrop-filter;
 }
 </style>
