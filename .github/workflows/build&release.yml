@@ -156,7 +156,7 @@ jobs:
         run: npm ci
 
       - name: 构建CSS文件
-        run: npx tailwindcss -i ./src/app.css -o kuaiyizhi.css -m
+        run: npx tailwindcss -i ./src/ui/app.css -o kuaiyizhi.css -m
 
       - name: 检查文件
         run: ls -alh
