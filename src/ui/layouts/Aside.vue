@@ -2,7 +2,7 @@
   <aside>
     <div id="side-menus">
       <!-- 空白，用于拖动 -->
-      <div class="sticky top-0 z-40 w-full bg-primary" v-if="!isWindows">
+      <div class="sticky top-0 z-40 w-full" v-if="!isWindows">
         <div class="draggable" :class="{ 'h-10': !hideTitleBar, 'h-0': hideTitleBar }"></div>
       </div>
 

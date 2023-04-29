@@ -4,13 +4,13 @@
   <!-- 因为electron配置了全透明窗口，这里最好配置一个底色 -->
   <div id="root" :data-theme="theme" class="absolute flex w-full flex-row bg-primary bg-white/95">
     <!-- header脱离文档流，固定定位 -->
-    <Header class="h-10s fixed top-0 z-40 w-full"></Header>
+    <Header class="fixed top-0 z-40 h-10 w-full bg-base-300"></Header>
 
     <!-- 左侧导航侧栏 -->
-    <Aside v-if="isLesson" class="z-50 bg-primary/20"></Aside>
+    <Aside v-if="isLesson" class="z-50 bg-base-200"></Aside>
 
     <!-- 右侧主内容，所有的滚动都基于main，必须有固定高度 -->
-    <main class="flex h-screen flex-grow flex-col justify-between overflow-scroll overscroll-none bg-primary/30">
+    <main class="flex h-screen flex-grow flex-col justify-between overflow-scroll overscroll-none bg-base-100">
       <router-view v-slot="{ Component }">
         <transition name="fade">
           <component :is="Component" />

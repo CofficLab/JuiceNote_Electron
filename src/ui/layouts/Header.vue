@@ -38,6 +38,6 @@ const isWindows = Preload.isWindows();
 
 <style lang="postcss" scoped>
 header {
-  @apply border-b border-base-300 bg-base-100 bg-opacity-60 shadow backdrop-blur-sm backdrop-filter;
+  @apply border-b border-base-300 shadow backdrop-blur-sm backdrop-filter;
 }
 </style>
