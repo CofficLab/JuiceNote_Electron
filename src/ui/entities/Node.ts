@@ -44,6 +44,7 @@ class Node {
             this.isDatabase = Object.getOwnPropertyDescriptor(dbResult, 'isDatabase')?.value
             this.isShop = Object.getOwnPropertyDescriptor(dbResult, 'isShop')?.value
             this.isHome = Object.getOwnPropertyDescriptor(dbResult, 'isHome')?.value
+            this.isLesson = Object.getOwnPropertyDescriptor(dbResult, 'isLesson')?.value
             this.isBook = isBook
             this.isChapter = isChapter
             this.isTab = isTab
@@ -301,7 +302,7 @@ const DatabaseNode = new Node(
         isChapter: false,
         isTab: false,
         isPage: false,
-        isLesson: true,
+        isLesson: false,
         isManual: false,
         isVisible: true,
         priority: 0,
@@ -323,7 +324,7 @@ const ShopNode = new Node(
         isShop: true,
         isTab: false,
         isPage: false,
-        isLesson: true,
+        isLesson: false,
         isManual: false,
         isVisible: true,
         priority: 0,
@@ -345,7 +346,7 @@ const HomeNode = new Node(
         isHome: true,
         isTab: false,
         isPage: false,
-        isLesson: true,
+        isLesson: false,
         isManual: false,
         isVisible: true,
         priority: 0,

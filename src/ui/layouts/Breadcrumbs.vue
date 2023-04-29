@@ -18,7 +18,7 @@
             <span v-if="editable">[{{ breadcrumb.id }}]</span>
           </label>
 
-          <div class="dropdown-content mt-0 pt-4" v-if="!breadcrumb.isDatabase">
+          <div class="dropdown-content mt-0 pt-4" v-if="breadcrumb.isLesson">
             <ul tabindex="0" class="siblings-list">
               <Children :list="breadcrumb.getSiblings()"></Children>
             </ul>
