@@ -10,22 +10,40 @@
     v-if="visible"
   >
     <Transition name="bounce">
-      <div class="themes-list">
-        <div class="flex w-full rounded-none">
-          <input type="hidden" placeholder="输入关键词" autofocus class="input-primary input w-full" />
-        </div>
+      <div class="max-w-96 dropdown-content rounded-box h-1/2 overflow-y-auto bg-primary/30 p-4 text-base-content shadow-2xl backdrop-blur-sm backdrop-filter">
         <div class="grid grid-cols-1 gap-3 p-3" tabindex="0">
-          <button class="theme-btn" :class="{ 'ring-4': current == index }" @click="setTheme(index)" v-for="(theme, index) in themes">
-            <div :data-theme="theme" class="w-full cursor-pointer bg-base-100 font-sans text-base-content">
+          <button
+            :data-theme="theme"
+            class="overflow-hidden rounded-lg text-left outline-base-content"
+            :class="{ 'ring-4': current == index }"
+            @click="setTheme(index)"
+            v-for="(theme, index) in themes"
+          >
+            <div class="flex cursor-pointer flex-row items-center justify-center gap-4 border-b border-base-200 bg-base-100 py-2 font-sans text-base-content">
+              <IconRight v-if="current == index"></IconRight>
+              <div class="font-bold">{{ theme }}</div>
+            </div>
+            <div :data-theme="t" class="w-full cursor-pointer bg-base-100 font-sans" v-for="t in [theme, theme + '-dark']">
               <div class="grid grid-cols-5 grid-rows-3">
                 <div class="col-span-5 row-span-3 row-start-1 flex items-center gap-2 px-4 py-3">
-                  <IconRight v-if="current == index"></IconRight>
-                  <div class="flex-grow text-sm font-bold">{{ theme }}</div>
-                  <div class="flex h-full flex-shrink-0 flex-wrap gap-1">
-                    <div class="w-2 rounded bg-primary"></div>
-                    <div class="w-2 rounded bg-secondary"></div>
-                    <div class="w-2 rounded bg-accent"></div>
-                    <div class="w-2 rounded bg-neutral"></div>
+                  <div class="flex flex-grow flex-row gap-2 text-sm font-bold text-base-content">
+                    <div class="bg-base-100 p-2">快易知</div>
+                    <div class="bg-base-200 p-2">简于形</div>
+                    <div class="bg-base-300 p-2">强于心</div>
+                  </div>
+                  <div class="flex h-full flex-shrink-0 flex-wrap gap-2">
+                    <div class="flex aspect-square w-5 items-center justify-center rounded bg-primary lg:w-6">
+                      <div class="text-sm font-bold text-primary-content">A</div>
+                    </div>
+                    <div class="flex aspect-square w-5 items-center justify-center rounded bg-secondary lg:w-6">
+                      <div class="text-sm font-bold text-secondary-content">A</div>
+                    </div>
+                    <div class="flex aspect-square w-5 items-center justify-center rounded bg-accent lg:w-6">
+                      <div class="text-sm font-bold text-accent-content">A</div>
+                    </div>
+                    <div class="flex aspect-square w-5 items-center justify-center rounded bg-neutral lg:w-6">
+                      <div class="text-sm font-bold text-neutral-content">A</div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -108,12 +126,5 @@ Preload.listen("toggle-theme-setting", toggleVisible);
 
 ul li {
   @apply border border-base-content/20 outline-2 outline-offset-2 outline-base-content hover:border-base-content/40;
-}
-.themes-list {
-  @apply dropdown-content rounded-t-box rounded-b-box top-px mt-16 h-[70vh] max-h-96 w-52 overflow-y-auto bg-primary bg-opacity-30 text-base-content shadow-2xl backdrop-blur-sm backdrop-filter;
-}
-
-.theme-btn {
-  @apply overflow-hidden rounded-lg text-left outline-base-content;
 }
 </style>

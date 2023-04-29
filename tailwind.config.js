@@ -9,6 +9,16 @@ module.exports = {
     // logs: false,
     themes: [
       {
+        default: {
+          ...require("daisyui/src/colors/themes")["[data-theme=light]"],
+        },
+      },
+      {
+        "default-dark": {
+          ...require("daisyui/src/colors/themes")["[data-theme=dark]"],
+        },
+      },
+      {
         cloud: {
           primary: "#bae6fd",
           secondary: "#e0f2fe",
@@ -29,6 +39,10 @@ module.exports = {
           "primary-focus": "mediumblue",
         },
       },
+      "cupcake",
+      "bumblebee",
+      "lemonade",
+      "winter",
       {
         mountain: {
           primary: "#d1fae5",

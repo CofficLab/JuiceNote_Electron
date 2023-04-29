@@ -2,15 +2,15 @@
   <!-- 在root层配置底色 -->
   <!-- 如果不配置底色，daisyui会自动配置为bg-primary -->
   <!-- 因为electron配置了全透明窗口，这里最好配置一个底色 -->
-  <div id="root" :data-theme="theme" class="absolute flex w-full flex-row bg-primary bg-opacity-100">
+  <div id="root" :data-theme="theme" class="absolute flex w-full flex-row bg-primary bg-white/95">
     <!-- header脱离文档流，固定定位 -->
     <Header class="h-10s fixed top-0 z-40 w-full"></Header>
 
     <!-- 左侧导航侧栏 -->
-    <Aside v-if="isLesson" class="z-50"></Aside>
+    <Aside v-if="isLesson" class="z-50 bg-primary/20"></Aside>
 
     <!-- 右侧主内容，所有的滚动都基于main，必须有固定高度 -->
-    <main class="flex h-screen flex-grow flex-col justify-between overflow-scroll overscroll-none bg-primary">
+    <main class="flex h-screen flex-grow flex-col justify-between overflow-scroll overscroll-none bg-primary/30">
       <router-view v-slot="{ Component }">
         <transition name="fade">
           <component :is="Component" />

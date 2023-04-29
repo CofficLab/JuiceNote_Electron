@@ -65,7 +65,7 @@ watch(
 
 <style lang="postcss" scope>
 aside {
-  @apply hidden h-screen w-40 border-r border-base-300 bg-primary bg-opacity-90 shadow-xl backdrop-blur-sm backdrop-filter lg:flex lg:flex-col;
+  @apply hidden h-screen w-40 border-r border-base-300 shadow-xl backdrop-blur-sm backdrop-filter lg:flex lg:flex-col;
 
   #side-menus {
     @apply flex h-screen flex-col justify-between overflow-scroll overscroll-none scroll-smooth;

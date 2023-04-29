@@ -10,6 +10,10 @@ const URL = process.env.VITE_DEV_SERVER_URL as string
 const INDEX_HTML_PATH = path.join(DIST_PATH, 'src/ui/index.html')
 const DATABASE_PATH = path.join(ROOT_PATH, 'database')
 const THEMEMS = tailwindConfig.daisyui.themes.map((theme: any) => {
+    if (typeof theme == 'string') {
+        return theme
+    }
+
     for (const key in theme) {
         return key
     }

@@ -210,9 +210,9 @@ class Node {
     }
 }
 
-const ShopNode = new Node({ title: '商店', isShop: true })
-const HomeNode = new Node({ title: '首页', isHome: true })
-const DatabaseNode = new Node({ title: '知识库', isDatabase: true })
+const ShopNode = new Node({ title: '商店', isShop: true, isLesson: false })
+const HomeNode = new Node({ title: '首页', isHome: true, isLesson: false })
+const DatabaseNode = new Node({ title: '知识库', isDatabase: true, isLesson: false })
 
 export {
     Node,
