@@ -1,5 +1,5 @@
 <template>
-  <footer :class="{ 'lg:pl-40': isLesson }">
+  <footer>
     <div class="z-50 flex w-full flex-row items-center gap-12 bg-info bg-opacity-30 px-4 shadow backdrop-blur-lg backdrop-filter">
       <Breadcrumbs :current="current"></Breadcrumbs>
     </div>
@@ -14,11 +14,10 @@ import RouteBox from "../entities/RouteBox";
 
 const route = useRoute();
 const current = computed(() => RouteBox.getCurrentNode(route));
-const isLesson = computed(() => RouteBox.isLesson(route));
 </script>
 
 <style lang="postcss" scope>
 footer {
-  @apply fixed bottom-0 z-30 flex h-6 w-full text-info-content;
+  @apply flex w-full text-info-content;
 }
 </style>

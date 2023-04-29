@@ -1,5 +1,4 @@
 <template>
-  <!-- 重命名的弹层 -->
   <div class="modal modal-open" v-show="visible">
     <Transition name="bounce" v-if="visible">
       <div class="modal-box">

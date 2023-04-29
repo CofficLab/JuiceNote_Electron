@@ -2,18 +2,22 @@
   <!-- 在root层配置底色 -->
   <!-- 如果不配置底色，daisyui会自动配置为bg-primary -->
   <!-- 因为electron配置了全透明窗口，这里最好配置一个底色 -->
-  <div id="root" :data-theme="theme" class="absolute w-full bg-primary bg-opacity-30">
-    <LessonAside v-if="isLesson"></LessonAside>
-    <Header class="ml-40"></Header>
+  <root :data-theme="theme" class="absolute flex w-full flex-row bg-primary bg-opacity-80">
+    <!-- header脱离文档流，固定定位 -->
+    <Header class="h-10s fixed top-0 z-40 w-full"></Header>
 
-    <!-- 所有的滚动都基于main -->
-    <!-- 必须有固定高度 -->
-    <main class="ml-40 h-screen overflow-scroll overscroll-none bg-primary">
+    <!-- 左侧导航侧栏 -->
+    <Aside v-if="isLesson" class="z-50"></Aside>
+
+    <!-- 右侧主内容，所有的滚动都基于main，必须有固定高度 -->
+    <main class="flex h-screen flex-grow flex-col justify-between overflow-scroll overscroll-none bg-primary">
       <router-view v-slot="{ Component }">
         <transition name="fade">
           <component :is="Component" />
         </transition>
       </router-view>
+
+      <Footer class="sticky bottom-0 z-30 h-10"></Footer>
     </main>
 
     <!-- 弹层 -->
@@ -23,9 +27,7 @@
     <FormAdd></FormAdd>
     <FormRename></FormRename>
     <Terminal></Terminal>
-
-    <Footer></Footer>
-  </div>
+  </root>
 </template>
 
 <script setup>
@@ -39,7 +41,7 @@ import FormAdd from "../modals/FormAdd.vue";
 import FormRename from "../modals/FormRename.vue";
 import RightMenuModal from "../modals/RightMenuModal.vue";
 import Terminal from "../modals/Terminal.vue";
-import LessonAside from "./LessonAside.vue";
+import Aside from "./Aside.vue";
 import RouteBox from "../entities/RouteBox";
 import { useRoute } from "vue-router";
 

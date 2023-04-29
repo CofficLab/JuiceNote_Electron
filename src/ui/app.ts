@@ -65,4 +65,4 @@ router.beforeEach(function (to, from) {
 const app = createApp(App)
 app.config.unwrapInjectedRef = true
 app.use(router)
-app.mount('#app')
+app.mount('body')
