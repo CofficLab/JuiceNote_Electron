@@ -6,7 +6,7 @@ import electron, { onstart } from 'vite-plugin-electron'
 import pkg from './package.json'
 import svgLoader from 'vite-svg-loader'
 
-rmSync('release', { recursive: true, force: true })
+// rmSync('release', { recursive: true, force: true })
 rmSync('dist', { recursive: true, force: true })
 
 export default defineConfig({
