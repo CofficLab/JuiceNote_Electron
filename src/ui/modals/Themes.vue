@@ -2,14 +2,20 @@
   <div
     ref="target"
     class="modal modal-open"
+    tabindex="0"
     @keyup.enter="toggleVisible"
     @keydown.esc="toggleVisible"
-    @keydown.arrow-up="activate(current - 1)"
-    @keydown.arrow-down="activate(current + 1)"
+    @click="handleClickModal"
+    @keydown.arrow-up="handelArrowUp"
+    @keydown.arrow-down="handelArrowDown"
     v-if="visible"
   >
     <Transition name="bounce">
-      <ul tabindex="0" class="max-w-96 rounded-box flex h-2/3 cursor-pointer flex-col gap-4 overflow-y-scroll bg-primary/30 p-8 shadow-2xl backdrop-blur-sm backdrop-filter">
+      <ul
+        id="theme-list"
+        tabindex="0"
+        class="max-w-96 rounded-box flex h-2/3 cursor-pointer flex-col gap-4 overflow-y-scroll bg-primary/30 p-8 shadow-2xl backdrop-blur-sm backdrop-filter focus:outline-none"
+      >
         <li :data-theme="theme" class="outline-base-content" :class="{ 'ring-4': current == index }" @click="setTheme(index)" v-for="(theme, index) in themes">
           <div class="flex flex-row items-center justify-center gap-4 border-b border-base-200 bg-base-100 py-2 font-sans text-base-content">
             <IconRight v-if="current == index"></IconRight>
@@ -60,7 +66,6 @@ const setTheme = (index) => {
   current.value = index;
   dispatchEvent(new CustomEvent("set-theme", { detail: themeName.value }));
 
-  console.log("滚动到中间");
   document.querySelector(`[data-theme=${themes[index]}]`)?.scrollIntoView({
     behavior: "smooth",
     block: "center",
@@ -68,15 +73,28 @@ const setTheme = (index) => {
 };
 
 const toggleVisible = () => {
-  console.log("切换主题配置的可见性");
   visible.value = !visible.value;
   nextTick(() => target.value?.focus());
 };
 
 const activate = (index: number) => {
   current.value = Math.min(themes.length - 1, Math.max(0, index));
-  console.log("当前激活的索引是", current.value);
   setTheme(current.value);
+};
+
+const handelArrowUp = (e) => {
+  e.preventDefault();
+  activate(current.value - 1);
+};
+
+const handelArrowDown = (e) => {
+  e.preventDefault();
+  activate(current.value + 1);
+};
+
+const handleClickModal = (e) => {
+  e.preventDefault();
+  document.querySelector<HTMLDivElement>("#theme-list")!.focus();
 };
 
 Preload.listen("toggle-theme-setting", toggleVisible);
