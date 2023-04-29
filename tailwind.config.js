@@ -28,10 +28,6 @@ module.exports = {
           ...require("daisyui/src/colors/themes")["[data-theme=dark]"],
         },
       },
-      "cupcake",
-      "bumblebee",
-      "lemonade",
-      "winter",
       {
         mountain: {
           primary: "#d1fae5",
