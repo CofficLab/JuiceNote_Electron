@@ -24,12 +24,12 @@ const props = defineProps({
   saveCallback: null,
 });
 
-let code = ref(props.node.getContent());
+let code = ref(props.node.content);
 
 let getEditor = () =>
   new Editor({
     extensions: Extensions,
-    content: props.node.getContent(),
+    content: props.node.content,
     autofocus: props.editable ? 1 : true,
     injectCSS: true,
     enableInputRules: true,

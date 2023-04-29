@@ -44,7 +44,7 @@ class Node {
     public content: string = ''
 
     constructor(public options: NodeOptions) {
-        if (options.title) Object.assign(this, options)
+        Object.assign(this, options)
     }
 
     // 创建子页面，返回新创建的ID
@@ -65,12 +65,6 @@ class Node {
 
     getFirstTabInParents(): Node | undefined {
         return this.getParents().find((parent) => parent.getParent()?.isBook)
-    }
-
-    getContent(): string {
-        let content = Ipc.sendSync('getContent', this.id)
-
-        return content == '' ? '{空}' : content
     }
 
     getTabs(): Node[] {
@@ -132,55 +126,9 @@ class Node {
     }
 
     getFirstPage(): Node {
-        // console.log('get first page,current is', this)
-        if (this.isPage || this.isEmpty) return this
+        if (this.isPage) return this
 
         return this.getFirstChild().getFirstPage()
-    }
-
-    getLastPage(): Node {
-        // console.log('get last page,current is', this)
-        if (this.isPage || this.isEmpty) return this
-
-        return this.getLastChild().getLastPage()
-    }
-
-    getPrevious(): Node {
-        // 如果当前节点是父节点的第一个节点，返回父节点的上一个节点
-        if (this.id == this.getParent().getFirstChild().id) {
-            return this.getParent().getPrevious()
-        }
-
-        let next = db.prepare(`
-            select * from nodes 
-            where parent_id=? and id!=? and priority<=?
-            order by priority desc limit 1
-        `).get(this.parentId, this.id, this.priority)
-
-        return new Node(next)
-    }
-
-    getPreviousPage(): Node {
-        return this.getPrevious().getLastPage()
-    }
-
-    getNext(): Node {
-        // 如果当前节点是父节点的最后一个节点，返回父节点的下一个节点
-        if (this.id == this.getParent().getLastChild().id) {
-            return this.getParent().getNext()
-        }
-
-        let next = db.prepare(`
-            select * from nodes 
-            where parent_id=? and id!=? and priority>=?
-            order by priority asc limit 1
-        `).get(this.parentId, this.id, this.priority)
-
-        return new Node(next)
-    }
-
-    getNextPage(): Node {
-        return this.getNext().getFirstPage()
     }
 
     setChildrenPriority(children: Node[]) {
@@ -237,44 +185,34 @@ class Node {
         return Ipc.sendSync('delete', this.id)
     }
 
-    transformToTab(): string {
-        this.createChildPage(this.title + '子标签', this.content)
-        db.prepare('update nodes set is_chapter=1,is_tab=1,is_page=0 where id=?').run(this.id)
-        return '已转换成标签'
-    }
-
     static find(id: number | String): Node {
-        let node = Ipc.sendSync('find', id)
-
-        return new Node(node)
+        return new Node(Ipc.sendSync('find', id))
     }
 
     static getBooks(): Node[] {
         let items = Ipc.sendSync('getBooks')
 
-        return items.map((item: object) => {
+        return items.map((item: NodeOptions) => {
             return new Node(item)
         });
     }
 
     static getVisibleBooks(): Node[] {
-        return Node.getBooks().map((item: object) => {
+        return Node.getBooks().map((item: NodeOptions) => {
             return new Node(item)
         }).filter(node => node.isVisible);
     }
 
     static search(keyword: string): Node[] {
-        let nodes = Ipc.sendSync('search', keyword)
-        return nodes.map((node: object) => {
+        return Ipc.sendSync('search', keyword).map((node: NodeOptions) => {
             return new Node(node)
         })
     }
-
 }
 
-const DatabaseNode = new Node({ title: '知识库', isDatabase: true })
 const ShopNode = new Node({ title: '商店', isShop: true })
 const HomeNode = new Node({ title: '首页', isHome: true })
+const DatabaseNode = new Node({ title: '知识库', isDatabase: true })
 
 export {
     Node,
