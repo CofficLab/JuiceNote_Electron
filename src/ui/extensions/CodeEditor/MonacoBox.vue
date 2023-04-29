@@ -157,7 +157,7 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-  console.log("monaco component unmounted");
+  // console.log("monaco component unmounted");
 });
 
 watch(
