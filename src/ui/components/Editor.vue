@@ -63,7 +63,7 @@ watch(props, () => {
 });
 
 onBeforeUnmount(() => {
-  console.log("销毁TipTap Editor");
+  // console.log("销毁TipTap Editor");
   editor.destroy();
 });
 </script>
