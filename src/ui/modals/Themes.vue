@@ -1,7 +1,6 @@
 <template>
   <div
     ref="target"
-    tabindex="0"
     class="modal modal-open"
     @keyup.enter="toggleVisible"
     @keydown.esc="toggleVisible"
@@ -10,8 +9,8 @@
     v-if="visible"
   >
     <Transition name="bounce">
-      <div class="max-w-96 rounded-box flex h-2/3 cursor-pointer flex-col gap-4 overflow-y-scroll bg-primary/30 p-8 shadow-2xl backdrop-blur-sm backdrop-filter">
-        <div :data-theme="theme" class="outline-base-content" :class="{ 'ring-4': current == index }" @click="setTheme(index)" v-for="(theme, index) in themes">
+      <ul tabindex="0" class="max-w-96 rounded-box flex h-2/3 cursor-pointer flex-col gap-4 overflow-y-scroll bg-primary/30 p-8 shadow-2xl backdrop-blur-sm backdrop-filter">
+        <li :data-theme="theme" class="outline-base-content" :class="{ 'ring-4': current == index }" @click="setTheme(index)" v-for="(theme, index) in themes">
           <div class="flex flex-row items-center justify-center gap-4 border-b border-base-200 bg-base-100 py-2 font-sans text-base-content">
             <IconRight v-if="current == index"></IconRight>
             <div class="font-bold">{{ theme }}</div>
@@ -39,8 +38,8 @@
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        </li>
+      </ul>
     </Transition>
   </div>
 </template>
@@ -62,10 +61,10 @@ const setTheme = (index) => {
   dispatchEvent(new CustomEvent("set-theme", { detail: themeName.value }));
 
   console.log("滚动到中间");
-  // document.querySelector(`[data-theme=${themes[index]}]`)?.scrollIntoView({
-  //   behavior: "smooth",
-  //   block: "center",
-  // });
+  document.querySelector(`[data-theme=${themes[index]}]`)?.scrollIntoView({
+    behavior: "smooth",
+    block: "center",
+  });
 };
 
 const toggleVisible = () => {
