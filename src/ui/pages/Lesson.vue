@@ -1,6 +1,6 @@
 <template>
   <div class="pt-8">
-    <div class="fixed top-9 z-50 flex w-full flex-grow">
+    <div class="sticky top-12 z-50 flex w-full flex-grow">
       <NodeTab :current="node"></NodeTab>
     </div>
 

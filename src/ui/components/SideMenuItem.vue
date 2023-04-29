@@ -7,11 +7,12 @@
       @click="goto(item)"
       :class="{
         'bg-primary text-primary-content': shouldActive(item),
-        'font-bold text-opacity-50': item.isChapter,
+        'font-bold text-opacity-50': item.isChapter && !item.isTab,
       }"
     >
       <DynamicPadding :count="item.getParents().length - (item.isChapter ? 4 : 3)"></DynamicPadding>
-      <IconPage v-if="item.isPage" class="h-4 w-4"></IconPage>
+      <IconPage v-if="item.isPage || item.isTab" class="h-4 w-4"></IconPage>
+      <IconChapter v-if="item.isChapter && !item.isTab" class="h-4 w-4"></IconChapter>
       {{ item.title }}
     </li>
 
@@ -26,6 +27,7 @@ import DynamicPadding from "./DynamicPadding.vue";
 import { Node } from "../entities/Node";
 import RouteBox from "../entities/RouteBox";
 import IconPage from "../icons/IconPage.vue";
+import IconChapter from "../icons/IconChapter.vue";
 
 const route = useRoute();
 const router = useRouter();

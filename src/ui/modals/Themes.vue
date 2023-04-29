@@ -51,11 +51,12 @@
 </template>
 
 <script lang="ts" setup>
+import Preload from "../entities/Preload";
+import Themes from "../entities/Themes";
 import IconRight from "../icons/IconCorrect.vue";
 import { ref, nextTick } from "vue";
-import Preload from "../entities/Preload";
 
-const themes = Preload.getThemes();
+const themes = Themes;
 const themeName = ref(themes[0]);
 const visible = ref(false);
 const current = ref(0);

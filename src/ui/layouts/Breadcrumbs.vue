@@ -59,6 +59,6 @@ watch(route, function () {
 
 <style lang="postcss" scoped>
 .siblings-list {
-  @apply rounded-box min-h-16 max-h-96 w-40 gap-2 overflow-y-scroll bg-primary bg-opacity-90 px-6 py-6 shadow-2xl backdrop-blur-sm backdrop-filter;
+  @apply rounded-box min-h-16 max-h-96 w-56 gap-2 overflow-y-scroll bg-base-300/90 px-6 py-6 shadow-2xl backdrop-blur backdrop-filter;
 }
 </style>

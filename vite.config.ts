@@ -6,13 +6,19 @@ import electron, { onstart } from 'vite-plugin-electron'
 import pkg from './package.json'
 import svgLoader from 'vite-svg-loader'
 
-rmSync('dist', { recursive: true, force: true }) // v14.14.0
+rmSync('release', { recursive: true, force: true })
+rmSync('dist', { recursive: true, force: true })
 
 export default defineConfig({
+  build: {
+    outDir: 'dist/ui',
+  },
   plugins: [
     vue(),
     svgLoader(),
     electron({
+      // 这个插件负责打包main和preload
+      // ui部分的代码由vite负责打包
       main: {
         entry: 'src/main/index.ts',
         vite: {
