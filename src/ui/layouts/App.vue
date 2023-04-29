@@ -4,7 +4,7 @@
   <!-- 因为electron配置了全透明窗口，这里最好配置一个底色 -->
   <div id="root" :data-theme="theme" class="absolute flex w-full flex-row bg-primary bg-white/90">
     <!-- header脱离文档流，固定定位 -->
-    <Header class="fixed top-0 z-40 h-10 w-full bg-base-300"></Header>
+    <Header class="fixed top-0 z-50 h-10 w-full bg-base-300"></Header>
 
     <!-- 左侧导航侧栏 -->
     <Aside v-if="isLesson" class="z-50 bg-base-200/90"></Aside>
