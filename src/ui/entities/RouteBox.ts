@@ -1,5 +1,5 @@
 import { RouteLocationNormalizedLoaded, Router, RouterLink, useRoute, useRouter } from "vue-router";
-import Node from "./Node";
+import { DatabaseNode, HomeNode, Node, ShopNode } from "./Node";
 
 class RouteBox {
     public route: RouteLocationNormalizedLoaded
@@ -14,6 +14,10 @@ class RouteBox {
 
     static isLesson(route: RouteLocationNormalizedLoaded) {
         return route.name == 'lessons.show' || route.name == 'lessons.edit'
+    }
+
+    static isShop(route: RouteLocationNormalizedLoaded) {
+        return route.name == 'shop'
     }
 
     static isEditable(route: RouteLocationNormalizedLoaded) {
@@ -75,8 +79,27 @@ class RouteBox {
     }
 
     static getBreadcrumbs(route: RouteLocationNormalizedLoaded) {
+        let isLesson = RouteBox.isLesson(route)
+        let isHome = RouteBox.isHome(route)
+        let isShop = RouteBox.isShop(route)
+        let prefix: Node[] = [];
+
+        if (isLesson) {
+            prefix.push(DatabaseNode)
+        }
+
+        if (isHome) {
+            prefix.push(HomeNode)
+        }
+
+        if (isShop) {
+            prefix.push(ShopNode)
+        }
+
         let current = RouteBox.getCurrentNode(route)
-        return current?.getParents().concat([current!])
+        let items = current?.getParents().concat([current!])
+
+        return prefix.concat(items ?? [])
     }
 
     static goto(router: Router, node: Node) {

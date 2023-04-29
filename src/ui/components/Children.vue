@@ -9,7 +9,7 @@
 <script lang="ts" setup>
 import draggable from "vuedraggable/src/vuedraggable";
 import Link from "./Link.vue";
-import Node from "../entities/Node";
+import { Node } from "../entities/Node";
 
 const props = defineProps({
   list: { type: Array<Node>, required: true },

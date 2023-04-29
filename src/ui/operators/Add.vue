@@ -7,7 +7,7 @@
 
 <script setup>
 import Plus from "../assets/icons/plus.svg";
-import Node from "../entities/Node";
+import { Node } from "../entities/Node";
 
 let props = defineProps({
   showText: {
@@ -27,6 +27,6 @@ let props = defineProps({
 });
 
 let add = function () {
-  dispatchEvent(new CustomEvent('show-add-form',{detail:{node:props.node}}))
+  dispatchEvent(new CustomEvent("show-add-form", { detail: { node: props.node } }));
 };
 </script>

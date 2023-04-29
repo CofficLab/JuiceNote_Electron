@@ -1,7 +1,7 @@
 <template>
   <div @click="toggleVisible">
-      <HideIcon v-if="showIcon"></HideIcon>
-      <span v-if="showText">隐藏或显示</span>
+    <HideIcon v-if="showIcon"></HideIcon>
+    <span v-if="showText">隐藏或显示</span>
   </div>
 </template>
 
@@ -10,7 +10,7 @@ import { computed } from "vue";
 import ToastController from "../entities/Toast";
 import HideIcon from "../assets/icons/no-symbol.svg";
 import { useRoute, useRouter } from "vue-router";
-import Node from "../entities/Node";
+import { Node } from "../entities/Node";
 
 const props = defineProps({
   showText: {

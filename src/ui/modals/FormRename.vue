@@ -28,7 +28,7 @@
 <script lang="ts" setup>
 import Toast from "../entities/Toast";
 import { onMounted, ref, onBeforeUnmount, nextTick } from "vue";
-import Node from "../entities/Node";
+import { Node } from "../entities/Node";
 
 let visible = ref(false);
 let title = "";

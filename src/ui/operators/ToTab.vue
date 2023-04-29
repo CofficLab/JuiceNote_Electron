@@ -9,7 +9,7 @@
 import { defineComponent } from "vue";
 import ArrowLeftCircle from "../assets/icons/arrow-left-circle.svg";
 import ToastController from "../entities/Toast";
-import Node from "../entities/Node";
+import { Node } from "../entities/Node";
 
 export default defineComponent({
   props: {

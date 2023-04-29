@@ -18,7 +18,7 @@
 import { computed } from "vue";
 import { useRoute } from "vue-router";
 import Book from "../components/Book.vue";
-import Node from "../entities/Node";
+import { Node } from "../entities/Node";
 
 const route = useRoute();
 let booksVisible = computed(() => {

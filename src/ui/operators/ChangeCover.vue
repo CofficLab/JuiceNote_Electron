@@ -7,8 +7,7 @@
 
 <script lang="ts" setup>
 import PhotoIcon from "../assets/icons/photo.svg";
-import Node from "../entities/Node";
-
+import { Node } from "../entities/Node";
 
 const props = defineProps({
   showText: {

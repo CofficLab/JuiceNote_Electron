@@ -5,10 +5,10 @@
       v-if="!item.isBook"
       v-on:contextmenu="showRightMenu"
       @click="goto(item)"
-      :class="{ 'text-primary-content bg-accent': shouldActive(item), 'font-bold text-opacity-50': item.isChapter }"
+      :class="{ 'bg-accent text-primary-content': shouldActive(item), 'font-bold text-opacity-50': item.isChapter }"
     >
       <DynamicPadding :count="item.getParents().length - (item.isChapter ? 4 : 3)"></DynamicPadding>
-      <IconPage v-if="item.isPage" class="w-4 h-4 text-accent" :class="{ 'text-accent-focus': shouldActive(item) }"></IconPage>
+      <IconPage v-if="item.isPage" class="h-4 w-4 text-accent" :class="{ 'text-accent-focus': shouldActive(item) }"></IconPage>
       {{ item.title }}
     </li>
 
@@ -20,7 +20,7 @@
 import { computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import DynamicPadding from "./DynamicPadding.vue";
-import Node from "../entities/Node";
+import { Node } from "../entities/Node";
 import RouteBox from "../entities/RouteBox";
 import IconPage from "../icons/page.vue";
 
@@ -55,7 +55,7 @@ const showRightMenu = function (e) {
 ul {
   @apply flex flex-col px-1 text-xs;
   li {
-    @apply hover:bg-primary-focus/20 my-0 flex cursor-pointer items-center justify-start gap-2 rounded px-4 py-2;
+    @apply my-0 flex cursor-pointer items-center justify-start gap-2 rounded px-4 py-2 hover:bg-primary-focus/20;
   }
 }
 </style>

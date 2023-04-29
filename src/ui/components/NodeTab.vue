@@ -6,7 +6,7 @@
   </div>
 
   <div class="tabs-container" v-if="current.isTab">
-    <Link v-for="child in current.getChildren()" class="tab tab-lifted" :node="child">{{ child.title }}</Link>
+    <Link v-for="child in current.getChildren()" class="tab-lifted tab" :node="child">{{ child.title }}</Link>
   </div>
 </template>
 
@@ -14,7 +14,7 @@
 import { computed } from "vue";
 import { useRoute } from "vue-router";
 import Link from "../components/Link.vue";
-import Node from "../entities/Node";
+import { Node } from "../entities/Node";
 const props = defineProps({
   current: null,
 });

@@ -8,7 +8,7 @@
 import { computed, ref } from "vue";
 
 import { useRoute, useRouter } from "vue-router";
-import Node from "../entities/Node";
+import { Node } from "../entities/Node";
 
 const route = useRoute();
 const props = defineProps({

@@ -16,7 +16,7 @@ import Extensions from "../entities/Extensions";
 import { ref, watch, onBeforeUnmount } from "vue";
 import Toolbar from "../layouts/Toolbar.vue";
 import { Editor, EditorContent } from "@tiptap/vue-3";
-import Node from "../entities/Node";
+import { Node } from "../entities/Node";
 
 const props = defineProps({
   node: Node,

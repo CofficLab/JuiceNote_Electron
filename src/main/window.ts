@@ -30,7 +30,7 @@ function createWindow(option?: BrowserWindowConstructorOptions): BrowserWindow {
         win.loadFile(Config.INDEX_HTML_PATH)
     } else {
         win.loadURL(Config.URL)
-        // win.webContents.openDevTools()
+        win.webContents.openDevTools()
     }
 
     // Test actively push message to the Electron-Renderer

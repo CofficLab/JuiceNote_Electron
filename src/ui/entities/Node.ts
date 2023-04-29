@@ -5,6 +5,9 @@ const Ipc = Preload.ipc
 class Node {
     public id: number = 0
     public title: string = ''
+    public isDatabase: boolean = false
+    public isShop: boolean = false
+    public isHome: boolean = false
     public isBook: boolean = false
     public isChapter: boolean = false
     public isTab: boolean = false
@@ -38,6 +41,9 @@ class Node {
             this.id = id ?? 0
             this.title = title ?? '无效节点'
             this.content = content ?? '[空]'
+            this.isDatabase = Object.getOwnPropertyDescriptor(dbResult, 'isDatabase')?.value
+            this.isShop = Object.getOwnPropertyDescriptor(dbResult, 'isShop')?.value
+            this.isHome = Object.getOwnPropertyDescriptor(dbResult, 'isHome')?.value
             this.isBook = isBook
             this.isChapter = isChapter
             this.isTab = isTab
@@ -286,4 +292,74 @@ class Node {
 
 }
 
-export default Node;
+const DatabaseNode = new Node(
+    {
+        id: 0,
+        title: '知识库',
+        isBook: false,
+        isDatabase: true,
+        isChapter: false,
+        isTab: false,
+        isPage: false,
+        isLesson: true,
+        isManual: false,
+        isVisible: true,
+        priority: 0,
+        parentId: 0,
+        level: 0,
+        isEmpty: false,
+        cover: '',
+        content: '',
+    }
+)
+
+const ShopNode = new Node(
+    {
+        id: 0,
+        title: '商店',
+        isBook: false,
+        isDatabase: false,
+        isChapter: false,
+        isShop: true,
+        isTab: false,
+        isPage: false,
+        isLesson: true,
+        isManual: false,
+        isVisible: true,
+        priority: 0,
+        parentId: 0,
+        level: 0,
+        isEmpty: false,
+        cover: '',
+        content: '',
+    }
+)
+
+const HomeNode = new Node(
+    {
+        id: 0,
+        title: '首页',
+        isBook: false,
+        isDatabase: false,
+        isChapter: false,
+        isHome: true,
+        isTab: false,
+        isPage: false,
+        isLesson: true,
+        isManual: false,
+        isVisible: true,
+        priority: 0,
+        parentId: 0,
+        level: 0,
+        isEmpty: false,
+        cover: '',
+        content: '',
+    }
+)
+
+export {
+    Node,
+    ShopNode,
+    HomeNode,
+    DatabaseNode
+};

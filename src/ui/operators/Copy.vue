@@ -11,29 +11,27 @@ import ClipboardJS from "clipboard";
 import ToastController from "../entities/Toast";
 import IconCopy from "../assets/icons/clipboard-document.svg";
 import { useRoute } from "vue-router";
-import Node from "../entities/Node";
-
+import { Node } from "../entities/Node";
 
 var clipboard = new ClipboardJS(".copy");
 clipboard.on("success", function () {
   ToastController.set("已将源码复制到剪贴板");
 });
 
-const route = useRoute()
+const route = useRoute();
 
-const props=defineProps( {
-    showText: {
-      type: Boolean,
-      default: true,
-      required: false,
-    },
-    showIcon: {
-      type: Boolean,
-      default: true,
-      required: false,
-    },
-  })
+const props = defineProps({
+  showText: {
+    type: Boolean,
+    default: true,
+    required: false,
+  },
+  showIcon: {
+    type: Boolean,
+    default: true,
+    required: false,
+  },
+});
 
-const content=computed( () => Node.find(parseInt(route.params.id.toString())).content)
-
+const content = computed(() => Node.find(parseInt(route.params.id.toString())).content);
 </script>

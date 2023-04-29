@@ -19,7 +19,7 @@ import Delete from "../operators/Delete.vue";
 import ToTab from "../operators/ToTab.vue";
 import CreateChild from "../operators/Add.vue";
 import Visible from "../operators/Visible.vue";
-import Node from "../entities/Node";
+import { Node } from "../entities/Node";
 
 let x = ref(0);
 let y = ref(0);

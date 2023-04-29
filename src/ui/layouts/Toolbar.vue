@@ -163,7 +163,7 @@ import IconEmpty from "../assets/icons/empty.svg";
 import IconHashTag from "../assets/icons/hashtag.svg";
 import { useRouter } from "vue-router";
 import Visible from "../operators/Visible.vue";
-import Node from "../entities/Node";
+import { Node } from "../entities/Node";
 
 const router = useRouter();
 

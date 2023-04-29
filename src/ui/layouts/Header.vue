@@ -8,9 +8,9 @@
         <BtnOfficialLink></BtnOfficialLink>
         <Terminal class="btn-ghost btn-sm flex items-center rounded px-2 text-accent" v-if="isLesson"></Terminal>
         <Prev class="btn-ghost btn-sm flex items-center rounded px-2 text-accent" :showText="false" v-if="isLesson"></Prev>
+        <Next class="btn-ghost btn-sm flex items-center rounded px-2 text-accent" :showText="false" v-if="isLesson"></Next>
         <Home class="btn-ghost btn-sm flex items-center rounded px-2 text-accent"></Home>
         <Shop class="btn-ghost btn-sm flex items-center rounded px-2 text-accent"></Shop>
-        <Next class="btn-ghost btn-sm flex items-center rounded px-2 text-accent" :showText="false" v-if="isLesson"></Next>
         <More class="btn-ghost btn-sm flex items-center rounded px-2 text-accent"></More>
       </div>
     </div>

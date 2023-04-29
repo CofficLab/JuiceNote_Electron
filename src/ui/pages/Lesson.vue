@@ -20,7 +20,7 @@ import Editor from "../components/Editor.vue";
 import Add from "../operators/Add.vue";
 import { computed, watch } from "vue";
 import { useRoute } from "vue-router";
-import Node from "../entities/Node";
+import { Node } from "../entities/Node";
 
 const route = useRoute();
 

@@ -11,7 +11,7 @@ import ToastController from "../entities/Toast";
 import Trash from "../assets/icons/trash.svg";
 
 import { useRoute, useRouter } from "vue-router";
-import Node from "../entities/Node";
+import { Node } from "../entities/Node";
 
 const router = useRouter();
 const route = useRoute();

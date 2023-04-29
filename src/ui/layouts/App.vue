@@ -2,7 +2,7 @@
   <!-- 在root层配置底色 -->
   <!-- 如果不配置底色，daisyui会自动配置为bg-primary -->
   <!-- 因为electron配置了全透明窗口，这里最好配置一个底色 -->
-  <root :data-theme="theme" class="absolute flex w-full flex-row bg-primary bg-opacity-80">
+  <div id="root" :data-theme="theme" class="absolute flex w-full flex-row bg-primary bg-opacity-100">
     <!-- header脱离文档流，固定定位 -->
     <Header class="h-10s fixed top-0 z-40 w-full"></Header>
 
@@ -17,7 +17,7 @@
         </transition>
       </router-view>
 
-      <Footer class="sticky bottom-0 z-30 h-10"></Footer>
+      <Footer class="sticky bottom-0 z-50 h-10"></Footer>
     </main>
 
     <!-- 弹层 -->
@@ -27,7 +27,7 @@
     <FormAdd></FormAdd>
     <FormRename></FormRename>
     <Terminal></Terminal>
-  </root>
+  </div>
 </template>
 
 <script setup>

@@ -38,7 +38,7 @@
 <script lang="ts" setup>
 import { nextTick, ref } from "vue";
 import { useRouter } from "vue-router";
-import Node from "../entities/Node";
+import { Node } from "../entities/Node";
 import Preload from "../entities/Preload";
 
 const router = useRouter();
@@ -79,7 +79,7 @@ Preload.listen("toggle-search", toggleVisible);
 
 <style scoped lang="postcss">
 .modal-box {
-  @apply bg-primary backdrop-filter backdrop-blur-sm bg-opacity-10
+  @apply bg-primary bg-opacity-10 backdrop-blur-sm backdrop-filter;
 }
 .bounce-enter-active {
   animation: bounce-in 0.5s;
