@@ -9,8 +9,6 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import "./app.css"
 import { Node } from './entities/Node'
 
-require.config({ paths: { vs: './vendor/monaco-editor/min/vs' } });
-
 // 定义路由
 const router = createRouter({
   history: createWebHashHistory(),
@@ -67,4 +65,15 @@ router.beforeEach(function (to, from) {
 const app = createApp(App)
 app.config.unwrapInjectedRef = true
 app.use(router)
-app.mount('body')
+app.mount('#app')
+
+window.x = function (target, content, l) {
+  console.log('active monaca')
+  require(["vs/editor/editor.main"], () => {
+    const editor = monaco.editor.create(target, {
+      value: content,
+      language: l,
+    });
+  });
+}
+
