@@ -20,6 +20,10 @@ export default defineConfig({
   build: {
     outDir: 'dist/ui',
   },
+
+  base: './',
+  root: './src/ui',
+
   plugins: [
     vue(),
     svgLoader(),
