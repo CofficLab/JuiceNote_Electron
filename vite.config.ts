@@ -9,6 +9,13 @@ import svgLoader from 'vite-svg-loader'
 // rmSync('release', { recursive: true, force: true })
 rmSync('dist', { recursive: true, force: true })
 
+
+// 打包前与打包后的结构
+// database     database
+// src          dist 
+// node_modules node_modules
+// temp         temp
+
 export default defineConfig({
   build: {
     outDir: 'dist/ui',
