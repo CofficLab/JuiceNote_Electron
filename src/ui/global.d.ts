@@ -10,3 +10,7 @@ export declare global {
         };
     }
 }
+
+// 这个函数是在vendor/monaco-editor/min/vs/loader.js中定义的
+// monaco github 上的例子是用这个函数加载的
+export declare function require(str: Array, cb: (n?: number) => void): void;

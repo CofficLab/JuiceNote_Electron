@@ -7,7 +7,7 @@
       <!-- 运行按钮 -->
       <button contenteditable="false" class="btn-sm btn absolute bottom-8 right-2 z-20 transition-none" :class="{ loading: running }" @click="handleRun" v-html="runTitle" v-show="runnable"></button>
 
-      <div ref="codeDom" class="relative z-10 h-96">
+      <div ref="codeDom" class="relative z-10">
         <!-- 操作栏 -->
         <div class="code-block-operators absolute bottom-0" contenteditable="false" v-if="editable">
           <div class="flex">
@@ -45,6 +45,7 @@ import Preload from "../../entities/Preload";
 import MonacoBox from "./MonacoBox";
 import ClipboardJS from "clipboard";
 import Toast from "../../entities/Toast";
+import Jarvis from "./Jarvis";
 
 var clipboard = new ClipboardJS(".copy");
 clipboard.on("success", function () {
@@ -132,62 +133,29 @@ let lan = ref();
 let codeForCopy = ref();
 
 onMounted(() => {
-  require(["vs/editor/editor.main"], function () {
-    const editor = monaco.editor.create(codeDom.value!, {
-      value: props.content,
-      language: props.language,
-      readOnly: props.readOnly,
-      theme: "vs-dark",
-      fontSize: 14,
-      lineNumbers: props.showLineNumbers ? "on" : "off",
-      automaticLayout: true,
-      scrollBeyondLastLine: false,
-      contextmenu: false,
-      tabSize: 4,
-      roundedSelection: false,
-      renderLineHighlight: "none",
-      formatOnPaste: true,
-      scrollbar: {
-        vertical: "hidden",
-        horizontal: "hidden",
-        alwaysConsumeMouseWheel: false,
-      },
-      overviewRulerBorder: false,
-      overviewRulerLanes: 0,
-      domReadOnly: false,
-      stickyScroll: {
-        enabled: false,
-      },
-      padding: {
-        top: props.readOnly ? 10 : 10,
-        bottom: props.readOnly ? 10 : 50,
-      },
-      minimap: { enabled: false },
-    });
+  // 编辑器
+  editorBox.value = Jarvis.createEditor(props, codeDom.value!, props.runnable, {
+    onCreate(monacoBox) {
+      lan.value = monacoBox.getLanguage();
+      runnable.value = monacoBox.getRunnable();
+      codeForCopy.value = monacoBox.getContent();
+    },
+    onContentChanged(monacoBox) {
+      props.onContentChanged(monacoBox);
+      codeForCopy.value = monacoBox.getContent();
+    },
+    onRunnableChanged(v: boolean) {
+      props.onRunnableChanged(v);
+      runnable.value = v;
+    },
+    onLanguageChanged(editorBox) {
+      lan.value = editorBox.getLanguage();
+      props.onLanguageChanged(editorBox);
+    },
   });
 
-  // 编辑器
-  // editorBox.value = MonacoBox.createEditor(props, codeDom.value!, props.runnable)
-  //   .onCreated((monacoBox) => {
-  //     lan.value = monacoBox.getLanguage();
-  //     runnable.value = monacoBox.getRunnable();
-  //     codeForCopy.value = monacoBox.getContent();
-  //   })
-  //   .onContentChanged((monacoBox) => {
-  //     props.onContentChanged(monacoBox);
-  //     codeForCopy.value = monacoBox.getContent();
-  //   })
-  //   .onRunnableChanged((v: boolean) => {
-  //     props.onRunnableChanged(v);
-  //     runnable.value = v;
-  //   })
-  //   .onLanguageChanged((editorBox) => {
-  //     lan.value = editorBox.getLanguage();
-  //     props.onLanguageChanged(editorBox);
-  //   });
-
   // 展示运行结果的编辑器
-  // resultBox = MonacoBox.createEditor(props, resultDom.value!, false);
+  resultBox = Jarvis.createEditor(props, resultDom.value!, false);
 });
 
 onUnmounted(() => {
