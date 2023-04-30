@@ -1,51 +1,17 @@
 <template>
   <div>
     <div class="relative">
-      <!-- 语言 -->
-      <span v-html="lan" class="absolute right-0 top-0 z-20 rounded-bl-lg bg-cyan-800/20 px-2 py-1 text-sm text-info"></span>
-
-      <!-- 运行按钮 -->
-      <button contenteditable="false" class="btn-sm btn absolute bottom-8 right-2 z-20 transition-none" :class="{ loading: running }" @click="handleRun" v-html="runTitle" v-show="runnable"></button>
-
-      <div ref="codeDom" class="relative z-10">
-        <!-- 操作栏 -->
-        <div class="code-block-operators absolute bottom-0" contenteditable="false" v-if="editable">
-          <div class="flex">
-            <button class="btn-ghost btn-sm btn flex self-start rounded-none" @click="() => onDelete()">
-              <Trash class="h-4 w-4"></Trash>
-            </button>
-          </div>
-          <div class="flex justify-end">
-            <button v-bind:data-clipboard-text="codeForCopy" class="copy justify-end self-end justify-self-end">复制代码</button>
-            <button @click="handleToggleRun" v-html="runnable ? '关运行' : '开运行'" class="justify-end self-end justify-self-end"></button>
-            <select name="language" @change="handleChangeLanguage" class="text-sm">
-              <option value="text" v-bind:selected="lan == 'text'">纯文本</option>
-              <option value="html" v-bind:selected="lan == 'html'">HTML</option>
-              <option value="go" v-bind:selected="lan == 'go'">Golang</option>
-              <option value="php" v-bind:selected="lan == 'php'">PHP</option>
-              <option value="javascript" v-bind:selected="lan == 'javascript'">JavaScript</option>
-              <option value="java" v-bind:selected="lan == 'java'">Java</option>
-              <option value="python" v-bind:selected="lan == 'python'">Python</option>
-              <option value="shell" v-bind:selected="lan == 'shell'">Shell</option>
-            </select>
-          </div>
-        </div>
-      </div>
+      <div ref="codeDom" class="relative z-10 h-96"></div>
     </div>
-
-    <!-- 展示运行结果 -->
-    <div ref="resultDom" v-show="runResultVisible && runnable" class="result-dom border-2 border-transparent border-t-sky-900"></div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { computed, onMounted, onUnmounted, watch, ref } from "vue";
-import Trash from "./trash.vue";
-import Preload from "../../entities/Preload";
 import MonacoBox from "./MonacoBox";
 import ClipboardJS from "clipboard";
 import Toast from "../../entities/Toast";
-import Jarvis from "./Jarvis";
+import * as monaco from "monaco-editor";
 
 var clipboard = new ClipboardJS(".copy");
 clipboard.on("success", function () {
@@ -129,33 +95,13 @@ let editorBox = ref<MonacoBox>();
 let resultBox: MonacoBox;
 let lan = ref();
 
-// 复制按钮相关的属性
-let codeForCopy = ref();
-
 onMounted(() => {
-  // 编辑器
-  editorBox.value = Jarvis.createEditor(props, codeDom.value!, props.runnable, {
-    onCreate(monacoBox) {
-      lan.value = monacoBox.getLanguage();
-      runnable.value = monacoBox.getRunnable();
-      codeForCopy.value = monacoBox.getContent();
-    },
-    onContentChanged(monacoBox) {
-      props.onContentChanged(monacoBox);
-      codeForCopy.value = monacoBox.getContent();
-    },
-    onRunnableChanged(v: boolean) {
-      props.onRunnableChanged(v);
-      runnable.value = v;
-    },
-    onLanguageChanged(editorBox) {
-      lan.value = editorBox.getLanguage();
-      props.onLanguageChanged(editorBox);
-    },
+  require(["vs/editor/editor.main"], function () {
+    const editor = monaco.editor.create(codeDom.value!, {
+      value: props.content,
+      language: props.language,
+    });
   });
-
-  // 展示运行结果的编辑器
-  resultBox = Jarvis.createEditor(props, resultDom.value!, false);
 });
 
 onUnmounted(() => {
@@ -177,34 +123,4 @@ watch(
     editorBox.value!.setLanguage(props.language);
   }
 );
-
-/**
- * 处理页面点击事件
- */
-let handleChangeLanguage = (e) => editorBox.value!.setLanguage(e.target.value);
-let handleToggleRun = () => {
-  editorBox.value!.toggleRunnable();
-  if (!editorBox.value!.runnable) runResultVisible.value = false;
-};
-let handleRun = () => {
-  if (running.value) return;
-
-  // 收起结果
-  if (runResultVisible.value) {
-    runResultVisible.value = false;
-    running.value = false;
-    resultBox.setContent("");
-    return;
-  }
-
-  running.value = true;
-
-  setTimeout(() => {
-    let result = Preload.ipc.sendSync("run", editorBox.value!.getContent(), editorBox.value!.getLanguage());
-    resultBox.setContent(result == "" ? "「程序没有输出」" : result);
-    console.log("运行结果", result);
-    running.value = false;
-    runResultVisible.value = true;
-  }, 500);
-};
 </script>
