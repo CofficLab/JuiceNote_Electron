@@ -8,7 +8,7 @@
           <label tabindex="0" class="flex items-end">
             <div class="avatar">
               <div class="w-10 rounded-full">
-                <img src="/images/logo-Golang.png" class="dark:brightness-50" @click="switchPosition" />
+                <!-- <img src="/images/logo-Golang.png" class="dark:brightness-50" @click="switchPosition" /> -->
               </div>
             </div>
           </label>

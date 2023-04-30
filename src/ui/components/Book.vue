@@ -10,7 +10,7 @@
     </div>
     <router-link :to="'/lessons/' + book.id + '/show'">
       <figure class="max-h-56 rounded-xl">
-        <img v-if="!book.cover" src="/images/book.png" />
+        <img v-if="!book.cover" src="../images/book.png" />
         <img v-else :src="book.cover" class="h-36 w-72" />
       </figure>
     </router-link>

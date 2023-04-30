@@ -18,12 +18,10 @@ rmSync('dist', { recursive: true, force: true })
 
 export default defineConfig({
   build: {
-    outDir: 'dist/ui',
+    outDir: '../../dist/ui',
   },
-
   base: './',
   root: './src/ui',
-
   plugins: [
     vue(),
     svgLoader(),
