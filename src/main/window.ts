@@ -17,6 +17,7 @@ function createWindow(option?: BrowserWindowConstructorOptions): BrowserWindow {
         trafficLightPosition: { x: 8, y: 8 },
         titleBarOverlay: true,
         webPreferences: {
+            worldSafeExecuteJavaScript: true,
             preload: Config.PRELOAD_FILE,
             // nodeIntegration: true,
             // contextIsolation: false,
