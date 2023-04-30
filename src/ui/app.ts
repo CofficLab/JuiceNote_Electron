@@ -9,7 +9,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import "./app.css"
 import { Node } from './entities/Node'
 
-require.config({ paths: { vs: '../../node_modules/monaco-editor/min/vs' } });
+require.config({ paths: { vs: './vendor/monaco-editor/min/vs' } });
 
 // 定义路由
 const router = createRouter({
