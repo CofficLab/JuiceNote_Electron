@@ -69,7 +69,7 @@ app.config.unwrapInjectedRef = true
 app.use(router)
 app.mount('#app')
 
-interface CreateEditorOptions {
+export interface CreateEditorOptions {
   target: HTMLDivElement;
   content: string;
   language: string;
@@ -82,7 +82,7 @@ interface CreateEditorOptions {
   onLanguageChanged?: (editor: MonacoBox) => void;
 }
 
-window.createMonaco = function (options: CreateEditorOptions) {
+window.createMonaco = function (box: MonacoBox, options: CreateEditorOptions) {
   console.log('active monaca')
   window.require(["vs/editor/editor.main"], () => {
     const editor = monaco.editor.create(options.target, {
@@ -117,7 +117,7 @@ window.createMonaco = function (options: CreateEditorOptions) {
       minimap: { enabled: false },
     });
 
-    let box = new MonacoBox(editor, monaco.editor.getModels().length - 1, options.runnable);
+    box = new MonacoBox(editor, monaco.editor.getModels().length - 1, options.runnable);
 
     if (options?.onCreate != undefined) box.onCreated(options.onCreate);
     if (options?.onContentChanged != undefined) box.onContentChanged(options.onContentChanged);

@@ -4,6 +4,7 @@ import jsonWorker from "monaco-editor/esm/vs/language/json/json.worker?worker";
 import cssWorker from "monaco-editor/esm/vs/language/css/css.worker?worker";
 import htmlWorker from "monaco-editor/esm/vs/language/html/html.worker?worker";
 import tsWorker from "monaco-editor/esm/vs/language/typescript/ts.worker?worker";
+import { CreateEditorOptions } from "src/ui/app";
 
 class MonacoBox {
     public editor: monaco.editor.IStandaloneCodeEditor;
@@ -146,40 +147,8 @@ class MonacoBox {
         };
     }
 
-    static createEditor(props, target: HTMLDivElement, runnable: boolean) {
-        let editor = monaco.editor.create(target, {
-            value: props.content,
-            language: props.language,
-            readOnly: props.readOnly,
-            theme: "vs-dark",
-            fontSize: 14,
-            lineNumbers: props.showLineNumbers ? "on" : "off",
-            automaticLayout: true,
-            scrollBeyondLastLine: false,
-            contextmenu: false,
-            tabSize: 4,
-            roundedSelection: false,
-            renderLineHighlight: "none",
-            formatOnPaste: true,
-            scrollbar: {
-                vertical: "hidden",
-                horizontal: "hidden",
-                alwaysConsumeMouseWheel: false,
-            },
-            overviewRulerBorder: false,
-            overviewRulerLanes: 0,
-            domReadOnly: false,
-            stickyScroll: {
-                enabled: false,
-            },
-            padding: {
-                top: props.readOnly ? 10 : 10,
-                bottom: props.readOnly ? 10 : 50,
-            },
-            minimap: { enabled: false },
-        });
-
-        return new MonacoBox(editor, monaco.editor.getModels().length - 1, runnable);
+    static createEditor(box: MonacoBox, options: CreateEditorOptions) {
+        window.createMonaco(box, options)
     }
 }
 
