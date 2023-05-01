@@ -9,6 +9,7 @@
     "t": "tailwind-config-viewer -o",
     "rebuild": "electron-rebuild",
     "dev": "vite",
+    "build:vite": "vite build",
     "build": "vite build && electron-builder",
     "build:mac": "vite build && electron-builder --mac",
     "build:win": "vite build && electron-builder --win",

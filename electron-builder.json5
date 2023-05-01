@@ -14,7 +14,7 @@
     "database",
     "temp",
     {
-      from: "src/ui/vendor",
+      from: "vendor",
       to: "dist/ui/vendor",
     },
   ],
