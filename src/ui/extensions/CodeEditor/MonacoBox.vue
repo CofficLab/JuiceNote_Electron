@@ -120,7 +120,11 @@ onMounted(() => {
     },
   };
 
-  window.x(codeDom.value, props.content, props.language);
+  window.x({
+    target: codeDom.value!,
+    language: props.language,
+    content: props.content,
+  });
   // require(["vs/editor/editor.main"], function () {
   //   const editor = monaco.editor.create(codeDom.value!, {
   //     value: props.content,

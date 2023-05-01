@@ -7,7 +7,8 @@ export declare global {
         listen,
         api: {
             versions,
-        };
+        },
+        x: function(CreateEditorOptions): void,
     }
 }
 

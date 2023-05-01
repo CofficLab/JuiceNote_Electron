@@ -8,6 +8,8 @@ import NotFound from './pages/NotFound.vue'
 import { createRouter, createWebHashHistory } from 'vue-router'
 import "./app.css"
 import { Node } from './entities/Node'
+import MonacoBox from './extensions/CodeEditor/MonacoBox'
+// import { require } from './global.d'
 
 // 定义路由
 const router = createRouter({
@@ -67,12 +69,51 @@ app.config.unwrapInjectedRef = true
 app.use(router)
 app.mount('#app')
 
-window.x = function (target, content, l) {
+interface CreateEditorOptions {
+  target: HTMLDivElement;
+  content: string;
+  language: string;
+  readOnly: boolean;
+  showLineNumbers: boolean;
+  onCreate?: (editor: MonacoBox) => void;
+  onContentChanged?: (editor: MonacoBox) => void;
+  onRunnableChanged?: (value: boolean) => void;
+  onLanguageChanged?: (editor: MonacoBox) => void;
+}
+
+window.x = function (options: CreateEditorOptions) {
   console.log('active monaca')
   require(["vs/editor/editor.main"], () => {
-    const editor = monaco.editor.create(target, {
-      value: content,
-      language: l,
+    const editor = monaco.editor.create(options.target, {
+      value: options.content,
+      language: options.language,
+      readOnly: options.readOnly,
+      theme: "vs-dark",
+      fontSize: 14,
+      lineNumbers: options.showLineNumbers ? "on" : "off",
+      automaticLayout: true,
+      scrollBeyondLastLine: false,
+      contextmenu: false,
+      tabSize: 4,
+      roundedSelection: false,
+      renderLineHighlight: "none",
+      formatOnPaste: true,
+      scrollbar: {
+        vertical: "hidden",
+        horizontal: "hidden",
+        alwaysConsumeMouseWheel: false,
+      },
+      overviewRulerBorder: false,
+      overviewRulerLanes: 0,
+      domReadOnly: false,
+      stickyScroll: {
+        enabled: false,
+      },
+      padding: {
+        top: options.readOnly ? 10 : 10,
+        bottom: options.readOnly ? 10 : 50,
+      },
+      minimap: { enabled: false },
     });
   });
 }
