@@ -74,6 +74,7 @@ interface CreateEditorOptions {
   content: string;
   language: string;
   readOnly: boolean;
+  runnable: boolean;
   showLineNumbers: boolean;
   onCreate?: (editor: MonacoBox) => void;
   onContentChanged?: (editor: MonacoBox) => void;
@@ -81,9 +82,9 @@ interface CreateEditorOptions {
   onLanguageChanged?: (editor: MonacoBox) => void;
 }
 
-window.x = function (options: CreateEditorOptions) {
+window.createMonaco = function (options: CreateEditorOptions) {
   console.log('active monaca')
-  require(["vs/editor/editor.main"], () => {
+  window.require(["vs/editor/editor.main"], () => {
     const editor = monaco.editor.create(options.target, {
       value: options.content,
       language: options.language,
@@ -115,6 +116,13 @@ window.x = function (options: CreateEditorOptions) {
       },
       minimap: { enabled: false },
     });
+
+    let box = new MonacoBox(editor, monaco.editor.getModels().length - 1, options.runnable);
+
+    if (options?.onCreate != undefined) box.onCreated(options.onCreate);
+    if (options?.onContentChanged != undefined) box.onContentChanged(options.onContentChanged);
+    if (options?.onLanguageChanged != undefined) box.onLanguageChanged(options.onLanguageChanged);
+    if (options?.onRunnableChanged != undefined) box.onRunnableChanged(options.onRunnableChanged);
   });
 }
 

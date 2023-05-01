@@ -120,17 +120,28 @@ onMounted(() => {
     },
   };
 
-  window.x({
+  window.createMonaco({
     target: codeDom.value!,
     language: props.language,
     content: props.content,
+    onCreate(monacoBox) {
+      lan.value = monacoBox.getLanguage();
+      runnable.value = monacoBox.getRunnable();
+      // codeForCopy.value = monacoBox.getContent();
+    },
+    onContentChanged(monacoBox) {
+      props.onContentChanged(monacoBox);
+      // codeForCopy.value = monacoBox.getContent();
+    },
+    onRunnableChanged(v: boolean) {
+      props.onRunnableChanged(v);
+      runnable.value = v;
+    },
+    onLanguageChanged(editorBox) {
+      lan.value = editorBox.getLanguage();
+      props.onLanguageChanged(editorBox);
+    },
   });
-  // require(["vs/editor/editor.main"], function () {
-  //   const editor = monaco.editor.create(codeDom.value!, {
-  //     value: props.content,
-  //     language: 'javascript',
-  //   });
-  // });
 });
 
 onUnmounted(() => {
