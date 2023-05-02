@@ -3,7 +3,7 @@ import fs from 'fs'
 import path from 'path'
 import Config from '../config'
 
-const tempPath = path.join(Config.ROOT_PATH, 'temp')
+const tempPath = path.join(Config.ROOT_PATH, 'playground')
 
 let run = function (code = '', language = 'PHP') {
     let suffix = 'unknown'
@@ -111,9 +111,9 @@ let run = function (code = '', language = 'PHP') {
     }
 
     return output.toString()
-        // replaceAll(Config.ROOT_PATH + '/temp/', '').
-        // replace('PATH=/opt/homebrew/bin/:/usr/local/bin:$PATH && ', '').
-        // replace('Command failed: ', '')
+    // replaceAll(Config.ROOT_PATH + '/temp/', '').
+    // replace('PATH=/opt/homebrew/bin/:/usr/local/bin:$PATH && ', '').
+    // replace('Command failed: ', '')
 }
 
 export default function setRunController() {

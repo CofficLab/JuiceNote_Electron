@@ -12,7 +12,7 @@
   files: [
     "dist",
     "database",
-    "temp",
+    "playground",
     {
       from: "vendor",
       to: "dist/ui/vendor",
