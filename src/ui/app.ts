@@ -84,7 +84,7 @@ export interface CreateEditorOptions {
 window.createMonaco = function (box: MonacoBox, options: CreateEditorOptions) {
   console.log('active monaca')
   window.require(["vs/editor/editor.main"], () => {
-    const editor = monaco.editor.create(options.target, {
+    const editor = window.monaco.editor.create(options.target, {
       value: options.content,
       language: options.language,
       readOnly: options.readOnly,
@@ -116,7 +116,7 @@ window.createMonaco = function (box: MonacoBox, options: CreateEditorOptions) {
       minimap: { enabled: false },
     });
 
-    box = new MonacoBox(editor, monaco.editor.getModels().length - 1, options.runnable);
+    box = new MonacoBox(editor, window.monaco.editor.getModels().length - 1, options.runnable);
 
     if (options?.onCreated != undefined) box.onCreated(options.onCreated);
     if (options?.onContentChanged != undefined) box.onContentChanged(options.onContentChanged);

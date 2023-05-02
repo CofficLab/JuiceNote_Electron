@@ -3,11 +3,11 @@ import jsonWorker from "monaco-editor/esm/vs/language/json/json.worker?worker";
 import cssWorker from "monaco-editor/esm/vs/language/css/css.worker?worker";
 import htmlWorker from "monaco-editor/esm/vs/language/html/html.worker?worker";
 import tsWorker from "monaco-editor/esm/vs/language/typescript/ts.worker?worker";
-// import * as monaco from "monaco-editor";
+import { editor } from "monaco-editor";
 import { CreateEditorOptions } from "src/ui/app";
 
 class MonacoBox {
-    public editor: monaco.editor.IStandaloneCodeEditor;
+    public editor: editor.IStandaloneCodeEditor;
     public index;
     public runnable;
     public runnableChangedCallback: Function;
@@ -70,7 +70,7 @@ class MonacoBox {
 
         // 使用 this.editor.setValue() 会导致整个界面卡住
         // https://github.com/microsoft/monaco-editor/issues/2439
-        return monaco.editor.getModels()[this.index.toString()].setValue(content)
+        return window.monaco.editor.getModels()[this.index.toString()].setValue(content)
     }
 
     public setHeight() {
@@ -92,7 +92,7 @@ class MonacoBox {
 
         console.log("设置Monaco Editor的Language为", language);
 
-        monaco.editor.setModelLanguage(this.editor.getModel()!, language);
+        window.monaco.editor.setModelLanguage(this.editor.getModel()!, language);
     }
 
     public toggleRunnable() {
@@ -122,7 +122,7 @@ class MonacoBox {
     }
 
     public onCreated(callback: Function) {
-        monaco.editor.onDidCreateEditor(() => {
+        window.monaco.editor.onDidCreateEditor(() => {
             console.log('monaco editor created, call the callback')
             callback(this)
         });
@@ -153,7 +153,7 @@ class MonacoBox {
     static createEditor(box: MonacoBox, options: CreateEditorOptions) {
         console.log('active monaca')
         window.require(["vs/editor/editor.main"], () => {
-            const editor = monaco.editor.create(options.target, {
+            const editor = window.monaco.editor.create(options.target, {
                 value: options.content,
                 language: options.language,
                 readOnly: options.readOnly,
@@ -185,7 +185,7 @@ class MonacoBox {
                 minimap: { enabled: false },
             });
 
-            box = new MonacoBox(editor, monaco.editor.getModels().length - 1, options.runnable);
+            box = new MonacoBox(editor, window.monaco.editor.getModels().length - 1, options.runnable);
 
             if (options?.onCreated != undefined) box.onCreated(options.onCreated);
             if (options?.onContentChanged != undefined) box.onContentChanged(options.onContentChanged);
