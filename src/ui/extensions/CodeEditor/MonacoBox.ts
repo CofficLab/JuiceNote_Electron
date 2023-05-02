@@ -3,6 +3,7 @@ import jsonWorker from "monaco-editor/esm/vs/language/json/json.worker?worker";
 import cssWorker from "monaco-editor/esm/vs/language/css/css.worker?worker";
 import htmlWorker from "monaco-editor/esm/vs/language/html/html.worker?worker";
 import tsWorker from "monaco-editor/esm/vs/language/typescript/ts.worker?worker";
+import * as monaco from "monaco-editor";
 import { CreateEditorOptions } from "src/ui/app";
 
 class MonacoBox {
@@ -121,7 +122,10 @@ class MonacoBox {
     }
 
     public onCreated(callback: Function) {
-        monaco.editor.onDidCreateEditor(() => callback(this));
+        monaco.editor.onDidCreateEditor(() => {
+            console.log('monaco editor created, call the callback')
+            callback(this)
+        });
 
         return this;
     }

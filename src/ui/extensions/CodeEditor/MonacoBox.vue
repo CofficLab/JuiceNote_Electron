@@ -7,7 +7,7 @@
       <!-- 运行按钮 -->
       <button contenteditable="false" class="btn-sm btn absolute bottom-8 right-2 z-20 transition-none" :class="{ loading: running }" @click="handleRun" v-html="runTitle" v-show="runnable"></button>
 
-      <div ref="codeDom" class="relative z-10 h-96">
+      <div ref="codeDom" class="relative z-10">
         <!-- 操作栏 -->
         <div class="code-block-operators absolute bottom-0" contenteditable="false" v-if="editable">
           <div class="flex">
@@ -141,6 +141,8 @@ onMounted(() => {
       lan.value = monacoBox.getLanguage();
       runnable.value = monacoBox.getRunnable();
       codeForCopy.value = monacoBox.getContent();
+
+      editorBox.value = monacoBox;
     },
     onContentChanged(monacoBox) {
       props.onContentChanged(monacoBox);
@@ -156,8 +158,18 @@ onMounted(() => {
     },
   });
 
+  console.log(editorBox.value);
+
   // 展示运行结果的编辑器
-  // MonacoBox.createEditor(resultBox, props, resultDom.value!, false);
+  MonacoBox.createEditor(resultBox, {
+    content: "",
+    target: resultDom.value,
+    language: props.language,
+    runnable: props.runnable,
+    onCreated: (monacoBox) => {
+      resultBox = monacoBox;
+    },
+  });
 });
 
 onUnmounted(() => {
@@ -202,9 +214,9 @@ let handleRun = () => {
   running.value = true;
 
   setTimeout(() => {
-    let result = Preload.ipc.sendSync("run", editorBox.value!.getContent(), editorBox.value!.getLanguage());
+    let result = Preload.ipc.sendSync("run", editorBox.value?.getContent(), editorBox.value?.getLanguage());
     resultBox.setContent(result == "" ? "「程序没有输出」" : result);
-    console.log("运行结果", result);
+    // console.log("运行结果", result);
     running.value = false;
     runResultVisible.value = true;
   }, 500);

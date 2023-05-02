@@ -9,7 +9,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import "./app.css"
 import { Node } from './entities/Node'
 import MonacoBox from './extensions/CodeEditor/MonacoBox'
-// import { require } from './global.d'
+import * as monaco from "monaco-editor";
 
 // 定义路由
 const router = createRouter({
@@ -76,7 +76,7 @@ export interface CreateEditorOptions {
   readOnly: boolean;
   runnable: boolean;
   showLineNumbers: boolean;
-  onCreate?: (editor: MonacoBox) => void;
+  onCreated?: (editor: MonacoBox) => void;
   onContentChanged?: (editor: MonacoBox) => void;
   onRunnableChanged?: (value: boolean) => void;
   onLanguageChanged?: (editor: MonacoBox) => void;
@@ -119,7 +119,7 @@ window.createMonaco = function (box: MonacoBox, options: CreateEditorOptions) {
 
     box = new MonacoBox(editor, monaco.editor.getModels().length - 1, options.runnable);
 
-    if (options?.onCreate != undefined) box.onCreated(options.onCreate);
+    if (options?.onCreated != undefined) box.onCreated(options.onCreated);
     if (options?.onContentChanged != undefined) box.onContentChanged(options.onContentChanged);
     if (options?.onLanguageChanged != undefined) box.onLanguageChanged(options.onLanguageChanged);
     if (options?.onRunnableChanged != undefined) box.onRunnableChanged(options.onRunnableChanged);
