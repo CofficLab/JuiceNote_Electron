@@ -3,7 +3,7 @@ import jsonWorker from "monaco-editor/esm/vs/language/json/json.worker?worker";
 import cssWorker from "monaco-editor/esm/vs/language/css/css.worker?worker";
 import htmlWorker from "monaco-editor/esm/vs/language/html/html.worker?worker";
 import tsWorker from "monaco-editor/esm/vs/language/typescript/ts.worker?worker";
-import * as monaco from "monaco-editor";
+// import * as monaco from "monaco-editor";
 import { CreateEditorOptions } from "src/ui/app";
 
 class MonacoBox {
@@ -31,7 +31,7 @@ class MonacoBox {
     public getContent() {
         // 使用 this.editor.getValue() 会导致整个界面卡住
         // https://github.com/microsoft/monaco-editor/issues/2439
-        return monaco.editor.getModels()[this.index.toString()].getValue()
+        return window.monaco.editor.getModels()[this.index.toString()].getValue()
     }
 
     public getHeight() {
@@ -41,8 +41,8 @@ class MonacoBox {
     // 所有的行合起来的高度
     public getLinesHeight() {
         let lineCount = this.editor.getModel()!.getLineCount();
-        let lineHeight = this.editor.getOption(monaco.editor.EditorOption.lineHeight);
-        let padding = this.editor.getOption(monaco.editor.EditorOption.padding);
+        let lineHeight = this.editor.getOption(window.monaco.editor.EditorOption.lineHeight);
+        let padding = this.editor.getOption(window.monaco.editor.EditorOption.padding);
 
         return lineCount * lineHeight + padding.top + padding.bottom;
     }
@@ -151,7 +151,47 @@ class MonacoBox {
     }
 
     static createEditor(box: MonacoBox, options: CreateEditorOptions) {
-        window.createMonaco(box, options)
+        console.log('active monaca')
+        window.require(["vs/editor/editor.main"], () => {
+            const editor = monaco.editor.create(options.target, {
+                value: options.content,
+                language: options.language,
+                readOnly: options.readOnly,
+                theme: "vs-dark",
+                fontSize: 14,
+                lineNumbers: options.showLineNumbers ? "on" : "off",
+                automaticLayout: true,
+                scrollBeyondLastLine: false,
+                contextmenu: false,
+                tabSize: 4,
+                roundedSelection: false,
+                renderLineHighlight: "none",
+                formatOnPaste: true,
+                scrollbar: {
+                    vertical: "hidden",
+                    horizontal: "hidden",
+                    alwaysConsumeMouseWheel: false,
+                },
+                overviewRulerBorder: false,
+                overviewRulerLanes: 0,
+                domReadOnly: false,
+                stickyScroll: {
+                    enabled: false,
+                },
+                padding: {
+                    top: options.readOnly ? 10 : 10,
+                    bottom: options.readOnly ? 10 : 50,
+                },
+                minimap: { enabled: false },
+            });
+
+            box = new MonacoBox(editor, monaco.editor.getModels().length - 1, options.runnable);
+
+            if (options?.onCreated != undefined) box.onCreated(options.onCreated);
+            if (options?.onContentChanged != undefined) box.onContentChanged(options.onContentChanged);
+            if (options?.onLanguageChanged != undefined) box.onLanguageChanged(options.onLanguageChanged);
+            if (options?.onRunnableChanged != undefined) box.onRunnableChanged(options.onRunnableChanged);
+        });
     }
 }
 

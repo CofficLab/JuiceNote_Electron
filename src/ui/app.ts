@@ -9,7 +9,6 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import "./app.css"
 import { Node } from './entities/Node'
 import MonacoBox from './extensions/CodeEditor/MonacoBox'
-import * as monaco from "monaco-editor";
 
 // 定义路由
 const router = createRouter({
@@ -125,4 +124,3 @@ window.createMonaco = function (box: MonacoBox, options: CreateEditorOptions) {
     if (options?.onRunnableChanged != undefined) box.onRunnableChanged(options.onRunnableChanged);
   });
 }
-
