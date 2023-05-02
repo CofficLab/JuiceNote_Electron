@@ -133,27 +133,43 @@ let codeForCopy = ref();
 
 onMounted(() => {
   // 编辑器
-  editorBox.value = MonacoBox.createEditor(props, codeDom.value!, props.runnable)
-    .onCreated((monacoBox) => {
+  MonacoBox.createEditor(editorBox.value!, {
+    content: props.content,
+    target: codeDom.value,
+    language: props.language,
+    onCreated(monacoBox) {
       lan.value = monacoBox.getLanguage();
       runnable.value = monacoBox.getRunnable();
       codeForCopy.value = monacoBox.getContent();
-    })
-    .onContentChanged((monacoBox) => {
+
+      editorBox.value = monacoBox;
+    },
+    onContentChanged(monacoBox) {
       props.onContentChanged(monacoBox);
       codeForCopy.value = monacoBox.getContent();
-    })
-    .onRunnableChanged((v: boolean) => {
+    },
+    onRunnableChanged(v: boolean) {
       props.onRunnableChanged(v);
       runnable.value = v;
-    })
-    .onLanguageChanged((editorBox) => {
+    },
+    onLanguageChanged(editorBox) {
       lan.value = editorBox.getLanguage();
       props.onLanguageChanged(editorBox);
-    });
+    },
+  });
+
+  console.log(editorBox.value);
 
   // 展示运行结果的编辑器
-  resultBox = MonacoBox.createEditor(props, resultDom.value!, false);
+  MonacoBox.createEditor(resultBox, {
+    content: "",
+    target: resultDom.value,
+    language: props.language,
+    runnable: props.runnable,
+    onCreated: (monacoBox) => {
+      resultBox = monacoBox;
+    },
+  });
 });
 
 onUnmounted(() => {
@@ -198,9 +214,9 @@ let handleRun = () => {
   running.value = true;
 
   setTimeout(() => {
-    let result = Preload.ipc.sendSync("run", editorBox.value!.getContent(), editorBox.value!.getLanguage());
+    let result = Preload.ipc.sendSync("run", editorBox.value?.getContent(), editorBox.value?.getLanguage());
     resultBox.setContent(result == "" ? "「程序没有输出」" : result);
-    console.log("运行结果", result);
+    // console.log("运行结果", result);
     running.value = false;
     runResultVisible.value = true;
   }, 500);

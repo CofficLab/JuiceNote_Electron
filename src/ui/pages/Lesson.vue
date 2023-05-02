@@ -43,7 +43,7 @@ watch(route, () => {
   if (route.hash.length > 0) {
     // 获取带有锚点的元素
     var target = document.querySelector<HTMLDivElement>(route.hash);
-    console.log("滚动到锚点", target);
+    // console.log("滚动到锚点", target);
 
     // 如果有锚点并且目标元素存在，则滚动到该元素
     if (window.location.hash && target) {
