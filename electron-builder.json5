@@ -10,13 +10,14 @@
   },
   // 打包时复制这些文件
   files: [
-    "dist",
+    "dist/main",
+    "dist/preload",
+    {
+      from: "dist/ui",
+      to: "",
+    },
     "database",
     "playground",
-    {
-      from: "vendor",
-      to: "dist/ui/vendor",
-    },
   ],
   mac: {
     artifactName: "kuaiyizhi_${version}.${ext}",

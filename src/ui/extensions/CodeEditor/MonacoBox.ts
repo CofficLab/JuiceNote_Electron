@@ -1,8 +1,8 @@
-import editorWorker from "monaco-editor/esm/vs/editor/editor.worker?worker";
-import jsonWorker from "monaco-editor/esm/vs/language/json/json.worker?worker";
-import cssWorker from "monaco-editor/esm/vs/language/css/css.worker?worker";
-import htmlWorker from "monaco-editor/esm/vs/language/html/html.worker?worker";
-import tsWorker from "monaco-editor/esm/vs/language/typescript/ts.worker?worker";
+// import editorWorker from "monaco-editor/esm/vs/editor/editor.worker?worker";
+// import jsonWorker from "monaco-editor/esm/vs/language/json/json.worker?worker";
+// import cssWorker from "monaco-editor/esm/vs/language/css/css.worker?worker";
+// import htmlWorker from "monaco-editor/esm/vs/language/html/html.worker?worker";
+// import tsWorker from "monaco-editor/esm/vs/language/typescript/ts.worker?worker";
 import { editor } from "monaco-editor";
 import { CreateEditorOptions } from "src/ui/app";
 
@@ -13,7 +13,7 @@ class MonacoBox {
     public runnableChangedCallback: Function;
 
     public constructor(editor: any, index: any, runnable = true) {
-        MonacoBox.createWorker()
+        // MonacoBox.createWorker()
 
         this.editor = editor;
         this.index = index;
@@ -152,46 +152,9 @@ class MonacoBox {
 
     static createEditor(box: MonacoBox, options: CreateEditorOptions) {
         console.log('active monaca')
-        window.require(["vs/editor/editor.main"], () => {
-            const editor = window.monaco.editor.create(options.target, {
-                value: options.content,
-                language: options.language,
-                readOnly: options.readOnly,
-                theme: "vs-dark",
-                fontSize: 14,
-                lineNumbers: options.showLineNumbers ? "on" : "off",
-                automaticLayout: true,
-                scrollBeyondLastLine: false,
-                contextmenu: false,
-                tabSize: 4,
-                roundedSelection: false,
-                renderLineHighlight: "none",
-                formatOnPaste: true,
-                scrollbar: {
-                    vertical: "hidden",
-                    horizontal: "hidden",
-                    alwaysConsumeMouseWheel: false,
-                },
-                overviewRulerBorder: false,
-                overviewRulerLanes: 0,
-                domReadOnly: false,
-                stickyScroll: {
-                    enabled: false,
-                },
-                padding: {
-                    top: options.readOnly ? 10 : 10,
-                    bottom: options.readOnly ? 10 : 50,
-                },
-                minimap: { enabled: false },
-            });
 
-            box = new MonacoBox(editor, window.monaco.editor.getModels().length - 1, options.runnable);
+        window.createMonaco(box, options)
 
-            if (options?.onCreated != undefined) box.onCreated(options.onCreated);
-            if (options?.onContentChanged != undefined) box.onContentChanged(options.onContentChanged);
-            if (options?.onLanguageChanged != undefined) box.onLanguageChanged(options.onLanguageChanged);
-            if (options?.onRunnableChanged != undefined) box.onRunnableChanged(options.onRunnableChanged);
-        });
     }
 }
 
