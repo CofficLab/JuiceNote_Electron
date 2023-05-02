@@ -135,7 +135,7 @@ onMounted(() => {
   // 编辑器
   MonacoBox.createEditor(editorBox.value!, {
     content: props.content,
-    target: codeDom.value,
+    target: codeDom.value!,
     language: props.language,
     onCreated(monacoBox) {
       lan.value = monacoBox.getLanguage();
@@ -163,7 +163,7 @@ onMounted(() => {
   // 展示运行结果的编辑器
   MonacoBox.createEditor(resultBox, {
     content: "",
-    target: resultDom.value,
+    target: resultDom.value!,
     language: props.language,
     runnable: props.runnable,
     onCreated: (monacoBox) => {
