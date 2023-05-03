@@ -1,5 +1,5 @@
 import { ipcMain } from "electron"
-import { Node } from "../models/node"
+import { Node } from "../models/BaseNode"
 
 export default function setNodeController() {
     ipcMain.on('getBooks', (event) => {
