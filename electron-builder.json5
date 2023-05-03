@@ -8,7 +8,6 @@
   directories: {
     output: "release/",
   },
-  beforePack: "beforePack.js",
   // 打包时复制这些文件
   files: [
     "dist/main",
