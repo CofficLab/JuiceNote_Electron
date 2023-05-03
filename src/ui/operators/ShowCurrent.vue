@@ -7,7 +7,7 @@
 
 <script setup>
 import { useRouter, useRoute } from "vue-router";
-import BookOpen from "../assets/icons/book-open.svg";
+import BookOpen from "../icons/book-open.svg";
 import { Node } from "../entities/Node";
 
 let props = defineProps({

@@ -18,14 +18,7 @@
   </div>
   <ul v-if="item.notLeaf() && item.children.length > 0" class="my-0 bg-gray-600">
     <li class="mt-1 flex justify-center px-4">
-      <input
-        type="text"
-        v-model="newFileName"
-        placeholder="新建文件"
-        class="input-ghost input input-sm w-full max-w-xs text-center text-xs"
-        @keyup.enter="makeFile"
-        v-show="showFileForm"
-      />
+      <input type="text" v-model="newFileName" placeholder="新建文件" class="input-ghost input input-sm w-full max-w-xs text-center text-xs" @keyup.enter="makeFile" v-show="showFileForm" />
     </li>
     <li v-for="child in item.children" v-show="open" class="my-1 pl-1">
       <ProjectItem v-bind:item="child"></ProjectItem>
@@ -36,7 +29,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import Link from "./Link.vue";
-import ChevronDown from "../assets/icons/chevron-down.svg";
+import ChevronDown from "../icons/chevron-down.svg";
 import project from "../entities/Project";
 
 export default defineComponent({

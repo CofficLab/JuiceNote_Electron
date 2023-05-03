@@ -8,7 +8,7 @@
 
 <script>
 import { NodeViewContent, nodeViewProps, NodeViewWrapper } from "@tiptap/vue-3";
-import Info from "../assets/icons/info.svg";
+import Info from "../icons/IconInfo.vue";
 
 export default {
   components: {

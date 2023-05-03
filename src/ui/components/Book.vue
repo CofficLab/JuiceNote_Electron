@@ -44,15 +44,19 @@
 <script setup lang="ts">
 import { ref, computed, watch } from "vue";
 import { useRoute } from "vue-router";
-import { useToastStore } from "../stores/Toast";
+import { useToastStore } from "../stores/ToastStore";
 import Visible from "../operators/Visible.vue";
 import "vue-cropper/dist/index.css";
 import { VueCropper } from "vue-cropper";
 import ChangeCover from "../operators/ChangeCover.vue";
+import { Node } from "../entities/Node";
 
 const route = useRoute();
 let props = defineProps({
-  book: Object,
+  book: {
+    type: Node,
+    required: true,
+  },
 });
 
 let isCropperVisible = ref(false);
@@ -75,7 +79,7 @@ const openUploadDialog = () => {
 
   // 添加change事件监听器，用于处理选择文件后的操作
   input.addEventListener("change", function (event) {
-    var file = event.target.files[0]; // 获取选中的文件
+    var file = event.target!.files[0]; // 获取选中的文件
     readFile(file.path, (err, data) => {
       option.value.img = "data:image/png;base64," + data.toString("base64");
       isCropperVisible.value = true;

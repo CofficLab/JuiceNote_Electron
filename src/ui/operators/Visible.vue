@@ -7,11 +7,11 @@
 
 <script lang="ts" setup>
 import { computed } from "vue";
-import { useToastStore } from "../stores/Toast";
+import { useToastStore } from "../stores/ToastStore";
 import HideIcon from "../icons/IconNo.vue";
 import { useRoute, useRouter } from "vue-router";
 import { Node } from "../entities/Node";
-import { useCurrentNodeStore } from "../stores/node";
+import { useCurrentNodeStore } from "../stores/NodeStore";
 
 const props = defineProps({
   showText: {

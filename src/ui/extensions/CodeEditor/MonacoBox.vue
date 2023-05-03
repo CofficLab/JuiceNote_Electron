@@ -41,7 +41,7 @@
 <script lang="ts" setup>
 import { computed, onMounted, onUnmounted, watch, ref } from "vue";
 import Trash from "./trash.vue";
-import Preload from "../../entities/Preload";
+import Preload from "../../api/Preload";
 import MonacoBox from "./MonacoBox";
 import ClipboardJS from "clipboard";
 

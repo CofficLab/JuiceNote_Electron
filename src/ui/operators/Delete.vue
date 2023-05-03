@@ -5,16 +5,14 @@
   </div>
 </template>
 
-<script setup>
-import { computed } from "vue";
-import Trash from "../assets/icons/trash.svg";
+<script setup lang="ts">
+import Trash from "../icons/IconTrash.vue";
 
-import { useRoute, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 import { Node } from "../entities/Node";
-import { useToastStore } from "../stores/Toast";
+import { useToastStore } from "../stores/ToastStore";
 
 const router = useRouter();
-const route = useRoute();
 const props = defineProps({
   showText: {
     type: Boolean,
@@ -28,16 +26,12 @@ const props = defineProps({
   },
   node: {
     type: Node,
-    required: false,
+    required: true,
   },
 });
 
-const target = computed(() => {
-  return props.node ?? Node.find(route.params.id);
-});
-
 const deleteBookNode = function () {
-  router.push("/lessons/" + target.value.parentId + "/show");
-  useToastStore().set(target.value.delete());
+  router.push("/lessons/" + props.node.parentId + "/show");
+  useToastStore().set(props.node.delete());
 };
 </script>

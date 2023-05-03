@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts" setup>
-import Preload from "../entities/Preload";
+import Preload from "../api/Preload";
 
 const version = Preload.getAppVersion();
 </script>

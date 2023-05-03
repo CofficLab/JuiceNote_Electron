@@ -8,7 +8,7 @@ import Shop from './pages/Shop.vue'
 import NotFound from './pages/NotFound.vue'
 import { createRouter, createWebHashHistory } from 'vue-router'
 import "./app.css"
-import { Node, NodeApi } from './entities/Node'
+import { NodeApi } from './api/NodeApi'
 
 // 定义路由
 const router = createRouter({

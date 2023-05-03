@@ -28,7 +28,7 @@
 <script lang="ts" setup>
 import { onMounted, ref, onBeforeUnmount, nextTick } from "vue";
 import { Node } from "../entities/Node";
-import { useToastStore } from "../stores/Toast";
+import { useToastStore } from "../stores/ToastStore";
 
 let visible = ref(false);
 let title = "";

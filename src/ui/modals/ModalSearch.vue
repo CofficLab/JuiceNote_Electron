@@ -35,10 +35,11 @@
 import { nextTick, ref } from "vue";
 import { useRouter } from "vue-router";
 import { Node } from "../entities/Node";
-import Preload from "../entities/Preload";
+import Preload from "../api/Preload";
 import IconBook from "../icons/IconBook.vue";
 import IconChapter from "../icons/IconChapter.vue";
 import IconPage from "../icons/IconPage.vue";
+import { NodeApi } from "../api/NodeApi";
 
 const router = useRouter();
 let keyword = "";
@@ -65,7 +66,7 @@ const submit = (e: KeyboardEvent) => {
     nodes.value = [];
   } else {
     console.log("提交了搜索", keyword);
-    nodes.value = Node.search(keyword);
+    nodes.value = NodeApi.search(keyword);
   }
 };
 

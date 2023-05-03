@@ -37,11 +37,9 @@
 
 <script lang="ts" setup>
 import { computed } from "vue";
-import { useRoute } from "vue-router";
+import { NodeApi } from "../api/NodeApi";
 import Book from "../components/Book.vue";
-import { Node, NodeApi } from "../entities/Node";
 
-const route = useRoute();
 let booksVisible = computed(() => {
   return NodeApi.getBooks().filter((book) => book.isVisible);
 });

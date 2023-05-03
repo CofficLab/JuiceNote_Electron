@@ -9,23 +9,13 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-import ArrowRightCircle from "../assets/icons/arrow-right-circle.svg";
-import Link from "./Link.vue";
+<script lang="ts" setup>
+import { computed } from "vue";
 import Next from "../operators/Next.vue";
 
-export default defineComponent({
-  props: { current: { type: Node, required: true } },
-  components: {
-    ArrowRightCircle,
-    Link,
-    Next,
-  },
-  computed: {
-    next() {
-      return this.current.getNextPage();
-    },
-  },
-});
+const props = defineProps({
+  current: { type: Node, required: true },
+})
+
+const next = computed(() => props.current.nextPage())
 </script>

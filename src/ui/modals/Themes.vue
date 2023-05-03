@@ -51,7 +51,7 @@
 </template>
 
 <script lang="ts" setup>
-import Preload from "../entities/Preload";
+import Preload from "../api/Preload";
 import Themes from "../entities/Themes";
 import IconRight from "../icons/IconCorrect.vue";
 import { ref, nextTick } from "vue";
