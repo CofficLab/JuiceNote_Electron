@@ -22,7 +22,7 @@ class NodeDB {
     getFirstBook(): Node {
         let result = this.db.prepare('select * from nodes where is_book=1 order by priority asc limit 1').get()
 
-        log.info('get first book', result)
+        log.debug('get first book', result)
         return new Node(result)
     }
 

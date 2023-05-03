@@ -39,7 +39,7 @@ let save = function (content) {
 watch(route, () => {
   if (route.name != "lessons.show" && route.name != "lessons.edit") return;
 
-  node = RouteBox.getCurrentNode();
+  node = routeBox.getCurrentNode();
 
   if (route.hash.length > 0) {
     // 获取带有锚点的元素
