@@ -29,7 +29,6 @@ function createWindow(option?: BrowserWindowConstructorOptions): BrowserWindow {
 
     if (app.isPackaged) {
         win.loadFile(Config.INDEX_HTML_PATH)
-        win.webContents.openDevTools()
     } else {
         win.loadURL(Config.URL)
         win.webContents.openDevTools()
