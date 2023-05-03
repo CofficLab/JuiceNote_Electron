@@ -47,8 +47,8 @@ import Aside from "./Aside.vue";
 import ThemesConfig from "../entities/Themes";
 import RouteBox from "../entities/RouteBox";
 import { useRoute } from "vue-router";
-import { useCurrentNodeStore } from "../stores/node";
-import { EmptyNode, NodeApi } from "../entities/Node";
+import { useCurrentNodeStore } from "../stores/NodeStore";
+import { EmptyNode } from "../entities/Node";
 
 const route = useRoute();
 const nodeStore = useCurrentNodeStore();

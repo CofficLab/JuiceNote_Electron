@@ -6,7 +6,7 @@
 
 <script lang="ts" setup>
 import { computed } from "vue";
-import { useToastStore } from "../stores/Toast";
+import { useToastStore } from "../stores/ToastStore";
 
 const message = computed(() => useToastStore().message);
 </script>

@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts" setup>
-import PhotoIcon from "../assets/icons/photo.svg";
+import PhotoIcon from "../icons/photo.svg";
 import { Node } from "../entities/Node";
 
 const props = defineProps({

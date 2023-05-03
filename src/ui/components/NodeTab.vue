@@ -6,23 +6,17 @@
   </div>
 
   <div class="tabs-container" v-if="current.isTab">
-    <Link v-for="child in current.getChildren()" class="tab-lifted tab" :node="child">{{ child.title }}</Link>
+    <Link v-for="child in current.getChildren()" class="tab tab-lifted" :node="child">{{ child.title }}</Link>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from "vue";
-import { useRoute } from "vue-router";
 import Link from "../components/Link.vue";
-import { Node, NodeApi } from "../entities/Node";
-import RouteBox from "../entities/RouteBox";
-const props = defineProps({
-  current: null,
-});
+import { NodeApi } from "../api/NodeApi";
+import { useCurrentNodeStore } from "../stores/NodeStore";
 
-const route = useRoute();
-const routeBox = new RouteBox(route);
-const current = computed(() => routeBox.getCurrentNode());
+const current = computed(() => useCurrentNodeStore().current);
 
 const shouldActive = function (id) {
   let node = NodeApi.find(id);

@@ -1,6 +1,6 @@
 <template>
   <node-view-wrapper>
-    <div class="mt-1 mb-6 flex flex-row items-center justify-between rounded border-2 border-black/60 bg-yellow-400 px-4 dark:bg-yellow-600/50">
+    <div class="mb-6 mt-1 flex flex-row items-center justify-between rounded border-2 border-black/60 bg-yellow-400 px-4 dark:bg-yellow-600/50">
       <div class="flex flex-row items-center gap-1">
         <InfoIcon></InfoIcon>
         <span>官网</span>
@@ -13,8 +13,8 @@
 
 <script>
 import { NodeViewContent, nodeViewProps, NodeViewWrapper } from "@tiptap/vue-3";
-import LinkIcon from "../assets/icons/arrow-top-right-on-square.svg";
-import InfoIcon from "../assets/icons/info.svg";
+import LinkIcon from "../icons/IconGoto.vue";
+import InfoIcon from "../icons/IconInfo.vue";
 import { useRoute } from "vue-router";
 
 export default {

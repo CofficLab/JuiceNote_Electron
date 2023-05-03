@@ -1,7 +1,7 @@
 <template>
   <div class="pt-8">
     <div class="sticky top-12 z-50 flex w-full flex-grow">
-      <NodeTab :current="node"></NodeTab>
+      <NodeTab></NodeTab>
     </div>
 
     <div class="flex h-full w-full flex-col items-center">
@@ -20,17 +20,18 @@ import Editor from "../components/Editor.vue";
 import Add from "../operators/Add.vue";
 import { computed, watch } from "vue";
 import { useRoute } from "vue-router";
-import { useCurrentNodeStore } from "../stores/node";
+import { useCurrentNodeStore } from "../stores/NodeStore";
+import { NodeApi } from "../api/NodeApi";
 
 const route = useRoute();
 const nodeStore = useCurrentNodeStore();
 const editable = computed(() => route.name == "lessons.edit");
 let node = computed(() => nodeStore.current);
 
-let save = function (content) {
-  if (content != node.content) {
-    // console.log("保存节点", node.id, "的内容", content.substring(0, 20) + "...");
-    node.updateContent(content);
+let save = function (content: string) {
+  if (content != node.value.content) {
+    console.log("保存节点", node.value.id, "的内容", content.substring(0, 20) + "...");
+    NodeApi.updateContent(node.value.id, content);
   }
 };
 

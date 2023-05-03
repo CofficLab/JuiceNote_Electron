@@ -30,8 +30,8 @@ import SideMenuItem from "../components/SideMenuItem.vue";
 import Link from "../components/Link.vue";
 import { useRoute } from "vue-router";
 import RouteBox from "../entities/RouteBox";
-import Preload from "../entities/Preload";
-import { useCurrentNodeStore } from "../stores/node";
+import Preload from "../api/Preload";
+import { useCurrentNodeStore } from "../stores/NodeStore";
 
 const route = useRoute();
 const nodeStore = useCurrentNodeStore();

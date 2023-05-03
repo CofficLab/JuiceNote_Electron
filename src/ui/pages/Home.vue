@@ -2,7 +2,7 @@
 
 <script lang="ts" setup>
 import { useRouter } from "vue-router";
-import { NodeApi } from "../entities/Node";
+import { NodeApi } from "../api/NodeApi";
 
 const router = useRouter();
 

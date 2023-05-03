@@ -8,7 +8,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import CloudArrowUp from "../icons/IconUp.vue";
-import { useToastStore } from "../stores/Toast";
+import { useToastStore } from "../stores/ToastStore";
 
 export default defineComponent({
   props: {

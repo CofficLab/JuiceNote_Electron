@@ -24,7 +24,7 @@ import BtnOfficialLink from "../components/BtnOfficialLink.vue";
 import Terminal from "../operators/Terminal.vue";
 import { useRoute } from "vue-router";
 import { computed } from "vue";
-import Preload from "../entities/Preload";
+import Preload from "../api/Preload";
 import RouteBox from "../entities/RouteBox";
 import Shop from "../operators/Shop.vue";
 import Toast from "./Toast.vue";

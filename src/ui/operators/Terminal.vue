@@ -6,15 +6,15 @@
 </template>
 
 <script lang="ts" setup>
-import CommandLine from "../assets/icons/command-line.svg";
+import CommandLine from "../icons/command-line.svg";
 
 const props = defineProps({
   showText: Boolean,
   showIcon: {
     type: Boolean,
-    default: true
+    default: true,
   },
 });
 
-const click =  () => dispatchEvent(new Event('toggle-terminal'))
+const click = () => dispatchEvent(new Event("toggle-terminal"));
 </script>

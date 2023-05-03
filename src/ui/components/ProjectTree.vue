@@ -26,7 +26,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import Link from "./Link.vue";
-import ChevronDown from "../assets/icons/chevron-down.svg";
+import ChevronDown from "../icons/chevron-down.svg";
 import ProjectController from "../controllers/ProjectController";
 import ProjectItem from "./ProjectItem.vue";
 import project from "../entities/Project";

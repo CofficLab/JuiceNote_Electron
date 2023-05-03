@@ -28,9 +28,9 @@ import { FitAddon } from "xterm-addon-fit";
 import xtermTheme from "xterm-theme";
 import DraggableWindow from "../components/DraggableWindow.vue";
 import VueDragResize from "vue-drag-resize/src";
-import Preload from "../entities/Preload"
+import Preload from "../api/Preload";
 
-const ipc = Preload.ipc
+const ipc = Preload.ipc;
 
 export default {
   props: {
@@ -87,15 +87,10 @@ export default {
         xterm.open(document.getElementById("terminal" + this.id));
         that.xterm = xterm;
         that.fitAddon = fitAddon;
-        that.channels = [
-          "terminal-incomingData-" + pid,
-          "terminal-keystroke-" + pid,
-          "terminal-resize-" + pid,
-          "terminal-close-" + pid,
-        ];
-        xterm.onData((data) => ipc.send(that.channels[1], data))
-        xterm.onResize((size) => ipc.send(that.channels[2], size.cols, size.rows))
-        window.preloadApi.terminal.incomingData(pid, (event, data) => xterm.write(data))
+        that.channels = ["terminal-incomingData-" + pid, "terminal-keystroke-" + pid, "terminal-resize-" + pid, "terminal-close-" + pid];
+        xterm.onData((data) => ipc.send(that.channels[1], data));
+        xterm.onResize((size) => ipc.send(that.channels[2], size.cols, size.rows));
+        window.preloadApi.terminal.incomingData(pid, (event, data) => xterm.write(data));
         window.onresize = () => that.fitSize();
         that.fitSize();
         xterm.focus();

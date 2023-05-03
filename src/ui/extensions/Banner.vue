@@ -12,7 +12,7 @@
 <script setup>
 import { NodeViewContent, nodeViewProps, NodeViewWrapper } from "@tiptap/vue-3";
 import { useRoute } from "vue-router";
-import Info from "../assets/icons/info.svg";
+import Info from "../icons/IconInfo.vue";
 
 const route = useRoute();
 const editable = route.query.editable;

@@ -1,5 +1,6 @@
 import { RouteLocationNormalizedLoaded, Router, RouterLink, useRoute, useRouter } from "vue-router";
-import { DatabaseNode, HomeNode, Node, NodeApi, ShopNode } from "./Node";
+import { DatabaseNode, HomeNode, Node, ShopNode } from "./Node";
+import { NodeApi } from "../api/NodeApi";
 
 class RouteBox {
     public route: RouteLocationNormalizedLoaded
