@@ -6,12 +6,9 @@
 </template>
 
 <script setup>
-import ArrowLeftCircle from "../icons/arrow-left-circle.svg";
-
-import { useRouter } from "vue-router";
+import ArrowLeftCircle from "../icons/IconPrev.vue";
 import { Node } from "../entities/Node";
 
-const router = useRouter();
 const props = defineProps({
   showText: {
     type: Boolean,
