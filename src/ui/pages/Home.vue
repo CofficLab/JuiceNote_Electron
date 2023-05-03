@@ -1,29 +1,13 @@
-<template>
-  <div class="h-screen w-full overflow-scroll overscroll-none py-8">
-    <div class="mx-auto grid max-w-screen-2xl grid-cols-2 gap-4 p-12 py-8 lg:grid-cols-3 xl:grid-cols-4">
-      <template v-for="book in booksVisible" v-if="route.name == 'home.show'">
-        <Book :book="book"></Book>
-      </template>
-
-      <template v-for="book in books" v-if="route.name == 'home.edit'">
-        <Book :book="book"></Book>
-      </template>
-
-      <div class="h-24"></div>
-    </div>
-  </div>
-</template>
+<template></template>
 
 <script lang="ts" setup>
-import { computed } from "vue";
-import { useRoute } from "vue-router";
-import Book from "../components/Book.vue";
+import { useRouter } from "vue-router";
 import { Node } from "../entities/Node";
 
-const route = useRoute();
-let booksVisible = computed(() => {
-  return Node.getBooks().filter((book) => book.isVisible);
-});
+const router = useRouter();
 
-let books = computed(() => NodeController.getBooks());
+let firstBook = Node.getBooks()[0];
+let firstPage = firstBook.getFirstPage();
+
+router.push({ name: "lessons.show", params: { id: firstPage.id } });
 </script>
