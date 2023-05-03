@@ -11,7 +11,7 @@ import ClipboardJS from "clipboard";
 import ToastController from "../entities/Toast";
 import IconCopy from "../assets/icons/clipboard-document.svg";
 import { useRoute } from "vue-router";
-import { Node } from "../entities/Node";
+import { Node, NodeApi } from "../entities/Node";
 
 var clipboard = new ClipboardJS(".copy");
 clipboard.on("success", function () {
@@ -33,5 +33,5 @@ const props = defineProps({
   },
 });
 
-const content = computed(() => Node.find(parseInt(route.params.id.toString())).content);
+const content = computed(() => NodeApi.find(parseInt(route.params.id.toString())).content);
 </script>

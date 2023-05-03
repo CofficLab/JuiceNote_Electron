@@ -5,6 +5,7 @@ import setTerminalController from './controllers/terminalController'
 import setRunController from './controllers/runner'
 import { release } from 'os'
 import setWildController from './controllers/wildController'
+import log from 'electron-log'
 
 // Remove electron security warnings
 // This warning only shows in development mode
@@ -25,6 +26,7 @@ if (!app.requestSingleInstanceLock()) {
 let win: BrowserWindow | null = null
 
 app.whenReady().then(function () {
+    log.info('app.whenReady:创建窗口')
     win = createWindow()
 
     setTerminalController(win)
@@ -47,7 +49,7 @@ app.on('second-instance', () => {
 })
 
 app.on('activate', () => {
-    console.log('主进程检测到事件: activate')
+    log.info('主进程检测到事件: activate')
     const allWindows = BrowserWindow.getAllWindows()
     if (allWindows.length) {
         allWindows[0].focus()

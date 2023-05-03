@@ -21,12 +21,13 @@ import Add from "../operators/Add.vue";
 import { computed, watch } from "vue";
 import { useRoute } from "vue-router";
 import { Node } from "../entities/Node";
+import RouteBox from "../entities/RouteBox";
 
 const route = useRoute();
-
+const routeBox = new RouteBox(route);
 const editable = computed(() => route.name == "lessons.edit");
 
-let node = Node.find(route.params.id.toString());
+let node = routeBox.getCurrentNode();
 
 let save = function (content) {
   if (content != node.content) {
@@ -38,7 +39,7 @@ let save = function (content) {
 watch(route, () => {
   if (route.name != "lessons.show" && route.name != "lessons.edit") return;
 
-  node = Node.find(route.params.id.toString());
+  node = RouteBox.getCurrentNode();
 
   if (route.hash.length > 0) {
     // 获取带有锚点的元素
