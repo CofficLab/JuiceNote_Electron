@@ -5,11 +5,9 @@
 </template>
 
 <script lang="ts" setup>
-import { useRoute } from "vue-router";
 import { computed } from "vue";
 import Breadcrumbs from "./Breadcrumbs.vue";
-import RouteBox from "../entities/RouteBox";
+import { useCurrentNodeStore } from "../stores/node";
 
-const route = useRoute();
-const current = computed(() => RouteBox.getCurrentNode(route));
+const current = computed(() => useCurrentNodeStore().current);
 </script>

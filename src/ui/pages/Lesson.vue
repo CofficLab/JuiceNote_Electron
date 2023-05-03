@@ -20,14 +20,12 @@ import Editor from "../components/Editor.vue";
 import Add from "../operators/Add.vue";
 import { computed, watch } from "vue";
 import { useRoute } from "vue-router";
-import { Node } from "../entities/Node";
-import RouteBox from "../entities/RouteBox";
+import { useCurrentNodeStore } from "../stores/node";
 
 const route = useRoute();
-const routeBox = new RouteBox(route);
+const nodeStore = useCurrentNodeStore();
 const editable = computed(() => route.name == "lessons.edit");
-
-let node = routeBox.getCurrentNode();
+let node = computed(() => nodeStore.current);
 
 let save = function (content) {
   if (content != node.content) {
@@ -38,8 +36,6 @@ let save = function (content) {
 
 watch(route, () => {
   if (route.name != "lessons.show" && route.name != "lessons.edit") return;
-
-  node = routeBox.getCurrentNode();
 
   if (route.hash.length > 0) {
     // 获取带有锚点的元素

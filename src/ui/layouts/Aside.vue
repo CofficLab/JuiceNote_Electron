@@ -31,12 +31,14 @@ import Link from "../components/Link.vue";
 import { useRoute } from "vue-router";
 import RouteBox from "../entities/RouteBox";
 import Preload from "../entities/Preload";
+import { useCurrentNodeStore } from "../stores/node";
 
 const route = useRoute();
+const nodeStore = useCurrentNodeStore();
 const routeBox = new RouteBox(route);
 const book = ref(routeBox.getCurrentBook());
 const isWindows = Preload.isWindows();
-const current = computed(() => routeBox.getCurrentNode());
+const current = computed(() => nodeStore.current);
 const hideTitleBar = false;
 const shouldActive = (node) => RouteBox.isActive(route, node);
 

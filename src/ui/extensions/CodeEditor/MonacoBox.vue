@@ -44,11 +44,10 @@ import Trash from "./trash.vue";
 import Preload from "../../entities/Preload";
 import MonacoBox from "./MonacoBox";
 import ClipboardJS from "clipboard";
-import Toast from "../../entities/Toast";
 
 var clipboard = new ClipboardJS(".copy");
 clipboard.on("success", function () {
-  Toast.set("已将源码复制到剪贴板");
+  console.log("已将源码复制到剪贴板");
 });
 
 const props = defineProps({

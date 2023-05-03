@@ -20,7 +20,7 @@ export default defineComponent({
   components: { ArrowLeftCircle },
   methods: {
     transform() {
-      return ToastController.set(NodeController.transformToTab(this.node));
+      // return ToastController.set(NodeController.transformToTab(this.node));
     },
   },
 });

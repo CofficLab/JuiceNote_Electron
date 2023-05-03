@@ -7,8 +7,8 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import CloudArrowUp from "../assets/icons/cloud-arrow-up.svg";
-import ToastController from "../entities/Toast";
+import CloudArrowUp from "../icons/IconUp.vue";
+import { useToastStore } from "../stores/Toast";
 
 export default defineComponent({
   props: {
@@ -34,7 +34,7 @@ export default defineComponent({
         exec("git commit -m '提交文档变动'", function (error: any, stdout: string, stderr: any) {
           if (stdout) {
             console.log(stdout);
-            ToastController.set(stdout);
+            useToastStore().set(stdout);
           }
           if (error) return console.error(stderr, error);
 
