@@ -17,7 +17,6 @@
       to: "",
     },
     "database",
-    "temp",
     "playground",
   ],
   mac: {
