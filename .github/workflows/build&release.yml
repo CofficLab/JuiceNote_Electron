@@ -99,6 +99,15 @@ jobs:
         with:
           ref: ${{ env.tag }}
 
+      - name: 检查文件(macOS、Ubuntu)
+        if: matrix.os != 'windows-latest'
+        run: ls -alh .
+
+      - name: 检查文件(Windows)
+        if: matrix.os == 'windows-latest'
+        run: |
+          dir .
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
