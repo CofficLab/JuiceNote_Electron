@@ -1,5 +1,5 @@
 import { RouteLocationNormalizedLoaded, Router, RouterLink, useRoute, useRouter } from "vue-router";
-import { DatabaseNode, HomeNode, Node, ShopNode } from "./Node";
+import { DatabaseNode, HomeNode, Node, NodeApi, ShopNode } from "./Node";
 
 class RouteBox {
     public route: RouteLocationNormalizedLoaded
@@ -53,7 +53,7 @@ class RouteBox {
 
     static getCurrentNode(route: RouteLocationNormalizedLoaded) {
         if (this.isLesson(route)) {
-            return Node.find(route.params.id.toString())
+            return NodeApi.find(route.params.id.toString())
         }
 
         return null
@@ -72,7 +72,7 @@ class RouteBox {
 
     static getCurrentBook(route: RouteLocationNormalizedLoaded) {
         if (this.isLesson(route)) {
-            return Node.find(route.params.id.toString()).getBook()
+            return NodeApi.find(route.params.id.toString()).getBook()
         }
 
         return null

@@ -39,12 +39,10 @@
 import { computed } from "vue";
 import { useRoute } from "vue-router";
 import Book from "../components/Book.vue";
-import { Node } from "../entities/Node";
+import { Node, NodeApi } from "../entities/Node";
 
 const route = useRoute();
 let booksVisible = computed(() => {
-  return Node.getBooks().filter((book) => book.isVisible);
+  return NodeApi.getBooks().filter((book) => book.isVisible);
 });
-
-let books = computed(() => NodeController.getBooks());
 </script>

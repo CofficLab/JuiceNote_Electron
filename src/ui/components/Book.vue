@@ -1,7 +1,7 @@
 <template>
   <div class="card relative h-36 w-72 bg-base-100 shadow-2xl">
     <div class="badge-warning badge absolute left-0 top-2 gap-2 shadow-2xl" v-if="!book.isVisible">已隐藏</div>
-    <div class="dropdown-left dropdown absolute bottom-0 right-0" v-if="editable">
+    <div class="dropdown dropdown-left absolute bottom-0 right-0" v-if="editable">
       <label tabindex="0" class="btn-sm btn m-1 ring">...</label>
       <ul tabindex="0" class="dropdown-content menu rounded-box w-52 bg-base-100 p-2 shadow">
         <li><ChangeCover @click="openUploadDialog" :node="book"></ChangeCover></li>
@@ -41,12 +41,11 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, computed, watch } from "vue";
 import { useRoute } from "vue-router";
-import ToastController from "../entities/Toast";
+import { useToastStore } from "../stores/Toast";
 import Visible from "../operators/Visible.vue";
-
 import "vue-cropper/dist/index.css";
 import { VueCropper } from "vue-cropper";
 import ChangeCover from "../operators/ChangeCover.vue";

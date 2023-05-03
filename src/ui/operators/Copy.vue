@@ -8,14 +8,14 @@
 <script lang="ts" setup>
 import { computed } from "vue";
 import ClipboardJS from "clipboard";
-import ToastController from "../entities/Toast";
+import { useToastStore } from "../stores/Toast";
 import IconCopy from "../assets/icons/clipboard-document.svg";
 import { useRoute } from "vue-router";
-import { Node } from "../entities/Node";
+import { useCurrentNodeStore } from "../stores/node";
 
 var clipboard = new ClipboardJS(".copy");
 clipboard.on("success", function () {
-  ToastController.set("已将源码复制到剪贴板");
+  useToastStore().set("已将源码复制到剪贴板");
 });
 
 const route = useRoute();
@@ -33,5 +33,5 @@ const props = defineProps({
   },
 });
 
-const content = computed(() => Node.find(parseInt(route.params.id.toString())).content);
+const content = computed(() => useCurrentNodeStore().current.content);
 </script>

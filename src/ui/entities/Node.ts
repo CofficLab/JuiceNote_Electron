@@ -2,6 +2,59 @@ import Preload from "./Preload"
 
 const Ipc = Preload.ipc
 
+const NodeApi = {
+    getChildren(id: number): Node[] {
+        let children = Ipc.sendSync('getChildren', id)
+
+        return children.map((child: NodeOptions) => {
+            return new Node(child)
+        });
+    },
+    search(keyword: string): Node[] {
+        return Ipc.sendSync('search', keyword).map((node: NodeOptions) => {
+            return new Node(node)
+        })
+    },
+    updatePriority(id: number, priority: number) {
+        // console.log(this.title, '更新priority为', priority)
+        Ipc.sendSync('updatePriority', id, priority)
+    },
+    updateContent(id: number, content: string) {
+        dispatchEvent(new Event('nodeUpdated'))
+        Ipc.send('updateContent', id, content)
+    },
+    updateCover(id: number, base64Code: string): string {
+        return Ipc.sendSync('updateCover', id, base64Code)
+    },
+    updateTitle(id: number, title: string): string {
+        return Ipc.sendSync('updateTitle', title, id)
+    },
+    updateVisible(id: number, visible: boolean) {
+        Ipc.sendSync('updateVisible', id)
+    },
+    delete(id: number): string {
+        return Ipc.sendSync('delete', id)
+    },
+    find(id: number | String): Node {
+        return new Node(Ipc.sendSync('find', id))
+    },
+    getBooks(): Node[] {
+        let items = Ipc.sendSync('getBooks')
+
+        return items.map((item: NodeOptions) => {
+            return new Node(item)
+        });
+    },
+    getFirstBook(): Node {
+        return this.getBooks()[0]
+    },
+    getVisibleBooks(): Node[] {
+        return this.getBooks().map((item: NodeOptions) => {
+            return new Node(item)
+        }).filter(node => node.isVisible);
+    }
+}
+
 interface NodeOptions {
     id?: number
     title: string
@@ -43,86 +96,21 @@ class Node {
     public cover: string = ''
     public content: string = ''
 
-    constructor(public options: NodeOptions) {
+    constructor(options: NodeOptions) {
         Object.assign(this, options)
-    }
-
-    // 创建子页面，返回新创建的ID
-    createChildPage(title: string, content: string): Number {
-        return Ipc.sendSync('createChildPage', this.id, title, content)
-    }
-
-    // 创建兄弟章节，返回新创建的ID
-    createChildChapter(title: string): Number {
-        return Ipc.sendSync('createChildChapter', this.id, title)
     }
 
     getBook(): Node {
         if (this.isBook) return this
 
-        return this.getParent()!.getBook()
-    }
-
-    getFirstTabInParents(): Node | undefined {
-        return this.getParents().find((parent) => parent.getParent()?.isBook)
-    }
-
-    getTabs(): Node[] {
-        let tabs = Ipc.sendSync('getTabs', this.id)
-        return tabs.map((tab: NodeOptions) => {
-            return new Node(tab)
-        })
-    }
-
-    getParent(): Node | null {
-        if (this.parentId == 0) {
-            return null
-        }
-
-        // console.log('get parent from db,id is', this.id, 'parent id is',this.parentId)
-        let result = Node.find(this.parentId)
-
-        return new Node(result ?? {})
-    }
-
-    getParents(): Node[] {
-        let parents: Node[] = []
-        let parent = this.getParent()
-
-        while (parent) {
-            parents.push(parent)
-            parent = parent.getParent()
-        }
-
-        return parents.reverse()
-    }
-
-    getChildren(): Node[] {
-        let children = Ipc.sendSync('getChildren', this.id)
-
-        return children.map((child: NodeOptions) => {
-            return new Node(child)
-        });
-    }
-
-    getVisibleChildren(): Node[] {
-        let children = Ipc.sendSync('getVisibleChildren', this.id)
-
-        return children.map((child: NodeOptions) => {
-            return new Node(child)
-        });
-    }
-
-    getSiblings(): Node[] {
-        return Ipc.sendSync('getSiblings', this.id).map((sibling: NodeOptions) => {
-            return new Node(sibling)
-        })
+        return this.getParent().getBook()
     }
 
     getFirstChild(): Node {
-        let result = Ipc.sendSync('getFirstChild', this.id)
+        let children = NodeApi.getChildren(this.id)
+        let firstChild = children[0]
 
-        return new Node(result ?? {})
+        return firstChild || EmptyNode
     }
 
     getFirstPage(): Node {
@@ -131,91 +119,61 @@ class Node {
         return this.getFirstChild().getFirstPage()
     }
 
-    setChildrenPriority(children: Node[]) {
-        // console.log('设置子元素的排序', children)
-        children.forEach((child, index) => {
-            child.updatePriority(index)
-        })
-    }
-
-    refresh(): Node {
-        return Node.find(this.id)
-    }
-
-    static updateChildrenPriority(children: Node[]) {
-        let parent = children.at(0)?.getParent()
-        if (parent == undefined) {
-            throw '更新children发生错误，找不到parent'
+    getParent(): Node {
+        if (this.parentId == 0) {
+            return EmptyNode
         }
 
-        parent.setChildrenPriority(children)
-        dispatchEvent(new Event('nodeUpdated'))
+        // console.log('get parent from db,id is', this.id, 'parent id is',this.parentId)
+        let result = NodeApi.find(this.parentId)
+
+        return new Node(result)
     }
 
-    updatePriority(priority: number) {
-        // console.log(this.title, '更新priority为', priority)
-        Ipc.sendSync('updatePriority', this.id, priority)
-    }
+    getParents(): Node[] {
+        let parents: Node[] = []
+        let parent = this.getParent()
 
-    updateContent(content: string) {
-        dispatchEvent(new Event('nodeUpdated'))
-        Ipc.send('updateContent', this.id, content)
-    }
-
-    updateCover(base64Code: string): string {
-        return Ipc.sendSync('updateCover', this.id, base64Code)
-    }
-
-    updateTitle(title: string): string {
-        return Ipc.sendSync('updateTitle', title, this.id)
-    }
-
-    updateVisible(): string {
-        let result = Ipc.sendSync('updateVisible', this.id)
-
-        let updated = this.refresh()
-        if (result != null) {
-            return '「' + updated.title + '」已' + (updated.isVisible ? '展示' : '隐藏')
-        } else {
-            return '「' + updated.title + '」的可见性更新失败'
+        while (parent != EmptyNode) {
+            parents.push(parent)
+            parent = parent.getParent()
         }
+
+        return parents.reverse()
     }
 
-    delete(): string {
-        return Ipc.sendSync('delete', this.id)
+    getChildren(): Node[] {
+        return NodeApi.getChildren(this.id)
     }
 
-    static find(id: number | String): Node {
-        return new Node(Ipc.sendSync('find', id))
+    getVisibleChildren(): Node[] {
+        return this.getChildren().filter(child => child.isVisible)
     }
 
-    static getBooks(): Node[] {
-        let items = Ipc.sendSync('getBooks')
-
-        return items.map((item: NodeOptions) => {
-            return new Node(item)
-        });
+    getSiblings(): Node[] {
+        return this.getParent().getChildren().filter(child => child.id != this.id)
     }
 
-    static getVisibleBooks(): Node[] {
-        return Node.getBooks().map((item: NodeOptions) => {
-            return new Node(item)
-        }).filter(node => node.isVisible);
+    getTabs(): Node[] {
+        let children = this.getChildren()
+
+        return children.filter(child => child.isTab)
     }
 
-    static search(keyword: string): Node[] {
-        return Ipc.sendSync('search', keyword).map((node: NodeOptions) => {
-            return new Node(node)
-        })
+    getFirstTabInParents(): Node | undefined {
+        return this.getParents().find((parent) => parent.getParent()?.isBook)
     }
 }
 
+const EmptyNode = new Node({ title: '', isEmpty: true })
 const ShopNode = new Node({ title: '商店', isShop: true, isLesson: false })
 const HomeNode = new Node({ title: '首页', isHome: true, isLesson: false })
 const DatabaseNode = new Node({ title: '知识库', isDatabase: true, isLesson: false })
 
 export {
     Node,
+    EmptyNode,
+    NodeApi,
     ShopNode,
     HomeNode,
     DatabaseNode

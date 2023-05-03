@@ -20,9 +20,7 @@
 <script lang="ts" setup>
 import Home from "../operators/Home.vue";
 import More from "../operators/More.vue";
-import Next from "../operators/Next.vue";
 import BtnOfficialLink from "../components/BtnOfficialLink.vue";
-import Prev from "../operators/Prev.vue";
 import Terminal from "../operators/Terminal.vue";
 import { useRoute } from "vue-router";
 import { computed } from "vue";

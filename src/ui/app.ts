@@ -1,4 +1,5 @@
 import { createApp } from 'vue'
+import { createPinia } from 'pinia'
 import App from './layouts/App.vue'
 import Home from './pages/Home.vue'
 import Lesson from './pages/Lesson.vue'
@@ -7,7 +8,7 @@ import Shop from './pages/Shop.vue'
 import NotFound from './pages/NotFound.vue'
 import { createRouter, createWebHashHistory } from 'vue-router'
 import "./app.css"
-import { Node } from './entities/Node'
+import { Node, NodeApi } from './entities/Node'
 
 // 定义路由
 const router = createRouter({
@@ -43,7 +44,7 @@ router.beforeEach(function (to, from) {
 
   // 如果不是page，跳转到第一个page子节点
   if (to.name == 'lessons.show') {
-    let node = Node.find(parseInt(to.params.id.toString()))
+    let node = NodeApi.find(parseInt(to.params.id.toString()))
 
     if (!node.isPage && node.getFirstPage().id > 0) {
       return {
@@ -62,7 +63,9 @@ router.beforeEach(function (to, from) {
   }
 })
 
+const pinia = createPinia()
 const app = createApp(App)
 app.config.unwrapInjectedRef = true
 app.use(router)
+app.use(pinia)
 app.mount('#app')

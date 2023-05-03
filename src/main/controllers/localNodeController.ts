@@ -1,78 +1,40 @@
 import { ipcMain } from "electron"
-import { Node } from "../models/BaseNode"
+import { LocalNodeDB } from "../models/LocalNode"
 
 export default function setNodeController() {
     ipcMain.on('getBooks', (event) => {
-        return event.returnValue = Node.getBooks()
-    })
-
-    ipcMain.on('getBook', (event, id) => {
-        return event.returnValue = Node.find(id).getBook()
-    })
-
-    ipcMain.on('getContent', (event, id) => {
-        return event.returnValue = Node.find(id).getContent()
-    })
-
-    ipcMain.on('getChildren', (event, id) => {
-        return event.returnValue = Node.find(id).getChildren()
-    })
-
-    ipcMain.on('getSiblings', (event, id) => {
-        return event.returnValue = Node.find(id).getSiblings()
-    })
-
-    ipcMain.on('search', (event, keyword) => {
-        return event.returnValue = Node.search(keyword)
-    })
-
-    ipcMain.on('getTabs', (event, id) => {
-        return event.returnValue = Node.find(id).getTabs()
-    })
-
-    ipcMain.on('getVisibleChildren', (event, id) => {
-        return event.returnValue = Node.find(id).getVisibleChildren()
+        return event.returnValue = LocalNodeDB.getBooks()
     })
 
     ipcMain.on('find', (event, id) => {
-        return event.returnValue = Node.find(id)
+        return event.returnValue = LocalNodeDB.find(id)
     })
 
-    ipcMain.on('getFirstPage', (event, id) => {
-        return event.returnValue = Node.find(id).getFirstPage()
+    ipcMain.on('getChildren', (event, id) => {
+        return event.returnValue = LocalNodeDB.getChildren(id)
     })
 
-    ipcMain.on('getFirstChild', (event, id) => {
-        return event.returnValue = Node.find(id).getFirstChild()
+    ipcMain.on('search', (event, keyword) => {
+        return event.returnValue = LocalNodeDB.search(keyword)
     })
 
     ipcMain.on('updateTitle', (event, title, id) => {
-        return event.returnValue = Node.find(id).updateTitle(title)
+        return event.returnValue = LocalNodeDB.updateTitle(id, title)
     })
 
-    ipcMain.on('updateVisible', (event, id) => {
-        return event.returnValue = Node.find(id).updateVisible()
+    ipcMain.on('updateVisible', (event, id, visible) => {
+        return event.returnValue = LocalNodeDB.updateVisible(id, visible)
     })
 
     ipcMain.on('updateContent', (event, id, content) => {
-        // console.log('update content', id, content)
-        return event.returnValue = Node.find(id).updateContent(content)
+        return event.returnValue = LocalNodeDB.updateContent(id, content)
     })
 
     ipcMain.on('updatePriority', (event, id, priority) => {
-        console.log('update priority', id, priority)
-        return event.returnValue = Node.find(id).updatePriority(priority)
-    })
-
-    ipcMain.on('createChildPage', (event, id, title, content) => {
-        return event.returnValue = Node.find(id).createChildPage(title, content)
-    })
-
-    ipcMain.on('createChildChapter', (event, id, title, content) => {
-        return event.returnValue = Node.find(id).createChildChapter(title)
+        return event.returnValue = LocalNodeDB.updatePriority(id, priority)
     })
 
     ipcMain.on('delete', (e, id) => {
-        return e.returnValue = Node.find(id).delete()
+        return e.returnValue = LocalNodeDB.delete(id)
     })
 }

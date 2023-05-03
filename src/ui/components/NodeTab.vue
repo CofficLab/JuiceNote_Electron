@@ -6,7 +6,7 @@
   </div>
 
   <div class="tabs-container" v-if="current.isTab">
-    <Link v-for="child in current.getChildren()" class="tab tab-lifted" :node="child">{{ child.title }}</Link>
+    <Link v-for="child in current.getChildren()" class="tab-lifted tab" :node="child">{{ child.title }}</Link>
   </div>
 </template>
 
@@ -14,21 +14,20 @@
 import { computed } from "vue";
 import { useRoute } from "vue-router";
 import Link from "../components/Link.vue";
-import { Node } from "../entities/Node";
+import { Node, NodeApi } from "../entities/Node";
+import RouteBox from "../entities/RouteBox";
 const props = defineProps({
   current: null,
 });
 
 const route = useRoute();
-
-const current = computed(() => {
-  return Node.find(parseInt(route.params.id.toString()));
-});
+const routeBox = new RouteBox(route);
+const current = computed(() => routeBox.getCurrentNode());
 
 const shouldActive = function (id) {
-  let node = Node.find(id);
+  let node = NodeApi.find(id);
 
-  if (node.isPage) return current.value.id == id;
+  if (node.isPage) return current.value!.id == id;
 
   if (node.isTab)
     return current.value.getParents().some((parent) => {

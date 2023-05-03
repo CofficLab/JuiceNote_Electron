@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="dropdown-hover dropdown dropdown-end">
+    <div class="dropdown dropdown-end dropdown-hover">
       <label tabindex="0">
         <ChevronDoubleDown></ChevronDoubleDown>
       </label>
@@ -38,11 +38,11 @@ import Commit from "./Commit.vue";
 import Edit from "./Edit.vue";
 import CreateChild from "./Add.vue";
 import Visible from "./Visible.vue";
-import { Node } from "../entities/Node";
+import { Node, NodeApi } from "../entities/Node";
 import Preload from "../entities/Preload";
 
 const route = useRoute();
-const book = computed(() => Node.find(parseInt(route.params.id.toString())).getBook());
+const book = computed(() => NodeApi.find(parseInt(route.params.id.toString())).getBook());
 const isRouteLesson = computed(() => route.name && route.name.startsWith("lessons"));
 const isDev = Preload.isDev();
 </script>

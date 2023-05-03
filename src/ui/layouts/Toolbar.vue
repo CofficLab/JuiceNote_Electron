@@ -141,10 +141,10 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { Editor } from "@tiptap/vue-3";
 import { computed, ref } from "vue";
-import ToastController from "../entities/Toast";
+import { useToastStore } from "../stores/Toast.js";
 import IconCode from "../assets/icons/code-bracket.svg";
 import IconListBullet from "../assets/icons/list-bullet.svg";
 import IconBack from "../assets/icons/arrow-uturn-left.svg";
@@ -166,6 +166,7 @@ import Visible from "../operators/Visible.vue";
 import { Node } from "../entities/Node";
 
 const router = useRouter();
+const toastStore = useToastStore();
 
 const props = defineProps({
   editor: { type: Editor, required: true },
@@ -190,10 +191,10 @@ let addChat = () => props.editor.chain().focus().addChat().run();
 let cancel = () => props.editor.chain().focus().undo().run();
 let redo = () => props.editor.chain().focus().redo().run();
 let empty = () => {
-  ToastController.set(props.current.updateContent(""));
+  toastStore.set(props.current.updateContent(""));
   props.editor.commands.setContent("", false);
 };
-let save = () => ToastController.set(props.current.updateContent(props.editor.getHTML()));
+let save = () => toastStore.set(props.current.updateContent(props.editor.getHTML()));
 let setParagraph = () => {
   props.editor.chain().focus().setParagraph().run();
 };

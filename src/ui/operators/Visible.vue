@@ -7,10 +7,11 @@
 
 <script lang="ts" setup>
 import { computed } from "vue";
-import ToastController from "../entities/Toast";
-import HideIcon from "../assets/icons/no-symbol.svg";
+import { useToastStore } from "../stores/Toast";
+import HideIcon from "../icons/IconNo.vue";
 import { useRoute, useRouter } from "vue-router";
 import { Node } from "../entities/Node";
+import { useCurrentNodeStore } from "../stores/node";
 
 const props = defineProps({
   showText: {
@@ -32,9 +33,9 @@ const props = defineProps({
 const router = useRouter();
 const route = useRoute();
 
-const target = computed(() => props.node ?? Node.find(route.params.id));
+const target = computed(() => props.node ?? useCurrentNodeStore().current);
 
 const toggleVisible = function () {
-  ToastController.set(NodeController.updateVisible(target.value));
+  useToastStore().set(target.updateVisible());
 };
 </script>

@@ -7,11 +7,11 @@
 
 <script setup>
 import { computed } from "vue";
-import ToastController from "../entities/Toast";
 import Trash from "../assets/icons/trash.svg";
 
 import { useRoute, useRouter } from "vue-router";
 import { Node } from "../entities/Node";
+import { useToastStore } from "../stores/Toast";
 
 const router = useRouter();
 const route = useRoute();
@@ -38,6 +38,6 @@ const target = computed(() => {
 
 const deleteBookNode = function () {
   router.push("/lessons/" + target.value.parentId + "/show");
-  ToastController.set(target.value.delete());
+  useToastStore().set(target.value.delete());
 };
 </script>

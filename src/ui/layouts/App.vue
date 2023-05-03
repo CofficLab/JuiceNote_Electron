@@ -33,8 +33,8 @@
   </div>
 </template>
 
-<script setup>
-import { computed, ref } from "vue";
+<script lang="ts" setup>
+import { computed, ref, watch } from "vue";
 import Header from "./Header.vue";
 import Footer from "./Footer.vue";
 import FormSearch from "../modals/ModalSearch.vue";
@@ -47,8 +47,11 @@ import Aside from "./Aside.vue";
 import ThemesConfig from "../entities/Themes";
 import RouteBox from "../entities/RouteBox";
 import { useRoute } from "vue-router";
+import { useCurrentNodeStore } from "../stores/node";
+import { EmptyNode, NodeApi } from "../entities/Node";
 
 const route = useRoute();
+const nodeStore = useCurrentNodeStore();
 const isLesson = computed(() => RouteBox.isLesson(route));
 
 // 初始化主题
@@ -74,6 +77,11 @@ darkModeQuery.addListener((e) => {
     console.log("主题变化明亮模式");
     isDarkMode.value = false;
   }
+});
+
+watch(route, () => {
+  console.log("路由变化");
+  nodeStore.update(RouteBox.getCurrentNode(route) || EmptyNode);
 });
 </script>
 

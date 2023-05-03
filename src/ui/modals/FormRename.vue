@@ -26,9 +26,9 @@
 </template>
 
 <script lang="ts" setup>
-import Toast from "../entities/Toast";
 import { onMounted, ref, onBeforeUnmount, nextTick } from "vue";
 import { Node } from "../entities/Node";
+import { useToastStore } from "../stores/Toast";
 
 let visible = ref(false);
 let title = "";
@@ -41,7 +41,7 @@ const setVisible = function (e: CustomEvent) {
   nextTick(() => document.querySelector<HTMLDivElement>("#rename-node-form-title")!.focus());
 };
 const submit = () => {
-  Toast.set(node.value!.updateTitle(title));
+  useToastStore().set(node.value!.updateTitle(title));
   setUnVisible();
 };
 
