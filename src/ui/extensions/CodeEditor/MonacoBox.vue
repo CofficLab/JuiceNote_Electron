@@ -157,7 +157,7 @@ onMounted(() => {
     },
   });
 
-  console.log(editorBox.value);
+  // console.log(editorBox.value);
 
   // 展示运行结果的编辑器
   MonacoBox.createEditor(resultBox, {

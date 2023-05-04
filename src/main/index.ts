@@ -6,6 +6,7 @@ import setRunController from './controllers/runner'
 import { release } from 'os'
 import setWildController from './controllers/wildController'
 import log from 'electron-log'
+import createUpdater from './updater'
 
 // Remove electron security warnings
 // This warning only shows in development mode
@@ -33,6 +34,12 @@ app.whenReady().then(function () {
     setWildController(app)
     setRunController()
     setNodeController()
+
+    win.webContents.on('did-finish-load', () =>{
+        log.info('webContents.on:did-finish-load')
+
+        createUpdater(app, win!)
+    })
 })
 
 app.on('window-all-closed', () => {

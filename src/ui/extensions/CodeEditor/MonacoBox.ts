@@ -128,7 +128,7 @@ class MonacoBox {
 
     public onCreated(callback: Function) {
         window.monaco.editor.onDidCreateEditor(() => {
-            console.log('monaco editor created, call the callback')
+            // console.log('monaco editor created, call the callback')
             callback(this)
         });
 
@@ -136,7 +136,7 @@ class MonacoBox {
     }
 
     static createEditor(box: MonacoBox, options: CreateEditorOptions) {
-        console.log('active monaca')
+        // console.log('active monaca')
         window.require(["vs/editor/editor.main"], () => {
             const editor = window.monaco.editor.create(options.target, {
                 value: options.content,

@@ -7,8 +7,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import ArrowLeftCircle from "../icons/arrow-left-circle.svg";
-import ToastController from "../entities/Toast";
+import ArrowLeftCircle from "../icons/IconPrev.vue";
 import { Node } from "../entities/Node";
 
 export default defineComponent({

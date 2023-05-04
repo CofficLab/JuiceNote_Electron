@@ -15,7 +15,7 @@ class NodeDB {
 
         let result = this.db.prepare('select * from nodes where id=?').get(id)
 
-        log.debug('查找节点', id)
+        // log.debug('查找节点', id)
         return new Node(result)
     }
 

@@ -49,6 +49,7 @@ import RouteBox from "../entities/RouteBox";
 import { useRoute } from "vue-router";
 import { useCurrentNodeStore } from "../stores/NodeStore";
 import { EmptyNode } from "../entities/Node";
+import Preload from '../api/Preload'
 
 const route = useRoute();
 const nodeStore = useCurrentNodeStore();
@@ -77,6 +78,27 @@ darkModeQuery.addListener((e) => {
     console.log("主题变化明亮模式");
     isDarkMode.value = false;
   }
+});
+
+Preload.listen("update-downloaded", (e) => {
+  console.log("监测到事件：update-downloaded");
+});
+
+Preload.listen("update-available", (e) => {
+  console.log("监测到事件：update-avaliable");
+});
+
+Preload.listen("checking-for-update", (e) => {
+  console.log("监测到事件：checking-for-update");
+});
+
+Preload.listen("update-not-available", (e) => {
+  console.log("监测到事件：update-not-available");
+});
+
+Preload.listen("download-progress", (_, args) => {
+  let percent = args[0].percent;
+  console.log("监测到事件：download-progress",percent);
 });
 
 watch(route, () => {
