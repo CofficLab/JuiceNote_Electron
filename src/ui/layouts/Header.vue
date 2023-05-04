@@ -10,6 +10,7 @@
         <!-- <Prev class="btn-ghost btn-sm flex items-center rounded px-2" :showText="false" v-if="isLesson"></Prev> -->
         <!-- <Next class="btn-ghost btn-sm flex items-center rounded px-2" :showText="false" v-if="isLesson"></Next> -->
         <Home class="btn-ghost btn-sm flex items-center rounded px-2"></Home>
+        <Tree class="btn-ghost btn-sm flex items-center rounded px-2"></Tree>
         <Shop class="btn-ghost btn-sm flex items-center rounded px-2"></Shop>
         <More class="btn-ghost btn-sm flex items-center rounded px-2"></More>
       </div>
@@ -19,6 +20,7 @@
 
 <script lang="ts" setup>
 import Home from "../operators/Home.vue";
+import Tree from '../operators/Tree.vue'
 import More from "../operators/More.vue";
 import BtnOfficialLink from "../components/BtnOfficialLink.vue";
 import Terminal from "../operators/Terminal.vue";

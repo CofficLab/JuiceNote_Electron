@@ -5,6 +5,7 @@ import lessonsRoutes from "./LocalRoute"
 import NotFound from '../pages/NotFound.vue'
 import About from '../pages/About.vue'
 import Home from '../pages/Home.vue'
+import Database from '../pages/Database.vue'
 
 // 定义路由
 const Router = createRouter({
@@ -14,6 +15,11 @@ const Router = createRouter({
             path: '/',
             name: 'Home',
             component: Home,
+        },
+        {
+            path: '/database',
+            name: 'database',
+            component: Database,
         },
         {
             path: '/:pathMatch(.*)*',

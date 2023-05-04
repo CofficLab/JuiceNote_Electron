@@ -46,6 +46,7 @@ class Node {
     }
 
     getBook(): Node {
+        if (this.isEmpty) return this
         if (this.isBook) return this
 
         return this.getParent().getBook()
@@ -65,11 +66,12 @@ class Node {
     }
 
     getParent(): Node {
-        if (this.parentId == 0) {
+        // console.log('get parent,id is', this.id, 'parent id is', this.parentId)
+        
+        if (this.parentId == 0 || this.isEmpty) {
             return EmptyNode
         }
 
-        // console.log('get parent from db,id is', this.id, 'parent id is',this.parentId)
         let result = NodeApi.find(this.parentId)
 
         return new Node(result)
@@ -114,11 +116,13 @@ const EmptyNode = new Node({ title: '空节点', isEmpty: true,content: '空节�
 const ShopNode = new Node({ title: '商店', isShop: true, isLesson: false })
 const HomeNode = new Node({ title: '首页', isHome: true, isLesson: false })
 const DatabaseNode = new Node({ title: '知识库', isDatabase: true, isLesson: false })
+const RootNode = new Node({ title: '根节点', isEmpty: false, content: '根节点',id:0 })
 
 export {
     Node,
     NodeOptions,
     EmptyNode,
+    RootNode,
     ShopNode,
     HomeNode,
     DatabaseNode
