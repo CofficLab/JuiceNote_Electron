@@ -8,7 +8,7 @@ const createUpdater = (app: App, win: BrowserWindow) => {
     autoUpdater.logger.transports.file.level = 'info';
     autoUpdater.setFeedURL({
         provider: 'generic',
-        channel: process.platform === 'darwin' ? 'latest' : 'latest-win32',
+        channel: process.platform === 'darwin' ? 'latest-win32' : 'latest-win32',
         url: `https://www.kuaiyizhi.cn/apps`,
     });
 
