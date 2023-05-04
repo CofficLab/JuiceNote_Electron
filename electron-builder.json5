@@ -21,7 +21,8 @@
   ],
   mac: {
     artifactName: "kuaiyizhi_${version}.${ext}",
-    target: ["dmg"],
+    // 在线下载时下载dmg，自动更新时下载zip
+    target: ["dmg", "zip"],
     icon: "./public/logo5.icns",
   },
   win: {
@@ -43,5 +44,10 @@
     perMachine: false,
     allowToChangeInstallationDirectory: true,
     deleteAppDataOnUninstall: false,
+  },
+  publish: {
+    provider: "generic",
+    channel: "latest-win32",
+    url: "https://www.kuaiyizhi.cn/apps/kuaiyizhi_0.9.66.dmg",
   },
 }

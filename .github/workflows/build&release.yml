@@ -234,4 +234,4 @@ jobs:
         run: |
           rm -rf /www/storage/kuaiyizhi_desktop
           mv /www/storage/kuaiyizhi_desktop_temp /www/storage/kuaiyizhi_desktop
-          cp -rf database/database.db /www/database/lessons.db
+          cp -rf database/shop.db /www/database/lessons.db

@@ -4,6 +4,7 @@ import setNodeController from './controllers/localNodeController'
 import setTerminalController from './controllers/terminalController'
 import setRunController from './controllers/runner'
 import { release } from 'os'
+import { autoUpdater } from 'electron-updater';
 import setWildController from './controllers/wildController'
 import log from 'electron-log'
 
@@ -57,3 +58,23 @@ app.on('activate', () => {
         createWindow()
     }
 })
+
+/**
+ * 更新的相关逻辑
+ */
+autoUpdater.logger = log;
+autoUpdater.logger.transports.file.level = 'info';
+autoUpdater.setFeedURL({
+    provider: 'generic',
+    channel: process.platform === 'darwin' ? 'latest' : 'latest-win32',
+    url: `https://www.kuaiyizhi.cn/apps`,
+});
+autoUpdater.on('update-downloaded', () => {
+    autoUpdater.quitAndInstall();
+});
+app.on('ready', function () {
+    if (!app.isPackaged) {
+        autoUpdater.forceDevUpdateConfig = true
+        autoUpdater.checkForUpdatesAndNotify();
+    }
+});
