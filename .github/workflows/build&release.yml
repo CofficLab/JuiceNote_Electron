@@ -143,8 +143,10 @@ jobs:
           path: |
             release/*.exe 
             release/*.dmg
+            release/*.zip
             release/*.AppImage
             release/*.snap
+            release/*.yml
           retention-days: 5
 
   # 把css文件单独构建出来，可供其他平台展示文档时使用
@@ -198,6 +200,7 @@ jobs:
           tag_name: ${{ env.tag }}
           files: |
             ./**/*.dmg
+            ./**/*.zip
             ./**/*.exe
             ./**/*.AppImage
             ./**/*.snap
