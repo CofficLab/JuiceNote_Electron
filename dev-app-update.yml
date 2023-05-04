@@ -1,3 +1,3 @@
 provider: generic
 url: "https://www.kuaiyizhi.cn/apps"
-updaterCacheDirName: "kuaiyzhi_update_cache"
+updaterCacheDirName: "kuaiyzhi-updater"
