@@ -8,7 +8,7 @@
         <li><Visible :showText="true" :node="book"></Visible></li>
       </ul>
     </div>
-    <router-link :to="'/lessons/' + book.id + '/show'">
+    <router-link :to="'/shop/lessons/' + book.id + '/show'">
       <figure class="max-h-56 rounded-xl">
         <img v-if="!book.cover" src="../images/book.png" />
         <img v-else :src="book.cover" class="h-36 w-72" />

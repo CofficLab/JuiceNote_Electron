@@ -36,7 +36,7 @@ let save = function (content: string) {
 };
 
 watch(route, () => {
-  if (route.name != "lessons.show" && route.name != "lessons.edit") return;
+  if (route.name != "local.lessons.show" && route.name != "lessons.edit") return;
 
   if (route.hash.length > 0) {
     // 获取带有锚点的元素

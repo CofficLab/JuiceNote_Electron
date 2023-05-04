@@ -9,5 +9,5 @@ const router = useRouter();
 let firstBook = NodeApi.getFirstBook();
 let firstPage = firstBook.getFirstPage();
 
-router.push({ name: "lessons.show", params: { id: firstPage.id } });
+router.push({ name: "local.lessons.show", params: { id: firstPage.id } });
 </script>

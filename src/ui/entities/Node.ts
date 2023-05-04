@@ -110,7 +110,7 @@ class Node {
     }
 }
 
-const EmptyNode = new Node({ title: '', isEmpty: true })
+const EmptyNode = new Node({ title: '空节点', isEmpty: true,content: '空节点' })
 const ShopNode = new Node({ title: '商店', isShop: true, isLesson: false })
 const HomeNode = new Node({ title: '首页', isHome: true, isLesson: false })
 const DatabaseNode = new Node({ title: '知识库', isDatabase: true, isLesson: false })

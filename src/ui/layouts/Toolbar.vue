@@ -209,7 +209,7 @@ let setHardBreak = function () {
 };
 let saveAndShow = () => {
   save();
-  router.push({ name: "lessons.show", params: { id: props.current.id } });
+  router.push({ name: "local.lessons.show", params: { id: props.current.id } });
 };
 let insertNewLine = function () {
   props.editor.commands.setContent(props.editor.getHTML() + "<p>type here</p>");

@@ -32,8 +32,8 @@ const editable = computed(() => {
 });
 const toggleEditable = function () {
   if (route.name == "lessons.edit") {
-    router.push({ name: "lessons.show", params: { id: route.params.id } });
-  } else if (route.name == "lessons.show") {
+    router.push({ name: "local.lessons.show", params: { id: route.params.id } });
+  } else if (route.name == "local.lessons.show") {
     router.push({ name: "lessons.edit", params: { id: route.params.id } });
   } else if (route.name == "home.show") {
     router.push({ name: "home.edit" });
