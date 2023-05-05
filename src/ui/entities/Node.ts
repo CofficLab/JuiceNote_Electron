@@ -3,6 +3,12 @@ import { NodeApi } from "../api/NodeApi"
 interface NodeOptions {
     id?: number
     title: string
+    priority?: number
+    parentId?: number
+    level?: number
+    cover?: string
+    content?: string
+    isRoot?: boolean
     isDatabase?: boolean
     isShop?: boolean
     isHome?: boolean
@@ -13,12 +19,7 @@ interface NodeOptions {
     isLesson?: boolean
     isManual?: boolean
     isVisible?: boolean
-    priority?: number
-    parentId?: number
-    level?: number
     isEmpty?: boolean
-    cover?: string
-    content?: string
 }
 
 class Node {
@@ -34,6 +35,7 @@ class Node {
     public isLesson: boolean = true
     public isManual: boolean = false
     public isVisible: boolean = true
+    public isRoot:boolean =false
     public priority: number = 0
     public parentId: number = 0
     public level: number = 0
@@ -116,7 +118,7 @@ const EmptyNode = new Node({ title: '空节点', isEmpty: true,content: '空节�
 const ShopNode = new Node({ title: '商店', isShop: true, isLesson: false })
 const HomeNode = new Node({ title: '首页', isHome: true, isLesson: false })
 const DatabaseNode = new Node({ title: '知识库', isDatabase: true, isLesson: false })
-const RootNode = new Node({ title: '根节点', isEmpty: false, content: '根节点',id:0 })
+const RootNode = new Node({ title: '根节点', isEmpty: false, content: '根节点',id:0,isRoot:true })
 
 export {
     Node,
