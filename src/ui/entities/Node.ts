@@ -61,6 +61,13 @@ class Node {
         return firstChild || EmptyNode
     }
 
+    getLastChild(): Node {
+        let children = NodeApi.getChildren(this.id).reverse()
+        let lastChild = children[0]
+
+        return lastChild || EmptyNode
+    }
+
     getFirstPage(): Node {
         if (this.isPage) return this
 

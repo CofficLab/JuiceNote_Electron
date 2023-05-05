@@ -7,7 +7,7 @@
     }">
       <div v-show="shouldShow" :class="{
         'flex flex-row items-center p-0 text-xs': true,
-        'hover:bg-primary-focus/20': !shouldActive(),
+        'hover:bg-primary-focus/20': !shouldActive() || tree.isRoot,
         'bg-primary text-primary-content': shouldActive() && (tree.isPage || tree.isTab),
         'bg-primary/5': shouldActive() && tree.isChapter && !tree.isTab,
         'w-48':display=='row',
