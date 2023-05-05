@@ -5,7 +5,7 @@
       'flex-col': display == 'col',
       'flex-row p-1': display == 'row',
     }">
-      <div v-show="shouldShow" :class="{
+      <div v-show="shouldShow"  @mouseenter="hoverCallback(tree)" :class="{
         'flex flex-row items-center p-0 text-xs': true,
         'hover:bg-primary-focus/20': !shouldActive() || tree.isRoot,
         'bg-primary text-primary-content': shouldActive() && (tree.isPage || tree.isTab),
@@ -13,7 +13,7 @@
         'w-48':display=='row',
         'border-l border-t border-b border-accent-content':display=='row' && open,
       }">
-        <Link :node="tree" @click="setOpen" :class="{
+        <Link :node="tree" @click="setOpen" @mouseenter="hoverCallback(tree)" :class="{
           'flex flex-grow cursor-pointer flex-row items-center gap-2 px-2 py-2': true,
           'font-bold text-opacity-50': tree.isChapter && !tree.isTab,
         }">
@@ -36,7 +36,7 @@
         'flex flex-col rounded-none pl-2': true,
         'border border-accent-content gap-0 border-l-0':display=='row',
       }" v-if="(tree.getChildren().length > 0 && open) || shouldHide">
-        <BTree v-for="child in tree.getChildren()" :display="display" :tree="child" :current-node="currentNode"></BTree>
+        <BTree v-for="child in tree.getChildren()" :display="display" :tree="child" :hover-callback="hoverCallback" :current-node="currentNode"></BTree>
       </div>
     </div>
   </div>
@@ -50,6 +50,7 @@ import IconChapter from "../icons/IconChapter.vue";
 import IconDatabase from "../icons/IconDatabase.vue";
 import IconBook from "../icons/IconBook.vue";
 import Link from "../components/Link.vue";
+import { useCurrentNodeStore } from "../stores/NodeStore";
 
 const props = defineProps({
   tree: {
@@ -71,6 +72,12 @@ const props = defineProps({
   display: {
     type: String,
     default: "col",
+  },
+  hoverCallback: {
+    type: Function,
+    default: (node:Node) => {
+      console.log('tree hovered',node.title)
+    },
   }
 });
 

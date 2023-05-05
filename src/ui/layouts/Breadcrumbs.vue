@@ -29,10 +29,9 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed, ref, watch } from "vue";
 import { useRoute } from "vue-router";
-import Children from "../components/Children.vue";
 import RouteBox from "../entities/RouteBox";
 import IconBook from "../icons/IconBook.vue";
 import IconChapter from "../icons/IconChapter.vue";
@@ -41,10 +40,12 @@ import IconDatabase from "../icons/IconDatabase.vue";
 import IconShop from "../icons/IconShop.vue";
 import IconHome from "../icons/IconHome.vue";
 import BTree from "./BTree.vue";
+import { useCurrentNodeStore } from "../stores/NodeStore";
 
 const route = useRoute();
+const current = computed(() => useCurrentNodeStore().current);
 
-const getBreadcrumbs = () => RouteBox.getBreadcrumbs(route);
+const getBreadcrumbs = (currentNode?:Node) => RouteBox.getBreadcrumbs(route,currentNode);
 
 const editable = computed(() => RouteBox.isEditable(route));
 let breadcrumbs = ref(getBreadcrumbs());
@@ -55,6 +56,10 @@ window.addEventListener("nodeUpdated", function () {
 
 watch(route, function () {
   breadcrumbs.value = getBreadcrumbs();
+});
+
+watch(current, function () {
+  breadcrumbs.value = getBreadcrumbs(current.value);
 });
 </script>
 

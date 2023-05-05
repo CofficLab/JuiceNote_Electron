@@ -21,6 +21,10 @@ class RouteBox {
         return route.name == 'shop'
     }
 
+    static isDatabase(route: RouteLocationNormalizedLoaded) {
+        return route.name == 'database'
+    }
+
     static isEditable(route: RouteLocationNormalizedLoaded) {
         return route.name == 'lessons.edit'
     }
@@ -79,10 +83,11 @@ class RouteBox {
         return null
     }
 
-    static getBreadcrumbs(route: RouteLocationNormalizedLoaded) {
+    static getBreadcrumbs(route: RouteLocationNormalizedLoaded,current?:Node) {
         let isLesson = RouteBox.isLesson(route)
         let isHome = RouteBox.isHome(route)
         let isShop = RouteBox.isShop(route)
+        let isDatabase = RouteBox.isDatabase(route)
         let prefix: Node[] = [];
 
         if (isLesson) {
@@ -97,7 +102,11 @@ class RouteBox {
             prefix.push(ShopNode)
         }
 
-        let current = RouteBox.getCurrentNode(route)
+        if (isDatabase) {
+            prefix.push(DatabaseNode)
+        }
+
+        if (current == undefined) current= RouteBox.getCurrentNode(route)!
         let items = current?.getParents().concat([current!])
 
         return prefix.concat(items ?? [])
