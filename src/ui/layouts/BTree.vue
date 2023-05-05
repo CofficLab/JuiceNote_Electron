@@ -11,7 +11,7 @@
         'bg-primary text-primary-content': shouldActive() && (tree.isPage || tree.isTab),
         'bg-primary/5': shouldActive() && tree.isChapter && !tree.isTab,
         'w-48':display=='row',
-        'border border-accent-content':display=='row' && open,
+        'border-l border-t border-b border-accent-content':display=='row' && open,
       }">
         <Link :node="tree" @click="setOpen" :class="{
           'flex flex-grow cursor-pointer flex-row items-center gap-2 px-2 py-2': true,
