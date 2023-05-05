@@ -20,7 +20,7 @@
 
           <div class="dropdown-content mt-0 pt-4" v-if="breadcrumb.isLesson">
             <ul tabindex="0" class="siblings-list">
-              <Children :list="breadcrumb.getSiblings()"></Children>
+              <BTree :tree="breadcrumb.getParent()" :depth="breadcrumb.getParents().length"></BTree>
             </ul>
           </div>
         </div>
@@ -40,6 +40,7 @@ import IconPage from "../icons/IconPage.vue";
 import IconDatabase from "../icons/IconDatabase.vue";
 import IconShop from "../icons/IconShop.vue";
 import IconHome from "../icons/IconHome.vue";
+import BTree from "./BTree.vue";
 
 const route = useRoute();
 
