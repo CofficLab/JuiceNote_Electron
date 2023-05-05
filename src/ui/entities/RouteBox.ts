@@ -1,6 +1,7 @@
 import { RouteLocationNormalizedLoaded, Router, RouterLink, useRoute, useRouter } from "vue-router";
 import { DatabaseNode, HomeNode, Node, ShopNode } from "./Node";
 import { NodeApi } from "../api/NodeApi";
+import { useCurrentNodeStore } from "../stores/NodeStore";
 
 class RouteBox {
     public route: RouteLocationNormalizedLoaded
@@ -102,7 +103,7 @@ class RouteBox {
             prefix.push(ShopNode)
         }
 
-        if (isDatabase) {
+        if (isDatabase && !useCurrentNodeStore().current.isDatabase) {
             prefix.push(DatabaseNode)
         }
 

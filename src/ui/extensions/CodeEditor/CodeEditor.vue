@@ -4,7 +4,7 @@
       <!-- 标签列表 -->
       <div class="tab-list" ref="titlesDom">
         <div v-for="(item, index) in items" class="flex h-8 flex-row flex-nowrap items-stretch outline-none" :class="{ 'bg-gray-900': index == activatedIndex }">
-          <a class="code-title" contenteditable="true" @keyup="handleUpdateTitle" @click="activate(index)">{{ item.title }}</a>
+          <a class="code-title" :contenteditable="editor.isEditable" @keyup="handleUpdateTitle" @click="activate(index)">{{ item.title }}</a>
         </div>
       </div>
 

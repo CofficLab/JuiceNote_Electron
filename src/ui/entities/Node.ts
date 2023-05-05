@@ -125,7 +125,7 @@ const EmptyNode = new Node({ title: '空节点', isEmpty: true,content: '空节�
 const ShopNode = new Node({ title: '商店', isShop: true, isLesson: false })
 const HomeNode = new Node({ title: '首页', isHome: true, isLesson: false })
 const DatabaseNode = new Node({ title: '知识库', isDatabase: true, isLesson: false })
-const RootNode = new Node({ title: '根节点', isEmpty: false, content: '根节点',id:0,isRoot:true })
+const RootNode = new Node({ title: '根节点', isEmpty: false, content: '根节点',isRoot:true })
 
 export {
     Node,
