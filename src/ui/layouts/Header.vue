@@ -4,7 +4,7 @@
 
     <div class="flex h-full justify-between" :class="{ 'mr-40': isWindows }">
       <div class="draggable flex-grow flex justify-center">
-        {{ address }}
+        <!-- {{ address }} -->
       </div>
       <div class="flex flex-row items-center justify-end gap-2 pr-4">
         <BtnOfficialLink></BtnOfficialLink>
@@ -37,9 +37,9 @@ const route = useRoute();
 const isLesson = computed(() => RouteBox.isLesson(route));
 const isWindows = Preload.isWindows();
 
-const address = computed(() => {
-  return location.href
-})
+// const address = computed(() => {
+//   return location.href
+// })
 </script>
 
 <style lang="postcss" scoped>
