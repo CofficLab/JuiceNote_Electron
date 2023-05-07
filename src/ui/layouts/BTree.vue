@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div :class="{
+    <div tabindex="0" :class="{
       'flex': true,
       'flex-col': display == 'col',
-      'flex-row': display == 'breadcrumbs',
+      'flex-row dropdown dropdown-top dropdown-hover': display == 'breadcrumbs',
       'flex-row p-1': display == 'row',
     }">
 
@@ -11,7 +11,7 @@
       <div v-show="shouldShow" @mouseenter="hoverCallback(tree)" :class="{
         'flex flex-row items-center p-0 text-xs hover:bg-primary-focus/20': true,
         'bg-primary text-primary-content': shouldActive() && tree.isPage && display != 'breadcrumbs',
-        'bg-primary/5': shouldActive() && tree.isChapter && !tree.isTab  && display != 'breadcrumbs',
+        'bg-primary/5': shouldActive() && tree.isChapter && !tree.isTab && display != 'breadcrumbs',
         'border-l border-t border-b': display == 'row' && open,
         'w-48': display == 'row',
       }">
@@ -37,11 +37,16 @@
         <div @click="toggle" v-if="(!tree.isPage) && display == 'row'"
           class="btn-ghost rounded-none btn-square btn-sm btn">
           {{ open ? "-" : "+" }}</div>
+
+        <ul v-if="display == 'breadcrumbs'" tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100">
+          <li v-for="child in tree.getChildren()"><a>{{ child.title }}</a></li>
+        </ul>
       </div>
 
       <!-- 子节点 -->
       <div :class="{
-        'flex flex-col rounded-none pl-2': true,
+        'flex flex-col rounded-none': true,
+        'pl-2': display != 'breadcrumbs',
         'border gap-0 border-l-0': display == 'row',
       }" v-if="shouldChildrenShow">
         <BTree v-for="child in tree.getChildren()" :root="root.isEmpty ? tree : root"
