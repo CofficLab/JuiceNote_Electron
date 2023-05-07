@@ -3,12 +3,12 @@
     <div tabindex="0" :class="{
       'flex': true,
       'flex-col': display == 'col',
-      'flex-row dropdown dropdown-top dropdown-hover': display == 'breadcrumbs',
+      'flex-row dropdown dropdown-top relative': display == 'breadcrumbs',
       'flex-row p-1': display == 'row',
     }">
 
       <!-- 当前节点 -->
-      <div v-show="shouldShow" @mouseenter="hoverCallback(tree)" :class="{
+      <div v-show="shouldShow" @mouseleave="handleLeave(tree)" @mouseenter="handleHover(tree)" :class="{
         'flex flex-row items-center p-0 text-xs hover:bg-primary-focus/20': true,
         'bg-primary text-primary-content': shouldActive() && tree.isPage && display != 'breadcrumbs',
         'bg-primary/5': shouldActive() && tree.isChapter && !tree.isTab && display != 'breadcrumbs',
@@ -38,8 +38,12 @@
           class="btn-ghost rounded-none btn-square btn-sm btn">
           {{ open ? "-" : "+" }}</div>
 
-        <ul v-if="display == 'breadcrumbs'" tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100">
-          <li v-for="child in tree.getChildren()"><a>{{ child.title }}</a></li>
+        <!-- 面包屑模式的弹出菜单 -->
+        <ul id="dropdown-{{ tree.id }}" v-if="display == 'breadcrumbs' && shouldShowDropdown" tabindex="0"
+          class="absolute top-0 -translate-y-full menu p-2 shadow bg-base-100">
+          <li v-for="child in tree.getChildren()">
+            <Link :node="child">{{ child.title }}</Link>
+          </li>
         </ul>
       </div>
 
@@ -115,6 +119,8 @@ const shouldShow = computed(() => {
   return !props.hiddenList.includes(props.tree.id) && props.tree.getParents().length < props.depth
 })
 
+const shouldShowDropdown = ref(false)
+
 const shouldChildrenShow = computed(() => {
   if (props.display == 'breadcrumbs') {
     return shouldActive()
@@ -140,5 +146,14 @@ const toggle = () => {
 };
 const setOpen = () => {
   open.value = true;
+}
+
+const handleHover = (node: Node) => {
+  shouldShowDropdown.value = true
+  props.hoverCallback(node)
+}
+
+const handleLeave = (node: Node) => {
+  shouldShowDropdown.value = false
 }
 </script>
