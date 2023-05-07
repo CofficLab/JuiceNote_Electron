@@ -29,8 +29,8 @@
         </Link>
 
         <!-- 面包屑模式的分割符号 -->
-        <div v-if="!tree.isPage && display == 'breadcrumbs'" class="btn-ghost rounded-none btn-square btn-sm btn">
-          >
+        <div v-if="!tree.isPage && display == 'breadcrumbs'" class="btn-ghost rounded-none btn-square btn-sm btn w-4">
+          <IconRight></IconRight>
         </div>
 
         <!-- 折叠按钮 -->
@@ -59,6 +59,7 @@ import IconPage from "../icons/IconPage.vue";
 import IconChapter from "../icons/IconChapter.vue";
 import IconDatabase from "../icons/IconDatabase.vue";
 import IconBook from "../icons/IconBook.vue";
+import IconRight from '../icons/IconRight.vue'
 import Link from "../components/Link.vue";
 
 const props = defineProps({
