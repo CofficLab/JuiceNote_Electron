@@ -10,13 +10,22 @@
 import draggable from "vuedraggable/src/vuedraggable";
 import Link from "./Link.vue";
 import { Node } from "../entities/Node";
+import { ref } from "vue";
 
 const props = defineProps({
-  list: { type: Array<Node>, required: true },
+  list: {
+    type: Array<Node>,
+    required: true
+  },
   drag_disabled: {},
 });
 
+const list = ref(props.list)
+
 let dragEnd = function () {
   Node.updateChildrenPriority(props.list);
+
+  window.dispatchEvent(new Event("nodeUpdated"));
+  list.value = props.list
 };
 </script>

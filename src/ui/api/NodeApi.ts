@@ -17,7 +17,7 @@ const NodeApi = {
         })
     },
     updatePriority(id: number, priority: number) {
-        // console.log(this.title, '更新priority为', priority)
+        console.log(`节点ID「${id}」更新priority为${priority}`)
         Ipc.sendSync('updatePriority', id, priority)
     },
     updateContent(id: number, content: string) {

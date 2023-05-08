@@ -39,11 +39,9 @@
           {{ open ? "-" : "+" }}</div>
 
         <!-- 面包屑模式的弹出菜单 -->
-        <ul id="dropdown-{{ tree.id }}" v-if="display == 'breadcrumbs' && shouldShowDropdown" tabindex="0"
-          class="absolute top-0 -translate-y-full menu p-2 shadow bg-base-100">
-          <li v-for="child in tree.getChildren()">
-            <Link :node="child">{{ child.title }}</Link>
-          </li>
+        <ul id="dropdown-{{ tree.id }}" v-if="display == 'breadcrumbs' && shouldShowDropdown && !tree.isPage" tabindex="0"
+          class="absolute top-0 -translate-y-full flex flex-col py-6 px-4 shadow-2xl bg-base-300 rounded-t backdrop-filter backdrop-blur-sm max-h-96 overflow-y-scroll">
+          <Children :list="tree.getChildren()"></Children>
         </ul>
       </div>
 
@@ -70,6 +68,7 @@ import IconDatabase from "../icons/IconDatabase.vue";
 import IconBook from "../icons/IconBook.vue";
 import IconRight from '../icons/IconRight.vue'
 import Link from "../components/Link.vue";
+import Children from "../components/Children.vue";
 
 const props = defineProps({
   tree: {

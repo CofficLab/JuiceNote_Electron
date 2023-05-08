@@ -119,6 +119,12 @@ class Node {
     getFirstTabInParents(): Node | undefined {
         return this.getParents().find((parent) => parent.getParent()?.isBook)
     }
+
+    static updateChildrenPriority(children: Node[]) {
+        children.forEach((child,index) => {
+            NodeApi.updatePriority(child.id, index)
+        })
+    }
 }
 
 const EmptyNode = new Node({ title: '空节点', isEmpty: true,content: '空节点' })
