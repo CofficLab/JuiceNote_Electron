@@ -8,7 +8,7 @@
       <div class="w-full" :class="{ 'mt-12': node.getParent().isTab }">
         <Add :node="node" class="btn mx-auto flex w-72 flex-row items-center justify-center gap-4" v-if="node.isChapter"></Add>
 
-        <Editor :node="node" :saveCallback="save" :editable="editable" v-else></Editor>
+        <Tiptap :node="node" :saveCallback="save" :editable="editable" v-else></Tiptap>
       </div>
     </div>
   </div>
@@ -16,7 +16,7 @@
 
 <script lang="ts" setup>
 import NodeTab from "../components/NodeTab.vue";
-import Editor from "../components/Editor.vue";
+import Tiptap from "../components/Tiptap.vue";
 import Add from "../operators/Add.vue";
 import { computed, watch } from "vue";
 import { useRoute } from "vue-router";

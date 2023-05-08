@@ -20,8 +20,8 @@
       </div>
     </div>
 
-    <BTree :tree="bookActiveTab!" :hidden-list="[bookActiveTab?.id]" :current-node="current!"
-      class="h-full overflow-scroll pb-24"></BTree>
+    <Tree :tree="bookActiveTab!" :hidden-list="[bookActiveTab?.id]" :current-node="current!"
+      class="h-full overflow-scroll pb-24"></Tree>
 
     <!-- 底部的图书logo -->
     <div v-if="book!.cover.length > 0"
@@ -37,7 +37,7 @@ import { useRoute } from "vue-router";
 import RouteBox from "../entities/RouteBox";
 import Preload from "../api/Preload";
 import { useCurrentNodeStore } from "../stores/NodeStore";
-import BTree from "./BTree.vue";
+import Tree from "../components/Tree.vue";
 import { Node } from '../entities/Node';
 import Link from "../components/Link.vue";
 

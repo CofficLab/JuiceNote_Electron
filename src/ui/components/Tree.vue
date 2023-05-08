@@ -51,9 +51,9 @@
         'pl-2': display != 'breadcrumbs',
         'border gap-0 border-l-0': display == 'row',
       }" v-if="shouldChildrenShow">
-        <BTree v-for="child in tree.getChildren()" :root="root.isEmpty ? tree : root"
+        <Tree v-for="child in tree.getChildren()" :root="root.isEmpty ? tree : root"
           :active-ones-show-only="activeOnesShowOnly" :display="display" :tree="child" :hover-callback="hoverCallback"
-          :current-node="currentNode"></BTree>
+          :current-node="currentNode"></Tree>
       </div>
     </div>
   </div>

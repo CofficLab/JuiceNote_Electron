@@ -1,14 +1,13 @@
 <template>
   <footer>
-    <!-- <Breadcrumbs :current="current"></Breadcrumbs> -->
-    <BTree :tree="DatabaseNode" :display="'breadcrumbs'" :current-node="current"></BTree>
+    <Tree :tree="DatabaseNode" :display="'breadcrumbs'" :current-node="current"></Tree>
   </footer>
 </template>
 
 <script lang="ts" setup>
 import { computed } from "vue";
 import { useCurrentNodeStore } from "../stores/NodeStore";
-import BTree from "./BTree.vue";
+import Tree from "../components/Tree.vue";
 import { DatabaseNode } from "../entities/Node";
 
 const current = computed(() => useCurrentNodeStore().current);
