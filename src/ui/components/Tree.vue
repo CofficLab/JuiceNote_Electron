@@ -10,8 +10,8 @@
       <!-- 当前节点 -->
       <div v-show="shouldShow" @mouseleave="handleLeave(tree)" @mouseenter="handleHover(tree)" :class="{
         'flex flex-row items-center p-0 text-xs hover:bg-primary-focus/20': true,
-        'bg-primary text-primary-content': shouldActive() && tree.isPage && display != 'breadcrumbs',
-        'bg-primary/5': shouldActive() && tree.isChapter && !tree.isTab && display != 'breadcrumbs',
+        'bg-primary text-primary-content': tree.shouldActive(currentNode) && tree.isPage && display != 'breadcrumbs',
+        'bg-primary/5': tree.shouldActive(currentNode) && tree.isChapter && !tree.isTab && display != 'breadcrumbs',
         'border-l border-t border-b': display == 'row' && open,
         'w-48': display == 'row',
       }">
@@ -39,9 +39,9 @@
           {{ open ? "-" : "+" }}</div>
 
         <!-- 面包屑模式的弹出菜单 -->
-        <ul id="dropdown-{{ tree.id }}" v-if="display == 'breadcrumbs' && shouldShowDropdown && !tree.isPage" tabindex="0"
+        <ul id="dropdown-{{ tree.id }}" v-if="display == 'breadcrumbs' && shouldShowDropdown" tabindex="0"
           class="absolute top-0 -translate-y-full flex flex-col py-6 px-4 shadow-2xl bg-base-300 rounded-t backdrop-filter backdrop-blur-sm max-h-96 overflow-y-scroll">
-          <Children :list="tree.getChildren()"></Children>
+          <Children :list="tree.getSiblings()"></Children>
         </ul>
       </div>
 
@@ -51,8 +51,7 @@
         'pl-2': display != 'breadcrumbs',
         'border gap-0 border-l-0': display == 'row',
       }" v-if="shouldChildrenShow">
-        <Tree v-for="child in tree.getChildren()" :root="root.isEmpty ? tree : root"
-          :active-ones-show-only="activeOnesShowOnly" :display="display" :tree="child" :hover-callback="hoverCallback"
+        <Tree v-for="child in tree.getChildren()" :root="root.isEmpty ? tree : root" :display="display" :tree="child" :hover-callback="hoverCallback"
           :current-node="currentNode"></Tree>
       </div>
     </div>
@@ -60,7 +59,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref,watch } from "vue";
 import { EmptyNode, Node, DatabaseNode } from "../entities/Node";
 import IconPage from "../icons/IconPage.vue";
 import IconChapter from "../icons/IconChapter.vue";
@@ -103,16 +102,12 @@ const props = defineProps({
     default: (node: Node) => {
       console.log('tree hovered', node.title)
     },
-  },
-  activeOnesShowOnly: {
-    type: Boolean,
-    default: false,
   }
 });
 
 const shouldShow = computed(() => {
   if (props.display == 'breadcrumbs') {
-    return shouldActive()
+    return props.tree.shouldActive(props.currentNode)
   }
 
   return !props.hiddenList.includes(props.tree.id) && props.tree.getParents().length < props.depth
@@ -122,23 +117,17 @@ const shouldShowDropdown = ref(false)
 
 const shouldChildrenShow = computed(() => {
   if (props.display == 'breadcrumbs') {
-    return shouldActive()
+    return shouldShow.value
   }
 
   return (props.tree.getChildren().length > 0 && open.value) || shouldHide.value
 })
 
-const shouldActive = (node?: Node) => {
-  if (node == undefined) node = props.tree
-  if (node.isDatabase) return true
-
-  return node.id == props.currentNode.id || props.currentNode.getParents().some((parent) => parent.id == node!.id);
-};
 const shouldHide = computed(() => {
   return props.hiddenList.includes(props.tree.id)
 })
 
-let open = ref(shouldActive())
+let open = ref(props.tree.shouldActive(props.currentNode))
 
 const toggle = () => {
   open.value = !open.value;

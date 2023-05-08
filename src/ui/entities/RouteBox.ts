@@ -1,7 +1,6 @@
 import { RouteLocationNormalizedLoaded, Router, RouterLink, useRoute, useRouter } from "vue-router";
-import { DatabaseNode, HomeNode, Node, ShopNode } from "./Node";
+import { Node } from "./Node";
 import { NodeApi } from "../api/NodeApi";
-import { useCurrentNodeStore } from "../stores/NodeStore";
 
 class RouteBox {
     public route: RouteLocationNormalizedLoaded
@@ -19,7 +18,7 @@ class RouteBox {
     }
 
     static isShop(route: RouteLocationNormalizedLoaded) {
-        return route.name == 'shop'
+        return route.name?.toString().startsWith('shop')
     }
 
     static isDatabase(route: RouteLocationNormalizedLoaded) {
@@ -84,35 +83,6 @@ class RouteBox {
         return null
     }
 
-    static getBreadcrumbs(route: RouteLocationNormalizedLoaded,current?:Node) {
-        let isLesson = RouteBox.isLesson(route)
-        let isHome = RouteBox.isHome(route)
-        let isShop = RouteBox.isShop(route)
-        let isDatabase = RouteBox.isDatabase(route)
-        let prefix: Node[] = [];
-
-        if (isLesson) {
-            prefix.push(DatabaseNode)
-        }
-
-        if (isHome) {
-            prefix.push(HomeNode)
-        }
-
-        if (isShop) {
-            prefix.push(ShopNode)
-        }
-
-        if (isDatabase && !useCurrentNodeStore().current.isDatabase) {
-            prefix.push(DatabaseNode)
-        }
-
-        if (current == undefined) current= RouteBox.getCurrentNode(route)!
-        let items = current?.getParents().concat([current!])
-
-        return prefix.concat(items ?? [])
-    }
-
     static goto(router: Router, node: Node) {
         router.push({ name: 'local.lessons.show', params: { id: node.id } })
     }
@@ -143,10 +113,6 @@ class RouteBox {
 
     public getCurrentBook() {
         return RouteBox.getCurrentBook(this.route)
-    }
-
-    public getBreadcrumbs() {
-        return RouteBox.getBreadcrumbs(this.route)
     }
 }
 

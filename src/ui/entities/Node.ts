@@ -107,6 +107,8 @@ class Node {
     }
 
     getSiblings(): Node[] {
+        if (this.isDatabase || this.isShop) return [ShopNode, DatabaseNode]
+
         return this.getParent().getChildren().filter(child => child.id != this.id)
     }
 
@@ -120,6 +122,14 @@ class Node {
         return this.getParents().find((parent) => parent.getParent()?.isBook)
     }
 
+    shouldActive(current: Node): Boolean {
+        if (this.isRoot || this.isShop || this.isDatabase) return true
+        if (this.id == current.id) return true
+        if (this.isPage) return current.id == this.id;
+
+        return current.getParents().some(parent => parent.id == this.id)
+    }
+
     static updateChildrenPriority(children: Node[]) {
         children.forEach((child,index) => {
             NodeApi.updatePriority(child.id, index)
@@ -129,16 +139,12 @@ class Node {
 
 const EmptyNode = new Node({ title: '空节点', isEmpty: true,content: '空节点' })
 const ShopNode = new Node({ title: '商店', isShop: true, isLesson: false })
-const HomeNode = new Node({ title: '首页', isHome: true, isLesson: false })
-const DatabaseNode = new Node({ title: '知识库', isDatabase: true, isLesson: false })
-const RootNode = new Node({ title: '根节点', isEmpty: false, content: '根节点',isRoot:true })
+const DatabaseNode = new Node({ title: '知识库', isDatabase: true, isLesson: false,id:0 })
 
 export {
     Node,
     NodeOptions,
     EmptyNode,
-    RootNode,
     ShopNode,
-    HomeNode,
     DatabaseNode
 };
