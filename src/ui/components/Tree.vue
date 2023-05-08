@@ -59,7 +59,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref,watch } from "vue";
+import { computed, ref } from "vue";
 import { EmptyNode, Node, DatabaseNode } from "../entities/Node";
 import IconPage from "../icons/IconPage.vue";
 import IconChapter from "../icons/IconChapter.vue";
@@ -127,7 +127,7 @@ const shouldHide = computed(() => {
   return props.hiddenList.includes(props.tree.id)
 })
 
-let open = ref(props.tree.shouldActive(props.currentNode))
+let open = ref(props.tree.shouldActive(props.currentNode) || props.tree.getParents().length < 1)
 
 const toggle = () => {
   open.value = !open.value;
