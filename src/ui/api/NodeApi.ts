@@ -4,6 +4,9 @@ import Preload from "./Preload"
 const Ipc = Preload.ipc
 
 const NodeApi = {
+    getRoot(): Node {
+        return new Node(Ipc.sendSync('getRoot'))
+    },
     getChildren(id: number): Node[] {
         let children = Ipc.sendSync('getChildren', id)
 

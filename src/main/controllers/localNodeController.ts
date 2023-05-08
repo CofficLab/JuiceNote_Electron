@@ -2,6 +2,10 @@ import { ipcMain } from "electron"
 import { LocalNodeDB } from "../models/LocalNode"
 
 export default function setNodeController() {
+    ipcMain.on('getRoot', (event, id) => {
+        return event.returnValue = LocalNodeDB.getRoot()
+    })
+
     ipcMain.on('getBooks', (event) => {
         return event.returnValue = LocalNodeDB.getBooks()
     })

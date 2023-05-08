@@ -6,8 +6,8 @@ import { NodeApi } from "../api/NodeApi";
 
 const router = useRouter();
 
-let firstBook = NodeApi.getFirstBook();
-let firstPage = firstBook.getFirstPage();
+let root = NodeApi.getRoot();
+let firstPage = root.getFirstPage();
 
 router.push({ name: "local.lessons.show", params: { id: firstPage.id } });
 </script>
