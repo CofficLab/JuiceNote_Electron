@@ -116,12 +116,6 @@ class NodeDB {
             return '「' + id + '」的可见性更新失败'
         }
     }
-
-    // transformToTab(): string {
-    //     this.createChildPage(this.title + '子标签', this.content)
-    //     db.prepare('update nodes set is_chapter=1,is_tab=1,is_page=0 where id=?').run(this.id)
-    //     return '已转换成标签'
-    // }
 }
 
 class Node {
@@ -140,8 +134,9 @@ class Node {
     public isEmpty: boolean = false
     public cover: string = ''
     public content: string = ''
+    public tree:string=''
 
-    public constructor(dbResult: object) {
+    public constructor(dbResult: object,tree='local.db') {
         this.id = Object.getOwnPropertyDescriptor(dbResult, 'id')?.value
         this.title = Object.getOwnPropertyDescriptor(dbResult, 'title')?.value
         this.content = Object.getOwnPropertyDescriptor(dbResult, 'content')?.value
@@ -154,6 +149,7 @@ class Node {
         this.level = Object.getOwnPropertyDescriptor(dbResult, 'level')?.value
         this.cover = Object.getOwnPropertyDescriptor(dbResult, 'cover')?.value
         this.parentId = Object.getOwnPropertyDescriptor(dbResult, 'parent_id')?.value
+        this.tree = tree
     }
 
     getContent(): string {
