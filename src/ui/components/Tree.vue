@@ -100,7 +100,7 @@ const props = defineProps({
   hoverCallback: {
     type: Function,
     default: (node: Node) => {
-      console.log('tree hovered', node.title)
+      // console.log('tree hovered', node.title)
     },
   }
 });

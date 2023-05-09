@@ -5,25 +5,26 @@ const Ipc = Preload.ipc
 
 const ShopApi = {
     getRoot(): Node {
-        return new Node(Ipc.sendSync('getRoot'))
+        console.log('shop api get root')
+        return new Node(Ipc.sendSync('getShopRoot'))
     },
     getChildren(id: number): Node[] {
-        let children = Ipc.sendSync('getChildren', id)
+        let children = Ipc.sendSync('getChildrenOfShopNode', id)
 
         return children.map((child: NodeOptions) => {
             return new Node(child)
         });
     },
     search(keyword: string): Node[] {
-        return Ipc.sendSync('search', keyword).map((node: NodeOptions) => {
+        return Ipc.sendSync('searchShopNode', keyword).map((node: NodeOptions) => {
             return new Node(node)
         })
     },
     find(id: number | String): Node {
-        return new Node(Ipc.sendSync('find', id))
+        return new Node(Ipc.sendSync('findShopNode', id))
     },
     getBooks(): Node[] {
-        let items = Ipc.sendSync('getBooks')
+        let items = Ipc.sendSync('getShopBooks')
 
         return items.map((item: NodeOptions) => {
             return new Node(item)

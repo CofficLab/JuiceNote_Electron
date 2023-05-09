@@ -54,7 +54,7 @@ const focus = () => nextTick(() => document.querySelector<HTMLDivElement>("#sear
 const toggleVisible = () => (visible.value = !visible.value) && focus();
 const activate = (index: number) => (current.value = Math.min(nodes.value.length - 1, Math.max(0, index)));
 const goto = () => {
-  router.push({ name: "local.lessons.show", params: { id: nodes.value[current.value].id } });
+  router.push({ name: "nodes.show", params: { id: nodes.value[current.value].id } });
   toggleVisible();
 };
 const submit = (e: KeyboardEvent) => {

@@ -1,10 +1,17 @@
 
 import { join } from "path";
 import Config from "../config";
-import { Node } from "./BaseNode";
+import { Node, NodeDB } from "./BaseNode";
 
-const db = require('better-sqlite3')(join(Config.DATABASE_PATH, 'database.db'));
+const db = require('better-sqlite3')(join(Config.DATABASE_PATH, 'shop.db'));
 
-export default class ShopNode extends Node {
+const ShopNodeDB = new NodeDB(db);
 
+class ShopNode extends Node {
+
+}
+
+export {
+    ShopNode,
+    ShopNodeDB
 }

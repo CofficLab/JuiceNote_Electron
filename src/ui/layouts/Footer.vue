@@ -8,7 +8,7 @@
 import { computed } from "vue";
 import { useCurrentNodeStore } from "../stores/NodeStore";
 import Tree from "../components/Tree.vue";
-import { NodeApi } from "../api/NodeApi";
+
 const current = computed(() => useCurrentNodeStore().current);
-const tree = NodeApi.getRoot()
+const tree = computed(() => useCurrentNodeStore().root)
 </script>

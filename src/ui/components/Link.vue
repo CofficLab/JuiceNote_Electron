@@ -1,5 +1,5 @@
 <template>
-  <router-link v-bind:data-id="node.id" :to="{ name: 'local.lessons.show', params: { id: node.id } }">
+  <router-link v-bind:data-id="node.id" :to="{ name: 'nodes.show', params: { id: node.id } }">
     <slot></slot>
   </router-link>
 </template>

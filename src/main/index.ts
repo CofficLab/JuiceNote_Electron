@@ -1,12 +1,13 @@
 import { createWindow } from './window'
 import { BrowserWindow, app } from 'electron'
 import setNodeController from './controllers/localNodeController'
-import setTerminalController from './controllers/terminalController'
 import setRunController from './controllers/runner'
 import { release } from 'os'
-import setWildController from './controllers/wildController'
 import log from 'electron-log'
 import createUpdater from './updater'
+import setShopNodeController from './controllers/ShopNodeController'
+import setWildController from './controllers/WildController'
+import setTerminalController from './controllers/TerminalController'
 
 // Remove electron security warnings
 // This warning only shows in development mode
@@ -30,10 +31,11 @@ app.whenReady().then(function () {
     log.info('app.whenReady:创建窗口')
     win = createWindow()
 
-    setTerminalController(win)
     setWildController(app)
+    setTerminalController(win)
     setRunController()
     setNodeController()
+    setShopNodeController()
 
     win.webContents.on('did-finish-load', () =>{
         log.info('webContents.on:did-finish-load')

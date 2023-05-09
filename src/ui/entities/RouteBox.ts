@@ -14,7 +14,7 @@ class RouteBox {
     }
 
     static isLesson(route: RouteLocationNormalizedLoaded) {
-        return route.name == 'local.lessons.show' || route.name == 'local.lessons.edit' || route.name == 'shop.lessons.show' || route.name == 'shop.lessons.edit'
+        return route.name == 'nodes.show' || route.name == 'local.lessons.edit' || route.name == 'shop.lessons.show' || route.name == 'shop.lessons.edit'
     }
 
     static isShop(route: RouteLocationNormalizedLoaded) {
@@ -30,7 +30,7 @@ class RouteBox {
     }
 
     static isAsideVisible(route: RouteLocationNormalizedLoaded) {
-        return ["local.lessons.show", "lessons.edit"].includes(route.name?.toString()!)
+        return ["nodes.show", "lessons.edit"].includes(route.name?.toString()!)
     }
 
     static isHeaderVisible(route: RouteLocationNormalizedLoaded) {
@@ -38,7 +38,7 @@ class RouteBox {
             return RouteBox.getCurrentNode(route)!.isChapter;
         }
 
-        return ["local.lessons.show", "home.show", "home.edit"].includes(route.name?.toString()!);
+        return ["nodes.show", "home.show", "home.edit"].includes(route.name?.toString()!);
     }
 
     static isActive(route: RouteLocationNormalizedLoaded, node: Node) {
@@ -84,7 +84,7 @@ class RouteBox {
     }
 
     static goto(router: Router, node: Node) {
-        router.push({ name: 'local.lessons.show', params: { id: node.id } })
+        router.push({ name: 'nodes.show', params: { id: node.id } })
     }
 
     public isHome() {

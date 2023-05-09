@@ -45,6 +45,8 @@ class Node {
 
     constructor(options: NodeOptions) {
         Object.assign(this, options)
+
+        if (this.parentId == 0) this.isRoot = true
     }
 
     getBook(): Node {
@@ -123,6 +125,7 @@ class Node {
     }
 
     shouldActive(current: Node): Boolean {
+        // console.log('should active',this.title)
         if (this.isRoot || this.isShop || this.isDatabase) return true
         if (this.id == current.id) return true
         if (this.isPage) return current.id == this.id;

@@ -22,7 +22,7 @@ class NodeDB {
     getRoot(): Node {
         let result = this.db.prepare('select * from nodes where parent_id=0 order by priority asc limit 1').get()
 
-        log.debug('root', result)
+        log.debug('root', result.title)
         return new Node(result)
     }
 
@@ -52,7 +52,7 @@ class NodeDB {
     getChildren(id: number): Node[] {
         let children = this.db.prepare('select * from nodes where parent_id=? order by priority asc').all(id)
 
-        console.log(`get children of ${id},count=${children.length}`)
+        // console.log(`get children of ${id},count=${children.length}`)
 
         return children.map((child: object) => {
             return new Node(child)

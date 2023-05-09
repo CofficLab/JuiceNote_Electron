@@ -46,7 +46,7 @@ const submit = function (isChapter: boolean, createSibling = false) {
   let id = isChapter ? parent.createChildChapter(title) : parent.createChildPage(title, `<h1>${title}</h1>`);
 
   // console.log("创建新节点后返回的ID", id);
-  router.push({ name: "local.lessons.show", params: { id: id.toString() } });
+  router.push({ name: "nodes.show", params: { id: id.toString() } });
   setUnVisible();
 };
 

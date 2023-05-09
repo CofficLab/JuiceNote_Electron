@@ -1,11 +1,14 @@
 import { createRouter, createWebHashHistory } from "vue-router"
-import shopRoutes from "./ShopRoute"
+import ShopPage from "../pages/ShopPage.vue"
 import { NodeApi } from "../api/NodeApi"
-import lessonsRoutes from "./LocalRoute"
 import NotFound from '../pages/NotFound.vue'
 import About from '../pages/About.vue'
 import Home from '../pages/Home.vue'
 import Database from '../pages/Database.vue'
+import nodeRoutes from "./NodeRoutes"
+import { ShopApi } from "../api/ShopApi"
+import { useCurrentNodeStore } from "../stores/NodeStore"
+import { EmptyNode } from "../entities/Node"
 
 // 定义路由
 const Router = createRouter({
@@ -13,8 +16,13 @@ const Router = createRouter({
     routes: [
         {
             path: '/',
-            name: 'Home',
+            name: 'home',
             component: Home,
+        },
+        {
+            path: '/shop',
+            name: 'shop',
+            component: ShopPage,
         },
         {
             path: '/database',
@@ -23,36 +31,56 @@ const Router = createRouter({
         },
         {
             path: '/:pathMatch(.*)*',
-            name: 'NotFound', component: NotFound
+            name: 'notFound', component: NotFound
         },
         {
             path: '/about', component: About,
             name: "about"
         },
-        shopRoutes,
-        lessonsRoutes,
+        nodeRoutes
     ],
 })
 
 Router.beforeEach(function (to, from) {
     // console.log("从", from.fullPath, "到", to.fullPath)
 
-    // 如果不是page，跳转到第一个page子节点
-    if (to.name == 'local.lessons.show') {
-        let node = NodeApi.find(parseInt(to.params.id.toString()))
+    /**
+     * 路由发生变化时，更新store
+     */
 
-        if (!node.isPage && node.getFirstPage().id > 0) {
+    let root = EmptyNode
+    let current = EmptyNode
+
+    console.log(to.params)
+    
+    if (to.name == 'shop' || (to.params.source?.toString() == 'shop')) {
+        root = ShopApi.getRoot()
+        current = to.params.id ? ShopApi.find(to.params.id.toString()) : root
+    } else {
+        root = NodeApi.getRoot()
+        current = to.params.id ? NodeApi.find(to.params.id.toString()) : root
+    }
+
+    useCurrentNodeStore().updateRoot(root)
+    useCurrentNodeStore().update(current)
+
+    // 如果不是page，跳转到第一个page子节点
+    if (to.name == 'nodes.show') {
+        if (!current.isPage && current.getFirstPage().id > 0) {
             return {
-                name: "local.lessons.show",
-                params: { id: node.getFirstPage().id }
+                name: "nodes.show",
+                params: {
+                    source: to.params.source,
+                    id: current.getFirstPage().id
+                }
             }
         }
     }
 
     // 如果是编辑模式
-    if (from.name == 'lessons.edit' && to.name == 'local.lessons.show' && from.params.id != to.params.id) {
+    if (from.name == 'nodes.edit' && to.name == 'nodes.show' && from.params.id != to.params.id) {
         return {
-            name: "lessons.edit",
+            name: "nodes.edit",
             params: { id: to.params.id }
         }
     }
