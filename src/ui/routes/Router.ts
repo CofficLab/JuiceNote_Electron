@@ -42,7 +42,7 @@ const Router = createRouter({
 })
 
 Router.beforeEach(function (to, from) {
-    // console.log("从", from.fullPath, "到", to.fullPath)
+    console.log("从", from.fullPath, "到", to.fullPath)
 
     /**
      * 路由发生变化时，更新store
@@ -61,21 +61,10 @@ Router.beforeEach(function (to, from) {
         current = to.params.id ? NodeApi.find(to.params.id.toString()) : root
     }
 
-    useCurrentNodeStore().updateRoot(root)
-    useCurrentNodeStore().update(current)
+    console.log(root)
 
-    // 如果不是page，跳转到第一个page子节点
-    if (to.name == 'nodes.show') {
-        if (!current.isPage && current.getFirstPage().id > 0) {
-            return {
-                name: "nodes.show",
-                params: {
-                    source: to.params.source,
-                    id: current.getFirstPage().id
-                }
-            }
-        }
-    }
+    useCurrentNodeStore().updateRoot(root)
+    useCurrentNodeStore().update(current.getFirstPage())
 
     // 如果是编辑模式
     if (from.name == 'nodes.edit' && to.name == 'nodes.show' && from.params.id != to.params.id) {

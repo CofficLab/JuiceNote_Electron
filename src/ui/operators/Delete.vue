@@ -8,7 +8,7 @@
 <script setup lang="ts">
 import Trash from "../icons/IconTrash.vue";
 
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { Node } from "../entities/Node";
 import { useToastStore } from "../stores/ToastStore";
 
@@ -31,7 +31,14 @@ const props = defineProps({
 });
 
 const deleteBookNode = function () {
-  router.push("/lessons/" + props.node.parentId + "/show");
+  router.push({
+    name: "node.show",
+    params: {
+      id: props.node.parentId,
+      source: useRoute().params.source,
+    }
+  });
+  window.dispatchEvent(new Event("nodeUpdated"));
   useToastStore().set(props.node.delete());
 };
 </script>

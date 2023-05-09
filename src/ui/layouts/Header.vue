@@ -15,6 +15,7 @@
         <Tree class="btn-ghost btn-sm flex items-center rounded px-2"></Tree>
         <Shop class="btn-ghost btn-sm flex items-center rounded px-2"></Shop>
         <More class="btn-ghost btn-sm flex items-center rounded px-2"></More>
+        <Delete :node="current" :show-text="false" class="btn-ghost btn-sm flex items-center rounded px-2"></Delete>
       </div>
     </div>
   </header>
@@ -32,10 +33,13 @@ import Preload from "../api/Preload";
 import RouteBox from "../entities/RouteBox";
 import Shop from "../operators/Shop.vue";
 import Toast from "./Toast.vue";
+import Delete from "../operators/Delete.vue";
+import { useCurrentNodeStore } from "../stores/NodeStore";
 
 const route = useRoute();
 const isLesson = computed(() => RouteBox.isLesson(route));
 const isWindows = Preload.isWindows();
+const current = computed(() => useCurrentNodeStore().current);
 
 // const address = computed(() => {
 //   return location.href

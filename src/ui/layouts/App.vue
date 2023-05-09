@@ -101,10 +101,10 @@ Preload.listen("download-progress", (_, args) => {
   console.log("监测到事件：download-progress",percent);
 });
 
-watch(route, () => {
-  console.log("路由变化");
-  nodeStore.update(RouteBox.getCurrentNode(route) || EmptyNode);
-});
+// watch(route, () => {
+//   console.log("路由变化");
+//   nodeStore.update(RouteBox.getCurrentNode(route) || EmptyNode);
+// });
 </script>
 
 <style scoped>

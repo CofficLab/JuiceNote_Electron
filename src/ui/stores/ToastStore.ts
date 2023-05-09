@@ -16,6 +16,10 @@ export const useToastStore = defineStore('message', {
         set(message: string) {
             console.log('更新store中的toast为', message)
             this.message = truncate(message, 20)
+
+            setTimeout(() => {
+                this.message = ''
+            }, 2000);
         },
     },
 })

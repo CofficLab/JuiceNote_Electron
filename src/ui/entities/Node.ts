@@ -71,7 +71,7 @@ class Node {
     }
 
     getFirstPage(): Node {
-        if (this.isPage) return this
+        if (this.isPage ||this.isEmpty) return this
 
         return this.getFirstChild().getFirstPage()
     }
@@ -79,7 +79,7 @@ class Node {
     getParent(): Node {
         // console.log('get parent,id is', this.id, 'parent id is', this.parentId)
         
-        if (this.parentId == 0 || this.isEmpty) {
+        if (this.parentId == 0 || this.isEmpty || !this.parentId) {
             return EmptyNode
         }
 

@@ -11,11 +11,17 @@ class NodeDB {
     }
 
     find(id: number): Node {
+        log.debug(`在 ${this.db.name} 中查找节点 id=${id}`)
+
+        if (id == undefined) {
+            log.error('被查找的节点不能为undefined')
+            return EmptyNode
+        }
+
         if (id <= 0) return EmptyNode
 
         let result = this.db.prepare('select * from nodes where id=?').get(id)
 
-        // log.debug('查找节点', id)
         return new Node(result)
     }
 
@@ -68,8 +74,9 @@ class NodeDB {
     }
 
     delete(id: number): string {
+        let node = this.find(id)
         let result = this.db.prepare('delete from nodes where id=?').run(id)
-        return "已删除「" + id + "」"
+        return "已删除「" + node.title + "」"
     }
 
     updatePriority(id: number, priority: number) {
