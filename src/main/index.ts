@@ -1,13 +1,13 @@
 import { createWindow } from './window'
 import { BrowserWindow, app } from 'electron'
-import setNodeController from './controllers/localNodeController'
+import setNodeController from './controllers/LocalNodeController'
 import setRunController from './controllers/runner'
 import { release } from 'os'
-import log from 'electron-log'
 import createUpdater from './updater'
 import setShopNodeController from './controllers/ShopNodeController'
 import setWildController from './controllers/WildController'
 import setTerminalController from './controllers/TerminalController'
+import logger from './logger'
 
 // Remove electron security warnings
 // This warning only shows in development mode
@@ -28,7 +28,7 @@ if (!app.requestSingleInstanceLock()) {
 let win: BrowserWindow | null = null
 
 app.whenReady().then(function () {
-    log.info('app.whenReady:创建窗口')
+    logger.info('创建窗口')
     win = createWindow()
 
     setWildController(app)
@@ -37,10 +37,16 @@ app.whenReady().then(function () {
     setNodeController()
     setShopNodeController()
 
-    win.webContents.on('did-finish-load', () =>{
-        log.info('webContents.on:did-finish-load')
+    win.webContents.on('did-finish-load', () => {
+        logger.info('webContents.on:did-finish-load')
 
         createUpdater(app, win!)
+    })
+
+    process.on('uncaughtException', (err) => {
+        logger.error('主进程捕获到异常:', err)
+        logger.info('通知渲染进程异常信息')
+        win!.webContents.send('exception', err)
     })
 })
 
@@ -58,7 +64,7 @@ app.on('second-instance', () => {
 })
 
 app.on('activate', () => {
-    log.info('主进程检测到事件: activate')
+    logger.info('主进程检测到事件: activate')
     const allWindows = BrowserWindow.getAllWindows()
     if (allWindows.length) {
         allWindows[0].focus()

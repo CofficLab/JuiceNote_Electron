@@ -1,6 +1,7 @@
 import { ipcMain } from "electron"
 import Config from "../config"
 import { createWindow } from "../window"
+import logger from "../logger"
 
 export default function setWildController(app: Electron.App) {
     ipcMain.handle('open-win', createWindow)

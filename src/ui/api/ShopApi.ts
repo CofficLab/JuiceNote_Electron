@@ -20,8 +20,14 @@ const ShopApi = {
             return new Node(node)
         })
     },
-    find(id: number | String): Node {
-        return new Node(Ipc.sendSync('findShopNode', id))
+    find(id: number | String, callback: (node: Node) => void) {
+        console.log('use invoke,shop api find', id)
+        Ipc.invoke('findShopNode', id).then((node) => {
+            console.log('find node then', node)
+            callback(new Node(node))
+        }).catch((err) => {
+            console.log('find node catch',err)
+        })
     },
     getBooks(): Node[] {
         let items = Ipc.sendSync('getShopBooks')

@@ -7,10 +7,10 @@
     <Header class="fixed top-0 z-50 h-10 w-full bg-base-300"></Header>
 
     <!-- 左侧导航侧栏 -->
-    <Aside
+    <!-- <Aside
       v-if="isLesson"
       class="z-50 hidden h-screen w-40 overflow-scroll overscroll-none scroll-smooth border-r border-base-300 bg-base-200/90 shadow-xl backdrop-blur-sm backdrop-filter lg:flex lg:flex-col"
-    ></Aside>
+    ></Aside> -->
 
     <!-- 右侧主内容，所有的滚动都基于main，必须有固定高度 -->
     <main class="flex h-screen flex-grow flex-col justify-between overflow-scroll overscroll-none bg-base-100">
@@ -20,16 +20,17 @@
         </transition>
       </router-view>
 
-      <Footer class="sticky bottom-0 z-50 h-8 bg-primary/10 px-2 shadow-2xl backdrop-blur-lg backdrop-filter"></Footer>
+      <!-- <Footer class="sticky bottom-0 z-50 h-8 bg-primary/10 px-2 shadow-2xl backdrop-blur-lg backdrop-filter"></Footer> -->
     </main>
 
     <!-- 弹层 -->
-    <Themes></Themes>
+    <!-- <Themes></Themes>
     <FormSearch></FormSearch>
     <RightMenuModal></RightMenuModal>
     <FormAdd></FormAdd>
     <FormRename></FormRename>
-    <Terminal></Terminal>
+    <Terminal></Terminal> -->
+    <!-- <ErrorModal></ErrorModal> -->
   </div>
 </template>
 
@@ -50,6 +51,7 @@ import { useRoute } from "vue-router";
 import { useCurrentNodeStore } from "../stores/NodeStore";
 import { EmptyNode } from "../entities/Node";
 import Preload from '../api/Preload'
+import ErrorModal from "../modals/ErrorModal.vue";
 
 const route = useRoute();
 const nodeStore = useCurrentNodeStore();

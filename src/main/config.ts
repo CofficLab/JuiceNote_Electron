@@ -22,6 +22,8 @@ const URL = process.env.VITE_DEV_SERVER_URL as string
 // 打包后的index.html路径
 const INDEX_HTML_PATH = path.join(ROOT_PATH, 'index.html')
 
+const LOG_PATH = path.join(ROOT_PATH, 'logs/main.log')
+
 const Config = {
     ROOT_PATH,
     DIST_PATH,
@@ -29,6 +31,7 @@ const Config = {
     PRELOAD_FILE,
     URL,
     DATABASE_PATH,
+    LOG_PATH,
     INDEX_HTML_PATH
 }
 

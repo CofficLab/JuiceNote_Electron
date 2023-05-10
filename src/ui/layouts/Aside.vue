@@ -24,7 +24,7 @@
       class="h-full overflow-scroll pb-24"></Tree>
 
     <!-- 底部的图书logo -->
-    <div v-if="book!.cover.length > 0"
+    <div v-if="book && book.cover?.length > 0"
       class=" bottom-0 fixed h-20 opacity-90 backdrop-blur-sm backdrop-filter dark:brightness-50">
       <img :src="book!.cover" alt="" />
     </div>
