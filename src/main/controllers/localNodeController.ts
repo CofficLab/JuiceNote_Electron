@@ -1,6 +1,7 @@
 import { ipcMain } from "electron"
 import  LocalNode from "../models/LocalNode"
 import log from "../logger"
+import { NodeDB } from "../models/BaseNode"
 
 export default function setNodeController() {
     ipcMain.on('getRoot', (event, id) => {

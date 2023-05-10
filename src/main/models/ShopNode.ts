@@ -1,8 +1,9 @@
-
 import { join } from "path";
 import Config from "../config";
-import { Node} from "./BaseNode";
+import { Base } from "./BaseNode";
 
-const db = require('better-sqlite3')(join(Config.DATABASE_PATH, 'shop.db'));
-
-export default Node.new(db);
+export default class ShopNode extends Base {
+    constructor() {
+        super(join(Config.DATABASE_PATH, 'shop.db'))
+    }
+}
