@@ -4,6 +4,25 @@ import log from "../logger";
 import { EmptyNode, TreeNode } from "./TreeNode";
 import { writeFile } from "fs";
 
+interface TreeNodeObject {
+    id: number 
+    title: string 
+    isBook: boolean 
+    isChapter: boolean 
+    isTab: boolean 
+    isPage: boolean 
+    isLesson: boolean 
+    isManual: boolean 
+    isVisible: boolean 
+    priority: number 
+    parentId: number 
+    level: number 
+    isEmpty: boolean 
+    cover: string 
+    content: string 
+    tree: string 
+}
+
 class DatabaseApi {
     protected dbFilePath: string | undefined = join(Config.DATABASE_PATH, 'xxxx.db')
     protected connection!: any;
@@ -19,7 +38,7 @@ class DatabaseApi {
         return "已删除「" + node.title + "」"
     }
 
-    find(id: number): TreeNode {
+    find(id: number): TreeNodeObject {
         log.debug(`在 ${this.dbFilePath} 中查找节点 id=${id}`)
 
         if (id == undefined) {
@@ -31,16 +50,16 @@ class DatabaseApi {
 
         let result = this.connection.prepare('select * from nodes where id=?').get(id)
 
-        return new TreeNode(result)
+        return new result
     }
 
-    getRoot(): TreeNode {
+    getRoot(): TreeNodeObject {
         log.debug('get root,connection is', this.connection)
 
         let result = this.connection.prepare('select * from nodes where parent_id=0 order by priority asc limit 1').get()
 
         log.debug('root', result.title)
-        return new TreeNode(result)
+        return result
     }
 
     getChildren(id: number): TreeNode[] {
