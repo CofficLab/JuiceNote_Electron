@@ -1,9 +1,7 @@
 import { join } from "path";
 import Config from "../config";
-import { Base } from "./BaseNode";
+import DatabaseApi from "./DatabaseApi";
 
-export default class LocalNode extends Base {
-    constructor() {
-        super(join(Config.DATABASE_PATH, 'local.db'))
-    }
-}
+const LocalNodeDatabaseApi = new DatabaseApi(join(Config.DATABASE_PATH, 'local.db'))
+
+export default LocalNodeDatabaseApi
