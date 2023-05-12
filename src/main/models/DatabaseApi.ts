@@ -1,7 +1,6 @@
 import { join } from "path";
 import Config from "../config";
 import log from "../logger";
-import { EmptyNode, TreeNode } from "./TreeNode";
 import { writeFile } from "fs";
 
 interface TreeNodeObject {
@@ -23,6 +22,25 @@ interface TreeNodeObject {
     tree: string 
 }
 
+const EmptyNode: TreeNodeObject= {
+    id: 0,
+    title: '',
+    isBook: false,
+    isChapter: false,
+    isTab: false,
+    isPage: false,
+    isLesson: true,
+    isManual: false,
+    isVisible: true,
+    priority: 0,
+    parentId: 0,
+    level: 0,
+    isEmpty: true,
+    cover: '',
+    content: '',
+    tree: ''
+}
+
 class DatabaseApi {
     protected dbFilePath: string | undefined = join(Config.DATABASE_PATH, 'xxxx.db')
     protected connection!: any;
@@ -38,12 +56,12 @@ class DatabaseApi {
         return "已删除「" + node.title + "」"
     }
 
-    find(id: number): TreeNodeObject {
+    find(id: number): TreeNodeObject|null {
         log.debug(`在 ${this.dbFilePath} 中查找节点 id=${id}`)
 
         if (id == undefined) {
             log.error('被查找的节点不能为undefined')
-            return EmptyNode
+            return null
         }
 
         if (id <= 0) return EmptyNode
