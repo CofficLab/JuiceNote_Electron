@@ -51,7 +51,7 @@
         'pl-2': display != 'breadcrumbs',
         'border gap-0 border-l-0': display == 'row',
       }" v-if="shouldChildrenShow">
-        <Tree v-for="child in tree.getChildren()" :root="root.isEmpty ? tree : root" :display="display" :tree="child" :hover-callback="hoverCallback"
+        <Tree v-for="child in children" :root="root.isEmpty ? tree : root" :display="display" :tree="child" :hover-callback="hoverCallback"
           :current-node="currentNode"></Tree>
       </div>
     </div>
@@ -107,6 +107,11 @@ const props = defineProps({
 
 console.log('加载tree', props.tree)
 
+let children = ref<Node[]>([])
+props.tree.getChildren().then(c => {
+  children.value = c
+})
+
 const shouldShow = computed(() => {
   if (props.display == 'breadcrumbs') {
     return shouldActive(props.tree,props.currentNode)
@@ -150,7 +155,7 @@ const handleLeave = (node: Node) => {
 
 <script lang="ts">
 function shouldActive(target: Node, current: Node): Boolean {
-  // console.log('should active',this.title)
+  console.log('should active',target.title)
   if (target.isRoot || target.isShop || target.isDatabase) return true
   if (target.id == current.id) return true
   if (target.isPage) return current.id == target.id;

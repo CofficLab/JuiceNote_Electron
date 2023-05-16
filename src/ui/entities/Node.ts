@@ -79,16 +79,14 @@ class Node {
         return this.getFirstChild().getFirstPage()
     }
 
-    getParent(): Node {
+    async getParent(): Promise<Node> {
         console.log('get parent,id is', this.id, 'parent id is', this.parentId)
         
         if (this.parentId == 0 || this.isEmpty || !this.parentId) {
             return EmptyNode
         }
 
-        let result = NodeApi.find(this.parentId)
-
-        return new Node(result)
+        return NodeApi.find(this.parentId)
     }
 
     getParents(): Node[] {
@@ -103,8 +101,9 @@ class Node {
         return parents.reverse()
     }
 
-    getChildren(): Node[] {
-        return this.children
+    async getChildren(): Promise<Node[]> {
+        const children = await NodeApi.getChildren(this.id)
+        return children
     }
 
     getVisibleChildren(): Node[] {
