@@ -21,7 +21,7 @@ import Add from "../operators/Add.vue";
 import { computed, watch } from "vue";
 import { useRoute } from "vue-router";
 import { useCurrentNodeStore } from "../stores/NodeStore";
-import { NodeApi } from "../api/NodeApi";
+import  NodeApi  from "../api/NodeApi";
 
 const route = useRoute();
 const nodeStore = useCurrentNodeStore();

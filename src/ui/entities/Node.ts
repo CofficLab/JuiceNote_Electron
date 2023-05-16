@@ -1,4 +1,4 @@
-import { NodeApi } from "../api/NodeApi"
+import NodeApi from "../api/NodeApi"
 
 interface NodeOptions {
     id?: number
@@ -77,7 +77,7 @@ class Node {
     }
 
     getParent(): Node {
-        // console.log('get parent,id is', this.id, 'parent id is', this.parentId)
+        console.log('get parent,id is', this.id, 'parent id is', this.parentId)
         
         if (this.parentId == 0 || this.isEmpty || !this.parentId) {
             return EmptyNode
@@ -124,14 +124,7 @@ class Node {
         return this.getParents().find((parent) => parent.getParent()?.isBook)
     }
 
-    shouldActive(current: Node): Boolean {
-        // console.log('should active',this.title)
-        if (this.isRoot || this.isShop || this.isDatabase) return true
-        if (this.id == current.id) return true
-        if (this.isPage) return current.id == this.id;
-
-        return current.getParents().some(parent => parent.id == this.id)
-    }
+    
 
     static updateChildrenPriority(children: Node[]) {
         children.forEach((child,index) => {

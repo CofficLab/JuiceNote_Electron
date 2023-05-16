@@ -3,7 +3,7 @@ import { RouteRecordRaw } from 'vue-router'
 
 const nodeRoutes: RouteRecordRaw =
 {
-    path: '/nodes/:source?/:id',
+    path: '/nodes/:id',
     children: [
         {
             path: 'edit',

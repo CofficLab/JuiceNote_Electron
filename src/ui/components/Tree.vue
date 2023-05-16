@@ -10,8 +10,8 @@
       <!-- 当前节点 -->
       <div v-show="shouldShow" @mouseleave="handleLeave(tree)" @mouseenter="handleHover(tree)" :class="{
         'flex flex-row items-center p-0 text-xs hover:bg-primary-focus/20': true,
-        'bg-primary text-primary-content': tree.shouldActive(currentNode) && tree.isPage && display != 'breadcrumbs',
-        'bg-primary/5': tree.shouldActive(currentNode) && tree.isChapter && !tree.isTab && display != 'breadcrumbs',
+        'bg-primary text-primary-content': shouldActive(tree,currentNode) && tree.isPage && display != 'breadcrumbs',
+        'bg-primary/5': shouldActive(tree,currentNode) && tree.isChapter && !tree.isTab && display != 'breadcrumbs',
         'border-l border-t border-b': display == 'row' && open,
         'w-48': display == 'row',
       }">
@@ -105,9 +105,11 @@ const props = defineProps({
   }
 });
 
+console.log('加载tree', props.tree)
+
 const shouldShow = computed(() => {
   if (props.display == 'breadcrumbs') {
-    return props.tree.shouldActive(props.currentNode)
+    return shouldActive(props.tree,props.currentNode)
   }
 
   return !props.hiddenList.includes(props.tree.id) && props.tree.getParents().length < props.depth
@@ -127,7 +129,7 @@ const shouldHide = computed(() => {
   return props.hiddenList.includes(props.tree.id)
 })
 
-let open = ref(props.tree.shouldActive(props.currentNode) || props.tree.getParents().length < 1)
+let open = ref(shouldActive(props.tree,props.currentNode) || props.tree.getParents().length < 1)
 
 const toggle = () => {
   open.value = !open.value;
@@ -143,5 +145,16 @@ const handleHover = (node: Node) => {
 
 const handleLeave = (node: Node) => {
   shouldShowDropdown.value = false
+}
+</script>
+
+<script lang="ts">
+function shouldActive(target: Node, current: Node): Boolean {
+  // console.log('should active',this.title)
+  if (target.isRoot || target.isShop || target.isDatabase) return true
+  if (target.id == current.id) return true
+  if (target.isPage) return current.id == target.id;
+
+  return current.getParents().some(parent => parent.id == target.id)
 }
 </script>

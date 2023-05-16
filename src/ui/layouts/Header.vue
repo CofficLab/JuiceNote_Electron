@@ -13,7 +13,7 @@
         <!-- <Next class="btn-ghost btn-sm flex items-center rounded px-2" :showText="false" v-if="isLesson"></Next> -->
         <Home class="btn-ghost btn-sm flex items-center rounded px-2"></Home>
         <Tree class="btn-ghost btn-sm flex items-center rounded px-2"></Tree>
-        <Shop class="btn-ghost btn-sm flex items-center rounded px-2"></Shop>
+        <!-- <Shop class="btn-ghost btn-sm flex items-center rounded px-2"></Shop> -->
         <More class="btn-ghost btn-sm flex items-center rounded px-2"></More>
         <Delete :node="current" :show-text="false" class="btn-ghost btn-sm flex items-center rounded px-2"></Delete>
       </div>

@@ -51,9 +51,8 @@ class DatabaseApi {
     }
 
     delete(id: number): string {
-        let node = this.find(id)
-        let result = this.connection.prepare('delete from nodes where id=?').run(id)
-        return "已删除「" + node.title + "」"
+        this.connection.prepare('delete from nodes where id=?').run(id)
+        return "已删除「" + id + "」"
     }
 
     find(id: number): TreeNodeObject|null {
@@ -68,7 +67,7 @@ class DatabaseApi {
 
         let result = this.connection.prepare('select * from nodes where id=?').get(id)
 
-        return new result
+        return result
     }
 
     getRoot(): TreeNodeObject {
@@ -80,60 +79,58 @@ class DatabaseApi {
         return result
     }
 
-    getChildren(id: number): TreeNode[] {
+    getChildren(id: number): TreeNodeObject[] {
         let children = this.connection.prepare('select * from nodes where parent_id=? order by priority asc').all(id)
 
         log.info(`get children of ${id},count=${children.length}`)
 
-        return children.map((child: object) => {
-            return new TreeNode(child)
-        });
+        return children
     }
 
-    getBooks(): TreeNode[] {
+    getBooks(): TreeNodeObject[] {
         let items = this.connection.prepare('select * from nodes where is_book=1 order by priority asc').all()
 
-        return items.map((item: object) => {
-            return new TreeNode(item)
-        });
+        return items
     }
 
-    getFirstBook(): TreeNode {
+    getFirstBook(): TreeNodeObject {
         let result = this.connection.prepare('select * from nodes where is_book=1 order by priority asc limit 1').get()
 
         log.debug('get first book', result)
-        return new TreeNode(result)
+        return result
     }
 
-    getFirstPage(id: number): TreeNode {
+    getFirstPage(id: number): TreeNodeObject {
         let current = this.find(id)
-        if (current.isPage || current.isEmpty) return current
+        if (current!.isPage || current!.isEmpty) return current!
 
-        return this.getFirstPage(this.getFirstChild(id).id)
+        let firstChild = this.getFirstChild(id)
+
+        if (firstChild) {
+            return this.getFirstPage(firstChild.id)
+        }
+
+        return EmptyNode
     }
 
-    getFirstChild(id: number): TreeNode {
+    getFirstChild(id: number): TreeNodeObject|null {
         let child = this.connection.prepare('select * from nodes where parent_id=? order by priority asc limit 1').get(id)
 
         log.info(`get first child of ${id}`)
 
-        return new TreeNode(child)
+        return child
     }
 
-    getVisibleBooks(): TreeNode[] {
+    getVisibleBooks(): TreeNodeObject[] {
         let items = this.connection.prepare('select * from nodes where is_book=1 and is_visible=1 order by priority asc').all()
 
-        return items.map((item: object) => {
-            return new TreeNode(item)
-        });
+        return items
     }
 
-    search(keyword: string): TreeNode[] {
+    search(keyword: string): TreeNodeObject[] {
         log.info('搜索', keyword)
         let nodes = this.connection.prepare("select * from nodes where title like ? limit 5").all(`%${keyword}%`)
-        return nodes.map((node: object) => {
-            return new TreeNode(node)
-        })
+        return nodes
     }
 
     updateTitle(id: number, title: string): string {

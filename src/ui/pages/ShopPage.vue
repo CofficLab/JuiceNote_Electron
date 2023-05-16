@@ -37,10 +37,10 @@
 
 <script lang="ts" setup>
 import { computed } from "vue";
-import { ShopApi } from "../api/ShopApi";
+import NodeApi from "../api/NodeApi";
 import Book from "../components/Book.vue";
 
 let booksVisible = computed(() => {
-  return ShopApi.getBooks().filter((book) => book.isVisible);
+  return NodeApi.getBooks().filter((book) => book.isVisible);
 });
 </script>

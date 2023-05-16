@@ -13,7 +13,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import Link from "../components/Link.vue";
-import { NodeApi } from "../api/NodeApi";
+import  NodeApi  from "../api/NodeApi";
 import { useCurrentNodeStore } from "../stores/NodeStore";
 
 const current = computed(() => useCurrentNodeStore().current);

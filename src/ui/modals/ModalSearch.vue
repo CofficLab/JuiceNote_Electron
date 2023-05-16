@@ -39,7 +39,7 @@ import Preload from "../api/Preload";
 import IconBook from "../icons/IconBook.vue";
 import IconChapter from "../icons/IconChapter.vue";
 import IconPage from "../icons/IconPage.vue";
-import { NodeApi } from "../api/NodeApi";
+import  NodeApi  from "../api/NodeApi";
 
 const router = useRouter();
 let keyword = "";

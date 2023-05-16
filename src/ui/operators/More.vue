@@ -38,7 +38,7 @@ import Commit from "./Commit.vue";
 import Edit from "./Edit.vue";
 import CreateChild from "./Add.vue";
 import Visible from "./Visible.vue";
-import { NodeApi } from "../api/NodeApi";
+import  NodeApi  from "../api/NodeApi";
 import Preload from "../api/Preload";
 import { useCurrentNodeStore } from "../stores/NodeStore";
 

@@ -1,13 +1,12 @@
 import { createWindow } from './window'
 import { BrowserWindow, app } from 'electron'
-import setNodeController from './controllers/LocalNodeApi'
-import setRunController from './controllers/runner'
+import setRunController from './controllers/RunnerController'
 import { release } from 'os'
 import createUpdater from './updater'
-import setShopNodeController from './controllers/ShopNodeApi'
 import setWildController from './controllers/WildController'
 import setTerminalController from './controllers/TerminalController'
 import logger from './logger'
+import setNodeController from './controllers/NodeController'
 
 // Remove electron security warnings
 // This warning only shows in development mode
@@ -35,7 +34,6 @@ app.whenReady().then(function () {
     setTerminalController(win)
     setRunController()
     setNodeController()
-    setShopNodeController()
 
     win.webContents.on('did-finish-load', () => {
         logger.info('webContents.on:did-finish-load')
