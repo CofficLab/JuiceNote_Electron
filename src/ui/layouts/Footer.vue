@@ -10,5 +10,8 @@ import { useCurrentNodeStore } from "../stores/NodeStore";
 import Tree from "../components/Tree.vue";
 
 const current = computed(() => useCurrentNodeStore().current);
-const tree = computed(() => useCurrentNodeStore().root)
+const tree = computed(() => {
+  console.log('初始化footer', useCurrentNodeStore().root)
+  return useCurrentNodeStore().root
+})
 </script>

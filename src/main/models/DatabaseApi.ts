@@ -20,6 +20,7 @@ interface TreeNodeObject {
     cover: string 
     content: string 
     tree: string 
+    children: TreeNodeObject[]
 }
 
 const EmptyNode: TreeNodeObject= {
@@ -38,7 +39,8 @@ const EmptyNode: TreeNodeObject= {
     isEmpty: true,
     cover: '',
     content: '',
-    tree: ''
+    tree: '',
+    children: []
 }
 
 class DatabaseApi {
@@ -70,13 +72,17 @@ class DatabaseApi {
         return result
     }
 
-    getRoot(): TreeNodeObject {
+    getRoot(recursive = true): TreeNodeObject {
         log.debug('get root,connection is', this.connection)
 
         let result = this.connection.prepare('select * from nodes where parent_id=0 order by priority asc limit 1').get()
 
-        log.debug('root', result.title)
-        return result
+        if (recursive) result.children = this.getChildren(result.id)
+
+        log.debug('get root', result.title)
+        // log.debug('get root, full data is', result)
+
+        return  result
     }
 
     getChildren(id: number): TreeNodeObject[] {

@@ -10,6 +10,12 @@ const NodeApi =  {
         })
     },
 
+    async find(id:number): Promise<Node> {
+        return Ipc.invoke('find', id).then((node) => {
+            return new Node(node)
+        })
+    },
+
     async getFirstPage(id:number): Promise<Node> {
         return Ipc.invoke('getFirstPage', id).then((node) => {
             return new Node(node)

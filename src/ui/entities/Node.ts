@@ -20,6 +20,7 @@ interface NodeOptions {
     isManual?: boolean
     isVisible?: boolean
     isEmpty?: boolean
+    children?: Node[]
 }
 
 class Node {
@@ -42,9 +43,11 @@ class Node {
     public isEmpty: boolean = false
     public cover: string = ''
     public content: string = ''
+    public children: Node[] = []
 
     constructor(options: NodeOptions) {
         Object.assign(this, options)
+        // console.log('初始化node结构体',options)
 
         if (this.parentId == 0) this.isRoot = true
     }
@@ -101,7 +104,7 @@ class Node {
     }
 
     getChildren(): Node[] {
-        return NodeApi.getChildren(this.id)
+        return this.children
     }
 
     getVisibleChildren(): Node[] {
@@ -123,8 +126,6 @@ class Node {
     getFirstTabInParents(): Node | undefined {
         return this.getParents().find((parent) => parent.getParent()?.isBook)
     }
-
-    
 
     static updateChildrenPriority(children: Node[]) {
         children.forEach((child,index) => {
