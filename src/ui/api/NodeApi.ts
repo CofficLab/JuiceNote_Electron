@@ -17,9 +17,8 @@ const NodeApi =  {
     },
 
     async getFirstPage(id:number): Promise<Node> {
-        return Ipc.invoke('getFirstPage', id).then((node) => {
-            return new Node(node)
-        })
+        const node = await Ipc.invoke('getFirstPage', id);
+        return new Node(node);
     },
 
     async getChildren(id:number): Promise<Node[]> {

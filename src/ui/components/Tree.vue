@@ -8,14 +8,14 @@
     }">
 
       <!-- 当前节点 -->
-      <div v-show="shouldShow" @mouseleave="handleLeave(tree)" @mouseenter="handleHover(tree)" :class="{
+      <div v-show="isVisible" @mouseleave="handleLeave" @mouseenter="handleHover(tree)" :class="{
         'flex flex-row items-center p-0 text-xs hover:bg-primary-focus/20': true,
-        'bg-primary text-primary-content': shouldActive(tree,currentNode) && tree.isPage && display != 'breadcrumbs',
-        'bg-primary/5': shouldActive(tree,currentNode) && tree.isChapter && !tree.isTab && display != 'breadcrumbs',
-        'border-l border-t border-b': display == 'row' && open,
+        'bg-primary text-primary-content': isActive && tree.isPage && display != 'breadcrumbs',
+        'bg-primary/5': isActive && tree.isChapter && !tree.isTab && display != 'breadcrumbs',
+        'border-l border-t border-b': display == 'row' && isChildrenVisible,
         'w-48': display == 'row',
       }">
-        <Link :node="tree" @click="setOpen" @mouseenter="hoverCallback(tree)" :class="{
+        <Link :node="tree" @mouseenter="hoverCallback(tree)" :class="{
           'flex flex-grow cursor-pointer flex-row items-center gap-2 px-2 py-2': true,
           'font-bold text-opacity-50': !tree.isPage && display != 'breadcrumbs',
           'text-secondary': !tree.isVisible
@@ -34,14 +34,14 @@
         </div>
 
         <!-- 折叠按钮 -->
-        <div @click="toggle" v-if="(!tree.isPage) && display == 'row'"
+        <div @click="handleToggleChildrenVisible" v-if="(!tree.isPage) && display == 'row'"
           class="btn-ghost rounded-none btn-square btn-sm btn">
-          {{ open ? "-" : "+" }}</div>
+          {{ isChildrenVisible ? "-" : "+" }}</div>
 
         <!-- 面包屑模式的弹出菜单 -->
-        <ul id="dropdown-{{ tree.id }}" v-if="display == 'breadcrumbs' && shouldShowDropdown" tabindex="0"
+        <ul id="dropdown-{{ tree.id }}" v-if="display == 'breadcrumbs' && isDropdownVisible" tabindex="0"
           class="absolute top-0 -translate-y-full flex flex-col py-6 px-4 shadow-2xl bg-base-300 rounded-t backdrop-filter backdrop-blur-sm max-h-96 overflow-y-scroll">
-          <Children :list="tree.getSiblings()"></Children>
+          <Children :list="siblings"></Children>
         </ul>
       </div>
 
@@ -50,7 +50,7 @@
         'flex flex-col rounded-none': true,
         'pl-2': display != 'breadcrumbs',
         'border gap-0 border-l-0': display == 'row',
-      }" v-if="shouldChildrenShow">
+      }" v-if="isChildrenVisible">
         <Tree v-for="child in children" :root="root.isEmpty ? tree : root" :display="display" :tree="child" :hover-callback="hoverCallback"
           :current-node="currentNode"></Tree>
       </div>
@@ -59,8 +59,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
-import { EmptyNode, Node, DatabaseNode } from "../entities/Node";
+import { computed, onMounted, ref, watch } from "vue";
+import { EmptyNode, Node } from "../entities/Node";
 import IconPage from "../icons/IconPage.vue";
 import IconChapter from "../icons/IconChapter.vue";
 import IconDatabase from "../icons/IconDatabase.vue";
@@ -72,7 +72,7 @@ import Children from "../components/Children.vue";
 const props = defineProps({
   tree: {
     type: Node,
-    default: DatabaseNode,
+    default: EmptyNode,
   },
   root: {
     type: Node,
@@ -105,61 +105,71 @@ const props = defineProps({
   }
 });
 
-console.log('加载tree', props.tree)
-
+/**
+ * 初始化变量，页面加载完成后再更新变量的值
+ */
 let children = ref<Node[]>([])
-props.tree.getChildren().then(c => {
-  children.value = c
+let siblings = ref<Node[]>([])
+let isActive = ref(false)
+let isVisible = computed(() => props.display != 'breadcrumbs' || (props.display == 'breadcrumbs' && isActive.value))
+let isChildrenForceVisible = ref(false)
+let isChildrenVisible = computed(() => (children.value.length > 0 && isActive.value) || isChildrenForceVisible.value)
+let isDropdownVisible = ref(false)
+
+/**
+ * 监听变化
+ */
+watch(props, () => {
+  // console.log(`props发生变化`,props.currentNode.title)
+  shouldActive(props.tree, props.currentNode).then(active => {
+    // if (active) console.log(`更新当前节点:${props.tree.title}的active=true`)
+    isActive.value = active
+  })
 })
 
-const shouldShow = computed(() => {
-  if (props.display == 'breadcrumbs') {
-    return shouldActive(props.tree,props.currentNode)
-  }
+/**
+ * 页面完成加载后，处理数据
+ */
+onMounted(() => {
+  // 获取children，并更新相关数据
+  props.tree.getChildren().then(c => {
+    children.value = c
+  })
 
-  return !props.hiddenList.includes(props.tree.id) && props.tree.getParents().length < props.depth
+  props.tree.getSiblings().then(s => {
+    siblings.value = s
+  })
+
+  shouldActive(props.tree, props.currentNode).then(active => {
+    // console.log(`更新当前节点:${props.tree.title}的active=${active}`)
+    isActive.value = active
+  })
 })
 
-const shouldShowDropdown = ref(false)
+/**
+ * 处理页面事件
+ */
 
-const shouldChildrenShow = computed(() => {
-  if (props.display == 'breadcrumbs') {
-    return shouldShow.value
-  }
-
-  return (props.tree.getChildren().length > 0 && open.value) || shouldHide.value
-})
-
-const shouldHide = computed(() => {
-  return props.hiddenList.includes(props.tree.id)
-})
-
-let open = ref(shouldActive(props.tree,props.currentNode) || props.tree.getParents().length < 1)
-
-const toggle = () => {
-  open.value = !open.value;
-};
-const setOpen = () => {
-  open.value = true;
-}
-
-const handleHover = (node: Node) => {
-  shouldShowDropdown.value = true
+let handleHover = (node: Node) => {
+  isDropdownVisible.value = true
   props.hoverCallback(node)
 }
 
-const handleLeave = (node: Node) => {
-  shouldShowDropdown.value = false
-}
+let handleLeave = () => isDropdownVisible.value = false
+
+let handleToggleChildrenVisible = () => isChildrenForceVisible.value = !isChildrenForceVisible.value;
 </script>
 
 <script lang="ts">
-function shouldActive(target: Node, current: Node): Boolean {
-  console.log('should active',target.title)
-  if (target.isRoot || target.isShop || target.isDatabase) return true
+// 判断一个节点是否应该激活
+async function shouldActive(target: Node, current: Node): Promise<boolean> {
+  // console.log(`should [${target.id}]${target.title} be active while current is ${current.title}`)
+  if (target.isRoot) return true
   if (target.id == current.id) return true
   if (target.isPage) return current.id == target.id;
 
-  return current.getParents().some(parent => parent.id == target.id)
+  let parents = await current.getParents()
+
+  return parents.some(parent => parent.id == target.id)
 }
 </script>

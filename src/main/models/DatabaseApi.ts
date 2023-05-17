@@ -2,45 +2,11 @@ import { join } from "path";
 import Config from "../config";
 import log from "../logger";
 import { writeFile } from "fs";
+import Logger from "electron-log";
 
-interface TreeNodeObject {
-    id: number 
-    title: string 
-    isBook: boolean 
-    isChapter: boolean 
-    isTab: boolean 
-    isPage: boolean 
-    isLesson: boolean 
-    isManual: boolean 
-    isVisible: boolean 
-    priority: number 
-    parentId: number 
-    level: number 
-    isEmpty: boolean 
-    cover: string 
-    content: string 
-    tree: string 
-    children: TreeNodeObject[]
-}
-
-const EmptyNode: TreeNodeObject= {
+const EmptyNode= {
     id: 0,
-    title: '',
-    isBook: false,
-    isChapter: false,
-    isTab: false,
-    isPage: false,
-    isLesson: true,
-    isManual: false,
-    isVisible: true,
-    priority: 0,
-    parentId: 0,
-    level: 0,
-    isEmpty: true,
-    cover: '',
-    content: '',
-    tree: '',
-    children: []
+    title: '空节点',
 }
 
 class DatabaseApi {
@@ -57,12 +23,12 @@ class DatabaseApi {
         return "已删除「" + id + "」"
     }
 
-    find(id: number): TreeNodeObject|null {
+    find(id: number): Object {
         log.debug(`在 ${this.dbFilePath} 中查找节点 id=${id}`)
 
         if (id == undefined) {
             log.error('被查找的节点不能为undefined')
-            return null
+            return EmptyNode
         }
 
         if (id <= 0) return EmptyNode
@@ -72,7 +38,7 @@ class DatabaseApi {
         return result
     }
 
-    getRoot(recursive = true): TreeNodeObject {
+    getRoot(recursive = true): Object {
         log.debug('get root,connection is', this.connection)
 
         let result = this.connection.prepare('select * from nodes where parent_id=0 order by priority asc limit 1').get()
@@ -85,7 +51,7 @@ class DatabaseApi {
         return  result
     }
 
-    getChildren(id: number): TreeNodeObject[] {
+    getChildren(id: number): Object[] {
         let children = this.connection.prepare('select * from nodes where parent_id=? order by priority asc').all(id)
 
         log.info(`get children of ${id},count=${children.length}`)
@@ -93,24 +59,26 @@ class DatabaseApi {
         return children
     }
 
-    getBooks(): TreeNodeObject[] {
+    getBooks(): Object[] {
         let items = this.connection.prepare('select * from nodes where is_book=1 order by priority asc').all()
 
         return items
     }
 
-    getFirstBook(): TreeNodeObject {
+    getFirstBook(): Object {
         let result = this.connection.prepare('select * from nodes where is_book=1 order by priority asc limit 1').get()
 
         log.debug('get first book', result)
         return result
     }
 
-    getFirstPage(id: number): TreeNodeObject {
+    getFirstPage(id: number): Object {
         let current = this.find(id)
         if (current!.isPage || current!.isEmpty) return current!
 
         let firstChild = this.getFirstChild(id)
+
+        Logger.info(`${current!.title} 第一个子节点是 [${firstChild!.id}]${firstChild!.title}`)
 
         if (firstChild) {
             return this.getFirstPage(firstChild.id)
@@ -119,21 +87,21 @@ class DatabaseApi {
         return EmptyNode
     }
 
-    getFirstChild(id: number): TreeNodeObject|null {
+    getFirstChild(id: number): Object {
         let child = this.connection.prepare('select * from nodes where parent_id=? order by priority asc limit 1').get(id)
 
-        log.info(`get first child of ${id}`)
+        log.info(`get first child of ${id},result is`,child)
 
         return child
     }
 
-    getVisibleBooks(): TreeNodeObject[] {
+    getVisibleBooks(): Object[] {
         let items = this.connection.prepare('select * from nodes where is_book=1 and is_visible=1 order by priority asc').all()
 
         return items
     }
 
-    search(keyword: string): TreeNodeObject[] {
+    search(keyword: string): Object[] {
         log.info('搜索', keyword)
         let nodes = this.connection.prepare("select * from nodes where title like ? limit 5").all(`%${keyword}%`)
         return nodes

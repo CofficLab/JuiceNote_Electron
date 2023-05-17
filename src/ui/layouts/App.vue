@@ -4,13 +4,13 @@
   <!-- 因为electron配置了全透明窗口，这里最好配置一个底色 -->
   <div id="root" :data-theme="theme" class="absolute flex w-full flex-row bg-primary bg-white/90">
     <!-- header脱离文档流，固定定位 -->
-    <Header class="fixed top-0 z-50 h-10 w-full bg-base-300"></Header>
+    <Header class="fixed top-0 z-50 h-10 w-full bg-base-200/90 border-b border-base-300 shadow-sm"></Header>
 
     <!-- 左侧导航侧栏 -->
-    <!-- <Aside
+    <Aside
       v-if="isLesson"
-      class="z-50 hidden h-screen w-40 overflow-scroll overscroll-none scroll-smooth border-r border-base-300 bg-base-200/90 shadow-xl backdrop-blur-sm backdrop-filter lg:flex lg:flex-col"
-    ></Aside> -->
+      class="z-50 hidden h-screen w-40 overflow-scroll overscroll-none scroll-smooth border-r border-base-300 bg-base-200/90 shadow-sm backdrop-blur-sm backdrop-filter lg:flex lg:flex-col"
+    ></Aside>
 
     <!-- 右侧主内容，所有的滚动都基于main，必须有固定高度 -->
     <main class="flex h-screen flex-grow flex-col justify-between overflow-scroll overscroll-none bg-base-100">
@@ -24,12 +24,12 @@
     </main>
 
     <!-- 弹层 -->
-    <!-- <Themes></Themes>
-    <FormSearch></FormSearch>
-    <RightMenuModal></RightMenuModal>
-    <FormAdd></FormAdd>
-    <FormRename></FormRename>
-    <Terminal></Terminal> -->
+    <Themes></Themes>
+    <!-- <FormSearch></FormSearch> -->
+    <!-- <RightMenuModal></RightMenuModal> -->
+    <!-- <FormAdd></FormAdd> -->
+    <!-- <FormRename></FormRename> -->
+    <Terminal></Terminal>
     <!-- <ErrorModal></ErrorModal> -->
   </div>
 </template>
@@ -103,10 +103,6 @@ Preload.listen("download-progress", (_, args) => {
   console.log("监测到事件：download-progress",percent);
 });
 
-// watch(route, () => {
-//   console.log("路由变化");
-//   nodeStore.update(RouteBox.getCurrentNode(route) || EmptyNode);
-// });
 </script>
 
 <style scoped>

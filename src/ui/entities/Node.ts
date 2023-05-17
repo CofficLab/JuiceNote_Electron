@@ -1,27 +1,28 @@
 import NodeApi from "../api/NodeApi"
+import mapKeys from "lodash/mapKeys" 
+import camelCase  from "lodash/camelCase"
 
-interface NodeOptions {
-    id?: number
-    title: string
-    priority?: number
-    parentId?: number
-    level?: number
-    cover?: string
-    content?: string
-    isRoot?: boolean
-    isDatabase?: boolean
-    isShop?: boolean
-    isHome?: boolean
-    isBook?: boolean
-    isChapter?: boolean
-    isTab?: boolean
-    isPage?: boolean
-    isLesson?: boolean
-    isManual?: boolean
-    isVisible?: boolean
-    isEmpty?: boolean
-    children?: Node[]
-}
+// interface NodeOptions {
+//     id?: number
+//     title: string
+//     priority?: number
+//     parent_id?: number
+//     level?: number
+//     cover?: string
+//     content?: string
+//     is_root?: boolean
+//     is_database?: boolean
+//     is_shop?: boolean
+//     is_home?: boolean
+//     is_book?: boolean
+//     is_chapter?: boolean
+//     is_tab?: boolean
+//     is_page?: boolean
+//     is_lesson?: boolean
+//     is_manual?: boolean
+//     is_visible?: boolean
+//     is_empty?: boolean
+// }
 
 class Node {
     public id: number = 0
@@ -43,11 +44,14 @@ class Node {
     public isEmpty: boolean = false
     public cover: string = ''
     public content: string = ''
-    public children: Node[] = []
 
-    constructor(options: NodeOptions) {
+    constructor(options: object) {
+        // 将从数据库取出的数据转换成驼峰命名
+        options = mapKeys(options, (value, key) => {
+            return camelCase(key)
+        })
+
         Object.assign(this, options)
-        // console.log('初始化node结构体',options)
 
         if (this.parentId == 0) this.isRoot = true
     }
@@ -80,22 +84,24 @@ class Node {
     }
 
     async getParent(): Promise<Node> {
-        console.log('get parent,id is', this.id, 'parent id is', this.parentId)
+        // console.log('get parent,id is', this.id, 'parent id is', this.parentId)
         
         if (this.parentId == 0 || this.isEmpty || !this.parentId) {
             return EmptyNode
         }
 
-        return NodeApi.find(this.parentId)
+        let parent = await NodeApi.find(this.parentId)
+
+        return parent
     }
 
-    getParents(): Node[] {
+    async getParents(): Promise<Node[]> {
         let parents: Node[] = []
-        let parent = this.getParent()
+        let parent = await this.getParent()
 
         while (parent != EmptyNode) {
             parents.push(parent)
-            parent = parent.getParent()
+            parent = await parent.getParent()
         }
 
         return parents.reverse()
@@ -110,20 +116,19 @@ class Node {
         return this.getChildren().filter(child => child.isVisible)
     }
 
-    getSiblings(): Node[] {
-        if (this.isDatabase || this.isShop) return [ShopNode, DatabaseNode]
+    async getSiblings(): Promise<Node[]> {
+        if (this.isRoot) return [EmptyNode]
 
-        return this.getParent().getChildren().filter(child => child.id != this.id)
+        let parent = await this.getParent()
+        let children = await parent.getChildren()
+
+        return children.filter(child => child.id != this.id)
     }
 
-    getTabs(): Node[] {
-        let children = this.getChildren()
+    async getTabs(): Promise<Node[]> {
+        let children = await this.getChildren()
 
         return children.filter(child => child.isTab)
-    }
-
-    getFirstTabInParents(): Node | undefined {
-        return this.getParents().find((parent) => parent.getParent()?.isBook)
     }
 
     static updateChildrenPriority(children: Node[]) {
@@ -134,13 +139,8 @@ class Node {
 }
 
 const EmptyNode = new Node({ title: '空节点', isEmpty: true,content: '空节点',id:0 })
-const ShopNode = new Node({ title: '商店', isShop: true, isLesson: false })
-const DatabaseNode = new Node({ title: '知识库', isDatabase: true, isLesson: false,id:0 })
 
 export {
     Node,
-    NodeOptions,
     EmptyNode,
-    ShopNode,
-    DatabaseNode
 };

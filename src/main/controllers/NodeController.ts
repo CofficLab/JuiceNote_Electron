@@ -9,4 +9,8 @@ export default function setNodeController() {
     ipcMain.handle('getChildren', (event, id) => {
         return NodeModel.getChildren(id)
     })
+
+    ipcMain.handle('find', (event, id) => {
+        return NodeModel.find(id)
+    })
 }

@@ -54,7 +54,7 @@ Router.beforeEach(function (to, from) {
     })
 
     if (nodeId > 0) {
-        NodeApi.getFirstPage(nodeId).then((node) => {
+        NodeApi.find(nodeId).then((node) => {
             Logger.info('在路由中确定current节点为', node.title)
             useCurrentNodeStore().update(node)
         })
