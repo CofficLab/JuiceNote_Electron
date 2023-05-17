@@ -17,6 +17,7 @@ import { ref, watch, onBeforeUnmount } from "vue";
 import Toolbar from "../layouts/Toolbar.vue";
 import { Editor, EditorContent } from "@tiptap/vue-3";
 import { Node } from "../entities/Node";
+import use from '../stores/EditorStore'
 
 const props = defineProps({
   node: Node,
@@ -55,6 +56,7 @@ let getEditor = () =>
   });
 
 let editor = getEditor();
+
 
 watch(props, () => {
   // console.log("editor 发现 props 发生变化，更新内容");
