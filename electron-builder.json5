@@ -18,6 +18,7 @@
     },
     "database",
     "playground",
+    "logs"
   ],
   mac: {
     artifactName: "kuaiyizhi_${version}.${ext}",

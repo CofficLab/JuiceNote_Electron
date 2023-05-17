@@ -9,6 +9,7 @@ import svgLoader from 'vite-svg-loader'
 rmSync('release', { recursive: true, force: true })
 rmSync('dist', { recursive: true, force: true })
 writeFileSync("./playground/index.html", "<h1>文件夹是空的，不会被打包，所以写入这个文件</h1>");
+writeFileSync("./logs/index.html", "<h1>文件夹是空的，不会被打包，所以写入这个文件</h1>");
 
 // 打包前与打包后的结构
 // database     database
