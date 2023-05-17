@@ -11,7 +11,6 @@
       <div v-show="isVisible" @mouseleave="handleLeave" @mouseenter="handleHover(tree)" :class="{
         'flex flex-row items-center p-0 text-xs hover:bg-primary-focus/20': true,
         'bg-primary text-primary-content': isActive && tree.isPage && display != 'breadcrumbs',
-        'bg-primary/10': isActive && tree.isChapter && display != 'breadcrumbs',
         'border-l border-t border-b': display == 'row' && isChildrenVisible,
         'w-48': display == 'row',
       }">
@@ -20,8 +19,7 @@
           'font-bold text-opacity-50': !tree.isPage && display != 'breadcrumbs',
           'text-secondary': !tree.isVisible
         }">
-        <IconBook v-if="tree.isBook" class="h-4 w-4"></IconBook>
-        <IconChapter v-if="tree.isChapter" class="h-4 w-4"></IconChapter>
+        <IconChapter v-if="tree.isChapter || tree.isBook" class="h-4 w-4"></IconChapter>
         <IconDatabase v-if="tree.isRoot" class="h-4 w-4"></IconDatabase>
         <IconPage v-if="tree.isPage" class="h-4 w-4"></IconPage>
 

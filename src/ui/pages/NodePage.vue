@@ -6,7 +6,10 @@
 
     <div class="flex h-full w-full flex-col items-center">
       <div class="w-full" :class="{ 'mt-12': node.getParent().isTab }">
-        <Add :node="node" class="btn mx-auto flex w-72 flex-row items-center justify-center gap-4" v-if="node.isChapter"></Add>
+        <div v-if="node.isChapter || node.isBook" class="mt-24 flex flex-col items-center gap-12 justify-center">
+          <Add :node="node" class="btn mx-auto flex w-72 flex-row items-center justify-center gap-4"></Add>
+          <Tree :tree="node" :current-node="node" class="h-full overflow-scroll pb-24"></Tree>
+        </div>
 
         <Tiptap :node="node" :saveCallback="save" :editable="editable" v-else></Tiptap>
       </div>
@@ -21,7 +24,8 @@ import Add from "../operators/Add.vue";
 import { computed, watch } from "vue";
 import { useRoute } from "vue-router";
 import { useCurrentNodeStore } from "../stores/NodeStore";
-import  NodeApi  from "../api/NodeApi";
+import NodeApi from "../api/NodeApi";
+import Tree from "../components/Tree.vue";
 
 const route = useRoute();
 const nodeStore = useCurrentNodeStore();

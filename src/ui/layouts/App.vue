@@ -84,26 +84,26 @@ darkModeQuery.addListener((e) => {
   }
 });
 
-Preload.listen("update-downloaded", (e) => {
-  componentLogger.info("监测到事件：update-downloaded");
-});
+// Preload.listen("update-downloaded", (e) => {
+//   componentLogger.info("监测到事件：update-downloaded");
+// });
 
-Preload.listen("update-available", (e) => {
-  componentLogger.info("监测到事件：update-avaliable");
-});
+// Preload.listen("update-available", (e) => {
+//   componentLogger.info("监测到事件：update-avaliable");
+// });
 
-Preload.listen("checking-for-update", (e) => {
-  componentLogger.info("监测到事件：checking-for-update");
-});
+// Preload.listen("checking-for-update", (e) => {
+//   componentLogger.info("监测到事件：checking-for-update");
+// });
 
-Preload.listen("update-not-available", (e) => {
-  componentLogger.info("监测到事件：update-not-available");
-});
+// Preload.listen("update-not-available", (e) => {
+//   componentLogger.info("监测到事件：update-not-available");
+// });
 
-Preload.listen("download-progress", (_, args) => {
-  let percent = args[0].percent;
-  componentLogger.info("监测到事件：download-progress",percent);
-});
+// Preload.listen("download-progress", (_, args) => {
+//   let percent = args[0].percent;
+//   componentLogger.info("监测到事件：download-progress",percent);
+// });
 
 </script>
 
