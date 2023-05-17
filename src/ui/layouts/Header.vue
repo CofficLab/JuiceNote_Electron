@@ -8,7 +8,7 @@
         <BtnOfficialLink></BtnOfficialLink>
         <Terminal class="operators" v-if="isLesson"></Terminal>
         <Home class="operators"></Home>
-        <Tree class="operators"></Tree>
+        <Database class="operators"></Database>
         <Edit :showText="false" class="operators"></Edit>
         <Delete :node="current" :show-text="false" class="operators"></Delete>
       </div>
@@ -18,7 +18,7 @@
 
 <script lang="ts" setup>
 import Home from "../operators/Home.vue";
-import Tree from '../operators/Tree.vue'
+import Database from '../operators/Database.vue'
 import BtnOfficialLink from "../components/BtnOfficialLink.vue";
 import Terminal from "../operators/Terminal.vue";
 import { useRoute } from "vue-router";

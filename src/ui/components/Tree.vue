@@ -11,6 +11,7 @@
       <div v-show="isVisible" @mouseleave="handleLeave" @mouseenter="handleHover(tree)" :class="{
         'flex flex-row items-center p-0 text-xs hover:bg-primary-focus/20': true,
         'bg-primary text-primary-content': isActive && tree.isPage && display != 'breadcrumbs',
+        'bg-primary/10': !tree.isPage && currentNode.id == tree.id && display != 'breadcrumbs',
         'border-l border-t border-b': display == 'row' && isChildrenVisible,
         'w-48': display == 'row',
       }">
