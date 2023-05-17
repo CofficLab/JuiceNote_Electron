@@ -5,7 +5,7 @@
       <div class="modal-box bg-primary/30 text-primary-content backdrop-blur-sm backdrop-filter">
         <div class="form-control flex justify-center">
           <div class="flex w-full rounded-none">
-            <input id="search-form-title" type="text" v-model="keyword" placeholder="输入关键词" autofocus class="input-primary input w-full" @keyup="submit" @keyup.enter="goto" />
+            <input id="search-form-title" type="text" v-model="keyword" placeholder="输入关键词" autofocus class="input-primary text-primary-focus input w-full" @keyup="submit" @keyup.enter="goto" />
           </div>
           <ul class="mx-auto mt-4 w-full gap-4">
             <li
@@ -13,15 +13,12 @@
               class="flex cursor-pointer items-center justify-between rounded-lg p-2"
               v-for="(node, index) in nodes"
               @mouseenter="activate(index)"
-              :class="{ 'bg-base-300': current == index }"
+              :class="{ 'bg-primary text-primary-content': current == index }"
             >
               <div class="flex flex-row gap-4">
-                <IconBook></IconBook>
-                {{ getBook(node).title }}
-
-                <IconChapter v-if="node.isChapter"></IconChapter>
+                <IconChapter v-if="node.isChapter || node.isBook"></IconChapter>
                 <IconPage v-if="node.isPage"></IconPage>
-                <span v-if="!node.isBook">{{ node.title }}</span>
+                <span>{{ node.title }}</span>
               </div>
             </li>
           </ul>
@@ -39,7 +36,8 @@ import Preload from "../api/Preload";
 import IconBook from "../icons/IconBook.vue";
 import IconChapter from "../icons/IconChapter.vue";
 import IconPage from "../icons/IconPage.vue";
-import  NodeApi  from "../api/NodeApi";
+import NodeApi from "../api/NodeApi";
+import componentLogger from "../log/componentLogger";
 
 const router = useRouter();
 let keyword = "";
@@ -65,13 +63,15 @@ const submit = (e: KeyboardEvent) => {
   if (keyword.length == 0) {
     nodes.value = [];
   } else {
-    console.log("提交了搜索", keyword);
-    nodes.value = NodeApi.search(keyword);
+    componentLogger.info("提交了搜索", keyword);
+    NodeApi.search(keyword).then((items) => {
+      nodes.value = items
+    })
   }
 };
 
 window.addEventListener("channel", (e) => {
-  console.log("监听到channel事件", e);
+  componentLogger.info("监听到channel事件", e);
 });
 
 Preload.listen("toggle-search", toggleVisible);

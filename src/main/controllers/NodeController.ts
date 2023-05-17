@@ -17,4 +17,8 @@ export default function setNodeController() {
     ipcMain.handle('updateContent', (event, id, content) => {
         return NodeModel.updateContent(id, content)
     })
+
+    ipcMain.handle('search', (event, keyword) => {
+        return NodeModel.search(keyword)
+    })
 }

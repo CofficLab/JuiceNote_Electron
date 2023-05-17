@@ -1,6 +1,6 @@
 <template>
   <div class="flex w-full flex-row justify-center border-0 px-4">
-    <editor-content :editor="editor" class="prose w-full xl:prose-lg" />
+    <editor-content :editor="editor" class="prose-sm w-full 2xl:prose" />
   </div>
 </template>
 

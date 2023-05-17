@@ -30,6 +30,14 @@ const NodeApi =  {
         })
     },
 
+    async search(keyword: string):Promise<Node[]> {
+        return Ipc.invoke('search',keyword).then((nodes) => {
+            return nodes.map((node: any) => {
+                return new Node(node)
+            })
+        })
+    },
+
     async updateContent(id: number, content: string) {
         return Ipc.invoke('updateContent', id, content)
     }

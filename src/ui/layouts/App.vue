@@ -24,7 +24,7 @@
 
     <!-- 弹层 -->
     <Themes></Themes>
-    <!-- <FormSearch></FormSearch> -->
+    <FormSearch></FormSearch>
     <!-- <RightMenuModal></RightMenuModal> -->
     <!-- <FormAdd></FormAdd> -->
     <!-- <FormRename></FormRename> -->
