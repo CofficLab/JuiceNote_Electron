@@ -5,7 +5,7 @@
     </div>
 
     <div class="flex h-full w-full flex-col items-center">
-      <div class="w-full" :class="{ 'mt-12': node.getParent().isTab }">
+      <div class="w-full mt-12">
         <div v-if="node.isChapter || node.isBook || node.isRoot" class="mt-24 flex flex-col items-center gap-12 justify-center">
           <Add :node="node" class="btn mx-auto flex w-72 flex-row items-center justify-center gap-4"></Add>
           <Tree :tree="node" :current-node="node" class="h-full overflow-scroll pb-24"></Tree>

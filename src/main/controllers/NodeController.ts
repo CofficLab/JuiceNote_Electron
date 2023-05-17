@@ -13,4 +13,8 @@ export default function setNodeController() {
     ipcMain.handle('find', (event, id) => {
         return NodeModel.find(id)
     })
+
+    ipcMain.handle('updateContent', (event, id, content) => {
+        return NodeModel.updateContent(id, content)
+    })
 }

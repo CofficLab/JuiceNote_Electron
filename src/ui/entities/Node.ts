@@ -106,6 +106,10 @@ class Node {
         return children.filter(child => child.isTab)
     }
 
+    async updateContent(content: string) {
+        return NodeApi.updateContent(this.id, content)
+    }
+
     static updateChildrenPriority(children: Node[]) {
         children.forEach((child, index) => {
             NodeApi.updatePriority(child.id, index)

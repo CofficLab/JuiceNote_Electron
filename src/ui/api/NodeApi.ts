@@ -28,6 +28,10 @@ const NodeApi =  {
                 return new Node(node)
             })
         })
+    },
+
+    async updateContent(id: number, content: string) {
+        return Ipc.invoke('updateContent', id, content)
     }
 }
 

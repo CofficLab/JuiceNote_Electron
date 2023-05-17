@@ -1,15 +1,20 @@
 import { defineStore } from 'pinia'
 import storeLogger from '../log/storeLogger'
+import { Editor } from "@tiptap/vue-3";
 
-export const useEditorStore = defineStore('editor', {
+ const useEditorStore = defineStore('editor', {
     state: () => {
-        return { editor: '' }
+         return {
+             editor:undefined,
+         }
     },
 
     actions: {
-        set(editor: string) {
-            storeLogger.log('更新 editor 为', editor)
+        set(editor:Editor) {
+            storeLogger.log('更新 editor')
             this.editor = editor
         },
     },
-})
+ })
+
+ export default useEditorStore

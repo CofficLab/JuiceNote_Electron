@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-row flex-wrap items-center gap-0">
+  <div class="flex flex-row flex-wrap items-center gap-0 text-yellow-600">
     <div class="dropdown-hover dropdown">
       <label tabindex="0">
         <IconHashTag></IconHashTag>
@@ -123,9 +123,9 @@
       <Visible :showText="false"></Visible>
     </button>
 
-    <button @click="saveAndShow" class="tooltip tooltip-bottom ml-4" data-tip="保存并跳转到展示页面">
+    <!-- <button @click="saveAndShow" class="tooltip tooltip-bottom ml-4" data-tip="保存并跳转到展示页面">
       <IconBack></IconBack>
-    </button>
+    </button> -->
 
     <!-- 设置URL的模态框 -->
     <div class="modal" v-bind:class="{ 'modal-open': showLinkModal }">

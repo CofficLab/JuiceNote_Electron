@@ -1,10 +1,4 @@
 <template>
-  <!-- 工具栏 -->
-  <div v-if="editable" class="draggable fixed left-0 top-0 z-50 flex w-full justify-center bg-yellow-500/80 pl-24 dark:bg-yellow-900/40 lg:pl-40">
-    <Toolbar :editor="editor" :current="node"></Toolbar>
-  </div>
-
-  <!-- 编辑框 -->
   <div class="flex w-full flex-row justify-center border-0 px-4">
     <editor-content :editor="editor" class="prose w-full xl:prose-lg" />
   </div>
@@ -14,10 +8,11 @@
 import Extensions from "../entities/Extensions";
 
 import { ref, watch, onBeforeUnmount } from "vue";
-import Toolbar from "../layouts/Toolbar.vue";
 import { Editor, EditorContent } from "@tiptap/vue-3";
 import { Node } from "../entities/Node";
-import use from '../stores/EditorStore'
+import useEditorStore from '../stores/EditorStore'
+
+const editorStore = useEditorStore()
 
 const props = defineProps({
   node: Node,
@@ -56,7 +51,7 @@ let getEditor = () =>
   });
 
 let editor = getEditor();
-
+editorStore.set(editor)
 
 watch(props, () => {
   // console.log("editor 发现 props 发生变化，更新内容");
