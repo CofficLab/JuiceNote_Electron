@@ -10,6 +10,7 @@
         <Home class="operators"></Home>
         <Database class="operators"></Database>
         <Edit :showText="false" class="operators"></Edit>
+        <Add :node="current" :show-text="false" class="operators"></Add>
         <Delete :node="current" :show-text="false" class="operators"></Delete>
       </div>
     </div>
@@ -26,6 +27,7 @@ import { computed } from "vue";
 import Preload from "../api/Preload";
 import RouteBox from "../entities/RouteBox";
 import Edit from "../operators/Edit.vue";
+import Add from "../operators/Add.vue";
 import Toast from "./Toast.vue";
 import Delete from "../operators/Delete.vue";
 import { useCurrentNodeStore } from "../stores/NodeStore";

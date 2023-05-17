@@ -6,12 +6,10 @@
 
     <div class="flex h-full w-full flex-col items-center">
       <div class="w-full mt-12">
-        <div v-if="node.isChapter || node.isBook || node.isRoot" class="mt-24 flex flex-col items-center gap-12 justify-center">
-          <Add :node="node" class="btn mx-auto flex w-72 flex-row items-center justify-center gap-4"></Add>
+        <Tiptap :node="node" :saveCallback="save" :editable="editable"></Tiptap>
+        <div v-if="node.isChapter || node.isBook || node.isRoot" class="flex flex-col items-center gap-12 justify-center">
           <Tree :tree="node" :current-node="node" class="h-full overflow-scroll pb-24"></Tree>
         </div>
-
-        <Tiptap :node="node" :saveCallback="save" :editable="editable" v-else></Tiptap>
       </div>
     </div>
   </div>
@@ -20,7 +18,6 @@
 <script lang="ts" setup>
 import NodeTab from "../components/NodeTab.vue";
 import Tiptap from "../components/Tiptap.vue";
-import Add from "../operators/Add.vue";
 import { computed, watch } from "vue";
 import { useRoute } from "vue-router";
 import { useCurrentNodeStore } from "../stores/NodeStore";

@@ -11,6 +11,7 @@ import { ref, watch, onBeforeUnmount } from "vue";
 import { Editor, EditorContent } from "@tiptap/vue-3";
 import { Node } from "../entities/Node";
 import useEditorStore from '../stores/EditorStore'
+import componentLogger from "../log/componentLogger";
 
 const editorStore = useEditorStore()
 
@@ -20,12 +21,14 @@ const props = defineProps({
   saveCallback: null,
 });
 
+componentLogger.info('初始化Tiptap编辑器',props.node.title)
+
 let code = ref(props.node.content);
 
 let getEditor = () =>
   new Editor({
     extensions: Extensions,
-    content: props.node.content,
+    content: !props.node.content ? '{内容为空}' : props.node.content,
     autofocus: props.editable ? 1 : true,
     injectCSS: true,
     enableInputRules: true,

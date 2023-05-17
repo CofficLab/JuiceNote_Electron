@@ -26,7 +26,7 @@
     <Themes></Themes>
     <FormSearch></FormSearch>
     <!-- <RightMenuModal></RightMenuModal> -->
-    <!-- <FormAdd></FormAdd> -->
+    <FormAdd></FormAdd>
     <!-- <FormRename></FormRename> -->
     <Terminal></Terminal>
     <!-- <ErrorModal></ErrorModal> -->
