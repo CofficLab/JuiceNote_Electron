@@ -1,12 +1,12 @@
 <template>
   <div @click="rename">
-    <ArrowLeftCircle v-if="showIcon"></ArrowLeftCircle>
+    <IconRename v-if="showIcon"></IconRename>
     <span v-if="showText">重命名</span>
   </div>
 </template>
 
 <script setup>
-import ArrowLeftCircle from "../icons/IconPrev.vue";
+import IconRename from "../icons/IconRename.vue";
 import { Node } from "../entities/Node";
 
 const props = defineProps({

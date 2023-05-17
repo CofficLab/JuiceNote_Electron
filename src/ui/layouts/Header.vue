@@ -10,6 +10,7 @@
         <Home class="operators"></Home>
         <Database class="operators"></Database>
         <Edit :showText="false" class="operators"></Edit>
+        <Rename :node="current" :show-text="false" class="operators"></Rename>
         <Add :node="current" :show-text="false" class="operators"></Add>
         <Delete :node="current" :show-text="false" class="operators"></Delete>
       </div>
@@ -30,6 +31,7 @@ import Edit from "../operators/Edit.vue";
 import Add from "../operators/Add.vue";
 import Toast from "./Toast.vue";
 import Delete from "../operators/Delete.vue";
+import Rename from "../operators/Rename.vue";
 import { useCurrentNodeStore } from "../stores/NodeStore";
 import useEditorStore from "../stores/EditorStore";
 import Toolbar from "./Toolbar.vue";

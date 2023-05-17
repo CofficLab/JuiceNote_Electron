@@ -27,7 +27,7 @@
     <FormSearch></FormSearch>
     <!-- <RightMenuModal></RightMenuModal> -->
     <FormAdd></FormAdd>
-    <!-- <FormRename></FormRename> -->
+    <FormRename></FormRename>
     <Terminal></Terminal>
     <!-- <ErrorModal></ErrorModal> -->
   </div>

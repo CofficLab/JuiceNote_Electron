@@ -40,6 +40,10 @@ const NodeApi =  {
 
     async updateContent(id: number, content: string) {
         return Ipc.invoke('updateContent', id, content)
+    },
+
+    async updateTitle(id: number, content: string) {
+        return Ipc.invoke('updateTitle', id, content)
     }
 }
 

@@ -294,7 +294,7 @@ label {
 }
 
 ul {
-  @apply dropdown-content rounded-box flex max-h-96 w-52 flex-col gap-4 overflow-hidden overflow-y-scroll bg-base-100 p-2 py-4 shadow;
+  @apply dropdown-content rounded-box flex max-h-96 w-52 px-4 flex-col gap-4 overflow-hidden overflow-y-scroll bg-base-100/50 p-2 py-4 shadow backdrop-blur;
 
   li {
     @apply btn;

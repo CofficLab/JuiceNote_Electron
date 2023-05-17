@@ -110,6 +110,10 @@ class Node {
         return NodeApi.updateContent(this.id, content)
     }
 
+    async updateTitle(title: string) {
+        return NodeApi.updateTitle(this.id, title)
+    }
+
     static updateChildrenPriority(children: Node[]) {
         children.forEach((child, index) => {
             NodeApi.updatePriority(child.id, index)
