@@ -4,12 +4,12 @@
   <!-- 因为electron配置了全透明窗口，这里最好配置一个底色 -->
   <div id="root" :data-theme="theme" class="absolute flex w-full flex-row bg-primary bg-white/90">
     <!-- header脱离文档流，固定定位 -->
-    <Header class="fixed top-0 z-50 h-10 w-full bg-base-200/90 border-b border-base-300 shadow-sm"></Header>
+    <Header class="fixed top-0 z-50 h-10 w-full bg-base-200/90 border-b border-neutral/30 shadow-sm"></Header>
 
     <!-- 左侧导航侧栏 -->
     <Aside
       v-if="isLesson"
-      class="z-50 hidden h-screen w-40 overflow-scroll overscroll-none scroll-smooth border-r border-base-300 bg-base-200/90 shadow-sm backdrop-blur-sm backdrop-filter lg:flex lg:flex-col"
+      class="z-50 hidden h-screen w-40 overflow-scroll overscroll-none scroll-smooth border-r border-neutral/30 bg-base-300 shadow-sm lg:flex lg:flex-col"
     ></Aside>
 
     <!-- 右侧主内容，所有的滚动都基于main，必须有固定高度 -->
@@ -52,6 +52,8 @@ import { useCurrentNodeStore } from "../stores/NodeStore";
 import { EmptyNode } from "../entities/Node";
 import Preload from '../api/Preload'
 import ErrorModal from "../modals/ErrorModal.vue";
+import Logger from "electron-log";
+import componentLogger from "../log/componentLogger";
 
 const route = useRoute();
 const nodeStore = useCurrentNodeStore();
@@ -68,39 +70,39 @@ const theme = computed(() => (isDarkMode.value ? themeDark.value : themeLight.va
 // 主动设置主题
 window.addEventListener("set-theme", (e) => {
   themeLight.value = e.detail;
-  console.log("设置主题为", theme.value);
+  componentLogger.info("设置主题为", theme.value);
 });
 
 // 颜色模式变化监听
 darkModeQuery.addListener((e) => {
   if (e.matches) {
-    console.log("主题变为暗黑模式");
+    componentLogger.info("主题变为暗黑模式");
     isDarkMode.value = true;
   } else {
-    console.log("主题变化明亮模式");
+    componentLogger.info("主题变化明亮模式");
     isDarkMode.value = false;
   }
 });
 
 Preload.listen("update-downloaded", (e) => {
-  console.log("监测到事件：update-downloaded");
+  componentLogger.info("监测到事件：update-downloaded");
 });
 
 Preload.listen("update-available", (e) => {
-  console.log("监测到事件：update-avaliable");
+  componentLogger.info("监测到事件：update-avaliable");
 });
 
 Preload.listen("checking-for-update", (e) => {
-  console.log("监测到事件：checking-for-update");
+  componentLogger.info("监测到事件：checking-for-update");
 });
 
 Preload.listen("update-not-available", (e) => {
-  console.log("监测到事件：update-not-available");
+  componentLogger.info("监测到事件：update-not-available");
 });
 
 Preload.listen("download-progress", (_, args) => {
   let percent = args[0].percent;
-  console.log("监测到事件：download-progress",percent);
+  componentLogger.info("监测到事件：download-progress",percent);
 });
 
 </script>
