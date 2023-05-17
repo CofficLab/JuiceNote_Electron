@@ -22,6 +22,10 @@ export default function setNodeController() {
         return NodeModel.updateTitle(id, title)
     })
 
+    ipcMain.handle('updateVisible', (event, id, visible) => {
+        return NodeModel.updateVisible(id, visible)
+    })
+
     ipcMain.handle('search', (event, keyword) => {
         return NodeModel.search(keyword)
     })

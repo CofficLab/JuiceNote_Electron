@@ -12,6 +12,7 @@
         <Edit :showText="false" class="operators"></Edit>
         <Rename :node="current" :show-text="false" class="operators"></Rename>
         <Add :node="current" :show-text="false" class="operators"></Add>
+        <Visible :node="current" :show-text="false" class="operators"></Visible>
         <Delete :node="current" :show-text="false" class="operators"></Delete>
       </div>
     </div>
@@ -32,6 +33,7 @@ import Add from "../operators/Add.vue";
 import Toast from "./Toast.vue";
 import Delete from "../operators/Delete.vue";
 import Rename from "../operators/Rename.vue";
+import Visible from "../operators/Visible.vue";
 import { useCurrentNodeStore } from "../stores/NodeStore";
 import useEditorStore from "../stores/EditorStore";
 import Toolbar from "./Toolbar.vue";

@@ -44,6 +44,10 @@ const NodeApi =  {
 
     async updateTitle(id: number, content: string) {
         return Ipc.invoke('updateTitle', id, content)
+    },
+
+    async updateVisible(id: number, visible: boolean) {
+        return Ipc.invoke('updateVisible', id, visible)
     }
 }
 

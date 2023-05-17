@@ -6,12 +6,10 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from "vue";
 import { useToastStore } from "../stores/ToastStore";
 import HideIcon from "../icons/IconNo.vue";
-import { useRoute, useRouter } from "vue-router";
 import { Node } from "../entities/Node";
-import { useCurrentNodeStore } from "../stores/NodeStore";
+import componentLogger from "../log/componentLogger";
 
 const props = defineProps({
   showText: {
@@ -26,16 +24,14 @@ const props = defineProps({
   },
   node: {
     type: Node,
-    required: false,
+    required: true,
   },
 });
 
-const router = useRouter();
-const route = useRoute();
-
-const target = computed(() => props.node ?? useCurrentNodeStore().current);
-
 const toggleVisible = function () {
-  useToastStore().set(target.updateVisible());
+  componentLogger.info(`${props.node.title} 当前可见性为 ${props.node.isVisible}`);
+  props.node.updateVisible(!props.node.isVisible).then(() => {
+    useToastStore().set('可见性更新成功')
+  })
 };
 </script>

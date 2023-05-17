@@ -1,6 +1,7 @@
 import NodeApi from "../api/NodeApi"
 import mapKeys from "lodash/mapKeys"
 import camelCase from "lodash/camelCase"
+import componentLogger from "../log/componentLogger"
 
 class Node {
     public id: number = 0
@@ -23,9 +24,10 @@ class Node {
 
     constructor(options: object) {
         // 将从数据库取出的数据转换成驼峰命名，并转换成 Node
-        Object.assign(this, mapKeys(options, (value, key) => {
+        options = mapKeys(options, (value: any, key: any) => {
             return camelCase(key)
-        }))
+        })
+        Object.assign(this, options)
 
         this.isRoot = this.parentId == 0
         this.isEmpty = this.id == 0
@@ -112,6 +114,10 @@ class Node {
 
     async updateTitle(title: string) {
         return NodeApi.updateTitle(this.id, title)
+    }
+
+    async updateVisible(visible: boolean) {
+        return NodeApi.updateVisible(this.id, visible)
     }
 
     static updateChildrenPriority(children: Node[]) {

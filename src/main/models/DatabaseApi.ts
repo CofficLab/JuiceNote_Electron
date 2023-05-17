@@ -144,7 +144,10 @@ class DatabaseApi {
     }
 
     updateVisible(id: number, visible: boolean): string {
-        let result = this.connection.prepare('update nodes set is_visible=? where id=?').run(visible, id)
+        let value = visible == true ? 1 : 0
+
+        Logger.info(`更新「${id}」的可见性为 ${visible} ${value}`)
+        let result = this.connection.prepare('update nodes set is_visible=? where id=?').run(value, id)
         if (result != null) {
             return '「' + id + '」已更新可见性'
         } else {
