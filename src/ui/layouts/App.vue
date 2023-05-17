@@ -8,7 +8,6 @@
 
     <!-- 左侧导航侧栏 -->
     <Aside
-      v-if="isLesson"
       class="z-50 hidden h-screen w-40 overflow-scroll overscroll-none scroll-smooth border-r border-neutral/30 bg-base-300 shadow-sm lg:flex lg:flex-col"
     ></Aside>
 

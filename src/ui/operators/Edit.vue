@@ -28,13 +28,13 @@ const props = defineProps({
 const router = useRouter();
 const route = useRoute();
 const editable = computed(() => {
-  return route.name == "lessons.edit" || route.name == "home.edit";
+  return route.name == "nodes.edit" || route.name == "home.edit";
 });
 const toggleEditable = function () {
-  if (route.name == "lessons.edit") {
+  if (route.name == "nodes.edit") {
     router.push({ name: "nodes.show", params: { id: route.params.id } });
   } else if (route.name == "nodes.show") {
-    router.push({ name: "lessons.edit", params: { id: route.params.id } });
+    router.push({ name: "nodes.edit", params: { id: route.params.id } });
   } else if (route.name == "home.show") {
     router.push({ name: "home.edit" });
   } else if (route.name == "home.edit") {
