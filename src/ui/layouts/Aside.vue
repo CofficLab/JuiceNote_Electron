@@ -15,12 +15,13 @@ import { computed } from "vue";
 import Preload from "../api/Preload";
 import { useCurrentNodeStore } from "../stores/NodeStore";
 import Tree from "../components/Tree.vue";
+import Logger from "electron-log";
 
 /**
  * 定义变量，mounted后更新变量的值，实现不阻塞
  */
 const nodeStore = useCurrentNodeStore();
-const root = nodeStore.root
+const root = computed(() => nodeStore.root);
 const isWindows = Preload.isWindows();
 const current = computed(() => nodeStore.current);
 const hideTitleBar = false;

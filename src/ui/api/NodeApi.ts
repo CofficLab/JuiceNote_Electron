@@ -1,3 +1,4 @@
+import Logger from "electron-log";
 import { Node } from "../entities/Node";
 import Preload from "./Preload"
 

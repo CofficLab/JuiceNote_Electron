@@ -22,7 +22,7 @@
         }">
         <IconBook v-if="tree.isBook" class="h-4 w-4"></IconBook>
         <IconChapter v-if="tree.isChapter" class="h-4 w-4"></IconChapter>
-        <IconDatabase v-if="tree.id == 0" class="h-4 w-4"></IconDatabase>
+        <IconDatabase v-if="tree.isRoot" class="h-4 w-4"></IconDatabase>
         <IconPage v-if="tree.isPage" class="h-4 w-4"></IconPage>
 
         {{ tree.title }}
@@ -124,6 +124,10 @@ watch(props, () => {
   shouldActive(props.tree, props.currentNode).then(active => {
     // if (active) console.log(`更新当前节点:${props.tree.title}的active=true`)
     isActive.value = active
+  })
+
+  props.tree.getChildren().then(c => {
+    children.value = c
   })
 })
 
