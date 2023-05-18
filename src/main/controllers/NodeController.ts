@@ -1,5 +1,6 @@
 import { ipcMain } from "electron"
 import NodeModel from "../models/NodeModel"
+import controllerLogger from "../log/controllerLogger"
 
 export default function setNodeController() {
     ipcMain.handle('getRoot', (event) => {
@@ -11,6 +12,7 @@ export default function setNodeController() {
     })
 
     ipcMain.handle('find', (event, id) => {
+        controllerLogger.info('向数据库发起请求：find ' + id)
         return NodeModel.find(id)
     })
 

@@ -1,8 +1,9 @@
 import { join } from "path";
 import Config from "../config";
-import log from "../logger";
+import log from "../log/logger";
 import { writeFile } from "fs";
 import Logger from "electron-log";
+import databaseLogger from "../log/databaseLogger";
 
 const EmptyNode= {
     id: 0,
@@ -24,7 +25,7 @@ class DatabaseApi {
     }
 
     find(id: number): Object {
-        log.debug(`在 ${this.dbFilePath} 中查找节点 id=${id}`)
+        databaseLogger.debug(`在 ${this.dbFilePath} 中查找节点 id=${id}`)
 
         if (id == undefined) {
             log.error('被查找的节点不能为undefined')
@@ -38,15 +39,12 @@ class DatabaseApi {
         return result
     }
 
-    getRoot(recursive = true): Object {
-        log.debug('get root,connection is', this.connection)
+    getRoot(recursive = false): Object {
+        databaseLogger.debug(`在 ${this.dbFilePath} 中查找根节点`)
 
         let result = this.connection.prepare('select * from nodes where parent_id=0 order by priority asc limit 1').get()
 
         if (recursive) result.children = this.getChildren(result.id)
-
-        log.debug('get root', result.title)
-        // log.debug('get root, full data is', result)
 
         return  result
     }
@@ -54,7 +52,7 @@ class DatabaseApi {
     getChildren(id: number): Object[] {
         let children = this.connection.prepare('select * from nodes where parent_id=? order by priority asc').all(id)
 
-        log.info(`get children of ${id},count=${children.length}`)
+        // log.info(`get children of ${id},count=${children.length}`)
 
         return children
     }
@@ -73,6 +71,7 @@ class DatabaseApi {
     }
 
     getFirstPage(id: number): Object {
+        databaseLogger.info(`查询 ${id} 的第一个子节点`)
         let current = this.find(id)
         if (current!.isPage || current!.isEmpty) return current!
 

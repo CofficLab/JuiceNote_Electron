@@ -1,17 +1,20 @@
 import Logger from "electron-log";
 import { Node } from "../entities/Node";
 import Preload from "./Preload"
+import apiLogger from "../log/apiLogger";
 
 const Ipc = Preload.ipc
 
 const NodeApi =  {
     async getRoot(): Promise<Node> {
+        apiLogger.info('发起 API 请求：getRoot')
         return Ipc.invoke('getRoot').then((node) => {
             return new Node(node)
         })
     },
 
-    async find(id:number): Promise<Node> {
+    async find(id: number): Promise<Node> {
+        apiLogger.info('发起 API 请求：find')
         return Ipc.invoke('find', id).then((node) => {
             return new Node(node)
         })
