@@ -4,7 +4,7 @@ import setRunController from './controllers/RunnerController'
 import { release } from 'os'
 import createUpdater from './updater'
 import setWildController from './controllers/Wild'
-import setTerminalController from './controllers/TerminalController'
+import setTerminalController from './controllers/Terminal'
 import logger from './logger'
 import setNodeController from './controllers/NodeController'
 
