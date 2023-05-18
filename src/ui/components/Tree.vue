@@ -205,7 +205,7 @@ async function shouldActive(target: Node, current: Node): Promise<boolean> {
 }
 
 .icon-lg {
-  @apply h-16 w-16 text-primary/50
+  @apply h-16 w-16 text-primary/10
 }
 }
 </style>

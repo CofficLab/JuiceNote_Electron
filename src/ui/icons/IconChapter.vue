@@ -7,14 +7,11 @@
     />
   </svg>
 
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" :class="class" v-if="solid">
-    <path d="M19.5 21a3 3 0 003-3v-4.5a3 3 0 00-3-3h-15a3 3 0 00-3 3V18a3 3 0 003 3h15zM1.5 10.146V6a3 3 0 013-3h5.379a2.25 2.25 0 011.59.659l2.122 2.121c.14.141.331.22.53.22H19.5a3 3 0 013 3v1.146A4.483 4.483 0 0019.5 9h-15a4.483 4.483 0 00-3 1.146z" />
-  </svg>
-
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" :class="class" v-if="solid"><path fill="#0277bd" d="M42,37.75H6c-1.105,0-2-0.895-2-2V11c0-1.105,0.895-2,2-2h9.172c0.53,0,1.039,0.211,1.414,0.586	l2.121,2.121C18.895,11.895,19.149,12,19.414,12H42c1.105,0,2,0.895,2,2v21.75C44,36.855,43.105,37.75,42,37.75z"/><path fill="#4fc3f7" d="M42,39.75H6c-1.105,0-2-0.895-2-2V16c0-1.105,0.895-2,2-2h36c1.105,0,2,0.895,2,2v21.75	C44,38.855,43.105,39.75,42,39.75z"/></svg>
 </template>
 
 <script lang="ts" setup>
-const props = defineProps({
+defineProps({
   class: {
     type: String,
     default: "h-6 w-6",
