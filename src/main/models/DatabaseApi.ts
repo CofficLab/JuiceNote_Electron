@@ -25,7 +25,7 @@ class DatabaseApi {
     }
 
     find(id: number): Object {
-        databaseLogger.debug(`在 ${this.dbFilePath} 中查找节点 id=${id}`)
+        databaseLogger.info(`在 ${this.dbFilePath} 中查找节点 id=${id}`)
 
         if (id == undefined) {
             log.error('被查找的节点不能为undefined')
