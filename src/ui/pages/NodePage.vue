@@ -1,10 +1,10 @@
 <template>
-  <div>
-    <div class="sticky top-12 z-50 flex w-full flex-grow">
+  <div class="h-full">
+    <!-- <div class="sticky top-12 z-50 flex w-full flex-grow">
       <NodeTab></NodeTab>
-    </div>
+    </div> -->
 
-    <div class="flex h-full w-full flex-col items-center mt-12">
+    <div class="flex h-full w-full flex-col items-center pt-12">
       <div class="w-full" v-if="node.isPage">
         <Tiptap :node="node" :saveCallback="save" :editable="editable"></Tiptap>
       </div>

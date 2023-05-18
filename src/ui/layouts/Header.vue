@@ -8,7 +8,7 @@
         <BtnOfficialLink></BtnOfficialLink>
         <Terminal class="operators" v-if="isLesson"></Terminal>
         <Home class="operators"></Home>
-        <Database class="operators"></Database>
+        <!-- <Database class="operators"></Database> -->
         <Edit :showText="false" class="operators" v-if="current.isPage"></Edit>
         <Rename :node="current" :show-text="false" class="operators"></Rename>
         <Add :node="current" :show-text="false" class="operators"></Add>

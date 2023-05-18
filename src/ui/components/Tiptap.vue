@@ -70,7 +70,7 @@ onBeforeUnmount(() => {
 
 <style lang="postcss">
 .ProseMirror {
-  @apply px-2 pt-1 caret-red-900;
+  @apply px-2 pt-1 caret-red-900 pb-48;
 }
 
 table {

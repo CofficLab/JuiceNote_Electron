@@ -13,7 +13,7 @@
     ></Aside>
 
     <!-- 右侧主内容，所有的滚动都基于main，必须有固定高度 -->
-    <main class="flex h-screen flex-grow relative flex-col justify-between overflow-scroll overscroll-none bg-base-100">
+    <main class="flex h-screen flex-grow relative flex-col justify-between overflow-scroll overscroll-none bg-base-100 bg-gradient-to-b from-info/30 to-base-200">
       <router-view v-slot="{ Component }">
         <transition name="fade">
           <component :is="Component" />

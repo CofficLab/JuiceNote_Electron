@@ -1,30 +1,29 @@
 <template>
     <div>
-        <div class="stats shadow bg-primary/25 drop-shadow-2xl">
-            <img :src="node.cover" alt="封面" v-if="node.cover?.length > 0" class="w-48 shadow-none">
+        <div class="flex flex-col gap-4">
+            <div class="stats shadow bg-primary/60 drop-shadow-2xl backdrop-blur backdrop-filter">
+                <img :src="node.cover" alt="封面" v-if="node.cover?.length > 0" class="w-48 shadow-none">
 
-                <div class="stat place-items-center">
+                <div class="stat place-items-center hover:bg-primary-focus">
                     <div class="stat-value">{{ node.title }}</div>
                 </div>
-
-            <div class="stat place-items-center">
-                <div class="stat-title">ID</div>
-                <div class="stat-value">{{ node.id }}</div>
             </div>
 
-            <!-- <div class="stat flex-wrap place-items-center">
-                <div class="stat-title">Slug</div>
-                <div class="stat-value">{{ node.slug }}</div>
-            </div> -->
+            <div class="stats shadow bg-secondary/20 drop-shadow-xl py-0  backdrop-blur backdrop-filter">
+                <div class="stat place-items-center hover:bg-primary-focus">
+                    <div class="stat-title text-sm">ID</div>
+                    <div class="stat-value text-base">{{ node.id }}</div>
+                </div>
 
-            <div class="stat place-items-center">
-                <div class="stat-title">可见性</div>
-                <div class="stat-value">{{ node.isVisible ? '正常' : '隐藏' }}</div>
-            </div>
+                <div class="stat place-items-center hover:bg-primary-focus">
+                    <div class="stat-title text-sm">可见性</div>
+                    <div class="stat-value text-base">{{ node.isVisible ? '显示' : '隐藏' }}</div>
+                </div>
 
-            <div class="stat place-items-center">
-                <div class="stat-title">排序</div>
-                <div class="stat-value">{{ node.priority }}</div>
+                <div class="stat place-items-center hover:bg-primary-focus">
+                    <div class="stat-title text-sm">排序</div>
+                    <div class="stat-value text-base">{{ node.priority ?? '0' }}</div>
+                </div>
             </div>
         </div>
     </div>

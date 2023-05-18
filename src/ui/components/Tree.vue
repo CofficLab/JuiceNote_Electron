@@ -12,6 +12,9 @@
         // 通用
         'flex flex-row items-center p-0 text-xs hover:bg-primary-focus/20': true,
 
+        // shadow
+        'drop-shadow-lg': display=='grid',
+
         // rounded
         'rounded-md': display=='grid',
 
@@ -62,7 +65,10 @@
         'pl-2': display != 'breadcrumbs',
         'flex-col': display == 'col',
         'border gap-0 border-l-0 flex-col': display == 'row',
-        'grid grid-flow-row grid-cols-6': display=='grid'
+        // 排列
+        'grid grid-flow-row grid-cols-6': display=='grid' && children.length >= 6,
+        'flex flex-row justify-center': display == 'grid' && children.length < 6
+
       }" v-if="isChildrenVisible">
         <Tree v-for="child in children" :root="root.isEmpty ? tree : root" :display="display" :tree="child" :hover-callback="hoverCallback"
           :current-node="currentNode"></Tree>
@@ -205,7 +211,7 @@ async function shouldActive(target: Node, current: Node): Promise<boolean> {
 }
 
 .icon-lg {
-  @apply h-16 w-16 text-primary/10
+  @apply h-16 w-16 text-primary
 }
 }
 </style>
