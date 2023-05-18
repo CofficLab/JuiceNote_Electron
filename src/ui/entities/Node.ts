@@ -62,13 +62,11 @@ class Node {
     }
 
     async getParent(): Promise<Node> {
-        componentLogger.info('get parent,id is', this.id, 'parent id is', this.parentId)
-
         if (this.parentId == 0 || this.isEmpty || !this.parentId || this.isRoot) {
-            componentLogger.info('    -> parent is empty')
             return EmptyNode
         }
 
+        componentLogger.info('get parent,id is', this.id, 'parent id is', this.parentId)
         let parent = await NodeApi.find(this.parentId)
 
         return parent
