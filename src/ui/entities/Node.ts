@@ -11,6 +11,7 @@ class Node {
     public level: number = 0
     public cover: string = ''
     public content: string = ''
+    public slug:string=''
 
     public isBook: boolean = false
     public isChapter: boolean = false
@@ -61,9 +62,10 @@ class Node {
     }
 
     async getParent(): Promise<Node> {
-        // console.log('get parent,id is', this.id, 'parent id is', this.parentId)
+        componentLogger.info('get parent,id is', this.id, 'parent id is', this.parentId)
 
-        if (this.parentId == 0 || this.isEmpty || !this.parentId) {
+        if (this.parentId == 0 || this.isEmpty || !this.parentId || this.isRoot) {
+            componentLogger.info('    -> parent is empty')
             return EmptyNode
         }
 

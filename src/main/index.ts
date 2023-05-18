@@ -5,7 +5,7 @@ import { release } from 'os'
 import createUpdater from './updater'
 import setWildController from './controllers/Wild'
 import setTerminalController from './controllers/Terminal'
-import logger from './logger'
+import logger from './log/logger'
 import setNodeController from './controllers/NodeController'
 
 // Remove electron security warnings

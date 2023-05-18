@@ -6,6 +6,7 @@ import NodeApi from './api/NodeApi'
 import { useCurrentNodeStore } from './stores/NodeStore'
 import router from './route';
 import rendererLogger from './log/rendererLogger';
+import Preload from './api/Preload'
 
 rendererLogger.info('开始加载');
 
@@ -15,6 +16,10 @@ NodeApi.getRoot().then((root) => {
     rendererLogger.info('root节点为', root.title)
     useCurrentNodeStore().updateRoot(root)
 })
+
+Preload.listen("enter-full-screen", (_, args) => {
+  rendererLogger.info("监测到事件：enter-full-screen");
+});
 
 const pinia = createPinia()
 const app = createApp(App)

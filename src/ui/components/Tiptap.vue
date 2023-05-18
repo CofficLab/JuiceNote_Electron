@@ -1,6 +1,6 @@
 <template>
   <div class="flex w-full flex-row justify-center border-0 px-4">
-    <editor-content :editor="editor" class="prose-sm w-full 2xl:prose" />
+    <editor-content :editor="editor" class="prose w-full 2xl:prose" />
   </div>
 </template>
 
@@ -70,7 +70,7 @@ onBeforeUnmount(() => {
 
 <style lang="postcss">
 .ProseMirror {
-  @apply mb-24 px-2 pb-56 pt-1 caret-red-900;
+  @apply px-2 pt-1 caret-red-900 pb-48;
 }
 
 table {
