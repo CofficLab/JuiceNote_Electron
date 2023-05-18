@@ -11,7 +11,7 @@ module.exports = {
       {
         cloud: {
           ...require("daisyui/src/colors/themes")["[data-theme=light]"],
-          // primary: "#bae6fd",
+          primary: "#38bdf8",
           // secondary: "#e0f2fe",
           // accent: "#1FB2A5",
           // neutral: "#191D24",

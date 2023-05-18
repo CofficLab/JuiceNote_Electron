@@ -11,6 +11,7 @@ class Node {
     public level: number = 0
     public cover: string = ''
     public content: string = ''
+    public slug:string=''
 
     public isBook: boolean = false
     public isChapter: boolean = false

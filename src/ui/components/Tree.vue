@@ -9,26 +9,38 @@
 
       <!-- 当前节点 -->
       <div v-show="isVisible" @mouseleave="handleLeave" @mouseenter="handleHover(tree)" :class="{
+        // 通用
         'flex flex-row items-center p-0 text-xs hover:bg-primary-focus/20': true,
-        'bg-primary text-primary-content': isActive && tree.isPage && display != 'breadcrumbs',
-        'bg-primary/10': !tree.isPage && currentNode.id == tree.id && display != 'breadcrumbs',
-        'border-l border-t border-b': display == 'row' && isChildrenVisible,
+
+        // rounded
+        'rounded-md': display=='grid',
+
+        // 宽度
         'w-48': display == 'row',
+        'w-24': display == 'grid',
+
+        // 颜色
+        'bg-primary text-primary-content': isActive && tree.isPage && display != 'breadcrumbs',
+        'bg-primary/5': !tree.isPage && currentNode.id == tree.id && display != 'breadcrumbs',
+
+        // boder
+        'border-l border-t border-b': display == 'row' && isChildrenVisible,
       }">
         <Link :node="tree" @mouseenter="hoverCallback(tree)" :class="{
-          'flex flex-grow cursor-pointer flex-row items-center gap-2 px-2 py-2': true,
+          'flex flex-grow cursor-pointer flex-row items-center gap-2 px-2 py-2 tree-item': true,
+          'flex-col': display == 'grid',
           'font-bold text-opacity-50': !tree.isPage && display != 'breadcrumbs',
           'text-secondary': !tree.isVisible
         }">
-        <IconChapter v-if="tree.isChapter || tree.isBook" class="h-4 w-4"></IconChapter>
-        <IconDatabase v-if="tree.isRoot" class="h-4 w-4"></IconDatabase>
-        <IconPage v-if="tree.isPage" class="h-4 w-4"></IconPage>
+        <IconChapter v-if="tree.isChapter || tree.isBook" :solid="display=='grid'" :class="display == 'grid' ? 'icon-lg':'icon-sm'"></IconChapter>
+        <IconDatabase v-if="tree.isRoot" :class="display == 'grid' ? 'icon-lg':'icon-sm'"></IconDatabase>
+        <IconPage v-if="tree.isPage" :class="display == 'grid' ? 'icon-lg':'icon-sm'"></IconPage>
 
         {{ tree.title }}
         </Link>
 
         <!-- 面包屑模式的分割符号 -->
-        <div v-if="!tree.isPage && display == 'breadcrumbs'" class="btn-ghost rounded-none btn-square btn-sm btn w-4">
+        <div v-if="!tree.isPage && display == 'breadcrumbs' && tree.id != currentNode.id" class="btn-ghost rounded-none btn-square btn-sm btn w-4">
           <IconRight></IconRight>
         </div>
 
@@ -46,9 +58,11 @@
 
       <!-- 子节点 -->
       <div :class="{
-        'flex flex-col rounded-none': true,
+        'flex rounded-none': true,
         'pl-2': display != 'breadcrumbs',
-        'border gap-0 border-l-0': display == 'row',
+        'flex-col': display == 'col',
+        'border gap-0 border-l-0 flex-col': display == 'row',
+        'grid grid-flow-row grid-cols-6': display=='grid'
       }" v-if="isChildrenVisible">
         <Tree v-for="child in children" :root="root.isEmpty ? tree : root" :display="display" :tree="child" :hover-callback="hoverCallback"
           :current-node="currentNode"></Tree>
@@ -63,7 +77,6 @@ import { EmptyNode, Node } from "../entities/Node";
 import IconPage from "../icons/IconPage.vue";
 import IconChapter from "../icons/IconChapter.vue";
 import IconDatabase from "../icons/IconDatabase.vue";
-import IconBook from "../icons/IconBook.vue";
 import IconRight from '../icons/IconRight.vue'
 import Link from "../components/Link.vue";
 import Children from "../components/Children.vue";
@@ -93,7 +106,7 @@ const props = defineProps({
     type: String,
     default: "col",
     validator(value: string) {
-      return ['col', 'row', 'breadcrumbs'].includes(value)
+      return ['col', 'row', 'breadcrumbs','grid'].includes(value)
     },
   },
   hoverCallback: {
@@ -107,12 +120,20 @@ const props = defineProps({
 /**
  * 初始化变量，页面加载完成后再更新变量的值
  */
+let mounted = ref(false)
 let children = ref<Node[]>([])
 let siblings = ref<Node[]>([])
 let isActive = ref(false)
-let isVisible = computed(() => props.display != 'breadcrumbs' || (props.display == 'breadcrumbs' && isActive.value))
+let isVisible = computed(() => {
+  if (props.hiddenList.includes(props.tree.id)) return false
+  if (props.display == 'breadcrumbs' && isActive.value) return true
+
+  return props.display != 'breadcrumbs'
+})
 let isChildrenForceVisible = ref(false)
-let isChildrenVisible = computed(() => (children.value.length > 0 && isActive.value) || isChildrenForceVisible.value)
+let isChildrenVisible = computed(() => {
+  return  (children.value.length > 0 && isActive.value) || isChildrenForceVisible.value
+})
 let isDropdownVisible = ref(false)
 
 /**
@@ -176,3 +197,15 @@ async function shouldActive(target: Node, current: Node): Promise<boolean> {
   return parents.some(parent => parent.id == target.id)
 }
 </script>
+
+<style lang="postcss">
+.tree-item {
+  .icon-sm {
+  @apply h-4 w-4
+}
+
+.icon-lg {
+  @apply h-16 w-16 text-primary/50
+}
+}
+</style>

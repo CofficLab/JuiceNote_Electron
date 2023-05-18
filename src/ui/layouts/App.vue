@@ -2,24 +2,25 @@
   <!-- 在root层配置底色 -->
   <!-- 如果不配置底色，daisyui会自动配置为bg-primary -->
   <!-- 因为electron配置了全透明窗口，这里最好配置一个底色 -->
-  <div id="root" :data-theme="theme" class="absolute flex w-full flex-row bg-primary bg-white/90">
+  <!-- 另外注意：如果开了dev tool，是看不出透明效果的 -->
+  <div id="root" :data-theme="theme" class="absolute flex w-full flex-row bg-white/80">
     <!-- header脱离文档流，固定定位 -->
     <Header class="fixed draggable top-0 z-50 h-10 w-full bg-base-200/90 border-b border-neutral/30 shadow-sm"></Header>
 
     <!-- 左侧导航侧栏 -->
     <Aside
-      class="z-50 hidden h-screen w-40 overflow-scroll overscroll-none scroll-smooth border-r border-neutral/30 bg-base-300 shadow-sm lg:flex lg:flex-col"
+      class="z-50 hidden h-screen w-40 overflow-scroll overscroll-none scroll-smooth border-r border-neutral/30 bg-primary/5 backdrop-blur-lg shadow-sm lg:flex lg:flex-col"
     ></Aside>
 
     <!-- 右侧主内容，所有的滚动都基于main，必须有固定高度 -->
-    <main class="flex h-screen flex-grow flex-col justify-between overflow-scroll overscroll-none bg-base-100">
+    <main class="flex h-screen flex-grow relative flex-col justify-between overflow-scroll overscroll-none bg-base-100">
       <router-view v-slot="{ Component }">
         <transition name="fade">
           <component :is="Component" />
         </transition>
       </router-view>
 
-      <Footer class="sticky bottom-0 z-50 h-8 bg-primary/10 px-2 shadow-2xl backdrop-blur-lg backdrop-filter"></Footer>
+      <Footer class="fixed w-full bottom-0 z-40 h-8 bg-primary/10 px-2 shadow-2xl backdrop-blur-lg backdrop-filter"></Footer>
     </main>
 
     <!-- 弹层 -->
