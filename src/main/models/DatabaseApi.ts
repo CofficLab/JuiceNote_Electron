@@ -1,5 +1,5 @@
 import { join } from "path";
-import Config from "../config";
+import Config from "../bootstrap/config";
 import log from "../log/logger";
 import { writeFile } from "fs";
 import Logger from "electron-log";
@@ -25,7 +25,7 @@ class DatabaseApi {
     }
 
     find(id: number): Object {
-        databaseLogger.info(`在 ${this.dbFilePath} 中查找节点 id=${id}`)
+        databaseLogger.info(`查找节点 id=${id}`)
 
         if (id == undefined) {
             log.error('被查找的节点不能为undefined')
@@ -40,7 +40,7 @@ class DatabaseApi {
     }
 
     getRoot(recursive = false): Object {
-        databaseLogger.debug(`在 ${this.dbFilePath} 中查找根节点`)
+        databaseLogger.info(`查找根节点`)
 
         let result = this.connection.prepare('select * from nodes where parent_id=0 order by priority asc limit 1').get()
 

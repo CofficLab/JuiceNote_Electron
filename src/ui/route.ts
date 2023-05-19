@@ -14,7 +14,7 @@ const router = createRouter({
         {
             path: '/',
             name: 'home',
-            component: Home,
+            redirect: '/nodes/0/show'
         },
         {
             path: '/nodes/:id',

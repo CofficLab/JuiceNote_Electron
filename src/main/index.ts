@@ -1,12 +1,17 @@
-import { createWindow } from './window'
+import { createWindow } from './bootstrap/window'
 import { BrowserWindow, app } from 'electron'
 import setRunController from './controllers/RunnerController'
 import { release } from 'os'
-import createUpdater from './updater'
+import createUpdater from './bootstrap/updater'
 import setWildController from './controllers/Wild'
 import setTerminalController from './controllers/Terminal'
 import logger from './log/logger'
 import setNodeController from './controllers/NodeController'
+import indexLogger from './log/indexLogger'
+import setExceptionHandler from './bootstrap/exception'
+import prepareDatabase from './bootstrap/database'
+
+indexLogger.log('主进程启动')
 
 // Remove electron security warnings
 // This warning only shows in development mode
@@ -24,27 +29,56 @@ if (!app.requestSingleInstanceLock()) {
     process.exit(0)
 }
 
-let win: BrowserWindow | null = null
+let win: BrowserWindow | undefined | null = null
 
-app.whenReady().then(function () {
-    logger.info('创建窗口')
+// 注册控制器，用于和渲染进程通信
+setWildController(app)
+setTerminalController(win!)
+setRunController()
+setNodeController()
+
+// 错误处理
+setExceptionHandler(win)
+
+// 准备数据库
+prepareDatabase()
+
+app.on('ready', () => {
+    indexLogger.info('app ready,创建窗口')
     win = createWindow()
 
-    setWildController(app)
-    setTerminalController(win)
-    setRunController()
-    setNodeController()
-
-    win.webContents.on('did-finish-load', () => {
-        logger.info('webContents.on:did-finish-load')
-
-        createUpdater(app, win!)
+    win.webContents.on('did-start-loading', () => {
+        indexLogger.info('webContents:did-start-loading')
     })
 
-    process.on('uncaughtException', (err) => {
-        logger.error('主进程捕获到异常:', err)
-        logger.info('通知渲染进程异常信息')
-        win!.webContents.send('exception', err)
+    win.webContents.on('dom-ready', () => {
+        indexLogger.info('webContents:dom-ready')
+    })
+
+    win.webContents.on('did-finish-load', () => {
+        indexLogger.info('webContents:did-finish-load')
+
+        setTimeout(() => {
+            createUpdater(app, win!)
+        }, 5000);
+    })
+
+    // 进入全屏状态事件
+    win.on('enter-full-screen', () => {
+        win?.webContents.send('main-process-message', 'enter-full-screen')
+    })
+
+    win.on('leave-full-screen', () => {
+        win?.webContents.send('main-process-message', 'leave-full-screen')
+    })
+
+    // Test actively push message to the Electron-Renderer
+    win.webContents.on('did-finish-load', () => {
+        if (win!.isFullScreen()) {
+            win?.webContents.send('main-process-message', 'enter-full-screen')
+        }
+
+        win?.webContents.send('main-process-message', 'did_finish-load')
     })
 })
 

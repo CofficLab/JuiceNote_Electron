@@ -1,7 +1,8 @@
 import { app, BrowserWindow, shell, BrowserWindowConstructorOptions } from 'electron'
 import path from 'path'
-import setMenus from './menus/all'
+import setMenus from '../menus/all'
 import Config from './config'
+import indexLogger from '../log/indexLogger'
 
 function createWindow(option?: BrowserWindowConstructorOptions): BrowserWindow {
     const defaultOption = {
@@ -28,20 +29,13 @@ function createWindow(option?: BrowserWindowConstructorOptions): BrowserWindow {
     let win = new BrowserWindow(Object.assign({}, defaultOption, option))
 
     if (app.isPackaged) {
+        indexLogger.info('项目已打包，加载 index.html 文件')
         win.loadFile(Config.INDEX_HTML_PATH)
     } else {
+        indexLogger.info('项目未打包，加载 URL')
         win.loadURL(Config.URL)
         // win.webContents.openDevTools()
     }
-
-    // Test actively push message to the Electron-Renderer
-    win.webContents.on('did-finish-load', () => {
-        if (win.isFullScreen()) {
-            win?.webContents.send('main-process-message', 'enter-full-screen')
-        }
-
-        win?.webContents.send('main-process-message', 'did_finish-load')
-    })
 
     // 配置菜单
     setMenus(win)
@@ -50,15 +44,6 @@ function createWindow(option?: BrowserWindowConstructorOptions): BrowserWindow {
     win.webContents.setWindowOpenHandler(({ url }) => {
         if (url.startsWith('https:')) shell.openExternal(url)
         return { action: 'deny' }
-    })
-
-    // 进入全屏状态事件
-    win.on('enter-full-screen', () => {
-        win?.webContents.send('main-process-message', 'enter-full-screen')
-    })
-
-    win.on('leave-full-screen', () => {
-        win?.webContents.send('main-process-message', 'leave-full-screen')
     })
 
     return win

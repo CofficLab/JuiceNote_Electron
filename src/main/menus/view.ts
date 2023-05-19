@@ -1,5 +1,5 @@
 import { BrowserWindow, MenuItem } from "electron"
-import { createWindow } from "../window"
+import { createWindow } from "../bootstrap/window"
 
 const __DARWIN__ = process.platform === 'darwin'
 

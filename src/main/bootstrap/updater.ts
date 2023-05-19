@@ -2,7 +2,7 @@
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log'
 import { App, BrowserWindow } from 'electron';
-import updateLogger from './log/updateLogger';
+import updateLogger from '../log/updateLogger';
 
 const createUpdater = (app: App, win: BrowserWindow) => {
     autoUpdater.logger = updateLogger;
