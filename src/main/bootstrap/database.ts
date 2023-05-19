@@ -13,7 +13,7 @@ function prepareDatabase() {
         copyFileSync(databaseFileTemplate, databaseFile)
     }
 
-    databaseLogger.info(`用户节点数据库 \n ${databaseFile}`)
+    databaseLogger.info(`用户节点数据库: ${databaseFile}`)
 }
 
 export default prepareDatabase

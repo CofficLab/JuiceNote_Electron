@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import App from './layouts/App.vue'
 import "./app.css"
-import router from './route';
+import router from './router';
 import rendererLogger from './log/rendererLogger';
 import Preload from './api/Preload'
 

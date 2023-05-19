@@ -1,12 +1,10 @@
 import { createRouter, createWebHashHistory } from "vue-router"
+import { useCurrentNodeStore } from "./stores/NodeStore"
+import routerLogger from "./log/routerLogger"
+import NodePage from "./pages/NodePage.vue"
 import NotFound from './pages/NotFound.vue'
 import About from './pages/About.vue'
-import Home from './pages/Home.vue'
-import Database from './pages/Database.vue'
-import { useCurrentNodeStore } from "./stores/NodeStore"
 import NodeApi from "./api/NodeApi"
-import NodePage from "./pages/NodePage.vue"
-import routerLogger from "./log/routerLogger"
 
 const router = createRouter({
     history: createWebHashHistory(),
@@ -30,11 +28,6 @@ const router = createRouter({
                     name: "nodes.show"
                 },
             ]
-        },
-        {
-            path: '/database',
-            name: 'database',
-            component: Database,
         },
         {
             path: '/:pathMatch(.*)*',
