@@ -122,6 +122,10 @@ class Node {
         return NodeApi.updateVisible(this.id, visible)
     }
 
+    async createChild(node: Node) {
+        return NodeApi.create(node)
+    }
+
     static updateChildrenPriority(children: Node[]) {
         children.forEach((child, index) => {
             NodeApi.updatePriority(child.id, index)

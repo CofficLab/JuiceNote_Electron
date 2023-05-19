@@ -33,4 +33,8 @@ export default function setNodeController() {
     ipcMain.handle('search', (event, keyword) => {
         return nodeModel.search(keyword)
     })
+
+    ipcMain.handle('create', (event, node) => {
+        return nodeModel.create(node)
+    })
 }

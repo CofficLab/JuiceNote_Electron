@@ -22,11 +22,15 @@ let props = defineProps({
   },
   node: {
     type: Node,
-    require: false,
+    require: true,
   },
 });
 
 let add = function () {
-  dispatchEvent(new CustomEvent("show-add-form", { detail: { node: props.node } }));
+  props.node.createChild(new Node({
+    title: "新页面",
+    parentId: props.node.id,
+  }))
+  // dispatchEvent(new CustomEvent("show-add-form", { detail: { node: props.node } }));
 };
 </script>

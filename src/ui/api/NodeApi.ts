@@ -5,7 +5,12 @@ import apiLogger from "../log/apiLogger";
 
 const Ipc = Preload.ipc
 
-const NodeApi =  {
+const NodeApi = {
+    async create(node:Node) {
+        apiLogger.info('发起 API create')
+        return Ipc.invoke('create', node)
+    },
+
     async getRoot(): Promise<Node> {
         apiLogger.info('发起 API 请求：getRoot')
         return Ipc.invoke('getRoot').then((node) => {
