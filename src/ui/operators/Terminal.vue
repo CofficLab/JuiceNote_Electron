@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts" setup>
-import CommandLine from "../icons/command-line.svg";
+import CommandLine from "../icons/IconCommandLine.vue";
 
 const props = defineProps({
   showText: Boolean,

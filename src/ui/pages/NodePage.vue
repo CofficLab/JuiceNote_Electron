@@ -7,7 +7,7 @@
     <div class="flex h-full w-full flex-col items-center pt-12">
       <div class="w-full flex justify-center items-center h-full flex-col gap-4" v-if="node.isEmpty">
         <NodeInfo :node="node" class="flex justify-center"></NodeInfo>
-        <IconBlank class="w-24 text-primary/40 drop-shadow-2xl"></IconBlank>
+        <IconBlank class="w-48 text-primary/20 drop-shadow-2xl"></IconBlank>
       </div>
 
       <div class="w-full" v-else-if="node.isPage">
