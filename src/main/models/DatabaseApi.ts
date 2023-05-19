@@ -5,7 +5,7 @@ import { writeFile } from "fs";
 import Logger from "electron-log";
 import databaseLogger from "../log/databaseLogger";
 
-const EmptyNode= {
+const EmptyNode = {
     id: 0,
     title: '空节点',
 }
@@ -46,7 +46,7 @@ class DatabaseApi {
 
         if (recursive) result.children = this.getChildren(result.id)
 
-        return  result
+        return result
     }
 
     getChildren(id: number): Object[] {
@@ -89,7 +89,7 @@ class DatabaseApi {
     getFirstChild(id: number): Object {
         let child = this.connection.prepare('select * from nodes where parent_id=? order by priority asc limit 1').get(id)
 
-        log.info(`get first child of ${id},result is`,child)
+        log.info(`get first child of ${id},result is`, child)
 
         return child
     }

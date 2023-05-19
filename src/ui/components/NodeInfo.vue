@@ -5,11 +5,12 @@
                 <img :src="node.cover" alt="封面" v-if="node.cover?.length > 0" class="w-48 shadow-none">
 
                 <div class="stat place-items-center hover:bg-primary-focus">
-                    <div class="stat-value">{{ node.title }}</div>
+                    <div class="stat-value" v-if="node.isEmpty">内容为空</div>
+                    <div class="stat-value" v-else>{{ node.title }}</div>
                 </div>
             </div>
 
-            <div class="stats shadow bg-secondary/20 drop-shadow-xl py-0  backdrop-blur backdrop-filter">
+            <div class="stats shadow bg-secondary/20 drop-shadow-xl py-0  backdrop-blur backdrop-filter" v-if="!node.isEmpty">
                 <div class="stat place-items-center hover:bg-primary-focus">
                     <div class="stat-title text-sm">ID</div>
                     <div class="stat-value text-base">{{ node.id }}</div>

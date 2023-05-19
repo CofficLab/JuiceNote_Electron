@@ -24,6 +24,8 @@ class Node {
     public isVisible: boolean = true
 
     constructor(options: object) {
+        if (!options) return EmptyNode
+
         // 将从数据库取出的数据转换成驼峰命名，并转换成 Node
         options = mapKeys(options, (value: any, key: any) => {
             return camelCase(key)

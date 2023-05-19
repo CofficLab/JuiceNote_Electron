@@ -5,7 +5,7 @@ import { copyFileSync, existsSync } from "fs"
 import databaseLogger from "../log/databaseLogger"
 
 function prepareDatabase() {
-    const databaseFileTemplate = join(Config.DATABASE_PATH, 'local.db')
+    const databaseFileTemplate = join(Config.DATABASE_PATH, 'blueprint.db')
     const databaseFile = join(app.getPath('userData'), 'local.db')
 
     if (!existsSync(databaseFile)) {

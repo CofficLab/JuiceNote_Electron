@@ -32,6 +32,9 @@ if (!app.requestSingleInstanceLock()) {
 
 let win: BrowserWindow | undefined | null = null;
 
+// 准备数据库
+prepareDatabase();
+
 // 注册控制器，用于和渲染进程通信
 setWildController(app);
 setTerminalController(win!);
@@ -40,9 +43,6 @@ setNodeController();
 
 // 错误处理
 setExceptionHandler(win);
-
-// 准备数据库
-prepareDatabase();
 
 app.on("ready", () => {
     eventLogger.warn("app ready");

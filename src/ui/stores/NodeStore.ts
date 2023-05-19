@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
 import { EmptyNode, Node } from '../entities/Node'
-import Logger from 'electron-log'
 import storeLogger from '../log/storeLogger'
 
 export const useCurrentNodeStore = defineStore('current', {
