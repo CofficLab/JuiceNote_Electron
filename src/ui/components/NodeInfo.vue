@@ -25,6 +25,23 @@
                     <div class="stat-title text-sm">排序</div>
                     <div class="stat-value text-base">{{ node.priority ?? '0' }}</div>
                 </div>
+
+                <div class="stat place-items-center hover:bg-primary-focus">
+                  <div class="stat-title text-sm">增加页面</div>
+                  <div class="stat-actions">
+                    <button class="btn btn-sm btn-success">
+                      <Add :node="node" :show-text="false"></Add>
+                    </button>
+                  </div>
+                </div>
+                <div class="stat place-items-center hover:bg-primary-focus">
+                    <div class="stat-title text-sm">增加章节</div>
+                    <div class="stat-actions shadow-none">
+                      <button class="btn btn-sm btn-info shadow-none">
+                        <Add :show-text="false"></Add>
+                      </button>
+                    </div>
+                  </div>
             </div>
         </div>
     </div>
@@ -32,7 +49,7 @@
 
 <script lang="ts" setup>
 import { Node } from '../entities/Node'
-import IconInfo from '../icons/IconInfo.vue';
+import Add from '../operators/Add.vue';
 const props = defineProps({
     node: {
         type: Node,
