@@ -119,10 +119,6 @@
       <IconEmpty></IconEmpty>
     </button>
 
-    <button class="tooltip tooltip-bottom" data-tip="隐藏或显示">
-      <Visible :showText="false"></Visible>
-    </button>
-
     <!-- <button @click="saveAndShow" class="tooltip tooltip-bottom ml-4" data-tip="保存并跳转到展示页面">
       <IconBack></IconBack>
     </button> -->
@@ -146,21 +142,21 @@ import { Editor } from "@tiptap/vue-3";
 import { computed, ref } from "vue";
 import { useToastStore } from "../stores/ToastStore";
 import IconCode from "../icons/IconCode.vue";
-import IconListBullet from "../icons/list-bullet.svg";
+import IconListBullet from "../icons/IconList.vue";
 import IconBack from "../icons/arrow-uturn-left.svg";
-import IconLink from "../icons/link.svg";
-import IconTable from "../icons/table-cells.svg";
-import IconMinus from "../icons/minus.svg";
-import IconX from "../icons/x-mark.svg";
-import IconBarsArrowDown from "../icons/bars-arrow-down.svg";
-import IconClear from "../icons/no-symbol.svg";
-import IconPuzzle from "../icons/puzzle-pieces.svg";
-import IconQueueList from "../icons/queue-list.svg";
-import IconChat from "../icons/chat-bubble-left-ellipsis.svg";
-import IconFilm from "../icons/film.svg";
-import IconTab from "../icons/server-stack.svg";
-import IconEmpty from "../icons/empty.svg";
-import IconHashTag from "../icons/hashtag.svg";
+import IconLink from "../icons/IconLink.vue";
+import IconTable from "../icons/IconTableCell.vue";
+import IconMinus from "../icons/IconMinus.vue";
+import IconX from "../icons/IconX.vue";
+import IconBarsArrowDown from "../icons/IconBarsArrowDown.vue";
+import IconClear from "../icons/IconNoSymbol.vue";
+import IconPuzzle from "../icons/IconPuzzlePieces.vue";
+import IconQueueList from "../icons/IconQueueList.vue";
+import IconChat from "../icons/IconChat.vue";
+import IconFilm from "../icons/IconFilm.vue";
+import IconTab from "../icons/IconServerStack.vue";
+import IconEmpty from "../icons/IconEmpty.vue";
+import IconHashTag from "../icons/IconHashTag.vue";
 import { useRouter } from "vue-router";
 import Visible from "../operators/Visible.vue";
 import { Node } from "../entities/Node";

@@ -1,6 +1,6 @@
 import { ipcMain } from "electron"
-import Config from "../config"
-import { createWindow } from "../window"
+import Config from "../bootstrap/config"
+import { createWindow } from "../bootstrap/window"
 import logger from "../log/logger"
 
 export default function setWildController(app: Electron.App) {

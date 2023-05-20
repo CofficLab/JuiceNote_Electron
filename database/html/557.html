@@ -1,1 +1,0 @@
-<h1 id="heading-1">函数重载</h1><p>函数重载(function overloading)指的是可以编写多个同名函数，只要它们拥有不同的形参与/或者不同的返回 值，在 Go 里面函数重载是不被允许的。这将导致一个编译错误:</p><pre index="1"><code language="shell" run="0">funcName redeclared in this book, previous declaration at lineno</code></pre><p>Go 语言不支持这项特性的主要原因是函数重载需要进行多余的类型匹配影响性能;没有重载意味着只是一个简单的函 数调度。所以你需要给不同的函数使用不同的名字，我们通常会根据函数的特征对函数进行命名</p>

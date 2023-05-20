@@ -28,7 +28,7 @@ let code = ref(props.node.content);
 let getEditor = () =>
   new Editor({
     extensions: Extensions,
-    content: !props.node.content ? '{内容为空}' : props.node.content,
+    content: (!props.editable && !props.node.content) ? '内容为空' :props.node.content,
     autofocus: props.editable ? 1 : true,
     injectCSS: true,
     enableInputRules: true,

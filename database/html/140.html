@@ -1,2 +1,0 @@
-<h1 id="heading-1">new</h1><official-link class="bg-cyan-800/20 p-4">https://pkg.go.dev/builtin#new</official-link><pre index="1"><code language="go" run="NaN">func new(Type) *Type
-</code></pre><p>new 和 make 均是用于分配内存:new 用于值类型和用户定义的类型，如自定义结构，make 用于内置引用类型(切片、map 和管道)。它们的用法就像是函数，但是将类型作为参数: new(type)、make(type)。new(T) 分配类型 T 的零值并返回其地址，也就是指向类型 T 的指针(详见第 10.1 节)。它也可以被用于基本类型: v := new(int) 。make(T) 返回类型 T 的初始化之后的值，因此它比 new 进行更多的工作(详见第 7.2.3/4 节、第 8.1.1 节和 第 14.2.1 节)<strong>new() </strong>是一个函数，不要忘记它的括号</p>

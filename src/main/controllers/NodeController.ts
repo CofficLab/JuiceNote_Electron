@@ -1,34 +1,46 @@
 import { ipcMain } from "electron"
-import NodeModel from "../models/NodeModel"
+import makeNodeModel from "../models/NodeModel"
 import controllerLogger from "../log/controllerLogger"
 
 export default function setNodeController() {
+    let nodeModel = makeNodeModel()
+
+    ipcMain.handle('delete', (event, id) => {
+        controllerLogger.info('向数据库发起请求：delete ' + id)
+        return nodeModel.delete(id)
+    })
+
     ipcMain.handle('getRoot', (event) => {
-        return NodeModel.getRoot()
+        return nodeModel.getRoot()
     })
 
     ipcMain.handle('getChildren', (event, id) => {
-        return NodeModel.getChildren(id)
+        controllerLogger.info('向数据库发起请求：getChildren ' + id)
+        return nodeModel.getChildren(id)
     })
 
     ipcMain.handle('find', (event, id) => {
         controllerLogger.info('向数据库发起请求：find ' + id)
-        return NodeModel.find(id)
+        return nodeModel.find(id)
     })
 
     ipcMain.handle('updateContent', (event, id, content) => {
-        return NodeModel.updateContent(id, content)
+        return nodeModel.updateContent(id, content)
     })
 
     ipcMain.handle('updateTitle', (event, id, title) => {
-        return NodeModel.updateTitle(id, title)
+        return nodeModel.updateTitle(id, title)
     })
 
     ipcMain.handle('updateVisible', (event, id, visible) => {
-        return NodeModel.updateVisible(id, visible)
+        return nodeModel.updateVisible(id, visible)
     })
 
     ipcMain.handle('search', (event, keyword) => {
-        return NodeModel.search(keyword)
+        return nodeModel.search(keyword)
+    })
+
+    ipcMain.handle('create', (event, node) => {
+        return nodeModel.create(node)
     })
 }

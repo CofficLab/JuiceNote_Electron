@@ -1,8 +1,0 @@
-<toc></toc><h1 id="heading-1">简介</h1><p>Go 使用异常对象来表示异常状态，并在遇到错误时引发异常。异常对象未被处理(或捕获)时，程序将终止并显示一条错误消息(traceback)。</p><pre index="1"><code language="go" run="NaN">package main
-
-func main() {
-    a := 1/0
-}
-</code></pre><h2 id="heading-2">参考资料</h2><p><a target="_blank" rel="noopener noreferrer nofollow" href="https://mp.weixin.qq.com/s/Ym2BDVFJxXTOxp1L9tvAog">https://mp.weixin.qq.com/s/Ym2BDVFJxXTOxp1L9tvAog</a></p><p></p><p></p><pre index="1"><code language="go" run="NaN">处理错误并且在函数发生错误的地方给用户返回错误信息:照这样处理就算真的出了问题，你的程序也能继续运行并</code></pre><p>且通知给用户。 panic and recover 是用来处理真正的异常(无法预测的错误)而不是普通的错误。</p><h2 id="heading-3">规范</h2><p>在前面的章节中我们了解了 Go 检查和报告错误条件的惯有方式:</p><p>产生错误的函数会返回两个变量，一个值和一个错误码;如果后者是 nil 就是成功，非 nil 就是发生了错 误。</p><pre index="1"><code language="go" run="NaN">   为了防止发生错误时正在执行的函数(如果有必要的话甚至会是整个程序)被中止，在调用函数后必须检查错
-   误。
-</code></pre>

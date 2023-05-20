@@ -1,7 +1,7 @@
 import { join } from "path";
-import Config from "../config";
 import DatabaseApi from "./DatabaseApi";
+import { app } from "electron";
 
-const NodeModel = new DatabaseApi(join(Config.DATABASE_PATH, 'local.db'))
-
-export default NodeModel
+export default function makeNodeModel() {
+    return new DatabaseApi(join(app.getPath('userData'), 'local.db'))
+}

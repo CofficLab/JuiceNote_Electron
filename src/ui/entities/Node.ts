@@ -11,7 +11,8 @@ class Node {
     public level: number = 0
     public cover: string = ''
     public content: string = ''
-    public slug:string=''
+    public slug: string = ''
+    public updatedAt:string = (new Date()).toISOString()
 
     public isBook: boolean = false
     public isChapter: boolean = false
@@ -24,14 +25,13 @@ class Node {
     public isVisible: boolean = true
 
     constructor(options: object) {
+        if (!options) return EmptyNode
+
         // 将从数据库取出的数据转换成驼峰命名，并转换成 Node
         options = mapKeys(options, (value: any, key: any) => {
             return camelCase(key)
         })
         Object.assign(this, options)
-
-        this.isRoot = this.parentId == 0
-        this.isEmpty = this.id == 0
     }
 
     getBook(): Node {
@@ -70,6 +70,10 @@ class Node {
         let parent = await NodeApi.find(this.parentId)
 
         return parent
+    }
+
+    async delete() {
+        return NodeApi.delete(this.id)
     }
 
     async getParents(): Promise<Node[]> {
@@ -120,6 +124,10 @@ class Node {
         return NodeApi.updateVisible(this.id, visible)
     }
 
+    async createChild(node: Node) {
+        return NodeApi.create(node)
+    }
+
     static updateChildrenPriority(children: Node[]) {
         children.forEach((child, index) => {
             NodeApi.updatePriority(child.id, index)
@@ -128,8 +136,10 @@ class Node {
 }
 
 const EmptyNode = new Node({ title: '空节点', isEmpty: true, content: '空节点', id: 0 })
+const RootNode = new Node({ title: '根节点', isRoot: true, content: '根节点', id: 0 })
 
 export {
     Node,
     EmptyNode,
+    RootNode
 };

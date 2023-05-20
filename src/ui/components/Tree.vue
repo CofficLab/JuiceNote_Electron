@@ -24,7 +24,8 @@
 
         // 颜色
         'bg-primary text-primary-content': isActive && tree.isPage && display != 'breadcrumbs',
-        'bg-primary/5': !tree.isPage && currentNode.id == tree.id && display != 'breadcrumbs',
+        'bg-primary/50': !tree.isPage && currentNode.id == tree.id && display != 'breadcrumbs',
+        'bg-primary/70': tree.isRoot && currentNode.id == tree.id && display != 'breadcrumbs',
 
         // boder
         'border-l border-t border-b': display == 'row' && isChildrenVisible,

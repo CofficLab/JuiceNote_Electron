@@ -5,13 +5,23 @@ import apiLogger from "../log/apiLogger";
 
 const Ipc = Preload.ipc
 
-const NodeApi =  {
-    async getRoot(): Promise<Node> {
-        apiLogger.info('发起 API 请求：getRoot')
-        return Ipc.invoke('getRoot').then((node) => {
-            return new Node(node)
-        })
+const NodeApi = {
+    async create(node:Node) {
+        apiLogger.info('发起 API 请求：create')
+        return Ipc.invoke('create', node)
     },
+
+    async delete(id: number) {
+        apiLogger.info('发起 API 请求：delete')
+        return Ipc.invoke('delete', id)
+    },
+
+    // async getRoot(): Promise<Node> {
+    //     apiLogger.info('发起 API 请求：getRoot')
+    //     return Ipc.invoke('getRoot').then((node) => {
+    //         return new Node(node)
+    //     })
+    // },
 
     async find(id: number): Promise<Node> {
         apiLogger.info('发起 API 请求：find')
@@ -25,7 +35,8 @@ const NodeApi =  {
         return new Node(node);
     },
 
-    async getChildren(id:number): Promise<Node[]> {
+    async getChildren(id: number): Promise<Node[]> {
+        apiLogger.info('发起 API 请求：getChildren')
         return Ipc.invoke('getChildren', id).then((nodes) => {
             return nodes.map((node:any) => {
                 return new Node(node)

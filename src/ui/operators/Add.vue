@@ -6,8 +6,11 @@
 </template>
 
 <script setup>
-import Plus from "../icons/plus.svg";
+import Plus from "../icons/IconPlus.vue";
 import { Node } from "../entities/Node";
+import { useCurrentNodeStore } from "../stores/NodeStore";
+import componentLogger from "../log/componentLogger";
+import { useRouter } from "vue-router";
 
 let props = defineProps({
   showText: {
@@ -22,11 +25,27 @@ let props = defineProps({
   },
   node: {
     type: Node,
-    require: false,
+    require: true,
   },
 });
 
+const nodeStore = useCurrentNodeStore()
+const router = useRouter()
+
 let add = function () {
-  dispatchEvent(new CustomEvent("show-add-form", { detail: { node: props.node } }));
+  props.node.createChild(new Node({
+    title: "新页面",
+    isPage:true,
+    parentId: props.node.id,
+  })).then((id) => {
+    componentLogger.info('新节点的ID',id)
+    nodeStore.updateRoot()
+    router.push({
+      name: "nodes.edit",
+      params: {
+        id: id,
+      }
+    })
+  })
 };
 </script>

@@ -5,25 +5,28 @@
                 <img :src="node.cover" alt="封面" v-if="node.cover?.length > 0" class="w-48 shadow-none">
 
                 <div class="stat place-items-center hover:bg-primary-focus">
-                    <div class="stat-value">{{ node.title }}</div>
+                    <div class="stat-value" v-if="node.isEmpty">内容为空</div>
+                    <div class="stat-value" v-else>{{ node.title }}</div>
                 </div>
             </div>
 
-            <div class="stats shadow bg-secondary/20 drop-shadow-xl py-0  backdrop-blur backdrop-filter">
+            <div class="stats shadow bg-secondary/20 drop-shadow-xl py-0  backdrop-blur backdrop-filter" v-if="!node.isEmpty">
                 <div class="stat place-items-center hover:bg-primary-focus">
-                    <div class="stat-title text-sm">ID</div>
-                    <div class="stat-value text-base">{{ node.id }}</div>
+                  <div class="stat-title text-sm">增加页面</div>
+                  <div class="stat-actions">
+                    <button class="btn btn-sm btn-success">
+                      <Add :node="node" :show-text="false"></Add>
+                    </button>
+                  </div>
                 </div>
-
                 <div class="stat place-items-center hover:bg-primary-focus">
-                    <div class="stat-title text-sm">可见性</div>
-                    <div class="stat-value text-base">{{ node.isVisible ? '显示' : '隐藏' }}</div>
-                </div>
-
-                <div class="stat place-items-center hover:bg-primary-focus">
-                    <div class="stat-title text-sm">排序</div>
-                    <div class="stat-value text-base">{{ node.priority ?? '0' }}</div>
-                </div>
+                    <div class="stat-title text-sm">增加章节</div>
+                    <div class="stat-actions shadow-none">
+                      <button class="btn btn-sm btn-info shadow-none">
+                        <Add :show-text="false"></Add>
+                      </button>
+                    </div>
+                  </div>
             </div>
         </div>
     </div>
@@ -31,7 +34,7 @@
 
 <script lang="ts" setup>
 import { Node } from '../entities/Node'
-import IconInfo from '../icons/IconInfo.vue';
+import Add from '../operators/Add.vue';
 const props = defineProps({
     node: {
         type: Node,

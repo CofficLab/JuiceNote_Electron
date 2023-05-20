@@ -7,8 +7,8 @@
 </template>
 
 <script setup>
-import PencilSquare from "../icons/pencil-square.svg";
-import ArrowUturnLeft from "../icons/arrow-uturn-left.svg";
+import PencilSquare from "../icons/IconEdit.vue";
+import ArrowUturnLeft from "../icons/IconArrowUturnLeft.vue";
 import { useRoute, useRouter } from "vue-router";
 import { computed } from "vue";
 

@@ -1,5 +1,5 @@
 import log from 'electron-log'
-import Config from '../config';
+import Config from '../bootstrap/config';
 import { writeFileSync } from 'fs';
 
 log.initialize({ preload: true });

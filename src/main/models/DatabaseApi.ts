@@ -1,11 +1,11 @@
 import { join } from "path";
-import Config from "../config";
+import Config from "../bootstrap/config";
 import log from "../log/logger";
 import { writeFile } from "fs";
 import Logger from "electron-log";
 import databaseLogger from "../log/databaseLogger";
 
-const EmptyNode= {
+const EmptyNode = {
     id: 0,
     title: '空节点',
 }
@@ -19,13 +19,25 @@ class DatabaseApi {
         this.connection = require('better-sqlite3')(dbFilePath)
     }
 
+    create(node: Object): number {
+        databaseLogger.info('创建节点', node)
+        if (node.parent_id == null) node.parent_id=0
+        let result = this.connection.prepare('insert into nodes (title, parent_id, priority, is_page) values (?, ?, ?, ?)').run(
+            node.title,
+            node.parent_id,
+            node.priority,
+            node.isPage ? 1 : 0)
+        
+        return result.lastInsertRowid
+    }
+
     delete(id: number): string {
         this.connection.prepare('delete from nodes where id=?').run(id)
         return "已删除「" + id + "」"
     }
 
     find(id: number): Object {
-        databaseLogger.info(`在 ${this.dbFilePath} 中查找节点 id=${id}`)
+        databaseLogger.info(`查找节点 id=${id}`)
 
         if (id == undefined) {
             log.error('被查找的节点不能为undefined')
@@ -40,19 +52,19 @@ class DatabaseApi {
     }
 
     getRoot(recursive = false): Object {
-        databaseLogger.debug(`在 ${this.dbFilePath} 中查找根节点`)
+        databaseLogger.info(`查找根节点`)
 
         let result = this.connection.prepare('select * from nodes where parent_id=0 order by priority asc limit 1').get()
 
         if (recursive) result.children = this.getChildren(result.id)
 
-        return  result
+        return result
     }
 
     getChildren(id: number): Object[] {
         let children = this.connection.prepare('select * from nodes where parent_id=? order by priority asc').all(id)
 
-        // log.info(`get children of ${id},count=${children.length}`)
+        databaseLogger.info(`get children of ${id},count=${children.length}`)
 
         return children
     }
@@ -89,7 +101,7 @@ class DatabaseApi {
     getFirstChild(id: number): Object {
         let child = this.connection.prepare('select * from nodes where parent_id=? order by priority asc limit 1').get(id)
 
-        log.info(`get first child of ${id},result is`,child)
+        log.info(`get first child of ${id},result is`, child)
 
         return child
     }
@@ -122,9 +134,6 @@ class DatabaseApi {
 
     updateContent(id: number, content: string): string {
         let result = this.connection.prepare('update nodes set content=? where id=?').run(content, id)
-        writeFile(join(Config.DATABASE_PATH, 'html', id + '.html'), content, (err) => {
-            log.info('已同步到磁盘', err)
-        })
 
         if (result != null) {
             return '「' + id + '」的内容更新成功'
