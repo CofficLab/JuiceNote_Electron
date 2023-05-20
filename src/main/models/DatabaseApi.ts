@@ -19,12 +19,16 @@ class DatabaseApi {
         this.connection = require('better-sqlite3')(dbFilePath)
     }
 
-    create(node: Object): string {
+    create(node: Object): number {
+        databaseLogger.info('创建节点', node)
         if (node.parent_id == null) node.parent_id=0
-        let result = this.connection.prepare('insert into nodes (title, parent_id, priority, is_book) values (?, ?, ?, ?)').run(node.title, node.parent_id, node.priority, node.is_book)
-
-        databaseLogger.info('创建节点', node, result)
-        return "已创建「" + node.title + "」"
+        let result = this.connection.prepare('insert into nodes (title, parent_id, priority, is_page) values (?, ?, ?, ?)').run(
+            node.title,
+            node.parent_id,
+            node.priority,
+            node.isPage ? 1 : 0)
+        
+        return result.lastInsertRowid
     }
 
     delete(id: number): string {

@@ -119,10 +119,6 @@
       <IconEmpty></IconEmpty>
     </button>
 
-    <button class="tooltip tooltip-bottom" data-tip="隐藏或显示">
-      <Visible :showText="false"></Visible>
-    </button>
-
     <!-- <button @click="saveAndShow" class="tooltip tooltip-bottom ml-4" data-tip="保存并跳转到展示页面">
       <IconBack></IconBack>
     </button> -->

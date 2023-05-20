@@ -45,7 +45,6 @@ router.beforeEach(function (to, from) {
     /**
      * 路由发生变化时，更新store
      */
-    let current = RootNode
     let nodeId = parseInt((to.params.id ? to.params.id : 0).toString())
 
     routerLogger.info("从", from.fullPath, "到", to.fullPath)
@@ -57,6 +56,9 @@ router.beforeEach(function (to, from) {
             routerLogger.info(`完成异步获取节点信息，设置 store 中 current 为「${node.title}」`)
             useCurrentNodeStore().update(node)
         })
+    } else {
+        routerLogger.info('设置 store 中 current 为 Root 节点')
+        useCurrentNodeStore().update(RootNode)
     }
 })
 

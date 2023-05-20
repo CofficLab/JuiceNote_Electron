@@ -11,7 +11,8 @@ class Node {
     public level: number = 0
     public cover: string = ''
     public content: string = ''
-    public slug:string=''
+    public slug: string = ''
+    public updatedAt:string = (new Date()).toISOString()
 
     public isBook: boolean = false
     public isChapter: boolean = false
@@ -32,7 +33,6 @@ class Node {
         })
         Object.assign(this, options)
 
-        this.isRoot = this.parentId == 0
         this.isEmpty = this.id == 0
     }
 
@@ -72,6 +72,10 @@ class Node {
         let parent = await NodeApi.find(this.parentId)
 
         return parent
+    }
+
+    async delete() {
+        return NodeApi.delete(this.id)
     }
 
     async getParents(): Promise<Node[]> {

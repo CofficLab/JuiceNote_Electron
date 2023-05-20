@@ -7,8 +7,13 @@ const Ipc = Preload.ipc
 
 const NodeApi = {
     async create(node:Node) {
-        apiLogger.info('发起 API create')
+        apiLogger.info('发起 API 请求：create')
         return Ipc.invoke('create', node)
+    },
+
+    async delete(id: number) {
+        apiLogger.info('发起 API 请求：delete')
+        return Ipc.invoke('delete', id)
     },
 
     // async getRoot(): Promise<Node> {

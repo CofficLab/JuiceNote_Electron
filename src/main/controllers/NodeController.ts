@@ -5,6 +5,11 @@ import controllerLogger from "../log/controllerLogger"
 export default function setNodeController() {
     let nodeModel = makeNodeModel()
 
+    ipcMain.handle('delete', (event, id) => {
+        controllerLogger.info('向数据库发起请求：delete ' + id)
+        return nodeModel.delete(id)
+    })
+
     ipcMain.handle('getRoot', (event) => {
         return nodeModel.getRoot()
     })
