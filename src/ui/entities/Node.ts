@@ -134,8 +134,10 @@ class Node {
 }
 
 const EmptyNode = new Node({ title: '空节点', isEmpty: true, content: '空节点', id: 0 })
+const RootNode = new Node({ title: '根节点', isRoot: true, content: '根节点', id: 0 })
 
 export {
     Node,
     EmptyNode,
+    RootNode
 };

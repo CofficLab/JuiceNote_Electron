@@ -1,12 +1,12 @@
 import { defineStore } from 'pinia'
-import { EmptyNode, Node } from '../entities/Node'
+import {Node, RootNode } from '../entities/Node'
 import storeLogger from '../log/storeLogger'
 
 export const useCurrentNodeStore = defineStore('current', {
     state: () => {
         return {
-            current: EmptyNode,
-            root:EmptyNode,
+            current: RootNode,
+            root:RootNode,
         }
     },
 

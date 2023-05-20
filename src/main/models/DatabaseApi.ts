@@ -20,8 +20,10 @@ class DatabaseApi {
     }
 
     create(node: Object): string {
-        databaseLogger.info('创建节点',node)
-        this.connection.prepare('insert into nodes (title, parent_id, priority, is_book) values (?, ?, ?, ?)').run(node.title, node.parent_id, node.priority, node.is_book)
+        if (node.parent_id == null) node.parent_id=0
+        let result = this.connection.prepare('insert into nodes (title, parent_id, priority, is_book) values (?, ?, ?, ?)').run(node.title, node.parent_id, node.priority, node.is_book)
+
+        databaseLogger.info('创建节点', node, result)
         return "已创建「" + node.title + "」"
     }
 
@@ -58,7 +60,7 @@ class DatabaseApi {
     getChildren(id: number): Object[] {
         let children = this.connection.prepare('select * from nodes where parent_id=? order by priority asc').all(id)
 
-        // log.info(`get children of ${id},count=${children.length}`)
+        databaseLogger.info(`get children of ${id},count=${children.length}`)
 
         return children
     }

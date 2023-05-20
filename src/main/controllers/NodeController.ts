@@ -10,6 +10,7 @@ export default function setNodeController() {
     })
 
     ipcMain.handle('getChildren', (event, id) => {
+        controllerLogger.info('向数据库发起请求：getChildren ' + id)
         return nodeModel.getChildren(id)
     })
 

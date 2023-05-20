@@ -1,6 +1,5 @@
 
 import { autoUpdater } from 'electron-updater';
-import log from 'electron-log'
 import { App, BrowserWindow } from 'electron';
 import updateLogger from '../log/updateLogger';
 

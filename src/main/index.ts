@@ -60,7 +60,7 @@ app.on("ready", () => {
     win.webContents.on("did-finish-load", () => {
         indexLogger.info("webContents:did-finish-load");
 
-        setTimeout(() => {
+        if (app.isPackaged) setTimeout(() => {
             createUpdater(app, win!);
         }, 50000);
     });

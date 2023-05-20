@@ -5,6 +5,7 @@ import NodePage from "./pages/NodePage.vue"
 import NotFound from './pages/NotFound.vue'
 import About from './pages/About.vue'
 import NodeApi from "./api/NodeApi"
+import { RootNode } from "./entities/Node"
 
 const router = createRouter({
     history: createWebHashHistory(),
@@ -44,17 +45,19 @@ router.beforeEach(function (to, from) {
     /**
      * 路由发生变化时，更新store
      */
+    let current = RootNode
     let nodeId = parseInt((to.params.id ? to.params.id : 0).toString())
 
     routerLogger.info("从", from.fullPath, "到", to.fullPath)
     routerLogger.info('节点ID为', nodeId)
 
-    routerLogger.info('开始异步获取节点信息')
-    let current = (nodeId > 0 ? NodeApi.find(nodeId) : NodeApi.getRoot())
-    current.then((node) => {
-        routerLogger.info(`完成异步获取节点信息，设置 store 中 current 为「${node.title}」`)
-        useCurrentNodeStore().update(node)
-    })
+    if (nodeId > 0) {
+        routerLogger.info('开始异步获取节点信息')
+        NodeApi.find(nodeId).then((node) => {
+            routerLogger.info(`完成异步获取节点信息，设置 store 中 current 为「${node.title}」`)
+            useCurrentNodeStore().update(node)
+        })
+    }
 })
 
 export default router
