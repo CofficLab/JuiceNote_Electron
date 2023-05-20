@@ -12,21 +12,6 @@
 
             <div class="stats shadow bg-secondary/20 drop-shadow-xl py-0  backdrop-blur backdrop-filter" v-if="!node.isEmpty">
                 <div class="stat place-items-center hover:bg-primary-focus">
-                    <div class="stat-title text-sm">ID</div>
-                    <div class="stat-value text-base">{{ node.id }}</div>
-                </div>
-
-                <div class="stat place-items-center hover:bg-primary-focus">
-                    <div class="stat-title text-sm">可见性</div>
-                    <div class="stat-value text-base">{{ node.isVisible ? '显示' : '隐藏' }}</div>
-                </div>
-
-                <div class="stat place-items-center hover:bg-primary-focus">
-                    <div class="stat-title text-sm">排序</div>
-                    <div class="stat-value text-base">{{ node.priority ?? '0' }}</div>
-                </div>
-
-                <div class="stat place-items-center hover:bg-primary-focus">
                   <div class="stat-title text-sm">增加页面</div>
                   <div class="stat-actions">
                     <button class="btn btn-sm btn-success">

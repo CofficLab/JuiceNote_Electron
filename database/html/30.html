@@ -1,9 +1,0 @@
-<h1 id="heading-1">浮点型</h1><h2 id="heading-2">简介</h2><p>浮点数、浮点型意思相同。</p><p>浮点型用于表示包含小数点的数据，Go 内置两种浮点型：</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>float32</p></li><li class="m-0 p-0"><p>float64</p></li></ul><h2 id="heading-3">范围</h2><p>浮点型：</p><ul class="m-0 p-0"><li class="m-0 p-0"><p>float32（+- 1e-45 -&gt; +- 3.4 * 1e38）</p></li><li class="m-0 p-0"><p>float64（+- 5 1e-324 -&gt; 107 1e308）</p></li></ul><h2 id="heading-4">注意事项</h2><p>浮点数字面量被自动类型推断为 float64 类型：</p><pre index="1"><code language="go" run="NaN">var b := 10.00</code></pre><p>计算机很难进行浮点数的精确表示和存储，不能使用 == 或 != 比较两个浮点数。</p><p>高精度科学计算应该使用 math 标准库。</p><h2 id="heading-5">声明</h2><pre index="1"><code language="go" run="1">package main
-import "fmt"
-import "reflect"
-
-func main() {
-	var a float32 = 9.9
-
-	fmt.Println(reflect.TypeOf(a))
-}</code></pre>

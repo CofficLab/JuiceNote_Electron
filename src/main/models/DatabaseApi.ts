@@ -134,9 +134,6 @@ class DatabaseApi {
 
     updateContent(id: number, content: string): string {
         let result = this.connection.prepare('update nodes set content=? where id=?').run(content, id)
-        writeFile(join(Config.DATABASE_PATH, 'html', id + '.html'), content, (err) => {
-            log.info('已同步到磁盘', err)
-        })
 
         if (result != null) {
             return '「' + id + '」的内容更新成功'
