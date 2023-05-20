@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts" setup>
-const props = defineProps({
+defineProps({
     class: {
         type: String,
         default: "h-6 w-6",

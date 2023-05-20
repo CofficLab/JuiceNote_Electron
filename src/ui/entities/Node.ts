@@ -32,8 +32,6 @@ class Node {
             return camelCase(key)
         })
         Object.assign(this, options)
-
-        this.isEmpty = this.id == 0
     }
 
     getBook(): Node {
