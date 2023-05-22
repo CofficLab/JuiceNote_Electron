@@ -10,7 +10,7 @@ function createWindow(option?: BrowserWindowConstructorOptions): BrowserWindow {
         height: app.isPackaged ? 800 : 1600,
         width: 1300,
         // backgroundColor: '#07404b',
-        // transparent: true,
+        transparent: true,
         title: 'Main window',
         icon: path.join(Config.PUBLIC_PATH, 'favicon.ico'),
         frame: process.platform == 'win32' ? true : false, // false：不显示可拖动的那个顶栏，形成一个无边框窗口
