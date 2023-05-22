@@ -62,6 +62,10 @@ const NodeApi = {
 
     async updateVisible(id: number, visible: boolean) {
         return Ipc.invoke('updateVisible', id, visible)
+    },
+
+    async save(node:Node) {
+        return Ipc.invoke('save', JSON.stringify(node))
     }
 }
 

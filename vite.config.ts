@@ -4,7 +4,6 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import electron, { onstart } from 'vite-plugin-electron'
 import pkg from './package.json'
-import svgLoader from 'vite-svg-loader'
 
 rmSync('release', { recursive: true, force: true })
 rmSync('dist', { recursive: true, force: true })
@@ -25,7 +24,6 @@ export default defineConfig({
   root: './',
   plugins: [
     vue(),
-    svgLoader(),
     electron({
       // 这个插件负责打包main和preload
       // ui部分的代码由vite负责打包

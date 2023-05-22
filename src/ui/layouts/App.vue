@@ -9,7 +9,7 @@
 
     <!-- 左侧导航侧栏 -->
     <Aside
-      class="z-50 hidden h-screen w-40 overflow-scroll overscroll-none scroll-smooth border-r border-neutral/30 bg-primary/5 backdrop-blur-lg shadow-sm lg:flex lg:flex-col"
+      class="z-50 hidden h-screen w-40 overflow-scroll overscroll-none scroll-smooth border-r border-neutral/30 bg-primary/10 backdrop-filter backdrop-blur-3xl shadow-sm lg:flex lg:flex-col"
     ></Aside>
 
     <!-- 右侧主内容，所有的滚动都基于main，必须有固定高度 -->

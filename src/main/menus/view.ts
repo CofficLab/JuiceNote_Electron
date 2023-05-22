@@ -1,5 +1,6 @@
-import { BrowserWindow, MenuItem } from "electron"
+import { BrowserWindow, MenuItem, app, shell } from "electron"
 import { createWindow } from "../bootstrap/window"
+import Config from "../bootstrap/config"
 
 const __DARWIN__ = process.platform === 'darwin'
 
@@ -54,6 +55,19 @@ function getViewMenu(win: BrowserWindow) {
                 label: '新页面',
                 accelerator: 'CommandOrControl+N',
                 click: () => createWindow({ x: 10, y: 10 })
+            },
+            { type: 'separator' },
+            {
+                label: '打开存储文件夹',
+                click: () => {
+                    shell.openPath(app.getPath('userData'))
+                }
+            },
+            {
+                label: '打开程序文件夹',
+                click: () => {
+                    shell.openPath(Config.ROOT_PATH)
+                }
             },
         ],
     })

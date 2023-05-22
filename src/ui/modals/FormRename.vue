@@ -31,8 +31,8 @@ import { Node } from "../entities/Node";
 import { useToastStore } from "../stores/ToastStore";
 
 let visible = ref(false);
-let title = "";
 let node = ref<Node>();
+let title = node.title;
 
 const setUnVisible = () => (visible.value = false);
 const setVisible = function (e: CustomEvent) {
@@ -41,8 +41,12 @@ const setVisible = function (e: CustomEvent) {
   nextTick(() => document.querySelector<HTMLDivElement>("#rename-node-form-title")!.focus());
 };
 const submit = () => {
-  useToastStore().set(node.value!.updateTitle(title));
-  setUnVisible();
+  node.value!.title = title;
+  node.value?.update().then(() => {
+    useToastStore().set('标题更新成功');
+    setUnVisible();
+  });
+  
 };
 
 onMounted(function () {

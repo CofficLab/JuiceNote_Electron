@@ -15,6 +15,9 @@ export const useCurrentNodeStore = defineStore('current', {
             storeLogger.info('更新当前节点为', node.title)
             this.current = node
         },
+        updateCurrent() {
+            this.current.updatedAt = (new Date()).toISOString()
+        },
         updateRoot() {
             this.root.updatedAt = (new Date()).toISOString()
         }

@@ -43,4 +43,8 @@ export default function setNodeController() {
     ipcMain.handle('create', (event, node) => {
         return nodeModel.create(node)
     })
+
+    ipcMain.handle('save', (event, node) => {
+        return nodeModel.save(JSON.parse(node))
+    })
 }

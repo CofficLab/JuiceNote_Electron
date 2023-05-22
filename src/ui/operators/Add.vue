@@ -1,16 +1,16 @@
 <template>
   <div @click="add">
-    <Plus v-if="showIcon"></Plus>
+    <IconCreate v-if="showIcon"></IconCreate>
     <span v-if="showText">添加章节或页面</span>
   </div>
 </template>
 
 <script setup>
-import Plus from "../icons/IconPlus.vue";
 import { Node } from "../entities/Node";
 import { useCurrentNodeStore } from "../stores/NodeStore";
 import componentLogger from "../log/componentLogger";
 import { useRouter } from "vue-router";
+import IconCreate from "../icons/IconCreate.vue";
 
 let props = defineProps({
   showText: {
