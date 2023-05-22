@@ -5,6 +5,16 @@ import { writeFile } from "fs";
 import Logger from "electron-log";
 import databaseLogger from "../log/databaseLogger";
 
+interface NodeObject {
+    id: number,
+    title: string,
+    parentId: number,
+    priority: number,
+    isPage: boolean,
+    isChapter: boolean,
+    isVisible:boolean
+}
+
 const EmptyNode = {
     id: 0,
     title: '空节点',
@@ -21,13 +31,13 @@ class DatabaseApi {
 
     create(node: Object): number {
         databaseLogger.info('创建节点', node)
-        if (node.parent_id == null) node.parent_id=0
+        if (node.parent_id == null) node.parent_id = 0
         let result = this.connection.prepare('insert into nodes (title, parent_id, priority, is_page) values (?, ?, ?, ?)').run(
             node.title,
             node.parent_id,
             node.priority,
             node.isPage ? 1 : 0)
-        
+
         return result.lastInsertRowid
     }
 
@@ -116,6 +126,30 @@ class DatabaseApi {
         log.info('搜索', keyword)
         let nodes = this.connection.prepare("select * from nodes where title like ? limit 5").all(`%${keyword}%`)
         return nodes
+    }
+
+    save(node: NodeObject): string {
+        databaseLogger.info('保存节点', node)
+
+        let result = this.connection.prepare(`update nodes set 
+        title=?,
+        parent_id=?,
+        priority=?,
+        is_page=?,
+        is_chapter=?,
+        is_visible=?
+        where id=?`).run(
+            node.title,
+            node.parentId,
+            node.priority,
+            node.isPage ? 1 : 0,
+            node.isChapter ? 1 : 0,
+            node.isVisible ? 1 : 0,
+            node.id)
+
+        databaseLogger.info('保存节点的结果', result)
+
+        return result.changes
     }
 
     updateTitle(id: number, title: string): string {

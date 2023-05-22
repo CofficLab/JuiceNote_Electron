@@ -124,6 +124,10 @@ class Node {
         return NodeApi.updateVisible(this.id, visible)
     }
 
+    async update() {
+        return NodeApi.save(this)
+    }
+
     async createChild(node: Node) {
         return NodeApi.create(node)
     }

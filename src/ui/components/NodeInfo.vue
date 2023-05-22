@@ -6,27 +6,8 @@
 
                 <div class="stat place-items-center hover:bg-primary-focus">
                     <div class="stat-value" v-if="node.isEmpty">内容为空</div>
-                    <div class="stat-value" v-else>{{ node.title }}</div>
+                    <div class="stat-value" :class="{ 'text-secondary': !node.isVisible }" v-else>{{ node.title }}</div>
                 </div>
-            </div>
-
-            <div class="stats shadow bg-secondary/20 drop-shadow-xl py-0  backdrop-blur backdrop-filter" v-if="!node.isEmpty">
-                <div class="stat place-items-center hover:bg-primary-focus">
-                  <div class="stat-title text-sm">增加页面</div>
-                  <div class="stat-actions">
-                    <button class="btn btn-sm btn-success">
-                      <Add :node="node" :show-text="false"></Add>
-                    </button>
-                  </div>
-                </div>
-                <div class="stat place-items-center hover:bg-primary-focus">
-                    <div class="stat-title text-sm">增加章节</div>
-                    <div class="stat-actions shadow-none">
-                      <button class="btn btn-sm btn-info shadow-none">
-                        <Add :show-text="false"></Add>
-                      </button>
-                    </div>
-                  </div>
             </div>
         </div>
     </div>
@@ -34,8 +15,7 @@
 
 <script lang="ts" setup>
 import { Node } from '../entities/Node'
-import Add from '../operators/Add.vue';
-const props = defineProps({
+defineProps({
     node: {
         type: Node,
         required: true

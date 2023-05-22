@@ -9,7 +9,7 @@
 import { useToastStore } from "../stores/ToastStore";
 import HideIcon from "../icons/IconNo.vue";
 import { Node } from "../entities/Node";
-import componentLogger from "../log/componentLogger";
+import { useCurrentNodeStore } from "../stores/NodeStore";
 
 const props = defineProps({
   showText: {
@@ -29,8 +29,8 @@ const props = defineProps({
 });
 
 const toggleVisible = function () {
-  componentLogger.info(`${props.node.title} 当前可见性为 ${props.node.isVisible}`);
-  props.node.updateVisible(!props.node.isVisible).then(() => {
+  props.node.isVisible = !props.node.isVisible
+  props.node.update().then(() => {
     useToastStore().set('可见性更新成功')
   })
 };
