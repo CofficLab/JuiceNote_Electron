@@ -6,7 +6,6 @@
 </template>
 
 <script setup>
-import Plus from "../icons/IconPlus.vue";
 import { Node } from "../entities/Node";
 import { useCurrentNodeStore } from "../stores/NodeStore";
 import componentLogger from "../log/componentLogger";

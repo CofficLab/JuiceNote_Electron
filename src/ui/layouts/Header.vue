@@ -4,13 +4,12 @@
 
     <div class="flex h-full justify-end gap-4" :class="{ 'mr-40': isWindows }">
       <Toolbar :editor="editor" :current="current" v-if="editor && editable"></Toolbar>
-      <div class="flex flex-row items-center justify-end gap-2 pr-4">
+      <div class="flex flex-row items-center justify-end gap-0 pr-4">
         <BtnOfficialLink></BtnOfficialLink>
         <Terminal class="operators" v-if="isLesson"></Terminal>
         <Home class="operators"></Home>
         <Edit :showText="false" class="operators" v-if="current.isPage"></Edit>
         <Add :node="current" :show-text="false" class="operators"></Add>
-        <Delete :node="current" :show-text="false" class="operators"></Delete>
         <More :node="current" class="operators"></More>
       </div>
     </div>
