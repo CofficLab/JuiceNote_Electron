@@ -1,16 +1,16 @@
 <template>
   <div @click="toggleEditable">
     <PencilSquare v-if="!editable"></PencilSquare>
-    <ArrowUturnLeft v-if="editable"></ArrowUturnLeft>
+    <IconBack v-if="editable"></IconBack>
     <span v-if="showText">{{ editable ? "退出编辑" : "编辑" }}</span>
   </div>
 </template>
 
 <script setup>
 import PencilSquare from "../icons/IconEdit.vue";
-import ArrowUturnLeft from "../icons/IconArrowUturnLeft.vue";
 import { useRoute, useRouter } from "vue-router";
 import { computed } from "vue";
+import IconBack from "../icons/IconBack.vue";
 
 const props = defineProps({
   showText: {
