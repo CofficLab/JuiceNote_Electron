@@ -12,6 +12,7 @@ import { Editor, EditorContent } from "@tiptap/vue-3";
 import { Node } from "../entities/Node";
 import useEditorStore from '../stores/EditorStore'
 import componentLogger from "../log/componentLogger";
+import Toolbar from "../layouts/Toolbar.vue";
 
 const editorStore = useEditorStore()
 
@@ -60,6 +61,7 @@ watch(props, () => {
   // console.log("editor 发现 props 发生变化，更新内容");
   editor.destroy();
   editor = getEditor();
+  editorStore.set(editor)
 });
 
 onBeforeUnmount(() => {

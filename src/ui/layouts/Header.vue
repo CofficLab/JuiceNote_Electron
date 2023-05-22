@@ -8,7 +8,6 @@
         <BtnOfficialLink></BtnOfficialLink>
         <Terminal class="operators" v-if="isLesson"></Terminal>
         <Home class="operators"></Home>
-        <!-- <Database class="operators"></Database> -->
         <Edit :showText="false" class="operators" v-if="current.isPage"></Edit>
         <Add :node="current" :show-text="false" class="operators"></Add>
         <Delete :node="current" :show-text="false" class="operators"></Delete>
@@ -38,13 +37,15 @@ import useEditorStore from "../stores/EditorStore";
 import Toolbar from "./Toolbar.vue";
 import Type from "../operators/Type.vue";
 import More from "../operators/More.vue";
+import componentLogger from "../log/componentLogger";
 
+const editorStore = useEditorStore()
 const route = useRoute();
 const isLesson = computed(() => RouteBox.isLesson(route));
 const isWindows = Preload.isWindows();
 const current = computed(() => useCurrentNodeStore().current);
 const editable = computed(() => route.name == 'nodes.edit')
-const editor = computed(() => useEditorStore().editor);
+const editor = computed(() => editorStore.editor);
 </script>
 
 <style scoped lang="postcss">

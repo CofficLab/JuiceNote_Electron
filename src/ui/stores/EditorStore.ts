@@ -11,7 +11,7 @@ import { Editor } from "@tiptap/vue-3";
 
     actions: {
         set(editor:Editor) {
-            storeLogger.log('更新 editor')
+            storeLogger.log('设置 editor')
             this.editor = editor
         },
     },

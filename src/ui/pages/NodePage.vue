@@ -17,6 +17,7 @@
       <div v-else class="container flex h-full flex-col justify-center gap-6">
         <NodeInfo :node="node" class="flex justify-center"></NodeInfo>
         <!-- <Tiptap :node="node" :saveCallback="save" :editable="editable"></Tiptap> -->
+        <hr class="border-accent shadow-2xl" />
         <Tree :tree="node" display="grid" :hiddenList="[node.id]" :current-node="node"
           class="overflow-scroll pb-24 flex justify-center"></Tree>
       </div>
