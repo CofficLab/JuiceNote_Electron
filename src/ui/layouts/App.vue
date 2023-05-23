@@ -5,7 +5,7 @@
   <!-- 另外注意：如果开了dev tool，是看不出透明效果的 -->
   <div id="root" :data-theme="theme" class="absolute flex w-full flex-row bg-white/80">
     <!-- header脱离文档流，固定定位 -->
-    <Header class="fixed draggable top-0 z-50 h-10 w-full bg-base-200/90 border-b border-neutral/30 shadow-sm"></Header>
+    <Header class="fixed draggable top-0 z-50 h-10 w-full bg-base-200/90 backdrop-blur-sm border-b border-neutral/30 shadow-sm"></Header>
 
     <!-- 左侧导航侧栏 -->
     <Aside
@@ -20,7 +20,7 @@
         </transition>
       </router-view>
 
-      <Footer class="fixed w-full bottom-0 z-40 h-8 bg-primary/10 px-2 shadow-2xl backdrop-blur-lg backdrop-filter"></Footer>
+      <Footer class="fixed w-full bottom-0 z-40 h-8 bg-primary/60 px-2 shadow-2xl backdrop-blur backdrop-filter"></Footer>
     </main>
 
     <!-- 弹层 -->

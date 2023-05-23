@@ -1,7 +1,7 @@
 <template>
   <aside>
     <!-- 空白，用于拖动 -->
-    <div class="sticky top-0 z-40 w-full bg-base-300" v-if="!isWindows">
+    <div class="sticky top-0 z-40 w-full bg-primary/10" v-if="!isWindows">
       <div class="draggable" :class="{ 'h-10': !hideTitleBar, 'h-0': hideTitleBar }"></div>
     </div>
 

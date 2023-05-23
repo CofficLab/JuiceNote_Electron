@@ -55,7 +55,7 @@
 
         <!-- 面包屑模式的弹出菜单 -->
         <ul id="dropdown-{{ tree.id }}" v-if="display == 'breadcrumbs' && isDropdownVisible" tabindex="0"
-          class="absolute top-0 -translate-y-full flex flex-col py-6 px-4 shadow-2xl bg-base-300 rounded-t backdrop-filter backdrop-blur-sm max-h-96 overflow-y-scroll">
+          class="absolute top-0 -translate-y-full flex flex-col py-6 w-48 max-w-max px-4 shadow-2xl bg-primary/50 rounded-t backdrop-blur-sm  backdrop-filter  max-h-96 overflow-y-scroll">
           <Children :list="siblings"></Children>
         </ul>
       </div>
@@ -182,7 +182,7 @@ onMounted(() => {
  */
 
 let handleHover = (node: Node) => {
-  isDropdownVisible.value = true
+  isDropdownVisible.value = siblings.value.length > 0
   props.hoverCallback(node)
 }
 
