@@ -9,7 +9,7 @@
 
     <!-- 左侧导航侧栏 -->
     <Aside
-      class="z-50 hidden h-screen w-40 overflow-scroll overscroll-none scroll-smooth border-r border-neutral/30 bg-primary/10 backdrop-filter backdrop-blur-3xl shadow-sm lg:flex lg:flex-col"
+      class="z-50 hidden flex-col h-screen w-40 overflow-scroll overscroll-none scroll-smooth border-r border-neutral/30 bg-primary/10 backdrop-filter backdrop-blur-3xl shadow-sm md:flex lg:flex-col"
     ></Aside>
 
     <!-- 右侧主内容，所有的滚动都基于main，必须有固定高度 -->
@@ -48,7 +48,7 @@ import Aside from "./Aside.vue";
 import ThemesConfig from "../entities/Themes";
 import RouteBox from "../entities/RouteBox";
 import { useRoute } from "vue-router";
-import { useCurrentNodeStore } from "../stores/NodeStore";
+import { useNodeStore } from "../stores/NodeStore";
 import { EmptyNode } from "../entities/Node";
 import Preload from '../api/Preload'
 import ErrorModal from "../modals/ErrorModal.vue";
@@ -56,7 +56,7 @@ import Logger from "electron-log";
 import componentLogger from "../log/componentLogger";
 
 const route = useRoute();
-const nodeStore = useCurrentNodeStore();
+const nodeStore = useNodeStore();
 const isLesson = computed(() => RouteBox.isLesson(route));
 
 // 初始化主题

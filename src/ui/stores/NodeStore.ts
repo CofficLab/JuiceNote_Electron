@@ -1,24 +1,32 @@
 import { defineStore } from 'pinia'
-import {Node, RootNode } from '../entities/Node'
+import { Node, RootNode } from '../entities/Node'
 import storeLogger from '../log/storeLogger'
 
-export const useCurrentNodeStore = defineStore('current', {
+export const useNodeStore = defineStore('node-store', {
     state: () => {
         return {
             current: RootNode,
-            root:RootNode,
+            root: RootNode,
+            activeNodes: [RootNode],
         }
     },
 
     actions: {
-        update(node: Node) {
+        updateCurrent(node: Node) {
             storeLogger.info('更新当前节点为', node.title)
             this.current = node
+            this.activeNodes = [RootNode,node]
+            
+            node.getParents()
+                .then(parents => {
+                    this.activeNodes = parents.concat(node).concat(RootNode)
+                    storeLogger.info('当前激活的节点为', this.activeNodes.map(n => n.title))
+                })
         },
-        updateCurrent() {
+        refreshCurrent() {
             this.current.updatedAt = (new Date()).toISOString()
         },
-        updateRoot() {
+        refreshRoot() {
             this.root.updatedAt = (new Date()).toISOString()
         }
     },

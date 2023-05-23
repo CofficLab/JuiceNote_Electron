@@ -31,7 +31,7 @@ import Toast from "./Toast.vue";
 import Delete from "../operators/Delete.vue";
 import Rename from "../operators/Rename.vue";
 import Visible from "../operators/Visible.vue";
-import { useCurrentNodeStore } from "../stores/NodeStore";
+import { useNodeStore } from "../stores/NodeStore";
 import useEditorStore from "../stores/EditorStore";
 import Toolbar from "./Toolbar.vue";
 import Type from "../operators/Type.vue";
@@ -42,7 +42,7 @@ const editorStore = useEditorStore()
 const route = useRoute();
 const isLesson = computed(() => RouteBox.isLesson(route));
 const isWindows = Preload.isWindows();
-const current = computed(() => useCurrentNodeStore().current);
+const current = computed(() => useNodeStore().current);
 const editable = computed(() => route.name == 'nodes.edit')
 const editor = computed(() => editorStore.editor);
 </script>

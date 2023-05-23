@@ -9,7 +9,7 @@
 import { useToastStore } from "../stores/ToastStore";
 import HideIcon from "../icons/IconNo.vue";
 import { Node } from "../entities/Node";
-import { useCurrentNodeStore } from "../stores/NodeStore";
+import { useNodeStore } from "../stores/NodeStore";
 
 const props = defineProps({
   showText: {

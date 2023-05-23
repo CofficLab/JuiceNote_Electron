@@ -19,12 +19,12 @@
 
 <script setup>
 import { computed } from "vue";
-import { useCurrentNodeStore } from "../stores/NodeStore";
+import { useNodeStore } from "../stores/NodeStore";
 import IconType from "../icons/IconType.vue";
 import SetChapter from "../operators/SetChapter.vue"
 import SetPage from "./SetPage.vue";
 
-const current = computed(() => useCurrentNodeStore().current);
+const current = computed(() => useNodeStore().current);
 </script>
 
 <style scoped lang="postcss">

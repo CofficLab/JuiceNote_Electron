@@ -11,7 +11,7 @@ import Trash from "../icons/IconTrash.vue";
 import { useRoute, useRouter } from "vue-router";
 import { Node } from "../entities/Node";
 import { useToastStore } from "../stores/ToastStore";
-import { useCurrentNodeStore } from "../stores/NodeStore";
+import { useNodeStore } from "../stores/NodeStore";
 
 const router = useRouter();
 const props = defineProps({
@@ -31,7 +31,7 @@ const props = defineProps({
   },
 });
 
-const nodeStore = useCurrentNodeStore();
+const nodeStore = useNodeStore();
 const deleteBookNode = function () {
   router.push({
     name: "nodes.show",

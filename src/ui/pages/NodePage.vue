@@ -5,20 +5,23 @@
     </div> -->
 
     <div class="flex h-full w-full flex-col items-center pt-12">
+      <!-- 空节点 -->
       <div class="w-full flex justify-center items-center h-full flex-col gap-4" v-if="node.isEmpty">
         <NodeInfo :node="node" class="flex justify-center"></NodeInfo>
         <IconBlank class="w-48 text-primary/20 drop-shadow-2xl"></IconBlank>
       </div>
 
+      <!-- 页面节点 -->
       <div class="w-full" v-else-if="node.isPage">
         <Tiptap :node="node" :saveCallback="save" :editable="editable"></Tiptap>
       </div>
 
+      <!-- 章节节点 -->
       <div v-else class="container flex h-full flex-col justify-center gap-6">
         <NodeInfo :node="node" class="flex justify-center"></NodeInfo>
         <!-- <Tiptap :node="node" :saveCallback="save" :editable="editable"></Tiptap> -->
         <hr class="border-accent shadow-2xl" />
-        <Tree :tree="node" display="grid" :hiddenList="[node.id]" :current-node="node"
+        <Tree :tree="node" :active-nodes="activeNodes" display="grid" :hiddenList="[node.id]" :current-node="node"
           class="overflow-scroll pb-24 flex justify-center"></Tree>
       </div>
     </div>
@@ -29,15 +32,16 @@
 import Tiptap from "../components/Tiptap.vue";
 import { computed, watch } from "vue";
 import { useRoute } from "vue-router";
-import { useCurrentNodeStore } from "../stores/NodeStore";
+import { useNodeStore } from "../stores/NodeStore";
 import NodeApi from "../api/NodeApi";
 import Tree from "../components/Tree.vue";
 import NodeInfo from "../components/NodeInfo.vue";
 import IconBlank from "../icons/IconBlank.vue";
 
 const route = useRoute();
-const nodeStore = useCurrentNodeStore();
+const nodeStore = useNodeStore();
 const editable = computed(() => route.name == "nodes.edit");
+const activeNodes = computed(() => nodeStore.activeNodes);
 let node = computed(() => nodeStore.current);
 
 let save = function (content: string) {

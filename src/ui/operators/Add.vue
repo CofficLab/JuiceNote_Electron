@@ -7,7 +7,7 @@
 
 <script setup>
 import { Node } from "../entities/Node";
-import { useCurrentNodeStore } from "../stores/NodeStore";
+import { useNodeStore } from "../stores/NodeStore";
 import componentLogger from "../log/componentLogger";
 import { useRouter } from "vue-router";
 import IconCreate from "../icons/IconCreate.vue";
@@ -29,7 +29,7 @@ let props = defineProps({
   },
 });
 
-const nodeStore = useCurrentNodeStore()
+const nodeStore = useNodeStore()
 const router = useRouter()
 
 let add = function () {

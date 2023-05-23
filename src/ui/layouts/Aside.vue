@@ -13,14 +13,14 @@
         </div>
       </div>
     </div> -->
-    <Tree :tree="root" :current-node="current!" class="h-full overflow-scroll pb-24"></Tree>
+    <Tree :tree="root" :current-node="current!" :active-nodes="activeNodes" class="h-full w-full overflow-scroll pb-24"></Tree>
   </aside>
 </template>
 
 <script lang="ts" setup>
 import { computed } from "vue";
 import Preload from "../api/Preload";
-import { useCurrentNodeStore } from "../stores/NodeStore";
+import { useNodeStore } from "../stores/NodeStore";
 import Tree from "../components/Tree.vue";
 import componentLogger from '../log/componentLogger'
 import IconInfo from "../icons/IconInfo.vue";
@@ -30,9 +30,13 @@ componentLogger.info('加载侧栏')
 /**
  * 定义变量，mounted后更新变量的值，实现不阻塞
  */
-const nodeStore = useCurrentNodeStore();
+const nodeStore = useNodeStore();
 const isWindows = Preload.isWindows();
-const current = computed(() => nodeStore.current);
+const activeNodes = computed(() => nodeStore.activeNodes)
+const current = computed(() => {
+  componentLogger.info('更新aside的current', nodeStore.current.title)
+  return nodeStore.current
+});
 const hideTitleBar = false;
 const root = computed(() => {
   let node = nodeStore.root
