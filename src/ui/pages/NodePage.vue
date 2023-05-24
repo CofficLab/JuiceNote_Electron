@@ -21,8 +21,8 @@
         <NodeInfo :node="node" class="flex justify-center"></NodeInfo>
         <!-- <Tiptap :node="node" :saveCallback="save" :editable="editable"></Tiptap> -->
         <hr class="border-accent shadow-2xl" />
-        <Tree :tree="node" :active-nodes="activeNodes" display="grid" :hiddenList="[node.id]" :current-node="node"
-          class="overflow-scroll pb-24 flex justify-center"></Tree>
+        <!-- <Tree :tree="node" name="nodePage" :active-nodes="activeNodes" display="grid" :hiddenList="[node.id]" :current-node="node"
+          class="overflow-scroll pb-24 flex justify-center"></Tree> -->
       </div>
     </div>
   </div>
@@ -37,6 +37,7 @@ import NodeApi from "../api/NodeApi";
 import Tree from "../components/Tree.vue";
 import NodeInfo from "../components/NodeInfo.vue";
 import IconBlank from "../icons/IconBlank.vue";
+import componentLogger from "../log/componentLogger";
 
 const route = useRoute();
 const nodeStore = useNodeStore();
@@ -51,23 +52,25 @@ let save = function (content: string) {
   }
 };
 
-watch(route, () => {
-  if (route.name != "nodes.show" && route.name != "nodes.edit") return;
+componentLogger.info('初始化node page')
 
-  if (route.hash.length > 0) {
-    // 获取带有锚点的元素
-    var target = document.querySelector<HTMLDivElement>(route.hash);
-    // console.log("滚动到锚点", target);
+// watch(route, () => {
+//   if (route.name != "nodes.show" && route.name != "nodes.edit") return;
 
-    // 如果有锚点并且目标元素存在，则滚动到该元素
-    if (window.location.hash && target) {
-      document.querySelector("main")!.scrollTo({
-        top: target.offsetTop,
-        behavior: "smooth",
-      });
-    }
-  }
-});
+//   if (route.hash.length > 0) {
+//     // 获取带有锚点的元素
+//     var target = document.querySelector<HTMLDivElement>(route.hash);
+//     // console.log("滚动到锚点", target);
+
+//     // 如果有锚点并且目标元素存在，则滚动到该元素
+//     if (window.location.hash && target) {
+//       document.querySelector("main")!.scrollTo({
+//         top: target.offsetTop,
+//         behavior: "smooth",
+//       });
+//     }
+//   }
+// });
 </script>
 
 <style lang="postcss">

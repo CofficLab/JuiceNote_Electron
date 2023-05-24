@@ -1,7 +1,7 @@
 <template>
   <footer>
     <div class="flex flex-row justify-between">
-      <Tree :tree="tree" :active-nodes="activeNodes" :display="'breadcrumbs'" :current-node="current"></Tree>
+      <!-- <Tree :tree="tree" name="footer" :active-nodes="activeNodes" :display="'breadcrumbs'" :current-node="current"></Tree> -->
     </div>
   </footer>
 </template>

@@ -13,7 +13,7 @@
         </div>
       </div>
     </div> -->
-    <Tree :tree="root" :current-node="current!" :active-nodes="activeNodes" class="h-full w-full overflow-scroll pb-24"></Tree>
+    <Tree :tree="root" :current-node="current!" name="aside" :active-nodes="activeNodes" class="h-full w-full overflow-scroll pb-24"></Tree>
   </aside>
 </template>
 
@@ -23,7 +23,6 @@ import Preload from "../api/Preload";
 import { useNodeStore } from "../stores/NodeStore";
 import Tree from "../components/Tree.vue";
 import componentLogger from '../log/componentLogger'
-import IconInfo from "../icons/IconInfo.vue";
 
 componentLogger.info('加载侧栏')
 
