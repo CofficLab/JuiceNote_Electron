@@ -39,7 +39,7 @@ let add = function () {
     parentId: props.node.id,
   })).then((id) => {
     componentLogger.info('新节点的ID',id)
-    nodeStore.updateRoot()
+    nodeStore.refreshRoot()
     router.push({
       name: "nodes.edit",
       params: {

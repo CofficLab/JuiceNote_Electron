@@ -27,7 +27,11 @@ export const useNodeStore = defineStore('node-store', {
             this.current.updatedAt = (new Date()).toISOString()
         },
         refreshRoot() {
-            this.root.updatedAt = (new Date()).toISOString()
+            let newRoot = this.root 
+            newRoot.updatedAt = (new Date()).toISOString()
+
+            this.root= newRoot
+            storeLogger.info('刷新根节点',this.root.updatedAt)
         }
     },
 })

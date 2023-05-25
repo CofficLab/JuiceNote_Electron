@@ -158,11 +158,10 @@ let isChildrenVisible = computed(() => {
 })
 let isDropdownVisible = ref(false)
 
-const id = props.tree.title
-watch(() => props.tree.id, (old) => {
-  componentLogger.info(`「${props.name}」的 Tree 的 props.tree 发生变化，${id} -> ${props.tree.title}`)
+watch(() => props.tree.updatedAt, () => {
+  componentLogger.info(`「${props.name}」的 Tree 的 props.tree 发生变化========== -> ${props.tree.updatedAt}`)
 
-  // if (isVisible) updateChildren()
+  if (isVisible) updateChildren()
 })
 
 watch(isChildrenVisible, (n,o) => {

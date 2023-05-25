@@ -32,15 +32,15 @@ const props = defineProps({
 });
 
 const nodeStore = useNodeStore();
-const deleteBookNode = function () {
+const deleteBookNode = async function () {
   router.push({
     name: "nodes.show",
     params: {
-      id: props.node.parentId,
+      id: (await props.node.getPrev()).id,
     }
   });
-  nodeStore.updateRoot()
   props.node.delete().then(() => {
+    nodeStore.refreshRoot()
     useToastStore().set('已删除');
   })
 };

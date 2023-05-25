@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from "vue";
+import { computed, watch } from "vue";
 import Preload from "../api/Preload";
 import { useNodeStore } from "../stores/NodeStore";
 import Tree from "../components/Tree.vue";
@@ -37,11 +37,7 @@ const current = computed(() => {
   return nodeStore.current
 });
 const hideTitleBar = false;
-const root = computed(() => {
-  let node = nodeStore.root
-  componentLogger.info('设置侧栏的 Root 节点为', node.title)
-  return node
-});
+const root = nodeStore.root
 
 // watch(
 //   route,
