@@ -13,25 +13,24 @@ export const useNodeStore = defineStore('node-store', {
 
     actions: {
         updateCurrent(node: Node) {
-            storeLogger.info('更新当前节点为', node.title)
-            this.current = node
-            this.activeNodes = [RootNode,node]
-            
-            node.getParents()
-                .then(parents => {
-                    this.activeNodes = parents.concat(node).concat(RootNode)
-                    storeLogger.info('当前激活的节点为', this.activeNodes.map(n => n.title))
-                })
+            // 更新当前节点的同时，更新激活的节点
+            node.getParents().then(parents => {
+                storeLogger.info('更新当前节点为', node.title)
+                this.current = node
+
+                this.activeNodes = [RootNode,...parents,node]
+                storeLogger.info('更新当前激活的节点为', this.activeNodes.map(n => n.title))
+            })
         },
         refreshCurrent() {
             this.current.updatedAt = (new Date()).toISOString()
         },
         refreshRoot() {
-            let newRoot = this.root 
+            let newRoot = this.root
             newRoot.updatedAt = (new Date()).toISOString()
 
-            this.root= newRoot
-            storeLogger.info('刷新根节点',this.root.updatedAt)
+            this.root = newRoot
+            storeLogger.info('刷新根节点', this.root.updatedAt)
         }
     },
 })

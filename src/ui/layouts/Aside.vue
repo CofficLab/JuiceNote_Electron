@@ -13,7 +13,7 @@
         </div>
       </div>
     </div> -->
-    <Tree :tree="root" :current-node="current!" name="aside" :active-nodes="activeNodes" class="h-full w-full overflow-scroll pb-24"></Tree>
+    <Tree :tree="root" :current-node="current!" name="aside-root" :active-nodes="activeNodes" class="h-full w-full overflow-scroll pb-24"></Tree>
   </aside>
 </template>
 
@@ -24,7 +24,7 @@ import { useNodeStore } from "../stores/NodeStore";
 import Tree from "../components/Tree.vue";
 import componentLogger from '../log/componentLogger'
 
-componentLogger.info('加载侧栏')
+componentLogger.info('「aside」加载侧栏')
 
 /**
  * 定义变量，mounted后更新变量的值，实现不阻塞
@@ -32,10 +32,7 @@ componentLogger.info('加载侧栏')
 const nodeStore = useNodeStore();
 const isWindows = Preload.isWindows();
 const activeNodes = computed(() => nodeStore.activeNodes)
-const current = computed(() => {
-  componentLogger.info('更新aside的current', nodeStore.current.title)
-  return nodeStore.current
-});
+const current = computed(() =>  nodeStore.current);
 const hideTitleBar = false;
 const root = nodeStore.root
 

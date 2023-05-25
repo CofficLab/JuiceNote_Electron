@@ -68,7 +68,8 @@
         'pl-2': display != 'breadcrumbs',
         'flex-col': display == 'col',
         'border gap-0 border-l-0 flex-col': display == 'row',
-        // 排列
+
+        // 布局
         'grid grid-flow-row grid-cols-6': display == 'grid' && children.length >= 6,
         'flex flex-row justify-center': display == 'grid' && children.length < 6
       }" v-if="isChildrenVisible">
@@ -134,7 +135,7 @@ const props = defineProps({
   }
 });
 
-componentLogger.info(`加载 Tree 「${props.name}」`)
+log(`首次加载`)
 
 /**
  * 初始化变量，页面加载完成后再更新变量的值
@@ -142,10 +143,12 @@ componentLogger.info(`加载 Tree 「${props.name}」`)
 let children = ref<Node[]>([])
 let siblings = ref<Node[]>([])
 let isActive = computed(() => {
-  componentLogger.info(`「${props.name}」的 Tree 判断节点是否激活`, props.tree.title)
-  return props.activeNodes.map(node => node.id).includes(props.tree.id)
+  let result = props.activeNodes.map(node => node.id).includes(props.tree.id)
+  // log(`激活`,result,`当前激活的节点是`,props.activeNodes.map(node => node.title))
+  return result
 })
 let isVisible = computed(() => {
+  // log(`判断是否可见`)
   if (props.hiddenList.includes(props.tree.id)) return false
   if (props.display == 'breadcrumbs' && isActive.value) return true
 
@@ -153,35 +156,30 @@ let isVisible = computed(() => {
 })
 let isChildrenForceVisible = ref(false)
 let isChildrenVisible = computed(() => {
-  // componentLogger.info(`「${props.name}」的 Tree 判断子节点是否可见`, props.tree.title)
-  return (children.value.length > 0 && isActive.value) || isChildrenForceVisible.value
+  let result = (children.value.length > 0 && isActive.value) || isChildrenForceVisible.value
+  // log(`判断子节点是否可见`,result)
+  return result
 })
 let isDropdownVisible = ref(false)
 
 watch(() => props.tree.updatedAt, () => {
-  componentLogger.info(`「${props.name}」的 Tree 的 props.tree 发生变化========== -> ${props.tree.updatedAt}`)
+  log(`的 props.tree 发生变化 -> ${props.tree.updatedAt}`)
 
-  if (isVisible) updateChildren()
-})
-
-watch(isChildrenVisible, (n,o) => {
-  componentLogger.info(`「${props.name}」的 Tree 的 isChildrenVisible 发生变化，${o} -> ${n}`)
+  if (isVisible.value) updateChildren()
 })
 
 /**
  * 页面完成加载后，处理数据
  */
 onMounted(() => {
-  componentLogger.info(`Tree ${props.name} 初始化完成`)
   // 获取children，并更新相关数据
-if (isVisible && children.value.length == 0) {
-  componentLogger.info(`「${props.name}」的 Tree 初始化，更新子节点`)
-  updateChildren()
-}
+  if (isVisible && children.value.length == 0) {
+    updateChildren()
+  }
 
-  // props.tree.getSiblings().then(s => {
-  //   siblings.value = s
-  // })
+  props.tree.getSiblings().then(s => {
+    siblings.value = s
+  })
 })
 
 /**
@@ -197,15 +195,15 @@ let handleLeave = () => isDropdownVisible.value = false
 
 let handleToggleChildrenVisible = () => isChildrenForceVisible.value = !isChildrenForceVisible.value;
 
+function log(...args: any[]) {
+  componentLogger.info(`「${props.name}」`,...args)
+}
+
 function updateChildren() {
-  // componentLogger.info(`「${props.name}」的 Tree 更新子节点`)
+  log(`更新子节点`)
   props.tree.getChildren().then(c => {
     children.value = c
   })
-}
-
-function updateChildrenVisible() {
-  isChildrenVisible.value =  (children.value.length > 0 && isActive.value) || isChildrenForceVisible.value
 }
 </script>
 
