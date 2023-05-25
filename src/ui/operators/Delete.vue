@@ -41,7 +41,7 @@ const deleteBookNode = async function () {
   });
   props.node.delete().then(() => {
     nodeStore.refreshRoot()
-    useToastStore().set('已删除');
+    useToastStore().set(`已删除「${props.node.title}」`);
   })
 };
 </script>
