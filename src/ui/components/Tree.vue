@@ -23,8 +23,8 @@
         'w-24': display == 'grid',
 
         // 颜色
-        'bg-primary text-primary-content': isActive && tree.isPage && display != 'breadcrumbs',
-        'bg-primary/50': !tree.isPage && currentNode.id == tree.id && display != 'breadcrumbs',
+        'bg-primary text-primary-content': isActive && tree.isPage && children.length==0 && display != 'breadcrumbs',
+        'bg-primary/50': (!tree.isPage || children.length>0) && currentNode.id == tree.id && display != 'breadcrumbs',
         'bg-primary/70': tree.isRoot && currentNode.id == tree.id && display != 'breadcrumbs',
 
         // boder
@@ -36,10 +36,12 @@
           'font-bold text-opacity-50': !tree.isPage && display != 'breadcrumbs',
           'text-secondary': !tree.isVisible
         }">
-        <IconChapter v-if="tree.isChapter || tree.isBook" :solid="display == 'grid'"
+
+        <!-- 图标 -->
+        <IconChapter v-if="tree.isChapter || tree.isBook || children.length > 0" :solid="display == 'grid'"
           :class="display == 'grid' ? 'icon-lg' : 'icon-sm'"></IconChapter>
         <IconDatabase v-if="tree.isRoot" :class="display == 'grid' ? 'icon-lg' : 'icon-sm'"></IconDatabase>
-        <IconPage v-if="tree.isPage" :class="display == 'grid' ? 'icon-lg' : 'icon-sm'"></IconPage>
+        <IconPage v-if="tree.isPage && children.length == 0" :class="display == 'grid' ? 'icon-lg' : 'icon-sm'"></IconPage>
 
         {{ tree.title }}
         </Link>

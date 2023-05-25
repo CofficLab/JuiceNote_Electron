@@ -34,7 +34,7 @@ class DatabaseApi {
         if (node.parent_id == null) node.parent_id = 0
         let result = this.connection.prepare('insert into nodes (title, parent_id, priority, is_page) values (?, ?, ?, ?)').run(
             node.title,
-            node.parent_id,
+            node.parentId,
             node.priority,
             node.isPage ? 1 : 0)
 
@@ -43,6 +43,12 @@ class DatabaseApi {
 
     delete(id: number): string {
         this.connection.prepare('delete from nodes where id=?').run(id)
+
+        let children = this.getChildren(id)
+        for (let child of children) {
+            this.delete(child.id)
+        }
+        
         return "已删除「" + id + "」"
     }
 

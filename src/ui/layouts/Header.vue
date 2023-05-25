@@ -38,6 +38,7 @@ import Type from "../operators/Type.vue";
 import More from "../operators/More.vue";
 import componentLogger from "../log/componentLogger";
 
+const nodeStore = useNodeStore()
 const editorStore = useEditorStore()
 const route = useRoute();
 const isLesson = computed(() => RouteBox.isLesson(route));

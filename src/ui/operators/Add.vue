@@ -33,6 +33,7 @@ const nodeStore = useNodeStore()
 const router = useRouter()
 
 let add = function () {
+  componentLogger.info('创建新页面，当前节点是',props.node.title)
   props.node.createChild(new Node({
     title: "新页面",
     isPage:true,
