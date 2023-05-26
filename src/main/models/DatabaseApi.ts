@@ -1,9 +1,9 @@
 import { join } from "path";
-import Config from "../bootstrap/config";
 import log from "../log/logger";
-import { writeFile } from "fs";
 import Logger from "electron-log";
 import databaseLogger from "../log/databaseLogger";
+import Config from "./Config";
+import { existsSync } from "fs";
 
 interface NodeObject {
     id: number,
@@ -12,12 +12,19 @@ interface NodeObject {
     priority: number,
     isPage: boolean,
     isChapter: boolean,
-    isVisible:boolean
+    isVisible: boolean
+    isEmpty?: boolean
 }
 
-const EmptyNode = {
+const EmptyNode: NodeObject = {
     id: 0,
     title: '空节点',
+    parentId: 0,
+    priority: 0,
+    isPage: false,
+    isChapter: false,
+    isVisible: true,
+    isEmpty: true
 }
 
 class DatabaseApi {
@@ -25,13 +32,18 @@ class DatabaseApi {
     protected connection!: any;
 
     constructor(dbFilePath?: string) {
+        databaseLogger.info('数据库 API 初始化', dbFilePath)
+        if (dbFilePath && !existsSync(dbFilePath)) {
+            throw new Error('数据库文件不存在：'+ dbFilePath)
+        }
+
         this.dbFilePath = dbFilePath
         this.connection = require('better-sqlite3')(dbFilePath)
     }
 
-    create(node: Object): number {
+    create(node: NodeObject): number {
         databaseLogger.info('创建节点', node)
-        if (node.parent_id == null) node.parent_id = 0
+        if (node.parentId == null) node.parentId = 0
         let result = this.connection.prepare('insert into nodes (title, parent_id, priority, is_page) values (?, ?, ?, ?)').run(
             node.title,
             node.parentId,
@@ -52,7 +64,7 @@ class DatabaseApi {
         return "已删除「" + id + "」"
     }
 
-    find(id: number): Object {
+    find(id: number): NodeObject {
         databaseLogger.info(`查找节点 id=${id}`)
 
         if (id == undefined) {
@@ -77,7 +89,7 @@ class DatabaseApi {
         return result
     }
 
-    getChildren(id: number): Object[] {
+    getChildren(id: number): NodeObject[] {
         let children = this.connection.prepare('select * from nodes where parent_id=? order by priority asc').all(id)
 
         databaseLogger.info(`get children of ${id},count=${children.length}`)
@@ -98,7 +110,7 @@ class DatabaseApi {
         return result
     }
 
-    getFirstPage(id: number): Object {
+    getFirstPage(id: number): NodeObject {
         databaseLogger.info(`查询 ${id} 的第一个子节点`)
         let current = this.find(id)
         if (current!.isPage || current!.isEmpty) return current!
@@ -114,7 +126,7 @@ class DatabaseApi {
         return EmptyNode
     }
 
-    getFirstChild(id: number): Object {
+    getFirstChild(id: number): NodeObject {
         let child = this.connection.prepare('select * from nodes where parent_id=? order by priority asc limit 1').get(id)
 
         log.info(`get first child of ${id},result is`, child)

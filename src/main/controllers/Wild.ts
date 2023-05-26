@@ -1,11 +1,9 @@
-import { ipcMain } from "electron"
-import Config from "../bootstrap/config"
+import { dialog, ipcMain } from "electron"
 import { createWindow } from "../bootstrap/window"
-import logger from "../log/logger"
+import Config from "../models/Config"
 
 export default function setWildController(app: Electron.App) {
     ipcMain.handle('open-win', createWindow)
-    ipcMain.handle('get-config', () => Config)
 
     // 供子进程查询app path
     ipcMain.on('get-app-path', (event) => event.returnValue = app.getAppPath())
@@ -25,4 +23,17 @@ export default function setWildController(app: Electron.App) {
     })
 
     ipcMain.on('is-packaged', (event) => event.returnValue = app.isPackaged)
+
+    // 打开一个文件夹
+    ipcMain.handle('open-folder-dialog', (event) => { 
+        return dialog.showOpenDialog({ properties: ['openDirectory'] })
+    })
+
+    ipcMain.handle('get-config', (event) => {
+        return Config.getPreferences()
+    })
+
+    ipcMain.handle('set-config', (event, config) => {
+        return Config.setPreferences(config)
+    })
 }

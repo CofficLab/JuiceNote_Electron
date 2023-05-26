@@ -1,8 +1,8 @@
 import { app, BrowserWindow, shell, BrowserWindowConstructorOptions } from 'electron'
 import path from 'path'
 import setMenus from '../menus/all'
-import Config from './config'
 import indexLogger from '../log/indexLogger'
+import Config from '../models/Config'
 
 function createWindow(option?: BrowserWindowConstructorOptions): BrowserWindow {
     const defaultOption = {
@@ -49,20 +49,20 @@ function createMainWindow():BrowserWindow {
     } else {
         indexLogger.info('项目未打包，加载 URL')
         win.loadURL(Config.URL)
-        // win.webContents.openDevTools()
+        win.webContents.openDevTools()
     }
 
-    win.webContents.on("did-start-loading", () => {
-        indexLogger.info("webContents:did-start-loading");
-    });
+    // win.webContents.on("did-start-loading", () => {
+    //     indexLogger.info("webContents:did-start-loading");
+    // });
 
-    win.webContents.on("dom-ready", () => {
-        indexLogger.info("webContents:dom-ready");
-    });
+    // win.webContents.on("dom-ready", () => {
+    //     indexLogger.info("webContents:dom-ready");
+    // });
 
-    win.webContents.on("did-finish-load", () => {
-        indexLogger.info("webContents:did-finish-load");
-    });
+    // win.webContents.on("did-finish-load", () => {
+    //     indexLogger.info("webContents:did-finish-load");
+    // });
 
     // 进入全屏状态事件
     win.on("enter-full-screen", () => {

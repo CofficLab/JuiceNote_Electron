@@ -5,15 +5,22 @@
       <div class="draggable" :class="{ 'h-10': !hideTitleBar, 'h-0': hideTitleBar }"></div>
     </div>
 
-    <!-- <div v-if="root.isEmpty" class=" flex flex-col gap-4">
-      <div class="alert alert-info shadow-lg rounded-none">
-        <div>
-          <IconInfo></IconInfo>
-          <span>仓库为空</span>
-        </div>
-      </div>
-    </div> -->
-    <Tree :tree="root" :current-node="current!" name="aside-root" :active-nodes="activeNodes" class="h-full w-full overflow-scroll pb-24"></Tree>
+    <div v-if="route.name?.toString().startsWith('setting')">
+      <ul class="menu  p-2 rounded-box">
+        <li class="menu-title">
+          <span>数据存储</span>
+        </li>
+        <li><a :class="{'active':route.name=='setting.database'}">数据仓库</a></li>
+        <li><a>Item 2</a></li>
+        <li class="menu-title">
+          <span>个性化</span>
+        </li>
+        <li><a>Item 1</a></li>
+        <li><a>Item 2</a></li>
+      </ul>
+    </div>
+    <Tree v-else :tree="root" :current-node="current!" name="aside-root" :active-nodes="activeNodes"
+      class="h-full w-full overflow-scroll pb-24"></Tree>
   </aside>
 </template>
 
@@ -23,6 +30,7 @@ import Preload from "../api/Preload";
 import { useNodeStore } from "../stores/NodeStore";
 import Tree from "../components/Tree.vue";
 import componentLogger from '../log/componentLogger'
+import { useRoute } from "vue-router";
 
 componentLogger.info('「aside」加载侧栏')
 
@@ -32,9 +40,10 @@ componentLogger.info('「aside」加载侧栏')
 const nodeStore = useNodeStore();
 const isWindows = Preload.isWindows();
 const activeNodes = computed(() => nodeStore.activeNodes)
-const current = computed(() =>  nodeStore.current);
+const current = computed(() => nodeStore.current);
 const hideTitleBar = false;
 const root = nodeStore.root
+const route = useRoute()
 
 // watch(
 //   route,

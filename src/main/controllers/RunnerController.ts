@@ -1,7 +1,7 @@
 import { ipcMain } from 'electron'
 import fs from 'fs'
 import path from 'path'
-import Config from '../bootstrap/config'
+import Config from '../models/Config'
 
 const tempPath = path.join(Config.ROOT_PATH, 'playground')
 

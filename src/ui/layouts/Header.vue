@@ -11,6 +11,7 @@
         <Edit :showText="false" class="operators" v-if="current.isPage"></Edit>
         <Add :node="current" :show-text="false" class="operators"></Add>
         <More :node="current" class="operators"></More>
+        <Setting class="operators"></Setting>
       </div>
     </div>
   </header>
@@ -37,6 +38,7 @@ import Toolbar from "./Toolbar.vue";
 import Type from "../operators/Type.vue";
 import More from "../operators/More.vue";
 import componentLogger from "../log/componentLogger";
+import Setting from "../operators/Setting.vue";
 
 const nodeStore = useNodeStore()
 const editorStore = useEditorStore()

@@ -4,6 +4,7 @@ import routerLogger from "./log/routerLogger"
 import NodePage from "./pages/NodePage.vue"
 import NotFound from './pages/NotFound.vue'
 import About from './pages/About.vue'
+import Setting from './pages/Setting.vue'
 import NodeApi from "./api/NodeApi"
 import { RootNode } from "./entities/Node"
 
@@ -14,6 +15,21 @@ const router = createRouter({
             path: '/',
             name: 'home',
             redirect: '/nodes/0/show'
+        },
+        {
+            path: '/setting',
+            children: [
+                {
+                    path: '',
+                    name: "setting",
+                    redirect: '/setting/database'
+                },
+                {
+                    path: 'database',
+                    component: Setting,
+                    name: "setting.database"
+                },
+            ]
         },
         {
             path: '/nodes/:id',

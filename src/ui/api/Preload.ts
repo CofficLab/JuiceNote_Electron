@@ -16,6 +16,18 @@ const Preload = {
 
     onToggleSearch(callback: Function) {
         Preload.listen("toggle-search", callback);
+    },
+
+    openFolderDialog: async function () {
+        return Preload.ipc.invoke("open-folder-dialog");
+    },
+
+    getConfig: async function () {
+        return Preload.ipc.invoke("get-config");
+    },
+
+    setConfig: async function (config: string) {
+        return Preload.ipc.invoke("set-config", config);
     }
 }
 
