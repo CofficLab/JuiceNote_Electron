@@ -1,4 +1,4 @@
-import { createWindow } from "./bootstrap/window";
+import { createMainWindow, createWindow } from "./bootstrap/window";
 import { BrowserWindow, app } from "electron";
 import setRunController from "./controllers/RunnerController";
 import { release } from "os";
@@ -47,41 +47,7 @@ setExceptionHandler(win);
 app.on("ready", () => {
     eventLogger.warn("app ready");
     indexLogger.info("创建窗口");
-    win = createWindow();
-
-    win.webContents.on("did-start-loading", () => {
-        indexLogger.info("webContents:did-start-loading");
-    });
-
-    win.webContents.on("dom-ready", () => {
-        indexLogger.info("webContents:dom-ready");
-    });
-
-    win.webContents.on("did-finish-load", () => {
-        indexLogger.info("webContents:did-finish-load");
-
-        if (app.isPackaged) setTimeout(() => {
-            createUpdater(app, win!);
-        }, 50000);
-    });
-
-    // 进入全屏状态事件
-    win.on("enter-full-screen", () => {
-        win?.webContents.send("main-process-message", "enter-full-screen");
-    });
-
-    win.on("leave-full-screen", () => {
-        win?.webContents.send("main-process-message", "leave-full-screen");
-    });
-
-    // Test actively push message to the Electron-Renderer
-    win.webContents.on("did-finish-load", () => {
-        if (win!.isFullScreen()) {
-            win?.webContents.send("main-process-message", "enter-full-screen");
-        }
-
-        win?.webContents.send("main-process-message", "did_finish-load");
-    });
+    win = createMainWindow()
 });
 
 app.on("window-all-closed", () => {
@@ -106,3 +72,9 @@ app.on("activate", () => {
         createWindow();
     }
 });
+
+app.addRecentDocument("./index.html");
+
+if (app.isPackaged) setTimeout(() => {
+    createUpdater(app, win!);
+}, 50000);

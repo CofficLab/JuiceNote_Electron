@@ -28,15 +28,6 @@ function createWindow(option?: BrowserWindowConstructorOptions): BrowserWindow {
 
     let win = new BrowserWindow(Object.assign({}, defaultOption, option))
 
-    if (app.isPackaged) {
-        indexLogger.info('项目已打包，加载 index.html 文件')
-        win.loadFile(Config.INDEX_HTML_PATH)
-    } else {
-        indexLogger.info('项目未打包，加载 URL')
-        win.loadURL(Config.URL)
-        // win.webContents.openDevTools()
-    }
-
     // 配置菜单
     setMenus(win)
 
@@ -49,4 +40,64 @@ function createWindow(option?: BrowserWindowConstructorOptions): BrowserWindow {
     return win
 }
 
-export { createWindow }
+function createMainWindow():BrowserWindow {
+    let win = createWindow();
+
+    if (app.isPackaged) {
+        indexLogger.info('项目已打包，加载 index.html 文件')
+        win.loadFile(Config.INDEX_HTML_PATH)
+    } else {
+        indexLogger.info('项目未打包，加载 URL')
+        win.loadURL(Config.URL)
+        // win.webContents.openDevTools()
+    }
+
+    win.webContents.on("did-start-loading", () => {
+        indexLogger.info("webContents:did-start-loading");
+    });
+
+    win.webContents.on("dom-ready", () => {
+        indexLogger.info("webContents:dom-ready");
+    });
+
+    win.webContents.on("did-finish-load", () => {
+        indexLogger.info("webContents:did-finish-load");
+    });
+
+    // 进入全屏状态事件
+    win.on("enter-full-screen", () => {
+        win?.webContents.send("main-process-message", "enter-full-screen");
+    });
+
+    win.on("leave-full-screen", () => {
+        win?.webContents.send("main-process-message", "leave-full-screen");
+    });
+
+    // Test actively push message to the Electron-Renderer
+    win.webContents.on("did-finish-load", () => {
+        if (win!.isFullScreen()) {
+            win?.webContents.send("main-process-message", "enter-full-screen");
+        }
+
+        win?.webContents.send("main-process-message", "did_finish-load");
+    });
+
+    return win
+}
+
+function createAboutWindow() {
+    const win = createWindow({
+        width: 400,
+        height: 400,
+    })
+    
+    if (app.isPackaged) {
+        win.loadFile(Config.INDEX_HTML_PATH, { hash: '/about' })
+    } else {
+        win.loadURL(Config.URL + '#about')
+    }
+
+    return win
+}
+
+export { createWindow,createMainWindow,createAboutWindow }
