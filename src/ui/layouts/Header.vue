@@ -2,7 +2,7 @@
   <header>
     <Toast></Toast>
 
-    <div class="flex h-full justify-end gap-4" :class="{ 'mr-40': isWindows }">
+    <div class="flex h-full justify-end gap-4" :class="{ 'mr-40': isWindows }" v-if="!route.name?.toString().startsWith('setting')">
       <Toolbar :editor="editor" :current="current" v-if="editor && editable"></Toolbar>
       <div class="flex flex-row items-center justify-end gap-0 pr-4">
         <BtnOfficialLink></BtnOfficialLink>
@@ -14,6 +14,13 @@
         <Setting class="operators"></Setting>
       </div>
     </div>
+
+    <div class="flex h-full justify-end gap-4" :class="{ 'mr-40': isWindows }" v-if="route.name?.toString().startsWith('setting')">
+        <div class="flex flex-row items-center justify-end gap-0 pr-4">
+          <BtnOfficialLink></BtnOfficialLink>
+          <Setting class="operators"></Setting>
+        </div>
+      </div>
   </header>
 </template>
 

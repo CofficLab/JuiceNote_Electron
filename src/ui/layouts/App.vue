@@ -9,6 +9,7 @@
 
     <!-- 左侧导航侧栏 -->
     <Aside
+    v-if="!route.name?.toString().startsWith('setting')"
       class="z-50 hidden flex-col h-screen w-40 overflow-scroll overscroll-none scroll-smooth border-r border-neutral/30 bg-primary/10 backdrop-filter backdrop-blur-3xl shadow-sm md:flex lg:flex-col"
     ></Aside>
 

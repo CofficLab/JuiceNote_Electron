@@ -1,5 +1,5 @@
 import { MenuItem } from "electron"
-import { createAboutWindow } from "../bootstrap/window"
+import { createAboutWindow, createSettingWindow } from "../bootstrap/window"
 
 export default new MenuItem({
     label: '快易知',
@@ -11,6 +11,10 @@ export default new MenuItem({
         {
             label: '版本详情',
             click: () => createAboutWindow()
+        },
+        {
+            label: '偏好设置',
+            click: () => createSettingWindow()
         },
         { type: 'separator' },
         {

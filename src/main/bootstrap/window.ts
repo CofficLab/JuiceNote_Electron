@@ -100,4 +100,19 @@ function createAboutWindow() {
     return win
 }
 
-export { createWindow,createMainWindow,createAboutWindow }
+function createSettingWindow() {
+    const win = createWindow({
+        width: 400,
+        height: 400,
+    })
+
+    if (app.isPackaged) {
+        win.loadFile(Config.INDEX_HTML_PATH, { hash: '/setting' })
+    } else {
+        win.loadURL(Config.URL + '#setting')
+    }
+
+    return win
+}
+
+export { createWindow,createMainWindow,createAboutWindow,createSettingWindow }
