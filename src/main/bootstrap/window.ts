@@ -102,7 +102,7 @@ function createAboutWindow() {
 
 function createSettingWindow() {
     const win = createWindow({
-        width: 600,
+        width: 700,
         height: 400,
     })
 

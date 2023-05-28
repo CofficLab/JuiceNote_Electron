@@ -1,7 +1,7 @@
 <template>
   <div class="flex h-screen w-screen flex-col gap-4 items-center justify-center text-center">
-    <div class="flex flex-row gap-1">
-      <input type="text" v-model="databasePath" class="file-input w-full max-w-xs" />
+    <div class="flex flex-row gap-1 w-full max-w-2xl">
+      <input type="text" v-model="databasePath" class="text-input w-full max-w-2xl" />
       <button class="btn" @click="x">选择</button>
     </div>
   </div>
