@@ -11,7 +11,7 @@
         <Edit :showText="false" class="operators" v-if="current.isPage"></Edit>
         <Add :node="current" :show-text="false" class="operators"></Add>
         <More :node="current" class="operators"></More>
-        <Setting class="operators"></Setting>
+        <Setting :show-text="true" class="operators" v-if="isSetting"></Setting>
       </div>
     </div>
 
@@ -52,6 +52,7 @@ const editorStore = useEditorStore()
 const route = useRoute();
 const isLesson = computed(() => RouteBox.isLesson(route));
 const isWindows = Preload.isWindows();
+const isSetting = computed(() => route.name?.toString().startsWith('setting'));
 const current = computed(() => useNodeStore().current);
 const editable = computed(() => route.name == 'nodes.edit')
 const editor = computed(() => editorStore.editor);
