@@ -1,8 +1,7 @@
 import { app, BrowserWindow, shell, BrowserWindowConstructorOptions } from 'electron'
 import path from 'path'
-import setMenus from '../menus/all'
-import Config from './config'
 import indexLogger from '../log/indexLogger'
+import Config from '../models/Config'
 
 function createWindow(option?: BrowserWindowConstructorOptions): BrowserWindow {
     const defaultOption = {
@@ -28,18 +27,6 @@ function createWindow(option?: BrowserWindowConstructorOptions): BrowserWindow {
 
     let win = new BrowserWindow(Object.assign({}, defaultOption, option))
 
-    if (app.isPackaged) {
-        indexLogger.info('项目已打包，加载 index.html 文件')
-        win.loadFile(Config.INDEX_HTML_PATH)
-    } else {
-        indexLogger.info('项目未打包，加载 URL')
-        win.loadURL(Config.URL)
-        // win.webContents.openDevTools()
-    }
-
-    // 配置菜单
-    setMenus(win)
-
     // Make all links open with the browser, not with the application
     win.webContents.setWindowOpenHandler(({ url }) => {
         if (url.startsWith('https:')) shell.openExternal(url)
@@ -49,4 +36,67 @@ function createWindow(option?: BrowserWindowConstructorOptions): BrowserWindow {
     return win
 }
 
-export { createWindow }
+function createMainWindow():BrowserWindow {
+    let win = createWindow();
+
+    if (app.isPackaged) {
+        indexLogger.info('项目已打包，加载 index.html 文件')
+        win.loadFile(Config.INDEX_HTML_PATH)
+    } else {
+        indexLogger.info('项目未打包，加载 URL')
+        win.loadURL(Config.URL)
+        win.webContents.openDevTools()
+    }
+
+    // 进入全屏状态事件
+    win.on("enter-full-screen", () => {
+        win?.webContents.send("main-process-message", "enter-full-screen");
+    });
+
+    win.on("leave-full-screen", () => {
+        win?.webContents.send("main-process-message", "leave-full-screen");
+    });
+
+    // Test actively push message to the Electron-Renderer
+    win.webContents.on("did-finish-load", () => {
+        if (win!.isFullScreen()) {
+            win?.webContents.send("main-process-message", "enter-full-screen");
+        }
+
+        win?.webContents.send("main-process-message", "did_finish-load");
+    });
+
+    return win
+}
+
+function createAboutWindow() {
+    const win = createWindow({
+        width: 400,
+        height: 400,
+    })
+    
+    if (app.isPackaged) {
+        win.loadFile(Config.INDEX_HTML_PATH, { hash: '/about' })
+    } else {
+        win.loadURL(Config.URL + '#about')
+    }
+
+    return win
+}
+
+function createSettingWindow() {
+    const win = createWindow({
+        width: 700,
+        height: 400,
+    })
+
+    if (app.isPackaged) {
+        win.loadFile(Config.INDEX_HTML_PATH, { hash: '/setting' })
+    } else {
+        win.loadURL(Config.URL + '#setting')
+    }
+
+    return win
+}
+
+export { createWindow,createMainWindow,createAboutWindow,createSettingWindow }

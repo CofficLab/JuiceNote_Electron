@@ -41,13 +41,13 @@ import Delete from "./Delete.vue";
 import Edit from "./Edit.vue";
 import CreateChild from "./Add.vue";
 import Visible from "./Visible.vue";
-import { useCurrentNodeStore } from "../stores/NodeStore";
+import { useNodeStore } from "../stores/NodeStore";
 import IconMore from "../icons/IconMore.vue";
 import SetChapter from "./SetChapter.vue";
 import SetPage from "./SetPage.vue";
 import Rename from "./Rename.vue";
 
-const current = computed(() => useCurrentNodeStore().current);
+const current = computed(() => useNodeStore().current);
 </script>
 
 <style scoped lang="postcss">ul {

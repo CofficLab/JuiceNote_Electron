@@ -2,7 +2,7 @@
   <header>
     <Toast></Toast>
 
-    <div class="flex h-full justify-end gap-4" :class="{ 'mr-40': isWindows }">
+    <div class="flex h-full justify-end gap-4" :class="{ 'mr-40': isWindows }" v-if="!route.name?.toString().startsWith('setting')">
       <Toolbar :editor="editor" :current="current" v-if="editor && editable"></Toolbar>
       <div class="flex flex-row items-center justify-end gap-0 pr-4">
         <BtnOfficialLink></BtnOfficialLink>
@@ -11,8 +11,16 @@
         <Edit :showText="false" class="operators" v-if="current.isPage"></Edit>
         <Add :node="current" :show-text="false" class="operators"></Add>
         <More :node="current" class="operators"></More>
+        <Setting :show-text="true" class="operators" v-if="isSetting"></Setting>
       </div>
     </div>
+
+    <div class="flex h-full justify-end gap-4" :class="{ 'mr-40': isWindows }" v-if="route.name?.toString().startsWith('setting')">
+        <div class="flex flex-row items-center justify-end gap-0 pr-4">
+          <BtnOfficialLink></BtnOfficialLink>
+          <Setting class="operators"></Setting>
+        </div>
+      </div>
   </header>
 </template>
 
@@ -31,18 +39,21 @@ import Toast from "./Toast.vue";
 import Delete from "../operators/Delete.vue";
 import Rename from "../operators/Rename.vue";
 import Visible from "../operators/Visible.vue";
-import { useCurrentNodeStore } from "../stores/NodeStore";
+import { useNodeStore } from "../stores/NodeStore";
 import useEditorStore from "../stores/EditorStore";
 import Toolbar from "./Toolbar.vue";
 import Type from "../operators/Type.vue";
 import More from "../operators/More.vue";
 import componentLogger from "../log/componentLogger";
+import Setting from "../operators/Setting.vue";
 
+const nodeStore = useNodeStore()
 const editorStore = useEditorStore()
 const route = useRoute();
 const isLesson = computed(() => RouteBox.isLesson(route));
 const isWindows = Preload.isWindows();
-const current = computed(() => useCurrentNodeStore().current);
+const isSetting = computed(() => route.name?.toString().startsWith('setting'));
+const current = computed(() => useNodeStore().current);
 const editable = computed(() => route.name == 'nodes.edit')
 const editor = computed(() => editorStore.editor);
 </script>

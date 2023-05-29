@@ -14,9 +14,9 @@
 import { computed } from "vue";
 import Link from "../components/Link.vue";
 import  NodeApi  from "../api/NodeApi";
-import { useCurrentNodeStore } from "../stores/NodeStore";
+import { useNodeStore } from "../stores/NodeStore";
 
-const current = computed(() => useCurrentNodeStore().current);
+const current = computed(() => useNodeStore().current);
 
 const shouldActive = function (id) {
   let node = NodeApi.find(id);

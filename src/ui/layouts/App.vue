@@ -5,11 +5,12 @@
   <!-- 另外注意：如果开了dev tool，是看不出透明效果的 -->
   <div id="root" :data-theme="theme" class="absolute flex w-full flex-row bg-white/80">
     <!-- header脱离文档流，固定定位 -->
-    <Header class="fixed draggable top-0 z-50 h-10 w-full bg-base-200/90 border-b border-neutral/30 shadow-sm"></Header>
+    <Header class="fixed draggable top-0 z-50 h-10 w-full bg-base-200/90 backdrop-blur-sm border-b border-neutral/30 shadow-sm"></Header>
 
     <!-- 左侧导航侧栏 -->
     <Aside
-      class="z-50 hidden h-screen w-40 overflow-scroll overscroll-none scroll-smooth border-r border-neutral/30 bg-primary/10 backdrop-filter backdrop-blur-3xl shadow-sm lg:flex lg:flex-col"
+    v-if="!route.name?.toString().startsWith('setting')"
+      class="z-50 hidden flex-col h-screen w-40 overflow-scroll overscroll-none scroll-smooth border-r border-neutral/30 bg-primary/10 backdrop-filter backdrop-blur-3xl shadow-sm md:flex lg:flex-col"
     ></Aside>
 
     <!-- 右侧主内容，所有的滚动都基于main，必须有固定高度 -->
@@ -20,7 +21,7 @@
         </transition>
       </router-view>
 
-      <Footer class="fixed w-full bottom-0 z-40 h-8 bg-primary/10 px-2 shadow-2xl backdrop-blur-lg backdrop-filter"></Footer>
+      <Footer v-if="!route.name?.toString().startsWith('setting')" class="fixed w-full bottom-0 z-40 h-8 bg-primary/60 px-2 shadow-2xl backdrop-blur backdrop-filter"></Footer>
     </main>
 
     <!-- 弹层 -->
@@ -30,6 +31,7 @@
     <FormAdd></FormAdd>
     <FormRename></FormRename>
     <Terminal></Terminal>
+    <SettingModal></SettingModal>
     <!-- <ErrorModal></ErrorModal> -->
   </div>
 </template>
@@ -48,15 +50,16 @@ import Aside from "./Aside.vue";
 import ThemesConfig from "../entities/Themes";
 import RouteBox from "../entities/RouteBox";
 import { useRoute } from "vue-router";
-import { useCurrentNodeStore } from "../stores/NodeStore";
+import { useNodeStore } from "../stores/NodeStore";
 import { EmptyNode } from "../entities/Node";
 import Preload from '../api/Preload'
 import ErrorModal from "../modals/ErrorModal.vue";
 import Logger from "electron-log";
 import componentLogger from "../log/componentLogger";
+import SettingModal from "../modals/SettingModal.vue";
 
 const route = useRoute();
-const nodeStore = useCurrentNodeStore();
+const nodeStore = useNodeStore();
 const isLesson = computed(() => RouteBox.isLesson(route));
 
 // 初始化主题

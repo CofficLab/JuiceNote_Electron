@@ -11,7 +11,7 @@ import IconChapter from "../icons/IconChapter.vue";
 import { useRouter } from "vue-router";
 import { Node } from "../entities/Node";
 import { useToastStore } from "../stores/ToastStore";
-import { useCurrentNodeStore } from "../stores/NodeStore";
+import { useNodeStore } from "../stores/NodeStore";
 
 const router = useRouter();
 const props = defineProps({

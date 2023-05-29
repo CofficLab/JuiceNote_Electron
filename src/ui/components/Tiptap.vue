@@ -1,5 +1,5 @@
 <template>
-  <div class="flex w-full flex-row justify-center border-0 px-4">
+  <div class="flex w-full flex-row justify-center border-0 px-8">
     <editor-content :editor="editor" class="prose w-full 2xl:prose" />
   </div>
 </template>

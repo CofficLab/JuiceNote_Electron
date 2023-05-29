@@ -11,7 +11,7 @@ import ClipboardJS from "clipboard";
 import { useToastStore } from "../stores/ToastStore";
 import IconCopy from "../icons/clipboard-document.svg";
 import { useRoute } from "vue-router";
-import { useCurrentNodeStore } from "../stores/NodeStore";
+import { useNodeStore } from "../stores/NodeStore";
 
 var clipboard = new ClipboardJS(".copy");
 clipboard.on("success", function () {
@@ -33,5 +33,5 @@ const props = defineProps({
   },
 });
 
-const content = computed(() => useCurrentNodeStore().current.content);
+const content = computed(() => useNodeStore().current.content);
 </script>

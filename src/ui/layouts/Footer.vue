@@ -1,16 +1,17 @@
 <template>
   <footer>
     <div class="flex flex-row justify-between">
-      <Tree :tree="tree" :display="'breadcrumbs'" :current-node="current"></Tree>
+      <Tree :tree="tree" name="footer" :active-nodes="activeNodes" :display="'breadcrumbs'" :current-node="current"></Tree>
     </div>
   </footer>
 </template>
 
 <script lang="ts" setup>
 import { computed} from "vue";
-import { useCurrentNodeStore } from "../stores/NodeStore";
+import { useNodeStore } from "../stores/NodeStore";
 import Tree from "../components/Tree.vue";
 
-const current = computed(() => useCurrentNodeStore().current);
-const tree = computed(() => useCurrentNodeStore().root)
+const current = computed(() => useNodeStore().current);
+const activeNodes = computed(() => useNodeStore().activeNodes);
+const tree = computed(() => useNodeStore().root)
 </script>

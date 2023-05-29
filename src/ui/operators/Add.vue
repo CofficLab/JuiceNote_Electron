@@ -7,7 +7,7 @@
 
 <script setup>
 import { Node } from "../entities/Node";
-import { useCurrentNodeStore } from "../stores/NodeStore";
+import { useNodeStore } from "../stores/NodeStore";
 import componentLogger from "../log/componentLogger";
 import { useRouter } from "vue-router";
 import IconCreate from "../icons/IconCreate.vue";
@@ -29,17 +29,18 @@ let props = defineProps({
   },
 });
 
-const nodeStore = useCurrentNodeStore()
+const nodeStore = useNodeStore()
 const router = useRouter()
 
 let add = function () {
+  componentLogger.info('创建新页面，当前节点是',props.node.title)
   props.node.createChild(new Node({
     title: "新页面",
     isPage:true,
     parentId: props.node.id,
   })).then((id) => {
     componentLogger.info('新节点的ID',id)
-    nodeStore.updateRoot()
+    nodeStore.refreshRoot()
     router.push({
       name: "nodes.edit",
       params: {

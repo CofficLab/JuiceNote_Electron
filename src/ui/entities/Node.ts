@@ -93,10 +93,6 @@ class Node {
         return children
     }
 
-    getVisibleChildren(): Node[] {
-        return this.getChildren().filter(child => child.isVisible)
-    }
-
     async getSiblings(): Promise<Node[]> {
         if (this.isRoot) return [EmptyNode]
 
@@ -104,6 +100,16 @@ class Node {
         let children = await parent.getChildren()
 
         return children.filter(child => child.id != this.id)
+    }
+
+    async getPrev(): Promise<Node> {
+        let parent = await this.getParent()
+        let children = await parent.getChildren()
+        let index = children.findIndex(child => child.id == this.id)
+        let result = children[index - 1] ?? parent
+
+        componentLogger.info(`获取「${this.title}」的上一个节点:「${result.title}」`)
+        return result
     }
 
     async getTabs(): Promise<Node[]> {

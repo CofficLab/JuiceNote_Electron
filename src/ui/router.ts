@@ -1,9 +1,10 @@
 import { createRouter, createWebHashHistory } from "vue-router"
-import { useCurrentNodeStore } from "./stores/NodeStore"
+import { useNodeStore } from "./stores/NodeStore"
 import routerLogger from "./log/routerLogger"
 import NodePage from "./pages/NodePage.vue"
 import NotFound from './pages/NotFound.vue'
 import About from './pages/About.vue'
+import Setting from './pages/Setting.vue'
 import NodeApi from "./api/NodeApi"
 import { RootNode } from "./entities/Node"
 
@@ -14,6 +15,21 @@ const router = createRouter({
             path: '/',
             name: 'home',
             redirect: '/nodes/0/show'
+        },
+        {
+            path: '/setting',
+            children: [
+                {
+                    path: '',
+                    name: "setting",
+                    redirect: '/setting/database'
+                },
+                {
+                    path: 'database',
+                    component: Setting,
+                    name: "setting.database"
+                },
+            ]
         },
         {
             path: '/nodes/:id',
@@ -54,11 +70,10 @@ router.beforeEach(function (to, from) {
         routerLogger.info('开始异步获取节点信息')
         NodeApi.find(nodeId).then((node) => {
             routerLogger.info(`完成异步获取节点信息，设置 store 中 current 为「${node.title}」`)
-            useCurrentNodeStore().update(node)
+            useNodeStore().updateCurrent(node)
         })
     } else {
-        routerLogger.info('设置 store 中 current 为 Root 节点')
-        useCurrentNodeStore().update(RootNode)
+        useNodeStore().updateCurrent(RootNode)
     }
 })
 

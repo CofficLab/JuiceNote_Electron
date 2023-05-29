@@ -1,44 +1,49 @@
 <template>
   <aside>
     <!-- 空白，用于拖动 -->
-    <div class="sticky top-0 z-40 w-full bg-base-300" v-if="!isWindows">
+    <div class="sticky top-0 z-40 w-full bg-primary/10" v-if="!isWindows">
       <div class="draggable" :class="{ 'h-10': !hideTitleBar, 'h-0': hideTitleBar }"></div>
     </div>
 
-    <!-- <div v-if="root.isEmpty" class=" flex flex-col gap-4">
-      <div class="alert alert-info shadow-lg rounded-none">
-        <div>
-          <IconInfo></IconInfo>
-          <span>仓库为空</span>
-        </div>
-      </div>
-    </div> -->
-    <Tree :tree="root" :current-node="current!" class="h-full overflow-scroll pb-24"></Tree>
+    <div v-if="route.name?.toString().startsWith('setting')">
+      <ul class="menu  p-2 rounded-box">
+        <li class="menu-title">
+          <span>数据存储</span>
+        </li>
+        <li><a :class="{'active':route.name=='setting.database'}">数据仓库</a></li>
+        <li><a>Item 2</a></li>
+        <li class="menu-title">
+          <span>个性化</span>
+        </li>
+        <li><a>Item 1</a></li>
+        <li><a>Item 2</a></li>
+      </ul>
+    </div>
+    <Tree v-else :tree="root" :current-node="current!" name="aside-root" :active-nodes="activeNodes"
+      class="h-full w-full overflow-scroll pb-24"></Tree>
   </aside>
 </template>
 
 <script lang="ts" setup>
-import { computed } from "vue";
+import { computed, watch } from "vue";
 import Preload from "../api/Preload";
-import { useCurrentNodeStore } from "../stores/NodeStore";
+import { useNodeStore } from "../stores/NodeStore";
 import Tree from "../components/Tree.vue";
 import componentLogger from '../log/componentLogger'
-import IconInfo from "../icons/IconInfo.vue";
+import { useRoute } from "vue-router";
 
-componentLogger.info('加载侧栏')
+componentLogger.info('「aside」加载侧栏')
 
 /**
  * 定义变量，mounted后更新变量的值，实现不阻塞
  */
-const nodeStore = useCurrentNodeStore();
+const nodeStore = useNodeStore();
 const isWindows = Preload.isWindows();
+const activeNodes = computed(() => nodeStore.activeNodes)
 const current = computed(() => nodeStore.current);
 const hideTitleBar = false;
-const root = computed(() => {
-  let node = nodeStore.root
-  componentLogger.info('设置侧栏的 Root 节点为', node.title)
-  return node
-});
+const root = nodeStore.root
+const route = useRoute()
 
 // watch(
 //   route,

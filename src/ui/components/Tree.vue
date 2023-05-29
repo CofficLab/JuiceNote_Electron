@@ -13,18 +13,18 @@
         'flex flex-row items-center p-0 text-xs hover:bg-primary-focus/20': true,
 
         // shadow
-        'drop-shadow-lg': display=='grid',
+        'drop-shadow-lg': display == 'grid',
 
         // rounded
-        'rounded-md': display=='grid',
+        'rounded-md': display == 'grid',
 
         // 宽度
         'w-48': display == 'row',
         'w-24': display == 'grid',
 
         // 颜色
-        'bg-primary text-primary-content': isActive && tree.isPage && display != 'breadcrumbs',
-        'bg-primary/50': !tree.isPage && currentNode.id == tree.id && display != 'breadcrumbs',
+        'bg-primary text-primary-content': isActive && tree.isPage && children.length==0 && display != 'breadcrumbs',
+        'bg-primary/50': (!tree.isPage || children.length>0) && currentNode.id == tree.id && display != 'breadcrumbs',
         'bg-primary/70': tree.isRoot && currentNode.id == tree.id && display != 'breadcrumbs',
 
         // boder
@@ -36,15 +36,19 @@
           'font-bold text-opacity-50': !tree.isPage && display != 'breadcrumbs',
           'text-secondary': !tree.isVisible
         }">
-        <IconChapter v-if="tree.isChapter || tree.isBook" :solid="display=='grid'" :class="display == 'grid' ? 'icon-lg':'icon-sm'"></IconChapter>
-        <IconDatabase v-if="tree.isRoot" :class="display == 'grid' ? 'icon-lg':'icon-sm'"></IconDatabase>
-        <IconPage v-if="tree.isPage" :class="display == 'grid' ? 'icon-lg':'icon-sm'"></IconPage>
+
+        <!-- 图标 -->
+        <IconChapter v-if="tree.isChapter || tree.isBook || children.length > 0" :solid="display == 'grid'"
+          :class="display == 'grid' ? 'icon-lg' : 'icon-sm'"></IconChapter>
+        <IconDatabase v-if="tree.isRoot" :class="display == 'grid' ? 'icon-lg' : 'icon-sm'"></IconDatabase>
+        <IconPage v-if="tree.isPage && children.length == 0" :class="display == 'grid' ? 'icon-lg' : 'icon-sm'"></IconPage>
 
         {{ tree.title }}
         </Link>
 
         <!-- 面包屑模式的分割符号 -->
-        <div v-if="!tree.isPage && display == 'breadcrumbs' && tree.id != currentNode.id" class="btn-ghost rounded-none btn-square btn-sm btn w-4">
+        <div v-if="!tree.isPage && display == 'breadcrumbs' && tree.id != currentNode.id"
+          class="btn-ghost rounded-none btn-square btn-sm btn w-4">
           <IconRight></IconRight>
         </div>
 
@@ -55,7 +59,7 @@
 
         <!-- 面包屑模式的弹出菜单 -->
         <ul id="dropdown-{{ tree.id }}" v-if="display == 'breadcrumbs' && isDropdownVisible" tabindex="0"
-          class="absolute top-0 -translate-y-full flex flex-col py-6 px-4 shadow-2xl bg-base-300 rounded-t backdrop-filter backdrop-blur-sm max-h-96 overflow-y-scroll">
+          class="absolute top-0 -translate-y-full flex flex-col py-6 w-48 max-w-max px-4 shadow-2xl bg-primary/50 rounded-t backdrop-blur-sm  backdrop-filter  max-h-96 overflow-y-scroll">
           <Children :list="siblings"></Children>
         </ul>
       </div>
@@ -66,13 +70,13 @@
         'pl-2': display != 'breadcrumbs',
         'flex-col': display == 'col',
         'border gap-0 border-l-0 flex-col': display == 'row',
-        // 排列
-        'grid grid-flow-row grid-cols-6': display=='grid' && children.length >= 6,
-        'flex flex-row justify-center': display == 'grid' && children.length < 6
 
+        // 布局
+        'grid grid-flow-row grid-cols-6': display == 'grid' && children.length >= 6,
+        'flex flex-row justify-center': display == 'grid' && children.length < 6
       }" v-if="isChildrenVisible">
-        <Tree v-for="child in children" :root="root.isEmpty ? tree : root" :display="display" :tree="child" :hover-callback="hoverCallback"
-          :current-node="currentNode"></Tree>
+        <Tree v-for="child in children" :name="props.name + '-' + child.title" :root="root.isEmpty ? tree : root" :display="display" :tree="child"
+          :hover-callback="hoverCallback" :active-nodes="activeNodes" :current-node="currentNode"></Tree>
       </div>
     </div>
   </div>
@@ -87,6 +91,7 @@ import IconDatabase from "../icons/IconDatabase.vue";
 import IconRight from '../icons/IconRight.vue'
 import Link from "../components/Link.vue";
 import Children from "../components/Children.vue";
+import componentLogger from "../log/componentLogger";
 
 const props = defineProps({
   tree: {
@@ -101,6 +106,10 @@ const props = defineProps({
     type: Node,
     default: EmptyNode,
   },
+  activeNodes: {
+    type: Array<Node>,
+    default: () => [],
+  },
   hiddenList: {
     type: Array,
     default: () => [],
@@ -113,7 +122,7 @@ const props = defineProps({
     type: String,
     default: "col",
     validator(value: string) {
-      return ['col', 'row', 'breadcrumbs','grid'].includes(value)
+      return ['col', 'row', 'breadcrumbs', 'grid'].includes(value)
     },
   },
   hoverCallback: {
@@ -121,17 +130,27 @@ const props = defineProps({
     default: (node: Node) => {
       // console.log('tree hovered', node.title)
     },
+  },
+  name: {
+    type: String,
+    default: '未定义',
   }
 });
+
+log(`首次加载`)
 
 /**
  * 初始化变量，页面加载完成后再更新变量的值
  */
-let mounted = ref(false)
 let children = ref<Node[]>([])
 let siblings = ref<Node[]>([])
-let isActive = ref(false)
+let isActive = computed(() => {
+  let result = props.activeNodes.map(node => node.id).includes(props.tree.id)
+  // log(`激活`,result,`当前激活的节点是`,props.activeNodes.map(node => node.title))
+  return result
+})
 let isVisible = computed(() => {
+  // log(`判断是否可见`)
   if (props.hiddenList.includes(props.tree.id)) return false
   if (props.display == 'breadcrumbs' && isActive.value) return true
 
@@ -139,23 +158,16 @@ let isVisible = computed(() => {
 })
 let isChildrenForceVisible = ref(false)
 let isChildrenVisible = computed(() => {
-  return  (children.value.length > 0 && isActive.value) || isChildrenForceVisible.value
+  let result = (children.value.length > 0 && isActive.value) || isChildrenForceVisible.value
+  // log(`判断子节点是否可见`,result)
+  return result
 })
 let isDropdownVisible = ref(false)
 
-/**
- * 监听变化
- */
-watch(props, () => {
-  // console.log(`props发生变化`,props.currentNode.title)
-  shouldActive(props.tree, props.currentNode).then(active => {
-    // if (active) console.log(`更新当前节点:${props.tree.title}的active=true`)
-    isActive.value = active
-  })
+watch(() => props.tree.updatedAt, () => {
+  log(`的 props.tree 发生变化 -> ${props.tree.updatedAt}`)
 
-  props.tree.getChildren().then(c => {
-    children.value = c
-  })
+  if (isVisible.value) updateChildren()
 })
 
 /**
@@ -163,17 +175,12 @@ watch(props, () => {
  */
 onMounted(() => {
   // 获取children，并更新相关数据
-  props.tree.getChildren().then(c => {
-    children.value = c
-  })
+  if (isVisible && children.value.length == 0) {
+    updateChildren()
+  }
 
   props.tree.getSiblings().then(s => {
     siblings.value = s
-  })
-
-  shouldActive(props.tree, props.currentNode).then(active => {
-    // console.log(`更新当前节点:${props.tree.title}的active=${active}`)
-    isActive.value = active
   })
 })
 
@@ -182,37 +189,34 @@ onMounted(() => {
  */
 
 let handleHover = (node: Node) => {
-  isDropdownVisible.value = true
+  isDropdownVisible.value = siblings.value.length > 0
   props.hoverCallback(node)
 }
 
 let handleLeave = () => isDropdownVisible.value = false
 
 let handleToggleChildrenVisible = () => isChildrenForceVisible.value = !isChildrenForceVisible.value;
-</script>
 
-<script lang="ts">
-// 判断一个节点是否应该激活
-async function shouldActive(target: Node, current: Node): Promise<boolean> {
-  // console.log(`should [${target.id}]${target.title} be active while current is ${current.title}`)
-  if (target.isRoot) return true
-  if (target.id == current.id) return true
-  if (target.isPage) return current.id == target.id;
+function log(...args: any[]) {
+  componentLogger.info(`「${props.name}」`,...args)
+}
 
-  let parents = await current.getParents()
-
-  return parents.some(parent => parent.id == target.id)
+function updateChildren() {
+  log(`更新子节点`)
+  props.tree.getChildren().then(c => {
+    children.value = c
+  })
 }
 </script>
 
 <style lang="postcss">
 .tree-item {
   .icon-sm {
-  @apply h-4 w-4
-}
+    @apply h-4 w-4
+  }
 
-.icon-lg {
-  @apply h-16 w-16 text-primary
-}
+  .icon-lg {
+    @apply h-16 w-16 text-primary
+  }
 }
 </style>

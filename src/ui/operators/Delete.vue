@@ -11,7 +11,7 @@ import Trash from "../icons/IconTrash.vue";
 import { useRoute, useRouter } from "vue-router";
 import { Node } from "../entities/Node";
 import { useToastStore } from "../stores/ToastStore";
-import { useCurrentNodeStore } from "../stores/NodeStore";
+import { useNodeStore } from "../stores/NodeStore";
 
 const router = useRouter();
 const props = defineProps({
@@ -31,17 +31,18 @@ const props = defineProps({
   },
 });
 
-const nodeStore = useCurrentNodeStore();
-const deleteBookNode = function () {
+const nodeStore = useNodeStore();
+const deleteBookNode = async function () {
+  let node = props.node
   router.push({
     name: "nodes.show",
     params: {
-      id: props.node.parentId,
+      id: (await node.getPrev()).id,
     }
   });
-  nodeStore.updateRoot()
-  props.node.delete().then(() => {
-    useToastStore().set('已删除');
+  node.delete().then(() => {
+    nodeStore.refreshRoot()
+    useToastStore().set(`已删除「${node.title}」`);
   })
 };
 </script>
