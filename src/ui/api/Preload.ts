@@ -14,6 +14,10 @@ const Preload = {
         return Preload.ipc.sendSync("get-app-version");
     },
 
+    getAppName: function () {
+      return Preload.ipc.sendSync("get-app-name");  
+    },
+
     onToggleSearch(callback: Function) {
         Preload.listen("toggle-search", callback);
     },

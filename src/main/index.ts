@@ -11,6 +11,7 @@ import indexLogger from "./log/indexLogger";
 import setExceptionHandler from "./bootstrap/exception";
 import prepareDatabase from "./bootstrap/database";
 import eventLogger from "./log/eventLogger";
+import setMenus from "./menus/all";
 
 indexLogger.log("主进程启动");
 
@@ -48,6 +49,9 @@ app.on("ready", () => {
     eventLogger.warn("app ready");
     indexLogger.info("创建窗口");
     win = createMainWindow()
+
+    // 配置菜单
+    setMenus(win!)
 });
 
 app.on("window-all-closed", () => {

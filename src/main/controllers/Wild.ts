@@ -11,6 +11,8 @@ export default function setWildController(app: Electron.App) {
     // 供子进程查询app version
     ipcMain.on('get-app-version', (event) => event.returnValue = app.getVersion())
 
+    ipcMain.on('get-app-name', (event) => event.returnValue = app.getName())
+
     // 供子进程查询platform
     ipcMain.on('get-platform', (event) => event.returnValue = process.platform)
 

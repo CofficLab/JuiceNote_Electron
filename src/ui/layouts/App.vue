@@ -31,6 +31,7 @@
     <FormAdd></FormAdd>
     <FormRename></FormRename>
     <Terminal></Terminal>
+    <SettingModal></SettingModal>
     <!-- <ErrorModal></ErrorModal> -->
   </div>
 </template>
@@ -55,6 +56,7 @@ import Preload from '../api/Preload'
 import ErrorModal from "../modals/ErrorModal.vue";
 import Logger from "electron-log";
 import componentLogger from "../log/componentLogger";
+import SettingModal from "../modals/SettingModal.vue";
 
 const route = useRoute();
 const nodeStore = useNodeStore();

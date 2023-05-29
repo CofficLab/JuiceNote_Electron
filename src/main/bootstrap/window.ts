@@ -1,6 +1,5 @@
 import { app, BrowserWindow, shell, BrowserWindowConstructorOptions } from 'electron'
 import path from 'path'
-import setMenus from '../menus/all'
 import indexLogger from '../log/indexLogger'
 import Config from '../models/Config'
 
@@ -28,9 +27,6 @@ function createWindow(option?: BrowserWindowConstructorOptions): BrowserWindow {
 
     let win = new BrowserWindow(Object.assign({}, defaultOption, option))
 
-    // 配置菜单
-    setMenus(win)
-
     // Make all links open with the browser, not with the application
     win.webContents.setWindowOpenHandler(({ url }) => {
         if (url.startsWith('https:')) shell.openExternal(url)
@@ -51,18 +47,6 @@ function createMainWindow():BrowserWindow {
         win.loadURL(Config.URL)
         win.webContents.openDevTools()
     }
-
-    // win.webContents.on("did-start-loading", () => {
-    //     indexLogger.info("webContents:did-start-loading");
-    // });
-
-    // win.webContents.on("dom-ready", () => {
-    //     indexLogger.info("webContents:dom-ready");
-    // });
-
-    // win.webContents.on("did-finish-load", () => {
-    //     indexLogger.info("webContents:did-finish-load");
-    // });
 
     // 进入全屏状态事件
     win.on("enter-full-screen", () => {
