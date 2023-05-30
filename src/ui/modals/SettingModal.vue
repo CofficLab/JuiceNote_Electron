@@ -3,7 +3,7 @@
     <Transition name="bounce">
       <div class="modal-box w-2/3 max-w-2xl relative p-0 h-96 bg-primary/50 backdrop-blur">
         <div class="flex flex-row h-full">
-          <ul class="menu bg-base-300 w-16 h-full">
+          <ul class="menu bg-base-300/50 w-16 h-full">
             <li><a :class="{ 'active': tab === '数据' }" @click="setTab('数据')">数据</a></li>
             <li><a :class="{ 'active': tab === '版本' }" @click="setTab('版本')">版本</a></li>
           </ul>
@@ -16,7 +16,7 @@
             <SettingAbout v-show="tab === '版本'"></SettingAbout>
 
             <!-- 关闭的按钮 -->
-            <label for="my-modal-3" class="btn btn-sm btn-circle absolute right-4 bottom-4"
+            <label for="my-modal-3" class="btn btn-sm btn-circle absolute right-1 top-1"
               @click="toggleVisible">✕</label>
           </div>
         </div>
