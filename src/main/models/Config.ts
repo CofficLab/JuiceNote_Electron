@@ -32,6 +32,7 @@ const LOG_PATH = path.join(ROOT_PATH, 'logs/main.log')
  */
 
 const User_Data_Path = path.join(app.getPath('userData'))
+const Updates_Path = path.join(path.dirname(app.getPath('userData')),'Caches/kuaiyizhi-updater')
 const Preferences_File_Path = path.join(User_Data_Path, 'config.json')
 const Logs_Path = path.join(User_Data_Path, 'logs')
 
@@ -79,6 +80,7 @@ const Config = {
     LOG_PATH,
     INDEX_HTML_PATH,
     User_Data_Path,
+    Updates_Path,
     Logs_Path,
     getPreferences,
     setPreferences

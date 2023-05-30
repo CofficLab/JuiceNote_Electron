@@ -32,6 +32,10 @@ const Preload = {
 
     setConfig: async function (config: string) {
         return Preload.ipc.invoke("set-config", config);
+    },
+
+    openUserDataPath: async function () {
+        return Preload.ipc.invoke("open-user-data-path");
     }
 }
 

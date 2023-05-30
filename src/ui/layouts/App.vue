@@ -57,9 +57,11 @@ import ErrorModal from "../modals/ErrorModal.vue";
 import Logger from "electron-log";
 import componentLogger from "../log/componentLogger";
 import SettingModal from "../modals/SettingModal.vue";
+import { useOtherStore } from '../stores/OtherStore';
 
 const route = useRoute();
 const nodeStore = useNodeStore();
+const otherStore = useOtherStore();
 const isLesson = computed(() => RouteBox.isLesson(route));
 
 // 初始化主题
@@ -91,13 +93,16 @@ darkModeQuery.addListener((e) => {
 //   componentLogger.info("监测到事件：update-downloaded");
 // });
 
-// Preload.listen("update-available", (e) => {
-//   componentLogger.info("监测到事件：update-avaliable");
-// });
+Preload.listen("update-available", (e, args) => {
+  let version = args[0].version;
+  componentLogger.info("监测到事件：update-avaliable", version);
 
-// Preload.listen("checking-for-update", (e) => {
-//   componentLogger.info("监测到事件：checking-for-update");
-// });
+  otherStore.setLatestVersion(version);
+});
+
+Preload.listen("checking-for-update", (e) => {
+  componentLogger.info("监测到事件：checking-for-update");
+});
 
 // Preload.listen("update-not-available", (e) => {
 //   componentLogger.info("监测到事件：update-not-available");

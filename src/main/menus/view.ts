@@ -65,6 +65,10 @@ function getViewMenu(win: BrowserWindow) {
                 label: '打开程序文件夹',
                 click: () => shell.openPath(Config.ROOT_PATH)
             },
+            {
+                label: '打开更新缓存文件夹',
+                click: () => shell.openPath(Config.Updates_Path)
+            },
         ],
     })
 }
