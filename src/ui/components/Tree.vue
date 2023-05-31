@@ -23,8 +23,8 @@
         'w-24': display == 'grid',
 
         // 颜色
-        'bg-primary text-primary-content': isActive && tree.isPage && children.length==0 && display != 'breadcrumbs',
-        'bg-primary/50': (!tree.isPage || children.length>0) && currentNode.id == tree.id && display != 'breadcrumbs',
+        'bg-primary text-primary-content': isActive && tree.isPage && children.length == 0 && display != 'breadcrumbs',
+        'bg-primary/50': (!tree.isPage || children.length > 0) && currentNode.id == tree.id && display != 'breadcrumbs',
         'bg-primary/70': tree.isRoot && currentNode.id == tree.id && display != 'breadcrumbs',
 
         // boder
@@ -38,10 +38,11 @@
         }">
 
         <!-- 图标 -->
-        <IconChapter v-if="tree.isChapter || tree.isBook || children.length > 0" :solid="display == 'grid'"
-          :class="display == 'grid' ? 'icon-lg' : 'icon-sm'"></IconChapter>
         <IconDatabase v-if="tree.isRoot" :class="display == 'grid' ? 'icon-lg' : 'icon-sm'"></IconDatabase>
-        <IconPage v-if="tree.isPage && children.length == 0" :class="display == 'grid' ? 'icon-lg' : 'icon-sm'"></IconPage>
+        <IconChapter v-else-if="tree.isChapter || tree.isBook || children.length > 0" :solid="display == 'grid'"
+          :class="display == 'grid' ? 'icon-lg' : 'icon-sm'"></IconChapter>
+        <IconPage v-else-if="tree.isPage && children.length == 0" :class="display == 'grid' ? 'icon-lg' : 'icon-sm'">
+        </IconPage>
 
         {{ tree.title }}
         </Link>
@@ -75,8 +76,9 @@
         'grid grid-flow-row grid-cols-6': display == 'grid' && children.length >= 6,
         'flex flex-row justify-center': display == 'grid' && children.length < 6
       }" v-if="isChildrenVisible">
-        <Tree v-for="child in children" :name="props.name + '-' + child.title" :root="root.isEmpty ? tree : root" :display="display" :tree="child"
-          :hover-callback="hoverCallback" :active-nodes="activeNodes" :current-node="currentNode"></Tree>
+        <Tree v-for="child in children" :name="props.name + '-' + child.title" :root="root.isEmpty ? tree : root"
+          :display="display" :tree="child" :hover-callback="hoverCallback" :active-nodes="activeNodes"
+          :current-node="currentNode"></Tree>
       </div>
     </div>
   </div>
@@ -198,7 +200,7 @@ let handleLeave = () => isDropdownVisible.value = false
 let handleToggleChildrenVisible = () => isChildrenForceVisible.value = !isChildrenForceVisible.value;
 
 function log(...args: any[]) {
-  componentLogger.info(`「${props.name}」`,...args)
+  componentLogger.info(`「${props.name}」`, ...args)
 }
 
 function updateChildren() {

@@ -138,6 +138,10 @@ class Node {
         return NodeApi.create(node)
     }
 
+    async export() {
+        return NodeApi.export(this.id)
+    }
+
     static updateChildrenPriority(children: Node[]) {
         children.forEach((child, index) => {
             NodeApi.updatePriority(child.id, index)

@@ -66,6 +66,10 @@ const NodeApi = {
 
     async save(node:Node) {
         return Ipc.invoke('save', JSON.stringify(node))
+    },
+
+    async export(id:number) {
+        return Ipc.invoke('export', id)
     }
 }
 

@@ -35,6 +35,8 @@ const User_Data_Path = path.join(app.getPath('userData'))
 const Updates_Path = path.join(path.dirname(app.getPath('userData')),'Caches/kuaiyizhi-updater')
 const Preferences_File_Path = path.join(User_Data_Path, 'config.json')
 const Logs_Path = path.join(User_Data_Path, 'logs')
+const TempPath = app.getPath('temp')
+const Downloads_Path = app.getPath('downloads')
 
 interface Preferences {
     databasePath: string
@@ -82,6 +84,8 @@ const Config = {
     User_Data_Path,
     Updates_Path,
     Logs_Path,
+    Downloads_Path,
+    TempPath,
     getPreferences,
     setPreferences
 }

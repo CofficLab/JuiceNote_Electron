@@ -10,6 +10,7 @@ interface NodeObject {
     title: string,
     parentId: number,
     priority: number,
+    children?: NodeObject[],
     isPage: boolean,
     isChapter: boolean,
     isVisible: boolean
@@ -95,6 +96,13 @@ class DatabaseApi {
         databaseLogger.info(`get children of ${id},count=${children.length}`)
 
         return children
+    }
+
+    getDescendants(id: number): NodeObject[] {
+        return this.getChildren(id).map(item => {
+            item.children = this.getDescendants(item.id)
+            return item
+        })
     }
 
     getBooks(): Object[] {

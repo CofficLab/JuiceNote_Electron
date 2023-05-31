@@ -30,6 +30,9 @@
         <li>
           <Rename :node="current"></Rename>
         </li>
+        <li>
+          <Export :node="current"></Export>
+        </li>
       </ul>
     </div>
   </div>
@@ -46,6 +49,7 @@ import IconMore from "../icons/IconMore.vue";
 import SetChapter from "./SetChapter.vue";
 import SetPage from "./SetPage.vue";
 import Rename from "./Rename.vue";
+import Export from "./Export.vue";
 
 const current = computed(() => useNodeStore().current);
 </script>

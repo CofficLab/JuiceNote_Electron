@@ -1,6 +1,10 @@
-import { ipcMain } from "electron"
+import { dialog, ipcMain } from "electron"
 import makeNodeModel from "../models/NodeModel"
 import controllerLogger from "../log/controllerLogger"
+import indexLogger from "../log/indexLogger"
+import { copyFile, writeFile, writeFileSync } from "fs"
+import Config from "../models/Config"
+import { join } from "path"
 
 export default function setNodeController() {
     let nodeModel = makeNodeModel()
@@ -46,5 +50,43 @@ export default function setNodeController() {
 
     ipcMain.handle('save', (event, node) => {
         return nodeModel.save(JSON.parse(node))
+    })
+
+    ipcMain.handle('export', (event, id) => {
+        controllerLogger.info('导出节点', id)
+
+        let filePath = join(Config.TempPath, id + '.json')
+        let node = nodeModel.find(id)
+        node.children = nodeModel.getDescendants(id)
+
+        writeFile(filePath, JSON.stringify(node, null, 2), (err) => {
+            if (err) {
+                controllerLogger.error('导出节点失败', err)
+            } else {
+                indexLogger.info('导出节点到临时目录', filePath)
+
+                dialog.showSaveDialog({
+                    title: `导出「${node.title}」`,
+                    defaultPath: join(Config.Downloads_Path, node.title + '.json'),
+                }).then(result => {
+                    controllerLogger.info('选择保存位置的结果', result)
+
+                    if (result.canceled) {
+                        controllerLogger.info('取消保存')
+                        return
+                    }
+
+                    const savePath = result.filePath
+                    controllerLogger.info('文件保存到', savePath)
+
+                    copyFile(filePath, savePath!, (err) => {
+                        if (err) {
+                            controllerLogger.error('复制文件失败', err)
+                        }
+                        indexLogger.info('复制文件成功', savePath)
+                    })
+                })
+            }
+        })
     })
 }
