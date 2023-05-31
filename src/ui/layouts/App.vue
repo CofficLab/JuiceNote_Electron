@@ -21,7 +21,7 @@
         </transition>
       </router-view>
 
-      <Footer v-if="!route.name?.toString().startsWith('setting')" class="fixed w-full bottom-0 z-40 h-8 bg-primary/60 px-2 shadow-2xl backdrop-blur backdrop-filter"></Footer>
+      <Footer v-if="!route.name?.toString().startsWith('setting')" class="fixed w-full bottom-0 z-40 h-8 bg-gradient-to-r from-primary/50 to-primary/60 px-2 shadow-2xl backdrop-blur backdrop-filter"></Footer>
     </main>
 
     <!-- 弹层 -->
