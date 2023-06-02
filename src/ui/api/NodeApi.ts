@@ -70,6 +70,10 @@ const NodeApi = {
 
     async export(id:number) {
         return Ipc.invoke('export', id)
+    },
+
+    async import(id: number) {
+        return Ipc.invoke('import', id)
     }
 }
 

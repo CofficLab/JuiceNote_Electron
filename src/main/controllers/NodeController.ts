@@ -89,4 +89,28 @@ export default function setNodeController() {
             }
         })
     })
+
+    ipcMain.handle('import', (event, id) => {
+        controllerLogger.info('导入节点', id)
+
+        let node = nodeModel.find(id)
+        node.children = nodeModel.getDescendants(id)
+
+        dialog.showOpenDialog({
+            title: `导入文件`,
+            defaultPath: Config.Downloads_Path,
+        }).then(result => {
+            controllerLogger.info('选择要导入的文件', result)
+
+            if (result.canceled) {
+                controllerLogger.info('取消导入')
+                return
+            }
+
+            let filePaths = result.filePaths
+            let target = filePaths[0]
+
+            controllerLogger.log(target)
+        })
+    })
 }

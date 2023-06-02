@@ -33,6 +33,9 @@
         <li>
           <Export :node="current"></Export>
         </li>
+        <li>
+          <Import :node="current"></Import>
+        </li>
       </ul>
     </div>
   </div>
@@ -50,6 +53,7 @@ import SetChapter from "./SetChapter.vue";
 import SetPage from "./SetPage.vue";
 import Rename from "./Rename.vue";
 import Export from "./Export.vue";
+import Import from "./Import.vue";
 
 const current = computed(() => useNodeStore().current);
 </script>

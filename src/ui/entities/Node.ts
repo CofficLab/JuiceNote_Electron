@@ -142,6 +142,10 @@ class Node {
         return NodeApi.export(this.id)
     }
 
+    async import() {
+        return NodeApi.import(this.id)
+    }
+
     static updateChildrenPriority(children: Node[]) {
         children.forEach((child, index) => {
             NodeApi.updatePriority(child.id, index)
