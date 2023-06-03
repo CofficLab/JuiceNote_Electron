@@ -2,7 +2,7 @@ import { dialog, ipcMain } from "electron"
 import makeNodeModel from "../models/NodeModel"
 import controllerLogger from "../log/controllerLogger"
 import indexLogger from "../log/indexLogger"
-import { copyFile, writeFile, writeFileSync } from "fs"
+import { copyFile, writeFile } from "fs"
 import Config from "../models/Config"
 import { join } from "path"
 

@@ -8,6 +8,7 @@
         <BtnOfficialLink></BtnOfficialLink>
         <Terminal class="operators" v-if="isLesson"></Terminal>
         <Home class="operators"></Home>
+        <Shop class="operators"></Shop>
         <Edit :showText="false" class="operators" v-if="current.isPage"></Edit>
         <Add :node="current" :show-text="false" class="operators"></Add>
         <More :node="current" class="operators"></More>
@@ -26,7 +27,7 @@
 
 <script lang="ts" setup>
 import Home from "../operators/Home.vue";
-import Database from '../operators/Database.vue'
+import Shop from '../operators/Shop.vue'
 import BtnOfficialLink from "../components/BtnOfficialLink.vue";
 import Terminal from "../operators/Terminal.vue";
 import { useRoute } from "vue-router";
