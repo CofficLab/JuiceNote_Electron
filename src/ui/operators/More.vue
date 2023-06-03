@@ -5,7 +5,7 @@
         <IconMore></IconMore>
       </label>
       <ul tabindex="0"
-        class="dropdown-content w-48 rounded z-50 flex translate-x-4 flex-col bg-primary/50 py-4 shadow-2xl backdrop-blur-sm backdrop-filter">
+        class="dropdown-content w-48 rounded z-50 flex translate-x-4 flex-col bg-primary/90 py-4 shadow-2xl backdrop-blur-3xl">
         <li>
           <Delete :node="current"></Delete>
         </li>

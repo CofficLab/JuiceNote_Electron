@@ -3,7 +3,7 @@
   <!-- 如果不配置底色，daisyui会自动配置为bg-primary -->
   <!-- 因为electron配置了全透明窗口，这里最好配置一个底色 -->
   <!-- 另外注意：如果开了dev tool，是看不出透明效果的 -->
-  <div id="root" :data-theme="theme" class="absolute flex w-full flex-row bg-white/80">
+  <div id="root" :data-theme="theme" class="absolute flex w-full flex-row bg-base">
     <!-- header脱离文档流，固定定位 -->
     <Header class="fixed draggable top-0 z-50 h-10 w-full bg-base-200/90 backdrop-blur-sm border-b border-neutral/30 shadow-sm"></Header>
 
@@ -21,7 +21,7 @@
         </transition>
       </router-view>
 
-      <Footer v-if="!route.name?.toString().startsWith('setting')" class="fixed w-full bottom-0 z-40 h-8 bg-gradient-to-r from-primary/50 to-primary/60 px-2 shadow-2xl backdrop-blur backdrop-filter"></Footer>
+      <Footer v-if="!route.name?.toString().startsWith('setting')" class="fixed border-neutral/30 border-t w-full bottom-0 z-40 h-8 bg-gradient-to-r from-base-200/30 to-base-200/40 px-2 shadow-2xl backdrop-blur backdrop-filter"></Footer>
     </main>
 
     <!-- 弹层 -->

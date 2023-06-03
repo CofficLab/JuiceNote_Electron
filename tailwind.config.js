@@ -26,6 +26,7 @@ module.exports = {
       {
         "cloud-dark": {
           ...require("daisyui/src/colors/themes")["[data-theme=dark]"],
+          primary: "#38bdf8",
         },
       },
       {
