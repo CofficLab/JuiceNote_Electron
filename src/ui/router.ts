@@ -6,7 +6,7 @@ import NotFound from './pages/NotFound.vue'
 import About from './pages/About.vue'
 import Setting from './pages/Setting.vue'
 import NodeApi from "./api/NodeApi"
-import { RootNode } from "./entities/Node"
+import { RootNode, ShopNode } from "./entities/Node"
 
 const router = createRouter({
     history: createWebHashHistory(),
@@ -15,6 +15,11 @@ const router = createRouter({
             path: '/',
             name: 'home',
             redirect: '/nodes/0/show'
+        },
+        {
+            path: '/shop',
+            name: 'shop',
+            redirect: '/nodes/-1/show'
         },
         {
             path: '/setting',
@@ -72,6 +77,8 @@ router.beforeEach(function (to, from) {
             routerLogger.info(`完成异步获取节点信息，设置 store 中 current 为「${node.title}」`)
             useNodeStore().updateCurrent(node)
         })
+    } else if(nodeId == -1) {
+        useNodeStore().updateCurrent(ShopNode)
     } else {
         useNodeStore().updateCurrent(RootNode)
     }
