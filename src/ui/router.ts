@@ -80,7 +80,9 @@ router.beforeEach(function (to, from) {
     } else if(nodeId == -1) {
         useNodeStore().updateCurrent(ShopNode)
     } else {
-        useNodeStore().updateCurrent(RootNode)
+        RootNode.getFirstChild().then((node) => {
+            useNodeStore().updateCurrent(node)
+        })
     }
 })
 
