@@ -12,6 +12,10 @@ export const useNodeStore = defineStore('node-store', {
     },
 
     actions: {
+        updateRoot(node: Node) {
+            storeLogger.info('更新根节点为',node.title)
+            this.root = node
+        },
         updateCurrent(node: Node) {
             // 更新当前节点的同时，更新激活的节点
             node.getParents().then(parents => {
