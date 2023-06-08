@@ -5,11 +5,9 @@ import indexLogger from "../log/indexLogger"
 import { copyFile, writeFile } from "fs"
 import Config from "../models/Config"
 import { join } from "path"
-import makeShopModel from "../models/ShopModel"
 
 export default function setNodeController() {
     let nodeModel = makeNodeModel()
-    let shopModel = makeShopModel()
 
     ipcMain.handle('delete', (event, id) => {
         controllerLogger.info('向数据库发起请求：delete ' + id)
@@ -21,7 +19,7 @@ export default function setNodeController() {
     })
 
     ipcMain.handle('getChildren', (event, id) => {
-        controllerLogger.info('向数据库发起请求：getChildren ' + id,event)
+        controllerLogger.info('向数据库发起请求：getChildren ' + id)
         return nodeModel.getChildren(id)
     })
 

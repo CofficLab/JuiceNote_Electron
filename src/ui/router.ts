@@ -37,7 +37,7 @@ const router = createRouter({
             ]
         },
         {
-            path: '/nodes/:treeId/:id',
+            path: '/nodes/:id',
             children: [
                 {
                     path: 'edit',
@@ -66,11 +66,9 @@ router.beforeEach(function (to, from) {
     /**
      * 路由发生变化时，更新store
      */
-    let treeId = parseInt((to.params.treeId ? to.params.treeId : 0).toString())
     let nodeId = parseInt((to.params.id ? to.params.id : 0).toString())
 
     routerLogger.info("从", from.fullPath, "到", to.fullPath)
-    routerLogger.info('节点树ID为', treeId)
     routerLogger.info('节点ID为', nodeId)
 
     if (nodeId > 0) {
@@ -81,9 +79,7 @@ router.beforeEach(function (to, from) {
         })
     } else if(nodeId == -1) {
         useNodeStore().updateCurrent(ShopNode)
-        useNodeStore().updateRoot(ShopNode)
     } else {
-        // 设置当前节点为Root节点的第一个子节点
         RootNode.getFirstChild().then((node) => {
             useNodeStore().updateCurrent(node)
         })

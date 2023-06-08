@@ -2,6 +2,7 @@ import NodeApi from "../api/NodeApi"
 import mapKeys from "lodash/mapKeys"
 import camelCase from "lodash/camelCase"
 import componentLogger from "../log/componentLogger"
+import { promises } from "dns"
 
 class Node {
     public id: number = 0
@@ -34,11 +35,25 @@ class Node {
         Object.assign(this, options)
     }
 
+    getBook(): Node {
+        if (this.isEmpty) return this
+        if (this.isBook) return this
+
+        return this.getParent().getBook()
+    }
+
     async getFirstChild(): Promise<Node> {
         let children = await NodeApi.getChildren(this.id)
         let firstChild = children[0]
 
         return firstChild || EmptyNode
+    }
+
+    getLastChild(): Node {
+        let children = NodeApi.getChildren(this.id).reverse()
+        let lastChild = children[0]
+
+        return lastChild || EmptyNode
     }
 
     async getFirstPage(): Promise<Node> {
@@ -131,11 +146,17 @@ class Node {
     async import() {
         return NodeApi.import(this.id)
     }
+
+    static updateChildrenPriority(children: Node[]) {
+        children.forEach((child, index) => {
+            NodeApi.updatePriority(child.id, index)
+        })
+    }
 }
 
 const EmptyNode = new Node({ title: '空节点', isEmpty: true, content: '空节点', id: 0 })
-const RootNode = new Node({ title: '本地根节点', isRoot: true, content: '本地根节点', id: 0 })
-const ShopNode = new Node({ title: '商店根节点', isRoot: true, content: '商店根节点', id: 0 })
+const RootNode = new Node({ title: '根节点', isRoot: true, content: '根节点', id: 0 })
+const ShopNode = new Node({ title: '商店节点', isRoot: true, content: '商店节点', id: 0 })
 
 export {
     Node,

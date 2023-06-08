@@ -5,9 +5,6 @@ import databaseLogger from "../log/databaseLogger";
 import Config from "./Config";
 import { existsSync } from "fs";
 
-const LocalRootNodeId = -1
-const ShopRootNodeId = -2
-
 interface NodeObject {
     id: number,
     title: string,
@@ -20,11 +17,6 @@ interface NodeObject {
     isEmpty?: boolean
 }
 
-// 规则：
-// 空节点ID=0
-// 根节点ID<0，有多个根节点，如：本地根节点(数据库文件是local.db)、商店根节点(数据库文件是shop.db)
-// 其他节点都位于各自的根节点之下
-
 const EmptyNode: NodeObject = {
     id: 0,
     title: '空节点',
@@ -34,26 +26,6 @@ const EmptyNode: NodeObject = {
     isChapter: false,
     isVisible: true,
     isEmpty: true
-}
-
-const LocalRootNode: NodeObject = {
-    id: LocalRootNodeId,
-    title: '本地根节点',
-    parentId: 0,
-    priority: 0,
-    isPage: false,
-    isChapter: false,
-    isVisible: true
-}
-
-const ShopRootId:NodeObject = {
-    id: ShopRootNodeId,
-    title: '商店根节点',
-    parentId: 0,
-    priority: 0,
-    isPage: false,
-    isChapter: false,
-    isVisible: true
 }
 
 class DatabaseApi {
