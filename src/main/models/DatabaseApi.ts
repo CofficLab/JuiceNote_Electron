@@ -11,10 +11,12 @@ interface NodeObject {
     parentId: number,
     priority: number,
     children?: NodeObject[],
+    content?:string,
     isPage: boolean,
     isChapter: boolean,
-    isVisible: boolean
-    isEmpty?: boolean
+    isVisible: boolean,
+    isEmpty?: boolean,
+    isRoot?: boolean
 }
 
 const EmptyNode: NodeObject = {
@@ -224,4 +226,7 @@ class DatabaseApi {
     }
 }
 
-export default DatabaseApi
+export {
+    DatabaseApi,
+    NodeObject
+}

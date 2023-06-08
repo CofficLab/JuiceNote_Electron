@@ -6,7 +6,8 @@ import NotFound from './pages/NotFound.vue'
 import About from './pages/About.vue'
 import Setting from './pages/Setting.vue'
 import NodeApi from "./api/NodeApi"
-import { RootNode, ShopNode } from "./entities/Node"
+import ShopPage from "./pages/ShopPage.vue"
+import { RootNode } from "./entities/Node"
 
 const router = createRouter({
     history: createWebHashHistory(),
@@ -19,7 +20,7 @@ const router = createRouter({
         {
             path: '/shop',
             name: 'shop',
-            redirect: '/nodes/-1/show'
+            redirect: '/shop/0/show'
         },
         {
             path: '/setting',
@@ -37,7 +38,7 @@ const router = createRouter({
             ]
         },
         {
-            path: '/nodes/:id',
+            path: '/:pathMatch(.*)/:id',
             children: [
                 {
                     path: 'edit',
@@ -63,26 +64,32 @@ const router = createRouter({
 })
 
 router.beforeEach(function (to, from) {
-    /**
-     * 路由发生变化时，更新store
-     */
-    let nodeId = parseInt((to.params.id ? to.params.id : 0).toString())
-
     routerLogger.info("从", from.fullPath, "到", to.fullPath)
-    routerLogger.info('节点ID为', nodeId)
+})
 
-    if (nodeId > 0) {
-        routerLogger.info('开始异步获取节点信息')
-        NodeApi.find(nodeId).then((node) => {
-            routerLogger.info(`完成异步获取节点信息，设置 store 中 current 为「${node.title}」`)
-            useNodeStore().updateCurrent(node)
-        })
-    } else if(nodeId == -1) {
-        useNodeStore().updateCurrent(ShopNode)
-    } else {
-        RootNode.getFirstChild().then((node) => {
-            useNodeStore().updateCurrent(node)
-        })
+router.afterEach(function (to,from) {
+    routerLogger.info('路由跳转完毕')
+
+    if (to.name?.toString().startsWith('nodes')) {
+        let nodeId = parseInt((to.params.id ? to.params.id : 0).toString())
+
+        routerLogger.info('节点ID为', nodeId)
+
+        if (nodeId > 0) {
+            NodeApi.find(nodeId).then((node) => {
+                routerLogger.info(`设置 store 中 current 为「${node.title}」`)
+                useNodeStore().updateCurrent(node)
+            })
+        } else {
+            NodeApi.getTree().then((tree) => {
+                routerLogger.info(`设置 store 中 tree 为「${tree.title}」`)
+                useNodeStore().updateRoot(tree)
+                tree.getFirstChild().then((node) => {
+                    routerLogger.info(`设置 store 中 current 为「${node.title}」`)
+                    useNodeStore().updateCurrent(node)
+                })
+            })
+        }
     }
 })
 

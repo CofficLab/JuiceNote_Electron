@@ -22,6 +22,10 @@ export const useNodeStore = defineStore('node-store', {
                 storeLogger.info('更新当前激活的节点为', this.activeNodes.map(n => n.title))
             })
         },
+        updateRoot(node: Node) {
+            storeLogger.info('更新当前树为', node.title)
+            this.root = node
+        },
         refreshCurrent() {
             this.current.updatedAt = (new Date()).toISOString()
         },

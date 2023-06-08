@@ -1,12 +1,12 @@
 <template>
   <div class="flex flex-row gap-4">
-    <PhotoIcon v-if="showIcon"></PhotoIcon>
+    <IconBook v-if="showIcon"></IconBook>
     <span v-if="showText">更换封面</span>
   </div>
 </template>
 
 <script lang="ts" setup>
-import PhotoIcon from "../icons/photo.svg";
+import IconBook from '../icons/IconBook.vue';
 import { Node } from "../entities/Node";
 
 const props = defineProps({
