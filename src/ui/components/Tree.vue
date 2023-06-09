@@ -2,19 +2,19 @@
   <div>
     <div tabindex="0" :class="{
       'flex': true,
-      'flex-col': display == 'col',
-      'flex-row dropdown dropdown-top relative': display == 'breadcrumbs',
+      'flex-col': display == 'sidebar',
+      'flex-row dropdown dropdown-top relative h-full': display == 'breadcrumbs',
       'flex-row p-1': display == 'row',
     }">
 
       <!-- 当前节点 -->
       <div v-show="isVisible" @mouseleave="handleLeave" @mouseenter="handleHover(tree)" :class="{
         // 通用
-        'flex flex-row items-center p-0 hover:bg-primary-focus/20': true,
+        'flex flex-row items-center p-0': true,
 
         // 字体
-        'text-sm': display != 'breadcrumbs',
-        'text-xs': display == 'breadcrumbs',
+        'text-sm': display == 'row' || display == 'grid',
+        'text-xs': display == 'breadcrumbs' || display == 'sidebar',
 
         // shadow
         'drop-shadow-lg': display == 'grid',
@@ -35,7 +35,7 @@
         'border-l border-t border-b': display == 'row' && isChildrenVisible,
       }">
         <Link :node="tree" @mouseenter="hoverCallback(tree)" :class="{
-          'flex flex-grow cursor-pointer flex-row items-center gap-2 px-2 py-2 tree-item': true,
+          'flex flex-grow cursor-pointer flex-row h-full items-center gap-2 px-2 py-2 tree-item  hover:bg-primary-focus/20': true,
           'flex-col': display == 'grid',
           'font-bold text-opacity-50': !tree.isPage && display != 'breadcrumbs',
           'text-secondary': !tree.isVisible
@@ -53,8 +53,8 @@
 
         <!-- 面包屑模式的分割符号 -->
         <div v-if="!tree.isPage && display == 'breadcrumbs' && tree.id != currentNode.id"
-          class="btn-ghost rounded-none btn-square btn-sm btn w-4">
-          <IconRight></IconRight>
+          class="btn-ghost rounded-none h-full flex items-center">
+          <IconRight class="w-3"></IconRight>
         </div>
 
         <!-- 折叠按钮 -->
@@ -73,7 +73,7 @@
       <div :class="{
         'flex rounded-none': true,
         'pl-2': display != 'breadcrumbs',
-        'flex-col': display == 'col',
+        'flex-col': display == 'sidebar',
         'border gap-0 border-l-0 flex-col': display == 'row',
 
         // 布局
@@ -126,9 +126,9 @@ const props = defineProps({
   },
   display: {
     type: String,
-    default: "col",
+    default: "sidebar",
     validator(value: string) {
-      return ['col', 'row', 'breadcrumbs', 'grid'].includes(value)
+      return ['row', 'breadcrumbs', 'grid', 'sidebar'].includes(value)
     },
   },
   hoverCallback: {

@@ -19,7 +19,7 @@
         <li><a>Item 2</a></li>
       </ul>
     </div>
-    <Tree v-else :tree="tree" :current-node="current!" name="aside-root" :active-nodes="activeNodes"
+    <Tree v-else :tree="tree" :current-node="current!" name="aside-root" display="sidebar" :active-nodes="activeNodes"
       class="h-full w-full overflow-scroll pb-24"></Tree>
   </aside>
 </template>

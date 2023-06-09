@@ -1,7 +1,7 @@
 <template>
   <footer>
-    <div class="flex flex-row justify-between w-full">
-      <Tree :tree="tree" name="footer" :active-nodes="activeNodes" :display="'breadcrumbs'" :current-node="current"></Tree>
+    <div class="flex flex-row justify-between w-full h-full items-center">
+      <Tree :tree="tree" name="footer" :active-nodes="activeNodes" :display="'breadcrumbs'" class="h-full flex items-center" :current-node="current"></Tree>
 
       <div v-html="url" class="flex items-center text-sm" v-if="isDev"></div>
     </div>
