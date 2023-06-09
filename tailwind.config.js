@@ -10,7 +10,7 @@ module.exports = {
     themes: [
       {
         cloud: {
-          ...require("daisyui/src/colors/themes")["[data-theme=light]"],
+          ...require("daisyui/src/theming/themes")["[data-theme=light]"],
           primary: "#38bdf8",
           secondary: "#f59e0b",
           // accent: "#1FB2A5",
@@ -25,7 +25,7 @@ module.exports = {
       },
       {
         "cloud-dark": {
-          ...require("daisyui/src/colors/themes")["[data-theme=dark]"],
+          ...require("daisyui/src/theming/themes")["[data-theme=dark]"],
           primary: "#38bdf8",
         },
       },
@@ -45,7 +45,7 @@ module.exports = {
       },
       {
         "mountain-dark": {
-          ...require("daisyui/src/colors/themes")["[data-theme=dark]"],
+          ...require("daisyui/src/theming/themes")["[data-theme=dark]"],
           primary: "blue",
           "primary-focus": "mediumblue",
         },
