@@ -1,19 +1,17 @@
 <template>
-    <div class="form-control">
+    <div class="form-control bg-white/20 p-4 rounded-2xl">
         <label class="label">
             <span class="label-text text-accent-content">节点数据库路径</span>
         </label>
-        <div class="bg-white/20 p-4 rounded-2xl">
-            <div class="flex w-full rounded-none flex-row">
-                <input type="text" v-model="databasePath" class="text-input text-sm w-full max-w-2xl p-1 rounded-l" />
-                <button class="btn btn-sm rounded-r rounded-none px-1" @click="choose">
-                    <IconEdit class="w-5 h-5"></IconEdit>
-                </button>
-            </div>
-            <label class="label">
-                <span class="label-text-alt">数据的存储位置，可以是云盘目录</span>
-            </label>
+        <div class="flex w-full rounded-none flex-row">
+            <input type="text" v-model="databasePath" class="text-input text-sm w-full max-w-2xl p-1 rounded-l" />
+            <button class="btn btn-sm rounded-r rounded-none px-1" @click="choose">
+                <IconEdit class="w-5 h-5"></IconEdit>
+            </button>
         </div>
+        <label class="label">
+            <span class="label-text-alt">数据的存储位置，可以是云盘目录</span>
+        </label>
     </div>
 </template>
 

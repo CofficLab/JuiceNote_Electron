@@ -1,46 +1,93 @@
 <template>
-  <div class="h-screen w-full overflow-scroll overscroll-none py-12">
-    <div class="navbar bg-base-100">
-      <div class="navbar-start">
-        <a class="btn-ghost btn text-xl normal-case">商店</a>
-      </div>
-      <div class="navbar-center hidden lg:flex">
-        <ul class="menu menu-horizontal px-1">
-          <li><a>Item 1</a></li>
-          <li tabindex="0">
-            <a>
-              Parent
-              <svg class="fill-current" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" /></svg>
-            </a>
-            <ul class="p-2">
-              <li><a>Submenu 1</a></li>
-              <li><a>Submenu 2</a></li>
-            </ul>
-          </li>
-          <li><a>Item 3</a></li>
-        </ul>
-      </div>
-      <div class="navbar-end">
-        <a class="btn">Get started</a>
-      </div>
-    </div>
+  <div class="h-full">
+    <!-- <div class="sticky top-12 z-50 flex w-full flex-grow">
+      <NodeTab></NodeTab>
+    </div> -->
 
-    <div class="mx-auto grid max-w-screen-2xl grid-cols-2 gap-4 p-12 py-8 lg:grid-cols-3 xl:grid-cols-4">
-      <template v-for="book in booksVisible">
-        <Book :book="book"></Book>
-      </template>
+    <div class="flex h-full w-full flex-col items-center pt-12">
+      <!-- 空节点 -->
+      <div class="w-full flex justify-center items-center h-full flex-col gap-4" v-if="node.isEmpty">
+        <NodeInfo :node="node" class="flex justify-center"></NodeInfo>
+        <IconBlank class="w-48 text-primary/20 drop-shadow-2xl"></IconBlank>
+      </div>
 
-      <div class="h-24"></div>
+      <!-- 页面节点 -->
+      <div class="w-full" v-else-if="node.isPage">
+        <Tiptap :node="node" :saveCallback="save" :editable="editable"></Tiptap>
+      </div>
+
+      <!-- 章节节点 -->
+      <div v-else class="container flex h-full flex-col justify-center gap-6">
+        <NodeInfo :node="node" class="flex justify-center"></NodeInfo>
+        <!-- <Tiptap :node="node" :saveCallback="save" :editable="editable"></Tiptap> -->
+        <hr class="border-accent shadow-2xl" />
+        <!-- <Tree :tree="node" name="nodePage" :active-nodes="activeNodes" display="grid" :hiddenList="[node.id]" :current-node="node"
+          class="overflow-scroll pb-24 flex justify-center"></Tree> -->
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { computed } from "vue";
+import Tiptap from "../components/Tiptap.vue";
+import { computed, watch } from "vue";
+import { useRoute } from "vue-router";
+import { useNodeStore } from "../stores/NodeStore";
 import NodeApi from "../api/NodeApi";
-import Book from "../components/Book.vue";
+import Tree from "../components/Tree.vue";
+import NodeInfo from "../components/NodeInfo.vue";
+import IconBlank from "../icons/IconBlank.vue";
+import componentLogger from "../log/componentLogger";
 
-let booksVisible = computed(() => {
-  return NodeApi.getBooks().filter((book) => book.isVisible);
-});
+const route = useRoute();
+const nodeStore = useNodeStore();
+const editable = computed(() => route.name == "nodes.edit");
+const activeNodes = computed(() => nodeStore.activeNodes);
+let node = computed(() => nodeStore.current);
+
+let save = function (content: string) {
+  if (content != node.value.content) {
+    console.log("保存节点", node.value.id, "的内容", content.substring(0, 20) + "...");
+    NodeApi.updateContent(node.value.id, content);
+  }
+};
+
+componentLogger.info('初始化node page')
+
+// watch(route, () => {
+//   if (route.name != "nodes.show" && route.name != "nodes.edit") return;
+
+//   if (route.hash.length > 0) {
+//     // 获取带有锚点的元素
+//     var target = document.querySelector<HTMLDivElement>(route.hash);
+//     // console.log("滚动到锚点", target);
+
+//     // 如果有锚点并且目标元素存在，则滚动到该元素
+//     if (window.location.hash && target) {
+//       document.querySelector("main")!.scrollTo({
+//         top: target.offsetTop,
+//         behavior: "smooth",
+//       });
+//     }
+//   }
+// });
 </script>
+
+<style lang="postcss">
+#toolbar-container {
+  @apply sticky top-0 z-40 flex w-full flex-row items-center justify-center gap-2 bg-yellow-300/30 shadow-2xl;
+}
+
+table {
+  @apply rounded-none;
+
+  td,
+  th {
+    @apply border border-gray-700 p-2 !important;
+  }
+
+  p {
+    @apply my-0 !important;
+  }
+}
+</style>

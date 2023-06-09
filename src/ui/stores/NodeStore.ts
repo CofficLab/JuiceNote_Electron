@@ -6,7 +6,7 @@ export const useNodeStore = defineStore('node-store', {
     state: () => {
         return {
             current: RootNode,
-            root: RootNode,
+            tree: RootNode,
             activeNodes: [RootNode],
         }
     },
@@ -22,15 +22,19 @@ export const useNodeStore = defineStore('node-store', {
                 storeLogger.info('更新当前激活的节点为', this.activeNodes.map(n => n.title))
             })
         },
+        updateTree(tree: Node) {
+            storeLogger.info('更新当前树为', tree.title)
+            this.tree = tree
+        },
         refreshCurrent() {
             this.current.updatedAt = (new Date()).toISOString()
         },
-        refreshRoot() {
-            let newRoot = this.root
-            newRoot.updatedAt = (new Date()).toISOString()
+        refreshTree() {
+            let newTree = this.tree
+            newTree.updatedAt = (new Date()).toISOString()
 
-            this.root = newRoot
-            storeLogger.info('刷新根节点', this.root.updatedAt)
+            this.tree = newTree
+            storeLogger.info('刷新树', this.tree.updatedAt)
         }
     },
 })

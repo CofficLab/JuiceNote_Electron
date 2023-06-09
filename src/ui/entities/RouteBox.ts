@@ -18,7 +18,7 @@ class RouteBox {
     }
 
     static isShop(route: RouteLocationNormalizedLoaded) {
-        return route.name?.toString().startsWith('shop')
+        return route.fullPath.includes('/shop/')
     }
 
     static isDatabase(route: RouteLocationNormalizedLoaded) {

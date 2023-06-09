@@ -1,4 +1,4 @@
-import { dialog, ipcMain } from "electron"
+import { dialog, ipcMain, shell } from "electron"
 import { createWindow } from "../bootstrap/window"
 import Config from "../models/Config"
 
@@ -37,5 +37,9 @@ export default function setWildController(app: Electron.App) {
 
     ipcMain.handle('set-config', (event, config) => {
         return Config.setPreferences(config)
+    })
+
+    ipcMain.handle('open-user-data-path', (event) => { 
+        shell.openPath(Config.User_Data_Path)
     })
 }

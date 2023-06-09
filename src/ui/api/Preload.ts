@@ -7,7 +7,7 @@ const Preload = {
     isWindows: () => Preload.ipc.sendSync("get-platform") == "win32",
 
     isPackaged: () => Preload.ipc.sendSync('is-packaged'),
-
+    
     isDev: () => !Preload.isPackaged(),
 
     getAppVersion: function () {
@@ -32,6 +32,10 @@ const Preload = {
 
     setConfig: async function (config: string) {
         return Preload.ipc.invoke("set-config", config);
+    },
+
+    openUserDataPath: async function () {
+        return Preload.ipc.invoke("open-user-data-path");
     }
 }
 

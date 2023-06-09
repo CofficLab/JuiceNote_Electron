@@ -16,12 +16,12 @@ const NodeApi = {
         return Ipc.invoke('delete', id)
     },
 
-    // async getRoot(): Promise<Node> {
-    //     apiLogger.info('发起 API 请求：getRoot')
-    //     return Ipc.invoke('getRoot').then((node) => {
-    //         return new Node(node)
-    //     })
-    // },
+    async getTree(): Promise<Node> {
+        apiLogger.info('发起 API 请求：getTree')
+        return Ipc.invoke('getTree').then((node) => {
+            return new Node(node)
+        })
+    },
 
     async find(id: number): Promise<Node> {
         apiLogger.info('发起 API 请求：find')
@@ -66,6 +66,14 @@ const NodeApi = {
 
     async save(node:Node) {
         return Ipc.invoke('save', JSON.stringify(node))
+    },
+
+    async export(id:number) {
+        return Ipc.invoke('export', id)
+    },
+
+    async import(id: number) {
+        return Ipc.invoke('import', id)
     }
 }
 

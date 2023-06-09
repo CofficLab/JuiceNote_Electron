@@ -6,8 +6,9 @@
       <Toolbar :editor="editor" :current="current" v-if="editor && editable"></Toolbar>
       <div class="flex flex-row items-center justify-end gap-0 pr-4">
         <BtnOfficialLink></BtnOfficialLink>
-        <Terminal class="operators" v-if="isLesson"></Terminal>
+        <!-- <Terminal class="operators" v-if="isLesson"></Terminal> -->
         <Home class="operators"></Home>
+        <Shop class="operators" v-if="isDev"></Shop>
         <Edit :showText="false" class="operators" v-if="current.isPage"></Edit>
         <Add :node="current" :show-text="false" class="operators"></Add>
         <More :node="current" class="operators"></More>
@@ -26,7 +27,7 @@
 
 <script lang="ts" setup>
 import Home from "../operators/Home.vue";
-import Database from '../operators/Database.vue'
+import Shop from '../operators/Shop.vue'
 import BtnOfficialLink from "../components/BtnOfficialLink.vue";
 import Terminal from "../operators/Terminal.vue";
 import { useRoute } from "vue-router";
@@ -56,6 +57,7 @@ const isSetting = computed(() => route.name?.toString().startsWith('setting'));
 const current = computed(() => useNodeStore().current);
 const editable = computed(() => route.name == 'nodes.edit')
 const editor = computed(() => editorStore.editor);
+const isDev = Preload.isDev();
 </script>
 
 <style scoped lang="postcss">

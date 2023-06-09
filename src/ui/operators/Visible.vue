@@ -32,6 +32,7 @@ const toggleVisible = function () {
   props.node.isVisible = !props.node.isVisible
   props.node.update().then(() => {
     useToastStore().set('可见性更新成功')
+    useNodeStore().refreshTree()
   })
 };
 </script>

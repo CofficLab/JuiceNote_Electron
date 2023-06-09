@@ -12,7 +12,7 @@ contextBridge.exposeInMainWorld('preloadApi', {
 })
 
 // 对主进程的消息作出响应
-contextBridge.exposeInMainWorld('listen', (name: string, callback: (e,args) => void) => {
+contextBridge.exposeInMainWorld('listen', (name: string, callback: (e: any,args: any) => void) => {
   // console.log("preload 配置回调 ",name)
   ipcRenderer.on(name, (e,...args) => callback(e,args))
 })

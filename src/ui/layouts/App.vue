@@ -3,25 +3,38 @@
   <!-- 如果不配置底色，daisyui会自动配置为bg-primary -->
   <!-- 因为electron配置了全透明窗口，这里最好配置一个底色 -->
   <!-- 另外注意：如果开了dev tool，是看不出透明效果的 -->
-  <div id="root" :data-theme="theme" class="absolute flex w-full flex-row bg-white/80">
+  <div id="root" :data-theme="theme" class="absolute flex w-full flex-row bg-base">
     <!-- header脱离文档流，固定定位 -->
-    <Header class="fixed draggable top-0 z-50 h-10 w-full bg-base-200/90 backdrop-blur-sm border-b border-neutral/30 shadow-sm"></Header>
+    <Header
+      class="fixed draggable top-0 z-50 h-10 w-full bg-base-200/90 backdrop-blur-sm border-b border-neutral/30 shadow-sm">
+    </Header>
 
     <!-- 左侧导航侧栏 -->
-    <Aside
-    v-if="!route.name?.toString().startsWith('setting')"
-      class="z-50 hidden flex-col h-screen w-40 overflow-scroll overscroll-none scroll-smooth border-r border-neutral/30 bg-primary/10 backdrop-filter backdrop-blur-3xl shadow-sm md:flex lg:flex-col"
-    ></Aside>
+    <Aside v-if="!route.name?.toString().startsWith('setting')" class="z-50 hidden flex-col h-screen w-40 overflow-scroll overscroll-none scroll-smooth 
+      border-r border-neutral/30 bg-primary/10 backdrop-filter backdrop-blur-3xl shadow-sm md:flex lg:flex-col">
+    </Aside>
 
     <!-- 右侧主内容，所有的滚动都基于main，必须有固定高度 -->
-    <main class="flex h-screen flex-grow relative flex-col justify-between overflow-scroll overscroll-none bg-base-100 bg-gradient-to-b from-info/30 to-base-200">
+    <main
+      class="flex h-screen flex-grow relative flex-col justify-between overflow-scroll overscroll-none"
+      :class="{ 
+        'bg-gradient-to-b from-info/30 to-base-200': !isShop, 
+        'bg-gradient-to-b from-secondary/30 to-secondary/10': isShop
+        }"
+      >
       <router-view v-slot="{ Component }">
         <transition name="fade">
           <component :is="Component" />
         </transition>
       </router-view>
 
-      <Footer v-if="!route.name?.toString().startsWith('setting')" class="fixed w-full bottom-0 z-40 h-8 bg-primary/60 px-2 shadow-2xl backdrop-blur backdrop-filter"></Footer>
+      <Footer v-if="!route.name?.toString().startsWith('setting')"
+        class="fixed w-full pr-44 border-neutral/30 border-t bottom-0 z-40 h-6 flex items-center px-2 shadow-2xl backdrop-blur backdrop-filter"
+        :class="{
+          'bg-gradient-to-r from-base-200/30 to-base-200/40': !isShop,
+          'bg-gradient-to-r from-primary/30 to-primary/10': isShop
+        }">
+      </Footer>
     </main>
 
     <!-- 弹层 -->
@@ -37,30 +50,25 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, watch } from "vue";
+import { computed, ref } from "vue";
 import Header from "./Header.vue";
 import Footer from "./Footer.vue";
 import FormSearch from "../modals/ModalSearch.vue";
 import Themes from "../modals/Themes.vue";
 import FormAdd from "../modals/FormAdd.vue";
 import FormRename from "../modals/FormRename.vue";
-import RightMenuModal from "../modals/RightMenuModal.vue";
 import Terminal from "../modals/Terminal.vue";
 import Aside from "./Aside.vue";
 import ThemesConfig from "../entities/Themes";
-import RouteBox from "../entities/RouteBox";
 import { useRoute } from "vue-router";
-import { useNodeStore } from "../stores/NodeStore";
-import { EmptyNode } from "../entities/Node";
 import Preload from '../api/Preload'
-import ErrorModal from "../modals/ErrorModal.vue";
-import Logger from "electron-log";
 import componentLogger from "../log/componentLogger";
 import SettingModal from "../modals/SettingModal.vue";
+import { useOtherStore } from '../stores/OtherStore';
 
 const route = useRoute();
-const nodeStore = useNodeStore();
-const isLesson = computed(() => RouteBox.isLesson(route));
+const otherStore = useOtherStore();
+const isShop = computed(() => route.params.tree === 'shop');
 
 // 初始化主题
 const themes = ThemesConfig;
@@ -72,7 +80,7 @@ const theme = computed(() => (isDarkMode.value ? themeDark.value : themeLight.va
 
 // 主动设置主题
 window.addEventListener("set-theme", (e) => {
-  themeLight.value = e.detail;
+  themeLight.value = Object.getOwnPropertyDescriptor(e, "detail")!.value;
   componentLogger.info("设置主题为", theme.value);
 });
 
@@ -91,13 +99,16 @@ darkModeQuery.addListener((e) => {
 //   componentLogger.info("监测到事件：update-downloaded");
 // });
 
-// Preload.listen("update-available", (e) => {
-//   componentLogger.info("监测到事件：update-avaliable");
-// });
+Preload.listen("update-available", (e: any, args: { version: any; }[]) => {
+  let version = args[0].version;
+  componentLogger.info("监测到事件：update-avaliable", version);
 
-// Preload.listen("checking-for-update", (e) => {
-//   componentLogger.info("监测到事件：checking-for-update");
-// });
+  otherStore.setLatestVersion(version);
+});
+
+Preload.listen("checking-for-update", (e: any) => {
+  componentLogger.info("监测到事件：checking-for-update");
+});
 
 // Preload.listen("update-not-available", (e) => {
 //   componentLogger.info("监测到事件：update-not-available");
@@ -123,6 +134,7 @@ darkModeQuery.addListener((e) => {
   transform: translateY(0px);
   opacity: 0;
 }
+
 .fade-leave-to {
   transform: translateY(0px);
   opacity: 0;

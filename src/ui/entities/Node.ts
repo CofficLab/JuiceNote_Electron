@@ -2,6 +2,7 @@ import NodeApi from "../api/NodeApi"
 import mapKeys from "lodash/mapKeys"
 import camelCase from "lodash/camelCase"
 import componentLogger from "../log/componentLogger"
+import { promises } from "dns"
 
 class Node {
     public id: number = 0
@@ -41,8 +42,8 @@ class Node {
         return this.getParent().getBook()
     }
 
-    getFirstChild(): Node {
-        let children = NodeApi.getChildren(this.id)
+    async getFirstChild(): Promise<Node> {
+        let children = await NodeApi.getChildren(this.id)
         let firstChild = children[0]
 
         return firstChild || EmptyNode
@@ -55,10 +56,10 @@ class Node {
         return lastChild || EmptyNode
     }
 
-    getFirstPage(): Node {
+    async getFirstPage(): Promise<Node> {
         if (this.isPage || this.isEmpty) return this
 
-        return this.getFirstChild().getFirstPage()
+        return  (await this.getFirstChild()).getFirstPage()
     }
 
     async getParent(): Promise<Node> {
@@ -138,10 +139,12 @@ class Node {
         return NodeApi.create(node)
     }
 
-    static updateChildrenPriority(children: Node[]) {
-        children.forEach((child, index) => {
-            NodeApi.updatePriority(child.id, index)
-        })
+    async export() {
+        return NodeApi.export(this.id)
+    }
+
+    async import() {
+        return NodeApi.import(this.id)
     }
 }
 

@@ -51,7 +51,12 @@ app.on("ready", () => {
     win = createMainWindow()
 
     // 配置菜单
-    setMenus(win!)
+    setMenus(win)
+
+    // 自动检查更新
+    setTimeout(() => {
+        createUpdater(app, win!);
+    }, 3000);
 });
 
 app.on("window-all-closed", () => {
@@ -78,7 +83,3 @@ app.on("activate", () => {
 });
 
 app.addRecentDocument("./index.html");
-
-if (app.isPackaged) setTimeout(() => {
-    createUpdater(app, win!);
-}, 50000);
