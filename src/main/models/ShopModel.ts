@@ -5,12 +5,13 @@ import Config from "./Config";
 const ShopTree: NodeObject = {
     title: '商店',
     isRoot: true,
+    slug:"shop",
     content: '商店节点',
     id: 0,
     parentId: 0,
     priority: 0,
     isVisible: true,
-    isEmpty: true,
+    isEmpty: false,
     isPage: false,
     isChapter:false
 }

@@ -15,9 +15,10 @@ import Tree from "../components/Tree.vue";
 import { useRoute } from "vue-router";
 
 const route = useRoute()
-const current = computed(() => useNodeStore().current);
-const activeNodes = computed(() => useNodeStore().activeNodes);
-const tree = computed(() => useNodeStore().root)
+const nodeStore = useNodeStore()
+const current = computed(() => nodeStore.current);
+const activeNodes = computed(() => nodeStore.activeNodes);
+const tree = computed(() => nodeStore.tree)
 
 const url = computed(() => {
   return route.fullPath

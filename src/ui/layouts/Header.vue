@@ -6,7 +6,7 @@
       <Toolbar :editor="editor" :current="current" v-if="editor && editable"></Toolbar>
       <div class="flex flex-row items-center justify-end gap-0 pr-4">
         <BtnOfficialLink></BtnOfficialLink>
-        <Terminal class="operators" v-if="isLesson"></Terminal>
+        <!-- <Terminal class="operators" v-if="isLesson"></Terminal> -->
         <Home class="operators"></Home>
         <Shop class="operators"></Shop>
         <Edit :showText="false" class="operators" v-if="current.isPage"></Edit>

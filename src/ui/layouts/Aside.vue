@@ -19,13 +19,13 @@
         <li><a>Item 2</a></li>
       </ul>
     </div>
-    <Tree v-else :hidden-list="[root.id]" :tree="root" :current-node="current!" name="aside-root" :active-nodes="activeNodes"
+    <Tree v-else :tree="tree" :current-node="current!" name="aside-root" :active-nodes="activeNodes"
       class="h-full w-full overflow-scroll pb-24"></Tree>
   </aside>
 </template>
 
 <script lang="ts" setup>
-import { computed, watch } from "vue";
+import { computed } from "vue";
 import Preload from "../api/Preload";
 import { useNodeStore } from "../stores/NodeStore";
 import Tree from "../components/Tree.vue";
@@ -38,12 +38,12 @@ componentLogger.info('「aside」加载侧栏')
  * 定义变量，mounted后更新变量的值，实现不阻塞
  */
 const nodeStore = useNodeStore();
+const route = useRoute()
 const isWindows = Preload.isWindows();
 const activeNodes = computed(() => nodeStore.activeNodes)
 const current = computed(() => nodeStore.current);
 const hideTitleBar = false;
-const root = nodeStore.root
-const route = useRoute()
+const tree = computed(() => nodeStore.tree);
 
 // watch(
 //   route,

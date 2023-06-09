@@ -10,6 +10,7 @@ interface NodeObject {
     title: string,
     parentId: number,
     priority: number,
+    slug?: string,
     children?: NodeObject[],
     content?:string,
     isPage: boolean,
