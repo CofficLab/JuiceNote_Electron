@@ -29,7 +29,7 @@
       </router-view>
 
       <Footer v-if="!route.name?.toString().startsWith('setting')"
-        class="fixed w-full pr-44 border-neutral/30 border-t bottom-0 z-40 h-8 px-2 shadow-2xl backdrop-blur backdrop-filter"
+        class="fixed w-full pr-44 border-neutral/30 border-t bottom-0 z-40 h-6 flex items-center px-2 shadow-2xl backdrop-blur backdrop-filter"
         :class="{
           'bg-gradient-to-r from-base-200/30 to-base-200/40': !isShop,
           'bg-gradient-to-r from-primary/30 to-primary/10': isShop

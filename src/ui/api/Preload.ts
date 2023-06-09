@@ -7,7 +7,7 @@ const Preload = {
     isWindows: () => Preload.ipc.sendSync("get-platform") == "win32",
 
     isPackaged: () => Preload.ipc.sendSync('is-packaged'),
-
+    
     isDev: () => !Preload.isPackaged(),
 
     getAppVersion: function () {

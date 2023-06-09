@@ -10,7 +10,11 @@
       <!-- 当前节点 -->
       <div v-show="isVisible" @mouseleave="handleLeave" @mouseenter="handleHover(tree)" :class="{
         // 通用
-        'flex flex-row items-center p-0 text-xs hover:bg-primary-focus/20': true,
+        'flex flex-row items-center p-0 hover:bg-primary-focus/20': true,
+
+        // 字体
+        'text-sm': display != 'breadcrumbs',
+        'text-xs': display == 'breadcrumbs',
 
         // shadow
         'drop-shadow-lg': display == 'grid',

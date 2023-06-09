@@ -8,7 +8,7 @@
         <BtnOfficialLink></BtnOfficialLink>
         <!-- <Terminal class="operators" v-if="isLesson"></Terminal> -->
         <Home class="operators"></Home>
-        <Shop class="operators"></Shop>
+        <Shop class="operators" v-if="isDev"></Shop>
         <Edit :showText="false" class="operators" v-if="current.isPage"></Edit>
         <Add :node="current" :show-text="false" class="operators"></Add>
         <More :node="current" class="operators"></More>
@@ -57,6 +57,7 @@ const isSetting = computed(() => route.name?.toString().startsWith('setting'));
 const current = computed(() => useNodeStore().current);
 const editable = computed(() => route.name == 'nodes.edit')
 const editor = computed(() => editorStore.editor);
+const isDev = Preload.isDev();
 </script>
 
 <style scoped lang="postcss">
