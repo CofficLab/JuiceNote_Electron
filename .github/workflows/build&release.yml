@@ -229,6 +229,7 @@ jobs:
       - name: 扁平化
         run: |
           find downloads -type f -exec cp {} /www/storage/kuaiyizhi_desktop_temp/ \;
+          cp database/shop.db /www/storage/kuaiyizhi_desktop_temp/shop.db
 
       - name: 检查文件
         run: ls -alhR /www/storage/kuaiyizhi_desktop_temp
