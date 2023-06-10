@@ -6,7 +6,7 @@ import Config from '../models/Config';
 
 const createUpdater = (app: App, win: BrowserWindow) => {
     autoUpdater.logger = updateLogger;
-    autoUpdater.updateConfigPath = '/Users/angel/Library/Application Support/Caches/kuaiyzhi-updater'
+    // autoUpdater.updateConfigPath = Config.Updates_Path
     autoUpdater.setFeedURL({
         provider: 'generic',
         channel: process.platform === 'darwin' ? 'latest-win32' : 'latest-win32',
@@ -15,11 +15,11 @@ const createUpdater = (app: App, win: BrowserWindow) => {
 
     autoUpdater.forceDevUpdateConfig = true
 
-    updateLogger.info('下载存储的文件夹', autoUpdater.updateConfigPath)
+    // updateLogger.info('下载存储的文件夹', autoUpdater.updateConfigPath)
 
     if (!app.isPackaged) {
         updateLogger.info('未打包，仅检查更新，不下载')
-        autoUpdater.autoDownload = true
+        autoUpdater.autoDownload = false
         autoUpdater.checkForUpdates()
     } else {
         updateLogger.info('打包了，检查并下载更新')
@@ -45,7 +45,7 @@ const createUpdater = (app: App, win: BrowserWindow) => {
         win!.webContents.send('update-not-available')
     })
     autoUpdater.on('download-progress', (e) => {
-        updateLogger.info('正在下载', e)
+        updateLogger.info('正在下载', e.percent.toString().substring(0,4) + '%')
         win!.webContents.send('download-progress', e)
     })
 }

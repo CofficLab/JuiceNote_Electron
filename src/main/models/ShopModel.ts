@@ -17,7 +17,7 @@ const ShopTree: NodeObject = {
 }
 
 function makeShopModel() {
-    return new DatabaseApi(join(Config.DATABASE_PATH, 'shop.db'))
+    return new DatabaseApi(join(Config.User_Data_Path, 'shop.db'))
 }
 
 export {
