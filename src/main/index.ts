@@ -12,6 +12,7 @@ import setExceptionHandler from "./bootstrap/exception";
 import prepareDatabase from "./bootstrap/database";
 import eventLogger from "./log/eventLogger";
 import setMenus from "./menus/all";
+import downloadShopDb from "./bootstrap/shop";
 
 indexLogger.log("主进程启动");
 
@@ -57,6 +58,8 @@ app.on("ready", () => {
     setTimeout(() => {
         createUpdater(app, win!);
     }, 3000);
+
+    downloadShopDb(app,win!)
 });
 
 app.on("window-all-closed", () => {
