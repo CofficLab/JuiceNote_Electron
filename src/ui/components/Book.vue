@@ -1,5 +1,5 @@
 <template>
-  <div class="card relative h-36 w-72 bg-base-100 shadow-2xl">
+  <div class="card relative h-56 w-72 bg-base-100 shadow-2xl">
     <div class="badge-warning badge absolute left-0 top-2 gap-2 shadow-2xl" v-if="!book.isVisible">已隐藏</div>
     <div class="dropdown dropdown-left absolute bottom-0 right-0" v-if="editable">
       <label tabindex="0" class="btn-sm btn m-1 ring">...</label>
@@ -9,10 +9,14 @@
       </ul>
     </div>
     <router-link :to="'/'+tree.slug + '/' + book.id + '/show'">
-      <figure class="max-h-56 rounded-xl">
+      <figure class="max-h-56 rounded-t-xl">
         <img v-if="!book.cover" src="../images/book.png" />
         <img v-else :src="book.cover" class="h-36 w-72" />
       </figure>
+
+      <div class="card-body">
+        <h2 class="card-title">{{ book.title }}</h2>
+      </div>
     </router-link>
 
     <!-- 封面的裁剪框 -->

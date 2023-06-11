@@ -1,7 +1,7 @@
 <template>
   <div class="h-full">
     <div class="flex justify-center mt-20 pb-48" v-if="node.title == '商城'">
-      <div class="grid grid-cols-3 gap-4">
+      <div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
         <Book :book="book" v-for="book in children"></Book>
       </div>
     </div>
