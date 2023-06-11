@@ -7,10 +7,10 @@
       <div class="flex flex-row items-center justify-end gap-0 pr-4">
         <BtnOfficialLink></BtnOfficialLink>
         <Terminal class="operators" v-if="isDev"></Terminal>
+          <Add :node="current" :show-text="false" class="operators" v-if="!isShop"></Add>
         <Home class="operators"></Home>
         <Shop class="operators" v-if="isDev"></Shop>
         <Edit :showText="false" class="operators" v-if="current.isPage && !isShop"></Edit>
-        <Add :node="current" :show-text="false" class="operators" v-if="!isShop"></Add>
         <More :node="current" class="operators"></More>
         <Setting :show-text="true" class="operators" v-if="isSetting"></Setting>
       </div>

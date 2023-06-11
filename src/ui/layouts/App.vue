@@ -10,7 +10,7 @@
     </Header>
 
     <!-- 左侧导航侧栏 -->
-    <Aside v-if="!route.name?.toString().startsWith('setting')" class="z-50 hidden flex-col h-screen w-40 overflow-scroll overscroll-none scroll-smooth 
+    <Aside v-if="isAsideVisible" class="z-50 hidden flex-col h-screen w-40 overflow-scroll overscroll-none scroll-smooth 
       border-r border-neutral/30 bg-primary/10 backdrop-filter backdrop-blur-3xl shadow-sm md:flex lg:flex-col">
     </Aside>
 
@@ -65,10 +65,26 @@ import Preload from '../api/Preload'
 import componentLogger from "../log/componentLogger";
 import SettingModal from "../modals/SettingModal.vue";
 import { useOtherStore } from '../stores/OtherStore';
+import { useNodeStore } from "../stores/NodeStore";
 
 const route = useRoute();
 const otherStore = useOtherStore();
+const nodeStore = useNodeStore()
+const tree = computed(() => nodeStore.tree)
 const isShop = computed(() => route.params.tree === 'shop');
+const isAsideVisible = computed(() => {
+  componentLogger.info('计算是否显示侧栏',tree.value.title)
+  let result = true
+  if (route.name?.toString().startsWith('setting')) {
+    componentLogger.info('当前是设置页面，不显示侧栏')
+    result = false
+  } else if (tree.value.title == '商店' && route.params.id == '0') {
+    componentLogger.info('当前是商城首页，不显示侧栏')
+    result = false
+  }
+
+  return result
+})
 
 // 初始化主题
 const themes = ThemesConfig;

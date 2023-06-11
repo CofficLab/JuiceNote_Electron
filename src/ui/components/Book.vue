@@ -8,7 +8,7 @@
         <li><Visible :showText="true" :node="book"></Visible></li>
       </ul>
     </div>
-    <router-link :to="'/nodes/shop/' + book.id + '/show'">
+    <router-link :to="'/'+tree.slug + '/' + book.id + '/show'">
       <figure class="max-h-56 rounded-xl">
         <img v-if="!book.cover" src="../images/book.png" />
         <img v-else :src="book.cover" class="h-36 w-72" />
@@ -50,8 +50,11 @@ import "vue-cropper/dist/index.css";
 import { VueCropper } from "vue-cropper";
 import ChangeCover from "../operators/ChangeCover.vue";
 import { Node } from "../entities/Node";
+import { useNodeStore } from "../stores/NodeStore";
 
 const route = useRoute();
+const nodeStore = useNodeStore()
+
 let props = defineProps({
   book: {
     type: Node,
@@ -59,6 +62,7 @@ let props = defineProps({
   },
 });
 
+let tree = computed(() => nodeStore.tree)
 let isCropperVisible = ref(false);
 let cropper = ref(null);
 let option = ref({

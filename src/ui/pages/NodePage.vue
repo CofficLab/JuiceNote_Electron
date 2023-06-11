@@ -1,10 +1,12 @@
 <template>
   <div class="h-full">
-    <!-- <div class="sticky top-12 z-50 flex w-full flex-grow">
-      <NodeTab></NodeTab>
-    </div> -->
+    <div class="flex justify-center mt-20 pb-48" v-if="node.title == '商城'">
+      <div class="grid grid-cols-3 gap-4">
+        <Book :book="book" v-for="book in children"></Book>
+      </div>
+    </div>
 
-    <div class="flex h-full w-full flex-col items-center pt-12">
+    <div class="flex h-full w-full flex-col items-center pt-12" v-else>
       <!-- 空节点 -->
       <div class="w-full flex justify-center items-center h-full flex-col gap-4" v-if="node.isEmpty">
         <NodeInfo :node="node" class="flex justify-center"></NodeInfo>
@@ -30,20 +32,26 @@
 
 <script lang="ts" setup>
 import Tiptap from "../components/Tiptap.vue";
-import { computed, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { useNodeStore } from "../stores/NodeStore";
 import NodeApi from "../api/NodeApi";
-import Tree from "../components/Tree.vue";
 import NodeInfo from "../components/NodeInfo.vue";
 import IconBlank from "../icons/IconBlank.vue";
 import componentLogger from "../log/componentLogger";
+import Book from "../components/Book.vue";
 
 const route = useRoute();
 const nodeStore = useNodeStore();
 const editable = computed(() => route.name == "nodes.edit");
-const activeNodes = computed(() => nodeStore.activeNodes);
 let node = computed(() => nodeStore.current);
+let children = ref()
+
+watch(node, () => {
+  node.value.getChildren().then(c=> {
+    children.value = c
+  })
+})
 
 let save = function (content: string) {
   if (content != node.value.content) {
@@ -52,7 +60,7 @@ let save = function (content: string) {
   }
 };
 
-componentLogger.info('初始化node page')
+componentLogger.info('初始化node page',node.value)
 
 // watch(route, () => {
 //   if (route.name != "nodes.show" && route.name != "nodes.edit") return;
