@@ -146,6 +146,10 @@ class Node {
     async import() {
         return NodeApi.import(this.id)
     }
+
+    async sync() {
+        return NodeApi.sync(this)
+    }
 }
 
 const EmptyNode = new Node({ title: '空节点', isEmpty: true, content: '空节点', id: 0 })

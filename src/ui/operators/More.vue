@@ -36,6 +36,9 @@
         <li v-if="!isShop">
           <Import :node="current"></Import>
         </li>
+        <li>
+            <Upload :node="current"></Upload>
+          </li>
       </ul>
     </div>
   </div>
@@ -54,6 +57,7 @@ import SetPage from "./SetPage.vue";
 import Rename from "./Rename.vue";
 import Export from "./Export.vue";
 import Import from "./Import.vue";
+import Upload from "./Upload.vue";
 import { useRoute } from "vue-router";
 
 const current = computed(() => useNodeStore().current);

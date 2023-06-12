@@ -68,6 +68,10 @@ const NodeApi = {
         return Ipc.invoke('save', JSON.stringify(node))
     },
 
+    async sync(node: Node) {
+        return Ipc.invoke('sync', JSON.stringify(node))  
+    },
+
     async export(id:number) {
         return Ipc.invoke('export', id)
     },
