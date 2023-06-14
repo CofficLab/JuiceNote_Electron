@@ -2,7 +2,6 @@ import NodeApi from "../api/NodeApi"
 import mapKeys from "lodash/mapKeys"
 import camelCase from "lodash/camelCase"
 import componentLogger from "../log/componentLogger"
-import { promises } from "dns"
 
 class Node {
     public id: number = 0

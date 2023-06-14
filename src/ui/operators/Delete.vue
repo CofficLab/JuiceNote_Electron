@@ -41,7 +41,7 @@ const deleteBookNode = async function () {
     }
   });
   node.delete().then(() => {
-    nodeStore.refreshRoot()
+    nodeStore.refreshTree()
     useToastStore().set(`已删除「${node.title}」`);
   })
 };

@@ -36,11 +36,12 @@ let add = function () {
   componentLogger.info('创建新页面，当前节点是',props.node.title)
   props.node.createChild(new Node({
     title: "新页面",
-    isPage:true,
+    isPage: true,
+    isVisible: true,
     parentId: props.node.id,
   })).then((id) => {
     componentLogger.info('新节点的ID',id)
-    nodeStore.refreshRoot()
+    nodeStore.refreshTree()
     router.push({
       name: "nodes.edit",
       params: {

@@ -12,7 +12,7 @@ interface NodeObject {
     priority: number,
     slug?: string,
     children?: NodeObject[],
-    content?:string,
+    content?: string,
     isPage: boolean,
     isChapter: boolean,
     isVisible: boolean,
@@ -38,7 +38,7 @@ class DatabaseApi {
     constructor(dbFilePath?: string) {
         databaseLogger.info('数据库 API 初始化', dbFilePath)
         if (dbFilePath && !existsSync(dbFilePath)) {
-            throw new Error('数据库文件不存在：'+ dbFilePath)
+            throw new Error('数据库文件不存在：' + dbFilePath)
         }
 
         this.dbFilePath = dbFilePath
@@ -48,10 +48,11 @@ class DatabaseApi {
     create(node: NodeObject): number {
         databaseLogger.info('创建节点', node)
         if (node.parentId == null) node.parentId = 0
-        let result = this.connection.prepare('insert into nodes (title, parent_id, priority, is_page) values (?, ?, ?, ?)').run(
+        let result = this.connection.prepare('insert into nodes (title, parent_id, priority,is_visible, is_page) values (?, ?, ?, ?,?)').run(
             node.title,
             node.parentId,
             node.priority,
+            node.isVisible ? 1 : 0,
             node.isPage ? 1 : 0)
 
         return result.lastInsertRowid
@@ -64,7 +65,7 @@ class DatabaseApi {
         for (let child of children) {
             this.delete(child.id)
         }
-        
+
         return "已删除「" + id + "」"
     }
 
