@@ -1,6 +1,7 @@
 import { editor } from "monaco-editor";
 
 export interface CreateEditorOptions {
+    name?: string;
     target: HTMLDivElement;
     content: string;
     language: string;
@@ -17,17 +18,16 @@ class MonacoBox {
     public editor: editor.IStandaloneCodeEditor;
     public index;
     public runnable;
+    public name;
     public runnableChangedCallback: Function;
 
-    public constructor(editor: any, index: any, runnable = true) {
+    public constructor(editor: any, index: any, runnable = true,name="未命名Monaco编辑器") {
         this.editor = editor;
         this.index = index;
         this.runnable = runnable
+        this.name = name
         this.runnableChangedCallback = () => { }
 
-        this.onCreated((editorBox: MonacoBox) => {
-            this.setHeight()
-        })
         this.onContentChanged((editorBox: MonacoBox) => {
             this.setHeight()
         });
@@ -126,17 +126,8 @@ class MonacoBox {
         return this
     }
 
-    public onCreated(callback: Function) {
-        window.monaco.editor.onDidCreateEditor(() => {
-            // console.log('monaco editor created, call the callback')
-            callback(this)
-        });
-
-        return this;
-    }
-
     static createEditor(box: MonacoBox, options: CreateEditorOptions) {
-        // console.log('active monaca')
+        console.log('激活Monaco，名字是',options.name)
         window.require(["vs/editor/editor.main"], () => {
             const editor = window.monaco.editor.create(options.target, {
                 value: options.content,
@@ -170,9 +161,12 @@ class MonacoBox {
                 minimap: { enabled: false },
             });
 
-            box = new MonacoBox(editor, window.monaco.editor.getModels().length - 1, options.runnable);
+            box = new MonacoBox(editor, window.monaco.editor.getModels().length - 1, options.runnable,options.name);
 
-            if (options?.onCreated != undefined) box.onCreated(options.onCreated);
+            if (options?.onCreated != undefined) {
+                box.setHeight()
+                options.onCreated(box)
+            }
             if (options?.onContentChanged != undefined) box.onContentChanged(options.onContentChanged);
             if (options?.onLanguageChanged != undefined) box.onLanguageChanged(options.onLanguageChanged);
             if (options?.onRunnableChanged != undefined) box.onRunnableChanged(options.onRunnableChanged);

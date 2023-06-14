@@ -133,6 +133,7 @@ let codeForCopy = ref();
 onMounted(() => {
   // 编辑器
   MonacoBox.createEditor(editorBox.value!, {
+    name: "主编辑器",
     content: props.content,
     target: codeDom.value!,
     language: props.language,
@@ -165,6 +166,7 @@ onMounted(() => {
     target: resultDom.value!,
     language: props.language,
     runnable: props.runnable,
+    name: "结果编辑器",
     onCreated: (monacoBox) => {
       resultBox = monacoBox;
     },
