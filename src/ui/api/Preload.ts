@@ -22,6 +22,10 @@ const Preload = {
         Preload.listen("toggle-search", callback);
     },
 
+    onSyncResult(callback: Function) {
+        Preload.listen("sync-result", callback);
+    },
+
     openFolderDialog: async function () {
         return Preload.ipc.invoke("open-folder-dialog");
     },

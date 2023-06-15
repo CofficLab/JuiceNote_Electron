@@ -9,10 +9,10 @@ import { ShopTree, makeShopModel } from "../models/ShopModel"
 import { LocalTree, makeNodeModel } from "../models/NodeModel"
 import * as http from 'http'
 
-function getModel(event: Electron.IpcMainInvokeEvent):DatabaseApi {
+function getModel(event: Electron.IpcMainInvokeEvent): DatabaseApi {
     let url = event.sender.getURL()
     controllerLogger.info('根据URL确定当前的Model', url)
-    
+
     if (url.includes('#/shop/')) {
         return makeShopModel()
     }
@@ -23,7 +23,7 @@ function getModel(event: Electron.IpcMainInvokeEvent):DatabaseApi {
 function getTree(event: Electron.IpcMainInvokeEvent): NodeObject {
     let url = event.sender.getURL()
     controllerLogger.info('根据URL确定当前的树', url)
-    
+
     if (url.includes('#/shop/')) {
         return ShopTree
     }
@@ -82,8 +82,8 @@ export default function setNodeController() {
 
     ipcMain.handle('sync', (event, node) => {
         node = JSON.parse(node)
-        controllerLogger.log('向服务器同步节点',node.title)
-        const req = http.get({
+        controllerLogger.log('向服务器同步节点', node.title)
+        http.get({
             method: 'PUT',
             host: '127.0.0.1',
             port: 8000,
@@ -92,18 +92,13 @@ export default function setNodeController() {
                 'Content-Type': 'application/json'
             }
         }, res => {
-            controllerLogger.info('返回的HTTP状态码',res.statusCode)
+            controllerLogger.info('返回的HTTP状态码', res.statusCode)
             res.setEncoding('utf8')
-            // res.on('data', chunk => {
-            //     console.log(`BODY: ${chunk}`)
-            // })
             res.on('end', () => {
                 console.log('No more data in response.')
             })
-        })
 
-        req.on('error', error => {
-            console.error(error)
+            event.sender.send('sync-result', `「${node.title}」已同步到服务器`)
         })
     })
 

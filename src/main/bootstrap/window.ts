@@ -45,7 +45,7 @@ function createMainWindow():BrowserWindow {
     } else {
         indexLogger.info('项目未打包，加载 URL')
         win.loadURL(Config.URL)
-        // win.webContents.openDevTools()
+        win.webContents.openDevTools()
     }
 
     // 进入全屏状态事件
