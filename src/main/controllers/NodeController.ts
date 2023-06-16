@@ -94,6 +94,9 @@ export default function setNodeController() {
         }, res => {
             controllerLogger.info('返回的HTTP状态码', res.statusCode)
             res.setEncoding('utf8')
+            res.on('data', (chunk) => {
+                console.log('Response: ' + chunk)
+            })
             res.on('end', () => {
                 console.log('No more data in response.')
             })
