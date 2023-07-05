@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - electron_release
+      - main
 
 permissions:
   contents: write
